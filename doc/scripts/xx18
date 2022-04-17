@@ -1,0 +1,136 @@
+INICIO_SCRIPT
+### Distancias.
+
+Se observan luces en el cielo. Percibimos diferentes frecuencias de la
+luz que emiten. ¿Que tan lejos están?. La respuesta mas sencilla es: NO
+lo sabemos. Pero el ser humano en vez de admitir su ignorancia, supone,
+asume cosas que no puede confirmar y saca conclusiones basadas en esa
+suposiciones.
+
+Dibuje un punto en una hoja de papel. Ponga la hoja a una distancia de
+su brazo, ponga un lápiz entre la hoja y sus ojos. Cierre su ojo
+izquierdo y abra el derecho. Ponga el punto en la hoja detrás de la
+punta del lápiz, es decir: ponga en linea a su ojo derecho, la punta de
+lápiz y el punto en la hoja. Sin mover ni cabeza, ni lápiz, ni hoja,
+ahora cierre el ojo derecho y abra el izquierdo. El lápiz PARECE haberse
+desplazado respecto al punto en la hoja. ¿Con cuantas configuraciones de
+distancias de hoja, lápiz y ojos puede PARECER que el lápiz se desplaza
+la MISMA distancia?. Respuesta: tantas como pueda contar. Para cada una
+el ángulo entre las lineas de visión de cada ojo al OBJETO, ese que
+algunos llaman Parallax, es diferente porque éste DEPENDE de la
+distancia de la hoja al lápiz, de la distancia del FONDO al OBJETO en
+observación.
+
+Si este ángulo se trata de calcular midiendo el angulo de desplazamiento
+APARENTE de un objeto respecto a un fondo se debe cumplir una de dos: o
+se conoce la distancia del fondo al objeto o esta distancia debe ser
+varios ordenes de magnitud mayor que la distancia a calcular para poder
+obtener un valor aproximado. Este segundo caso es el origen de la
+palabra Parallax, porque ASUME que las lineas de visión desde el punto
+de observación, en este caso su ojo, al FONDO, eso que debe estar varios
+ordenes de magnitud mas lejos que la distancia que se desea calcular,
+son PARALELAS. Se ASUMEN paralelas para poder aproximar el angulo
+medido, que es el angulo entre la linea de visión de un ojo al FONDO y
+la linea de visión del MISMO ojo al OBJETO, al angulo entre las lineas
+de visión de cada ojo, o puntos de observación, al OBJETO.
+
+La segunda opción fue la que se uso en los primeros cálculos aproximados
+de la distancia de la luna a la tierra. Las estrellas eran el fondo y
+estas se ASUMÍAN varios ordenes de magnitud mas distantes que la luna.
+Una suposición razonable para el caso de la luna.
+
+Medir el angulo de desplazamiento aparente de un objeto respecto a un
+fondo del cual NO podemos asumir que este VARIOS ordenes de magnitud mas
+lejano que el objeto es ABUSAR de la aproximación, es ASUMIR DEMASIADO.
+Ya ni siquiera es una aproximación es una incertidumbre. Sin embargo
+esto es lo que se hace normalmente para calcular el famoso ángulo
+Parallax con esas luces que vemos en el cielo, con las estrellas.
+
+Imagínese poner el lápiz a 8 kilómetros o 5 millas de distancia de sus
+ojos y ubicándolo entre usted y una estrella. El punto en la hoja ahora
+es la estrella. Y luego tratar de medir el angulo que el lápiz PARECE
+haberse desplazado respecto a la estrella al observarlo desde el segundo
+ojo, o al observarlo con la mejor tecnología que se imagine pero
+separando cada observación solo por 6 centímetros. Y con esa medición
+luego calcular la distancia del lápiz a sus ojos mediante un calculo
+trigonométrico. Algo así sería lo que se trata de CALCULAR para la
+distancia a la estrella que se CREE mas cercana a la tierra, Alfa
+Centauro. ALGO así, porque en este ejemplo la distancia del ojo a la
+estrella es realmente mayor, en varios ordenes de magnitud, que la
+distancia del ojo al lápiz y la aproximación del angulo medido al angulo
+deseado sigue siendo válida. Cosa que no sabemos en el caso de estrellas
+respecto a estrellas, es decir el caso REAL para Alfa Centauro, y la
+aproximación empieza a ser incertidumbre.
+
+El método Parallax es solo una aproximación y solo funciona como
+aproximación si se puede aproximar el angulo medido al angulo deseado.
+Esto solo es posible si el FONDO esta varios ordenes de magnitud mas
+lejos que la distancia a medir. En el caso de las estrellas lo
+racionalmente lógico de ASUMIR es que la estrella para la cual se desea
+calcular la distancia esta mucho mas cerca de las otras estrellas que de
+este planeta, es decir que en realidad la estrella hace parte del FONDO
+!
+
+En el caso de las estrellas no hay ningún método de conocimiento
+público, que esté usando el hombre, para hacer la medición del angulo
+entre las lineas de visión de dos puntos de observación a una estrella
+en particular. Tal vez simplemente todavía no tenemos la tecnología para
+hacerlo.
+
+Otra alarma en el uso del método Parallax para aproximar la distancia de
+una estrella debería ser el valor en dichos ángulos. Son demasiado
+pequeños. Y eso que en dichos intentos se trata de separar los puntos de
+observación lo máximo posible haciendo las observaciones en extremos del
+ciclo de la tierra al rededor del Sol.
+
+Cuando el lápiz esta muy lejos el ángulo es muy pequeño. Y cuando la
+hoja está muy cerca del lápiz, es decir cuando el lápiz empieza a estar
+muy cerca del supuesto fondo, este parece moverse casi nada. El fondo no
+es tan fondo como creíamos.
+
+Los diminutos ángulos medidos en el caso de las estrellas, véase la
+definición de arcsec, de desplazamiento angular APARENTE respecto a un
+SUPUESTO fondo de distancia desconocida, deberían ser mas un indicativo
+de que la estrella, para la cual deseo calcular la distancia, hace parte
+del FONDO, y que por lo tanto no puedo aproximar el ángulo medido al
+ángulo entre las dos lineas de visión a la estrella. ASUMIR eso es
+asumir DEMASIADO.
+
+Esos ángulos son en realidad EVIDENCIA en contra de la aproximación y
+por lo tanto del uso del método. Esos ángulos fácilmente están dentro
+del margen de error de la medición de un ángulo entre dos estrellas,
+cuando dichas mediciones se hacen una en primavera y otra en otoño, es
+decir en dos extremos opuestos del ciclo de la tierra al rededor del
+sol.
+
+Este método Parallax que asume demasiado y que se usa para hacer un
+CÁLCULO APROXIMADO e INDIRECTO de la distancia de una estrella es lo que
+la astronomía, la cosmología, y las supuestas ciencias que estudian las
+estrellas, llaman MEDICIÓN DIRECTA de distancias estelares. Hágame el
+favor !. Esa el la DIRECTA !. A hacer un CÁLCULO APROXIMADO e INDIRECTO
+lo llamamos que dizque MEDIR DIRECTAMENTE !. Es lo mejor que tenemos.
+Imagínese ahora las mediciones INDIRECTAS.
+
+Con base en estos cálculos aproximados e indirectos para los objetos que
+creemos que se pueden calcular, los que creemos mas cercanos, que son
+menos del 0.07% de los objetos relacionados y menos del 0 PUNTO
+000000000000, 22 CEROS, un uno, por ciento, de los que se cree son
+visibles en el universo, se empieza a construir lo que se conoce como la
+escalera de distancias cósmicas. Que no es otra cosa que una escalera de
+mas SUPOSICIONES con la que se pretenden establecer las demás distancias
+cósmicas de las luces que observamos en el cielo. Suposiciones sobre
+suposiciones sobre suposiciones.
+
+Con instrumentos construidos con la mas alta tecnología humana y
+haciendo una serie de suposiciones que hasta el momento son
+completamente imposibles de confirmar, a menos que encontremos la manera
+de viajar a las estrellas, creemos que sabemos, que conocemos, que
+tenemos la certeza, ESA es la ACTITUD que tenemos, de cual es la
+distancia que tiene una luz que observamos en el cielo.
+
+La verdad es que NO lo sabemos.
+
+No podemos alcanzar La Verdad de lo muy lejano, sin tener contacto con
+ELLA.
+
+
