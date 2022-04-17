@@ -6,3 +6,4 @@ mv $1.md scripts
 cd scripts
 csplit -z $1.md '/INICIO_SCRIPT/' '{*}'
 
+
