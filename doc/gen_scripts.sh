@@ -5,5 +5,9 @@ mkdir scripts
 mv $1.md scripts
 cd scripts
 csplit -z $1.md '/INICIO_SCRIPT/' '{*}'
-
-
+ls > all_files
+awk '{print "mv "$1" "$1".txt"}' all_files > rename.sh
+rm all_files
+bash rename.sh
+rm rename.sh
+mv $1.md ../$1.txt
