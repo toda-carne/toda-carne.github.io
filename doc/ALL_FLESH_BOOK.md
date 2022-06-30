@@ -28,12 +28,12 @@ Introduction.
 HOME_SCRIPT
 ### Presentation.
 
-Hello, my name is José Luis Quiroga Beltrán, the objective of this video
-is to give you some good news and others that do not seem good.
+Hello, my name is José Luis Quiroga Beltrán, the goal of this video
+is to give you some good news and others that do not seem so good.
 
-I love Logic. I love the Truth. I love life. I love freedom. I love the
-Justice. I hope to be faithful to you throughout this presentation. And power
-show the arguments, concepts, evidence, and how they
+I love Logic. I love Truth. I love Life. I love Freedom. 
+I love Justice. I hope to be faithful to them throughout this presentation. 
+And show the arguments, concepts, evidence, and how they
 that love took me, made me love, Yeshua, my Father, his Spirit and
 to the set of texts commonly known by the name of the Bible.
 
