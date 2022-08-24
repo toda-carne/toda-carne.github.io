@@ -40,9 +40,8 @@ body {
 }
 
 .home_text {
-  font-size: 3vw;
-  padding: 0vw 0vw 3vw 3vw;
-  text-align: left;  
+  font-size: 2em;
+  padding: 0vw 5vw 0em 5em;
 }
 
 .home_footer {
@@ -321,6 +320,11 @@ display: none;
   .big_title{
     font-size: 300%;
     text-align: center;  
+  }
+
+  .home_text {
+    font-size: 2em;
+    padding: 0vw 0vw 0em 0em;
   }
 
   .cl_top_nav .cl_top_elem {display: none;}
