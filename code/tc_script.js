@@ -57,6 +57,13 @@ function sub_nav_onclick_handler() {
 }
 
 function init_side_nav() {
+    const sd_nv = document.getElementById("id_side_nav");
+    if(sd_nv == null){
+        sessionStorage.setItem("side_nav_selected_id", false);
+        sessionStorage.setItem("side_nav_name", false);
+        return;
+    }
+    
     var all_sub = document.getElementsByClassName("cl_sub_nav");
     var ii;
 
@@ -91,6 +98,10 @@ function get_ancestors(li_elem) {
 }
 
 function toggle_selected(li_elem) {
+    let nm = "" + li_elem.nodeName;
+    if(nm != "LI"){
+        return;
+    }
     var last_id_sel = sessionStorage.getItem("side_nav_selected_id");
     if(last_id_sel){
         var lst_sel = document.getElementById(last_id_sel);
@@ -108,15 +119,15 @@ function toggle_selected(li_elem) {
 function close_side_li(id_menu, li_elem) {
     toggle_selected(li_elem);
 
-    var all_ancestors = all_ancestors = get_ancestors(li_elem);
-
-    var all_sub = document.getElementsByClassName("cl_sub_nav");
     var ii;
-
+    var all_sub = document.getElementsByClassName("cl_sub_nav");
+    var all_ancestors = get_ancestors(li_elem);
+    let sel_ul = li_elem.parentElement.querySelector("ul");
     for (ii = 0; ii < all_sub.length; ii++) {
         var jj = all_sub[ii];
         if(jj.classList.contains("open")){
-            var fst = jj.parentElement.querySelector(".nested");
+            //var fst = jj.parentElement.querySelector(".nested");
+            let fst = jj.parentElement.querySelector("ul");
             if(! all_ancestors.includes(fst)){
                 fst.classList.toggle("active");
                 jj.classList.toggle("open");
@@ -128,14 +139,15 @@ function close_side_li(id_menu, li_elem) {
     if (mm.classList.contains("show_menu")){
         mm.classList.toggle("show_menu");
     }
-
 }
 
-function add_closer(ii, jj) {
-    jj.addEventListener("click", function() {
-        close_side_li('id_side_nav', jj);
-    });
-    jj.id = "id_side_li_" + ii;
+function close_simple_side_li(id_menu, li_elem) {
+    toggle_selected(li_elem);
+
+    var mm = document.getElementById(id_menu);
+    if (mm.classList.contains("show_menu")){
+        mm.classList.toggle("show_menu");
+    }    
 }
 
 function init_side_nav_closers() {
@@ -145,14 +157,21 @@ function init_side_nav_closers() {
 
     for (ii = 0; ii < all_li.length; ii++) {
         let jj = all_li[ii];
+        let fst_chd = jj.firstElementChild;
         
-        var first_li = jj.querySelector("li");
+        /*var first_li = jj.querySelector("li");
         if(first_li === null){
-            add_closer(ii, jj);
-        }
-        let nm = "" + jj.firstElementChild.nodeName;
+            fst_chd.addEventListener("click", function() {
+                close_side_li('id_side_nav', jj);
+            });
+            jj.id = "id_side_li_" + ii;
+        }*/
+        let nm = "" + fst_chd.nodeName;
         if(nm === "A"){
-            add_closer(ii, jj);
+            fst_chd.addEventListener("click", function() {
+                close_simple_side_li('id_side_nav', jj);
+            });
+            jj.id = "id_side_li_" + ii;
         }
     }
 
@@ -162,7 +181,7 @@ function init_side_nav_closers() {
     var is_same = (curr_nm == last_nm);
     if(! is_same){
         sessionStorage.setItem("side_nav_name", curr_nm);
-        sessionStorage.setItem("side_nav_selected_id", null);
+        sessionStorage.setItem("side_nav_selected_id", false);
         return;
     }
 
@@ -170,12 +189,12 @@ function init_side_nav_closers() {
     if(last_id_sel){
         var lst_sel = document.getElementById(last_id_sel);
         if(lst_sel != null){
-            debug_msg("HAS_SELECTED=" + last_id_sel);
-            dbg_add_li_html(lst_sel);
+            //debug_msg("HAS_SELECTED=" + last_id_sel);
+            //dbg_add_li_html(lst_sel);
 
             init_side_nav_selected('id_side_nav', lst_sel);
         } else {
-            sessionStorage.setItem("side_nav_selected_id", null);
+            sessionStorage.setItem("side_nav_selected_id", false);
         }
     }
 
