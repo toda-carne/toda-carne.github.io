@@ -112,6 +112,11 @@ z-index: 50;
 color: #00dd00;
 }
 
+#id_content a:hover {
+color: black;
+background-color: white;
+}
+
 #id_content::after {
 content: "";
 clear: both;
