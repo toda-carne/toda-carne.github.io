@@ -2,15 +2,77 @@
 /* 
 @import url('https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/fontawesome.min.css');
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'); 
-*/
 
 @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+*/
+
 
 * {
   box-sizing: border-box;
   /* border: 1px solid red; */
 }
+
+@font-face {
+  font-family: tc_icons_font;
+  src: url(../fonts/tc_icons.ttf);
+}
+
+.has_icons {
+  font-family: tc_icons_font;
+  font-size: 1em;
+  border: 1px solid red;
+}
+
+/*.fa,
+.fas,
+.fa-solid {
+  border: 1px solid red;
+}*/
+
+.has_icons {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: var(--fa-display, inline-block);
+  font-style: normal;
+  font-variant: normal;
+  /*line-height: 1;*/
+  line-height: inherit; 
+  text-rendering: auto; }
+
+.icon-side-menu::before {
+  content: "\0061"; }
+  
+.icon-book::before {
+  content: "\0062"; }
+  
+.icon-download::before {
+  content: "\0063"; }
+  
+.icon-media::before {
+  content: "\0064"; }
+  
+.icon-schema::before {
+  content: "\0065"; }
+  
+.icon-info::before {
+  content: "\0066"; }
+  
+.icon-tips::before {
+  content: "\0067"; }
+
+.icon-menu::before {
+  content: "\0068"; }
+
+.icon-pin::before {
+  content: "\0069"; }
+
+.icon-home::before {
+  content: "\006A"; }
+
+.icon-checked::before {
+  content: "\006B"; }
 
 .hebreo:lang(he) {
   direction: rtl;
