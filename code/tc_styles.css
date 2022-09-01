@@ -16,13 +16,13 @@
 
 @font-face {
   font-family: tc_icons_font;
-  src: url(../fonts/tc_icons.ttf);
+  src: url(../fonts/tc_icons2.ttf);
 }
 
 .has_icons {
   font-family: tc_icons_font;
-  font-size: 1em;
-  border: 1px solid red;
+  font-size: 1.2em;
+  /*border: 1px solid red;*/
 }
 
 /*.fa,
