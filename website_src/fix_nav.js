@@ -46,7 +46,8 @@ function get_depth(elem) {
 }
 
 function fix_file(dom){
-    const SUB_NAV_ICON = '<i class="fa fa-caret-down"></i>';
+    //const SUB_NAV_ICON = '<i class="fa fa-caret-down"></i>';
+    const SUB_NAV_ICON = '<i class="has_icons icon-side-menu"></i>';
     
     const document = dom.window.document;
     const all_li = document.getElementsByTagName("li");
@@ -54,16 +55,30 @@ function fix_file(dom){
 
     for (ii = 0; ii < all_li.length; ii++) {
         let jj = all_li[ii];
+        let first_a = jj.querySelector("a");
+        let first_ul = jj.querySelector("ul");
+        jj.id = "id_side_li_" + ii;
+
+        var args = "'id_nil', 'id_nil'";
+        if(! (first_a === null)){
+            var pm1 = "'" + first_a.id + "'";
+            var pm2 = "'" + jj.id + "'";
+            args = pm1 + ", " + pm2;
+        }
+        var hdlr_str = 'onclick="nav_clk_1(' + args + ');"';
         
-        var first_ul = jj.querySelector("ul");
         var dpth = get_depth(first_ul);
         if(! (first_ul === null) && (dpth > from_depth)){
             first_ul.classList.toggle("nested");
-            var first_a = jj.querySelector("a");
             if(! (first_a === null)){
                 first_a.classList.toggle("cl_sub_nav");
                 first_a.innerHTML = first_a.innerHTML + SUB_NAV_ICON;
+                hdlr_str = 'onclick="nav_clk_2(' + args + ');"';
             }
+        }
+        
+        if(! (first_a === null)){
+            first_a.outerHTML = first_a.outerHTML.replace('id=', hdlr_str + ' id=');
         }
     }
 
@@ -71,8 +86,7 @@ function fix_file(dom){
     if(! (first_nav === null)){
         console.log(first_nav.innerHTML);
     } else {
-        console.log("<!-- FILE WITHOTH LISTS !!! -->");
+        console.log("<!-- FILE WITHOUT LISTS !!! -->");
     }
 }
-
 

@@ -74,6 +74,12 @@
 .icon-checked::before {
   content: "\006B"; }
 
+.icon-language::before {
+  content: "\006C"; }
+
+.icon-globe::before {
+  content: "\006D"; }
+
 .hebreo:lang(he) {
   direction: rtl;
 }
@@ -98,6 +104,10 @@ body {
 
 .big_title{
   font-size: 6vw;
+  text-align: center;  
+}
+
+.in_center{
   text-align: center;  
 }
 
