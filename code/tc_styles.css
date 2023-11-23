@@ -88,10 +88,6 @@
   direction: ltr;
 }
 
-.key_verses img:hover {
-  border: 5px solid red;
-}
-
 body {
   background-color: #13234c;
   color: white;
@@ -131,6 +127,30 @@ body {
   align-items: center;  
   align-content: center;
   padding: 0vw 0vw 3vw 3vw;
+}
+
+.answer-selected {
+  background-color: green;
+}
+
+.answer-non-selected {
+  background-color: blue;
+}
+
+.answer-left {
+  border: 0.5em solid white;
+  justify-content: center;
+  float: left;
+  padding: 1em;
+  width: 50%;
+}
+
+.answer-right {
+  border: 0.5em solid white;
+  justify-content: center;
+  float: right;
+  padding: 1em;
+  width: 50%;
 }
 
 /* For mobile phones: */
@@ -200,6 +220,10 @@ background-color: white;
 content: "";
 clear: both;
 display: table;
+}
+
+.key_verses img:hover {
+  border: 5px solid white;
 }
 
 @media only screen and (min-width: 600px) {
