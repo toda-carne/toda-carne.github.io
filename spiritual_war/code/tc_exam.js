@@ -16,6 +16,12 @@ var SUF_ID_POS_SHOW = "_pos_show";
 var SUF_ID_POS_OK = "_pos_ok";
 var SUF_ID_INTER = "_inter";
 var SUF_ID_VERSES = "_verses";
+var SUF_ID_SCODES = "_scodes";
+var SUF_ID_LINKS = "_links";
+
+var SUF_ID_LAST_ADDED_CITATION = "_last_added_citation";
+var SUF_ID_LAST_ADDED_STRONG = "_last_added_strong";
+var SUF_ID_LAST_ADDED_LINK = "_last_added_link";
 
 var DEFAULT_BOOK = "BOOK";
 var DEFAULT_CHAPTER = 0;
@@ -24,7 +30,13 @@ var DEFAULT_LAST_VERSE = 0;
 var DEFAULT_BIBLES_SITE = "biblegateway";
 var DEFAULT_BIB_VER = "BIB";
 
+var DEFAULT_STRONG = "STRONG_CODE";
+var DEFAULT_LINK_NAME = "WEB LINK";
+var DEFAULT_LINK_HREF = "https://www.biblehub.com";
+
 var MSG_ADD_VERSE = "ADD VERSE";
+var MSG_ADD_STRONG = "ADD STRONG CODE";
+var MSG_ADD_LINK = "ADD WEB LINK";
 
 var CIT_BOOK_IDX = 0;
 var CIT_CHAPTER_IDX = 1;
@@ -34,10 +46,16 @@ var CIT_LAST_VERSE_IDX = 5;
 var CIT_SITE_IDX = 6;
 var CIT_BIB_VER_IDX = 7;
 
+var LNK_NAME_IDX = 0;
+var LNK_HREF_IDX = 1;
+
 var MSG_OK = "OK";
 var MSG_DEL = "DEL";
 var MSG_RANGE = "RANGE";
 var MSG_ANY = "ANY";
+
+const MIN_DATE = -7000;
+const MAX_DATE = -5000;
 
 function set_exam_language(lang){
 	if(lang == "es"){
@@ -54,8 +72,26 @@ function set_exam_language(lang){
 	return;
 }
 
+function is_in_viewport(elem) {	
+	var rect = elem.getBoundingClientRect();
+	
+	var dv_content = document.getElementById("id_exam_content");
+	var rect2 = dv_content.getBoundingClientRect();
+	return (
+		(rect.top >= rect2.top) &&
+		(rect.bottom <= rect2.bottom)
+	);
+	/*
+	return (
+		(rect.top >= 0) &&
+		(rect.left >= 0) &&
+		(rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)) && 
+		(rect.right <= (window.innerWidth || document.documentElement.clientWidth)) 
+	);*/
+}
+
 function add_statement(id_stm, htm_stm, bibref, v_min, v_max){
-	var dv1 = document.getElementById("id_exam");
+	var dv1 = document.getElementById("id_exam_statements");
 	const dv_full_stm = dv1.appendChild(document.createElement("div"));
 	dv_full_stm.setAttribute('id', id_stm);
 	dv_full_stm.classList.toggle("exam");
@@ -112,13 +148,15 @@ function add_statement(id_stm, htm_stm, bibref, v_min, v_max){
 	var dv_verses = dv_full_stm.appendChild(document.createElement("div"));
 	dv_verses.setAttribute('id', id_dv_verses);	
 	dv_verses.classList.toggle("exam");
-	dv_verses.classList.toggle("is_block");
+	dv_verses.classList.toggle("is_block");		
 	
-	dv_stm.scrollIntoView({
-		behavior: 'auto',
-		block: 'start',
-		inline: 'center'
-	});
+	if(! is_in_viewport(dv_stm)){
+		dv_stm.scrollIntoView({
+			behavior: 'auto',
+			block: 'start',
+			inline: 'center'
+		});
+	}
 	
 	return dv_stm;
 }
@@ -183,11 +221,13 @@ function toggle_pos_interaction(id_stm){
 		dv_verses.classList.toggle("ed_verses");
 		dv_inter.remove();
 
-		dv_stm.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});	
+		if(! is_in_viewport(dv_stm)){
+			dv_stm.scrollIntoView({
+				behavior: 'auto',
+				block: 'start',
+				inline: 'center'
+			});	
+		}
 		
 		return;
 	});    
@@ -198,38 +238,71 @@ function toggle_pos_interaction(id_stm){
 	dv_add_cit.classList.toggle("is_button");
 	dv_add_cit.innerHTML = MSG_ADD_VERSE;
 	dv_add_cit.addEventListener('click', function() {
-		add_citation(id_dv_verses);
+		add_citation(id_stm);
 		return;
 	});
 	
-	dv_inter.scrollIntoView({
-		behavior: 'auto',
-		block: 'start',
-		inline: 'center'
+	const dv_add_strong = dv_inter.appendChild(document.createElement("div"));
+	dv_add_strong.classList.toggle("exam");
+	dv_add_strong.classList.toggle("is_block");
+	dv_add_strong.classList.toggle("is_button");
+	dv_add_strong.innerHTML = MSG_ADD_STRONG;
+	dv_add_strong.addEventListener('click', function() {
+		add_strong(id_stm);
+		return;
 	});
+	
+	const dv_add_link = dv_inter.appendChild(document.createElement("div"));
+	dv_add_link.classList.toggle("exam");
+	dv_add_link.classList.toggle("is_block");
+	dv_add_link.classList.toggle("is_button");
+	dv_add_link.innerHTML = MSG_ADD_LINK;
+	dv_add_link.addEventListener('click', function() {
+		add_link(id_stm);
+		return;
+	});
+	
+	if(! is_in_viewport(dv_inter)){
+		dv_inter.scrollIntoView({
+			behavior: 'auto',
+			block: 'start',
+			inline: 'center'
+		});
+	}
 	
 }
 
-function is_last_verse_default(dv_verses){
-	var last_Verse = dv_verses.lastChild;
-	if(last_Verse != null){
-		var chls = last_Verse.childNodes;
-		var ck1 = (chls[CIT_BOOK_IDX].innerHTML == DEFAULT_BOOK);
-		var ck2 = (chls[CIT_CHAPTER_IDX].innerHTML == DEFAULT_CHAPTER);
-		var ck3 = (chls[CIT_VERSE_IDX].innerHTML == DEFAULT_VERSE);
-		if(ck1 || ck2 || ck3){ return true; }
+function is_last_added_citation_ok(id_dv_last_cit){
+	const dv_last_cit = document.getElementById(id_dv_last_cit);
+	if(dv_last_cit == null){
+		return true;
+	}
+	if(dv_last_cit != null){
+		var chls = dv_last_cit.childNodes;
+		var ck1 = (chls[CIT_BOOK_IDX].innerHTML != DEFAULT_BOOK);
+		var ck2 = (chls[CIT_CHAPTER_IDX].innerHTML != DEFAULT_CHAPTER);
+		var ck3 = (chls[CIT_VERSE_IDX].innerHTML != DEFAULT_VERSE);
+		if(ck1 && ck2 && ck3){ 
+			dv_last_cit.removeAttribute('id');
+			return true;		
+		}
 	}
 	return false;
 }
 
-function add_citation(id_dv_verses){
+function add_citation(id_stm){
+	const id_dv_verses = id_stm + SUF_ID_VERSES;
 	const dv_verses = document.getElementById(id_dv_verses);
-	if(is_last_verse_default(dv_verses)){
+
+	const id_dv_last_cit = id_stm + SUF_ID_LAST_ADDED_CITATION;
+	if(! is_last_added_citation_ok(id_dv_last_cit)){
 		return;
 	}
 	
-	const dv_citation = dv_verses.appendChild(document.createElement("a"));
+	const dv_citation = dv_verses.appendChild(document.createElement("div"));
+	dv_citation.setAttribute('id', id_dv_last_cit);
 	dv_citation.classList.toggle("exam");
+	dv_citation.classList.toggle("is_citation");
 	dv_citation.classList.toggle("is_option");
 	
 	const dv_book = dv_citation.appendChild(document.createElement("div"));
@@ -292,11 +365,13 @@ function add_citation(id_dv_verses){
 		return;
 	});
 
-	dv_citation.scrollIntoView({
-		behavior: 'auto',
-		block: 'start',
-		inline: 'center'
-	});	
+	if(! is_in_viewport(dv_citation)){
+		dv_citation.scrollIntoView({
+			behavior: 'auto',
+			block: 'start',
+			inline: 'center'
+		});	
+	}
 }
 
 function get_citation_json(dv_citation){
@@ -496,11 +571,13 @@ function toggle_citation_ed(dv_citation){
 		
 		dv_ed_cit.remove();
 		
-		dv_citation.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});	
+		if(! is_in_viewport(dv_citation)){
+			dv_citation.scrollIntoView({
+				behavior: 'auto',
+				block: 'start',
+				inline: 'center'
+			});	
+		}
 		
 		return;
 	});    
@@ -543,11 +620,13 @@ function toggle_citation_ed(dv_citation){
 		return;
 	});    
 	
-	dv_ed_cit.scrollIntoView({
-		behavior: 'auto',
-		block: 'start',
-		inline: 'center'
-	});
+	if(! is_in_viewport(dv_ed_cit)){
+		dv_ed_cit.scrollIntoView({
+			behavior: 'auto',
+			block: 'start',
+			inline: 'center'
+		});
+	}
 }
 
 function get_new_dv_under(dv_pop_up, id_dv){
@@ -614,7 +693,7 @@ function add_input_interaction(dv_inter, id_input, label, curr_val){
 	if(is_mobile_browser()){
 		const dv_neg = full_inp.appendChild(document.createElement("div"));
 		dv_neg.classList.toggle("exam");
-		dv_neg.classList.toggle("is_inline_block");
+		dv_neg.classList.toggle("is_inline_input");
 		dv_neg.classList.toggle("is_button");
 		dv_neg.innerHTML = "neg";
 		dv_neg.addEventListener('click', function() {
@@ -629,7 +708,7 @@ function add_input_interaction(dv_inter, id_input, label, curr_val){
 	inp_1.setAttribute('type', "number");
 	inp_1.setAttribute('size', 5);
 	inp_1.classList.toggle("exam");
-	inp_1.classList.toggle("is_inline_block");
+	inp_1.classList.toggle("is_inline_input");
 }
 
 function is_mobile_browser() {
@@ -648,36 +727,364 @@ function is_mobile_browser() {
 	});
 }
 
+function get_id_pos_array(dv_elem){
+	if(dv_elem.tagName != "DIV"){
+		return ["INVALID_ID", MIN_DATE];
+	}
+	const id_min = dv_elem.id + SUF_ID_POS_MIN;
+	const dv_min = document.getElementById(id_min);
+	
+	var val_min = MIN_DATE;
+	if(dv_min != null){
+		val_min = parseInt(dv_min.innerHTML);
+	}
+
+	const id_pos_pair = [dv_elem.id, val_min];
+	return id_pos_pair;
+}
+
+function get_all_id_pos_array(){
+	const dv1 = document.getElementById("id_exam_statements");
+	const all_pairs = [];
+	for (const child of dv1.children) {
+		all_pairs.push(get_id_pos_array(child));
+		//console.log(child.tagName);
+		//console.log(child.id);
+	}
+	return all_pairs;
+}
+
+function sort_button_handler(){
+	const all_pairs = get_all_id_pos_array();
+	const sorted_pairs = all_pairs.sort((p1, p2) => p1[1] - p2[1]);
+	//console.log(sorted_pairs);
+	//console.log("PRESSED_SORT_BUTTON");
+	
+	const dv_all_stm = document.getElementById("id_exam_statements");
+	sorted_pairs.forEach((pair) => {
+		const id_stm = pair[0];
+		const dv_stm = document.getElementById(id_stm);
+		dv_stm.remove();
+		dv_all_stm.appendChild(dv_stm);
+	});
+	
+}
+
+
+function make_strong_ref(scode){
+	// https://www.biblegateway.com/passage/?search=exodus+1%3A4-7&version=RVR1960
+	if((scode.length < 2) || ((scode[0] != "G") && (scode[0] != "H"))){
+		return "https://www.biblehub.com";
+	}
+	var bibref = null;
+	const the_code = scode.substring(1);
+	if(scode[0] == "H"){
+		bibref = "https://www.biblehub.com/hebrew/" + the_code + ".htm";
+	}
+	if(scode[0] == "G"){
+		bibref = "https://www.biblehub.com/greek/" + the_code + ".htm";
+	}
+	return bibref;
+}
+
+function is_last_added_strong_ok(id_dv_last_strong){
+	const dv_last_strong = document.getElementById(id_dv_last_strong);
+	if(dv_last_strong == null){
+		return true;
+	}
+	if(dv_last_strong != null){
+		var ck1 = (dv_last_strong.innerHTML != DEFAULT_STRONG);
+		if(ck1){ 
+			dv_last_strong.removeAttribute('id');
+			return true;		
+		}
+	}
+	return false;
+}
+
+function add_strong(id_stm){
+	//console.log("ENTRA a add_strong");
+	const id_dv_verses = id_stm + SUF_ID_VERSES;
+	const dv_verses = document.getElementById(id_dv_verses);
+
+	const id_dv_last_strong = id_stm + SUF_ID_LAST_ADDED_STRONG;
+	if(! is_last_added_strong_ok(id_dv_last_strong)){
+		return;
+	}
+	
+	const dv_code = dv_verses.appendChild(document.createElement("div"));
+	dv_code.setAttribute('id', id_dv_last_strong);
+	dv_code.classList.toggle("exam");
+	dv_code.classList.toggle("is_citation");
+	dv_code.classList.toggle("is_option");
+	dv_code.innerHTML = DEFAULT_STRONG;
+	
+	dv_code.addEventListener('click', function() {
+		if(dv_verses.classList.contains("ed_verses")){
+			toggle_strong_ed(dv_code);
+		} else {
+			const tg = make_strong_ref(dv_code.innerHTML);
+			//console.log("going to: " + tg);
+			window.open(tg, '_blank');
+			//window.location.href = dv_href.innerHTML;
+		}
+		return;
+	});
+
+	if(! is_in_viewport(dv_code)){
+		dv_code.scrollIntoView({
+			behavior: 'auto',
+			block: 'start',
+			inline: 'center'
+		});	
+	}
+}
+
+function toggle_strong_ed(dv_code){
+	var id_dv_code_ed = "id_strong_ed";
+	var dv_ed_strong = get_new_dv_under(dv_code, id_dv_code_ed);
+	dv_ed_strong.classList.toggle("exam");
+	dv_ed_strong.classList.toggle("is_block");
+
+	var strong_lang = "H";
+	var strong_num = "0";
+	const scode = dv_code.innerHTML;
+	if((scode != DEFAULT_STRONG) && (scode.length > 1)){
+		strong_lang = scode[0];
+		strong_num = scode.substring(1);
+	}
+
+	//console.log("IN toggle_strong_ed " + strong_lang + strong_num);
+	
+	const inp_slang = dv_ed_strong.appendChild(document.createElement("div"));
+	inp_slang.classList.toggle("exam");
+	inp_slang.classList.toggle("is_ed_verse");
+	inp_slang.classList.toggle("is_button");
+	inp_slang.innerHTML = strong_lang;
+	inp_slang.addEventListener('click', function() {
+		const lang_arr = ["H", "G"];
+		toggle_select_option(inp_slang, lang_arr, null);
+		return;
+	});
+	
+	const inp_snum = dv_ed_strong.appendChild(document.createElement("input"));
+	inp_snum.setAttribute('value', strong_num);
+	inp_snum.setAttribute('type', "number");
+	inp_snum.setAttribute('size', 4);
+	inp_snum.classList.toggle("exam");
+	inp_snum.classList.toggle("is_ed_verse");
+
+	const dv_ok = dv_ed_strong.appendChild(document.createElement("div"));
+	dv_ok.classList.toggle("exam");
+	dv_ok.classList.toggle("is_button");
+	dv_ok.classList.toggle("is_ed_verse");
+	dv_ok.innerHTML = MSG_OK;
+	dv_ok.addEventListener('click', function() {
+		//const all_chd = dv_code.childNodes;
+		dv_code.innerHTML = inp_slang.innerHTML + inp_snum.value;
+		dv_ed_strong.remove();
+		
+		if(! is_in_viewport(dv_code)){
+			dv_code.scrollIntoView({
+				behavior: 'auto',
+				block: 'start',
+				inline: 'center'
+			});	
+		}
+		
+		return;
+	});    
+
+	const dv_del = dv_ed_strong.appendChild(document.createElement("div"));
+	dv_del.classList.toggle("exam");
+	dv_del.classList.toggle("is_button");
+	dv_del.classList.toggle("is_ed_verse");
+	dv_del.innerHTML = MSG_DEL;
+	dv_del.addEventListener('click', function() {
+		dv_code.remove();
+		dv_ed_strong.remove();
+		return;
+	});    
+	
+	if(! is_in_viewport(dv_ed_strong)){
+		dv_ed_strong.scrollIntoView({
+			behavior: 'auto',
+			block: 'start',
+			inline: 'center'
+		});
+	}
+}
+
+function init_exam_buttons(){
+	const id_sort_butt = "id_exam_sort_button"; // this must be the same to the id in the HTML page.
+	const dv_sort_butt = document.getElementById(id_sort_butt);
+	dv_sort_butt.addEventListener('click', sort_button_handler);
+	
+}
+
 function init_page_exam(){
 	var msg_001 = `Este es un mensaje que se toma varias lineas porque se supone que es largo y dice varias cosas en varios parrafos para ver que sucede con el display en el momento de desplegarlo en la table, en el computador y en el celular. Si se pega a los lados o no. Si se ve todo. Si se ve demasiado raro o no. Y varias posibilidades de desplegarlo o de mostrarlo. Es solo un ejemplo y no pretende ser ningun tipo de mensaje que se vaya a mostrar en la aplicacion final.
 	`;
 	
+	init_exam_buttons();
+	
 	var st1 = add_statement("id001", "<h1>HOLA PABLO</h1>", null, -4310, -1876);
 	var st2 = add_statement("id002", msg_001, null, 1234, 7654);
 	var st3 = add_statement("id003", "HOLA JOSE", null, 5430, null);
-	add_statement("id004", "HOLA JOSE 2", null, 5430, null);
-	add_statement("id005", "HOLA JOSE 3", null, 5430, null);
-	add_statement("id006", "HOLA JOSE 4", null, 5430, null);
-	add_statement("id007", "HOLA JOSE 5", null, 5430, null);
-	add_statement("id008", "HOLA JOSE 6", null, 5430, null);
-	add_statement("id009", "HOLA JOSE 7", null, 5430, null);
-	add_statement("id010", "HOLA JOSE 8", null, 5430, null);
-	add_statement("id011", "HOLA JOSE 9", null, 5430, null);
-	add_statement("id012", "HOLA JOSE 10", null, 5430, null);
-	add_statement("id013", "HOLA JOSE 11", null, 5430, null);
-	add_statement("id014", "HOLA JOSE 12", null, 5430, null);
-	add_statement("id015", "HOLA JOSE 13", null, 5430, null);
-	add_statement("id016", "HOLA JOSE 14", null, 5430, null);
-	add_statement("id017", "HOLA JOSE 15", null, 5430, null);
-	add_statement("id018", "HOLA JOSE 16", null, 5430, null);
+	add_statement("id004", "HOLA JOSE 2", null, 45, null);
+	add_statement("id005", "HOLA JOSE 3", null, 52, null);
+	add_statement("id006", "HOLA JOSE 4", null, 23, null);
+	add_statement("id007", "HOLA JOSE 5", null, 22, null);
+	add_statement("id008", "HOLA JOSE 6", null, 35, null);
+	add_statement("id009", "HOLA JOSE 7", "AD", 11, null);
+	add_statement("id010", "HOLA JOSE 8", null, 9, null);
+	add_statement("id011", "HOLA JOSE 9", null, 67, null);
+	add_statement("id012", "HOLA JOSE 10", null, 5, null);
+	add_statement("id013", "HOLA JOSE 11", null, 25, null);
+	add_statement("id014", "HOLA JOSE 12", null, 61, null);
+	add_statement("id015", "HOLA JOSE 13", null, 98, null);
+	add_statement("id016", "HOLA JOSE 14", null, 3, null);
+	add_statement("id017", "HOLA JOSE 15", null, 7, null);
+	add_statement("id018", "HOLA JOSE 16", null, 44, null);
 	/*st3.addEventListener('click', function(event) {
 		var elem1 = document.getElementById("id001");
 		elem1.remove();
 	});	*/
-	var st4 = add_statement("id004", "Cuarto mensaje", null, null, null);
+	var st4 = add_statement("id_4", "Cuarto mensaje", null, null, null);
 
 	set_exam_language("es");
 };
+
+function is_last_added_link_ok(id_dv_last_link){
+	const dv_last_link = document.getElementById(id_dv_last_link);
+	if(dv_last_link == null){
+		return true;
+	}
+	if(dv_last_link != null){
+		var chls = dv_last_link.childNodes;
+		var ck1 = (chls[LNK_NAME_IDX].innerHTML != DEFAULT_LINK_NAME);
+		if(ck1){ 
+			dv_last_link.removeAttribute('id');
+			return true;		
+		}
+	}
+	return false;
+}
+
+function add_link(id_stm){
+	//console.log("ENTRA a add_link");
+	const id_dv_verses = id_stm + SUF_ID_VERSES;
+	const dv_verses = document.getElementById(id_dv_verses);
+
+	const id_dv_last_link = id_stm + SUF_ID_LAST_ADDED_LINK;
+	if(! is_last_added_link_ok(id_dv_last_link)){
+		return;
+	}
+	
+	const dv_link = dv_verses.appendChild(document.createElement("div"));
+	dv_link.setAttribute('id', id_dv_last_link);
+	dv_link.classList.toggle("exam");
+	dv_link.classList.toggle("is_citation");
+	dv_link.classList.toggle("is_option");
+	
+	const dv_name = dv_link.appendChild(document.createElement("div"));
+	dv_name.classList.toggle("exam");
+	dv_name.classList.toggle("is_citation");
+	dv_name.innerHTML = DEFAULT_LINK_NAME;
+	
+	const dv_href = dv_link.appendChild(document.createElement("a"));
+	dv_href.classList.toggle("is_hidden");
+	dv_href.setAttribute('href', DEFAULT_LINK_HREF);
+
+	dv_link.addEventListener('click', function() {
+		if(dv_verses.classList.contains("ed_verses")){
+			toggle_link_ed(dv_link);
+		} else {
+			const tg = dv_href.href;
+			//console.log("going to: " + tg);
+			window.open(tg, '_blank');
+			//window.location.href = dv_href.innerHTML;
+		}
+		return;
+	});
+
+	if(! is_in_viewport(dv_link)){
+		dv_link.scrollIntoView({
+			behavior: 'auto',
+			block: 'start',
+			inline: 'center'
+		});	
+	}
+}
+
+function toggle_link_ed(dv_link){
+	var id_dv_link_ed = "id_link_ed";
+	var dv_ed_link = get_new_dv_under(dv_link, id_dv_link_ed);
+	dv_ed_link.classList.toggle("exam");
+	dv_ed_link.classList.toggle("is_block");
+
+	const chls = dv_link.childNodes;
+	var link_name = chls[LNK_NAME_IDX].innerHTML;
+	var link_href = chls[LNK_HREF_IDX].href;
+
+	//console.log("IN toggle_link_ed " + link_lang + link_num);
+	
+	const inp_name = dv_ed_link.appendChild(document.createElement("input"));
+	inp_name.setAttribute('value', link_name);
+	inp_name.setAttribute('type', "text");
+	inp_name.setAttribute('size', 10);
+	inp_name.classList.toggle("exam");
+	inp_name.classList.toggle("is_ed_verse");
+	
+	const inp_href = dv_ed_link.appendChild(document.createElement("input"));
+	inp_href.setAttribute('value', link_href);
+	inp_href.setAttribute('type', "text");
+	inp_href.setAttribute('size', 20);
+	inp_href.classList.toggle("exam");
+	inp_href.classList.toggle("is_ed_verse");
+
+	const dv_ok = dv_ed_link.appendChild(document.createElement("div"));
+	dv_ok.classList.toggle("exam");
+	dv_ok.classList.toggle("is_button");
+	dv_ok.classList.toggle("is_ed_verse");
+	dv_ok.innerHTML = MSG_OK;
+	dv_ok.addEventListener('click', function() {
+		const all_chd = dv_link.childNodes;
+		all_chd[LNK_NAME_IDX].innerHTML = inp_name.value;
+		all_chd[LNK_HREF_IDX].href = inp_href.value;
+		dv_ed_link.remove();
+		
+		if(! is_in_viewport(dv_link)){
+			dv_link.scrollIntoView({
+				behavior: 'auto',
+				block: 'start',
+				inline: 'center'
+			});	
+		}
+		
+		return;
+	});    
+
+	const dv_del = dv_ed_link.appendChild(document.createElement("div"));
+	dv_del.classList.toggle("exam");
+	dv_del.classList.toggle("is_button");
+	dv_del.classList.toggle("is_ed_verse");
+	dv_del.innerHTML = MSG_DEL;
+	dv_del.addEventListener('click', function() {
+		dv_link.remove();
+		dv_ed_link.remove();
+		return;
+	});    
+	
+	if(! is_in_viewport(dv_ed_link)){
+		dv_ed_link.scrollIntoView({
+			behavior: 'auto',
+			block: 'start',
+			inline: 'center'
+		});
+	}
+}
+
 
 init_page_exam();
 
