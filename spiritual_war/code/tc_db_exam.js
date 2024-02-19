@@ -1,71 +1,82 @@
+
 "use strict";
 
-const tit_kind = "title";
-const stm_kind = "statement";
-const rsp_kind = "response";
+// enum.js
 
-const msg_creator_for_all_biological_machines = "For all biological machines known as plants, animals and people:";
+/*
+export function Enum(baseEnum) {  
+	return new Proxy(baseEnum, {
+		get(target, name) {
+			if (!baseEnum.hasOwnProperty(name)) {
+				throw new Error(`"${name}" value does not exist in the enum`)
+			}
+			return baseEnum[name]
+		},
+		set(target, name, value) {
+			throw new Error('Cannot add a new value to the enum')
+		}
+	})
+}
+
+const Choice = Enum({
+  single: 0,
+  multiple: 1,
+})
+*/
+
+const simgle_choice = 0;
+const multiple_choice = 1;
+
+const msg_for_all_biological_machines = "For all biological machines observed in plants, animals and people:";
 const msg_there_is_a_creator = "There is a CREATOR";
 const msg_there_is_no_creator = "There is NO Creator";
 const msg_i_do_not_know_if_there_is_creator = "I do not KNOW if there is a creator";
 const msg_i_do_not_care_if_there_is_creator = "I do not CARE if there is a creator";
 const msg_it_is_impossible_to_know_if_there_is_creator = "It is impossible to know if there is a creator";
 
-const msg_the_creator_has_technical_creativity = "The creator is intelligent, designer and has technical creativity";
-const msg_the_creator_has_no_technical_creativity = "The creator is NOT intelligent, or NOT a designer, or has NO technical creativity";
+const msg_the_creator_for_all_biological_machines = "The creator for all biological machines observed in plants, animals and people:";
+const msg_the_creator_has_technical_creativity = "is intelligent, designer and has technical creativity";
+const msg_the_creator_has_no_technical_creativity = "is NOT intelligent, or NOT a designer, or has NO technical creativity";
 
 const get_name = (nombre, apellido) => {
 	return `Mi nombre completo es ${nombre} ${apellido}`;
 };
 
 
-const db_messages_exam = {
+const db_nodes_exam = {
+	STARTING_EXAM_MESSAGE: msg_for_all_biological_machines,
 	func_1:get_name,
-	[msg_creator_for_all_biological_machines]: { 
-		kind : tit_kind,
-		year: -7000,
-		parents: [],
-		chldren: [msg_there_is_a_creator, msg_there_is_no_creator, msg_i_do_not_know_if_there_is_creator, msg_i_do_not_care_if_there_is_creator, 
-		msg_it_is_impossible_to_know_if_there_is_creator, ],
+	qid_1: { 
+		cho : simgle_choice,
+		htm_stm: msg_for_all_biological_machines,
+		v_min: -7000,
+		options: [
+			{ htm_op: msg_there_is_a_creator},
+			{ htm_op: msg_there_is_no_creator},
+			{ htm_op: msg_i_do_not_know_if_there_is_creator},
+			{ htm_op: msg_i_do_not_care_if_there_is_creator},
+			{ htm_op: msg_it_is_impossible_to_know_if_there_is_creator},
+		],
+		get_nxt: function () {
+			//console.log(` options[0]=${this.options[0].htm_op} \n options[1]=${this.options[1].htm_op} \n v_min=${this.v_min}`);
+			if(this.options[0].is_on){ 
+				return qid_2;
+			}
+			return qid_3;
+		},
 	},
-	[msg_there_is_a_creator]: { 
-		kind : stm_kind,
-		year: -7000,
-		parents: [msg_creator_for_all_biological_machines],
-		chldren: [msg_the_creator_has_technical_creativity, msg_the_creator_has_no_technical_creativity],
-		deactivates: [msg_there_is_no_creator, msg_i_do_not_know_if_there_is_creator, msg_i_do_not_care_if_there_is_creator, 
-		msg_it_is_impossible_to_know_if_there_is_creator, ],
-	},
-	[msg_there_is_no_creator]: { 
-		kind : stm_kind,
-		year: -7000,
-		parents: [msg_creator_for_all_biological_machines],
-		chldren: [],
-		deactivates: [msg_there_is_a_creator, msg_i_do_not_know_if_there_is_creator, msg_i_do_not_care_if_there_is_creator, 
-		msg_it_is_impossible_to_know_if_there_is_creator, ],
-	},
-	[msg_i_do_not_know_if_there_is_creator]: { 
-		kind : stm_kind,
-		year: -7000,
-		parents: [msg_creator_for_all_biological_machines],
-		chldren: [],
-		deactivates: [msg_there_is_a_creator, msg_there_is_no_creator, ],
-	},
-	[msg_i_do_not_care_if_there_is_creator]: { 
-		kind : stm_kind,
-		year: -7000,
-		parents: [msg_creator_for_all_biological_machines],
-		chldren: [],
-		deactivates: [msg_there_is_a_creator, msg_there_is_no_creator, ],
-	},
-	[msg_it_is_impossible_to_know_if_there_is_creator]: { 
-		kind : stm_kind,
-		year: -7000,
-		parents: [msg_creator_for_all_biological_machines],
-		chldren: [],
-		deactivates: [msg_there_is_a_creator, msg_there_is_no_creator, ],
+	qid_2: { 
+		cho : simgle_choice,
+		htm_stm: msg_the_creator_for_all_biological_machines,
+		v_min: -7000,
+		options: [
+			{ htm_op: msg_the_creator_has_technical_creativity},
+			{ htm_op: msg_the_creator_has_no_technical_creativity},
+		],
 	},
 };
+
+const msg2id = {};
 
 const num2book_es = {
 	"1":"génesis",
@@ -286,12 +297,20 @@ function fill_reversed_object(orig, reverse){
 	}  
 }
 
+function fill_reversed_message(orig, reverse){
+	for (const [key, value] of Object.entries(orig)) {
+		reverse[value.htm_stm] = key;
+		//console.log(`${key} = ${value}`);
+	}  
+}
+
 function fill_bible_objects(){
 	
 	fill_reversed_object(num2book_es, book2num_es);
 	fill_reversed_object(num2book_en, book2num_en);
 	fill_reversed_object(num2abbr, abbr2num);
 	
+	fill_reversed_message(db_nodes_exam, msg2id);
 	/*
 	 *  console.log(book2num_es);
 	 *  console.log(book2num_en);
@@ -381,6 +400,10 @@ const books_abbr = {
 	"revelation":"Rev",
 };
 
+function get_msg_id(msg){
+	return msg2id[msg];
+}
+
 function test1(){
 	console.log("json_example");
 	console.log(json_example);
@@ -400,7 +423,7 @@ function test1(){
 	 *      console.log(`${key} = ${value}`);
 }*/
 	//console.log(JSON.stringify(json_example, null, "  "));
-	//console.log(JSON.stringify(db_messages_exam, null, "  "));
+	//console.log(JSON.stringify(db_nodes_exam, null, "  "));
 }
 
 //test1();
@@ -437,4 +460,5 @@ fill_bible_objects();
  * };
  */
 
+//db_nodes_exam.qid_1.get_nxt();
 

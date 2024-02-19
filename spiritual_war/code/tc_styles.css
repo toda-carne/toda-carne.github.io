@@ -640,6 +640,10 @@ color: white;
 	background-color: #13234c;
 }
 
+.exam.contradiction {
+	background-color: #ff0000;
+}
+
 .exam.is_option {
 	display: inline-block;
 	margin: 0.5vw;

@@ -90,10 +90,15 @@ function is_in_viewport(elem) {
 	);*/
 }
 
-function add_statement(id_stm, htm_stm, bibref, v_min, v_max){
+function add_question(qid, quest){
+	const htm_stm = quest.htm_stm;
+	const bibref = quest.bibref;
+	const v_min = quest.v_min;
+	const v_max = quest.v_max;
+	
 	var dv1 = document.getElementById("id_exam_statements");
 	const dv_full_stm = dv1.appendChild(document.createElement("div"));
-	dv_full_stm.setAttribute('id', id_stm);
+	dv_full_stm.setAttribute('id', qid);
 	dv_full_stm.classList.toggle("exam");
 	dv_full_stm.classList.toggle("border");
 	
@@ -107,13 +112,13 @@ function add_statement(id_stm, htm_stm, bibref, v_min, v_max){
 		dv_pos.classList.toggle("pos");
 		dv_pos.classList.toggle("is_button");
 		dv_pos.addEventListener('click', function() {
-			toggle_pos_interaction(id_stm);
+			toggle_pos_interaction(qid);
 		});
 	//}
 
 	if(bibref != null){
 		const dv_bibref = dv_pos.appendChild(document.createElement("div"));
-		dv_bibref.id = id_stm + SUF_ID_BIBREF;
+		dv_bibref.id = qid + SUF_ID_BIBREF;
 		dv_bibref.classList.toggle("exam");
 		dv_bibref.classList.toggle("is_block");
 		dv_bibref.innerHTML = bibref;
@@ -121,14 +126,14 @@ function add_statement(id_stm, htm_stm, bibref, v_min, v_max){
 	
 	if(v_min != null){
 		const dv_min = dv_pos.appendChild(document.createElement("div"));
-		dv_min.id = id_stm + SUF_ID_POS_MIN;
+		dv_min.id = qid + SUF_ID_POS_MIN;
 		dv_min.classList.toggle("exam");
 		dv_min.classList.toggle("is_block");
 		dv_min.innerHTML = v_min;
 
 		if(v_max != null){
 			const dv_max = dv_pos.appendChild(document.createElement("div"));
-			dv_max.id = id_stm + SUF_ID_POS_MAX;
+			dv_max.id = qid + SUF_ID_POS_MAX;
 			dv_max.classList.toggle("exam");
 			dv_max.classList.toggle("is_block");
 			dv_max.innerHTML = v_max;
@@ -136,15 +141,18 @@ function add_statement(id_stm, htm_stm, bibref, v_min, v_max){
 	}
 	
 	const dv_msg = dv_stm.appendChild(document.createElement("div"));
-	dv_msg.setAttribute('id', id_stm + SUF_ID_MSG);
+	dv_msg.setAttribute('id', qid + SUF_ID_MSG);
 	dv_msg.classList.toggle("exam");
 	dv_msg.classList.toggle("msg");
-	dv_msg.addEventListener('click', function() {
-		dv_msg.classList.toggle("selected");
-	});
+	if(v_min != null){
+		dv_msg.addEventListener('click', function() {
+			dv_msg.classList.toggle("selected");
+			//dv_msg.classList.toggle("contradiction");
+		});
+	}
 	dv_msg.innerHTML = htm_stm;
 
-	var id_dv_verses = id_stm + SUF_ID_VERSES;
+	var id_dv_verses = qid + SUF_ID_VERSES;
 	var dv_verses = dv_full_stm.appendChild(document.createElement("div"));
 	dv_verses.setAttribute('id', id_dv_verses);	
 	dv_verses.classList.toggle("exam");
@@ -161,12 +169,12 @@ function add_statement(id_stm, htm_stm, bibref, v_min, v_max){
 	return dv_stm;
 }
 
-function toggle_pos_interaction(id_stm){
-	var id_dv_verses = id_stm + SUF_ID_VERSES;
+function toggle_pos_interaction(qid){
+	var id_dv_verses = qid + SUF_ID_VERSES;
 	const dv_verses = document.getElementById(id_dv_verses);
-	const dv_stm = document.getElementById(id_stm);
+	const dv_stm = document.getElementById(qid);
 	
-	//var id_dv_inter = id_stm + SUF_ID_INTER;
+	//var id_dv_inter = qid + SUF_ID_INTER;
 	var id_dv_inter = "id_interac_ed";
 	var dv_inter = document.getElementById(id_dv_inter);
 	if(dv_inter != null){
@@ -191,16 +199,16 @@ function toggle_pos_interaction(id_stm){
 	dv_inter.classList.toggle("exam");
 	dv_inter.classList.toggle("pos_inter");
 	
-	const nd_min = document.getElementById(id_stm + SUF_ID_POS_MIN);
-	const nd_max = document.getElementById(id_stm + SUF_ID_POS_MAX);
+	const nd_min = document.getElementById(qid + SUF_ID_POS_MIN);
+	const nd_max = document.getElementById(qid + SUF_ID_POS_MAX);
 	if(nd_min != null){
 		var v_min = nd_min.innerHTML;
-		var id_set_min = id_stm + SUF_ID_POS_SET_MIN;
+		var id_set_min = qid + SUF_ID_POS_SET_MIN;
 		add_input_interaction(dv_inter, id_set_min, "Year begins", v_min);
 		
 		if(nd_max != null){
 			var v_max = nd_max.innerHTML;
-			var id_set_max = id_stm + SUF_ID_POS_SET_MAX;
+			var id_set_max = qid + SUF_ID_POS_SET_MAX;
 			add_input_interaction(dv_inter, id_set_max, "Year ends", v_max);
 		}
 	}
@@ -213,9 +221,9 @@ function toggle_pos_interaction(id_stm){
 	dv_ok.innerHTML = MSG_OK;
 	dv_ok.addEventListener('click', function() {
 		if(nd_min != null){
-			nd_min.innerHTML = document.getElementById(id_stm + SUF_ID_POS_SET_MIN).value;
+			nd_min.innerHTML = document.getElementById(qid + SUF_ID_POS_SET_MIN).value;
 			if(nd_max != null){
-				nd_max.innerHTML = document.getElementById(id_stm + SUF_ID_POS_SET_MAX).value;
+				nd_max.innerHTML = document.getElementById(qid + SUF_ID_POS_SET_MAX).value;
 			}
 		}
 		dv_verses.classList.toggle("ed_verses");
@@ -238,7 +246,7 @@ function toggle_pos_interaction(id_stm){
 	dv_add_cit.classList.toggle("is_button");
 	dv_add_cit.innerHTML = MSG_ADD_VERSE;
 	dv_add_cit.addEventListener('click', function() {
-		add_citation(id_stm);
+		add_citation(qid);
 		return;
 	});
 	
@@ -248,7 +256,7 @@ function toggle_pos_interaction(id_stm){
 	dv_add_strong.classList.toggle("is_button");
 	dv_add_strong.innerHTML = MSG_ADD_STRONG;
 	dv_add_strong.addEventListener('click', function() {
-		add_strong(id_stm);
+		add_strong(qid);
 		return;
 	});
 	
@@ -258,7 +266,7 @@ function toggle_pos_interaction(id_stm){
 	dv_add_link.classList.toggle("is_button");
 	dv_add_link.innerHTML = MSG_ADD_LINK;
 	dv_add_link.addEventListener('click', function() {
-		add_link(id_stm);
+		add_link(qid);
 		return;
 	});
 	
@@ -290,11 +298,11 @@ function is_last_added_citation_ok(id_dv_last_cit){
 	return false;
 }
 
-function add_citation(id_stm){
-	const id_dv_verses = id_stm + SUF_ID_VERSES;
+function add_citation(qid){
+	const id_dv_verses = qid + SUF_ID_VERSES;
 	const dv_verses = document.getElementById(id_dv_verses);
 
-	const id_dv_last_cit = id_stm + SUF_ID_LAST_ADDED_CITATION;
+	const id_dv_last_cit = qid + SUF_ID_LAST_ADDED_CITATION;
 	if(! is_last_added_citation_ok(id_dv_last_cit)){
 		return;
 	}
@@ -762,8 +770,8 @@ function sort_button_handler(){
 	
 	const dv_all_stm = document.getElementById("id_exam_statements");
 	sorted_pairs.forEach((pair) => {
-		const id_stm = pair[0];
-		const dv_stm = document.getElementById(id_stm);
+		const qid = pair[0];
+		const dv_stm = document.getElementById(qid);
 		dv_stm.remove();
 		dv_all_stm.appendChild(dv_stm);
 	});
@@ -802,12 +810,12 @@ function is_last_added_strong_ok(id_dv_last_strong){
 	return false;
 }
 
-function add_strong(id_stm){
+function add_strong(qid){
 	//console.log("ENTRA a add_strong");
-	const id_dv_verses = id_stm + SUF_ID_VERSES;
+	const id_dv_verses = qid + SUF_ID_VERSES;
 	const dv_verses = document.getElementById(id_dv_verses);
 
-	const id_dv_last_strong = id_stm + SUF_ID_LAST_ADDED_STRONG;
+	const id_dv_last_strong = qid + SUF_ID_LAST_ADDED_STRONG;
 	if(! is_last_added_strong_ok(id_dv_last_strong)){
 		return;
 	}
@@ -922,39 +930,6 @@ function init_exam_buttons(){
 	
 }
 
-function init_page_exam(){
-	var msg_001 = `Este es un mensaje que se toma varias lineas porque se supone que es largo y dice varias cosas en varios parrafos para ver que sucede con el display en el momento de desplegarlo en la table, en el computador y en el celular. Si se pega a los lados o no. Si se ve todo. Si se ve demasiado raro o no. Y varias posibilidades de desplegarlo o de mostrarlo. Es solo un ejemplo y no pretende ser ningun tipo de mensaje que se vaya a mostrar en la aplicacion final.
-	`;
-	
-	init_exam_buttons();
-	
-	var st1 = add_statement("id001", "<h1>HOLA PABLO</h1>", null, -4310, -1876);
-	var st2 = add_statement("id002", msg_001, null, 1234, 7654);
-	var st3 = add_statement("id003", "HOLA JOSE", null, 5430, null);
-	add_statement("id004", "HOLA JOSE 2", null, 45, null);
-	add_statement("id005", "HOLA JOSE 3", null, 52, null);
-	add_statement("id006", "HOLA JOSE 4", null, 23, null);
-	add_statement("id007", "HOLA JOSE 5", null, 22, null);
-	add_statement("id008", "HOLA JOSE 6", null, 35, null);
-	add_statement("id009", "HOLA JOSE 7", "AD", 11, null);
-	add_statement("id010", "HOLA JOSE 8", null, 9, null);
-	add_statement("id011", "HOLA JOSE 9", null, 67, null);
-	add_statement("id012", "HOLA JOSE 10", null, 5, null);
-	add_statement("id013", "HOLA JOSE 11", null, 25, null);
-	add_statement("id014", "HOLA JOSE 12", null, 61, null);
-	add_statement("id015", "HOLA JOSE 13", null, 98, null);
-	add_statement("id016", "HOLA JOSE 14", null, 3, null);
-	add_statement("id017", "HOLA JOSE 15", null, 7, null);
-	add_statement("id018", "HOLA JOSE 16", null, 44, null);
-	/*st3.addEventListener('click', function(event) {
-		var elem1 = document.getElementById("id001");
-		elem1.remove();
-	});	*/
-	var st4 = add_statement("id_4", "Cuarto mensaje", null, null, null);
-
-	set_exam_language("es");
-};
-
 function is_last_added_link_ok(id_dv_last_link){
 	const dv_last_link = document.getElementById(id_dv_last_link);
 	if(dv_last_link == null){
@@ -971,12 +946,12 @@ function is_last_added_link_ok(id_dv_last_link){
 	return false;
 }
 
-function add_link(id_stm){
+function add_link(qid){
 	//console.log("ENTRA a add_link");
-	const id_dv_verses = id_stm + SUF_ID_VERSES;
+	const id_dv_verses = qid + SUF_ID_VERSES;
 	const dv_verses = document.getElementById(id_dv_verses);
 
-	const id_dv_last_link = id_stm + SUF_ID_LAST_ADDED_LINK;
+	const id_dv_last_link = qid + SUF_ID_LAST_ADDED_LINK;
 	if(! is_last_added_link_ok(id_dv_last_link)){
 		return;
 	}
@@ -1084,6 +1059,59 @@ function toggle_link_ed(dv_link){
 		});
 	}
 }
+
+function dbg_init_pru_stms(){
+	var msg_001 = `Este es un mensaje que se toma varias lineas porque se supone que es largo y dice varias cosas en varios parrafos para ver que sucede con el display en el momento de desplegarlo en la table, en el computador y en el celular. Si se pega a los lados o no. Si se ve todo. Si se ve demasiado raro o no. Y varias posibilidades de desplegarlo o de mostrarlo. Es solo un ejemplo y no pretende ser ningun tipo de mensaje que se vaya a mostrar en la aplicacion final.
+	`;
+	
+	var st1 = add_question("id001", { htm_stm:"<h1>HOLA PABLO</h1>", v_min:-4310, v_max:-1876 });
+	var st2 = add_question("id002", { htm_stm:msg_001, v_min:1234, v_max:7654 });
+	var st3 = add_question("id003", { htm_stm:"HOLA JOSE", v_min:5430 });
+	add_question("id004", { htm_stm:"HOLA JOSE 2", v_min:45 });
+	add_question("id005", { htm_stm:"HOLA JOSE 3", v_min:52 });
+	add_question("id006", { htm_stm:"HOLA JOSE 4", v_min:23 });
+	add_question("id007", { htm_stm:"HOLA JOSE 5", v_min:22 });
+	add_question("id008", { htm_stm:"HOLA JOSE 6", v_min:35 });
+	add_question("id009", { htm_stm:"HOLA JOSE 7", bibref:"AD", v_min:11 });
+	add_question("id010", { htm_stm:"HOLA JOSE 8", v_min:9 });
+	add_question("id011", { htm_stm:"HOLA JOSE 9", v_min:67 });
+	add_question("id012", { htm_stm:"HOLA JOSE 10", v_min:5 });
+	add_question("id013", { htm_stm:"HOLA JOSE 11", v_min:25 });
+	add_question("id014", { htm_stm:"HOLA JOSE 12", v_min:61 });
+	add_question("id015", { htm_stm:"HOLA JOSE 13", v_min:98 });
+	add_question("id016", { htm_stm:"HOLA JOSE 14", v_min:3 });
+	add_question("id017", { htm_stm:"HOLA JOSE 15", v_min:7 });
+	add_question("id018", { htm_stm:"HOLA JOSE 16", v_min:44 });
+	
+	
+	/*st3.addEventListener('click', function(event) {
+		var elem1 = document.getElementById("id001");
+		elem1.remove();
+	});	*/
+	//var st4 = add_question("id_4", "Cuarto mensaje", null, null, null);
+
+	console.log("FIRST_MESSAGE_TEST");
+	const fst_msg = db_nodes_exam["STARTING_EXAM_MESSAGE"];
+	console.log(JSON.stringify(db_nodes_exam[get_msg_id(fst_msg)], null, "  "));
+	console.log(msg2id[msg_there_is_no_creator]);
+	console.log(msg2id[msg_i_do_not_know_if_there_is_creator]);
+
+};
+
+function add_exam_question(qid){
+	const nd = db_nodes_exam[qid];
+	add_question(qid, nd);
+};
+
+function init_page_exam(){
+	init_exam_buttons();
+	set_exam_language("es");
+	dbg_init_pru_stms();
+	
+	const fst_msg = db_nodes_exam["STARTING_EXAM_MESSAGE"];
+	const fst_id = msg2id[fst_msg];
+	add_exam_question(fst_id);	
+};
 
 
 init_page_exam();
