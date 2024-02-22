@@ -7,6 +7,7 @@
 <title>toda-carne.github.io</title>
 <meta name="author" content="Jose Luis Quiroga">
 <link rel="stylesheet" href="../code/tc_styles.css">
+<script type="module" src="../code/tc_script.js"></script>
 </head>
 <body>
 
@@ -34,26 +35,21 @@
   </a>
 </div>
 
-
-<div id="id_content">
-  <div class="cl_main_content col-12 col-m12">
-
-    <div class="home_text">
-    <h1>Existe un Creador?</h1>
-    <div class="answer-left answer-non-selected">
-    <h1>SI</h1>
-    </div>
-    <div class="answer-right answer-non-selected">
-    <h1>NO</h1>
-    </div>
-    
-    <p><strong>Compruebe usted mismo que la biblia ni es para locos ni enseña lo que le dijeron.</strong></p>
-          
-    </div>
-  </div>
+<div class="exam_top_menu">
+	<div id="id_exam_sort_button" class="exam_menu">SORT</div>
+	<div id="id_exam_mode_button" class="exam_menu">LEARN</div>
 </div>
 
+<div id="id_exam_content" class="exam_content">
+    <h1 class="big_title">Interactive Theology Test</h1>
+    <div id="id_exam_statements">
+    </div>  
+</div>  
 
+<script src="../code/tc_lang_all.js"></script>  // ALWAYS FIRST !!!
+<script src="../code/tc_lang_en.js"></script>
+<script src="../code/tc_db_exam.js"></script>
+<script src="../code/tc_exam.js"></script>
 <script src="../code/tc_script.js"></script>
 
 </body>
