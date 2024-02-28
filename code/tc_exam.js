@@ -1,3 +1,5 @@
+
+
 "use strict";
 
 const MSG_OK = glb_curr_lang["msg_ok"];
@@ -1244,6 +1246,39 @@ function dbg_init_pru_stms(){
 
 };
 
+function dbg_init_firebase_test(){
+	const htm_test = `
+<h1>JLQ AUTH TRY 1</h1>
+<div id="firebaseui-auth-container"></div>
+<div id="login_data">
+</div>
+
+<h2><a onclick=init_firebase_todacarne()> INIT_FIREBASE </a></h2>
+
+
+<h2><a onclick=read_jlq()> READ_TEST </a></h2>
+
+<div id="db_read_data">
+</div>
+
+<h2><a onclick=write_jlq('nombre','Jose_Luis_Quiroga')> WRITE Jose Luis Quiroga </a></h2>
+<h2><a onclick=write_jlq('nombre','Joluqui')> WRITE Joluqui </a></h2>
+
+<h2><a onclick=read2_jlq()> READ_TEST_2 </a></h2>
+
+<div id="db_read_data_2">
+
+<h2><a onclick=get_out()> SIGN_OUT </a></h2>
+
+</div>
+`;
+
+	const dv_content = document.getElementById("id_exam_content");
+	const dv_fb_test = dv_content.appendChild(document.createElement("div"));
+	dv_fb_test.innerHTML = htm_test;
+
+}
+
 function add_exam_question(qid){
 	const nd = db_nodes_exam[qid];
 	if(nd != null){
@@ -1258,6 +1293,7 @@ function init_page_exam(){
 	init_exam_buttons();
 	//set_exam_language("es");
 	//dbg_init_pru_stms();
+	dbg_init_firebase_test();
 	
 	return add_exam_question(FIRST_EXAM_QUESTION_ID);
 };
