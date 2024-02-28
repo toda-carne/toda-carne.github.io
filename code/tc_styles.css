@@ -583,7 +583,8 @@ color: white;
 	font-size:1.1em;
 }
 
-.exam.border {
+.exam.has_border {
+	margin-top: 2vw;
 	border: 0.1vw solid white;
 }
 

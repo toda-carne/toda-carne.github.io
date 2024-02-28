@@ -1,15 +1,35 @@
 
 "use strict";
 
+// ENGLISH IS THE DEFAULT LANGUAGE.
+// SO THIS FILE MUST BE INCLUDED FOR ANY OTHER LANGUAGE
+
 const abbr2num = {};
 const book2num_en = {};
- 
+const all_en_msg = {};
+
 function fill_reversed_object(orig, reverse){
 	for (const [key, value] of Object.entries(orig)) {
 		reverse[value] = key;
 		//console.log(`${key} = ${value}`);
 	}  
 }
+
+function get_traduced_message(trad_msg, nom_msg){
+	const tr_mg = trad_msg[nom_msg];
+	if(tr_mg == null){
+		const en_mg = all_en_msg[nom_msg];
+		if(en_mg == null){
+			return nom_msg;
+		}
+		return en_mg;
+	}
+	return tr_mg;
+}
+
+let get_msg = function (nom_msg){
+	return get_traduced_message(all_en_msg, nom_msg);
+};
 
 const num2abbr = {
 	"1":"Gen",
@@ -157,4 +177,53 @@ const num2book_en = {
 
 fill_reversed_object(num2book_en, book2num_en);
 fill_reversed_object(num2abbr, abbr2num);
+
+function nom1(){
+	const lg = glb_curr_lang;
+	//return lg.msg_there_is_a_creator;
+	return lg.msg_i_do_not_know_if_there_is_creator;
+}
+
+let glb_exam_language = "en";
+let glb_all_books = num2book_en;
+let glb_all_bibles = bibles_en;
+let glb_books_nums = book2num_en;
+let glb_curr_lang = all_en_msg;
+
+function init_en_basic_msg(){
+	const obj = all_en_msg;
+	obj.msg_ok = "OK";
+	obj.msg_del = "DEL";
+	obj.msg_range = "RANGE";
+	obj.msg_any = "ANY";
+	obj.msg_end_ans = "END ANSWER";
+	obj.msg_edit_ans = "CHANGE ANSWER";
+	
+	obj.msg_add_verse = "ADD VERSE";
+	obj.msg_add_strong = "ADD STRONG CODE";
+	obj.msg_add_link = "ADD WEB LINK";
+	
+	obj.msg_def_book = "BOOK";
+	obj.msg_def_strong = "STRONG_CODE";
+	obj.msg_def_link_name = "WEB LINK";
+}
+
+init_en_basic_msg();
+init_en_exam_msg();
+
+function init_en_exam_msg(){
+	const lg = all_en_msg;
+	lg.msg_for_all_biological_machines = "For all biological machines observed in plants, animals and people:";
+	lg.msg_there_is_a_creator = "There is a CREATOR";
+	lg.msg_there_is_no_creator = "There is NO Creator";
+	lg.msg_i_do_not_know_if_there_is_creator = "I do not KNOW if there is a creator";
+	lg.msg_i_do_not_care_if_there_is_creator = "I do not CARE if there is a creator";
+	lg.msg_it_is_impossible_to_know_if_there_is_creator = "It is impossible to know if there is a creator";
+
+	lg.msg_the_creator_for_all_biological_machines = "The creator for all biological machines observed in plants, animals and people:";
+	lg.msg_the_creator_has_technical_creativity = "is intelligent, designer and has technical creativity";
+	lg.msg_the_creator_has_no_technical_creativity = "is NOT intelligent, or NOT a designer, or has NO technical creativity";
+
+}
+
 

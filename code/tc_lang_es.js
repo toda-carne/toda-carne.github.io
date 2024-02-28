@@ -2,21 +2,15 @@
 "use strict";
 
 const book2num_es = {};
+const all_es_msg = {};
 
-const msg_ok = "ACEPTAR";
-const msg_del = "BORRAR";
-const msg_range = "RANGO";
-const msg_any = "CUALQUIERA";
-const msg_end_ans = "TERMINAR RESPUESTA";
-const msg_edit_ans = "CAMBIAR RESPUESTA";
+function init_get_msg(){
+	get_msg = function (nom_msg){
+		return get_traduced_message(all_es_msg, nom_msg);
+	};
+}
 
-const msg_add_verse = "AGREGAR VERSICULO";
-const msg_add_strong = "AGREGAR CODIGO STRONG";
-const msg_add_link = "AGREGAR ENLACE WEB";
-
-const msg_def_book = "LIBRO";
-const msg_def_strong = "CODIGO STRONG";
-const msg_def_link_name = "ENLACE WEB";
+init_get_msg();
 
 const bibles_es = {
 	biblegateway: [ "RVA", "RVR1960", "DHH", "NTV", "WLC", "HHH", "WHNU", "TR1550", ],
@@ -96,20 +90,51 @@ const num2book_es = {
 
 fill_reversed_object(num2book_es, book2num_es);
 
-const glb_exam_language = "es";
-const glb_all_books = num2book_es;
-const glb_all_bibles = bibles_es;
-const glb_books_nums = book2num_es;
+function set_glb_lang(){
+	glb_exam_language = "es";
+	glb_all_books = num2book_es;
+	glb_all_bibles = bibles_es;
+	glb_books_nums = book2num_es;
+	glb_curr_lang = all_es_msg;
+}
 
-const msg_for_all_biological_machines = "Para todas las maquina biológicas observadas en plantas, animales y personas:";
-const msg_there_is_a_creator = "Hay un CREADOR";
-const msg_there_is_no_creator = "NO hay un creador";
-const msg_i_do_not_know_if_there_is_creator = "NO SE si hay un creador";
-const msg_i_do_not_care_if_there_is_creator = "No me IMPORTA si hay un creador";
-const msg_it_is_impossible_to_know_if_there_is_creator = "Es imposible saber si hay un creador";
+set_glb_lang();
 
-const msg_the_creator_for_all_biological_machines = "El creador para todas las maquinas biologicas observadas en plantas, animales y personas:";
-const msg_the_creator_has_technical_creativity = "Es inteligente, diseñador y tiene creatividad técnica.";
-const msg_the_creator_has_no_technical_creativity = "NO es inteligente, o NO es diseñador, o NO tiene creatividad técnica.";
+function init_es_basic_msg(){
+	const obj = all_es_msg;
+	obj.msg_ok = "ACEPTAR";
+	obj.msg_del = "BORRAR";
+	obj.msg_range = "RANGO";
+	obj.msg_any = "CUALQUIERA";
+	obj.msg_end_ans = "TERMINAR RESPUESTA";
+	obj.msg_edit_ans = "CAMBIAR RESPUESTA";
+	
+	obj.msg_add_verse = "AGREGAR VERSICULO";
+	obj.msg_add_strong = "AGREGAR CODIGO STRONG";
+	obj.msg_add_link = "AGREGAR ENLACE WEB";
+	
+	obj.msg_def_book = "LIBRO";
+	obj.msg_def_strong = "CODIGO STRONG";
+	obj.msg_def_link_name = "ENLACE WEB";
+}
+
+init_es_basic_msg();
+
+
+function init_es_exam_msg(){
+	const lg = all_es_msg;
+	lg.msg_for_all_biological_machines = "Para todas las maquina biológicas observadas en plantas, animales y personas:";
+	lg.msg_there_is_a_creator = "Hay un CREADOR";
+	lg.msg_there_is_no_creator = "NO hay un creador";
+	lg.msg_i_do_not_know_if_there_is_creator = "NO SE si hay un creador";
+	lg.msg_i_do_not_care_if_there_is_creator = "No me IMPORTA si hay un creador";
+	lg.msg_it_is_impossible_to_know_if_there_is_creator = "Es imposible saber si hay un creador";
+
+	lg.msg_the_creator_for_all_biological_machines = "El creador para todas las maquinas biologicas observadas en plantas, animales y personas:";
+	lg.msg_the_creator_has_technical_creativity = "Es inteligente, diseñador y tiene creatividad técnica.";
+	lg.msg_the_creator_has_no_technical_creativity = "NO es inteligente, o NO es diseñador, o NO tiene creatividad técnica.";
+}
+
+init_es_exam_msg();
 
  

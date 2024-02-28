@@ -1,65 +1,65 @@
 "use strict";
 
-var MSG_OK = msg_ok;
-var MSG_DEL = msg_del;
-var MSG_RANGE = msg_range;
-var MSG_ANY = msg_any;
-var MSG_END_ANS = msg_end_ans;
-var MSG_EDIT_ANS = msg_edit_ans;
+const MSG_OK = glb_curr_lang["msg_ok"];
+const MSG_DEL = glb_curr_lang["msg_del"];
+const MSG_RANGE = glb_curr_lang["msg_range"];
+const MSG_ANY = glb_curr_lang["msg_any"];
+const MSG_END_ANS = glb_curr_lang["msg_end_ans"];
+const MSG_EDIT_ANS = glb_curr_lang["msg_edit_ans"];
 
-var MSG_ADD_VERSE = msg_add_verse;
-var MSG_ADD_STRONG = msg_add_strong;
-var MSG_ADD_LINK = msg_add_link;
+const MSG_ADD_VERSE = glb_curr_lang["msg_add_verse"];
+const MSG_ADD_STRONG = glb_curr_lang["msg_add_strong"];
+const MSG_ADD_LINK = glb_curr_lang["msg_add_link"];
 
-var MSG_DEF_BOOK = msg_def_book;
-var MSG_DEF_STRONG = msg_def_strong;
-var MSG_DEF_LINK_NAME = msg_def_link_name;
+const MSG_DEF_BOOK = glb_curr_lang["msg_def_book"];
+const MSG_DEF_STRONG = glb_curr_lang["msg_def_strong"];
+const MSG_DEF_LINK_NAME = glb_curr_lang["msg_def_link_name"];
 
-var EXAM_LANGUAGE = glb_exam_language;
-var ALL_BOOKS = glb_all_books;
-var ALL_BIBLES = glb_all_bibles;
-var BOOKS_NUMS = glb_books_nums;
+const EXAM_LANGUAGE = glb_exam_language;
+const ALL_BOOKS = glb_all_books;
+const ALL_BIBLES = glb_all_bibles;
+const BOOKS_NUMS = glb_books_nums;
 
-var SUF_ID_POS = "_pos";
-var SUF_ID_MSG = "_msg";
-var SUF_ID_BIBREF = "_bibref";
-var SUF_ID_POS_MIN = "_pos_min";
-var SUF_ID_POS_MAX = "_pos_max";
-var SUF_ID_POS_SET_MIN = "_pos_set_min";
-var SUF_ID_POS_SET_MAX = "_pos_set_max";
-var SUF_ID_POS_SHOW = "_pos_show";
-var SUF_ID_POS_OK = "_pos_ok";
-var SUF_ID_INTER = "_inter";
-var SUF_ID_ANSWERS = "_answers";
-var SUF_ID_VERSES = "_verses";
-var SUF_ID_SCODES = "_scodes";
-var SUF_ID_LINKS = "_links";
+const SUF_ID_POS = "_pos";
+const SUF_ID_MSG = "_msg";
+const SUF_ID_BIBREF = "_bibref";
+const SUF_ID_POS_MIN = "_pos_min";
+const SUF_ID_POS_MAX = "_pos_max";
+const SUF_ID_POS_SET_MIN = "_pos_set_min";
+const SUF_ID_POS_SET_MAX = "_pos_set_max";
+const SUF_ID_POS_SHOW = "_pos_show";
+const SUF_ID_POS_OK = "_pos_ok";
+const SUF_ID_INTER = "_inter";
+const SUF_ID_ANSWERS = "_answers";
+const SUF_ID_VERSES = "_verses";
+const SUF_ID_SCODES = "_scodes";
+const SUF_ID_LINKS = "_links";
 
-var SUF_ID_LAST_ADDED_CITATION = "_last_added_citation";
-var SUF_ID_LAST_ADDED_STRONG = "_last_added_strong";
-var SUF_ID_LAST_ADDED_LINK = "_last_added_link";
+const SUF_ID_LAST_ADDED_CITATION = "_last_added_citation";
+const SUF_ID_LAST_ADDED_STRONG = "_last_added_strong";
+const SUF_ID_LAST_ADDED_LINK = "_last_added_link";
 
-var DEFAULT_BOOK = MSG_DEF_BOOK;
-var DEFAULT_CHAPTER = 0;
-var DEFAULT_VERSE = 0;
-var DEFAULT_LAST_VERSE = 0;
-var DEFAULT_BIBLES_SITE = "biblegateway";
-var DEFAULT_BIB_VER = "BIB";
+const DEFAULT_BOOK = MSG_DEF_BOOK;
+const DEFAULT_CHAPTER = 0;
+const DEFAULT_VERSE = 0;
+const DEFAULT_LAST_VERSE = 0;
+const DEFAULT_BIBLES_SITE = "biblegateway";
+const DEFAULT_BIB_VER = "BIB";
 
-var DEFAULT_STRONG = MSG_DEF_STRONG;
-var DEFAULT_LINK_NAME = MSG_DEF_LINK_NAME;
-var DEFAULT_LINK_HREF = "https://www.biblehub.com";
+const DEFAULT_STRONG = MSG_DEF_STRONG;
+const DEFAULT_LINK_NAME = MSG_DEF_LINK_NAME;
+const DEFAULT_LINK_HREF = "https://www.biblehub.com";
 
-var CIT_BOOK_IDX = 0;
-var CIT_CHAPTER_IDX = 1;
-var CIT_VERSE_IDX = 3;
-var CIT_SEP_RANGE_IDX = 4;
-var CIT_LAST_VERSE_IDX = 5;
-var CIT_SITE_IDX = 6;
-var CIT_BIB_VER_IDX = 7;
+const CIT_BOOK_IDX = 0;
+const CIT_CHAPTER_IDX = 1;
+const CIT_VERSE_IDX = 3;
+const CIT_SEP_RANGE_IDX = 4;
+const CIT_LAST_VERSE_IDX = 5;
+const CIT_SITE_IDX = 6;
+const CIT_BIB_VER_IDX = 7;
 
-var LNK_NAME_IDX = 0;
-var LNK_HREF_IDX = 1;
+const LNK_NAME_IDX = 0;
+const LNK_HREF_IDX = 1;
 
 const MIN_DATE = -7000;
 const MAX_DATE = -5000;
@@ -99,6 +99,12 @@ function is_in_viewport(elem) {
 }
 
 function add_question(qid, quest){
+	const old_dv = document.getElementById(qid);
+	if(old_dv != null){ 
+		console.log("Question " + qid + " ALREADY in page (add_question)");
+		return null;
+	}
+	
 	const htm_stm = quest.htm_stm;
 	const bibref = quest.bibref;
 	const v_min = quest.v_min;
@@ -108,7 +114,7 @@ function add_question(qid, quest){
 	const dv_full_stm = dv1.appendChild(document.createElement("div"));
 	dv_full_stm.id = qid;
 	dv_full_stm.classList.add("exam");
-	dv_full_stm.classList.add("border");
+	dv_full_stm.classList.add("has_border");
 	
 	const dv_stm = dv_full_stm.appendChild(document.createElement("div"));
 	dv_stm.classList.add("exam");
@@ -152,7 +158,7 @@ function add_question(qid, quest){
 	dv_msg.id = qid + SUF_ID_MSG;
 	dv_msg.classList.add("exam");
 	dv_msg.classList.add("msg");
-	dv_msg.innerHTML = htm_stm;
+	dv_msg.innerHTML = get_msg(htm_stm);
 	//dv_msg.classList.toggle("contradiction");
 
 	/*
@@ -179,7 +185,7 @@ function add_question(qid, quest){
 		});
 	}
 	
-	return dv_stm;
+	return dv_full_stm;
 }
 
 function init_answers(qid, quest, is_init_to_answer){
@@ -212,7 +218,7 @@ function init_answers(qid, quest, is_init_to_answer){
 		const dv_answ = dv_answers.appendChild(document.createElement("div"));
 		dv_answ.classList.add("exam");
 		dv_answ.classList.add("is_answer");
-		dv_answ.innerHTML = an_answ.htm_answ;
+		dv_answ.innerHTML = get_msg(an_answ.htm_answ);
 		if(an_answ.is_on){
 			dv_answ.classList.add("selected");
 		}
@@ -267,7 +273,54 @@ function init_answers(qid, quest, is_init_to_answer){
 
 function end_question(qid, quest){
 	init_answers(qid, quest, false);
-	//console.log("ENDING QUESTION " + qid);
+	if(quest.all_nxt != null){
+		remove_all_descendants(qid);
+	}
+	if(quest.set_all_nxt == null){
+		return;
+	}
+	//console.log("BEFORE set_all_nxt = " + quest.all_nxt);
+	quest.set_all_nxt();
+	//console.log("AFTER set_all_nxt = " + quest.all_nxt);
+	if(quest.all_nxt == null){
+		return;
+	}
+	const all_added = [];
+	for(const qq of quest.all_nxt){
+		//console.log("Adding question " + qq + " to page");
+		const added = add_exam_question(qq);
+		if(added == null){
+			console.log("Question " + qq + " could NOT be added to page !!!");
+		} else {
+			all_added.push(qq);
+		}
+	}
+	quest.all_nxt = all_added;
+	//console.log("ALL ADDED = " + quest.all_nxt);
+	//console.log(JSON.stringify(quest, null, "  "));
+}
+
+function remove_all_descendants(qid){
+	const quest = db_nodes_exam[qid];
+	const all_desc = quest.all_nxt;
+	quest.all_nxt = null;
+	if(all_desc != null){
+		for(const qq of all_desc){
+			remove_descendant(qq);
+		}
+	}
+}
+
+function remove_descendant(qid){
+	const dv_quest = document.getElementById(qid);
+	if(dv_quest != null){
+		//console.log("REMOVING question " + qid + " from page");
+		dv_quest.remove();
+		remove_all_descendants(qid);
+		return true;
+	}
+	console.log("Question " + qq + " was NOT found in page !!!");
+	return false;
 }
 
 function toggle_pos_interaction(qid){
@@ -1189,17 +1242,16 @@ function dbg_init_pru_stms(){
 	});	*/
 	//var st4 = add_question("id_4", "Cuarto mensaje", null, null, null);
 
-	console.log("FIRST_MESSAGE_TEST");
-	const fst_msg = db_nodes_exam["STARTING_EXAM_MESSAGE"];
-	console.log(JSON.stringify(db_nodes_exam[get_msg_id(fst_msg)], null, "  "));
-	console.log(msg2id[msg_there_is_no_creator]);
-	console.log(msg2id[msg_i_do_not_know_if_there_is_creator]);
-
 };
 
 function add_exam_question(qid){
 	const nd = db_nodes_exam[qid];
-	add_question(qid, nd);
+	if(nd != null){
+		return add_question(qid, nd);
+	} else {
+		console.log("Could not find question " + qid + " in questions db.");
+	}
+	return null;
 };
 
 function init_page_exam(){
@@ -1207,9 +1259,7 @@ function init_page_exam(){
 	//set_exam_language("es");
 	//dbg_init_pru_stms();
 	
-	const fst_msg = db_nodes_exam["STARTING_EXAM_MESSAGE"];
-	const fst_id = msg2id[fst_msg];
-	add_exam_question(fst_id);	
+	return add_exam_question(FIRST_EXAM_QUESTION_ID);
 };
 
 

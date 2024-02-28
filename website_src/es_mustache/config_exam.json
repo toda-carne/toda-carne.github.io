@@ -3,6 +3,6 @@
     { "name": "Jose Luis Quiroga" }
   ],
   "language": "es",
-  "with_firebase": false,
+  "with_firebase": true,
 }
  

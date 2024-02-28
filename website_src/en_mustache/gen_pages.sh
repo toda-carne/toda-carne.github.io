@@ -9,4 +9,4 @@ mustach config_mustache.json info.mustache > $DEST_DIR/info.html
 mustach config_mustache.json tips.mustache > $DEST_DIR/tips.html
 mustach config_mustache.json language.mustache > $DEST_DIR/language.html
 mustach config_mustache.json home.mustache > $DEST_DIR/index.html
-mustach config_mustache.json exam.mustache > $DEST_DIR/exam.html
+mustach config_exam.json exam.mustache > $DEST_DIR/exam.html
