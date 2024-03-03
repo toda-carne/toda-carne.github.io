@@ -206,6 +206,10 @@ function init_en_basic_msg(){
 	obj.msg_def_book = "BOOK";
 	obj.msg_def_strong = "STRONG_CODE";
 	obj.msg_def_link_name = "WEB LINK";
+	
+	obj.msg_save_in_browser = "IN BROWSER";
+	obj.msg_save_in_cloud = "IN CLOUD";
+	
 }
 
 init_en_basic_msg();

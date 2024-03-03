@@ -1,3 +1,11 @@
+#!/bin/bash
+
+CURR_DIR=$(pwd)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+echo "Updating" $(basename $SCRIPT_DIR)
+
+cd $SCRIPT_DIR
 
 DEST_DIR=../../es/
 
@@ -10,3 +18,6 @@ mustach config_mustache.json tips.mustache > $DEST_DIR/tips.html
 mustach config_mustache.json language.mustache > $DEST_DIR/language.html
 mustach config_mustache.json home.mustache > $DEST_DIR/index.html
 mustach config_exam.json exam.mustache > $DEST_DIR/exam.html
+
+cd $CURR_DIR
+

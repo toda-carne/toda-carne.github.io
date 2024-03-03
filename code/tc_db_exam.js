@@ -38,7 +38,8 @@ function init_exam_database(){
 	db.qid_1 = { 
 		is_multi: false,
 		htm_stm: "msg_for_all_biological_machines",
-		v_min: -7000,
+		v_min: -100,
+		v_max: -500,
 		answers: [
 			{ htm_answ: "msg_there_is_a_creator" },
 			{ htm_answ: "msg_there_is_no_creator" },

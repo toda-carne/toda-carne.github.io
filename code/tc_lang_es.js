@@ -116,6 +116,10 @@ function init_es_basic_msg(){
 	obj.msg_def_book = "LIBRO";
 	obj.msg_def_strong = "CODIGO STRONG";
 	obj.msg_def_link_name = "ENLACE WEB";
+	
+	obj.msg_save_in_browser = "EN NAVEGADOR";
+	obj.msg_save_in_cloud = "EN NUBE";
+	
 }
 
 init_es_basic_msg();

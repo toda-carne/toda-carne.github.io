@@ -18,15 +18,15 @@ export const firebaseConfig = {
 	measurementId: "G-GL4NXH7Q2R"
 };
 
-let app = null;
-//let analytics = getAnalytics(app);
-let provider = null;
-let auth = null;
-let credential = null;
-let token = null;
-let user = null;
-let USER_ID = null;
-let database = null;
+let tc_fb_app = null;
+//let analytics = getAnalytics(tc_fb_app);
+let tc_fb_provider = null;
+let tc_fb_auth = null;
+let tc_fb_credential = null;
+let tc_fb_token = null;
+let tc_fb_user = null;
+let tc_fb_user_id = null;
+let tc_fb_database = null;
 
 /*
  *      In order to work from toda-carne.github.io
@@ -36,36 +36,47 @@ let database = null;
  *      firebase console > Athentication > Settings > Authorized Domains
  *      google console > APIs & Services > Credentials > API Keys > Browser Key
  */
-
-export function init_firebase_todacarne(){
+function get_database(){
+	if(tc_fb_database != null){
+		return new Promise((resolve, reject) => {
+			resolve('database != null');
+		});
+	}
 	// Initialize Firebase
-	app = initializeApp(firebaseConfig);
-	//const analytics = getAnalytics(app);
+	tc_fb_app = initializeApp(firebaseConfig);
+	//const analytics = getAnalytics(tc_fb_app);
 	
-	provider = new GoogleAuthProvider();
+	tc_fb_provider = new GoogleAuthProvider();
 	
-	provider.setCustomParameters({
+	tc_fb_provider.setCustomParameters({
 		prompt: "select_account"
 	});
 	
-	auth = getAuth();
+	tc_fb_auth = getAuth();
 	
-	signInWithPopup(auth, provider)
-	.then((result) => {
+	return signInWithPopup(tc_fb_auth, tc_fb_provider).then((result) => {
 		// This gives you a Google Access Token. You can use it to access the Google API.
-		credential = GoogleAuthProvider.credentialFromResult(result);
-		token = credential.accessToken;
+		tc_fb_credential = GoogleAuthProvider.credentialFromResult(result);
+		tc_fb_token = tc_fb_credential.accessToken;
 		// The signed-in user info.
-		user = result.user;
+		tc_fb_user = result.user;
 		// IdP data available using getAdditionalUserInfo(result)
-		const json_user = JSON.stringify(user); 
+		const json_user = JSON.stringify(tc_fb_user); 
 		
-		USER_ID = user.uid;
+		tc_fb_user_id = tc_fb_user.uid;
 		
-		console.log('token=' + token);
+		console.log('token=' + tc_fb_token);
 		console.log('user=' + json_user);
-		console.log('USER_ID=' + USER_ID);
+		console.log('user_id=' + tc_fb_user_id);
 		console.log('finished_login');
+		
+		tc_fb_database = getDatabase(tc_fb_app);
+		if(tc_fb_database == null){
+			console.error("NO database !!");
+		} else {
+			console.log("database OK");
+		}
+		
 	}).catch((error) => {
 		// Handle Errors here.
 		const errorCode = error.code;
@@ -80,46 +91,115 @@ export function init_firebase_todacarne(){
 		console.log('credential=' + credential);          
 	});      
 	
-	database = getDatabase(app);
-	
 }
+
+export const firebase_write_object = (sub_ref, obj) => {
+	return get_database().then((result) => {
+		const db_ref = ref(tc_fb_database, 'users/' + tc_fb_user_id + sub_ref)
+		console.log("firebase_write_object. db_ref = " + db_ref);
+		set(db_ref, obj).catch((error) => {
+			console.error(error);
+		});
+	});
+};
+
+export const firebase_read_object = (sub_ref, cbak) => {
+	return get_database().then((result) => {
+		const db_ref = ref(tc_fb_database, 'users/' + tc_fb_user_id + sub_ref)
+		console.log("firebase_read_object. db_ref = " + db_ref);
+		onValue(db_ref, cbak).catch((error) => {
+			console.error(error);
+		});
+	});
+}
+
+export const firebase_sign_out = () => {
+	if(tc_fb_database == null){ return; }
+	//const tc_fb_auth = getAuth();
+	signOut(tc_fb_auth);
+	console.log('signed out');
+	//tc_fb_database.getInstance().signOut();
+}
+
 
 // firebase apiKey access to Identity Toolkit API
 // Requests to this API identitytoolkit method google.cloud.identitytoolkit.v1.ProjectConfigService.GetProjectConfig are blocked
 // FirebaseAuth.getInstance().signOut();
 
+export function init_firebase_todacarne(){
+	get_database();
+}
+
 export const write_jlq = (field, val) => {
-	if(database == null){ return; }
-	set(ref(database, 'users/' + USER_ID), {
+	firebase_write_object('', {
+		username: val,
+		email: 'el correo de ' + val,
+	});
+	/*
+	if(tc_fb_database == null){ return; }
+	//set(ref(tc_fb_database, 'users/' + tc_fb_user_id + '/sub1/sub2/sub3'), {
+	set(ref(tc_fb_database, 'users/' + tc_fb_user_id), {
 		username: val,
 	 email: 'el correo de ' + val,
 	}).catch((error) => {
 		console.error(error);
 	});
+	*/
 };
 
-export const get_out = () => {
-	if(database == null){ return; }
-	//const auth = getAuth();
-	signOut(auth);
-	console.log('signed out');
-	//database.getInstance().signOut();
-}
-
 export const read_jlq = () => {
-	if(database == null){ return; }
-	const dbRef2 = ref(database, 'users/' + USER_ID + '/username')
+	firebase_read_object('/username', (snapshot) => {
+		if (snapshot.exists()) {
+			var the_val = snapshot.val();
+			document.getElementById("db_read_data").innerText = "THE_VAL=" + the_val;
+			console.log('read_fireabase= ' + the_val);
+		} else {
+			console.log("No data available");
+		}
+	});
+	
+	/*
+	if(tc_fb_database == null){ return; }
+	const dbRef2 = ref(tc_fb_database, 'users/' + tc_fb_user_id + '/username')
 	read_fb(dbRef2, "db_read_data");
+	*/
 }
 
 export const read2_jlq = () => {
-	if(database == null){ return; }
-	const dbRef2 = ref(database, 'users/campo_1')
+	if(tc_fb_database == null){ return; }
+	const dbRef2 = ref(tc_fb_database, 'users/campo_1')
 	read_fb(dbRef2, "db_read_data_2");
 }
 
+export const read3_jlq = () => {
+	firebase_read_object('', (snapshot) => {
+		if (snapshot.exists()) {
+			var the_val = snapshot.val();
+			console.log('read_fireabase= ' + JSON.stringify(the_val, null, "  "));
+		} else {
+			console.log("No data available");
+		}
+	});
+
+	/*
+	if(tc_fb_database == null){ return; }
+	const dbRef = ref(tc_fb_database, 'users/' + tc_fb_user_id)
+	onValue(dbRef, (snapshot) => {
+		if (snapshot.exists()) {
+			var the_val = snapshot.val();
+			//console.log('read_fireabase= ' + the_val);
+			console.log('read_fireabase= ' + JSON.stringify(the_val, null, "  "));
+		} else {
+			console.log("No data available");
+		}
+	}).catch((error) => {
+		console.error(error);
+	});        
+	*/
+}
+
 const read_fb = (dbRef, field) => {
-	if(database == null){ return; }
+	if(tc_fb_database == null){ return; }
 	onValue(dbRef, (snapshot) => {
 		if (snapshot.exists()) {
 			//console.log(snapshot.val());

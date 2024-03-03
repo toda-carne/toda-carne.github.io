@@ -543,6 +543,18 @@ color: white;
 	border-bottom: 3px solid #23418c;
 }
 
+.exam_sub_menu {
+	display: block;
+	width: 100%;
+	font-size: 4vh;
+	width: 100%;
+	z-index: 100;
+	text-decoration: none;
+	//padding: 1em 1em;
+	//border: 0.1vw solid white;
+	background-color: #0b142c;
+}
+
 .exam_menu {
 	display: inline-block;
 	margin: 1vh;
@@ -592,6 +604,16 @@ color: white;
 	border: 0.2vw solid white;
 	background-color: #1c396f;
 	text-align: center;
+}
+
+.exam.is_button:hover,.exam.is_button:hover>* {
+	background-color: #ddd;
+	color: black;
+}
+
+.exam.is_button.active {
+	background-color: #04AA6D;
+	color: white;
 }
 
 .exam.stm {
@@ -656,6 +678,11 @@ color: white;
 	display: inline-block;
 	margin: 0.5vw;
 	border: 0.2vw solid white;
+}
+
+.exam.is_option:hover,.exam.is_option:hover>* {
+	background-color: #ddd;
+	color: black;
 }
 
 .exam.is_citation {
