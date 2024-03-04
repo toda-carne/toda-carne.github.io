@@ -9,6 +9,7 @@
 </div>
 
 <div id="id_exam_content" class="exam_content">
+	<div id="id_exam_top_content"></div>
 	<div id="id_exam_name" class="big_title">
 	</div>
     <h1 class="big_title">Examen Interactivo de Teologia</h1>
@@ -17,10 +18,34 @@
 </div>  
 </div>
 
+<script type="module">
+
+//import { init_firebase_todacarne, write_jlq, firebase_sign_out, read_jlq, read2_jlq } from '../code/tc_firebase.js';
+import * as fb from '../code/tc_firebase.js';
+
+window.init_firebase_todacarne = fb.init_firebase_todacarne;
+window.write_jlq = fb.write_jlq;
+window.read_jlq = fb.read_jlq;
+window.read2_jlq = fb.read2_jlq;
+window.read3_jlq = fb.read3_jlq;
+window.firebase_write_object = fb.firebase_write_object;
+window.firebase_read_object = fb.firebase_read_object;
+window.firebase_sign_out = fb.firebase_sign_out;
+
+import * as es_lang from '../code/tc_lang_es.js';
+import * as exm from '../code/tc_exam.js';
+
+es_lang.init_es_module();
+exm.init_page_exam();
+
+</script>       
+
+<!--
 <script src="../code/tc_lang_all.js"></script>  // ALWAYS FIRST !!!
 <script src="../code/tc_lang_es.js"></script>
 <script src="../code/tc_db_exam.js"></script>
 <script src="../code/tc_exam.js"></script>
+-->
 
 {{> bottom}}
 

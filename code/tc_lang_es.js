@@ -1,16 +1,10 @@
 
+import { init_get_msg, init_all_glb, fill_reversed_object, init_en_module } from '../code/tc_lang_all.js';
+
 "use strict";
 
 const book2num_es = {};
 const all_es_msg = {};
-
-function init_get_msg(){
-	get_msg = function (nom_msg){
-		return get_traduced_message(all_es_msg, nom_msg);
-	};
-}
-
-init_get_msg();
 
 const bibles_es = {
 	biblegateway: [ "RVA", "RVR1960", "DHH", "NTV", "WLC", "HHH", "WHNU", "TR1550", ],
@@ -88,8 +82,6 @@ const num2book_es = {
 	"66":"apocalipsis",
 };
 
-fill_reversed_object(num2book_es, book2num_es);
-
 function set_glb_lang(){
 	glb_exam_language = "es";
 	glb_all_books = num2book_es;
@@ -97,8 +89,6 @@ function set_glb_lang(){
 	glb_books_nums = book2num_es;
 	glb_curr_lang = all_es_msg;
 }
-
-set_glb_lang();
 
 function init_es_basic_msg(){
 	const obj = all_es_msg;
@@ -118,12 +108,10 @@ function init_es_basic_msg(){
 	obj.msg_def_link_name = "ENLACE WEB";
 	
 	obj.msg_save_in_browser = "EN NAVEGADOR";
-	obj.msg_save_in_cloud = "EN NUBE";
+	obj.msg_save_in_cloud = "EN TodaCarne.com";
 	
+	obj.msg_new_answers_name = "NUEVO NOMBRE RESPUESTAS";
 }
-
-init_es_basic_msg();
-
 
 function init_es_exam_msg(){
 	const lg = all_es_msg;
@@ -139,6 +127,19 @@ function init_es_exam_msg(){
 	lg.msg_the_creator_has_no_technical_creativity = "NO es inteligente, o NO es diseñador, o NO tiene creatividad técnica.";
 }
 
-init_es_exam_msg();
+export function init_es_module(){
+	init_en_module();
+	
+	console.log("Called init_es_module");
+	
+	init_get_msg(all_es_msg);
+	fill_reversed_object(num2book_es, book2num_es);
+	
+	init_es_basic_msg();
+	init_es_exam_msg();
+	
+	init_all_glb("es", num2book_es, bibles_es, book2num_es, all_es_msg);	
+}
 
- 
+//init_es_module();
+

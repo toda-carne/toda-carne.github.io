@@ -8,30 +8,14 @@ const abbr2num = {};
 const book2num_en = {};
 const all_en_msg = {};
 
-function fill_reversed_object(orig, reverse){
+export function fill_reversed_object(orig, reverse){
 	for (const [key, value] of Object.entries(orig)) {
 		reverse[value] = key;
 		//console.log(`${key} = ${value}`);
 	}  
 }
 
-function get_traduced_message(trad_msg, nom_msg){
-	const tr_mg = trad_msg[nom_msg];
-	if(tr_mg == null){
-		const en_mg = all_en_msg[nom_msg];
-		if(en_mg == null){
-			return nom_msg;
-		}
-		return en_mg;
-	}
-	return tr_mg;
-}
-
-let get_msg = function (nom_msg){
-	return get_traduced_message(all_en_msg, nom_msg);
-};
-
-const num2abbr = {
+export const num2abbr = {
 	"1":"Gen",
 	"2":"Exo",
 	"3":"Lev",
@@ -100,13 +84,7 @@ const num2abbr = {
 	"66":"Rev",
 };
 
-const bibles_en = {
-	biblegateway: [ "KJV", "WEB", "YLT", "NASB", "WLC", "HHH", "WHNU", "TR1550", ],
-	biblehub: [ "text", "kjv", "web", "ylt", "nasb77", "bsb", "sepd", "wlco", ],
-	blueletterbible: [ "KJV", "WEB", "YLT", "VUL", "NASB95", "VUL", "WLC", "LXX", "MGNT", "TR", ],
-};
-
-const num2book_en = {
+export const num2book_en = {
 	"1":"genesis",
 	"2":"exodus",
 	"3":"leviticus",
@@ -175,20 +153,29 @@ const num2book_en = {
 	"66":"revelation",
 };
 
-fill_reversed_object(num2book_en, book2num_en);
-fill_reversed_object(num2abbr, abbr2num);
+const bibles_en = {
+	biblegateway: [ "KJV", "WEB", "YLT", "NASB", "WLC", "HHH", "WHNU", "TR1550", ],
+	biblehub: [ "text", "kjv", "web", "ylt", "nasb77", "bsb", "sepd", "wlco", ],
+	blueletterbible: [ "KJV", "WEB", "YLT", "VUL", "NASB95", "VUL", "WLC", "LXX", "MGNT", "TR", ],
+};
+
+function get_traduced_message(trad_msg, nom_msg){
+	const tr_mg = trad_msg[nom_msg];
+	if(tr_mg == null){
+		const en_mg = all_en_msg[nom_msg];
+		if(en_mg == null){
+			return nom_msg;
+		}
+		return en_mg;
+	}
+	return tr_mg;
+}
 
 function nom1(){
 	const lg = glb_curr_lang;
 	//return lg.msg_there_is_a_creator;
 	return lg.msg_i_do_not_know_if_there_is_creator;
 }
-
-let glb_exam_language = "en";
-let glb_all_books = num2book_en;
-let glb_all_bibles = bibles_en;
-let glb_books_nums = book2num_en;
-let glb_curr_lang = all_en_msg;
 
 function init_en_basic_msg(){
 	const obj = all_en_msg;
@@ -208,12 +195,10 @@ function init_en_basic_msg(){
 	obj.msg_def_link_name = "WEB LINK";
 	
 	obj.msg_save_in_browser = "IN BROWSER";
-	obj.msg_save_in_cloud = "IN CLOUD";
+	obj.msg_save_in_cloud = "IN TodaCarne.com";
 	
+	obj.msg_new_answers_name = "NEW ANSWERS NAME";
 }
-
-init_en_basic_msg();
-init_en_exam_msg();
 
 function init_en_exam_msg(){
 	const lg = all_en_msg;
@@ -229,5 +214,42 @@ function init_en_exam_msg(){
 	lg.msg_the_creator_has_no_technical_creativity = "is NOT intelligent, or NOT a designer, or has NO technical creativity";
 
 }
+
+export let get_msg = null;
+
+export function init_get_msg(lang_msgs){
+	get_msg = function (nom_msg){
+		return get_traduced_message(lang_msgs, nom_msg);
+	};
+}
+
+export let glb_exam_language = "en";
+export let glb_all_books = num2book_en;
+export let glb_all_bibles = bibles_en;
+export let glb_books_nums = book2num_en;
+export let glb_curr_lang = all_en_msg;
+
+export function init_all_glb(lang, books, bibles, nums, curr){
+	glb_exam_language = lang;
+	glb_all_books = books;
+	glb_all_bibles = bibles;
+	glb_books_nums = nums;
+	glb_curr_lang = curr;
+}
+
+
+export function init_en_module(){
+	console.log("Called init_en_module");
+	
+	init_get_msg(all_en_msg);
+	
+	fill_reversed_object(num2book_en, book2num_en);
+	fill_reversed_object(num2abbr, abbr2num);
+
+	init_en_basic_msg();
+	init_en_exam_msg();
+}
+
+//init_en_module();
 
 
