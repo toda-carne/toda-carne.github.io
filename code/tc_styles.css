@@ -685,12 +685,22 @@ color: white;
 	color: black;
 }
 
-.exam.is_citation {
+.exam.is_verse_cit {
 	display: inline-block;
 	margin: 0.5vw;
 }
 
-.exam.is_strong_code {
+.exam.is_strong_cit {
+	display: inline-block;
+	margin: 0.5vw;
+}
+
+.exam.is_link_cit {
+	display: inline-block;
+	margin: 0.5vw;
+}
+
+.exam.is_citation_item {
 	display: inline-block;
 	margin: 0.5vw;
 }
