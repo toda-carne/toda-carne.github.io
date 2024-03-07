@@ -197,7 +197,10 @@ function init_en_basic_msg(){
 	obj.msg_save_in_browser = "IN BROWSER";
 	obj.msg_save_in_cloud = "IN TodaCarne.com";
 	
-	obj.msg_new_answers_name = "NEW ANSWERS NAME";
+	obj.msg_open_from_browser = "FROM BROWSER";
+	obj.msg_open_from_cloud = "FROM TodaCarne.com";
+	
+	obj.msg_new_answers_name = "NEW";
 }
 
 function init_en_exam_msg(){

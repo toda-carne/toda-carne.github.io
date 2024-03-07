@@ -110,7 +110,10 @@ function init_es_basic_msg(){
 	obj.msg_save_in_browser = "EN NAVEGADOR";
 	obj.msg_save_in_cloud = "EN TodaCarne.com";
 	
-	obj.msg_new_answers_name = "NUEVO NOMBRE RESPUESTAS";
+	obj.msg_open_from_browser = "DEL NAVEGADOR";
+	obj.msg_open_from_cloud = "DE TodaCarne.com";
+	
+	obj.msg_new_answers_name = "NUEVO";
 }
 
 function init_es_exam_msg(){
