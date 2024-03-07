@@ -2,7 +2,7 @@
 import { num2abbr, num2book_en, get_msg, 
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang } from '../code/tc_lang_all.js';
 	
-import { FIRST_EXAM_QUESTION_ID, db_nodes_exam, db_user_info } from '../code/tc_db_exam.js';
+import { FIRST_EXAM_QUESTION_ID, db_nodes_exam, db_user_info, init_exam_database } from '../code/tc_db_exam.js';
 
 "use strict";
 
@@ -157,7 +157,7 @@ function add_question(qid, quest){
 	dv_msg.innerHTML = get_msg(htm_stm);
 	//dv_msg.classList.toggle("contradiction");
 
-	init_answers(qid, quest, true);
+	init_answers(qid, quest);
 	
 	const id_dv_support = qid + SUF_ID_SUPPORT;
 	var dv_support = dv_quest.appendChild(document.createElement("div"));
@@ -176,7 +176,8 @@ function add_question(qid, quest){
 	return dv_quest;
 }
 
-function init_answers(qid, quest, is_init_to_answer){
+function init_answers(qid, quest){
+	const is_init_to_answer = (quest.has_answ == null);
 	const dv_quest = document.getElementById(qid);
 	if(dv_quest == null){
 		console.log("COULD NOT FIND qid = " + qid);
@@ -240,7 +241,8 @@ function init_answers(qid, quest, is_init_to_answer){
 					dv_answ_ed.classList.add("is_button");
 					dv_answ_ed.innerHTML = glb_curr_lang.msg_edit_ans;
 					dv_answ_ed.addEventListener('click', function() {
-						init_answers(qid, quest, true);
+						quest.has_answ = null;
+						init_answers(qid, quest);
 					});
 				}
 			});
@@ -259,10 +261,11 @@ function init_answers(qid, quest, is_init_to_answer){
 }
 
 function end_question(qid, quest){
-	init_answers(qid, quest, false);
 	if(quest.all_nxt != null){
 		remove_all_descendants(qid);
 	}
+	quest.has_answ = true;
+	init_answers(qid, quest);
 	if(quest.set_all_nxt == null){
 		return;
 	}
@@ -299,6 +302,9 @@ function remove_all_descendants(qid){
 }
 
 function remove_descendant(qid){
+	const quest = db_nodes_exam[qid];
+	quest.has_answ = null;
+	
 	const dv_quest = document.getElementById(qid);
 	if(dv_quest != null){
 		//console.log("REMOVING question " + qid + " from page");
@@ -965,9 +971,7 @@ function get_all_id_pos_array(){
 	return all_pairs;
 }
 
-function save_button_handler(){
-	const sv_obj = calc_exam_save_object();
-	
+function save_button_handler(){	
 	const dv_exam_top = document.getElementById("id_exam_top_content");
 	const dv_exam_nm = document.getElementById("id_exam_name");
 	
@@ -985,23 +989,18 @@ function save_button_handler(){
 			} else {
 				all_disp_nams = all_sv_nams.concat([nw_nm]);
 			}
-			toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, val_sel_n){
+			toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm){
 				dv_ops_n.remove();
-				if(val_sel_n == nw_nm){
-					toggle_exam_name_ed(dv_exam_nm, save_in_browser);
+				if(exam_nm == nw_nm){
+					toggle_exam_name_ed(dv_exam_nm, write_exam_object);
 				} else {
-					dv_exam_nm.innerHTML = val_sel_n;
-					save_in_browser(val_sel_n);
+					dv_exam_nm.innerHTML = exam_nm;
+					write_exam_object(exam_nm);
 				}
 			});
 		} else {
 		}
 	});
-}
-
-function save_in_browser(exam_nm){
-	console.log("SAVING " + exam_nm);
-	write_exam_name(exam_nm);
 }
 
 function open_button_handler(){
@@ -1015,28 +1014,30 @@ function open_button_handler(){
 		dv_ops_w.remove();
 		if(val_sel_w == mg_browser){
 			let all_disp_nams = read_all_exam_names();
-			toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, val_sel_n){
+			toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm){
 				dv_ops_n.remove();
-				dv_exam_nm.innerHTML = val_sel_n;
-				open_from_browser(val_sel_n);
+				read_exam_objetc(exam_nm);
+				dv_exam_nm.innerHTML = exam_nm;
 			});
 		} else {
 		}
 	});
 }
 
-function open_from_browser(name){
-	write_exam_name(name);
-}
-
 function delete_button_handler(){
 	const dv_exam_top = document.getElementById("id_exam_top_content");
 	const dv_exam_nm = document.getElementById("id_exam_name");
-
-	const exam_nm = dv_exam_nm.innerHTML;
-	console.log("DELETING " + exam_nm);
-	delete_exam_name(exam_nm);	
-	dv_exam_nm.innerHTML = "";
+	
+	const mg_browser = glb_curr_lang.msg_open_from_browser;
+	const mg_cloud = glb_curr_lang.msg_open_from_cloud;
+	const where_arr = [mg_browser, mg_cloud];
+	
+	let all_disp_nams = read_all_exam_names();
+	toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm){
+		dv_ops_n.remove();
+		delete_exam_object(exam_nm);
+		dv_exam_nm.innerHTML = "";
+	});	
 }
 
 function sort_button_handler(){
@@ -1513,6 +1514,7 @@ function toggle_exam_name_ed(dv_name, save_fn){
 export function init_page_exam(){
 	console.log("Called init_page_exam");
 
+	init_exam_database();
 	init_exam_module_vars();
 	init_exam_buttons();
 	//dbg_init_pru_stms();
@@ -1554,6 +1556,7 @@ function calc_quest_save_object(dv_quest){
 	
 	sv_obj.v_min = quest.v_min;
 	sv_obj.v_max = quest.v_max;
+	sv_obj.has_answ = quest.has_answ;
 	sv_obj.answers = JSON.parse(JSON.stringify(quest.answers));
 	if(quest.all_nxt != null){
 		sv_obj.all_nxt = JSON.parse(JSON.stringify(quest.all_nxt));
@@ -1582,6 +1585,7 @@ function update_nodes_exam_with(ld_obj){
 	for (const [qid, quest] of Object.entries(ld_obj)) {
 		db[qid].v_min = quest.v_min;
 		db[qid].v_max = quest.v_max;
+		db[qid].has_answ = quest.has_answ;
 		db[qid].answers = JSON.parse(JSON.stringify(quest.answers));
 		if(quest.all_nxt != null){
 			db[qid].all_nxt = JSON.parse(JSON.stringify(quest.all_nxt));
@@ -1604,11 +1608,12 @@ function display_support_for_question(qid, ld_obj){
 }
 
 function display_exam_load_object(ld_obj){
+	init_exam_database();
 	update_nodes_exam_with(ld_obj);
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
+	dv_all_quest.innerHTML = "";
 	
-	const db = db_nodes_exam;
-	for (const [qid, quest] of Object.entries(db)) {
+	for (const [qid, quest] of Object.entries(ld_obj)) {
 		const added = add_exam_question(qid);
 		if(added == null){
 			console.log("Question " + qid + " could NOT be DISPLAYED in page !!!");
@@ -1616,6 +1621,9 @@ function display_exam_load_object(ld_obj){
 			display_citations_of_question(qid, ld_obj);
 		}
 	}
+}
+
+function display_citations_of_question(qid, ld_obj){
 }
 
 function read_all_exam_names(){
@@ -1639,7 +1647,9 @@ function delete_exam_name(name){
 	window.localStorage.setItem(ALL_SAVED_OBJ_NAMES, JSON.stringify(all_nm));
 }
 
-function write_exam_object(name, wr_obj){
+function write_exam_object(name){
+	console.log("SAVING " + name);
+	const wr_obj = calc_exam_save_object();
 	write_exam_name(name);
 	if(wr_obj != null){
 		window.localStorage.setItem(name, JSON.stringify(wr_obj));
@@ -1647,15 +1657,21 @@ function write_exam_object(name, wr_obj){
 }
 
 function read_exam_objetc(name){
+	console.log("READING " + name);
+	write_exam_name(name);
 	let rd_obj_str = window.localStorage.getItem(name);
 	let rd_obj = null;
 	if(rd_obj_str != null){
 		rd_obj = JSON.parse(rd_obj_str);
 	}
-	return rd_obj;
+	if(rd_obj != null){
+		console.log("FULL_READ_OBJ = " + JSON.stringify(rd_obj, null, "  "));
+		display_exam_load_object(rd_obj);
+	}
 }
 
 function delete_exam_object(name){
+	console.log("DELETING " + name);
 	delete_exam_name(name);
 	window.localStorage.removeItem(name);
 }

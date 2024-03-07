@@ -1,14 +1,14 @@
 
 "use strict";
 
-
 export const FIRST_EXAM_QUESTION_ID = "qid_1";
-export const db_nodes_exam = {};
 export const db_user_info = {};
 
-init_exam_database();
+export let db_nodes_exam = {};
 
-function init_exam_database(){
+//init_exam_database();
+export function init_exam_database(){
+	db_nodes_exam = {};
 	const db = db_nodes_exam;
 	db.qid_1 = { 
 		is_multi: false,
