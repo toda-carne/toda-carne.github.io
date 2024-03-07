@@ -1618,12 +1618,9 @@ function display_exam_load_object(ld_obj){
 		if(added == null){
 			console.log("Question " + qid + " could NOT be DISPLAYED in page !!!");
 		} else {
-			display_citations_of_question(qid, ld_obj);
+			display_support_for_question(qid, ld_obj);
 		}
 	}
-}
-
-function display_citations_of_question(qid, ld_obj){
 }
 
 function read_all_exam_names(){
