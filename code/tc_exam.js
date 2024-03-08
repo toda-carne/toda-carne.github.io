@@ -1,8 +1,10 @@
 
 import { num2abbr, num2book_en, get_msg, 
-	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang } from '../code/tc_lang_all.js';
+	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang } from './tc_lang_all.js';
 	
-import { FIRST_EXAM_QUESTION_ID, db_nodes_exam, db_user_info, init_exam_database } from '../code/tc_db_exam.js';
+import { FIRST_EXAM_QUESTION_ID, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
+
+import { firebase_write_object, firebase_read_object, firebase_sign_out, init_firebase_todacarne } from './tc_firebase.js';
 
 "use strict";
 
@@ -78,6 +80,8 @@ const id_dv_link_ed = "id_dv_link_ed";
 const id_dv_sel_option = "id_dv_sel_option";
 const id_dv_name_ed = "id_dv_name_ed";
 const id_dv_answ_ed = "id_dv_answ_ed"; 
+
+const firebase_answers_path = "/user_answers"; 
 
 function is_in_viewport(elem) {	
 	var rect = elem.getBoundingClientRect();
@@ -999,6 +1003,12 @@ function save_button_handler(){
 				}
 			});
 		} else {
+			dv_exam_nm.innerHTML = glb_curr_lang.msg_todacarne_answers_writing;
+			//dv_exam_nm.classList.add("is_red");
+			write_firebase_exam_object().then((result) => {
+				dv_exam_nm.innerHTML = glb_curr_lang.msg_todacarne_answers_name;
+				//dv_exam_nm.classList.remove("is_red");
+			});
 		}
 	});
 }
@@ -1016,10 +1026,12 @@ function open_button_handler(){
 			let all_disp_nams = read_all_exam_names();
 			toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm){
 				dv_ops_n.remove();
-				read_exam_objetc(exam_nm);
+				read_exam_object(exam_nm);
 				dv_exam_nm.innerHTML = exam_nm;
 			});
 		} else {
+			dv_exam_nm.innerHTML = glb_curr_lang.msg_todacarne_answers_reading;
+			read_firebase_exam_object();
 		}
 	});
 }
@@ -1553,11 +1565,19 @@ function calc_quest_save_object(dv_quest){
 		return null;
 	}
 	const sv_obj = {};
-	
-	sv_obj.v_min = quest.v_min;
-	sv_obj.v_max = quest.v_max;
-	sv_obj.has_answ = quest.has_answ;
-	sv_obj.answers = JSON.parse(JSON.stringify(quest.answers));
+
+	if(quest.v_min != null){
+		sv_obj.v_min = quest.v_min;
+	}
+	if(quest.v_max != null){
+		sv_obj.v_max = quest.v_max;
+	}
+	if(quest.has_answ != null){
+		sv_obj.has_answ = quest.has_answ;
+	}
+	if(quest.answers != null){
+		sv_obj.answers = JSON.parse(JSON.stringify(quest.answers));
+	}
 	if(quest.all_nxt != null){
 		sv_obj.all_nxt = JSON.parse(JSON.stringify(quest.all_nxt));
 	}
@@ -1583,10 +1603,18 @@ function calc_exam_save_object(){
 function update_nodes_exam_with(ld_obj){
 	const db = db_nodes_exam;
 	for (const [qid, quest] of Object.entries(ld_obj)) {
-		db[qid].v_min = quest.v_min;
-		db[qid].v_max = quest.v_max;
-		db[qid].has_answ = quest.has_answ;
-		db[qid].answers = JSON.parse(JSON.stringify(quest.answers));
+		if(quest.v_min != null){
+			db[qid].v_min = quest.v_min;
+		}
+		if(quest.v_max != null){
+			db[qid].v_max = quest.v_max;
+		}
+		if(quest.has_answ != null){
+			db[qid].has_answ = quest.has_answ;
+		}
+		if(quest.answers != null){
+			db[qid].answers = JSON.parse(JSON.stringify(quest.answers));
+		}
 		if(quest.all_nxt != null){
 			db[qid].all_nxt = JSON.parse(JSON.stringify(quest.all_nxt));
 		}
@@ -1595,7 +1623,13 @@ function update_nodes_exam_with(ld_obj){
 
 function display_support_for_question(qid, ld_obj){
 	const quest = ld_obj[qid];
+	if(quest == null){
+		return;
+	}
 	const all_supp = quest.support;
+	if(all_supp == null){
+		return;
+	}
 	all_supp.forEach((cit_obj) => {
 		if(cit_obj.kind == VRS_CIT_KIND){
 			add_verse_cit(qid, cit_obj);
@@ -1608,6 +1642,7 @@ function display_support_for_question(qid, ld_obj){
 }
 
 function display_exam_load_object(ld_obj){
+	console.log("FULL_READ_OBJ = " + JSON.stringify(ld_obj, null, "  "));
 	init_exam_database();
 	update_nodes_exam_with(ld_obj);
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
@@ -1653,7 +1688,7 @@ function write_exam_object(name){
 	}
 }
 
-function read_exam_objetc(name){
+function read_exam_object(name){
 	console.log("READING " + name);
 	write_exam_name(name);
 	let rd_obj_str = window.localStorage.getItem(name);
@@ -1662,7 +1697,6 @@ function read_exam_objetc(name){
 		rd_obj = JSON.parse(rd_obj_str);
 	}
 	if(rd_obj != null){
-		console.log("FULL_READ_OBJ = " + JSON.stringify(rd_obj, null, "  "));
 		display_exam_load_object(rd_obj);
 	}
 }
@@ -1671,5 +1705,25 @@ function delete_exam_object(name){
 	console.log("DELETING " + name);
 	delete_exam_name(name);
 	window.localStorage.removeItem(name);
+}
+
+function write_firebase_exam_object(){
+	console.log("SAVING in TodaCarne.com");
+	const wr_obj = calc_exam_save_object();
+	return firebase_write_object(firebase_answers_path, wr_obj);
+}
+
+function read_firebase_exam_object(){
+	console.log("LOADING from TodaCarne.com");
+	return firebase_read_object(firebase_answers_path, (snapshot) => {
+		if (snapshot.exists()) {
+			const rd_obj = snapshot.val();
+			display_exam_load_object(rd_obj);
+			const dv_exam_nm = document.getElementById("id_exam_name");
+			dv_exam_nm.innerHTML = glb_curr_lang.msg_todacarne_answers_name;
+		} else {
+			console.log("No data available");
+		}
+	});	
 }
 

@@ -528,6 +528,10 @@ text-align: center;
 color: white;
 }
 
+.is_red {
+	color: red;
+}
+
 .exam_top_menu {
 	font-size: 4vh;
 	height: 7vh;

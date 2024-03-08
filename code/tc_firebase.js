@@ -93,7 +93,7 @@ function get_database(){
 	
 }
 
-export const firebase_write_object = (sub_ref, obj) => {
+export const firebase_write_object = (sub_ref, obj) => {  //sub_ref MUST start with '/' or be empty
 	return get_database().then((result) => {
 		const db_ref = ref(tc_fb_database, 'users/' + tc_fb_user_id + sub_ref)
 		console.log("firebase_write_object. db_ref = " + db_ref);
@@ -103,11 +103,11 @@ export const firebase_write_object = (sub_ref, obj) => {
 	});
 };
 
-export const firebase_read_object = (sub_ref, cbak) => {
+export const firebase_read_object = (sub_ref, callbak_func) => { //sub_ref MUST start with '/' or be empty
 	return get_database().then((result) => {
 		const db_ref = ref(tc_fb_database, 'users/' + tc_fb_user_id + sub_ref)
 		console.log("firebase_read_object. db_ref = " + db_ref);
-		onValue(db_ref, cbak).catch((error) => {
+		onValue(db_ref, callbak_func).catch((error) => {
 			console.error(error);
 		});
 	});

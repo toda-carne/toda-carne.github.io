@@ -201,6 +201,11 @@ function init_en_basic_msg(){
 	obj.msg_open_from_cloud = "FROM TodaCarne.com";
 	
 	obj.msg_new_answers_name = "NEW";
+	
+	obj.msg_todacarne_answers_name = "IN TodaCarne.com";
+	obj.msg_todacarne_answers_writing = "Saving...";
+	obj.msg_todacarne_answers_reading = "Opening...";
+	
 }
 
 function init_en_exam_msg(){
