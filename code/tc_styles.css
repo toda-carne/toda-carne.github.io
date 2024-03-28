@@ -528,10 +528,6 @@ text-align: center;
 color: white;
 }
 
-.is_red {
-	color: red;
-}
-
 .exam_top_menu {
 	font-size: 4vh;
 	height: 7vh;
@@ -592,6 +588,7 @@ color: white;
 	font-size:1em;
 	display: block;
 	background-color: #254795;
+	/*background-color: red;*/
 	color: white;
 }
 
@@ -667,7 +664,7 @@ color: white;
 	background-color: #13234c;
 }
 
-.exam.contradiction {
+.exam.is_contradiction {
 	background-color: #ff0000;
 }
 
@@ -716,5 +713,10 @@ color: white;
 
 .exam.is_hidden {
 	display: none;
+}
+
+.is_red {
+	background-color: red;
+	/* color: red; */
 }
 

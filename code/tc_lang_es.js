@@ -121,20 +121,6 @@ function init_es_basic_msg(){
 	
 }
 
-function init_es_exam_msg(){
-	const lg = all_es_msg;
-	lg.msg_for_all_biological_machines = "Para todas las maquina biológicas observadas en plantas, animales y personas:";
-	lg.msg_there_is_a_creator = "Hay un CREADOR";
-	lg.msg_there_is_no_creator = "NO hay un creador";
-	lg.msg_i_do_not_know_if_there_is_creator = "NO SE si hay un creador";
-	lg.msg_i_do_not_care_if_there_is_creator = "No me IMPORTA si hay un creador";
-	lg.msg_it_is_impossible_to_know_if_there_is_creator = "Es imposible saber si hay un creador";
-
-	lg.msg_the_creator_for_all_biological_machines = "El creador para todas las maquinas biologicas observadas en plantas, animales y personas:";
-	lg.msg_the_creator_has_technical_creativity = "Es inteligente, diseñador y tiene creatividad técnica.";
-	lg.msg_the_creator_has_no_technical_creativity = "NO es inteligente, o NO es diseñador, o NO tiene creatividad técnica.";
-}
-
 export function init_es_module(){
 	init_en_module();
 	
@@ -150,4 +136,18 @@ export function init_es_module(){
 }
 
 //init_es_module();
+
+function init_es_exam_msg(){
+	const lg = all_es_msg;
+	lg.q1_for_all_biological_machines = "Para todas las maquinas biológicas observadas en plantas, animales y personas:";
+	lg.q1_there_is_a_creator = "Hay un CREADOR";
+	lg.q1_there_is_no_creator = "NO hay un creador";
+	lg.q1_i_do_not_know_if_there_is_creator = "NO SE si hay un creador";
+	lg.q1_i_do_not_care_if_there_is_creator = "No me IMPORTA si hay un creador";
+	lg.q1_it_is_impossible_to_know_if_there_is_creator = "Es imposible saber si hay un creador";
+
+	lg.q2_the_creator_for_all_biological_machines = "El creador para todas las maquinas biologicas observadas en plantas, animales y personas:";
+	lg.q2_the_creator_has_technical_creativity = "Es inteligente, diseñador y tiene creatividad técnica.";
+	lg.q2_the_creator_has_no_technical_creativity = "NO es inteligente, o NO es diseñador, o NO tiene creatividad técnica.";
+}
 

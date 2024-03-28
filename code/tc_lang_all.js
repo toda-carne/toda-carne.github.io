@@ -208,21 +208,6 @@ function init_en_basic_msg(){
 	
 }
 
-function init_en_exam_msg(){
-	const lg = all_en_msg;
-	lg.msg_for_all_biological_machines = "For all biological machines observed in plants, animals and people:";
-	lg.msg_there_is_a_creator = "There is a CREATOR";
-	lg.msg_there_is_no_creator = "There is NO Creator";
-	lg.msg_i_do_not_know_if_there_is_creator = "I do not KNOW if there is a creator";
-	lg.msg_i_do_not_care_if_there_is_creator = "I do not CARE if there is a creator";
-	lg.msg_it_is_impossible_to_know_if_there_is_creator = "It is impossible to know if there is a creator";
-
-	lg.msg_the_creator_for_all_biological_machines = "The creator for all biological machines observed in plants, animals and people:";
-	lg.msg_the_creator_has_technical_creativity = "is intelligent, designer and has technical creativity";
-	lg.msg_the_creator_has_no_technical_creativity = "is NOT intelligent, or NOT a designer, or has NO technical creativity";
-
-}
-
 export let get_msg = null;
 
 export function init_get_msg(lang_msgs){
@@ -260,4 +245,52 @@ export function init_en_module(){
 
 //init_en_module();
 
+
+function init_en_exam_msg(){
+	const lg = all_en_msg;
+	lg.q0_0_1_end_of_test = "This test is not for you. This is the end of the test for you.";
+	lg.q0_0_2_contradiction = "You have a contradiction in your answers. Please change one of your answers shown in red. The contradiction is in one of them. Otherwise you cannot continue with this test.";
+	
+	lg.q0_1_are_you_reasonable = "This questions are for rational and reasonable people.";
+	lg.q0_1_yes = "I am a rational and reasonable person.";
+	lg.q0_1_no = "I am NOT a rational and reasonable person.";
+	
+	lg.q0_2_are_humans_intelligent = "I consider that the human being ";
+	lg.q0_2_yes = "is a creative, designer and intelligent being.";
+	lg.q0_2_no = "is NOT a creative, designer and intelligent being";
+	
+	lg.q0_3_can_an_engineer_rebuild_his_house = "If an engineer has built a house, and it gets destroyed, or burned, in an accident or by someone else ";
+	lg.q0_3_yes = "the engineer can build the house again.";
+	lg.q0_3_no = "the engineer cannot build the house again";
+	
+	lg.q0_4_experience_is_evidence = "A claim that most people can see, hear, smell, taste, touch, or confirm by perceptual experience, ";
+	lg.q0_4_yes = "it is evidence.";
+	lg.q0_4_no = "it is NOT evidence";
+	
+	lg.q0_5_more_complex_than = "Select all claims supported by evidence: ";
+	lg.q0_5_airplane_vs_knife = "an airplane is more complex than a knife";
+	lg.q0_5_computer_vs_lamp = "a computer is more complex than a lamp";
+	lg.q0_5_cellphone_vs_clock = "a cellphone is more complex than a clock";
+	
+	lg.q0_6_more_creativity_than = "Select all claims supported by evidence: ";
+	lg.q0_6_airplane_vs_knife = "an airplane requires more technical creativity than a knife";
+	lg.q0_6_computer_vs_lamp = "a computer requires more technical creativity than a lamp";
+	lg.q0_6_cellphone_vs_clock = "a cellphone requires more technical creativity than a clock";
+	
+	lg.q0_7_more_complexity_then_more_creativity = "Given all normal perceptual experience, the statement: 'the more complex a machine is, the bigger the technical creativity needed to reproduce it'";
+	lg.q0_7_yes = "It is true.";
+	lg.q0_7_no = "It is false.";
+	
+	lg.q1_for_all_biological_machines = "For all biological machines observed in plants, animals and people:";
+	lg.q1_there_is_a_creator = "There is a CREATOR";
+	lg.q1_there_is_no_creator = "There is NO Creator";
+	lg.q1_i_do_not_know_if_there_is_creator = "I do not KNOW if there is a creator";
+	lg.q1_i_do_not_care_if_there_is_creator = "I do not CARE if there is a creator";
+	lg.q1_it_is_impossible_to_know_if_there_is_creator = "It is impossible to know if there is a creator";
+
+	lg.q2_the_creator_for_all_biological_machines = "The creator for all biological machines observed in plants, animals and people:";
+	lg.q2_the_creator_has_technical_creativity = "is intelligent, designer and has technical creativity";
+	lg.q2_the_creator_has_no_technical_creativity = "is NOT intelligent, or NOT a designer, or has NO technical creativity";
+
+}
 

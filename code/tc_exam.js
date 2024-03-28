@@ -94,7 +94,8 @@ function is_in_viewport(elem) {
 	);
 }
 
-function add_question(qid, quest){
+function add_question(qid){
+	const quest = db_nodes_exam[qid];
 	const old_dv = document.getElementById(qid);
 	if(old_dv != null){ 
 		console.log("Question " + qid + " ALREADY in page (add_question)");
@@ -161,7 +162,7 @@ function add_question(qid, quest){
 	dv_msg.innerHTML = get_msg(htm_stm);
 	//dv_msg.classList.toggle("contradiction");
 
-	init_answers(qid, quest);
+	init_answers(qid);
 	
 	const id_dv_support = qid + SUF_ID_SUPPORT;
 	var dv_support = dv_quest.appendChild(document.createElement("div"));
@@ -180,7 +181,8 @@ function add_question(qid, quest){
 	return dv_quest;
 }
 
-function init_answers(qid, quest){
+function init_answers(qid){
+	const quest = db_nodes_exam[qid];
 	const is_init_to_answer = (quest.has_answ == null);
 	const dv_quest = document.getElementById(qid);
 	if(dv_quest == null){
@@ -228,7 +230,7 @@ function init_answers(qid, quest){
 					dv_answ.classList.add("selected");
 					an_answ.is_on = true;
 					if(! is_mult){
-						end_question(qid, quest);
+						end_question(qid);
 					}
 				}
 			});
@@ -246,7 +248,7 @@ function init_answers(qid, quest){
 					dv_answ_ed.innerHTML = glb_curr_lang.msg_edit_ans;
 					dv_answ_ed.addEventListener('click', function() {
 						quest.has_answ = null;
-						init_answers(qid, quest);
+						init_answers(qid);
 					});
 				}
 			});
@@ -259,23 +261,32 @@ function init_answers(qid, quest){
 		dv_end.classList.add("is_button");
 		dv_end.innerHTML = glb_curr_lang.msg_end_ans;
 		dv_end.addEventListener('click', function() {
-			end_question(qid, quest);
+			end_question(qid);
 		});
 	}
 }
 
-function end_question(qid, quest){
+function end_question(qid){
+	const quest = db_nodes_exam[qid];
 	if(quest.all_nxt != null){
 		remove_all_descendants(qid);
 	}
 	quest.has_answ = true;
-	init_answers(qid, quest);
-	if(quest.set_all_nxt == null){
+	init_answers(qid);
+	
+	if(quest.set_reactions == null){
 		return;
 	}
-	//console.log("BEFORE set_all_nxt = " + quest.all_nxt);
-	quest.set_all_nxt();
-	//console.log("AFTER set_all_nxt = " + quest.all_nxt);
+	//console.log("BEFORE set_reactions = " + quest.all_nxt);
+	quest.set_reactions();
+	//console.log("AFTER set_reactions = " + quest.all_nxt);
+	
+	add_all_nxt(qid);
+	add_contradictions(qid);
+}
+
+function add_all_nxt(qid){
+	const quest = db_nodes_exam[qid];
 	if(quest.all_nxt == null){
 		return;
 	}
@@ -294,6 +305,28 @@ function end_question(qid, quest){
 	//console.log(JSON.stringify(quest, null, "  "));
 }
 
+function add_contradictions(qid){
+	const quest = db_nodes_exam[qid];
+	const all_ctra = quest.all_contra;
+	if(all_ctra != null){
+		for(const ctra of all_ctra){
+			add_contradicted_by(ctra, qid);
+		}
+	}
+}
+
+function add_contradicted_by(ctra, qid){
+	const quest = db_nodes_exam[ctra];
+	if(quest.all_dicted_by == null){
+		quest.all_dicted_by = [];
+	}
+	quest.all_dicted_by.push(qid);
+	const dv_quest = document.getElementById(ctra + SUF_ID_MSG);
+	if(dv_quest != null){
+		dv_quest.classList.add("is_contradiction");
+	}
+}
+
 function remove_all_descendants(qid){
 	const quest = db_nodes_exam[qid];
 	const all_desc = quest.all_nxt;
@@ -301,6 +334,38 @@ function remove_all_descendants(qid){
 	if(all_desc != null){
 		for(const qq of all_desc){
 			remove_descendant(qq);
+		}
+	}
+	
+	remove_contradictions(qid);	
+}
+
+function remove_contradictions(qid){
+	const quest = db_nodes_exam[qid];
+	const all_ctra = quest.all_contra;
+	quest.all_contra = null;
+	if(all_ctra != null){
+		for(const ctra of all_ctra){
+			remove_contradicted_by(ctra, qid);
+		}
+	}
+}
+
+function remove_contradicted_by(ctra, qid){ 
+	//console.log("Removing all_dicted_by of " + ctra + " with qid=" + qid);
+	const quest = db_nodes_exam[ctra];
+	const all_dictd_by = quest.all_dicted_by;
+	if(all_dictd_by == null){
+		console.log("Cannot find all_dicted_by of " + ctra + " !!!");
+		return;
+	}
+	//console.log("BEFORE remove_contradicted_by = " + quest.all_nxt);
+	quest.all_dicted_by = all_dictd_by.filter((val) => (val != qid));
+	if(quest.all_dicted_by.length == 0){
+		//console.log("Removing is_red of " + ctra);
+		const dv_quest = document.getElementById(ctra + SUF_ID_MSG);
+		if(dv_quest != null){
+			dv_quest.classList.remove("is_contradiction");
 		}
 	}
 }
@@ -316,7 +381,7 @@ function remove_descendant(qid){
 		remove_all_descendants(qid);
 		return true;
 	}
-	console.log("Question " + qq + " was NOT found in page !!!");
+	console.log("Question " + qid + " was NOT found in page !!!");
 	return false;
 }
 
@@ -1397,42 +1462,10 @@ function toggle_link_ed(dv_link){
 	}
 }
 
-function dbg_init_pru_stms(){
-	var msg_001 = `Este es un mensaje que se toma varias lineas porque se supone que es largo y dice varias cosas en varios parrafos para ver que sucede con el display en el momento de desplegarlo en la table, en el computador y en el celular. Si se pega a los lados o no. Si se ve todo. Si se ve demasiado raro o no. Y varias posibilidades de desplegarlo o de mostrarlo. Es solo un ejemplo y no pretende ser ningun tipo de mensaje que se vaya a mostrar en la aplicacion final.
-	`;
-	
-	var st1 = add_question("id001", { htm_stm:"<h1>HOLA PABLO</h1>", v_min:-4310, v_max:-1876 });
-	var st2 = add_question("id002", { htm_stm:msg_001, v_min:1234, v_max:7654 });
-	var st3 = add_question("id003", { htm_stm:"HOLA JOSE", v_min:5430 });
-	add_question("id004", { htm_stm:"HOLA JOSE 2", v_min:45 });
-	add_question("id005", { htm_stm:"HOLA JOSE 3", v_min:52 });
-	add_question("id006", { htm_stm:"HOLA JOSE 4", v_min:23 });
-	add_question("id007", { htm_stm:"HOLA JOSE 5", v_min:22 });
-	add_question("id008", { htm_stm:"HOLA JOSE 6", v_min:35 });
-	add_question("id009", { htm_stm:"HOLA JOSE 7", bibref:"AD", v_min:11 });
-	add_question("id010", { htm_stm:"HOLA JOSE 8", v_min:9 });
-	add_question("id011", { htm_stm:"HOLA JOSE 9", v_min:67 });
-	add_question("id012", { htm_stm:"HOLA JOSE 10", v_min:5 });
-	add_question("id013", { htm_stm:"HOLA JOSE 11", v_min:25 });
-	add_question("id014", { htm_stm:"HOLA JOSE 12", v_min:61 });
-	add_question("id015", { htm_stm:"HOLA JOSE 13", v_min:98 });
-	add_question("id016", { htm_stm:"HOLA JOSE 14", v_min:3 });
-	add_question("id017", { htm_stm:"HOLA JOSE 15", v_min:7 });
-	add_question("id018", { htm_stm:"HOLA JOSE 16", v_min:44 });
-	
-	
-	/*st3.addEventListener('click', function(event) {
-		var elem1 = document.getElementById("id001");
-		elem1.remove();
-	});	*/
-	//var st4 = add_question("id_4", "Cuarto mensaje", null, null, null);
-
-};
-
 function add_exam_question(qid){
 	const nd = db_nodes_exam[qid];
 	if(nd != null){
-		return add_question(qid, nd);
+		return add_question(qid);
 	} else {
 		console.log("Could not find question " + qid + " in questions db.");
 	}
@@ -1495,7 +1528,6 @@ export function init_page_exam(){
 	init_exam_database();
 	init_exam_module_vars();
 	init_exam_buttons();
-	//dbg_init_pru_stms();
 	
 	return add_exam_question(FIRST_EXAM_QUESTION_ID);
 };
