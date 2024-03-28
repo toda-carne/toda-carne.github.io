@@ -182,6 +182,7 @@ function add_question(qid){
 }
 
 function init_answers(qid){
+	set_is_contra_if_so(qid);
 	const quest = db_nodes_exam[qid];
 	const is_init_to_answer = (quest.has_answ == null);
 	const dv_quest = document.getElementById(qid);
@@ -321,7 +322,18 @@ function add_contradicted_by(ctra, qid){
 		quest.all_dicted_by = [];
 	}
 	quest.all_dicted_by.push(qid);
-	const dv_quest = document.getElementById(ctra + SUF_ID_MSG);
+	set_is_contra_if_so(ctra);
+}
+
+function set_is_contra_if_so(qid){
+	const quest = db_nodes_exam[qid];
+	if(quest.all_dicted_by == null){
+		return;
+	}
+	if(quest.all_dicted_by.length == 0){
+		return;
+	}
+	const dv_quest = document.getElementById(qid + SUF_ID_MSG);
 	if(dv_quest != null){
 		dv_quest.classList.add("is_contradiction");
 	}
@@ -1578,6 +1590,12 @@ function calc_quest_save_object(dv_quest){
 	if(quest.all_nxt != null){
 		sv_obj.all_nxt = JSON.parse(JSON.stringify(quest.all_nxt));
 	}
+	if(quest.all_contra != null){
+		sv_obj.all_contra = JSON.parse(JSON.stringify(quest.all_contra));
+	}
+	if(quest.all_dicted_by != null){
+		sv_obj.all_dicted_by = JSON.parse(JSON.stringify(quest.all_dicted_by));
+	}
 	
 	sv_obj.support = calc_support_save_array(dv_quest);
 	
@@ -1614,6 +1632,12 @@ function update_nodes_exam_with(ld_obj){
 		}
 		if(quest.all_nxt != null){
 			db[qid].all_nxt = JSON.parse(JSON.stringify(quest.all_nxt));
+		}
+		if(quest.all_contra != null){
+			db[qid].all_contra = JSON.parse(JSON.stringify(quest.all_contra));
+		}
+		if(quest.all_dicted_by != null){
+			db[qid].all_dicted_by = JSON.parse(JSON.stringify(quest.all_dicted_by));
 		}
 	}
 }

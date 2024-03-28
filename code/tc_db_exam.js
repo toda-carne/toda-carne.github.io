@@ -63,6 +63,7 @@ export function init_exam_database(){
 				return;
 			}
 			this.all_nxt = ["q0_0_2"];
+			this.all_contra = ["q0_1", "q0_2", "q0_0_2"];
 			//console.log(this);
 		},
 	};
@@ -86,6 +87,7 @@ export function init_exam_database(){
 				return;
 			}
 			this.all_nxt = ["q0_0_2"];
+			this.all_contra = ["q0_1", "q0_4", "q0_0_2"];
 			//console.log(this);
 		},
 	};
@@ -111,6 +113,7 @@ export function init_exam_database(){
 			const a2_on = this.answers[2].is_on;
 			if(! a0_on || ! a1_on || ! a2_on){ 
 				this.all_nxt = ["q0_0_2"];
+				this.all_contra = ["q0_4", "q0_5", "q0_0_2"];
 				return;
 			}
 			this.all_nxt = ["q0_6"];

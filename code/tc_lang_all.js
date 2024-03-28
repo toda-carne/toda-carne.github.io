@@ -249,7 +249,7 @@ export function init_en_module(){
 function init_en_exam_msg(){
 	const lg = all_en_msg;
 	lg.q0_0_1_end_of_test = "This test is not for you. This is the end of the test for you.";
-	lg.q0_0_2_contradiction = "You have a contradiction in your answers. Please change one of your answers shown in red. The contradiction is in one of them. Otherwise you cannot continue with this test.";
+	lg.q0_0_2_contradiction = "You have a contradiction in your answers. Please change one of your answers to the questions shown in red. The contradiction is in one of them. Otherwise you cannot continue with this test.";
 	
 	lg.q0_1_are_you_reasonable = "This questions are for rational and reasonable people.";
 	lg.q0_1_yes = "I am a rational and reasonable person.";
@@ -267,12 +267,12 @@ function init_en_exam_msg(){
 	lg.q0_4_yes = "it is evidence.";
 	lg.q0_4_no = "it is NOT evidence";
 	
-	lg.q0_5_more_complex_than = "Select all claims supported by evidence: ";
+	lg.q0_5_more_complex_than = "Select ALL claims supported by evidence: ";
 	lg.q0_5_airplane_vs_knife = "an airplane is more complex than a knife";
 	lg.q0_5_computer_vs_lamp = "a computer is more complex than a lamp";
 	lg.q0_5_cellphone_vs_clock = "a cellphone is more complex than a clock";
 	
-	lg.q0_6_more_creativity_than = "Select all claims supported by evidence: ";
+	lg.q0_6_more_creativity_than = "Select ALL claims supported by evidence: ";
 	lg.q0_6_airplane_vs_knife = "an airplane requires more technical creativity than a knife";
 	lg.q0_6_computer_vs_lamp = "a computer requires more technical creativity than a lamp";
 	lg.q0_6_cellphone_vs_clock = "a cellphone requires more technical creativity than a clock";
