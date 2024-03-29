@@ -1537,6 +1537,9 @@ function toggle_exam_name_ed(dv_name, save_fn){
 export function init_page_exam(){
 	console.log("Called init_page_exam");
 
+	//let sd_menu = document.getElementById("id_side_menu");
+	//sd_menu.classList.toggle("has_side_nav");
+	
 	init_exam_database();
 	init_exam_module_vars();
 	init_exam_buttons();

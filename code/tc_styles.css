@@ -531,14 +531,13 @@ color: white;
 .exam_top_menu {
 	font-size: 4vh;
 	height: 7vh;
-	overflow: auto;
+	overflow-x: scroll;
 	position: fixed;
 	top: 10vh;  /* cl_top_nav:height */
 	width: 100%;
 	z-index: 100;
 	text-decoration: none;
-	//padding: 1em 1em;
-	//border: 0.1vw solid white;
+	border-spacing: 10px 0px;
 	background-color: #0b142c;
 	border-bottom: 3px solid #23418c;
 }
@@ -556,9 +555,10 @@ color: white;
 }
 
 .exam_menu {
-	display: inline-block;
+	display: table-cell;
 	margin: 1vh;
 	border: 0.1vw solid white;
+	//background-color: red;
 }
 
 .exam_menu:hover {
