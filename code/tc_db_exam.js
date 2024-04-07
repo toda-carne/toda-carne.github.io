@@ -1,8 +1,9 @@
 
 "use strict";
 
-export const FIRST_EXAM_QUESTION_ID = "q1_1__";
+//export const FIRST_EXAM_QUESTION_ID = "q1_1__";
 //export const FIRST_EXAM_QUESTION_ID = "q1";
+export const STARTING_QUESTIONS = ["q0_4__", "q1_1__"];
 export const db_user_info = {};
 
 export let db_nodes_exam = {};
@@ -18,6 +19,14 @@ export function init_exam_database(){
 	
 	db.q0_2__ = { 
 		htm_stm: "q0_2__contradiction",
+	};
+	
+	db.q0_3__ = { 
+		htm_stm: "q0_3__end_so_far",
+	};
+	
+	db.q0_4__ = { 
+		htm_stm: "q0_4__about_beliefs",
 	};
 	
 	db.q1_1__ = { 
@@ -39,7 +48,7 @@ export function init_exam_database(){
 				return;
 			}
 			this.all_nxt = ["q0_1__"];
-			this.all_contra = ["q1_1__", "q0_1__"];
+			this.all_contra = ["q0_1__", "q1_1__"];
 			//console.log(this);
 		},
 	};
@@ -63,7 +72,7 @@ export function init_exam_database(){
 				return;
 			}
 			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q1_1__", "q1_2__", "q0_2__"];
+			this.all_contra = ["q0_2__", "q1_1__", "q1_2__"];
 			//console.log(this);
 		},
 	};
@@ -83,11 +92,124 @@ export function init_exam_database(){
 			this.all_nxt = [];
 			
 			if(this.answers[0].is_on){ 
-				this.all_nxt = ["q1_5__"];
+				this.all_nxt = ["q1_31__"];
 				return;
 			}
 			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q1_1__", "q1_3__", "q0_2__"];
+			this.all_contra = ["q0_2__", "q1_1__", "q1_3__"];
+			//console.log(this);
+		},
+	};
+	
+	db.q1_31__ = { 
+		htm_stm: "q1_31__all_biological_machines",
+		answers: [
+			{ htm_answ: "q1_31__evolution" },
+			{ htm_answ: "q1_31__creator" },
+			{ htm_answ: "q1_31__other" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions in question q1_1__");
+				return;
+			}
+			this.all_nxt = [];
+			
+			const a0 = this.answers[0].is_on;
+			const a1 = this.answers[1].is_on;
+			const a2 = this.answers[2].is_on;
+			if(a0){ 
+				this.all_nxt = ["q1_33__"];
+				return;
+			}
+			if(a1){ 
+				this.all_nxt = ["q1_32__"];
+				return;
+			}
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q1_1__", "q1_31__"];
+			//console.log(this);
+		},
+	};
+	
+	db.q1_32__ = { 
+		htm_stm: "q1_32__the_creator",
+		answers: [
+			{ htm_answ: "q1_32__intelligent" },
+			{ htm_answ: "q1_32__not_intelligent" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions in question q1_1__");
+				return;
+			}
+			this.all_nxt = [];
+			
+			const a0 = this.answers[0].is_on;
+			const a1 = this.answers[1].is_on;
+			if(a0){ 
+				this.all_nxt = ["q0_3__"];
+				return;
+			}
+			this.all_nxt = ["q1_4__"];
+			return;
+			//console.log(this);
+		},
+	};
+	
+	db.q1_33__ = { 
+		htm_stm: "q1_33__the_evolution",
+		answers: [
+			{ htm_answ: "q1_33__intelligent" },
+			{ htm_answ: "q1_33__not_intelligent" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions in question q1_1__");
+				return;
+			}
+			this.all_nxt = [];
+			
+			//const a0 = this.answers[0].is_on;
+			const a1 = this.answers[1].is_on;
+			if(a1){ 
+				this.all_nxt = ["q1_4__"];
+				return;
+			}
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q1_1__", "q1_3__", "q1_31__", "q1_33__"];
+			//console.log(this);
+		},
+	};
+	
+	db.q1_4__ = { 
+		htm_stm: "q1_4__requires_technical_creativity",
+		is_multi: true,
+		answers: [
+			{ htm_answ: "q1_4__knife" },
+			{ htm_answ: "q1_4__lamp" },
+			{ htm_answ: "q1_4__clock" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions in question q1_4__");
+				return;
+			}
+			this.all_nxt = [];
+			
+			const a0_on = this.answers[0].is_on;
+			const a1_on = this.answers[1].is_on;
+			const a2_on = this.answers[2].is_on;
+			if(! a0_on || ! a1_on || ! a2_on){ 
+				this.all_nxt = ["q0_2__"];
+				this.all_contra = ["q0_2__", "q1_2__", "q1_4__"];
+				return;
+			}
+			this.all_nxt = ["q1_5__"];
 			//console.log(this);
 		},
 	};
@@ -96,8 +218,8 @@ export function init_exam_database(){
 		htm_stm: "q1_5__more_complex_than",
 		is_multi: true,
 		answers: [
-			{ htm_answ: "q1_5__airplane_vs_knife" },
-			{ htm_answ: "q1_5__computer_vs_lamp" },
+			{ htm_answ: "q1_5__building_vs_knife" },
+			{ htm_answ: "q1_5__car_vs_lamp" },
 			{ htm_answ: "q1_5__cellphone_vs_clock" },
 		],
 		set_reactions: function () {
@@ -113,36 +235,7 @@ export function init_exam_database(){
 			const a2_on = this.answers[2].is_on;
 			if(! a0_on || ! a1_on || ! a2_on){ 
 				this.all_nxt = ["q0_2__"];
-				this.all_contra = ["q1_2__", "q1_5__", "q0_2__"];
-				return;
-			}
-			this.all_nxt = ["q1_6__"];
-			//console.log(this);
-		},
-	};
-	
-	db.q1_6__ = { 
-		htm_stm: "q1_6__more_creativity_than",
-		is_multi: true,
-		answers: [
-			{ htm_answ: "q1_6__airplane_vs_knife" },
-			{ htm_answ: "q1_6__computer_vs_lamp" },
-			{ htm_answ: "q1_6__cellphone_vs_clock" },
-		],
-		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
-			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_6__");
-				return;
-			}
-			this.all_nxt = [];
-			
-			const a0_on = this.answers[0].is_on;
-			const a1_on = this.answers[1].is_on;
-			const a2_on = this.answers[2].is_on;
-			if(! a0_on || ! a1_on || ! a2_on){ 
-				this.all_nxt = ["q0_2__"];
-				this.all_contra = ["q1_2__", "q1_6__", "q0_2__"];
+				this.all_contra = ["q0_2__", "q1_2__", "q1_5__"];
 				return;
 			}
 			this.all_nxt = ["q1_7__"];
@@ -159,53 +252,106 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_6__");
+				console.log("Already set_reactions in question q1_7__");
 				return;
 			}
 			this.all_nxt = [];
 			
-			//const a0_on = this.answers[0].is_on;
+			const a0_on = this.answers[0].is_on;
 			//const a1_on = this.answers[1].is_on;
-			//console.log(this);
+			if(a0_on){ 
+				this.all_nxt = ["q1_9__"];
+				return;
+			}
+			this.all_nxt = ["q1_8__"];
 		},
 	};
 	
-	db.q1 = { 
-		htm_stm: "q1_for_all_biological_machines",
-		//v_min: -100,
-		//v_max: -500,
+	db.q1_8__ = { 
+		htm_stm: "q1_8__more_creativity",
+		is_multi: true,
 		answers: [
-			{ htm_answ: "q1_there_is_a_creator" },
-			{ htm_answ: "q1_there_is_no_creator" },
-			{ htm_answ: "q1_i_do_not_know_if_there_is_creator" },
-			{ htm_answ: "q1_i_do_not_care_if_there_is_creator" },
-			{ htm_answ: "q1_it_is_impossible_to_know_if_there_is_creator" },
+			{ htm_answ: "q1_8__building_vs_knife" },
+			{ htm_answ: "q1_8__car_vs_lamp" },
+			{ htm_answ: "q1_8__cellphone_vs_clock" },
 		],
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question " + qid);
+				console.log("Already set_reactions in question q1_7__");
+				return;
+			}
+			this.all_nxt = [];
+
+			const a0_on = this.answers[0].is_on;
+			const a1_on = this.answers[1].is_on;
+			const a2_on = this.answers[2].is_on;
+			if(! a0_on || ! a1_on || ! a2_on){ 
+				this.all_nxt = ["q0_2__"];
+				this.all_contra = ["q0_2__", "q1_2__", "q1_8__"];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q1_1__", "q1_2__", "q1_7__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q1_9__ = { 
+		htm_stm: "q1_9__coplexity_of_biological_machines",
+		is_multi: true,
+		answers: [
+			{ htm_answ: "q1_9__car_vs_mitosis" },
+			{ htm_answ: "q1_9__smartphone_vs_sex" },
+			{ htm_answ: "q1_9__bicycle_vs_healing" },
+			{ htm_answ: "q1_9__knife_vs_regeneration" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions in question q1_7__");
+				return;
+			}
+			this.all_nxt = [];
+
+			const a0_on = this.answers[0].is_on;
+			const a1_on = this.answers[1].is_on;
+			const a2_on = this.answers[2].is_on;
+			const a3_on = this.answers[3].is_on;
+			if(! a0_on || ! a1_on || ! a2_on || ! a3_on){ 
+				this.all_nxt = ["q0_2__"];
+				this.all_contra = ["q0_2__", "q1_2__", "q1_9__"];
+				return;
+			}
+			
+			this.all_nxt = ["q1_10__"];
+		},
+	};
+	
+	db.q1_10__ = { 
+		htm_stm: "q1_10__more_complexity_in_biology",
+		answers: [
+			{ htm_answ: "q1_10__yes" },
+			{ htm_answ: "q1_10__no" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions in question q1_7__");
 				return;
 			}
 			this.all_nxt = [];
 			
-			if(this.answers[0].is_on){ 
-				this.all_nxt = ["q2"];
+			const a0_on = this.answers[0].is_on;
+			//const a1_on = this.answers[1].is_on;
+			if(a0_on){ 
+				this.all_nxt = ["q1_11__"];
 				return;
 			}
-			//console.log(this);
+			this.all_nxt = ["q0_3__"];
 		},
 	};
 	
-	db.q2 = { 
-		htm_stm: "q2_the_creator_for_all_biological_machines",
-		//v_min: -7000,
-		answers: [
-			{ htm_answ: "q2_the_creator_has_technical_creativity" },
-			{ htm_answ: "q2_the_creator_has_no_technical_creativity" },
-		],
-	};
-		
 }
 
 

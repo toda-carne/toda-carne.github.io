@@ -720,3 +720,17 @@ color: white;
 	/* color: red; */
 }
 
+.exam_ref {
+	background-color: #254795;
+}
+
+a.exam_ref {
+	color: yellow;
+	//color: red;
+}
+
+a.exam_ref:hover {
+	color: black;
+	background-color: white;
+}
+

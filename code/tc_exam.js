@@ -2,7 +2,7 @@
 import { num2abbr, num2book_en, get_msg, 
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang } from './tc_lang_all.js';
 	
-import { FIRST_EXAM_QUESTION_ID, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
+import { STARTING_QUESTIONS, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
 
 import { firebase_write_object, firebase_read_object, firebase_sign_out, init_firebase_todacarne } from './tc_firebase.js';
 
@@ -1544,7 +1544,16 @@ export function init_page_exam(){
 	init_exam_module_vars();
 	init_exam_buttons();
 	
-	return add_exam_question(FIRST_EXAM_QUESTION_ID);
+	let added = null;
+	for(const qq of STARTING_QUESTIONS){
+		//console.log("Adding question " + qq + " to page");
+		added = add_exam_question(qq);
+		if(added == null){
+			console.log("Question " + qq + " could NOT be added to page !!!");
+		}
+	}
+	return added;
+	//return add_exam_question(FIRST_EXAM_QUESTION_ID);
 };
 
 function calc_support_save_array(dv_quest){
