@@ -2,7 +2,7 @@
   "translators": [
     { "name": "Jose Luis Quiroga" }
   ],
-  "language": "en",
-  "with_firebase": false,
+  "language": "es",
+  "with_gstats": true,
 }
  

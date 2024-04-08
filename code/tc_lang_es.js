@@ -118,6 +118,7 @@ function init_es_basic_msg(){
 	obj.msg_todacarne_answers_name = "EN TodaCarne.com";
 	obj.msg_todacarne_answers_writing = "Guardando...";
 	obj.msg_todacarne_answers_reading = "Abriendo...";
+	obj.msg_todacarne_no_internet = "Sin conexion a internet.";
 	
 }
 

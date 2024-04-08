@@ -126,28 +126,15 @@ export const firebase_sign_out = () => {
 // Requests to this API identitytoolkit method google.cloud.identitytoolkit.v1.ProjectConfigService.GetProjectConfig are blocked
 // FirebaseAuth.getInstance().signOut();
 
-export function init_firebase_todacarne(){
-	get_database();
-}
-
-export const write_jlq = (field, val) => {
+/*
+const write_jlq = (field, val) => {
 	firebase_write_object('', {
 		username: val,
 		email: 'el correo de ' + val,
 	});
-	/*
-	if(tc_fb_database == null){ return; }
-	//set(ref(tc_fb_database, 'users/' + tc_fb_user_id + '/sub1/sub2/sub3'), {
-	set(ref(tc_fb_database, 'users/' + tc_fb_user_id), {
-		username: val,
-	 email: 'el correo de ' + val,
-	}).catch((error) => {
-		console.error(error);
-	});
-	*/
 };
 
-export const read_jlq = () => {
+const read_jlq = () => {
 	firebase_read_object('/username', (snapshot) => {
 		if (snapshot.exists()) {
 			var the_val = snapshot.val();
@@ -157,21 +144,15 @@ export const read_jlq = () => {
 			console.log("No data available");
 		}
 	});
-	
-	/*
-	if(tc_fb_database == null){ return; }
-	const dbRef2 = ref(tc_fb_database, 'users/' + tc_fb_user_id + '/username')
-	read_fb(dbRef2, "db_read_data");
-	*/
 }
 
-export const read2_jlq = () => {
+const read2_jlq = () => {
 	if(tc_fb_database == null){ return; }
 	const dbRef2 = ref(tc_fb_database, 'users/campo_1')
 	read_fb(dbRef2, "db_read_data_2");
 }
 
-export const read3_jlq = () => {
+const read3_jlq = () => {
 	firebase_read_object('', (snapshot) => {
 		if (snapshot.exists()) {
 			var the_val = snapshot.val();
@@ -180,22 +161,6 @@ export const read3_jlq = () => {
 			console.log("No data available");
 		}
 	});
-
-	/*
-	if(tc_fb_database == null){ return; }
-	const dbRef = ref(tc_fb_database, 'users/' + tc_fb_user_id)
-	onValue(dbRef, (snapshot) => {
-		if (snapshot.exists()) {
-			var the_val = snapshot.val();
-			//console.log('read_fireabase= ' + the_val);
-			console.log('read_fireabase= ' + JSON.stringify(the_val, null, "  "));
-		} else {
-			console.log("No data available");
-		}
-	}).catch((error) => {
-		console.error(error);
-	});        
-	*/
 }
 
 const read_fb = (dbRef, field) => {
@@ -215,4 +180,6 @@ const read_fb = (dbRef, field) => {
 	});        
 	
 };
+
+*/
 

@@ -4,13 +4,31 @@ import { num2abbr, num2book_en, get_msg,
 	
 import { STARTING_QUESTIONS, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
 
-import { firebase_write_object, firebase_read_object, firebase_sign_out, init_firebase_todacarne } from './tc_firebase.js';
+// import { firebase_write_object, firebase_read_object, firebase_sign_out } from './tc_firebase.js';
 
 "use strict";
 
 let DEFAULT_BOOK = null;
 let DEFAULT_STRONG = null;
 let DEFAULT_LINK_NAME = null;
+
+let fb_write_object = null;
+let fb_read_object = null;
+let fb_sign_out = null;
+
+function init_exam_fb(){
+	const mod_nm = "./tc_firebase.js";
+	import(mod_nm)
+	.then((module) => {
+		fb_write_object = module.firebase_write_object;
+		fb_read_object = module.firebase_read_object;
+		fb_sign_out = module.firebase_sign_out;
+	})
+	.catch((err) => {
+		console.log("Could NOT import '${mod_nm}' err:" + err.message);
+	});
+	
+}
 
 function init_exam_module_vars(){
 	console.log("Calling init_exam_module_vars");
@@ -1540,6 +1558,7 @@ export function init_page_exam(){
 	//let sd_menu = document.getElementById("id_side_menu");
 	//sd_menu.classList.toggle("has_side_nav");
 	
+	init_exam_fb();
 	init_exam_database();
 	init_exam_module_vars();
 	init_exam_buttons();
@@ -1741,14 +1760,26 @@ function delete_exam_object(name){
 }
 
 function write_firebase_exam_object(){
+	if(fb_write_object == null){
+		console.log("CANNOT write_firebase_exam_object. fb_write_object == null");
+		const dv_exam_nm = document.getElementById("id_exam_name");
+		dv_exam_nm.innerHTML = glb_curr_lang.msg_todacarne_no_internet;
+		return;
+	}
 	console.log("SAVING in TodaCarne.com");
 	const wr_obj = calc_exam_save_object();
-	return firebase_write_object(firebase_answers_path, wr_obj);
+	return fb_write_object(firebase_answers_path, wr_obj);
 }
 
 function read_firebase_exam_object(){
+	if(fb_read_object == null){
+		console.log("CANNOT read_firebase_exam_object. fb_read_object == null");
+		const dv_exam_nm = document.getElementById("id_exam_name");
+		dv_exam_nm.innerHTML = glb_curr_lang.msg_todacarne_no_internet;
+		return;
+	}
 	console.log("LOADING from TodaCarne.com");
-	return firebase_read_object(firebase_answers_path, (snapshot) => {
+	return fb_read_object(firebase_answers_path, (snapshot) => {
 		if (snapshot.exists()) {
 			const rd_obj = snapshot.val();
 			display_exam_load_object(rd_obj);

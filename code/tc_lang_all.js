@@ -205,6 +205,7 @@ function init_en_basic_msg(){
 	obj.msg_todacarne_answers_name = "IN TodaCarne.com";
 	obj.msg_todacarne_answers_writing = "Saving...";
 	obj.msg_todacarne_answers_reading = "Opening...";
+	obj.msg_todacarne_no_internet = "No internet conection.";
 	
 }
 
@@ -298,14 +299,19 @@ function init_en_exam_msg(){
 	lg.q1_8__cellphone_vs_clock = "a cellphone requires more technical creativity to reproduce than a clock";
 	
 	lg.q1_9__coplexity_of_biological_machines = "Select ALL claims supported by normal perceptual experience about man made machines compared to biological machines: ";
-	lg.q1_9__car_vs_mitosis = "We do NOT observe in cars that it can start a process in which it divides in two identical to the original, nor we observe it in any other man made machine, yet we observe it in biological machines like the cell.";
-	lg.q1_9__smartphone_vs_sex = "We do NOT observe in smartphones that a blue one joins with a pink one, and after a while, a third small one comes out of the pink one, that resembles a mix of two of them, and that it grows in size as time goes by, nor we observe it in any other man made machine, yet we observe it in biological machines like the human body.";
-	lg.q1_9__bicycle_vs_healing = "We do NOT observe in bicycles that when one crashes and its surface gets damaged, in a few days it has fixed itself, nor we observe it in any other man made machine, yet we observe it in biological machines like in the skin of animals.";
+	lg.q1_9__car_vs_mitosis = "We do NOT observe in cars that one can start a process in which it divides in two of them identical to the original, nor we observe it in any other man made machine, yet we observe it in biological machines like the cell.";
+	lg.q1_9__smartphone_vs_sex = "We do NOT observe in smartphones that a male one joins with a female one, and after a while, a third small one comes out of the female one, that resembles a mix of two of them, and that it grows in size as time goes by, nor we observe it in any other man made machine, yet we observe it in biological machines like the human body.";
+	lg.q1_9__bicycle_vs_healing = "We do NOT observe in bicycles that when one crashes and its surface gets damaged, in a few days it has fixed its surface, nor we observe it in any other man made machine, yet we observe it in biological machines like in the skin of animals.";
 	lg.q1_9__knife_vs_regeneration = "We do NOT observe in knifes that when one brakes and looses its tip, in a few days it has grown a new tip, nor we observe it in any other man made machine, yet we observe it in biological machines like the tail of some lizards";
 	
 	lg.q1_10__more_complexity_in_biology = "Given all normal perceptual experience, the statement: 'biological machines have more <a class='exam_ref' href='../en/book.html#technical-complexity_DOT_'>technical complexity</a> that man made machines and objects'";
 	lg.q1_10__yes = "It is true.";
 	lg.q1_10__no = "It is false.";
+	
+	lg.q1_11__human_complexity = "Select ALL claims about <a class='exam_ref' href='../en/book.html#technical-complexity_DOT_'>technical complexity</a> supported by evidence: ";
+	lg.q1_11__leg = "a leg is so complex that if we understood how they are made we could take a drop of blood of the person missing a leg, make a custom leg for him, and install it, just like we do with a car wheel.";
+	lg.q1_11__liver = "a liver is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged liver, make a custom liver for him, and install it, just like we do with a distribution and logistics warehouse of a factory.";
+	lg.q1_11__lung = "a lung is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged lung, make a custom lung for him, and install it, just like we do with the air filtering equipment of a ventilation system.";
 	
 	lg.q1_20__can_an_engineer_rebuild_his_house = "If an engineer has built a house, and it gets destroyed, or burned, in an accident or by someone else ";
 	lg.q1_20__yes = "the engineer can build the house again.";

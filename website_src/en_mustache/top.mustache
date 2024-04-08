@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+{{#with_gstats}}
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBJN1N7HKP"></script>
 <script>
@@ -10,13 +11,11 @@
 
   gtag('config', 'G-KBJN1N7HKP');
 </script>
+{{/with_gstats}}
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>toda-carne.github.io</title>
-{{#with_firebase}}
-{{> ../all_mustache/firebase_imports}}
-{{/with_firebase}}
 <meta name="author" content="Jose Luis Quiroga">
 <link rel="stylesheet" href="../code/tc_styles.css">
 </head>
