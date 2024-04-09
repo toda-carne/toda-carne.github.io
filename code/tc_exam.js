@@ -16,6 +16,8 @@ let fb_write_object = null;
 let fb_read_object = null;
 let fb_sign_out = null;
 
+const qref_prefix = "QREF_";
+
 function init_exam_fb(){
 	const mod_nm = "./tc_firebase.js";
 	import(mod_nm)
@@ -114,13 +116,16 @@ function is_in_viewport(elem) {
 
 function add_question(qid){
 	const quest = db_nodes_exam[qid];
+	if(quest == null){
+		console.log("Could not find question " + qid + " in questions db.");
+		return null;
+	}
 	const old_dv = document.getElementById(qid);
 	if(old_dv != null){ 
 		console.log("Question " + qid + " ALREADY in page (add_question)");
 		return null;
 	}
 	
-	const htm_stm = quest.htm_stm;
 	const bibref = quest.bibref;
 	const v_min = quest.v_min;
 	const v_max = quest.v_max;
@@ -131,20 +136,19 @@ function add_question(qid){
 	dv_quest.classList.add("exam");
 	dv_quest.classList.add("has_border");
 	
+	quest.pos_page = dv_all_quest.childNodes.length - 1;
+	
 	const dv_stm = dv_quest.appendChild(document.createElement("div"));
 	dv_stm.classList.add("exam");
 	dv_stm.classList.add("stm");
 	
-	//if((bibref != null) || (v_min != null)){
-		const dv_pos = dv_stm.appendChild(document.createElement("div"));
-		dv_pos.classList.add("exam");
-		dv_pos.classList.add("pos");
-		dv_pos.classList.add("is_button");
-		//dv_pos.classList.add("is_hover");
-		dv_pos.addEventListener('click', function() {
-			toggle_pos_interaction(qid);
-		});
-	//}
+	const dv_pos = dv_stm.appendChild(document.createElement("div"));
+	dv_pos.classList.add("exam");
+	dv_pos.classList.add("pos");
+	dv_pos.classList.add("is_button");
+	dv_pos.addEventListener('click', function() {
+		toggle_pos_interaction(qid);
+	});
 
 	if(bibref != null){
 		const dv_bibref = dv_pos.appendChild(document.createElement("div"));
@@ -173,11 +177,16 @@ function add_question(qid){
 		}
 	}
 	
+	let the_stm = get_msg(quest.htm_stm);
+	if(quest.has_qrefs){
+		the_stm = replace_all_qrefs(the_stm);
+	}
+	
 	const dv_msg = dv_stm.appendChild(document.createElement("div"));
 	dv_msg.id = qid + SUF_ID_MSG;
 	dv_msg.classList.add("exam");
 	dv_msg.classList.add("msg");
-	dv_msg.innerHTML = get_msg(htm_stm);
+	dv_msg.innerHTML = "" + quest.pos_page + ". " + the_stm;
 	//dv_msg.classList.toggle("contradiction");
 
 	init_answers(qid);
@@ -312,7 +321,7 @@ function add_all_nxt(qid){
 	const all_added = [];
 	for(const qq of quest.all_nxt){
 		//console.log("Adding question " + qq + " to page");
-		const added = add_exam_question(qq);
+		const added = add_question(qq);
 		if(added == null){
 			console.log("Question " + qq + " could NOT be added to page !!!");
 		} else {
@@ -1492,16 +1501,6 @@ function toggle_link_ed(dv_link){
 	}
 }
 
-function add_exam_question(qid){
-	const nd = db_nodes_exam[qid];
-	if(nd != null){
-		return add_question(qid);
-	} else {
-		console.log("Could not find question " + qid + " in questions db.");
-	}
-	return null;
-};
-
 function toggle_exam_name_ed(dv_name, save_fn){
 	var dv_ed_name = get_new_dv_under(dv_name, id_dv_name_ed);
 	dv_ed_name.classList.add("exam");
@@ -1566,13 +1565,13 @@ export function init_page_exam(){
 	let added = null;
 	for(const qq of STARTING_QUESTIONS){
 		//console.log("Adding question " + qq + " to page");
-		added = add_exam_question(qq);
+		added = add_question(qq);
 		if(added == null){
 			console.log("Question " + qq + " could NOT be added to page !!!");
 		}
 	}
 	return added;
-	//return add_exam_question(FIRST_EXAM_QUESTION_ID);
+	//return add_question(FIRST_EXAM_QUESTION_ID);
 };
 
 function calc_support_save_array(dv_quest){
@@ -1701,7 +1700,7 @@ function display_exam_load_object(ld_obj){
 	dv_all_quest.innerHTML = "";
 	
 	for (const [qid, quest] of Object.entries(ld_obj)) {
-		const added = add_exam_question(qid);
+		const added = add_question(qid);
 		if(added == null){
 			console.log("Question " + qid + " could NOT be DISPLAYED in page !!!");
 		} else {
@@ -1789,5 +1788,31 @@ function read_firebase_exam_object(){
 			console.log("No data available");
 		}
 	});	
+}
+
+function qref_to_qid(qrf){
+	return qrf.slice(qref_prefix.length);
+}
+
+function qid_to_qhref(qid){
+	const quest = db_nodes_exam[qid];
+	if(quest == null){
+		const bad_qhrf = "<a class='exam_ref' href='#" + qid + "'>invalid question " + qid + "</a>";
+		return bad_qhrf;
+	}
+	const qhrf = "<a class='exam_ref' href='#" + qid + "'>question number " + quest.pos_page + "</a>";
+	return qhrf;
+}
+
+function replace_all_qrefs(str){
+	const words = str.split(' ');
+	words.forEach((wrd, idx, arr) => {
+		if(wrd.startsWith(qref_prefix)){
+			arr[idx] = qid_to_qhref(qref_to_qid(wrd)); 
+		}
+	});
+	
+	const nwstr = words.join(' ');
+	return nwstr;
 }
 

@@ -8,6 +8,8 @@ export const db_user_info = {};
 
 export let db_nodes_exam = {};
 
+export let answ_stack = [];
+
 //init_exam_database();
 export function init_exam_database(){
 	db_nodes_exam = {};
@@ -396,6 +398,33 @@ export function init_exam_database(){
 			
 			this.all_nxt = ["q0_2__"];
 			this.all_contra = ["q0_2__", "q1_1__", "q1_2__", "q1_10__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q1_12__ = { 
+		htm_stm: "q1_12__biological_requires_creativity",
+		has_qrefs: true,
+		answers: [
+			{ htm_answ: "q1_12__yes" },
+			{ htm_answ: "q1_12__no" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = [];
+
+			const a0_on = this.answers[0].is_on;
+			const a1_on = this.answers[1].is_on;
+			if(a0_on){ 
+				this.all_nxt = ["q0_3__"];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q1_7__", "q1_10__", "q1_12__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
 	

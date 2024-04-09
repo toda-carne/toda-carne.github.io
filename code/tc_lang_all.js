@@ -248,11 +248,15 @@ export function init_en_module(){
 
 
 function init_en_exam_msg(){
+	const href_tch_crea = "../en/book.html#technical-creativity_DOT_";
+	const href_tch_cplx = "../en/book.html#technical-complexity_DOT_";
+	const href_factories = "../en/book.html#factories_DOT_";
+	
 	const lg = all_en_msg;
 	lg.q0_1__end_of_test = "This test is not for you. This is the end of the test for you, unless you did not really mean it and change your answer. Click on your answer to change it.";
 	lg.q0_2__contradiction = "You have a contradiction in your answers. Please change one of your answers to the questions shown in red. The contradiction is in one of them. Otherwise you cannot continue with this test. Click on your answer to change it.";
 	lg.q0_3__end_so_far = "This test is in construction. This is the end of the test for you so far...";
-	lg.q0_4__about_beliefs = "<h4>All these questions are about what you believe NOT about what you think you have certainty. Answer them accordingly.</h4>";
+	lg.q0_4__about_beliefs = "<b>All these questions are about what you believe, NOT about what you think you have certainty. Some of them are just check questions to avoid silly behaviour. Answer them all properly.</b>";
 	
 	lg.q1_1__are_you_reasonable = "This questions are for rational and reasonable people.";
 	lg.q1_1__yes = "I am a rational and reasonable person.";
@@ -262,7 +266,7 @@ function init_en_exam_msg(){
 	lg.q1_2__yes = "it is evidence.";
 	lg.q1_2__no = "it is NOT evidence";
 	
-	lg.q1_3__are_humans_intelligent = "With respect to <a class='exam_ref' href='../en/book.html#technical-creativity_DOT_'>technical creativity</a>, there is evidence that the human being ";
+	lg.q1_3__are_humans_intelligent = `With respect to <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a>, there is evidence that the human being `;
 	lg.q1_3__yes = "is intelligent, designer and has technical creativity.";
 	lg.q1_3__no = "is NOT intelligent, or NOT a designer, or has NO technical creativity";
 	
@@ -270,11 +274,11 @@ function init_en_exam_msg(){
 	lg.q1_31__creator = "Were created by a CREATOR";
 	lg.q1_31__other = "Are result of an OTHER cause, not a creator";
 
-	lg.q1_32__the_creator = "The statement: 'Just like the human being, the CREATOR of all biological machines observed in plants, animals and people is intelligent, designer and has <a class='exam_ref' href='../en/book.html#technical-creativity_DOT_'>technical creativity</a>'";
+	lg.q1_32__the_creator = `The statement: 'Just like the human being, the CREATOR of all biological machines observed in plants, animals and people is intelligent, designer and has <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a>'`;
 	lg.q1_32__intelligent = "It is true.";
 	lg.q1_32__not_intelligent = "It is false.";
 	
-	lg.q1_33__the_evolution = "The statement: 'The creator used EVOLUTION as means to create all biological machines observed in plants, animals and people'";
+	lg.q1_33__the_evolution = `The statement: 'The creator used EVOLUTION as means to create all <a class='exam_ref' href='${href_factories}'>biological machines</a> observed in plants, animals and people'`;
 	lg.q1_33__yes = "It is true.";
 	lg.q1_33__no = "It is false.";
 	
@@ -282,39 +286,43 @@ function init_en_exam_msg(){
 	lg.q1_34__yes = "It is true.";
 	lg.q1_34__no = "It is false.";
 	
-	lg.q1_4__requires_technical_creativity = "Select ALL claims about <a class='exam_ref' href='../en/book.html#technical-creativity_DOT_'>technical creativity</a> supported by evidence: ";
+	lg.q1_4__requires_technical_creativity = `Select ALL claims about <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> supported by evidence: `;
 	lg.q1_4__knife = "a knife requires technical creativity to reproduce";
 	lg.q1_4__lamp = "a lamp requires technical creativity to reproduce";
 	lg.q1_4__clock = "a clock requires technical creativity to reproduce";
 	
-	lg.q1_5__more_complex_than = "Select ALL claims about <a class='exam_ref' href='../en/book.html#technical-complexity_DOT_'>technical complexity</a> supported by evidence: ";
+	lg.q1_5__more_complex_than = `Select ALL claims about <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> supported by evidence: `;
 	lg.q1_5__building_vs_knife = "a building has more technical complexity than a knife";
 	lg.q1_5__car_vs_lamp = "a car has more technical complexity than a lamp";
 	lg.q1_5__cellphone_vs_clock = "a cellphone has more technical complexity than a clock";
 	
-	lg.q1_7__more_complexity_then_more_creativity = "Given all normal perceptual experience, the statement: 'the more <a class='exam_ref' href='../en/book.html#technical-complexity_DOT_'>technical complexity</a> an object or machine has, THEN, the bigger the <a class='exam_ref' href='../en/book.html#technical-creativity_DOT_'>technical creativity</a> needed to reproduce it'";
+	lg.q1_7__more_complexity_then_more_creativity = `Given all normal perceptual experience, the statement: "the more <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> an object or machine has, THEN, the bigger the <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> needed to reproduce it"`;
 	lg.q1_7__yes = "It is true.";
 	lg.q1_7__no = "It is false.";
 	
-	lg.q1_8__more_creativity = "Select ALL claims about <a class='exam_ref' href='../en/book.html#technical-creativity_DOT_'>technical creativity</a> supported by evidence: ";
+	lg.q1_8__more_creativity = `Select ALL claims about <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> supported by evidence: `;
 	lg.q1_8__building_vs_knife = "a building requires more technical creativity to reproduce than a knife";
 	lg.q1_8__car_vs_lamp = "a car requires more technical creativity to reproduce than a lamp";
 	lg.q1_8__cellphone_vs_clock = "a cellphone requires more technical creativity to reproduce than a clock";
 	
-	lg.q1_9__coplexity_of_biological_machines = "Select ALL claims supported by normal perceptual experience about man made machines and <a class='exam_ref' href='../en/book.html#factories_DOT_'>factories</a> compared to biological machines: ";
+	lg.q1_9__coplexity_of_biological_machines = `Select ALL claims supported by normal perceptual experience about man made machines and <a class='exam_ref' href='${href_factories}'>factories</a> compared to biological machines: `;
 	lg.q1_9__car_vs_mitosis = "We do NOT observe in CARS that one can start a process in which it divides in two of them identical to the original, nor we observe it in any other man made machine, yet we observe it in the MITOSIS of biological machines like the CELL.";
 	lg.q1_9__smartphone_vs_sex = "We do NOT observe in SMARTPHONES that a male one joins with a female one, and after a while, a third small one comes out of the female one, that resembles a mix of two of them, and that it grows in size as time goes by, nor we observe it in any other man made machine, yet we observe it in SEX reproduction of biological machines like the HUMAN BODY.";
 	lg.q1_9__bicycle_vs_healing = "We do NOT observe in BICYCLES that when one crashes and its surface gets damaged, in a few days it has fixed its surface, nor we observe it in any other man made machine, yet we observe it in HEALING of biological machines like in the SKIN of animals.";
 	lg.q1_9__knife_vs_regeneration = "We do NOT observe in KNIFES that when one brakes and looses its tip, in a few days it has grown a new tip, nor we observe it in any other man made machine, yet we observe it in REGENERATION of biological machines like the TAIL of some lizards.";
 	
-	lg.q1_10__more_complexity_in_biology = "Given all normal perceptual experience, the statement: 'biological machines have more <a class='exam_ref' href='../en/book.html#technical-complexity_DOT_'>technical complexity</a> that man made machines and objects'";
+	lg.q1_10__more_complexity_in_biology = `Given all normal perceptual experience, the statement: "biological machines have more <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> that human made machines"`;
 	lg.q1_10__yes = "It is true.";
 	lg.q1_10__no = "It is false.";
 	
-	lg.q1_11__human_complexity = "Select ALL claims about <a class='exam_ref' href='../en/book.html#technical-complexity_DOT_'>technical complexity</a> supported by evidence: ";
+	lg.q1_11__human_complexity = `Select ALL claims about <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> and <a class='exam_ref' href='${href_factories}'>factories</a> supported by evidence: `;
 	lg.q1_11__leg = "a LEG is so complex that if we understood how they are made we could take a drop of blood of the person missing a leg, make a custom leg for him, and install it, just like we do with a car WHEEL.";
 	lg.q1_11__liver = "a LIVER is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged liver, make a custom liver for him, and install it, just like we do with a distribution and logistics warehouse of a FACTORY.";
 	lg.q1_11__lung = "a LUNG is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged lung, make a custom lung for him, and install it, just like we do with the air filtering equipment of a VENTILATION system.";
+	
+	lg.q1_12__biological_requires_creativity = `Given your answers in QREF_q1_10__ and QREF_q1_7__ you MUST conclude that the statement: "biological machines require more <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> than human made machines"`;
+	lg.q1_12__yes = "It is true.";
+	lg.q1_12__no = "It is false.";
 	
 	lg.q1_40__can_an_engineer_rebuild_his_house = "If an engineer has built a house, and it gets destroyed, or burned, in an accident or by someone else ";
 	lg.q1_40__yes = "the engineer can build the house again.";
