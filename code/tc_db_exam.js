@@ -38,7 +38,7 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_1__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
@@ -62,7 +62,7 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_2__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
@@ -86,7 +86,7 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_3__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
@@ -96,7 +96,7 @@ export function init_exam_database(){
 				return;
 			}
 			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q1_1__", "q1_3__"];
+			this.all_contra = ["q0_2__", "q1_1__", "q1_2__", "q1_3__"];
 			//console.log(this);
 		},
 	};
@@ -104,31 +104,24 @@ export function init_exam_database(){
 	db.q1_31__ = { 
 		htm_stm: "q1_31__all_biological_machines",
 		answers: [
-			{ htm_answ: "q1_31__evolution" },
 			{ htm_answ: "q1_31__creator" },
 			{ htm_answ: "q1_31__other" },
 		],
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_1__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
 			
 			const a0 = this.answers[0].is_on;
 			const a1 = this.answers[1].is_on;
-			const a2 = this.answers[2].is_on;
 			if(a0){ 
-				this.all_nxt = ["q1_33__"];
-				return;
-			}
-			if(a1){ 
 				this.all_nxt = ["q1_32__"];
 				return;
 			}
-			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q1_1__", "q1_31__"];
+			this.all_nxt = ["q1_4__"];
 			//console.log(this);
 		},
 	};
@@ -142,7 +135,7 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_1__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
@@ -150,7 +143,7 @@ export function init_exam_database(){
 			const a0 = this.answers[0].is_on;
 			const a1 = this.answers[1].is_on;
 			if(a0){ 
-				this.all_nxt = ["q0_3__"];
+				this.all_nxt = ["q1_33__"];
 				return;
 			}
 			this.all_nxt = ["q1_4__"];
@@ -162,25 +155,49 @@ export function init_exam_database(){
 	db.q1_33__ = { 
 		htm_stm: "q1_33__the_evolution",
 		answers: [
-			{ htm_answ: "q1_33__intelligent" },
-			{ htm_answ: "q1_33__not_intelligent" },
+			{ htm_answ: "q1_33__yes" },
+			{ htm_answ: "q1_33__no" },
 		],
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_1__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
 			
-			//const a0 = this.answers[0].is_on;
-			const a1 = this.answers[1].is_on;
-			if(a1){ 
+			const a0 = this.answers[0].is_on;
+			if(a0){ 
 				this.all_nxt = ["q1_4__"];
 				return;
 			}
-			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q1_1__", "q1_3__", "q1_31__", "q1_33__"];
+			this.all_nxt = ["q1_34__"];
+			return;
+			//console.log(this);
+		},
+	};
+	
+	db.q1_34__ = { 
+		htm_stm: "q1_34__six_spins",
+		answers: [
+			{ htm_answ: "q1_34__yes" },
+			{ htm_answ: "q1_34__no" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = [];
+			
+			const a0 = this.answers[0].is_on;
+			if(a0){ 
+				this.all_nxt = ["q0_3__"];
+				return;
+			}
+			this.all_nxt = ["q1_4__"];
+			return;
 			//console.log(this);
 		},
 	};
@@ -196,7 +213,7 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_4__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
@@ -225,7 +242,7 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_5__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
@@ -252,7 +269,7 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_7__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
@@ -278,7 +295,7 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_7__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
@@ -309,7 +326,7 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_7__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
@@ -337,7 +354,7 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_7__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];
@@ -363,7 +380,7 @@ export function init_exam_database(){
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
-				console.log("Already set_reactions in question q1_7__");
+				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
 			this.all_nxt = [];

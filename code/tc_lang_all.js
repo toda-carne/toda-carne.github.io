@@ -267,17 +267,20 @@ function init_en_exam_msg(){
 	lg.q1_3__no = "is NOT intelligent, or NOT a designer, or has NO technical creativity";
 	
 	lg.q1_31__all_biological_machines = "All biological machines observed in plants, animals and people:";
-	lg.q1_31__evolution = "Are a result of EVOLUTION";
 	lg.q1_31__creator = "Were created by a CREATOR";
-	lg.q1_31__other = "Are result of an OTHER cause";
+	lg.q1_31__other = "Are result of an OTHER cause, not a creator";
 
-	lg.q1_32__the_creator = "The CREATOR of all biological machines observed in plants, animals and people:";
-	lg.q1_32__intelligent = "is intelligent, designer and has technical creativity in the same sense of a human being";
-	lg.q1_32__not_intelligent = "is NOT intelligent, or NOT a designer, or has NO technical creativity in the same sense of a human being";
+	lg.q1_32__the_creator = "The statement: 'Just like the human being, the CREATOR of all biological machines observed in plants, animals and people is intelligent, designer and has <a class='exam_ref' href='../en/book.html#technical-creativity_DOT_'>technical creativity</a>'";
+	lg.q1_32__intelligent = "It is true.";
+	lg.q1_32__not_intelligent = "It is false.";
 	
-	lg.q1_33__the_evolution = "The EVOLUTION of all biological machines observed in plants, animals and people:";
-	lg.q1_33__intelligent = "is intelligent, designer and has technical creativity, taking them in the same sense of a human being";
-	lg.q1_33__not_intelligent = "is NOT intelligent, or NOT a designer, or has NO technical creativity, taking them in the same sense of a human being";
+	lg.q1_33__the_evolution = "The statement: 'The creator used EVOLUTION as means to create all biological machines observed in plants, animals and people'";
+	lg.q1_33__yes = "It is true.";
+	lg.q1_33__no = "It is false.";
+	
+	lg.q1_34__six_spins = "The statement: 'The creator created all biological machines observed in plants, animals and people in no more than six spins of the planet on its axis, six chronological days'";
+	lg.q1_34__yes = "It is true.";
+	lg.q1_34__no = "It is false.";
 	
 	lg.q1_4__requires_technical_creativity = "Select ALL claims about <a class='exam_ref' href='../en/book.html#technical-creativity_DOT_'>technical creativity</a> supported by evidence: ";
 	lg.q1_4__knife = "a knife requires technical creativity to reproduce";
@@ -298,24 +301,24 @@ function init_en_exam_msg(){
 	lg.q1_8__car_vs_lamp = "a car requires more technical creativity to reproduce than a lamp";
 	lg.q1_8__cellphone_vs_clock = "a cellphone requires more technical creativity to reproduce than a clock";
 	
-	lg.q1_9__coplexity_of_biological_machines = "Select ALL claims supported by normal perceptual experience about man made machines compared to biological machines: ";
-	lg.q1_9__car_vs_mitosis = "We do NOT observe in cars that one can start a process in which it divides in two of them identical to the original, nor we observe it in any other man made machine, yet we observe it in biological machines like the cell.";
-	lg.q1_9__smartphone_vs_sex = "We do NOT observe in smartphones that a male one joins with a female one, and after a while, a third small one comes out of the female one, that resembles a mix of two of them, and that it grows in size as time goes by, nor we observe it in any other man made machine, yet we observe it in biological machines like the human body.";
-	lg.q1_9__bicycle_vs_healing = "We do NOT observe in bicycles that when one crashes and its surface gets damaged, in a few days it has fixed its surface, nor we observe it in any other man made machine, yet we observe it in biological machines like in the skin of animals.";
-	lg.q1_9__knife_vs_regeneration = "We do NOT observe in knifes that when one brakes and looses its tip, in a few days it has grown a new tip, nor we observe it in any other man made machine, yet we observe it in biological machines like the tail of some lizards";
+	lg.q1_9__coplexity_of_biological_machines = "Select ALL claims supported by normal perceptual experience about man made machines and <a class='exam_ref' href='../en/book.html#factories_DOT_'>factories</a> compared to biological machines: ";
+	lg.q1_9__car_vs_mitosis = "We do NOT observe in CARS that one can start a process in which it divides in two of them identical to the original, nor we observe it in any other man made machine, yet we observe it in the MITOSIS of biological machines like the CELL.";
+	lg.q1_9__smartphone_vs_sex = "We do NOT observe in SMARTPHONES that a male one joins with a female one, and after a while, a third small one comes out of the female one, that resembles a mix of two of them, and that it grows in size as time goes by, nor we observe it in any other man made machine, yet we observe it in SEX reproduction of biological machines like the HUMAN BODY.";
+	lg.q1_9__bicycle_vs_healing = "We do NOT observe in BICYCLES that when one crashes and its surface gets damaged, in a few days it has fixed its surface, nor we observe it in any other man made machine, yet we observe it in HEALING of biological machines like in the SKIN of animals.";
+	lg.q1_9__knife_vs_regeneration = "We do NOT observe in KNIFES that when one brakes and looses its tip, in a few days it has grown a new tip, nor we observe it in any other man made machine, yet we observe it in REGENERATION of biological machines like the TAIL of some lizards.";
 	
 	lg.q1_10__more_complexity_in_biology = "Given all normal perceptual experience, the statement: 'biological machines have more <a class='exam_ref' href='../en/book.html#technical-complexity_DOT_'>technical complexity</a> that man made machines and objects'";
 	lg.q1_10__yes = "It is true.";
 	lg.q1_10__no = "It is false.";
 	
 	lg.q1_11__human_complexity = "Select ALL claims about <a class='exam_ref' href='../en/book.html#technical-complexity_DOT_'>technical complexity</a> supported by evidence: ";
-	lg.q1_11__leg = "a leg is so complex that if we understood how they are made we could take a drop of blood of the person missing a leg, make a custom leg for him, and install it, just like we do with a car wheel.";
-	lg.q1_11__liver = "a liver is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged liver, make a custom liver for him, and install it, just like we do with a distribution and logistics warehouse of a factory.";
-	lg.q1_11__lung = "a lung is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged lung, make a custom lung for him, and install it, just like we do with the air filtering equipment of a ventilation system.";
+	lg.q1_11__leg = "a LEG is so complex that if we understood how they are made we could take a drop of blood of the person missing a leg, make a custom leg for him, and install it, just like we do with a car WHEEL.";
+	lg.q1_11__liver = "a LIVER is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged liver, make a custom liver for him, and install it, just like we do with a distribution and logistics warehouse of a FACTORY.";
+	lg.q1_11__lung = "a LUNG is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged lung, make a custom lung for him, and install it, just like we do with the air filtering equipment of a VENTILATION system.";
 	
-	lg.q1_20__can_an_engineer_rebuild_his_house = "If an engineer has built a house, and it gets destroyed, or burned, in an accident or by someone else ";
-	lg.q1_20__yes = "the engineer can build the house again.";
-	lg.q1_20__no = "the engineer cannot build the house again";
+	lg.q1_40__can_an_engineer_rebuild_his_house = "If an engineer has built a house, and it gets destroyed, or burned, in an accident or by someone else ";
+	lg.q1_40__yes = "the engineer can build the house again.";
+	lg.q1_40__no = "the engineer cannot build the house again";
 	
 
 }
