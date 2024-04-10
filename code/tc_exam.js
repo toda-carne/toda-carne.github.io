@@ -43,7 +43,7 @@ function init_exam_module_vars(){
 const ALL_SAVED_OBJ_NAMES = "all_saved_object_names";
 
 const SUF_ID_POS = "_pos";
-const SUF_ID_MSG = "_msg";
+const SUF_ID_QSTM = "_qstm";
 const SUF_ID_BIBREF = "_bibref";
 const SUF_ID_POS_MIN = "_pos_min";
 const SUF_ID_POS_MAX = "_pos_max";
@@ -182,12 +182,12 @@ function add_question(qid){
 		the_stm = replace_all_qrefs(the_stm);
 	}
 	
-	const dv_msg = dv_stm.appendChild(document.createElement("div"));
-	dv_msg.id = qid + SUF_ID_MSG;
-	dv_msg.classList.add("exam");
-	dv_msg.classList.add("msg");
-	dv_msg.innerHTML = "" + quest.pos_page + ". " + the_stm;
-	//dv_msg.classList.toggle("contradiction");
+	const dv_qstm = dv_stm.appendChild(document.createElement("div"));
+	dv_qstm.id = qid + SUF_ID_QSTM;
+	dv_qstm.classList.add("exam");
+	dv_qstm.classList.add("msg");
+	dv_qstm.innerHTML = "" + quest.pos_page + ". " + the_stm;
+	//dv_qstm.classList.toggle("contradiction");
 
 	init_answers(qid);
 	
@@ -336,10 +336,25 @@ function add_all_nxt(qid){
 function add_contradictions(qid){
 	const quest = db_nodes_exam[qid];
 	const all_ctra = quest.all_contra;
-	if(all_ctra != null){
-		for(const ctra of all_ctra){
-			add_contradicted_by(ctra, qid);
-		}
+	if(all_ctra == null){
+		return;
+	}
+	for(const ctra of all_ctra){
+		add_contradicted_by(ctra, qid);
+	}
+	if(quest.all_nxt == null){
+		return;
+	}
+	const qid_nxt = quest.all_nxt[quest.all_nxt.length - 1];
+	const qlnxt = db_nodes_exam[qid_nxt];
+	if((qlnxt == null) || (qlnxt.pos_page < quest.pos_page)){
+		console.log("add_contradictions. Invalid qid order !! (" + qlnxt.pos_page + " < " + quest.pos_page + ")");
+		return;
+	}
+	const dv_qstm = document.getElementById(qid_nxt + SUF_ID_QSTM);
+	if(dv_qstm != null){
+		const sufix_qhrefs = get_contradictions_qhrefs(qid, qid_nxt);
+		dv_qstm.innerHTML = dv_qstm.innerHTML + " <br>Change one of these: " + sufix_qhrefs;
 	}
 }
 
@@ -360,7 +375,7 @@ function set_is_contra_if_so(qid){
 	if(quest.all_dicted_by.length == 0){
 		return;
 	}
-	const dv_quest = document.getElementById(qid + SUF_ID_MSG);
+	const dv_quest = document.getElementById(qid + SUF_ID_QSTM);
 	if(dv_quest != null){
 		dv_quest.classList.add("is_contradiction");
 	}
@@ -402,7 +417,7 @@ function remove_contradicted_by(ctra, qid){
 	quest.all_dicted_by = all_dictd_by.filter((val) => (val != qid));
 	if(quest.all_dicted_by.length == 0){
 		//console.log("Removing is_red of " + ctra);
-		const dv_quest = document.getElementById(ctra + SUF_ID_MSG);
+		const dv_quest = document.getElementById(ctra + SUF_ID_QSTM);
 		if(dv_quest != null){
 			dv_quest.classList.remove("is_contradiction");
 		}
@@ -1814,5 +1829,19 @@ function replace_all_qrefs(str){
 	
 	const nwstr = words.join(' ');
 	return nwstr;
+}
+
+function get_contradictions_qhrefs(qid, skip_qid){
+	const quest = db_nodes_exam[qid];
+	const all_ctra = quest.all_contra;
+	let all_qhrefs = "";
+	if(all_ctra != null){
+		for(const ctra of all_ctra){
+			if(ctra != skip_qid){
+				all_qhrefs = all_qhrefs + " " + qid_to_qhref(ctra);
+			}
+		}
+	}
+	return all_qhrefs;
 }
 

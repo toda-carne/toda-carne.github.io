@@ -256,7 +256,7 @@ function init_en_exam_msg(){
 	lg.q0_1__end_of_test = "This test is not for you. This is the end of the test for you, unless you did not really mean it and change your answer. Click on your answer to change it.";
 	lg.q0_2__contradiction = "You have a contradiction in your answers. Please change one of your answers to the questions shown in red. The contradiction is in one of them. Otherwise you cannot continue with this test. Click on your answer to change it.";
 	lg.q0_3__end_so_far = "This test is in construction. This is the end of the test for you so far...";
-	lg.q0_4__about_beliefs = "<b>All these questions are about what you believe, NOT about what you think you have certainty. Some of them are just check questions to avoid silly behaviour. Answer them all properly.</b>";
+	lg.q0_4__about_beliefs = "<b>All these questions are about what you believe, NOT about what you think you have certainty. Some of them might be check questions to avoid silly behaviour. Answer them all properly.</b>";
 	
 	lg.q1_1__are_you_reasonable = "This questions are for rational and reasonable people.";
 	lg.q1_1__yes = "I am a rational and reasonable person.";
@@ -282,9 +282,13 @@ function init_en_exam_msg(){
 	lg.q1_33__yes = "It is true.";
 	lg.q1_33__no = "It is false.";
 	
-	lg.q1_34__six_spins = "The statement: 'The creator created all biological machines observed in plants, animals and people in no more than six spins of the planet on its axis, six chronological days'";
+	lg.q1_34__six_spins = "The statement: 'The creator of all biological machines observed in plants, animals and people, created them in no more than six spins of the planet on its axis, six chronological days'";
 	lg.q1_34__yes = "It is true.";
 	lg.q1_34__no = "It is false.";
+	
+	lg.q1_35__skip_creator_proof = `You can now choose to SKIP all the questions for proving by evidence and logic the existance of a creator of all biological machines, do you want to skip them?`;
+	lg.q1_35__yes = "Yes, SKIP the questions.";
+	lg.q1_35__no = "No, let me ANSWER them.";
 	
 	lg.q1_4__requires_technical_creativity = `Select ALL claims about <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> supported by evidence: `;
 	lg.q1_4__knife = "a knife requires technical creativity to reproduce";
@@ -311,22 +315,26 @@ function init_en_exam_msg(){
 	lg.q1_9__bicycle_vs_healing = "We do NOT observe in BICYCLES that when one crashes and its surface gets damaged, in a few days it has fixed its surface, nor we observe it in any other man made machine, yet we observe it in HEALING of biological machines like in the SKIN of animals.";
 	lg.q1_9__knife_vs_regeneration = "We do NOT observe in KNIFES that when one brakes and looses its tip, in a few days it has grown a new tip, nor we observe it in any other man made machine, yet we observe it in REGENERATION of biological machines like the TAIL of some lizards.";
 	
-	lg.q1_10__more_complexity_in_biology = `Given all normal perceptual experience, the statement: "biological machines have more <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> that human made machines"`;
-	lg.q1_10__yes = "It is true.";
-	lg.q1_10__no = "It is false.";
+	lg.q2_1__more_complexity_in_biology = `Given all normal perceptual experience, the statement: "biological machines have more <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> that human made machines"`;
+	lg.q2_1__yes = "It is true.";
+	lg.q2_1__no = "It is false.";
 	
-	lg.q1_11__human_complexity = `Select ALL claims about <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> and <a class='exam_ref' href='${href_factories}'>factories</a> supported by evidence: `;
-	lg.q1_11__leg = "a LEG is so complex that if we understood how they are made we could take a drop of blood of the person missing a leg, make a custom leg for him, and install it, just like we do with a car WHEEL.";
-	lg.q1_11__liver = "a LIVER is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged liver, make a custom liver for him, and install it, just like we do with a distribution and logistics warehouse of a FACTORY.";
-	lg.q1_11__lung = "a LUNG is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged lung, make a custom lung for him, and install it, just like we do with the air filtering equipment of a VENTILATION system.";
+	lg.q2_2__human_complexity = `Select ALL claims about <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> and <a class='exam_ref' href='${href_factories}'>factories</a> supported by evidence: `;
+	lg.q2_2__leg = "a LEG is so complex that if we understood how they are made we could take a drop of blood of the person missing a leg, make a custom leg for him, and install it, just like we do with a car WHEEL.";
+	lg.q2_2__liver = "a LIVER is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged liver, make a custom liver for him, and install it, just like we do with a distribution and logistics warehouse of a FACTORY.";
+	lg.q2_2__lung = "a LUNG is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged lung, make a custom lung for him, and install it, just like we do with the air filtering equipment of a VENTILATION system.";
 	
-	lg.q1_12__biological_requires_creativity = `Given your answers in QREF_q1_10__ and QREF_q1_7__ you MUST conclude that the statement: "biological machines require more <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> than human made machines"`;
-	lg.q1_12__yes = "It is true.";
-	lg.q1_12__no = "It is false.";
+	lg.q2_3__biological_requires_creativity = `Given your answers in QREF_q2_1__ and QREF_q1_7__ you MUST conclude that the statement: "biological machines require more <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> than human made machines"`;
+	lg.q2_3__yes = "It is true.";
+	lg.q2_3__no = "It is false.";
 	
-	lg.q1_40__can_an_engineer_rebuild_his_house = "If an engineer has built a house, and it gets destroyed, or burned, in an accident or by someone else ";
-	lg.q1_40__yes = "the engineer can build the house again.";
-	lg.q1_40__no = "the engineer cannot build the house again";
+	lg.q2_4__if_human_then_creator = `Given your answer in QREF_q2_3__ you MUST conclude that the statement: "IF the human being is going to call himself intelligent, designer and creator, due to all the EVIDENCE in the tecnology that he has made, THEN, he has to admit that there EXISTS an intelligent, designer and creator of all biological machines that we observe"`;
+	lg.q2_4__yes = "It is true.";
+	lg.q2_4__no = "It is false.";
+	
+	lg.q10_1__can_an_engineer_rebuild_his_house = "If an engineer has built the same house many times, and one of them gets destroyed, by fire, in an accident, or by someone else ";
+	lg.q10_1__yes = "he can BUILD the destroyed house again.";
+	lg.q10_1__no = "he CANNOT build the destroyed house again";
 	
 
 }

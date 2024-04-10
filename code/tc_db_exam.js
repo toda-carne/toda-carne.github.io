@@ -195,7 +195,32 @@ export function init_exam_database(){
 			
 			const a0 = this.answers[0].is_on;
 			if(a0){ 
-				this.all_nxt = ["q0_3__"];
+				this.all_nxt = ["q1_35__"];
+				return;
+			}
+			this.all_nxt = ["q1_4__"];
+			return;
+			//console.log(this);
+		},
+	};
+	
+	db.q1_35__ = { 
+		htm_stm: "q1_35__skip_creator_proof",
+		answers: [
+			{ htm_answ: "q1_35__yes" },
+			{ htm_answ: "q1_35__no" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = [];
+			
+			const a0 = this.answers[0].is_on;
+			if(a0){ 
+				this.all_nxt = ["q10_1__"];
 				return;
 			}
 			this.all_nxt = ["q1_4__"];
@@ -343,15 +368,15 @@ export function init_exam_database(){
 				return;
 			}
 			
-			this.all_nxt = ["q1_10__"];
+			this.all_nxt = ["q2_1__"];
 		},
 	};
 	
-	db.q1_10__ = { 
-		htm_stm: "q1_10__more_complexity_in_biology",
+	db.q2_1__ = { 
+		htm_stm: "q2_1__more_complexity_in_biology",
 		answers: [
-			{ htm_answ: "q1_10__yes" },
-			{ htm_answ: "q1_10__no" },
+			{ htm_answ: "q2_1__yes" },
+			{ htm_answ: "q2_1__no" },
 		],
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
@@ -364,20 +389,20 @@ export function init_exam_database(){
 			const a0_on = this.answers[0].is_on;
 			//const a1_on = this.answers[1].is_on;
 			if(a0_on){ 
-				this.all_nxt = ["q1_12__"];
+				this.all_nxt = ["q2_3__"];
 				return;
 			}
-			this.all_nxt = ["q1_11__"];
+			this.all_nxt = ["q2_2__"];
 		},
 	};
 	
-	db.q1_11__ = { 
-		htm_stm: "q1_11__human_complexity",
+	db.q2_2__ = { 
+		htm_stm: "q2_2__human_complexity",
 		is_multi: true,
 		answers: [
-			{ htm_answ: "q1_11__leg" },
-			{ htm_answ: "q1_11__liver" },
-			{ htm_answ: "q1_11__lung" },
+			{ htm_answ: "q2_2__leg" },
+			{ htm_answ: "q2_2__liver" },
+			{ htm_answ: "q2_2__lung" },
 		],
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
@@ -392,21 +417,74 @@ export function init_exam_database(){
 			const a2_on = this.answers[2].is_on;
 			if(! a0_on || ! a1_on || ! a2_on){ 
 				this.all_nxt = ["q0_2__"];
-				this.all_contra = ["q0_2__", "q1_2__", "q1_11__"];
+				this.all_contra = ["q0_2__", "q1_2__", "q2_2__"];
 				return;
 			}
 			
 			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q1_1__", "q1_2__", "q1_10__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+			this.all_contra = ["q0_2__", "q1_1__", "q1_2__", "q2_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
 	
-	db.q1_12__ = { 
-		htm_stm: "q1_12__biological_requires_creativity",
+	db.q2_3__ = { 
+		htm_stm: "q2_3__biological_requires_creativity",
 		has_qrefs: true,
 		answers: [
-			{ htm_answ: "q1_12__yes" },
-			{ htm_answ: "q1_12__no" },
+			{ htm_answ: "q2_3__yes" },
+			{ htm_answ: "q2_3__no" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = [];
+
+			const a0_on = this.answers[0].is_on;
+			const a1_on = this.answers[1].is_on;
+			if(a0_on){ 
+				this.all_nxt = ["q2_4__"];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q1_7__", "q2_1__", "q2_3__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q2_4__ = { 
+		htm_stm: "q2_4__if_human_then_creator",
+		has_qrefs: true,
+		answers: [
+			{ htm_answ: "q2_4__yes" },
+			{ htm_answ: "q2_4__no" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = [];
+
+			const a0_on = this.answers[0].is_on;
+			if(a0_on){ 
+				this.all_nxt = ["q10_1__"];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q2_3__", "q2_4__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q10_1__ = { 
+		htm_stm: "q10_1__can_an_engineer_rebuild_his_house",
+		has_qrefs: true,
+		answers: [
+			{ htm_answ: "q10_1__yes" },
+			{ htm_answ: "q10_1__no" },
 		],
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
@@ -424,7 +502,7 @@ export function init_exam_database(){
 			}
 			
 			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q1_7__", "q1_10__", "q1_12__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+			this.all_contra = ["q0_2__", "q1_1__", "q1_2__", "q10_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
 	
