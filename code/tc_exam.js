@@ -8,6 +8,8 @@ import { STARTING_QUESTIONS, db_nodes_exam, db_user_info, init_exam_database } f
 
 "use strict";
 
+let DEBUG_QNUMS = true;
+
 let DEFAULT_BOOK = null;
 let DEFAULT_STRONG = null;
 let DEFAULT_LINK_NAME = null;
@@ -138,11 +140,11 @@ function add_question(qid){
 	
 	quest.pos_page = dv_all_quest.childNodes.length - 1;
 	
-	if(quest.starts_section != null){
+	if(quest.presentation != null){
 		const dv_title = dv_quest.appendChild(document.createElement("div"));
 		dv_title.classList.add("exam");
 		dv_title.classList.add("exam_title");
-		dv_title.innerHTML = get_msg(quest.starts_section);
+		dv_title.innerHTML = get_msg(quest.presentation);
 	}
 	
 	const dv_stm = dv_quest.appendChild(document.createElement("div"));
@@ -188,12 +190,16 @@ function add_question(qid){
 	if(quest.has_qrefs){
 		the_stm = replace_all_qrefs(the_stm);
 	}
+	let qnum = "" + quest.pos_page;
+	if(DEBUG_QNUMS){
+		qnum = "<span title='" + quest.htm_stm + "'>" + qnum + "</span>";
+	}
 	
 	const dv_qstm = dv_stm.appendChild(document.createElement("div"));
 	dv_qstm.id = qid + SUF_ID_QSTM;
 	dv_qstm.classList.add("exam");
 	dv_qstm.classList.add("msg");
-	dv_qstm.innerHTML = "" + quest.pos_page + ". " + the_stm;
+	dv_qstm.innerHTML = qnum + ". " + the_stm;
 	//dv_qstm.classList.toggle("contradiction");
 
 	init_answers(qid);

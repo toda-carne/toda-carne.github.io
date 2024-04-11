@@ -139,16 +139,43 @@ export function init_es_module(){
 //init_es_module();
 
 function init_es_exam_msg(){
-	const lg = all_es_msg;
-	lg.q1_for_all_biological_machines = "Para todas las maquinas biológicas observadas en plantas, animales y personas:";
-	lg.q1_there_is_a_creator = "Hay un CREADOR";
-	lg.q1_there_is_no_creator = "NO hay un creador";
-	lg.q1_i_do_not_know_if_there_is_creator = "NO SE si hay un creador";
-	lg.q1_i_do_not_care_if_there_is_creator = "No me IMPORTA si hay un creador";
-	lg.q1_it_is_impossible_to_know_if_there_is_creator = "Es imposible saber si hay un creador";
 
-	lg.q2_the_creator_for_all_biological_machines = "El creador para todas las maquinas biologicas observadas en plantas, animales y personas:";
-	lg.q2_the_creator_has_technical_creativity = "Es inteligente, diseñador y tiene creatividad técnica.";
-	lg.q2_the_creator_has_no_technical_creativity = "NO es inteligente, o NO es diseñador, o NO tiene creatividad técnica.";
+	const href_creator_tit = "../es/book.html#creador_DOT_";
+	const href_tch_crea = "../es/book.html#creatividad-técnica_DOT_";
+	const href_tch_cplx = "../es/book.html#complejidad-técnica_DOT_";
+	const href_factories = "../es/book.html#fábricas_DOT_";
+	const href_biology = "../es/book.html#biología_DOT_";
+	const href_creator = "../es/book.html#creador_DOT_-1";
+	const href_evidence = "../es/book.html#evidencia_DOT_";
+	const href_reproduction_tit = "../es/book.html#reproducción_DOT_";
+	const href_reproduction = "../es/book.html#reproducción_DOT_";
+	const href_resurrection = "../es/book.html#resurrección_DOT_";
+	const href_resurrection_tit = "../es/book.html#resurrección_DOT_";
+	
+	const lg = all_es_msg;
+	lg.q0_1__end_of_test = "Este cuestionario no es para usted. Aqui termina el examen para usted, a menos que no fuera la respuesta que queria decir. Hagale clik a su respuesta para cambiarla.";
+	lg.q0_2__contradiction = "Usted tiene una contradiccion en sus respuestas. Por favor cambie una de las respuestas en rojo. La contradiccion está en una de ellas. De otra manera no puede continuar con el cuestionario. Hagale clik a su respuesta para cambiarla.";
+	lg.q0_3__end_so_far = "Este cuestionario está en construcción. Este es el final del cuestionario por el momento...";
+	lg.q0_4__about_beliefs = "<b>Todas estas preguntas son sobre lo que usted cree, NO sobre lo que usted cree tener certeza. Algunas preguntas son para evitar que se haga el tonto. Conteste todas apropiadamente. Usted puede cambiar cualquier respuesta en cualquier momento haciendole clik a la respuesta.</b>";
+	
+	lg.q1_1__are_you_reasonable = "Estas preguntas son para personas racionales y razonables.";
+	lg.q1_1__yes = "Yo soy una persona racional y razonable.";
+	lg.q1_1__no = "Yo NO soy una persona racional y razonable.";
+	
+	lg.q1_2__experience_is_evidence = "Una afirmacion que la mayoria de las personas puede ver, oir, oler, degustar, tocar, oconfirmar por experiencia perceptual, ";
+	lg.q1_2__yes = "ES evidencia.";
+	lg.q1_2__no = "NO es evidencia";
+
+	lg.q1_21__creator_section = `<a class='exam_ref exam_title' href='${href_creator_tit}'>Creador</a>`;
+	
+	lg.q1_3__are_humans_intelligent = `Con respecto a la <a class='exam_ref' href='${href_tch_crea}'>creatividad écnica</a>, hay <a class='exam_ref' href='${href_evidence}'>evidencia</a> que el ser humano `;
+	lg.q1_3__yes = "es inteligente, diseñador y tiene creatividad técnica.";
+	lg.q1_3__no = "NO es inteligente, o NO es diseñador, o NO tiene creatividad técnica.";
+	
+	lg.q1_31__all_biological_machines = "Toda la maquinaria biologica observada en plantas, animales y personas:";
+	lg.q1_31__creator = "fueron hechas por un CREADOR";
+	lg.q1_31__other = "son el resultado de OTRA causa, NO de un creador";
+
+	
 }
 
