@@ -734,3 +734,10 @@ a.exam_ref:hover {
 	background-color: white;
 }
 
+.exam_title {
+	display: block;
+	font-size: 150%;
+	text-align: center;  
+	margin-bottom: 0.5em;
+}
+

@@ -248,15 +248,22 @@ export function init_en_module(){
 
 
 function init_en_exam_msg(){
+	const href_creator_tit = "../en/book.html#creator_DOT_";
 	const href_tch_crea = "../en/book.html#technical-creativity_DOT_";
 	const href_tch_cplx = "../en/book.html#technical-complexity_DOT_";
 	const href_factories = "../en/book.html#factories_DOT_";
+	const href_biology = "../en/book.html#biology_DOT_";
+	const href_creator = "../en/book.html#creator_DOT_-1";
+	const href_evidence = "../en/book.html#evidence_DOT_";
+	const href_reproduction_tit = "../en/book.html#reproduction_DOT_";
+	const href_reproduction = "../en/book.html#reproduction_DOT_";
+	const href_resurrection = "../en/book.html#resurrection_DOT_";
 	
 	const lg = all_en_msg;
 	lg.q0_1__end_of_test = "This test is not for you. This is the end of the test for you, unless you did not really mean it and change your answer. Click on your answer to change it.";
 	lg.q0_2__contradiction = "You have a contradiction in your answers. Please change one of your answers to the questions shown in red. The contradiction is in one of them. Otherwise you cannot continue with this test. Click on your answer to change it.";
 	lg.q0_3__end_so_far = "This test is in construction. This is the end of the test for you so far...";
-	lg.q0_4__about_beliefs = "<b>All these questions are about what you believe, NOT about what you think you have certainty. Some of them might be check questions to avoid silly behaviour. Answer them all properly.</b>";
+	lg.q0_4__about_beliefs = "<b>All these questions are about what you believe, NOT about what you think you have certainty. Some of them might be check questions to avoid silly behaviour. Answer them all properly. You can change any answer at any time by clicking on it.</b>";
 	
 	lg.q1_1__are_you_reasonable = "This questions are for rational and reasonable people.";
 	lg.q1_1__yes = "I am a rational and reasonable person.";
@@ -265,8 +272,10 @@ function init_en_exam_msg(){
 	lg.q1_2__experience_is_evidence = "A claim that most people can see, hear, smell, taste, touch, or confirm by perceptual experience, ";
 	lg.q1_2__yes = "it is evidence.";
 	lg.q1_2__no = "it is NOT evidence";
+
+	lg.q1_21__creator_section = `<a class='exam_ref exam_title' href='${href_creator_tit}'>Creator</a>`;
 	
-	lg.q1_3__are_humans_intelligent = `With respect to <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a>, there is evidence that the human being `;
+	lg.q1_3__are_humans_intelligent = `With respect to <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a>, there is <a class='exam_ref' href='${href_evidence}'>evidence</a> that the human being `;
 	lg.q1_3__yes = "is intelligent, designer and has technical creativity.";
 	lg.q1_3__no = "is NOT intelligent, or NOT a designer, or has NO technical creativity";
 	
@@ -309,13 +318,13 @@ function init_en_exam_msg(){
 	lg.q1_8__car_vs_lamp = "a car requires more technical creativity to reproduce than a lamp";
 	lg.q1_8__cellphone_vs_clock = "a cellphone requires more technical creativity to reproduce than a clock";
 	
-	lg.q1_9__coplexity_of_biological_machines = `Select ALL claims supported by normal perceptual experience about man made machines and <a class='exam_ref' href='${href_factories}'>factories</a> compared to biological machines: `;
+	lg.q1_9__coplexity_of_biological_machines = `Select ALL claims supported by normal perceptual experience about man made machines and <a class='exam_ref' href='${href_factories}'>factories</a> compared to <a class='exam_ref' href='${href_biology}'>biological machines</a>: `;
 	lg.q1_9__car_vs_mitosis = "We do NOT observe in CARS that one can start a process in which it divides in two of them identical to the original, nor we observe it in any other man made machine, yet we observe it in the MITOSIS of biological machines like the CELL.";
 	lg.q1_9__smartphone_vs_sex = "We do NOT observe in SMARTPHONES that a male one joins with a female one, and after a while, a third small one comes out of the female one, that resembles a mix of two of them, and that it grows in size as time goes by, nor we observe it in any other man made machine, yet we observe it in SEX reproduction of biological machines like the HUMAN BODY.";
 	lg.q1_9__bicycle_vs_healing = "We do NOT observe in BICYCLES that when one crashes and its surface gets damaged, in a few days it has fixed its surface, nor we observe it in any other man made machine, yet we observe it in HEALING of biological machines like in the SKIN of animals.";
 	lg.q1_9__knife_vs_regeneration = "We do NOT observe in KNIFES that when one brakes and looses its tip, in a few days it has grown a new tip, nor we observe it in any other man made machine, yet we observe it in REGENERATION of biological machines like the TAIL of some lizards.";
 	
-	lg.q2_1__more_complexity_in_biology = `Given all normal perceptual experience, the statement: "biological machines have more <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> that human made machines"`;
+	lg.q2_1__more_complexity_in_biology = `Given all normal perceptual experience, the statement: "<a class='exam_ref' href='${href_biology}'>biological machines</a> have more <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> that human made machines"`;
 	lg.q2_1__yes = "It is true.";
 	lg.q2_1__no = "It is false.";
 	
@@ -328,14 +337,37 @@ function init_en_exam_msg(){
 	lg.q2_3__yes = "It is true.";
 	lg.q2_3__no = "It is false.";
 	
-	lg.q2_4__if_human_then_creator = `Given your answer in QREF_q2_3__ you MUST conclude that the statement: "IF the human being is going to call himself intelligent, designer and creator, due to all the EVIDENCE in the tecnology that he has made, THEN, he has to admit that there EXISTS an intelligent, designer and creator of all biological machines that we observe"`;
+	lg.q2_4__if_human_then_creator = `Given your answer in QREF_q2_3__ you MUST conclude that the statement: "IF the human being is going to call himself intelligent, designer and <a class='exam_ref' href='${href_creator}'>creator</a>, due to all the <a class='exam_ref' href='${href_evidence}'>EVIDENCE</a> in the tecnology that he has made, THEN, he has to admit that there EXISTS an intelligent, designer and creator of all <a class='exam_ref' href='${href_biology}'>biological machines</a> that we observe"`;
 	lg.q2_4__yes = "It is true.";
 	lg.q2_4__no = "It is false.";
 	
-	lg.q10_1__can_an_engineer_rebuild_his_house = "If an engineer has built the same house many times, and one of them gets destroyed, by fire, in an accident, or by someone else ";
+	lg.q10_0__reproduction_section = `<a class='exam_ref exam_title' href='${href_reproduction_tit}'>Reproduction</a>`;
+	
+	lg.q10_1__can_an_engineer_rebuild_his_house = `If an engineer has <a class='exam_ref' href='${href_reproduction}'>reproduced</a>, built, the same house many times, and one of them gets destroyed, by fire, in an accident, or by someone else `;
 	lg.q10_1__yes = "he can BUILD the destroyed house again.";
 	lg.q10_1__no = "he CANNOT build the destroyed house again";
 	
+	lg.q10_2__future_resurrection = `Given your answer in QREF_q10_1__ you must accept that it is REASONABLE to visualize a future, maybe distant, when we understand enough about the human body, in which humans will be able to <a class='exam_ref' href='${href_reproduction}'>reproduce</a> the human body and simulate a <a class='exam_ref' href='${href_resurrection}'>resurrection</a>`;
+	lg.q10_2__yes = "Yes. I DO";
+	lg.q10_2__no = "No. I do NOT";
+	
+	lg.q20_3__jesus_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of Jesus Christ: `;
+	lg.q20_3__physical = "He is physically alive in BODY and SPIRIT";
+	lg.q20_3__not_to_die = "He is alive FOREVER, to not die again, because He cannot longer die.";
+	lg.q20_3__in_heaven = "He is in the heavens, those PHYSICAL ones that we can see and that have clouds";
+	
+	lg.q20_4__people_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead promissed by Jesus Christ: `;
+	lg.q20_4__like_jesus = "It is in BODY and SPIRIT just like Jesus Chist. And it is in a new body, similar to Jesus's one, that cannot die.";
+	lg.q20_4__for_all = "It is for everyone. ALL people, just and unjust.";
+	lg.q20_4__not_happened_for_most = "It has NOT happened for the great MAJORITY of people. The promissed event is on the last day.";
+	lg.q20_4__happened_for_few = "It HAS happened for a FEW ones. Some male genetic decendants of Jacob, of Israel, have been resurrected.";
+	lg.q20_4__new_earth = "It is to live forever in a new physical EARTH with new physical HEAVENS";
+	lg.q20_4__sleep = "Before resurrection, the dead person has NO body, NO consciousness, and therefore cannot do anything";
 
+	lg.q20_5__dispute_or_aqccept_resurrection = `What statements about <a class='exam_ref' href='${href_resurrection}'>resurrection</a> would you like to explore and optionally dispute? `;
+	lg.q20_5__not_believed = "The ones I do NOT believe are claimed by The Bible.";
+	lg.q20_5__all_stms = "ALL of them.";
+	lg.q20_5__go_on = "None of them. I ACCEPT they are all claimed by The Bible. Let's go on.";
+	
 }
 

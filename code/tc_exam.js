@@ -138,6 +138,13 @@ function add_question(qid){
 	
 	quest.pos_page = dv_all_quest.childNodes.length - 1;
 	
+	if(quest.starts_section != null){
+		const dv_title = dv_quest.appendChild(document.createElement("div"));
+		dv_title.classList.add("exam");
+		dv_title.classList.add("exam_title");
+		dv_title.innerHTML = get_msg(quest.starts_section);
+	}
+	
 	const dv_stm = dv_quest.appendChild(document.createElement("div"));
 	dv_stm.classList.add("exam");
 	dv_stm.classList.add("stm");
