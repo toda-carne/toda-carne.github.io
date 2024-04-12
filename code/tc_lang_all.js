@@ -259,6 +259,16 @@ function init_en_exam_msg(){
 	const href_reproduction = "../en/book.html#reproduction_DOT_";
 	const href_resurrection = "../en/book.html#resurrection_DOT_";
 	const href_resurrection_tit = "../en/book.html#resurrection_DOT_";
+	const href_physical_resu = "../en/book.html#physical_DOT_";
+	const href_not_die_resu = "../en/book.html#they-cant-die_DOT_";
+	const href_in_heaven_resu = "../en/book.html#in-the-sky_DOT_";
+	const href_like_jesus_resu = "../en/book.html#physical_DOT_";
+	const href_for_all_resu = "../en/book.html#for-all_DOT_";
+	const href_not_yet_resu = "../en/book.html#has-not-happened_DOT_";
+	const href_only_few_resu = "../en/book.html#has-not-happened_DOT_";
+	const href_new_earth_resu = "../en/book.html#a-new-earth_DOT_";
+	const href_sleep_resu = "../en/book.html#asleep_DOT_";
+	const href_the_cloth = "../en/book.html#the-cloth_DOT_";
 	
 	const lg = all_en_msg;
 	lg.q0_1__end_of_test = "This test is not for you. This is the end of the test for you, unless you did not really mean it and change your answer. Click on your answer to change it.";
@@ -325,52 +335,102 @@ function init_en_exam_msg(){
 	lg.q1_9__bicycle_vs_healing = "We do NOT observe in BICYCLES that when one crashes and its surface gets damaged, in a few days it has fixed its surface, nor we observe it in any other man made machine, yet we observe it in HEALING of biological machines like in the SKIN of animals.";
 	lg.q1_9__knife_vs_regeneration = "We do NOT observe in KNIFES that when one brakes and looses its tip, in a few days it has grown a new tip, nor we observe it in any other man made machine, yet we observe it in REGENERATION of biological machines like the TAIL of some lizards.";
 	
-	lg.q2_1__more_complexity_in_biology = `Given all normal perceptual experience, the statement: "<a class='exam_ref' href='${href_biology}'>biological machines</a> have more <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> that human made machines"`;
-	lg.q2_1__yes = "It is true.";
-	lg.q2_1__no = "It is false.";
+	lg.q1_91__more_complexity_in_biology = `Given all normal perceptual experience, the statement: "<a class='exam_ref' href='${href_biology}'>biological machines</a> have more <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> that human made machines"`;
+	lg.q1_91__yes = "It is true.";
+	lg.q1_91__no = "It is false.";
 	
-	lg.q2_2__human_complexity = `Select ALL claims about <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> and <a class='exam_ref' href='${href_factories}'>factories</a> supported by evidence: `;
-	lg.q2_2__leg = "a LEG is so complex that if we understood how they are made we could take a drop of blood of the person missing a leg, make a custom leg for him, and install it, just like we do with a car WHEEL.";
-	lg.q2_2__liver = "a LIVER is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged liver, make a custom liver for him, and install it, just like we do with a distribution and logistics warehouse of a FACTORY.";
-	lg.q2_2__lung = "a LUNG is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged lung, make a custom lung for him, and install it, just like we do with the air filtering equipment of a VENTILATION system.";
+	lg.q1_92__human_complexity = `Select ALL claims about <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> and <a class='exam_ref' href='${href_factories}'>factories</a> supported by evidence: `;
+	lg.q1_92__leg = "a LEG is so complex that if we understood how they are made we could take a drop of blood of the person missing a leg, make a custom leg for him, and install it, just like we do with a car WHEEL.";
+	lg.q1_92__liver = "a LIVER is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged liver, make a custom liver for him, and install it, just like we do with a distribution and logistics warehouse of a FACTORY.";
+	lg.q1_92__lung = "a LUNG is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged lung, make a custom lung for him, and install it, just like we do with the air filtering equipment of a VENTILATION system.";
 	
-	lg.q2_3__biological_requires_creativity = `Given your answers in QREF_q2_1__ and QREF_q1_7__ you MUST conclude that the statement: "biological machines require more <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> than human made machines"`;
-	lg.q2_3__yes = "It is true.";
-	lg.q2_3__no = "It is false.";
+	lg.q1_93__biological_requires_creativity = `Given your answers in QREF_q1_91__ and QREF_q1_7__ you MUST conclude that the statement: "biological machines require more <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> than human made machines"`;
+	lg.q1_93__yes = "It is true.";
+	lg.q1_93__no = "It is false.";
 	
-	lg.q2_4__if_human_then_creator = `Given your answer in QREF_q2_3__ you MUST conclude that the statement: "IF the human being is going to call himself intelligent, designer and <a class='exam_ref' href='${href_creator}'>creator</a>, due to all the <a class='exam_ref' href='${href_evidence}'>EVIDENCE</a> in the tecnology that he has made, THEN, he has to admit that there EXISTS an intelligent, designer and creator of all <a class='exam_ref' href='${href_biology}'>biological machines</a> that we observe"`;
-	lg.q2_4__yes = "It is true.";
-	lg.q2_4__no = "It is false.";
+	lg.q1_94__if_human_then_creator = `Given your answer in QREF_q1_93__ you MUST conclude that the statement: "IF the human being is going to call himself intelligent, designer and <a class='exam_ref' href='${href_creator}'>creator</a>, due to all the <a class='exam_ref' href='${href_evidence}'>EVIDENCE</a> in the tecnology that he has made, THEN, he has to admit that there EXISTS an intelligent, designer and creator of all <a class='exam_ref' href='${href_biology}'>biological machines</a> that we observe"`;
+	lg.q1_94__yes = "It is true.";
+	lg.q1_94__no = "It is false.";
 	
-	lg.q10_0__reproduction_section = `<a class='exam_ref exam_title' href='${href_reproduction_tit}'>Reproduction</a>`;
+	lg.q2_0__reproduction_section = `<a class='exam_ref exam_title' href='${href_reproduction_tit}'>Reproduction</a>`;
 	
-	lg.q10_1__can_an_engineer_rebuild_his_house = `If an engineer has <a class='exam_ref' href='${href_reproduction}'>reproduced</a>, built, the same house many times, and one of them gets destroyed, by fire, in an accident, or by someone else `;
-	lg.q10_1__yes = "he can BUILD the destroyed house again.";
-	lg.q10_1__no = "he CANNOT build the destroyed house again";
+	lg.q2_1__can_an_engineer_rebuild_his_house = `If an engineer has <a class='exam_ref' href='${href_reproduction}'>reproduced</a>, built, the same house many times, and one of them gets destroyed, by fire, in an accident, or by someone else `;
+	lg.q2_1__yes = "he can BUILD the destroyed house again.";
+	lg.q2_1__no = "he CANNOT build the destroyed house again";
 	
-	lg.q10_2__future_resurrection = `Given your answer in QREF_q10_1__ you must accept that it is REASONABLE to visualize a future, maybe distant, when we understand enough about the human body, in which humans will be able to <a class='exam_ref' href='${href_reproduction}'>reproduce</a> the human body and simulate a <a class='exam_ref' href='${href_resurrection}'>resurrection</a>`;
-	lg.q10_2__yes = "Yes. I DO";
-	lg.q10_2__no = "No. I do NOT";
+	lg.q2_2__future_resurrection = `Given your answer in QREF_q2_1__ you must accept that it is REASONABLE to visualize a future, maybe distant, when we understand enough about the human body, in which humans will be able to <a class='exam_ref' href='${href_reproduction}'>reproduce</a> the human body and simulate a <a class='exam_ref' href='${href_resurrection}'>resurrection</a>`;
+	lg.q2_2__yes = "Yes. I DO";
+	lg.q2_2__no = "No. I do NOT";
 	
-	lg.q20_0__resurrection_section = `<a class='exam_ref exam_title' href='${href_resurrection_tit}'>Resurrection</a>`;
 	
-	lg.q20_1__jesus_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of Jesus Christ: `;
-	lg.q20_1__physical = "He is physically alive in BODY and SPIRIT";
-	lg.q20_1__not_to_die = "He is alive FOREVER, to not die again, because He cannot longer die.";
-	lg.q20_1__in_heaven = "He is in the heavens, those PHYSICAL ones that we can see and that have clouds";
+	lg.q3_1__resurrection_section = `<a class='exam_ref exam_title' href='${href_resurrection_tit}'>Resurrection</a>`;
+	lg.q3_1__jesus_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of Jesus Christ: `;
+	lg.q3_1__physical = "He is physically alive in BODY and SPIRIT";
+	lg.q3_1__not_to_die = "He is alive FOREVER, to not die again, because He cannot longer die.";
+	lg.q3_1__in_heaven = "He is in the heavens, those PHYSICAL ones that we can see and that have clouds";
 	
-	lg.q20_2__people_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead promissed by Jesus Christ: `;
-	lg.q20_2__like_jesus = "It is in BODY and SPIRIT just like Jesus Chist. And it is in a new body, similar to Jesus's one, that cannot die.";
-	lg.q20_2__for_all = "It is for everyone. ALL people, just and unjust.";
-	lg.q20_2__not_happened_for_most = "It has NOT happened for the great MAJORITY of people. The promissed event is on the last day.";
-	lg.q20_2__happened_for_few = "It HAS happened for a FEW ones. Some male genetic decendants of Jacob, of Israel, have been resurrected.";
-	lg.q20_2__new_earth = "It is to live forever in a new physical EARTH with new physical HEAVENS";
-	lg.q20_2__sleep = "Before resurrection, the dead person has NO body, NO consciousness, and therefore cannot do anything";
+	lg.q3_2__people_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead promissed by Jesus Christ: `;
+	lg.q3_2__like_jesus = "It is in BODY and SPIRIT just like Jesus Chist. And it is in a new body, similar to Jesus's one, that cannot die.";
+	lg.q3_2__for_all = "It is for everyone. ALL people, just and unjust.";
+	lg.q3_2__not_yet_most = "It has NOT happened for the great MAJORITY of people. The promissed event is on the last day.";
+	lg.q3_2__happened_for_few = "It HAS happened for a FEW ones. Some male genetic decendants of Jacob, of Israel, have been resurrected.";
+	lg.q3_2__new_earth = "It is to live forever in a new physical EARTH with new physical HEAVENS";
+	lg.q3_2__sleep = "Before resurrection, the dead person has NO body, NO consciousness, and therefore cannot do anything";
 
-	lg.q20_4__dispute_or_accept_resurrection = `What statements about <a class='exam_ref' href='${href_resurrection}'>resurrection</a> would you like to explore and optionally dispute? `;
-	lg.q20_4__not_believed = "The ones I do NOT believe are claimed by The Bible.";
-	lg.q20_4__all_stms = "ALL of them.";
-	lg.q20_4__go_on = "None of them. I ACCEPT they are all claimed by The Bible. Let's go on.";
+	lg.q3_3__dispute_or_accept_resurrection = `What statements about <a class='exam_ref' href='${href_resurrection}'>resurrection</a> would you like to explore and optionally dispute? `;
+	lg.q3_3__not_believed = "The ones I do NOT believe are claimed by The Bible.";
+	lg.q3_3__all_stms = "ALL of them.";
+	lg.q3_3__go_on = "None of them. I ACCEPT they are all claimed by The Bible. Let's go on.";
+
+	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${href_physical_resu}'>Physical</a>`;
+	lg.q4_1__physical = `1st quest  PHYSICAL`;
+	lg.q4_1__go = "Go";
+	lg.q4_1__stay = "Stay";
+
+	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To Not die again</a>`;
+	lg.q5_1__not_die = `1st quest NOT DIE`;
+	lg.q5_1__go = "Go";
+	lg.q5_1__stay = "Stay";
+	
+	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${href_in_heaven_resu}'>In Heaven</a>`;
+	lg.q6_1__in_heaven = `1st quest IN HEAVEN`;
+	lg.q6_1__go = "Go";
+	lg.q6_1__stay = "Stay";
+
+	lg.q7_1__like_jesus_sec = `<a class='exam_ref exam_title' href='${href_like_jesus_resu}'>Like Jesus</a>`;
+	lg.q7_1__like_jesus = `1st quest LIKE JESUS`;
+	lg.q7_1__go = "Go";
+	lg.q7_1__stay = "Stay";
+	
+	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${href_for_all_resu}'>For All</a>`;
+	lg.q8_1__for_all = `1st quest FOR ALL`;
+	lg.q8_1__go = "Go";
+	lg.q8_1__stay = "Stay";
+	
+	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>Not yet for most</a>`;
+	lg.q9_1__not_yet = `1st quest NOT YET FOR MOST`;
+	lg.q9_1__go = "Go";
+	lg.q9_1__stay = "Stay";
+	
+	lg.q10_1__has_for_few_sec = `<a class='exam_ref exam_title' href='${href_only_few_resu}'>Only for few</a>`;
+	lg.q10_1__has_for_few = `1st quest ONLY FOR FEW`;
+	lg.q10_1__go = "Go";
+	lg.q10_1__stay = "Stay";
+	
+	lg.q11_1__new_earth_sec = `<a class='exam_ref exam_title' href='${href_new_earth_resu}'>New Earth</a>`;
+	lg.q11_1__new_earth = `1st quest NEW EARTH`;
+	lg.q11_1__go = "Go";
+	lg.q11_1__stay = "Stay";
+	
+	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleep_resu}'>Sleep</a>`;
+	lg.q12_1__sleep = `1st quest SLEEP`;
+	lg.q12_1__go = "Go";
+	lg.q12_1__stay = "Stay";
+
+	lg.q13_1__the_cloth_sec = `<a class='exam_ref exam_title' href='${href_the_cloth}'>The Cloth</a>`;
+	lg.q13_1__the_cloth = `1st quest THE CLOTH`;
+	lg.q13_1__go = "Go";
+	lg.q13_1__stay = "Stay";
 	
 }
 

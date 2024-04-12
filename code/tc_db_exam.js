@@ -38,7 +38,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_1__no" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -62,7 +61,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_2__no" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -87,7 +85,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_3__no" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -111,7 +108,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_31__other" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -136,7 +132,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_32__not_intelligent" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -162,7 +157,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_33__no" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -187,7 +181,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_34__no" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -212,7 +205,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_35__no" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -221,7 +213,7 @@ export function init_exam_database(){
 			
 			const a0 = this.answers[0].is_on;
 			if(a0){ 
-				this.all_nxt = ["q10_1__"];
+				this.all_nxt = ["q2_1__"];
 				return;
 			}
 			this.all_nxt = ["q1_4__"];
@@ -239,7 +231,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_4__clock" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -268,7 +259,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_5__cellphone_vs_clock" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -295,7 +285,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_7__no" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -321,7 +310,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_8__cellphone_vs_clock" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -352,7 +340,6 @@ export function init_exam_database(){
 			{ htm_answ: "q1_9__knife_vs_regeneration" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -369,18 +356,17 @@ export function init_exam_database(){
 				return;
 			}
 			
-			this.all_nxt = ["q2_1__"];
+			this.all_nxt = ["q1_91__"];
 		},
 	};
 	
-	db.q2_1__ = { 
-		htm_stm: "q2_1__more_complexity_in_biology",
+	db.q1_91__ = { 
+		htm_stm: "q1_91__more_complexity_in_biology",
 		answers: [
-			{ htm_answ: "q2_1__yes" },
-			{ htm_answ: "q2_1__no" },
+			{ htm_answ: "q1_91__yes" },
+			{ htm_answ: "q1_91__no" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -390,23 +376,22 @@ export function init_exam_database(){
 			const a0_on = this.answers[0].is_on;
 			//const a1_on = this.answers[1].is_on;
 			if(a0_on){ 
-				this.all_nxt = ["q2_3__"];
+				this.all_nxt = ["q1_93__"];
 				return;
 			}
-			this.all_nxt = ["q2_2__"];
+			this.all_nxt = ["q1_92__"];
 		},
 	};
 	
-	db.q2_2__ = { 
-		htm_stm: "q2_2__human_complexity",
+	db.q1_92__ = { 
+		htm_stm: "q1_92__human_complexity",
 		is_multi: true,
 		answers: [
-			{ htm_answ: "q2_2__leg" },
-			{ htm_answ: "q2_2__liver" },
-			{ htm_answ: "q2_2__lung" },
+			{ htm_answ: "q1_92__leg" },
+			{ htm_answ: "q1_92__liver" },
+			{ htm_answ: "q1_92__lung" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -418,7 +403,84 @@ export function init_exam_database(){
 			const a2_on = this.answers[2].is_on;
 			if(! a0_on || ! a1_on || ! a2_on){ 
 				this.all_nxt = ["q0_2__"];
-				this.all_contra = ["q0_2__", "q1_2__", "q2_2__"];
+				this.all_contra = ["q0_2__", "q1_2__", "q1_92__"];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q1_1__", "q1_2__", "q1_91__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q1_93__ = { 
+		htm_stm: "q1_93__biological_requires_creativity",
+		has_qrefs: true,
+		answers: [
+			{ htm_answ: "q1_93__yes" },
+			{ htm_answ: "q1_93__no" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = [];
+
+			const a0_on = this.answers[0].is_on;
+			const a1_on = this.answers[1].is_on;
+			if(a0_on){ 
+				this.all_nxt = ["q1_94__"];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q1_7__", "q1_91__", "q1_93__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q1_94__ = { 
+		htm_stm: "q1_94__if_human_then_creator",
+		has_qrefs: true,
+		answers: [
+			{ htm_answ: "q1_94__yes" },
+			{ htm_answ: "q1_94__no" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = [];
+
+			const a0_on = this.answers[0].is_on;
+			if(a0_on){ 
+				this.all_nxt = ["q2_1__"];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q1_93__", "q1_94__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q2_1__ = { 
+		htm_stm: "q2_1__can_an_engineer_rebuild_his_house",
+		presentation: "q2_0__reproduction_section",
+		answers: [
+			{ htm_answ: "q2_1__yes" },
+			{ htm_answ: "q2_1__no" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = [];
+
+			const a0_on = this.answers[0].is_on;
+			const a1_on = this.answers[1].is_on;
+			if(a0_on){ 
+				this.all_nxt = ["q2_2__"];
 				return;
 			}
 			
@@ -427,15 +489,14 @@ export function init_exam_database(){
 		},
 	};
 	
-	db.q2_3__ = { 
-		htm_stm: "q2_3__biological_requires_creativity",
+	db.q2_2__ = { 
+		htm_stm: "q2_2__future_resurrection",
 		has_qrefs: true,
 		answers: [
-			{ htm_answ: "q2_3__yes" },
-			{ htm_answ: "q2_3__no" },
+			{ htm_answ: "q2_2__yes" },
+			{ htm_answ: "q2_2__no" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
@@ -443,97 +504,357 @@ export function init_exam_database(){
 			this.all_nxt = [];
 
 			const a0_on = this.answers[0].is_on;
-			const a1_on = this.answers[1].is_on;
 			if(a0_on){ 
-				this.all_nxt = ["q2_4__"];
+				this.all_nxt = ["q3_1__"];
 				return;
 			}
 			
 			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q1_7__", "q2_1__", "q2_3__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+			this.all_contra = ["q0_2__", "q1_1__", "q2_1__", "q2_2__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
 	
-	db.q2_4__ = { 
-		htm_stm: "q2_4__if_human_then_creator",
-		has_qrefs: true,
+	db.q3_1__ = { 
+		htm_stm: "q3_1__jesus_resurrection_claims",
+		presentation: "q3_1__resurrection_section",
+		is_multi: true,
 		answers: [
-			{ htm_answ: "q2_4__yes" },
-			{ htm_answ: "q2_4__no" },
+			{ htm_answ: "q3_1__physical" },
+			{ htm_answ: "q3_1__not_to_die" },
+			{ htm_answ: "q3_1__in_heaven" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
+			this.all_nxt = ["q3_2__"];
+		},
+	};
+	
+	db.q3_2__ = { 
+		htm_stm: "q3_2__people_resurrection_claims",
+		is_multi: true,
+		answers: [
+			{ htm_answ: "q3_2__like_jesus" },
+			{ htm_answ: "q3_2__for_all" },
+			{ htm_answ: "q3_2__not_yet_most" },
+			{ htm_answ: "q3_2__happened_for_few" },
+			{ htm_answ: "q3_2__new_earth" },
+			{ htm_answ: "q3_2__sleep" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = ["q3_3__"];
+		},
+	};
+	
+	db.q3_3__ = { 
+		htm_stm: "q3_3__dispute_or_accept_resurrection",
+		answers: [
+			{ htm_answ: "q3_3__not_believed" },
+			{ htm_answ: "q3_3__all_stms" },
+			{ htm_answ: "q3_3__go_on" },
+		],
+		sections: {
+			q3_1__physical: "q4_1__",
+			q3_1__not_to_die: "q5_1__",
+			q3_1__in_heaven: "q6_1__",
+			q3_2__like_jesus: "q7_1__",
+			q3_2__for_all: "q8_1__",
+			q3_2__not_yet_most: "q9_1__",
+			q3_2__happened_for_few: "q10_1__",
+			q3_2__new_earth: "q11_1__",
+			q3_2__sleep: "q12_1__",
+		},
+		nxt_sec: {
+		},
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.nxt_sec = {};
 			this.all_nxt = [];
-
+			const a0_on = this.answers[0].is_on;
+			const a1_on = this.answers[1].is_on;
+			const a2_on = this.answers[2].is_on;
+			
+			const nxt_topic = "q13_1__";
+			
+			let ck_val = false;
+			if(a0_on){ ck_val = true; }
+			if(a0_on || a1_on){
+				const lst_stm1 = add_sections(this.nxt_sec, this.sections, db.q3_1__.answers, ck_val, false, "q3_3__");
+				const lst_stm2 = add_sections(this.nxt_sec, this.sections, db.q3_2__.answers, ck_val, false, lst_stm1);
+				this.nxt_sec[lst_stm2] = nxt_topic;
+				
+				console.log("nxt_sec= " + JSON.stringify(this.nxt_sec));
+			
+				const fqid = this.nxt_sec["q3_3__"];
+				this.all_nxt = [fqid];
+				return;
+			}
+			if(a2_on){
+				this.all_nxt = [nxt_topic];
+				return;
+			}
+		},
+	};
+	
+	db.q4_1__ = { 
+		htm_stm: "q4_1__physical",
+		presentation: "q4_1__physical_sec",
+		answers: [
+			{ htm_answ: "q4_1__go" },
+			{ htm_answ: "q4_1__stay" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
 			const a0_on = this.answers[0].is_on;
 			if(a0_on){ 
-				this.all_nxt = ["q10_1__"];
+				const nxt_qid = db.q3_3__.nxt_sec["q3_1__physical"];
+				this.all_nxt = [nxt_qid];
 				return;
 			}
 			
 			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q2_3__", "q2_4__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+			this.all_contra = ["q0_2__", "q4_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q5_1__ = { 
+		htm_stm: "q5_1__not_die",
+		presentation: "q5_1__not_die_sec",
+		answers: [
+			{ htm_answ: "q5_1__go" },
+			{ htm_answ: "q5_1__stay" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			const a0_on = this.answers[0].is_on;
+			if(a0_on){ 
+				const nxt_qid = db.q3_3__.nxt_sec["q3_1__not_to_die"];
+				this.all_nxt = [nxt_qid];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q5_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q6_1__ = { 
+		htm_stm: "q6_1__in_heaven",
+		presentation: "q6_1__in_heaven_sec",
+		answers: [
+			{ htm_answ: "q6_1__go" },
+			{ htm_answ: "q6_1__stay" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			const a0_on = this.answers[0].is_on;
+			if(a0_on){ 
+				const nxt_qid = db.q3_3__.nxt_sec["q3_1__in_heaven"];
+				this.all_nxt = [nxt_qid];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q6_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q7_1__ = { 
+		htm_stm: "q7_1__like_jesus",
+		presentation: "q7_1__like_jesus_sec",
+		answers: [
+			{ htm_answ: "q7_1__go" },
+			{ htm_answ: "q7_1__stay" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			const a0_on = this.answers[0].is_on;
+			if(a0_on){ 
+				const nxt_qid = db.q3_3__.nxt_sec["q3_2__like_jesus"];
+				this.all_nxt = [nxt_qid];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q7_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q8_1__ = { 
+		htm_stm: "q8_1__for_all",
+		presentation: "q8_1__for_all_sec",
+		answers: [
+			{ htm_answ: "q8_1__go" },
+			{ htm_answ: "q8_1__stay" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			const a0_on = this.answers[0].is_on;
+			if(a0_on){ 
+				const nxt_qid = db.q3_3__.nxt_sec["q3_2__for_all"];
+				this.all_nxt = [nxt_qid];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q8_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q9_1__ = { 
+		htm_stm: "q9_1__not_yet",
+		presentation: "q9_1__not_yet_sec",
+		answers: [
+			{ htm_answ: "q9_1__go" },
+			{ htm_answ: "q9_1__stay" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			const a0_on = this.answers[0].is_on;
+			if(a0_on){ 
+				const nxt_qid = db.q3_3__.nxt_sec["q3_2__not_yet_most"];
+				this.all_nxt = [nxt_qid];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q9_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
 	
 	db.q10_1__ = { 
-		htm_stm: "q10_1__can_an_engineer_rebuild_his_house",
-		presentation: "q10_0__reproduction_section",
-		has_qrefs: true,
+		htm_stm: "q10_1__has_for_few",
+		presentation: "q10_1__has_for_few_sec",
 		answers: [
-			{ htm_answ: "q10_1__yes" },
-			{ htm_answ: "q10_1__no" },
+			{ htm_answ: "q10_1__go" },
+			{ htm_answ: "q10_1__stay" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
-			this.all_nxt = [];
-
 			const a0_on = this.answers[0].is_on;
-			const a1_on = this.answers[1].is_on;
 			if(a0_on){ 
-				this.all_nxt = ["q10_2__"];
+				const nxt_qid = db.q3_3__.nxt_sec["q3_2__happened_for_few"];
+				this.all_nxt = [nxt_qid];
 				return;
 			}
 			
 			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q1_1__", "q1_2__", "q10_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+			this.all_contra = ["q0_2__", "q10_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
 	
-	db.q10_2__ = { 
-		htm_stm: "q10_2__future_resurrection",
-		has_qrefs: true,
+	db.q11_1__ = { 
+		htm_stm: "q11_1__new_earth",
+		presentation: "q11_1__new_earth_sec",
 		answers: [
-			{ htm_answ: "q10_2__yes" },
-			{ htm_answ: "q10_2__no" },
+			{ htm_answ: "q11_1__go" },
+			{ htm_answ: "q11_1__stay" },
 		],
 		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
 				return;
 			}
-			this.all_nxt = [];
-
 			const a0_on = this.answers[0].is_on;
 			if(a0_on){ 
-				this.all_nxt = ["q10_3__"];
+				const nxt_qid = db.q3_3__.nxt_sec["q3_2__new_earth"];
+				this.all_nxt = [nxt_qid];
 				return;
 			}
 			
 			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q1_1__", "q10_1__", "q10_2__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+			this.all_contra = ["q0_2__", "q11_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
+	
+	db.q12_1__ = { 
+		htm_stm: "q12_1__sleep",
+		presentation: "q12_1__sleep_sec",
+		answers: [
+			{ htm_answ: "q12_1__go" },
+			{ htm_answ: "q12_1__stay" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			const a0_on = this.answers[0].is_on;
+			if(a0_on){ 
+				const nxt_qid = db.q3_3__.nxt_sec["q3_2__sleep"];
+				this.all_nxt = [nxt_qid];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q12_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q13_1__ = { 
+		htm_stm: "q13_1__the_cloth",
+		presentation: "q13_1__the_cloth_sec",
+		answers: [
+			{ htm_answ: "q13_1__go" },
+			{ htm_answ: "q13_1__stay" },
+		],
+		set_reactions: function () {
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = ["q0_3__"];
+		},
+	};
+	
 	
 }
 
+function add_sections(nxt_sec, secs, answs, ck_val, value, fst_stm){
+	let prv_stm = fst_stm;
+	answs.forEach((an_answ) => {
+		let curr_stm = an_answ.htm_answ;
+		if(! ck_val || (an_answ.is_on == value)){
+			const fst_qid = secs[curr_stm];
+			if(fst_qid != null){
+				nxt_sec[prv_stm] = fst_qid;
+			} else {
+				console.log("add_sections. Could not find " + curr_stm + " in " + JSON.stringify(secs));
+			}
+			prv_stm = curr_stm;
+		}
+	});
+		
+	return prv_stm;
+}
 

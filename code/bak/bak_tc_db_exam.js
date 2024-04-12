@@ -221,7 +221,7 @@ export function init_exam_database(){
 			
 			const a0 = this.answers[0].is_on;
 			if(a0){ 
-				this.all_nxt = ["q10_1__"];
+				this.all_nxt = ["q2_1__"];
 				return;
 			}
 			this.all_nxt = ["q1_4__"];
@@ -369,15 +369,15 @@ export function init_exam_database(){
 				return;
 			}
 			
-			this.all_nxt = ["q2_1__"];
+			this.all_nxt = ["q1_91__"];
 		},
 	};
 	
-	db.q2_1__ = { 
-		htm_stm: "q2_1__more_complexity_in_biology",
+	db.q1_91__ = { 
+		htm_stm: "q1_91__more_complexity_in_biology",
 		answers: [
-			{ htm_answ: "q2_1__yes" },
-			{ htm_answ: "q2_1__no" },
+			{ htm_answ: "q1_91__yes" },
+			{ htm_answ: "q1_91__no" },
 		],
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
@@ -390,20 +390,20 @@ export function init_exam_database(){
 			const a0_on = this.answers[0].is_on;
 			//const a1_on = this.answers[1].is_on;
 			if(a0_on){ 
-				this.all_nxt = ["q2_3__"];
+				this.all_nxt = ["q1_93__"];
 				return;
 			}
-			this.all_nxt = ["q2_2__"];
+			this.all_nxt = ["q1_92__"];
 		},
 	};
 	
-	db.q2_2__ = { 
-		htm_stm: "q2_2__human_complexity",
+	db.q1_92__ = { 
+		htm_stm: "q1_92__human_complexity",
 		is_multi: true,
 		answers: [
-			{ htm_answ: "q2_2__leg" },
-			{ htm_answ: "q2_2__liver" },
-			{ htm_answ: "q2_2__lung" },
+			{ htm_answ: "q1_92__leg" },
+			{ htm_answ: "q1_92__liver" },
+			{ htm_answ: "q1_92__lung" },
 		],
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
@@ -418,7 +418,88 @@ export function init_exam_database(){
 			const a2_on = this.answers[2].is_on;
 			if(! a0_on || ! a1_on || ! a2_on){ 
 				this.all_nxt = ["q0_2__"];
-				this.all_contra = ["q0_2__", "q1_2__", "q2_2__"];
+				this.all_contra = ["q0_2__", "q1_2__", "q1_92__"];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q1_1__", "q1_2__", "q1_91__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q1_93__ = { 
+		htm_stm: "q1_93__biological_requires_creativity",
+		has_qrefs: true,
+		answers: [
+			{ htm_answ: "q1_93__yes" },
+			{ htm_answ: "q1_93__no" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = [];
+
+			const a0_on = this.answers[0].is_on;
+			const a1_on = this.answers[1].is_on;
+			if(a0_on){ 
+				this.all_nxt = ["q1_94__"];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q1_7__", "q1_91__", "q1_93__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q1_94__ = { 
+		htm_stm: "q1_94__if_human_then_creator",
+		has_qrefs: true,
+		answers: [
+			{ htm_answ: "q1_94__yes" },
+			{ htm_answ: "q1_94__no" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = [];
+
+			const a0_on = this.answers[0].is_on;
+			if(a0_on){ 
+				this.all_nxt = ["q2_1__"];
+				return;
+			}
+			
+			this.all_nxt = ["q0_2__"];
+			this.all_contra = ["q0_2__", "q1_93__", "q1_94__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+		},
+	};
+	
+	db.q2_1__ = { 
+		htm_stm: "q2_1__can_an_engineer_rebuild_his_house",
+		presentation: "q2_0__reproduction_section",
+		has_qrefs: true,
+		answers: [
+			{ htm_answ: "q2_1__yes" },
+			{ htm_answ: "q2_1__no" },
+		],
+		set_reactions: function () {
+			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
+			if(this.all_nxt != null){
+				console.log("Already set_reactions for question " + this.htm_stm);
+				return;
+			}
+			this.all_nxt = [];
+
+			const a0_on = this.answers[0].is_on;
+			const a1_on = this.answers[1].is_on;
+			if(a0_on){ 
+				this.all_nxt = ["q2_2__"];
 				return;
 			}
 			
@@ -427,93 +508,12 @@ export function init_exam_database(){
 		},
 	};
 	
-	db.q2_3__ = { 
-		htm_stm: "q2_3__biological_requires_creativity",
+	db.q2_2__ = { 
+		htm_stm: "q2_2__future_resurrection",
 		has_qrefs: true,
 		answers: [
-			{ htm_answ: "q2_3__yes" },
-			{ htm_answ: "q2_3__no" },
-		],
-		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
-			if(this.all_nxt != null){
-				console.log("Already set_reactions for question " + this.htm_stm);
-				return;
-			}
-			this.all_nxt = [];
-
-			const a0_on = this.answers[0].is_on;
-			const a1_on = this.answers[1].is_on;
-			if(a0_on){ 
-				this.all_nxt = ["q2_4__"];
-				return;
-			}
-			
-			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q1_7__", "q2_1__", "q2_3__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
-		},
-	};
-	
-	db.q2_4__ = { 
-		htm_stm: "q2_4__if_human_then_creator",
-		has_qrefs: true,
-		answers: [
-			{ htm_answ: "q2_4__yes" },
-			{ htm_answ: "q2_4__no" },
-		],
-		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
-			if(this.all_nxt != null){
-				console.log("Already set_reactions for question " + this.htm_stm);
-				return;
-			}
-			this.all_nxt = [];
-
-			const a0_on = this.answers[0].is_on;
-			if(a0_on){ 
-				this.all_nxt = ["q10_1__"];
-				return;
-			}
-			
-			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q2_3__", "q2_4__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
-		},
-	};
-	
-	db.q10_1__ = { 
-		htm_stm: "q10_1__can_an_engineer_rebuild_his_house",
-		presentation: "q10_0__reproduction_section",
-		has_qrefs: true,
-		answers: [
-			{ htm_answ: "q10_1__yes" },
-			{ htm_answ: "q10_1__no" },
-		],
-		set_reactions: function () {
-			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
-			if(this.all_nxt != null){
-				console.log("Already set_reactions for question " + this.htm_stm);
-				return;
-			}
-			this.all_nxt = [];
-
-			const a0_on = this.answers[0].is_on;
-			const a1_on = this.answers[1].is_on;
-			if(a0_on){ 
-				this.all_nxt = ["q10_2__"];
-				return;
-			}
-			
-			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q1_1__", "q1_2__", "q10_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
-		},
-	};
-	
-	db.q10_2__ = { 
-		htm_stm: "q10_2__future_resurrection",
-		has_qrefs: true,
-		answers: [
-			{ htm_answ: "q10_2__yes" },
-			{ htm_answ: "q10_2__no" },
+			{ htm_answ: "q2_2__yes" },
+			{ htm_answ: "q2_2__no" },
 		],
 		set_reactions: function () {
 			//console.log(` answers[0]=${this.answers[0].htm_answ} \n answers[1]=${this.answers[1].htm_answ} \n v_min=${this.v_min}`);
@@ -530,7 +530,7 @@ export function init_exam_database(){
 			}
 			
 			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q1_1__", "q10_1__", "q10_2__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+			this.all_contra = ["q0_2__", "q1_1__", "q2_1__", "q2_2__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
 	
