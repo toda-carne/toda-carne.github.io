@@ -1,16 +1,11 @@
 
 "use strict";
 
-//export const FIRST_EXAM_QUESTION_ID = "q1_1__";
-//export const FIRST_EXAM_QUESTION_ID = "q1";
 export const STARTING_QUESTIONS = ["q0_4__", "q1_1__"];
 export const db_user_info = {};
 
 export let db_nodes_exam = {};
 
-export let answ_stack = [];
-
-//init_exam_database();
 export function init_exam_database(){
 	db_nodes_exam = {};
 	const db = db_nodes_exam;
@@ -33,8 +28,13 @@ export function init_exam_database(){
 	
 	db.q1_1__ = { 
 		htm_stm: "q1_1__are_you_reasonable",
+		//pos_txt: "q1_1__pru_pos_txt", // uncomment to debug pos_txt
+		//v_min: -500,  // uncomment to debug sort
+		//v_max: 200,  // uncomment to debug sort
 		answers: [
-			{ htm_answ: "q1_1__yes" },
+			{ 	htm_answ: "q1_1__yes", 
+				rclk_href: "q1_1__pru_href", // uncomment to debug right_click 
+			},
 			{ htm_answ: "q1_1__no" },
 		],
 		set_reactions: function () {
@@ -611,6 +611,7 @@ export function init_exam_database(){
 		answers: [
 			{ htm_answ: "q4_1__go" },
 			{ htm_answ: "q4_1__stay" },
+			{ htm_answ: "_str", rclk_href: "q4_1__luk_24_39_href" },
 		],
 		set_reactions: function () {
 			if(this.all_nxt != null){
@@ -857,4 +858,6 @@ function add_sections(nxt_sec, secs, answs, ck_val, value, fst_stm){
 		
 	return prv_stm;
 }
+
+
 

@@ -1,5 +1,5 @@
 
-import { num2abbr, num2book_en, get_msg, 
+import { num2abbr, num2book_en, get_msg, make_bible_ref, make_strong_ref, bib_defaults, 
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang } from './tc_lang_all.js';
 	
 import { STARTING_QUESTIONS, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
@@ -46,7 +46,7 @@ const ALL_SAVED_OBJ_NAMES = "all_saved_object_names";
 
 const SUF_ID_POS = "_pos";
 const SUF_ID_QSTM = "_qstm";
-const SUF_ID_BIBREF = "_bibref";
+const SUF_ID_POS_TXT = "_pos_txt";
 const SUF_ID_POS_MIN = "_pos_min";
 const SUF_ID_POS_MAX = "_pos_max";
 const SUF_ID_POS_SET_MIN = "_pos_set_min";
@@ -63,11 +63,11 @@ const SUF_ID_LAST_ADDED_CITATION = "_last_added_citation";
 const SUF_ID_LAST_ADDED_STRONG = "_last_added_strong";
 const SUF_ID_LAST_ADDED_LINK = "_last_added_link";
 
-const DEFAULT_CHAPTER = 0;
-const DEFAULT_VERSE = 0;
-const DEFAULT_LAST_VERSE = 0;
-const DEFAULT_BIBLES_SITE = "biblegateway";
-const DEFAULT_BIB_VER = "BIB";
+const DEFAULT_CHAPTER = bib_defaults.CHAPTER;
+const DEFAULT_VERSE = bib_defaults.VERSE;
+const DEFAULT_LAST_VERSE = bib_defaults.LAST_VERSE;
+const DEFAULT_BIBLES_SITE = bib_defaults.BIBLES_SITE;
+const DEFAULT_BIB_VER = bib_defaults.BIB_VER;
 
 const DEFAULT_LINK_HREF = "https://www.biblehub.com";
 
@@ -128,7 +128,7 @@ function add_question(qid){
 		return null;
 	}
 	
-	const bibref = quest.bibref;
+	const pos_txt = quest.pos_txt;
 	const v_min = quest.v_min;
 	const v_max = quest.v_max;
 	
@@ -159,13 +159,13 @@ function add_question(qid){
 		toggle_pos_interaction(qid);
 	});
 
-	if(bibref != null){
-		const dv_bibref = dv_pos.appendChild(document.createElement("div"));
-		dv_bibref.id = qid + SUF_ID_BIBREF;
-		dv_bibref.classList.add("exam");
-		//dv_bibref.classList.add("is_hover");
-		dv_bibref.classList.add("is_block");
-		dv_bibref.innerHTML = bibref;
+	if(pos_txt != null){
+		const dv_pos_txt = dv_pos.appendChild(document.createElement("div"));
+		dv_pos_txt.id = qid + SUF_ID_POS_TXT;
+		dv_pos_txt.classList.add("exam");
+		//dv_pos_txt.classList.add("is_hover");
+		dv_pos_txt.classList.add("is_block");
+		dv_pos_txt.innerHTML = get_msg(pos_txt);
 	}
 	
 	if(v_min != null){
@@ -257,6 +257,12 @@ function init_answers(qid){
 		dv_answ.innerHTML = get_msg(an_answ.htm_answ);
 		if(an_answ.is_on){
 			dv_answ.classList.add("selected");
+		}
+		
+		if(an_answ.rclk_href != null){
+			dv_answ.addEventListener('contextmenu', (ev1) => {
+				window.open(get_msg(an_answ.rclk_href), '_blank');				
+			});
 		}
 		
 		if(is_init_to_answer){
@@ -740,46 +746,6 @@ function calc_verse_cit_object(dv_citation){
 	return cit_obj;
 }
 
-function citation_to_en(cit_obj){ // websites use english names for citations
-	var num_b = glb_books_nums[cit_obj.book];
-	cit_obj.abbr = num2abbr[num_b];
-	cit_obj.book = num2book_en[num_b];  
-	return cit_obj;
-}
-
-function make_bible_ref(cit_obj_orig){
-	// https://www.biblegateway.com/passage/?search=exodus+1%3A4-7&version=RVR1960
-	const cit_obj = citation_to_en(cit_obj_orig); // websites use english names for citations
-	var bibref = null;
-	if(cit_obj.site == "blueletterbible"){
-		bibref = "https://www.blueletterbible.org/" + cit_obj.bib_ver + "/" + cit_obj.abbr + "/" + cit_obj.chapter + "/" + cit_obj.verse;
-		return bibref;
-		//https://www.blueletterbible.org/kjv/mat/3/4/
-	}
-	if(cit_obj.site == "biblehub"){
-		if(cit_obj.bib_ver == "text"){
-			bibref = "https://www.biblehub.com/text/" + cit_obj.book + "/" + cit_obj.chapter + "-" + cit_obj.verse + ".htm";
-			return bibref;
-		} else {
-			bibref = "https://www.biblehub.com/" + cit_obj.bib_ver + "/" + cit_obj.book + "/" + cit_obj.chapter + ".htm";
-			return bibref;
-		}
-	}
-	if(cit_obj.site == "bibliaparalela"){
-		// https://bibliaparalela.com/nblh/genesis/1.htm
-		bibref = "https://bibliaparalela.com/" + cit_obj.bib_ver + "/" + cit_obj.book + "/" + cit_obj.chapter + ".htm";
-		return bibref;
-	}
-	if(cit_obj.site == "biblegateway"){
-		bibref = "https://www.biblegateway.com/passage/?search=" + cit_obj.book + "+" + cit_obj.chapter + ":" + cit_obj.verse;
-		if(! (cit_obj.last_verse == DEFAULT_LAST_VERSE)){
-			bibref += "-" + cit_obj.last_verse;
-		}
-		bibref += "&version=" + cit_obj.bib_ver;
-		return bibref;
-	}
-	
-}
 
 function toggle_verse_ed(dv_citation){
 	var dv_ed_cit = get_new_dv_under(dv_citation, id_dv_citation_ed);
@@ -1200,23 +1166,6 @@ function sort_button_handler(){
 	
 }
 
-
-function make_strong_ref(scode){
-	// https://www.biblegateway.com/passage/?search=exodus+1%3A4-7&version=RVR1960
-	if((scode.length < 2) || ((scode[0] != "G") && (scode[0] != "H"))){
-		return "https://www.biblehub.com";
-	}
-	var bibref = null;
-	const the_code = scode.substring(1);
-	if(scode[0] == "H"){
-		bibref = "https://www.biblehub.com/hebrew/" + the_code + ".htm";
-	}
-	if(scode[0] == "G"){
-		bibref = "https://www.biblehub.com/greek/" + the_code + ".htm";
-	}
-	return bibref;
-}
-
 function is_last_added_strong_ok(qid){
 	const id_dv_last_strong = qid + SUF_ID_LAST_ADDED_STRONG;
 	const dv_last_strong = document.getElementById(id_dv_last_strong);
@@ -1631,29 +1580,9 @@ function calc_quest_save_object(dv_quest){
 	if(quest == null){
 		return null;
 	}
-	const sv_obj = {};
-
-	if(quest.v_min != null){
-		sv_obj.v_min = quest.v_min;
-	}
-	if(quest.v_max != null){
-		sv_obj.v_max = quest.v_max;
-	}
-	if(quest.has_answ != null){
-		sv_obj.has_answ = quest.has_answ;
-	}
-	if(quest.answers != null){
-		sv_obj.answers = JSON.parse(JSON.stringify(quest.answers));
-	}
-	if(quest.all_nxt != null){
-		sv_obj.all_nxt = JSON.parse(JSON.stringify(quest.all_nxt));
-	}
-	if(quest.all_contra != null){
-		sv_obj.all_contra = JSON.parse(JSON.stringify(quest.all_contra));
-	}
-	if(quest.all_dicted_by != null){
-		sv_obj.all_dicted_by = JSON.parse(JSON.stringify(quest.all_dicted_by));
-	}
+	let sv_obj = {};
+	
+	sv_obj = JSON.parse(JSON.stringify(quest));
 	
 	sv_obj.support = calc_support_save_array(dv_quest);
 	
@@ -1676,27 +1605,11 @@ function calc_exam_save_object(){
 function update_nodes_exam_with(ld_obj){
 	const db = db_nodes_exam;
 	for (const [qid, quest] of Object.entries(ld_obj)) {
-		if(quest.v_min != null){
-			db[qid].v_min = quest.v_min;
-		}
-		if(quest.v_max != null){
-			db[qid].v_max = quest.v_max;
-		}
-		if(quest.has_answ != null){
-			db[qid].has_answ = quest.has_answ;
-		}
-		if(quest.answers != null){
-			db[qid].answers = JSON.parse(JSON.stringify(quest.answers));
-		}
-		if(quest.all_nxt != null){
-			db[qid].all_nxt = JSON.parse(JSON.stringify(quest.all_nxt));
-		}
-		if(quest.all_contra != null){
-			db[qid].all_contra = JSON.parse(JSON.stringify(quest.all_contra));
-		}
-		if(quest.all_dicted_by != null){
-			db[qid].all_dicted_by = JSON.parse(JSON.stringify(quest.all_dicted_by));
-		}
+		let reacs = db[qid].set_reactions;
+		
+		db[qid] = JSON.parse(JSON.stringify(quest));
+		db[qid].support = null;
+		db[qid].set_reactions = reacs;		
 	}
 }
 

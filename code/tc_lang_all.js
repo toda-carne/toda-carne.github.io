@@ -159,6 +159,14 @@ const bibles_en = {
 	blueletterbible: [ "KJV", "WEB", "YLT", "VUL", "NASB95", "VUL", "WLC", "LXX", "MGNT", "TR", ],
 };
 
+export const bib_defaults = {
+	CHAPTER: 0,
+	VERSE: 0,
+	LAST_VERSE: 0,
+	BIBLES_SITE: "biblegateway",
+	BIB_VER: "BIB",
+};
+
 function get_traduced_message(trad_msg, nom_msg){
 	const tr_mg = trad_msg[nom_msg];
 	if(tr_mg == null){
@@ -231,6 +239,19 @@ export function init_all_glb(lang, books, bibles, nums, curr){
 	glb_curr_lang = curr;
 }
 
+function fill_all_bibrefs_href(){
+	for (const [key, value] of Object.entries(all_bibrefs)) {
+		const ob_sufx = "_obj";
+		if(key.endsWith(ob_sufx)){
+			const prefx = key.slice(0, key.length - ob_sufx.length);
+			const href_attr = prefx + "_href";
+			const href_val = make_bible_ref(value);
+			all_bibrefs[href_attr] = href_val;
+			//console.log(`${href_attr} = ${href_val}`);
+		}
+	}  
+	
+}
 
 export function init_en_module(){
 	console.log("Called init_en_module");
@@ -239,6 +260,8 @@ export function init_en_module(){
 	
 	fill_reversed_object(num2book_en, book2num_en);
 	fill_reversed_object(num2abbr, abbr2num);
+	
+	fill_all_bibrefs_href();
 
 	init_en_basic_msg();
 	init_en_exam_msg();
@@ -246,8 +269,79 @@ export function init_en_module(){
 
 //init_en_module();
 
+function citation_to_en(cit_obj){ // websites use english names for citations
+	var num_b = glb_books_nums[cit_obj.book];
+	cit_obj.abbr = num2abbr[num_b];
+	cit_obj.book = num2book_en[num_b];  
+	return cit_obj;
+}
+
+export function make_bible_ref(cit_obj_orig){
+	// https://www.biblegateway.com/passage/?search=exodus+1%3A4-7&version=RVR1960
+	const cit_obj = citation_to_en(cit_obj_orig); // websites use english names for citations
+	var bibref = null;
+	if(cit_obj.site == "blueletterbible"){
+		bibref = "https://www.blueletterbible.org/" + cit_obj.bib_ver + "/" + cit_obj.abbr + "/" + cit_obj.chapter + "/" + cit_obj.verse;
+		return bibref;
+		//https://www.blueletterbible.org/kjv/mat/3/4/
+	}
+	if(cit_obj.site == "biblehub"){
+		if(cit_obj.bib_ver == "text"){
+			bibref = "https://www.biblehub.com/text/" + cit_obj.book + "/" + cit_obj.chapter + "-" + cit_obj.verse + ".htm";
+			return bibref;
+		} else {
+			bibref = "https://www.biblehub.com/" + cit_obj.bib_ver + "/" + cit_obj.book + "/" + cit_obj.chapter + ".htm";
+			return bibref;
+		}
+	}
+	if(cit_obj.site == "bibliaparalela"){
+		// https://bibliaparalela.com/nblh/genesis/1.htm
+		bibref = "https://bibliaparalela.com/" + cit_obj.bib_ver + "/" + cit_obj.book + "/" + cit_obj.chapter + ".htm";
+		return bibref;
+	}
+	if(cit_obj.site == "biblegateway"){
+		bibref = "https://www.biblegateway.com/passage/?search=" + cit_obj.book + "+" + cit_obj.chapter + ":" + cit_obj.verse;
+		if(! (cit_obj.last_verse == bib_defaults.LAST_VERSE)){
+			bibref += "-" + cit_obj.last_verse;
+		}
+		bibref += "&version=" + cit_obj.bib_ver;
+		return bibref;
+	}
+	
+}
+
+export function make_strong_ref(scode){
+	// https://www.biblegateway.com/passage/?search=exodus+1%3A4-7&version=RVR1960
+	if((scode.length < 2) || ((scode[0] != "G") && (scode[0] != "H"))){
+		return "https://www.biblehub.com";
+	}
+	var bibref = null;
+	const the_code = scode.substring(1);
+	if(scode[0] == "H"){
+		bibref = "https://www.biblehub.com/hebrew/" + the_code + ".htm";
+	}
+	if(scode[0] == "G"){
+		bibref = "https://www.biblehub.com/greek/" + the_code + ".htm";
+	}
+	return bibref;
+}
+
+const all_bibrefs = {
+	luk_24_39_obj: {
+		book: "luke",
+		chapter: 24,
+		verse: 39,
+		last_verse: bib_defaults.LAST_VERSE,
+		site: "biblegateway",
+		bib_ver: "WEB",
+	},
+	luk_24_39_str: "Luk 24:39: See my hands and my feet, that it is truly me. Touch me and see, for a spirit doesn’t have flesh and bones, as you see that I have",
+	luk_24_39_href: null, // all '_href' terminated entries it will be filled with '_obj' terminated data when fill_all_bibrefs_href gets called.
+};
 
 function init_en_exam_msg(){
+	let bibref = {};
+	
 	const href_creator_tit = "../en/book.html#creator_DOT_";
 	const href_tch_crea = "../en/book.html#technical-creativity_DOT_";
 	const href_tch_cplx = "../en/book.html#technical-complexity_DOT_";
@@ -278,6 +372,8 @@ function init_en_exam_msg(){
 	
 	lg.q1_1__are_you_reasonable = "This questions are for rational and reasonable people.";
 	lg.q1_1__yes = "I am a rational and reasonable person.";
+	lg.q1_1__pru_pos_txt = `<span class="is_big">+</span>`;
+	lg.q1_1__pru_href = all_bibrefs.luk_24_39_href;
 	lg.q1_1__no = "I am NOT a rational and reasonable person.";
 	
 	lg.q1_2__experience_is_evidence = "A claim that most people can see, hear, smell, taste, touch, or confirm by perceptual experience, ";
@@ -378,14 +474,16 @@ function init_en_exam_msg(){
 	lg.q3_2__sleep = "Before resurrection, the dead person has NO body, NO consciousness, and therefore cannot do anything";
 
 	lg.q3_3__dispute_or_accept_resurrection = `What statements about <a class='exam_ref' href='${href_resurrection}'>resurrection</a> would you like to explore and optionally dispute? `;
-	lg.q3_3__not_believed = "The ones I do NOT believe are claimed by The Bible.";
+	lg.q3_3__not_believed = "The ones I DO NOT believe are claimed by The Bible.";
 	lg.q3_3__all_stms = "ALL of them.";
-	lg.q3_3__go_on = "None of them. I ACCEPT they are all claimed by The Bible. Let's go on.";
+	lg.q3_3__go_on = "NONE of them. I ACCEPT they are all claimed by The Bible. Let's go on.";
 
 	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${href_physical_resu}'>Physical</a>`;
-	lg.q4_1__physical = `1st quest  PHYSICAL`;
+	lg.q4_1__physical = `Select all verses that you believe support a physical resurrection`;
 	lg.q4_1__go = "Go";
 	lg.q4_1__stay = "Stay";
+	lg.q4_1__luk_24_39_str = all_bibrefs.luk_24_39_str;
+	lg.q4_1__luk_24_39_href = all_bibrefs.luk_24_39_href;
 
 	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To Not die again</a>`;
 	lg.q5_1__not_die = `1st quest NOT DIE`;

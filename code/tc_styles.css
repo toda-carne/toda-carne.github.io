@@ -675,6 +675,17 @@ color: white;
 	border: 0.2vw solid white;
 }
 
+.exam.answ_bib {
+	display: inline-block;
+	height: 100%;
+}
+
+.exam.answ_msg {
+	display: inline-block;
+	flex-grow: 100;
+	padding-left: 1vw;
+}
+
 .exam.is_option {
 	display: inline-block;
 	margin: 0.5vw;
@@ -718,6 +729,13 @@ color: white;
 .is_red {
 	background-color: red;
 	/* color: red; */
+}
+
+.is_big{
+	font-size: 1.5em;
+	text-align: center;  
+	padding-left: 0.5em;
+	padding-right: 0.5em;
 }
 
 .exam_ref {
