@@ -18,6 +18,8 @@ let fb_write_object = null;
 let fb_read_object = null;
 let fb_sign_out = null;
 
+const ROOT_QUEST_ID = "root_quest_id";
+
 const qref_prefix = "QREF_";
 
 function init_exam_fb(){
@@ -313,10 +315,29 @@ function init_answers(qid){
 	}
 }
 
+function remove_all_children_descendants(qid){
+	if(qid == ROOT_QUEST_ID){
+		for(const qq of STARTING_QUESTIONS){
+			remove_all_descendants(qq);
+		}
+		return;
+	}
+	const quest = db_nodes_exam[qid];
+	if((quest == null) || (quest.all_nxt == null)){
+		return;
+	}
+	for(const qq of quest.all_nxt){
+		remove_all_descendants(qq);
+	}
+}
+
 function end_question(qid){
 	const quest = db_nodes_exam[qid];
 	if(quest.all_nxt != null){
-		remove_all_descendants(qid);
+		//remove_all_descendants(qid);
+	}
+	if(quest.parent != null){
+		remove_all_children_descendants(quest.parent);
 	}
 	quest.has_answ = true;
 	init_answers(qid);
@@ -345,6 +366,11 @@ function add_all_nxt(qid){
 			console.log("Question " + qq + " could NOT be added to page !!!");
 		} else {
 			all_added.push(qq);
+			const chld = db_nodes_exam[qq];
+			if(chld != null){
+				db_nodes_exam[qq].parent = qid;
+				//console.log("db_nodes_exam[" + qq + "].parent = " + qid);
+			}
 		}
 	}
 	quest.all_nxt = all_added;
@@ -1545,10 +1571,15 @@ export function init_page_exam(){
 		added = add_question(qq);
 		if(added == null){
 			console.log("Question " + qq + " could NOT be added to page !!!");
+		} else {
+			const top_quest = db_nodes_exam[qq];
+			if(top_quest != null){
+				db_nodes_exam[qq].parent = ROOT_QUEST_ID;
+				//console.log("db_nodes_exam[" + qq + "].parent = " + ROOT_QUEST_ID);
+			}
 		}
 	}
 	return added;
-	//return add_question(FIRST_EXAM_QUESTION_ID);
 };
 
 function calc_support_save_array(dv_quest){

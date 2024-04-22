@@ -68,7 +68,7 @@ export function init_exam_database(){
 			this.all_nxt = [];
 			
 			if(this.answers[0].is_on){ 
-				this.all_nxt = ["q1_21__", "q1_3__"];
+				this.all_nxt = ["q1_3__"];
 				return;
 			}
 			this.all_nxt = ["q0_2__"];
@@ -79,7 +79,7 @@ export function init_exam_database(){
 	
 	db.q1_3__ = { 
 		htm_stm: "q1_3__are_humans_intelligent",
-		presentation: "q1_21__creator_section",
+		presentation: "q1_3__creator_section",
 		answers: [
 			{ htm_answ: "q1_3__yes" },
 			{ htm_answ: "q1_3__no" },

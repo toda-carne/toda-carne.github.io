@@ -380,8 +380,8 @@ function init_en_exam_msg(){
 	lg.q1_2__yes = "it is evidence.";
 	lg.q1_2__no = "it is NOT evidence";
 
-	lg.q1_21__creator_section = `<a class='exam_ref exam_title' href='${href_creator_tit}'>Creator</a>`;
 	
+	lg.q1_3__creator_section = `<a class='exam_ref exam_title' href='${href_creator_tit}'>Creator</a>`;
 	lg.q1_3__are_humans_intelligent = `With respect to <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a>, there is <a class='exam_ref' href='${href_evidence}'>evidence</a> that the human being `;
 	lg.q1_3__yes = "is intelligent, designer and has technical creativity.";
 	lg.q1_3__no = "is NOT intelligent, or NOT a designer, or has NO technical creativity";
