@@ -327,16 +327,24 @@ export function make_strong_ref(scode){
 }
 
 const all_bibrefs = {
-	luk_24_39_obj: {
-		book: "luke",
-		chapter: 24,
-		verse: 39,
-		last_verse: bib_defaults.LAST_VERSE,
-		site: "biblegateway",
-		bib_ver: "WEB",
-	},
+	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_all_bibrefs_href gets called.
+	mat_28_9_obj: { book: "matthew", chapter: 28, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	mat_28_9_str: "Mat 28:9: As they went to tell his disciples, behold, Jesus met them, saying, “Rejoice!” They came and took hold of his feet, and worshiped him.",
+	luk_24_30_obj: { book: "luke", chapter: 24, verse: 30, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	luk_24_30_str: "Luk 24:30: When he had sat down at the table with them, he took the bread and gave thanks. Breaking it, he gave it to them.",
+	luk_24_39_obj: { book: "luke", chapter: 24, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	luk_24_39_str: "Luk 24:39: See my hands and my feet, that it is truly me. Touch me and see, for a spirit doesn’t have flesh and bones, as you see that I have",
-	luk_24_39_href: null, // all '_href' terminated entries it will be filled with '_obj' terminated data when fill_all_bibrefs_href gets called.
+	luk_24_43_obj: { book: "luke", chapter: 24, verse: 43, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	luk_24_43_str: "Luk 24:43: He took them, and ate in front of them.",
+	jhn_2_19_obj: { book: "john", chapter: 2, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_2_19_str: "Jhn 2:19: Jesus answered them, “Destroy this temple, and in three days I will raise it up.",
+	jhn_20_20_obj: { book: "john", chapter: 20, verse: 20, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_20_20_str: "Jhn 20:20: When he had said this, he showed them his hands and his side. The disciples therefore were glad when they saw the Lord.",
+	jhn_20_27_obj: { book: "john", chapter: 20, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_20_27_str: "Jhn 20:27: Then he said to Thomas, “Reach here your finger, and see my hands. Reach here your hand, and put it into my side. Don’t be unbelieving, but believing",
+	act_10_41_obj: { book: "acts", chapter: 10, verse: 41, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	act_10_41_str: "Act 10:41: not to all the people, but to witnesses who were chosen before by God, to us, who ate and drank with him after he rose from the dead",
+	
 };
 
 function init_en_exam_msg(){
@@ -354,6 +362,7 @@ function init_en_exam_msg(){
 	const href_resurrection = "../en/book.html#resurrection_DOT_";
 	const href_resurrection_tit = "../en/book.html#resurrection_DOT_";
 	const href_physical_resu = "../en/book.html#physical_DOT_";
+	const href_still_physical = "../en/book.html#physical_DOT_";
 	const href_not_die_resu = "../en/book.html#they-cant-die_DOT_";
 	const href_in_heaven_resu = "../en/book.html#in-the-sky_DOT_";
 	const href_like_jesus_resu = "../en/book.html#physical_DOT_";
@@ -461,7 +470,8 @@ function init_en_exam_msg(){
 	
 	lg.q3_1__resurrection_section = `<a class='exam_ref exam_title' href='${href_resurrection_tit}'>Resurrection</a>`;
 	lg.q3_1__jesus_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of Jesus Christ: `;
-	lg.q3_1__physical = "He is physically alive in BODY and SPIRIT";
+	lg.q3_1__physical = "He was physically resurrected, in BODY and spirit";
+	lg.q3_1__still_physical = "He is STILL physically alive, in body and spirit";
 	lg.q3_1__not_to_die = "He is alive FOREVER, to not die again, because He cannot longer die.";
 	lg.q3_1__in_heaven = "He is in the heavens, those PHYSICAL ones that we can see and that have clouds";
 	
@@ -471,7 +481,7 @@ function init_en_exam_msg(){
 	lg.q3_2__not_yet_most = "It has NOT happened for the great MAJORITY of people. The promissed event is on the last day.";
 	lg.q3_2__happened_for_few = "It HAS happened for a FEW ones. Some male genetic decendants of Jacob, of Israel, have been resurrected.";
 	lg.q3_2__new_earth = "It is to live forever in a new physical EARTH with new physical HEAVENS";
-	lg.q3_2__sleep = "Before resurrection, the dead person has NO body, NO consciousness, and therefore cannot do anything";
+	lg.q3_2__sleep = "Before resurrection, the dead person has NO body, NO consciousness, and therefore cannot do anything. The dead ARE dead.";
 
 	lg.q3_3__dispute_or_accept_resurrection = `What statements about <a class='exam_ref' href='${href_resurrection}'>resurrection</a> would you like to explore and optionally dispute? `;
 	lg.q3_3__not_believed = "The ones I DO NOT believe are claimed by The Bible.";
@@ -480,10 +490,26 @@ function init_en_exam_msg(){
 
 	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${href_physical_resu}'>Physical</a>`;
 	lg.q4_1__physical = `Select all verses that you believe support a physical resurrection`;
-	lg.q4_1__go = "Go";
-	lg.q4_1__stay = "Stay";
-	lg.q4_1__luk_24_39_str = all_bibrefs.luk_24_39_str;
-	lg.q4_1__luk_24_39_href = all_bibrefs.luk_24_39_href;
+	lg.q4_1__verse1_str = all_bibrefs.luk_24_39_str;
+	lg.q4_1__verse1_href = all_bibrefs.luk_24_39_href;
+	lg.q4_1__verse2_str = all_bibrefs.jhn_20_27_str;
+	lg.q4_1__verse2_href = all_bibrefs.jhn_20_27_href;
+	lg.q4_1__verse3_str = all_bibrefs.act_10_41_str;
+	lg.q4_1__verse3_href = all_bibrefs.act_10_41_href;
+	lg.q4_1__verse4_str = all_bibrefs.mat_28_9_str;
+	lg.q4_1__verse4_href = all_bibrefs.mat_28_9_href;
+	lg.q4_1__verse5_str = all_bibrefs.luk_24_30_str;
+	lg.q4_1__verse5_href = all_bibrefs.luk_24_30_href;
+	lg.q4_1__verse6_str = all_bibrefs.jhn_2_19_str;
+	lg.q4_1__verse6_href = all_bibrefs.jhn_2_19_href;
+	lg.q4_1__verse7_str = all_bibrefs.luk_24_43_str;
+	lg.q4_1__verse7_href = all_bibrefs.luk_24_43_href;
+	
+
+	lg.q4_2__still_physical_sec = `<a class='exam_ref exam_title' href='${href_still_physical}'>Still Physical</a>`;
+	lg.q4_2__still_physical = `1st quest STILL PHYSYCAL`;
+	lg.q4_2__go = "Go";
+	lg.q4_2__stay = "Stay";
 
 	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To Not die again</a>`;
 	lg.q5_1__not_die = `1st quest NOT DIE`;
