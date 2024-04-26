@@ -337,7 +337,7 @@ const all_bibrefs = {
 	luk_24_43_obj: { book: "luke", chapter: 24, verse: 43, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	luk_24_43_str: "Luk 24:43: He took them, and ate in front of them.",
 	jhn_2_19_obj: { book: "john", chapter: 2, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	jhn_2_19_str: "Jhn 2:19: Jesus answered them, “Destroy this temple, and in three days I will raise it up.",
+	jhn_2_19_str: `Jhn 2:19: Jesus answered them, "Destroy this temple, and in three days I will raise it up."`,
 	jhn_20_20_obj: { book: "john", chapter: 20, verse: 20, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	jhn_20_20_str: "Jhn 20:20: When he had said this, he showed them his hands and his side. The disciples therefore were glad when they saw the Lord.",
 	jhn_20_27_obj: { book: "john", chapter: 20, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -374,13 +374,14 @@ function init_en_exam_msg(){
 	const href_the_cloth = "../en/book.html#the-cloth_DOT_";
 	
 	const lg = all_en_msg;
-	lg.q0_1__end_of_test = "This test is not for you. This is the end of the test for you, unless you did not really mean it and change your answer. Click on your answer to change it.";
-	lg.q0_2__contradiction = "You have a contradiction in your answers. Please change one of your answers to the questions shown in red. The contradiction is in one of them. Otherwise you cannot continue with this test. Click on your answer to change it.";
-	lg.q0_3__end_so_far = "This test is in construction. This is the end of the test for you so far...";
+	lg.q0_1__end_of_test = "These questions are not for you. This is the end of the questions for you, unless you did not really mean it and change your answer. Click on your answer to change it.";
+	lg.q0_2__contradiction = "You have a contradiction in your answers. Please change one of your answers to the questions shown in red. The contradiction is in one of them. Otherwise you cannot continue with these questions. Click on your answer to change it.";
+	lg.q0_3__end_so_far = "These questions are in construction. This is the end of the questions for you so far...";
 	lg.q0_4__about_beliefs = "<b>All these questions are about what you believe, NOT about what you think you have certainty. Some of them might be check questions to avoid silly behaviour. Answer them all properly. You can change any answer at any time by clicking on it.</b>";
 	
 	lg.q1_1__are_you_reasonable = "This questions are for rational and reasonable people.";
 	lg.q1_1__yes = "I am a rational and reasonable person.";
+	lg.q1_1__should_yes = "All people answering these questions are required to be RATIONAL and REASONABLE.";
 	lg.q1_1__pru_pos_txt = `<span class="is_big">+</span>`;
 	lg.q1_1__pru_href = all_bibrefs.luk_24_39_href;
 	lg.q1_1__no = "I am NOT a rational and reasonable person.";
@@ -471,9 +472,8 @@ function init_en_exam_msg(){
 	lg.q3_1__resurrection_section = `<a class='exam_ref exam_title' href='${href_resurrection_tit}'>Resurrection</a>`;
 	lg.q3_1__jesus_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of Jesus Christ: `;
 	lg.q3_1__physical = "He was physically resurrected, in BODY and spirit";
-	lg.q3_1__still_physical = "He is STILL physically alive, in body and spirit";
 	lg.q3_1__not_to_die = "He is alive FOREVER, to not die again, because He cannot longer die.";
-	lg.q3_1__in_heaven = "He is in the heavens, those PHYSICAL ones that we can see and that have clouds";
+	lg.q3_1__in_heaven = "He is, in BODY and spirit, in the heavens, that PHYSICAL sky that we can see, and that has clouds";
 	
 	lg.q3_2__people_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead promissed by Jesus Christ: `;
 	lg.q3_2__like_jesus = "It is in BODY and SPIRIT just like Jesus Chist. And it is in a new body, similar to Jesus's one, that cannot die.";
@@ -492,25 +492,26 @@ function init_en_exam_msg(){
 	lg.q4_1__physical = `Select all verses that you believe support a physical resurrection`;
 	lg.q4_1__verse1_str = all_bibrefs.luk_24_39_str;
 	lg.q4_1__verse1_href = all_bibrefs.luk_24_39_href;
+	lg.q1_1__verse1_should = "FLESH and BONES are PHYSICAL.";
 	lg.q4_1__verse2_str = all_bibrefs.jhn_20_27_str;
 	lg.q4_1__verse2_href = all_bibrefs.jhn_20_27_href;
+	lg.q1_1__verse2_should = "Putting a hand into FLESH is something PHYSICAL.";
 	lg.q4_1__verse3_str = all_bibrefs.act_10_41_str;
 	lg.q4_1__verse3_href = all_bibrefs.act_10_41_href;
+	lg.q1_1__verse3_should = "EATING and DRINKING is something PHYSICAL.";
 	lg.q4_1__verse4_str = all_bibrefs.mat_28_9_str;
 	lg.q4_1__verse4_href = all_bibrefs.mat_28_9_href;
+	lg.q1_1__verse4_should = "TAKING hold of somebody's feet is something PHYSICAL.";
 	lg.q4_1__verse5_str = all_bibrefs.luk_24_30_str;
 	lg.q4_1__verse5_href = all_bibrefs.luk_24_30_href;
+	lg.q1_1__verse5_should = "BREAKING bread is something PHYSICAL.";
 	lg.q4_1__verse6_str = all_bibrefs.jhn_2_19_str;
 	lg.q4_1__verse6_href = all_bibrefs.jhn_2_19_href;
+	lg.q1_1__verse6_should = "REBUILDING a body is something PHYSICAL.";
 	lg.q4_1__verse7_str = all_bibrefs.luk_24_43_str;
 	lg.q4_1__verse7_href = all_bibrefs.luk_24_43_href;
+	lg.q1_1__verse7_should = "EATING is something PHYSICAL.";
 	
-
-	lg.q4_2__still_physical_sec = `<a class='exam_ref exam_title' href='${href_still_physical}'>Still Physical</a>`;
-	lg.q4_2__still_physical = `1st quest STILL PHYSYCAL`;
-	lg.q4_2__go = "Go";
-	lg.q4_2__stay = "Stay";
-
 	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To Not die again</a>`;
 	lg.q5_1__not_die = `1st quest NOT DIE`;
 	lg.q5_1__go = "Go";

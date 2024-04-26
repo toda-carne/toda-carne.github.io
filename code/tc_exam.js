@@ -227,6 +227,7 @@ function init_answers(qid){
 	set_is_contra_if_so(qid);
 	const quest = db_nodes_exam[qid];
 	const is_init_to_answer = (quest.has_answ == null);
+	const has_contra = ((quest.all_contra != null) && (quest.all_contra.length > 0));
 	const dv_quest = document.getElementById(qid);
 	if(dv_quest == null){
 		console.log("COULD NOT FIND qid = " + qid);
@@ -248,8 +249,16 @@ function init_answers(qid){
 		return;
 	}
 	const is_mult = quest.is_multi;
-	arr_answers.forEach((an_answ) => {
+	arr_answers.forEach((an_answ) => {		
 		if(! is_init_to_answer && ! an_answ.is_on){
+			if(has_contra && (an_answ.should_on != null)){
+				const dv_shd_on = dv_answers.appendChild(document.createElement("div"));
+				dv_shd_on.classList.add("exam");
+				dv_shd_on.classList.add("is_answer");
+				dv_shd_on.classList.add("is_contradiction");
+				dv_shd_on.innerHTML = get_msg(an_answ.should_on);
+				add_listener_to_add_edit_button(dv_answers, dv_shd_on, qid);
+			}
 			return; // continue with next elem
 		}
 		
@@ -284,23 +293,7 @@ function init_answers(qid){
 				}
 			});
 		} else {
-			dv_answ.addEventListener('click', function() {
-				// togle edit button
-				var dv_answ_ed = document.getElementById(id_dv_answ_ed);
-				if(dv_answ_ed != null){
-					dv_answ_ed.remove();
-				} else {
-					dv_answ_ed = dv_answers.appendChild(document.createElement("div"));
-					dv_answ_ed.id = id_dv_answ_ed;
-					dv_answ_ed.classList.add("exam");
-					dv_answ_ed.classList.add("is_button");
-					dv_answ_ed.innerHTML = glb_curr_lang.msg_edit_ans;
-					dv_answ_ed.addEventListener('click', function() {
-						quest.has_answ = null;
-						init_answers(qid);
-					});
-				}
-			});
+			add_listener_to_add_edit_button(dv_answers, dv_answ, qid);
 		}
 	});
 	
@@ -313,6 +306,27 @@ function init_answers(qid){
 			end_question(qid);
 		});
 	}
+}
+
+function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
+	const quest = db_nodes_exam[qid];
+	dv_answ.addEventListener('click', function() {
+		// togle edit button
+		var dv_answ_ed = document.getElementById(id_dv_answ_ed);
+		if(dv_answ_ed != null){
+			dv_answ_ed.remove();
+		} else {
+			dv_answ_ed = dv_answers.appendChild(document.createElement("div"));
+			dv_answ_ed.id = id_dv_answ_ed;
+			dv_answ_ed.classList.add("exam");
+			dv_answ_ed.classList.add("is_button");
+			dv_answ_ed.innerHTML = glb_curr_lang.msg_edit_ans;
+			dv_answ_ed.addEventListener('click', function() {
+				quest.has_answ = null;
+				init_answers(qid);
+			});
+		}
+	});
 }
 
 function remove_all_children_descendants(qid){
@@ -340,15 +354,14 @@ function end_question(qid){
 		remove_all_children_descendants(quest.parent);
 	}
 	quest.has_answ = true;
-	init_answers(qid);
 	
-	if(quest.set_reactions == null){
-		return;
+	if(quest.set_reactions != null){
+		//console.log("BEFORE set_reactions = " + quest.all_nxt);
+		quest.set_reactions();
+		//console.log("AFTER set_reactions = " + quest.all_nxt);
 	}
-	//console.log("BEFORE set_reactions = " + quest.all_nxt);
-	quest.set_reactions();
-	//console.log("AFTER set_reactions = " + quest.all_nxt);
 	
+	init_answers(qid);
 	add_all_nxt(qid);
 	add_contradictions(qid);
 }
