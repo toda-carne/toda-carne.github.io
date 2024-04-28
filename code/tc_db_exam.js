@@ -82,7 +82,7 @@ export function init_exam_database(){
 		htm_stm: "q1_3__are_humans_intelligent",
 		presentation: "q1_3__creator_section",
 		answers: [
-			{ htm_answ: "q1_3__yes" },
+			{ htm_answ: "q1_3__yes", should_on: "q1_3__should", },
 			{ htm_answ: "q1_3__no" },
 		],
 		set_reactions: function () {
@@ -227,9 +227,9 @@ export function init_exam_database(){
 		htm_stm: "q1_4__requires_technical_creativity",
 		is_multi: true,
 		answers: [
-			{ htm_answ: "q1_4__knife" },
-			{ htm_answ: "q1_4__lamp" },
-			{ htm_answ: "q1_4__clock" },
+			{ htm_answ: "q1_4__knife", should_on: "q1_4__should1", },
+			{ htm_answ: "q1_4__lamp", should_on: "q1_4__should2", },
+			{ htm_answ: "q1_4__clock", should_on: "q1_4__should3", },
 		],
 		set_reactions: function () {
 			if(this.all_nxt != null){
@@ -255,9 +255,9 @@ export function init_exam_database(){
 		htm_stm: "q1_5__more_complex_than",
 		is_multi: true,
 		answers: [
-			{ htm_answ: "q1_5__building_vs_knife" },
-			{ htm_answ: "q1_5__car_vs_lamp" },
-			{ htm_answ: "q1_5__cellphone_vs_clock" },
+			{ htm_answ: "q1_5__building_vs_knife", should_on: "q1_5__should1", },
+			{ htm_answ: "q1_5__car_vs_lamp", should_on: "q1_5__should2", },
+			{ htm_answ: "q1_5__cellphone_vs_clock", should_on: "q1_5__should3", },
 		],
 		set_reactions: function () {
 			if(this.all_nxt != null){

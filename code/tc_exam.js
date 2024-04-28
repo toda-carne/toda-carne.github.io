@@ -129,6 +129,7 @@ function add_question(qid){
 		console.log("Question " + qid + " ALREADY in page (add_question)");
 		return null;
 	}
+	//console.log("ADDING question " + qid + " to page.");
 	
 	const pos_txt = quest.pos_txt;
 	const v_min = quest.v_min;
@@ -204,7 +205,7 @@ function add_question(qid){
 	dv_qstm.innerHTML = qnum + ". " + the_stm;
 	//dv_qstm.classList.toggle("contradiction");
 
-	init_answers(qid);
+	init_answers(qid, true);
 	
 	const id_dv_support = qid + SUF_ID_SUPPORT;
 	var dv_support = dv_quest.appendChild(document.createElement("div"));
@@ -223,11 +224,12 @@ function add_question(qid){
 	return dv_quest;
 }
 
-function init_answers(qid){
+function init_answers(qid, is_init_to_answer){
+	//console.log("init_answers of qid = " + qid);
 	set_is_contra_if_so(qid);
 	const quest = db_nodes_exam[qid];
-	const is_init_to_answer = (quest.has_answ == null);
 	const has_contra = ((quest.all_contra != null) && (quest.all_contra.length > 0));
+	
 	const dv_quest = document.getElementById(qid);
 	if(dv_quest == null){
 		console.log("COULD NOT FIND qid = " + qid);
@@ -306,6 +308,12 @@ function init_answers(qid){
 			end_question(qid);
 		});
 	}
+	
+	if(is_init_to_answer && (quest.parent != null)){
+		//console.log("removing all SIBLING descendants of " + qid);
+		remove_all_children_descendants(quest.parent);
+	}
+	
 }
 
 function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
@@ -322,8 +330,7 @@ function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
 			dv_answ_ed.classList.add("is_button");
 			dv_answ_ed.innerHTML = glb_curr_lang.msg_edit_ans;
 			dv_answ_ed.addEventListener('click', function() {
-				quest.has_answ = null;
-				init_answers(qid);
+				init_answers(qid, true);
 			});
 		}
 	});
@@ -340,6 +347,7 @@ function remove_all_children_descendants(qid){
 	if((quest == null) || (quest.all_nxt == null)){
 		return;
 	}
+	//console.log("remove_all_children_descendants qid " + qid + ".all_nxt=" + quest.all_nxt);
 	for(const qq of quest.all_nxt){
 		remove_all_descendants(qq);
 	}
@@ -347,13 +355,9 @@ function remove_all_children_descendants(qid){
 
 function end_question(qid){
 	const quest = db_nodes_exam[qid];
-	if(quest.all_nxt != null){
-		//remove_all_descendants(qid);
-	}
-	if(quest.parent != null){
+	/*if(quest.parent != null){
 		remove_all_children_descendants(quest.parent);
-	}
-	quest.has_answ = true;
+	}*/
 	
 	if(quest.set_reactions != null){
 		//console.log("BEFORE set_reactions = " + quest.all_nxt);
@@ -361,7 +365,7 @@ function end_question(qid){
 		//console.log("AFTER set_reactions = " + quest.all_nxt);
 	}
 	
-	init_answers(qid);
+	init_answers(qid, false);
 	add_all_nxt(qid);
 	add_contradictions(qid);
 }
@@ -440,10 +444,12 @@ function set_is_contra_if_so(qid){
 }
 
 function remove_all_descendants(qid){
+	//console.log("removing ALL_NXT of " + qid + " from page");
 	const quest = db_nodes_exam[qid];
 	const all_desc = quest.all_nxt;
 	quest.all_nxt = null;
 	if(all_desc != null){
+		//console.log("remove_all_descendants qid "+ qid + ".all_nxt=" + all_desc);
 		for(const qq of all_desc){
 			remove_descendant(qq);
 		}
@@ -484,11 +490,11 @@ function remove_contradicted_by(ctra, qid){
 
 function remove_descendant(qid){
 	const quest = db_nodes_exam[qid];
-	quest.has_answ = null;
+	quest.parent = null;
 	
 	const dv_quest = document.getElementById(qid);
 	if(dv_quest != null){
-		//console.log("REMOVING question " + qid + " from page");
+		//console.log("REMOVING QUESTION " + qid + " from page");
 		dv_quest.remove();
 		remove_all_descendants(qid);
 		return true;

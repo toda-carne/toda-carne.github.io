@@ -389,11 +389,11 @@ function init_en_exam_msg(){
 	lg.q1_2__experience_is_evidence = "A claim that most people can see, hear, smell, taste, touch, or confirm by perceptual experience, ";
 	lg.q1_2__yes = "it is evidence.";
 	lg.q1_2__no = "it is NOT evidence";
-
 	
 	lg.q1_3__creator_section = `<a class='exam_ref exam_title' href='${href_creator_tit}'>Creator</a>`;
 	lg.q1_3__are_humans_intelligent = `With respect to <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a>, there is <a class='exam_ref' href='${href_evidence}'>evidence</a> that the human being `;
 	lg.q1_3__yes = "is intelligent, designer and has technical creativity.";
+	lg.q1_3__should = "EVIDENCE are all the buildings, transistors, cars, satellites, refrigerators, washing machines, polishers, MACHINES that make machines, factories that use machines made by other factories, that humans have made";
 	lg.q1_3__no = "is NOT intelligent, or NOT a designer, or has NO technical creativity";
 	
 	lg.q1_31__all_biological_machines = "All biological machines observed in plants, animals and people:";
@@ -418,13 +418,19 @@ function init_en_exam_msg(){
 	
 	lg.q1_4__requires_technical_creativity = `Select ALL claims about <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> supported by evidence: `;
 	lg.q1_4__knife = "a knife requires technical creativity to reproduce";
+	lg.q1_4__should1 = "a knife is EVIDENCE of men's technical creativity";
 	lg.q1_4__lamp = "a lamp requires technical creativity to reproduce";
+	lg.q1_4__should2 = "a lamp is EVIDENCE of men's technical creativity";
 	lg.q1_4__clock = "a clock requires technical creativity to reproduce";
+	lg.q1_4__should3 = "a clock is EVIDENCE of men's technical creativity";
 	
 	lg.q1_5__more_complex_than = `Select ALL claims about <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> supported by evidence: `;
 	lg.q1_5__building_vs_knife = "a building has more technical complexity than a knife";
+	lg.q1_5__should1 = "generally speaking a building is HARDER to make than a knife, just by the fact that usually you need knives to make a building";
 	lg.q1_5__car_vs_lamp = "a car has more technical complexity than a lamp";
+	lg.q1_5__should2 = "generally speaking a car is HARDER to make than a lamp, just by the fact that cars usually have lamps";
 	lg.q1_5__cellphone_vs_clock = "a cellphone has more technical complexity than a clock";
+	lg.q1_5__should3 = "generally speaking a cellphone is HARDER to make than a clock, just by the fact that usually a cellphone has a built-in clock";
 	
 	lg.q1_7__more_complexity_then_more_creativity = `Given all normal perceptual experience, the statement: "the more <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> an object or machine has, THEN, the bigger the <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> needed to reproduce it"`;
 	lg.q1_7__yes = "It is true.";
