@@ -28,7 +28,7 @@ export function init_exam_database(){
 	
 	db.q1_1__ = { 
 		htm_stm: "q1_1__are_you_reasonable",
-		//pos_txt: "q1_1__pru_pos_txt", // uncomment to debug pos_txt
+		pos_txt: "q1_1__pru_pos_txt", // uncomment to debug pos_txt
 		//v_min: -500,  // uncomment to debug sort
 		//v_max: 200,  // uncomment to debug sort
 		answers: [

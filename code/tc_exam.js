@@ -696,7 +696,7 @@ function add_verse_cit(qid, verse_obj){
 	if(verse_obj == null){
 		dv_book_nam.innerHTML = DEFAULT_BOOK;
 	} else {
-		dv_book_nam.innerHTML = verse_obj.book;
+		dv_book_nam.innerHTML = glb_all_books[verse_obj.book];
 	}
 	
 	const dv_chapter = dv_citation.appendChild(document.createElement("div"));
@@ -788,7 +788,8 @@ function calc_verse_cit_object(dv_citation){
 	if(dv_citation != null){
 		var chls = dv_citation.childNodes;
 		cit_obj.kind = VRS_CIT_KIND;
-		cit_obj.book = chls[VRS_BOOK_IDX].innerHTML;
+		const book_nam = chls[VRS_BOOK_IDX].innerHTML;
+		cit_obj.book = glb_books_nums[book_nam];
 		cit_obj.chapter = chls[VRS_CHAPTER_IDX].innerHTML;
 		cit_obj.verse = chls[VRS_VERSE_IDX].innerHTML;
 		cit_obj.last_verse = chls[VRS_LAST_VERSE_IDX].innerHTML;
@@ -812,7 +813,7 @@ function toggle_verse_ed(dv_citation){
 	inp_book.classList.add("exam");
 	inp_book.classList.add("is_ed_verse");
 	inp_book.classList.add("is_button");
-	inp_book.innerHTML = cit_obj.book;
+	inp_book.innerHTML = glb_all_books[cit_obj.book];
 	inp_book.addEventListener('click', function() {
 		const books_arr = Object.values(glb_all_books);
 		toggle_select_option(inp_book, books_arr, null);

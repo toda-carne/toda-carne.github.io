@@ -256,14 +256,16 @@ function fill_all_bibrefs_href(){
 export function init_en_module(){
 	console.log("Called init_en_module");
 	
+	init_en_basic_msg();
 	init_get_msg(all_en_msg);
 	
+	num2book_en["-1"] = all_en_msg.msg_def_book;	
 	fill_reversed_object(num2book_en, book2num_en);
+	
 	fill_reversed_object(num2abbr, abbr2num);
 	
 	fill_all_bibrefs_href();
 
-	init_en_basic_msg();
 	init_en_exam_msg();
 }
 
@@ -271,14 +273,18 @@ export function init_en_module(){
 
 function citation_to_en(cit_obj){ // websites use english names for citations
 	var num_b = glb_books_nums[cit_obj.book];
+	cit_obj.lang = "en";
 	cit_obj.abbr = num2abbr[num_b];
 	cit_obj.book = num2book_en[num_b];  
 	return cit_obj;
 }
 
-export function make_bible_ref(cit_obj_orig){
+//export function make_bible_ref(cit_obj_orig){
+export function make_bible_ref(cit_obj){
 	// https://www.biblegateway.com/passage/?search=exodus+1%3A4-7&version=RVR1960
-	const cit_obj = citation_to_en(cit_obj_orig); // websites use english names for citations
+	//const cit_obj = citation_to_en(cit_obj_orig); // websites use english names for citations
+	//const book_nam =  cit_obj.book;
+	const book_nam =  num2book_en[cit_obj.book];
 	var bibref = null;
 	if(cit_obj.site == "blueletterbible"){
 		bibref = "https://www.blueletterbible.org/" + cit_obj.bib_ver + "/" + cit_obj.abbr + "/" + cit_obj.chapter + "/" + cit_obj.verse;
@@ -287,20 +293,20 @@ export function make_bible_ref(cit_obj_orig){
 	}
 	if(cit_obj.site == "biblehub"){
 		if(cit_obj.bib_ver == "text"){
-			bibref = "https://www.biblehub.com/text/" + cit_obj.book + "/" + cit_obj.chapter + "-" + cit_obj.verse + ".htm";
+			bibref = "https://www.biblehub.com/text/" + book_nam + "/" + cit_obj.chapter + "-" + cit_obj.verse + ".htm";
 			return bibref;
 		} else {
-			bibref = "https://www.biblehub.com/" + cit_obj.bib_ver + "/" + cit_obj.book + "/" + cit_obj.chapter + ".htm";
+			bibref = "https://www.biblehub.com/" + cit_obj.bib_ver + "/" + book_nam + "/" + cit_obj.chapter + ".htm";
 			return bibref;
 		}
 	}
 	if(cit_obj.site == "bibliaparalela"){
 		// https://bibliaparalela.com/nblh/genesis/1.htm
-		bibref = "https://bibliaparalela.com/" + cit_obj.bib_ver + "/" + cit_obj.book + "/" + cit_obj.chapter + ".htm";
+		bibref = "https://bibliaparalela.com/" + cit_obj.bib_ver + "/" + book_nam + "/" + cit_obj.chapter + ".htm";
 		return bibref;
 	}
 	if(cit_obj.site == "biblegateway"){
-		bibref = "https://www.biblegateway.com/passage/?search=" + cit_obj.book + "+" + cit_obj.chapter + ":" + cit_obj.verse;
+		bibref = "https://www.biblegateway.com/passage/?search=" + book_nam + "+" + cit_obj.chapter + ":" + cit_obj.verse;
 		if(! (cit_obj.last_verse == bib_defaults.LAST_VERSE)){
 			bibref += "-" + cit_obj.last_verse;
 		}

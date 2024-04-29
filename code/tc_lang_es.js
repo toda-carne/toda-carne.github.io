@@ -124,16 +124,18 @@ function init_es_basic_msg(){
 
 export function init_es_module(){
 	init_en_module();
+	init_es_basic_msg();
 	
 	console.log("Called init_es_module");
 	
 	init_get_msg(all_es_msg);
+	
+	num2book_es["-1"] = all_es_msg.msg_def_book;
 	fill_reversed_object(num2book_es, book2num_es);
 	
-	init_es_basic_msg();
 	init_es_exam_msg();
 	
-	init_all_glb("es", num2book_es, bibles_es, book2num_es, all_es_msg);	
+	init_all_glb("es", num2book_es, bibles_es, book2num_es, all_es_msg);
 }
 
 //init_es_module();
