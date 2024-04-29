@@ -276,16 +276,7 @@ function init_answers(qid){
 		
 		if(an_answ.rclk_href != null){
 			dv_answ.addEventListener('contextmenu', (ev1) => {
-				ev1.preventDefault(); 
-				/*
-				ev1 = ev1 || window.event;
-
-				if (ev1.stopPropagation)
-					ev1.stopPropagation();
-
-				ev1.cancelBubble = true;
-				*/
-				
+				ev1.preventDefault(); 				
 				window.open(get_msg(an_answ.rclk_href), '_blank');				
 				return false;				
 			});
