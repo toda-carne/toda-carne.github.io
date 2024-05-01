@@ -122,6 +122,7 @@ function init_es_basic_msg(){
 	
 	obj.msg_in_favor = "A favor";
 	obj.msg_against = "En contra";
+	obj.msg_respond = "RESPONDER";
 	
 }
 

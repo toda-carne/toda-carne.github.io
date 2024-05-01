@@ -167,6 +167,15 @@ export const bib_defaults = {
 	BIB_VER: "BIB",
 };
 
+export const citation_ids = {
+	in_favor_side: "_in_favor",
+	against_side: "_against",
+	verse_kind: "vrs_cit_kind",
+	strong_kind: "stg_cit_kind",
+	ling_kind: "lnk_cit_kind",
+};
+
+
 function get_traduced_message(trad_msg, nom_msg){
 	const tr_mg = trad_msg[nom_msg];
 	if(tr_mg == null){
@@ -217,6 +226,7 @@ function init_en_basic_msg(){
 
 	obj.msg_in_favor = "In favor";
 	obj.msg_against = "Against";
+	obj.msg_respond = "RESPOND";
 	
 }
 

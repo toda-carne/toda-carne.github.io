@@ -702,6 +702,14 @@ color: white;
 	margin: 0.5vw;
 }
 
+.exam.is_red_border {
+	border: 0.2vw solid #ff0000;
+}
+
+.exam.is_green_border {
+	border: 0.2vw solid #00ff00;
+}
+
 .exam.is_strong_cit {
 	display: inline-block;
 	margin: 0.5vw;

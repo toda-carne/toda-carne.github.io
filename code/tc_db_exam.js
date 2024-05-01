@@ -1,4 +1,6 @@
 
+import { citation_ids } from './tc_lang_all.js';
+
 "use strict";
 
 export const STARTING_QUESTIONS = ["q0_4__", "q1_1__"];
@@ -38,6 +40,18 @@ export function init_exam_database(){
 			},
 			{ htm_answ: "q1_1__no" },
 		],
+		responses:{
+			[citation_ids.against_side]:{
+				[citation_ids.verse_kind]:{
+					book: 1,
+					chapter: 1,
+					verse: 1,
+					last_verse: 5,
+					reponse: {
+					},
+				},
+			},
+		},
 		set_reactions: function () {
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);

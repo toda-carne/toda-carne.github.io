@@ -1,5 +1,5 @@
 
-import { num2abbr, num2book_en, get_msg, make_bible_ref, make_strong_ref, bib_defaults, 
+import { num2abbr, num2book_en, get_msg, make_bible_ref, make_strong_ref, bib_defaults, citation_ids,
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang } from './tc_lang_all.js';
 	
 import { STARTING_QUESTIONS, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
@@ -57,8 +57,10 @@ const SUF_ID_POS_SHOW = "_pos_show";
 const SUF_ID_POS_OK = "_pos_ok";
 const SUF_ID_INTER = "_inter";
 const SUF_ID_ANSWERS = "_answers";
-const SUF_ID_IN_FAVOR = "_in_favor";
-const SUF_ID_AGAINST = "_against";
+const SUF_ID_IN_FAVOR = citation_ids.in_favor_side;
+const SUF_ID_AGAINST = citation_ids.against_side;
+const SUF_ID_RESPONSE = "_response";
+const SUF_ID_RESPOND = "_respond";
 const SUF_ID_SCODES = "_scodes";
 const SUF_ID_LINKS = "_links";
 
@@ -74,7 +76,7 @@ const DEFAULT_BIB_VER = bib_defaults.BIB_VER;
 
 const DEFAULT_LINK_HREF = "https://www.biblehub.com";
 
-const VRS_CIT_KIND = "vrs_cit_kind";
+const VRS_CIT_KIND = citation_ids.verse_kind;
 const VRS_BOOK_IDX = 0;
 const VRS_CHAPTER_IDX = 1;
 const VRS_VERSE_IDX = 3;
@@ -83,9 +85,9 @@ const VRS_LAST_VERSE_IDX = 5;
 const VRS_SITE_IDX = 6;
 const VRS_BIB_VER_IDX = 7;
 
-const STG_CIT_KIND = "stg_cit_kind";
+const STG_CIT_KIND = citation_ids.strong_kind;
 
-const LNK_CIT_KIND = "lnk_cit_kind";
+const LNK_CIT_KIND = citation_ids.ling_kind;
 const LNK_NAME_IDX = 0;
 const LNK_HREF_IDX = 1;
 
@@ -225,6 +227,12 @@ function add_question(qid){
 	dv_against.id = id_dv_against;
 	dv_against.classList.add("exam");
 	dv_against.classList.add("is_block");
+	
+	const id_dv_response = qid + SUF_ID_RESPONSE;
+	var dv_response = dv_quest.appendChild(document.createElement("div"));
+	dv_response.id = id_dv_response;
+	dv_response.classList.add("exam");
+	dv_response.classList.add("is_block");
 	
 	if(! is_in_viewport(dv_stm)){
 		dv_stm.scrollIntoView({
@@ -555,6 +563,40 @@ function remove_all_ed(qid){
 	remove_id(id_dv_sel_option);
 }
 
+function add_respond_button(qid){
+	const id_dv_in_favor = qid + SUF_ID_IN_FAVOR;
+	const dv_in_favor = document.getElementById(id_dv_in_favor);
+	const id_dv_against = qid + SUF_ID_AGAINST;
+	const dv_against = document.getElementById(id_dv_against);
+	const id_dv_response = qid + SUF_ID_RESPONSE;
+	const dv_response = document.getElementById(id_dv_response);
+	
+	const id_dv_respond = qid + SUF_ID_RESPOND;
+	let dv_respond = document.getElementById(id_dv_respond);
+	
+	if((dv_in_favor.firstChild == null) && (dv_against.firstChild == null)){
+		if(dv_respond != null){
+			dv_respond.remove();
+		}
+		return;
+	}
+	
+	if(dv_respond != null){
+		return;
+	}
+	
+	dv_respond = dv_response.appendChild(document.createElement("div"));
+	dv_respond.id = id_dv_respond;
+	dv_respond.classList.add("exam");
+	dv_respond.classList.add("is_block");
+	dv_respond.classList.add("is_button");
+	dv_respond.innerHTML = glb_curr_lang.msg_respond;
+	dv_respond.addEventListener('click', function() {
+		return;
+	});    
+	
+}
+
 function get_qid_of_support_id(support_id){
 	if(support_id.endsWith(SUF_ID_IN_FAVOR)){
 		return support_id.slice(0, - SUF_ID_IN_FAVOR.length);
@@ -585,6 +627,7 @@ function toggle_support_interaction(qid){
 	const sides_arr = [glb_curr_lang.msg_in_favor, glb_curr_lang.msg_against];
 	const dv_quest = document.getElementById(qid);
 	toggle_select_option(dv_quest, sides_arr, function(dv_ret, dv_ops, val_sel){
+		dv_ops.remove();
 		if(val_sel == glb_curr_lang.msg_in_favor){
 			toggle_side_interaction(qid, SUF_ID_IN_FAVOR)
 		} else {
@@ -604,6 +647,7 @@ function toggle_side_interaction(qid, support_suf){
 		const old_dv_support = document.getElementById(prv_id);
 		old_dv_support.classList.remove("ed_support");
 		remove_all_ed(old_qid);
+		add_respond_button(old_qid);
 	}		
 	
 	const id_dv_support = qid + support_suf;
@@ -633,6 +677,7 @@ function toggle_side_interaction(qid, support_suf){
 		dv_support.classList.remove("ed_support");
 		dv_inter.remove();
 		remove_all_ed(qid);
+		add_respond_button(qid);
 
 		if(! is_in_viewport(dv_inter)){
 			dv_inter.scrollIntoView({
@@ -782,6 +827,11 @@ function add_verse_cit(qid, verse_obj, support_suf){
 	dv_citation.classList.add("exam");
 	dv_citation.classList.add("is_verse_cit");
 	dv_citation.classList.add("is_option");
+	if(support_suf == SUF_ID_IN_FAVOR){
+		dv_citation.classList.add("is_green_border");
+	} else {
+		dv_citation.classList.add("is_red_border");
+	}
 	
 	const dv_book_nam = dv_citation.appendChild(document.createElement("div"));
 	dv_book_nam.classList.add("exam");
@@ -1361,6 +1411,11 @@ function add_strong_cit(qid, stg_obj, support_suf){
 	dv_code.classList.add("exam");
 	dv_code.classList.add("is_strong_cit");
 	dv_code.classList.add("is_option");
+	if(support_suf == SUF_ID_IN_FAVOR){
+		dv_code.classList.add("is_green_border");
+	} else {
+		dv_code.classList.add("is_red_border");
+	}
 	if(stg_obj == null){
 		dv_code.innerHTML = DEFAULT_STRONG;
 	} else {
@@ -1529,6 +1584,11 @@ function add_link_cit(qid, link_obj, support_suf){
 	dv_link.classList.add("exam");
 	dv_link.classList.add("is_link_cit");
 	dv_link.classList.add("is_option");
+	if(support_suf == SUF_ID_IN_FAVOR){
+		dv_link.classList.add("is_green_border");
+	} else {
+		dv_link.classList.add("is_red_border");
+	}
 	
 	const dv_name = dv_link.appendChild(document.createElement("div"));
 	dv_name.classList.add("exam");
@@ -1714,6 +1774,8 @@ export function init_page_exam(){
 	init_exam_module_vars();
 	init_exam_buttons();
 	
+	//console.log("db_nodes_exam.q1_1__.responses = " + JSON.stringify(db_nodes_exam.q1_1__.responses, null, "  "));
+	
 	let added = null;
 	for(const qq of STARTING_QUESTIONS){
 		//console.log("Adding question " + qq + " to page");
@@ -1827,6 +1889,7 @@ function display_exam_load_object(ld_obj){
 			if(quest != null){
 				display_support_for_question(qid, quest.refs_in_favor);
 				display_support_for_question(qid, quest.refs_against);
+				add_respond_button(qid);
 			}
 		}
 	}
