@@ -207,7 +207,7 @@ function add_question(qid){
 	//dv_qstm.classList.toggle("contradiction");
 	dv_qstm.addEventListener('contextmenu', (ev1) => {
 		ev1.preventDefault();
-		toggle_support_interaction(qid, SUF_ID_IN_FAVOR);
+		toggle_support_interaction(qid);
 		//toggle_pos_interaction(qid);
 		return false;				
 	});
@@ -555,7 +555,6 @@ function remove_all_ed(qid){
 	remove_id(id_dv_sel_option);
 }
 
-
 function get_qid_of_support_id(support_id){
 	if(support_id.endsWith(SUF_ID_IN_FAVOR)){
 		return support_id.slice(0, - SUF_ID_IN_FAVOR.length);
@@ -566,7 +565,36 @@ function get_qid_of_support_id(support_id){
 	return null;
 }
 
-function toggle_support_interaction(qid, support_suf){
+function get_side_of_support_id(support_id){
+	if(support_id.endsWith(SUF_ID_IN_FAVOR)){
+		return SUF_ID_IN_FAVOR;
+	}
+	return SUF_ID_AGAINST;
+}
+
+function toggle_support_interaction(qid){
+	const id_dv_inter = "id_support_ed";
+	let dv_inter = document.getElementById(id_dv_inter);
+	if(dv_inter != null){
+		const prv_id = dv_inter.previousSibling.id;
+		const old_side = get_side_of_support_id(prv_id);
+		toggle_side_interaction(qid, old_side);
+		return;
+	}
+
+	const sides_arr = [glb_curr_lang.msg_in_favor, glb_curr_lang.msg_against];
+	const dv_quest = document.getElementById(qid);
+	toggle_select_option(dv_quest, sides_arr, function(dv_ret, dv_ops, val_sel){
+		if(val_sel == glb_curr_lang.msg_in_favor){
+			toggle_side_interaction(qid, SUF_ID_IN_FAVOR)
+		} else {
+			toggle_side_interaction(qid, SUF_ID_AGAINST)
+		}
+	});
+	
+}
+
+function toggle_side_interaction(qid, support_suf){
 	const id_dv_inter = "id_support_ed";
 	let dv_inter = document.getElementById(id_dv_inter);
 	if(dv_inter != null){
@@ -1736,9 +1764,9 @@ function calc_quest_save_object(dv_quest){
 	
 	sv_obj = JSON.parse(JSON.stringify(quest));
 	
-	const in_fav = calc_support_save_array(dv_quest, SUF_ID_IN_FAVOR);
-	const agains = calc_support_save_array(dv_quest, SUF_ID_AGAINST);
-	sv_obj.support = in_fav.concat(agains);
+	sv_obj.refs_in_favor = calc_support_save_array(dv_quest, SUF_ID_IN_FAVOR);
+	sv_obj.refs_against = calc_support_save_array(dv_quest, SUF_ID_AGAINST);
+	//in_fav.concat(agains);
 	
 	return sv_obj;
 }
@@ -1762,17 +1790,13 @@ function update_nodes_exam_with(ld_obj){
 		let reacs = db[qid].set_reactions;
 		
 		db[qid] = JSON.parse(JSON.stringify(quest));
-		db[qid].support = null;
+		db[qid].refs_in_favor = null;
+		db[qid].refs_against = null;
 		db[qid].set_reactions = reacs;		
 	}
 }
 
-function display_support_for_question(qid, ld_obj){
-	const quest = ld_obj[qid];
-	if(quest == null){
-		return;
-	}
-	const all_supp = quest.support;
+function display_support_for_question(qid, all_supp){
 	if(all_supp == null){
 		return;
 	}
@@ -1799,7 +1823,11 @@ function display_exam_load_object(ld_obj){
 		if(added == null){
 			console.log("Question " + qid + " could NOT be DISPLAYED in page !!!");
 		} else {
-			display_support_for_question(qid, ld_obj);
+			const quest = ld_obj[qid];
+			if(quest != null){
+				display_support_for_question(qid, quest.refs_in_favor);
+				display_support_for_question(qid, quest.refs_against);
+			}
 		}
 	}
 }

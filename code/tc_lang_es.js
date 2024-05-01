@@ -120,6 +120,9 @@ function init_es_basic_msg(){
 	obj.msg_todacarne_answers_reading = "Abriendo...";
 	obj.msg_todacarne_no_internet = "Sin conexion a internet.";
 	
+	obj.msg_in_favor = "A favor";
+	obj.msg_against = "En contra";
+	
 }
 
 export function init_es_module(){

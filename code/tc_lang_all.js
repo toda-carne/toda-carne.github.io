@@ -214,6 +214,9 @@ function init_en_basic_msg(){
 	obj.msg_todacarne_answers_writing = "Saving...";
 	obj.msg_todacarne_answers_reading = "Opening...";
 	obj.msg_todacarne_no_internet = "No internet conection.";
+
+	obj.msg_in_favor = "In favor";
+	obj.msg_against = "Against";
 	
 }
 
