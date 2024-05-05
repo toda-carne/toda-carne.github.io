@@ -274,7 +274,9 @@ function init_answers(qid){
 		return;
 	}
 	const is_mult = quest.is_multi;
-	arr_answers.forEach((an_answ) => {		
+	//arr_answers.forEach((an_answ) => {
+	for (const [aid, an_answ] of Object.entries(arr_answers)) {
+		//console.log("aid=" + aid + " an_answ=" + JSON.stringify(an_answ, null, "  "));
 		if(! is_init_to_answer && ! an_answ.is_on){
 			if(has_contra && (an_answ.should_on != null)){
 				const dv_shd_on = dv_answers.appendChild(document.createElement("div"));
@@ -284,7 +286,8 @@ function init_answers(qid){
 				dv_shd_on.innerHTML = get_msg(an_answ.should_on);
 				add_listener_to_add_edit_button(dv_answers, dv_shd_on, qid);
 			}
-			return; // continue with next elem
+			//return; // continue with next elem
+			continue; // continue with next elem
 		}
 		
 		const dv_answ = dv_answers.appendChild(document.createElement("div"));
@@ -302,7 +305,7 @@ function init_answers(qid){
 				const ref_str = get_msg(an_answ.rclk_href);
 				console.log("rclick. val_href=" + val_href + " ref_str=" + ref_str);
 				window.open(ref_str, '_blank');				
-				return false;				
+				return false; // skip default behaviour
 			});
 		}
 		
@@ -325,7 +328,8 @@ function init_answers(qid){
 		} else {
 			add_listener_to_add_edit_button(dv_answers, dv_answ, qid);
 		}
-	});
+	}
+	//});
 	
 	if(is_mult && is_init_to_answer){
 		const dv_end = dv_answers.appendChild(document.createElement("div"));

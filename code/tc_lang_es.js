@@ -174,7 +174,7 @@ function init_es_exam_msg(){
 
 	lg.q1_21__creator_section = `<a class='exam_ref exam_title' href='${href_creator_tit}'>Creador</a>`;
 	
-	lg.q1_3__are_humans_intelligent = `Con respecto a la <a class='exam_ref' href='${href_tch_crea}'>creatividad écnica</a>, hay <a class='exam_ref' href='${href_evidence}'>evidencia</a> que el ser humano `;
+	lg.q1_3__are_humans_intelligent = `Con respecto a la <a class='exam_ref' href='${href_tch_crea}'>creatividad técnica</a>, hay <a class='exam_ref' href='${href_evidence}'>evidencia</a> que el ser humano `;
 	lg.q1_3__yes = "es inteligente, diseñador y tiene creatividad técnica.";
 	lg.q1_3__should = "EVIDENCIA son todos los edificios, transistores, automóviles, satélites, neveras, lavadoras, pulidoras, retroescabadoras, máquinas que hacen máquinas, fábricas que usan máquinas hechas por otras fábricas, que ha hecho el hombre";
 	lg.q1_3__no = "NO es inteligente, o NO es diseñador, o NO tiene creatividad técnica.";

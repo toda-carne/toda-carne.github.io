@@ -7,10 +7,10 @@ function pru_stringfy(){
 	const db = db_nodes_exam;
 	db.q1_1__ = { 
 		htm_stm: "q1_1__are_you_reasonable",
-		answers: [
-			{ htm_answ: "q1_1__yes" },
-			{ htm_answ: "q1_1__no" },
-		],
+		answers: {
+			r0: { htm_answ: "q1_1__yes" },
+			r1: { htm_answ: "q1_1__no" },
+		},
 		set_reactions: function () {
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);
@@ -18,7 +18,7 @@ function pru_stringfy(){
 			}
 			this.all_nxt = [];
 			
-			if(this.answers[0].is_on){ 
+			if(this.answers.r0.is_on){ 
 				this.all_nxt = ["q1_2__"];
 				return;
 			}
