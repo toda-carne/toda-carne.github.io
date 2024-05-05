@@ -167,12 +167,13 @@ export const bib_defaults = {
 	BIB_VER: "BIB",
 };
 
-export const citation_ids = {
+export const refs_ids = {
 	in_favor_side: "_in_favor",
 	against_side: "_against",
-	verse_kind: "vrs_cit_kind",
-	strong_kind: "stg_cit_kind",
-	ling_kind: "lnk_cit_kind",
+	verse_kind: "vrs_kind",
+	strong_kind: "stg_kind",
+	ling_kind: "lnk_kind",
+	qid_kind: "qid_kind",
 };
 
 
@@ -296,8 +297,10 @@ function citation_to_en(cit_obj){ // websites use english names for citations
 export function make_bible_ref(cit_obj){
 	// https://www.biblegateway.com/passage/?search=exodus+1%3A4-7&version=RVR1960
 	//const cit_obj = citation_to_en(cit_obj_orig); // websites use english names for citations
-	//const book_nam =  cit_obj.book;
-	const book_nam =  num2book_en[cit_obj.book];
+	let book_nam =  cit_obj.book; // all_bibrefs references
+	if(Number.isInteger(cit_obj.book)){
+		book_nam =  num2book_en[cit_obj.book];  // normal references
+	}
 	var bibref = null;
 	if(cit_obj.site == "blueletterbible"){
 		bibref = "https://www.blueletterbible.org/" + cit_obj.bib_ver + "/" + cit_obj.abbr + "/" + cit_obj.chapter + "/" + cit_obj.verse;

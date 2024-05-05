@@ -1,5 +1,5 @@
 
-import { citation_ids } from './tc_lang_all.js';
+import { refs_ids } from './tc_lang_all.js';
 
 "use strict";
 
@@ -41,13 +41,14 @@ export function init_exam_database(){
 			{ htm_answ: "q1_1__no" },
 		],
 		responses:{
-			[citation_ids.against_side]:{
-				[citation_ids.verse_kind]:{
+			[refs_ids.against_side]:{
+				[refs_ids.verse_kind]:{
 					book: 1,
 					chapter: 1,
 					verse: 1,
 					last_verse: 5,
 					reponse: {
+						kind: refs_ids.qid_kind,
 					},
 				},
 			},

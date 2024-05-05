@@ -1,5 +1,5 @@
 
-import { num2abbr, num2book_en, get_msg, make_bible_ref, make_strong_ref, bib_defaults, citation_ids,
+import { num2abbr, num2book_en, get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids,
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang } from './tc_lang_all.js';
 	
 import { STARTING_QUESTIONS, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
@@ -57,8 +57,8 @@ const SUF_ID_POS_SHOW = "_pos_show";
 const SUF_ID_POS_OK = "_pos_ok";
 const SUF_ID_INTER = "_inter";
 const SUF_ID_ANSWERS = "_answers";
-const SUF_ID_IN_FAVOR = citation_ids.in_favor_side;
-const SUF_ID_AGAINST = citation_ids.against_side;
+const SUF_ID_IN_FAVOR = refs_ids.in_favor_side;
+const SUF_ID_AGAINST = refs_ids.against_side;
 const SUF_ID_RESPONSE = "_response";
 const SUF_ID_RESPOND = "_respond";
 const SUF_ID_SCODES = "_scodes";
@@ -76,7 +76,7 @@ const DEFAULT_BIB_VER = bib_defaults.BIB_VER;
 
 const DEFAULT_LINK_HREF = "https://www.biblehub.com";
 
-const VRS_CIT_KIND = citation_ids.verse_kind;
+const VRS_CIT_KIND = refs_ids.verse_kind;
 const VRS_BOOK_IDX = 0;
 const VRS_CHAPTER_IDX = 1;
 const VRS_VERSE_IDX = 3;
@@ -85,9 +85,9 @@ const VRS_LAST_VERSE_IDX = 5;
 const VRS_SITE_IDX = 6;
 const VRS_BIB_VER_IDX = 7;
 
-const STG_CIT_KIND = citation_ids.strong_kind;
+const STG_CIT_KIND = refs_ids.strong_kind;
 
-const LNK_CIT_KIND = citation_ids.ling_kind;
+const LNK_CIT_KIND = refs_ids.ling_kind;
 const LNK_NAME_IDX = 0;
 const LNK_HREF_IDX = 1;
 
@@ -297,8 +297,11 @@ function init_answers(qid){
 		
 		if(an_answ.rclk_href != null){
 			dv_answ.addEventListener('contextmenu', (ev1) => {
-				ev1.preventDefault(); 				
-				window.open(get_msg(an_answ.rclk_href), '_blank');				
+				ev1.preventDefault();
+				const val_href = an_answ.rclk_href;
+				const ref_str = get_msg(an_answ.rclk_href);
+				console.log("rclick. val_href=" + val_href + " ref_str=" + ref_str);
+				window.open(ref_str, '_blank');				
 				return false;				
 			});
 		}
@@ -592,8 +595,8 @@ function add_respond_button(qid){
 	dv_respond.classList.add("is_button");
 	dv_respond.innerHTML = glb_curr_lang.msg_respond;
 	dv_respond.addEventListener('click', function() {
-		return;
-	});    
+		respond_support(qid);
+	});
 	
 }
 
@@ -825,6 +828,7 @@ function add_verse_cit(qid, verse_obj, support_suf){
 	const dv_citation = dv_support.appendChild(document.createElement("div"));
 	dv_citation.id = id_dv_last_cit;
 	dv_citation.classList.add("exam");
+	//dv_answ.classList.add("is_answer");
 	dv_citation.classList.add("is_verse_cit");
 	dv_citation.classList.add("is_option");
 	if(support_suf == SUF_ID_IN_FAVOR){
@@ -1793,8 +1797,7 @@ export function init_page_exam(){
 	return added;
 };
 
-function calc_support_save_array(dv_quest, support_suf){
-	const qid = dv_quest.id;
+function calc_support_save_array(qid, support_suf){
 	const id_dv_support = qid + support_suf;
 	const dv_support = document.getElementById(id_dv_support);
 	const sv_obj = [];
@@ -1826,8 +1829,8 @@ function calc_quest_save_object(dv_quest){
 	
 	sv_obj = JSON.parse(JSON.stringify(quest));
 	
-	sv_obj.refs_in_favor = calc_support_save_array(dv_quest, SUF_ID_IN_FAVOR);
-	sv_obj.refs_against = calc_support_save_array(dv_quest, SUF_ID_AGAINST);
+	sv_obj.refs_in_favor = calc_support_save_array(dv_quest.id, SUF_ID_IN_FAVOR);
+	sv_obj.refs_against = calc_support_save_array(dv_quest.id, SUF_ID_AGAINST);
 	//in_fav.concat(agains);
 	
 	return sv_obj;
@@ -2014,5 +2017,12 @@ function get_contradictions_qhrefs(qid, skip_qid){
 		}
 	}
 	return all_qhrefs;
+}
+
+function respond_support(qid){
+	let r_in_favor = calc_support_save_array(qid, SUF_ID_IN_FAVOR);
+	let r_against = calc_support_save_array(qid, SUF_ID_AGAINST);
+	
+	
 }
 
