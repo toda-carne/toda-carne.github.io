@@ -40,19 +40,6 @@ export function init_exam_database(){
 			},
 			r1: { htm_answ: "q1_1__no" },
 		},
-		responses:{
-			[refs_ids.against_side]:{
-				[refs_ids.verse_kind]:{
-					book: 1,
-					chapter: 1,
-					verse: 1,
-					last_verse: 5,
-					reponse: {
-						kind: refs_ids.qid_kind,
-					},
-				},
-			},
-		},
 		set_reactions: function () {
 			if(this.all_nxt != null){
 				console.log("Already set_reactions for question " + this.htm_stm);

@@ -298,9 +298,13 @@ export function make_bible_ref(cit_obj){
 	// https://www.biblegateway.com/passage/?search=exodus+1%3A4-7&version=RVR1960
 	//const cit_obj = citation_to_en(cit_obj_orig); // websites use english names for citations
 	let book_nam =  cit_obj.book; // all_bibrefs references
-	if(Number.isInteger(cit_obj.book)){
-		book_nam =  num2book_en[cit_obj.book];  // normal references
+	if(isNaN(cit_obj.book)){
+		book_nam =  cit_obj.book;
+	} else {
+		let num = Number(cit_obj.book);
+		book_nam =  num2book_en[num];  // normal references
 	}
+	console.log("make_bible_ref. cit_obj= " + JSON.stringify(cit_obj, null, "  ") + "\nbook_nam=" + book_nam);
 	var bibref = null;
 	if(cit_obj.site == "blueletterbible"){
 		bibref = "https://www.blueletterbible.org/" + cit_obj.bib_ver + "/" + cit_obj.abbr + "/" + cit_obj.chapter + "/" + cit_obj.verse;
