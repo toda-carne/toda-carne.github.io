@@ -124,6 +124,10 @@ function init_es_basic_msg(){
 	obj.msg_against = "En contra";
 	obj.msg_respond = "RESPONDER";
 	
+	obj.msg_help_statement_right_click = "Click derecho para abrir/cerrar la iteraccion de citas en contra o a favor";
+	obj.msg_help_answer_right_click = "Click derecho para ir al enlace web correspondiente";
+	obj.msg_help_cit_ed_ok_right_click = "Click derecho para cambiar entre A favor/En contra";
+	
 }
 
 export function init_es_module(){

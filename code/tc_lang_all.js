@@ -229,6 +229,9 @@ function init_en_basic_msg(){
 	obj.msg_against = "Against";
 	obj.msg_respond = "RESPOND";
 	
+	obj.msg_help_statement_right_click = "Right click to open/close interaction of against or in favor citations ";
+	obj.msg_help_answer_right_click = "Right click to go to corresponding web link";
+	obj.msg_help_cit_ed_ok_right_click = "Right click to toggle In favor/Against";
 }
 
 export let get_msg = null;

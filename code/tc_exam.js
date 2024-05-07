@@ -199,15 +199,20 @@ function add_question(qid){
 	
 	const dv_qstm = dv_stm.appendChild(document.createElement("div"));
 	dv_qstm.id = qid + SUF_ID_QSTM;
+	if(quest.answers != null){
+		dv_qstm.title = glb_curr_lang.msg_help_statement_right_click;
+	}
 	dv_qstm.classList.add("exam");
 	dv_qstm.classList.add("msg");
 	dv_qstm.innerHTML = qnum + ". " + the_stm;
 	//dv_qstm.classList.toggle("contradiction");
-	dv_qstm.addEventListener('contextmenu', (ev1) => {
-		ev1.preventDefault();
-		toggle_support_interaction(qid, SUF_ID_ANSWERS);
-		return false;				
-	});
+	if(quest.answers != null){
+		dv_qstm.addEventListener('contextmenu', (ev1) => {
+			ev1.preventDefault();
+			toggle_support_interaction(qid, SUF_ID_ANSWERS);
+			return false;				
+		});
+	}
 
 	init_answers(qid);
 	
@@ -285,6 +290,10 @@ function init_answers(qid){
 			dv_answ = add_strong_cit(qid, an_answ, suf_answs);
 		} else if (an_answ.kind == LNK_CIT_KIND){
 			dv_answ = add_link_cit(qid, an_answ, suf_answs);
+		}
+		
+		if(an_answ.rclk_href != null){
+			dv_answ.title = glb_curr_lang.msg_help_answer_right_click;
 		}
 		
 		dv_answ.tc_answ_obj = an_answ;
@@ -806,7 +815,11 @@ function is_last_added_verse_cit_ok(qid){
 	return false;
 }
 
-function set_cit_border(cit_obj, dv_cit){
+function set_cit_params(cit_obj, dv_cit){
+	dv_cit.classList.add("exam");
+	dv_cit.classList.add("is_answer");
+	dv_cit.title = glb_curr_lang.msg_help_answer_right_click;
+	
 	if(cit_obj == null){
 		dv_cit.classList.add("is_red_border");
 	} else {
@@ -829,9 +842,7 @@ function add_verse_cit(qid, verse_obj, support_suf){
 	
 	const dv_citation = dv_support.appendChild(document.createElement("div"));
 	dv_citation.id = id_dv_last_cit;
-	dv_citation.classList.add("exam");
-	dv_citation.classList.add("is_answer");
-	set_cit_border(verse_obj, dv_citation);
+	set_cit_params(verse_obj, dv_citation);
 	
 	const dv_book_nam = dv_citation.appendChild(document.createElement("div"));
 	dv_book_nam.classList.add("exam");
@@ -942,6 +953,7 @@ function get_verse_cit_key(obj){
 }
 
 function add_toggle_side_handler(dv_ok){
+	dv_ok.title = glb_curr_lang.msg_help_cit_ed_ok_right_click;
 	dv_ok.addEventListener('contextmenu', (ev1) => {
 		ev1.preventDefault();
 		dv_ok.classList.toggle("is_red_border");
@@ -1447,9 +1459,8 @@ function add_strong_cit(qid, stg_obj, support_suf){
 	
 	const dv_code = dv_support.appendChild(document.createElement("div"));
 	dv_code.id = id_dv_last_strong;
-	dv_code.classList.add("exam");
-	dv_code.classList.add("is_answer");
-	set_cit_border(stg_obj, dv_code);
+	set_cit_params(stg_obj, dv_code);
+	
 	if(stg_obj == null){
 		dv_code.innerHTML = DEFAULT_STRONG;
 	} else {
@@ -1641,9 +1652,7 @@ function add_link_cit(qid, link_obj, support_suf){
 	
 	const dv_link = dv_support.appendChild(document.createElement("div"));
 	dv_link.id = id_dv_last_link;
-	dv_link.classList.add("exam");
-	dv_link.classList.add("is_answer");
-	set_cit_border(link_obj, dv_link);
+	set_cit_params(link_obj, dv_link);
 	
 	const dv_name = dv_link.appendChild(document.createElement("div"));
 	dv_name.classList.add("exam");

@@ -675,6 +675,11 @@ color: white;
 	border: 0.2vw solid white;
 }
 
+.exam.is_answer:hover,.exam.is_answer:hover>* {
+	background-color: #3263cb;
+	color: white;
+}
+
 .exam.answ_bib {
 	display: inline-block;
 	height: 100%;
