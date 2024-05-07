@@ -57,10 +57,6 @@ const SUF_ID_POS_SHOW = "_pos_show";
 const SUF_ID_POS_OK = "_pos_ok";
 const SUF_ID_INTER = "_inter";
 const SUF_ID_ANSWERS = "_answers";
-const SUF_ID_IN_FAVOR = refs_ids.in_favor_side;
-const SUF_ID_AGAINST = refs_ids.against_side;
-const SUF_ID_RESPONSE = "_response";
-const SUF_ID_RESPOND = "_respond";
 const SUF_ID_SCODES = "_scodes";
 const SUF_ID_LINKS = "_links";
 
@@ -209,31 +205,11 @@ function add_question(qid){
 	//dv_qstm.classList.toggle("contradiction");
 	dv_qstm.addEventListener('contextmenu', (ev1) => {
 		ev1.preventDefault();
-		//toggle_support_selection(qid);
 		toggle_support_interaction(qid, SUF_ID_ANSWERS);
-		//toggle_pos_interaction(qid);
 		return false;				
 	});
 
 	init_answers(qid);
-	
-	const id_dv_in_favor = qid + SUF_ID_IN_FAVOR;
-	var dv_in_favor = dv_quest.appendChild(document.createElement("div"));
-	dv_in_favor.id = id_dv_in_favor;
-	dv_in_favor.classList.add("exam");
-	dv_in_favor.classList.add("is_block");		
-	
-	const id_dv_against = qid + SUF_ID_AGAINST;
-	var dv_against = dv_quest.appendChild(document.createElement("div"));
-	dv_against.id = id_dv_against;
-	dv_against.classList.add("exam");
-	dv_against.classList.add("is_block");
-	
-	const id_dv_response = qid + SUF_ID_RESPONSE;
-	var dv_response = dv_quest.appendChild(document.createElement("div"));
-	dv_response.id = id_dv_response;
-	dv_response.classList.add("exam");
-	dv_response.classList.add("is_block");
 	
 	if(! is_in_viewport(dv_stm)){
 		dv_stm.scrollIntoView({
@@ -631,83 +607,9 @@ function remove_all_ed(qid){
 	remove_id(id_dv_sel_option);
 }
 
-/*
-function add_respond_button(qid){
-	const id_dv_in_favor = qid + SUF_ID_IN_FAVOR;
-	const dv_in_favor = document.getElementById(id_dv_in_favor);
-	const id_dv_against = qid + SUF_ID_AGAINST;
-	const dv_against = document.getElementById(id_dv_against);
-	const id_dv_response = qid + SUF_ID_RESPONSE;
-	const dv_response = document.getElementById(id_dv_response);
-	
-	const id_dv_respond = qid + SUF_ID_RESPOND;
-	let dv_respond = document.getElementById(id_dv_respond);
-	
-	if((dv_in_favor.firstChild == null) && (dv_against.firstChild == null)){
-		if(dv_respond != null){
-			dv_respond.remove();
-		}
-		return;
-	}
-	
-	if(dv_respond != null){
-		return;
-	}
-	
-	dv_respond = dv_response.appendChild(document.createElement("div"));
-	dv_respond.id = id_dv_respond;
-	dv_respond.classList.add("exam");
-	dv_respond.classList.add("is_block");
-	dv_respond.classList.add("is_button");
-	dv_respond.innerHTML = glb_curr_lang.msg_respond;
-	dv_respond.addEventListener('click', function() {
-		respond_support(qid);
-	});
-	
-}
-*/
-
-function get_side_of_support_id(support_id){
-	if(support_id.endsWith(SUF_ID_IN_FAVOR)){
-		return SUF_ID_IN_FAVOR;
-	}
-	return SUF_ID_AGAINST;
-}
-
-/*
-function toggle_support_selection(qid){
-	const id_dv_inter = "id_support_ed";
-	let dv_inter = document.getElementById(id_dv_inter);
-	if(dv_inter != null){
-		const prv_id = dv_inter.previousSibling.id;
-		const old_side = get_side_of_support_id(prv_id);
-		toggle_support_interaction(qid, old_side);
-		return;
-	}
-
-	const sides_arr = [glb_curr_lang.msg_in_favor, glb_curr_lang.msg_against];
-	const dv_quest = document.getElementById(qid);
-	toggle_select_option(dv_quest, sides_arr, function(dv_ret, dv_ops, val_sel){
-		dv_ops.remove();
-		if(val_sel == glb_curr_lang.msg_in_favor){
-			toggle_support_interaction(qid, SUF_ID_IN_FAVOR)
-		} else {
-			toggle_support_interaction(qid, SUF_ID_AGAINST)
-		}
-	});
-	
-}
-*/
-
 function get_qid_of_support_id(support_id){
 	if(support_id.endsWith(SUF_ID_ANSWERS)){
 		return support_id.slice(0, - SUF_ID_ANSWERS.length);
-	}
-	if(support_id.endsWith(SUF_ID_IN_FAVOR)){
-		return support_id.slice(0, - SUF_ID_IN_FAVOR.length);
-	}
-	if(support_id.endsWith(SUF_ID_AGAINST)){
-		return support_id.slice(0, - SUF_ID_AGAINST.length);
 	}
 	return null;
 }
@@ -728,7 +630,6 @@ function toggle_support_interaction(qid, support_suf){
 		const old_dv_support = document.getElementById(prv_id);
 		old_dv_support.classList.remove("ed_support");
 		remove_all_ed(old_qid);
-		//add_respond_button(old_qid);
 	}		
 	
 	const id_dv_support = qid + support_suf;
@@ -758,7 +659,6 @@ function toggle_support_interaction(qid, support_suf){
 		dv_support.classList.remove("ed_support");
 		dv_inter.remove();
 		remove_all_ed(qid);
-		//add_respond_button(qid);
 
 		if(! is_in_viewport(dv_inter)){
 			dv_inter.scrollIntoView({
@@ -906,6 +806,18 @@ function is_last_added_verse_cit_ok(qid){
 	return false;
 }
 
+function set_cit_border(cit_obj, dv_cit){
+	if(cit_obj == null){
+		dv_cit.classList.add("is_red_border");
+	} else {
+		if(cit_obj.side == refs_ids.in_favor_side){
+			dv_cit.classList.add("is_green_border");
+		} else {
+			dv_cit.classList.add("is_red_border");
+		}
+	}
+}
+	
 function add_verse_cit(qid, verse_obj, support_suf){
 	const id_dv_support = qid + support_suf;
 	const dv_support = document.getElementById(id_dv_support);
@@ -918,14 +830,8 @@ function add_verse_cit(qid, verse_obj, support_suf){
 	const dv_citation = dv_support.appendChild(document.createElement("div"));
 	dv_citation.id = id_dv_last_cit;
 	dv_citation.classList.add("exam");
-	//dv_citation.classList.add("is_answer");
-	dv_citation.classList.add("is_verse_cit");
-	dv_citation.classList.add("is_option");
-	if(support_suf == SUF_ID_IN_FAVOR){
-		dv_citation.classList.add("is_green_border");
-	} else {
-		dv_citation.classList.add("is_red_border");
-	}
+	dv_citation.classList.add("is_answer");
+	set_cit_border(verse_obj, dv_citation);
 	
 	const dv_book_nam = dv_citation.appendChild(document.createElement("div"));
 	dv_book_nam.classList.add("exam");
@@ -1009,22 +915,12 @@ function add_verse_cit(qid, verse_obj, support_suf){
 	return dv_citation;
 }
 
-function get_cit_side(dv_citation){
-	const dv_parent = dv_citation.parentNode;
-	const side_id = dv_parent.id;
-	//console.log("get_cit_side. side_id=" + side_id);
-	if(side_id.endsWith(SUF_ID_IN_FAVOR)){
-		return SUF_ID_IN_FAVOR;
-	}
-	return SUF_ID_AGAINST;
-}
-
 function calc_verse_cit_object(dv_citation){
 	const cit_obj = {};
 	if(dv_citation != null){
 		var chls = dv_citation.childNodes;
 		cit_obj.kind = VRS_CIT_KIND;
-		cit_obj.side = get_cit_side(dv_citation);
+		cit_obj.side = dv_citation.tc_cit_side;
 		const book_nam = chls[VRS_BOOK_IDX].innerHTML;
 		cit_obj.book = glb_books_nums[book_nam];
 		cit_obj.chapter = chls[VRS_CHAPTER_IDX].innerHTML;
@@ -1045,8 +941,34 @@ function get_verse_cit_key(obj){
 	return kk;
 }
 
+function add_toggle_side_handler(dv_ok){
+	dv_ok.addEventListener('contextmenu', (ev1) => {
+		ev1.preventDefault();
+		dv_ok.classList.toggle("is_red_border");
+		dv_ok.classList.toggle("is_green_border");
+		if(dv_ok.classList.contains("is_red_border")){
+			dv_ok.innerHTML = glb_curr_lang.msg_against;
+		} else {
+			dv_ok.innerHTML = glb_curr_lang.msg_in_favor;
+		}
+		return false;
+	});	
+}
+
+function set_cit_side(dv_citation, dv_ok){
+	if(dv_ok.classList.contains("is_red_border")){
+		dv_citation.classList.add("is_red_border");
+		dv_citation.classList.remove("is_green_border");
+		dv_citation.tc_cit_side = refs_ids.against_side;
+	} else {
+		dv_citation.classList.remove("is_red_border");
+		dv_citation.classList.add("is_green_border");
+		dv_citation.tc_cit_side = refs_ids.in_favor_side;
+	}
+}
+
 function toggle_verse_ed(dv_citation){
-	var dv_ed_cit = get_new_dv_under(dv_citation, id_dv_citation_ed);
+	let dv_ed_cit = get_new_dv_under(dv_citation, id_dv_citation_ed);
 	if(dv_ed_cit == null){
 		return;
 	}
@@ -1054,7 +976,6 @@ function toggle_verse_ed(dv_citation){
 	dv_ed_cit.classList.add("is_block");
 	
 	const cit_obj = calc_verse_cit_object(dv_citation);	
-	//const cit_obj = {chapter:"543",verse:"123"};
 
 	const inp_book = dv_ed_cit.appendChild(document.createElement("div"));
 	inp_book.id = id_ed_book;
@@ -1106,6 +1027,13 @@ function toggle_verse_ed(dv_citation){
 		sep2.classList.toggle("is_hidden");
 		inp_last_verse.classList.toggle("is_hidden");
 	}
+
+	inp_verse.addEventListener('contextmenu', (ev1) => {
+		ev1.preventDefault();
+		sep2.classList.toggle("is_hidden");
+		inp_last_verse.classList.toggle("is_hidden");
+		return false;
+	});
 	
 	const inp_site = dv_ed_cit.appendChild(document.createElement("div"));
 	inp_site.id = id_ed_site;
@@ -1132,7 +1060,6 @@ function toggle_verse_ed(dv_citation){
 		});
 		return;
 	});
-		
 	
 	inp_bib_ver_sel.addEventListener('click', function() {
 		const all_bibs_arr = glb_all_bibles[inp_site.innerHTML];
@@ -1140,7 +1067,7 @@ function toggle_verse_ed(dv_citation){
 		return;
 	});
 	
-	var id_ed_bib_ver_txt = "id_ed_bib_ver_txt";
+	const id_ed_bib_ver_txt = "id_ed_bib_ver_txt";
 	const inp_bib_ver_txt = dv_ed_cit.appendChild(document.createElement("input"));
 	inp_bib_ver_txt.id = id_ed_bib_ver_txt;
 	inp_bib_ver_txt.value = cit_obj.bib_ver;
@@ -1149,12 +1076,48 @@ function toggle_verse_ed(dv_citation){
 	inp_bib_ver_txt.classList.add("exam");
 	inp_bib_ver_txt.classList.add("is_ed_verse");
 	inp_bib_ver_txt.classList.add("is_hidden");
+	
+	
+	inp_bib_ver_sel.addEventListener('contextmenu', (ev1) => {
+		ev1.preventDefault();
+		inp_bib_ver_txt.value = inp_bib_ver_sel.innerHTML;
+		inp_bib_ver_txt.classList.remove("is_hidden");
+		inp_bib_ver_sel.classList.add("is_hidden");
+		return false;
+	});
+	
+	inp_bib_ver_txt.addEventListener('contextmenu', (ev1) => {
+		ev1.preventDefault();
+		inp_bib_ver_sel.innerHTML = inp_bib_ver_txt.value;
+		inp_bib_ver_sel.classList.remove("is_hidden");
+		inp_bib_ver_txt.classList.add("is_hidden");
+		return false;
+	});
+	
+	const dv_del = dv_ed_cit.appendChild(document.createElement("div"));
+	dv_del.classList.add("exam");
+	dv_del.classList.add("is_button");
+	dv_del.classList.add("is_ed_verse");
+	dv_del.innerHTML = glb_curr_lang.msg_del;
+	dv_del.addEventListener('click', function() {
+		remove_answer_for_verse_cit(dv_citation);
 		
+		dv_citation.remove();
+		dv_ed_cit.remove();
+		return;
+	});    
+	
 	const dv_ok = dv_ed_cit.appendChild(document.createElement("div"));
 	dv_ok.classList.add("exam");
 	dv_ok.classList.add("is_button");
 	dv_ok.classList.add("is_ed_verse");
-	dv_ok.innerHTML = glb_curr_lang.msg_ok;
+	if(cit_obj.side == refs_ids.in_favor_side){
+		dv_ok.innerHTML = glb_curr_lang.msg_in_favor;
+		dv_ok.classList.add("is_green_border");
+	} else {
+		dv_ok.innerHTML = glb_curr_lang.msg_against;
+		dv_ok.classList.add("is_red_border");
+	}
 	dv_ok.addEventListener('click', function() {
 		//const all_chd = dv_citation.childNodes;
 		dv_citation.childNodes[VRS_BOOK_IDX].innerHTML = inp_book.innerHTML;
@@ -1164,12 +1127,12 @@ function toggle_verse_ed(dv_citation){
 		var sep_range = dv_citation.childNodes[VRS_SEP_RANGE_IDX];
 		var lst_Verse = dv_citation.childNodes[VRS_LAST_VERSE_IDX];
 		if(! inp_last_verse.classList.contains("is_hidden") && (inp_last_verse.value != DEFAULT_LAST_VERSE)){			
-			if(sep_range.classList.contains("is_hidden")){ sep_range.classList.toggle("is_hidden"); }
-			if(lst_Verse.classList.contains("is_hidden")){ lst_Verse.classList.toggle("is_hidden"); }
+			sep_range.classList.remove("is_hidden");
+			lst_Verse.classList.remove("is_hidden");
 			lst_Verse.innerHTML = inp_last_verse.value;
 		} else {
-			if(! sep_range.classList.contains("is_hidden")){ sep_range.classList.toggle("is_hidden"); }
-			if(! lst_Verse.classList.contains("is_hidden")){ lst_Verse.classList.toggle("is_hidden"); }
+			sep_range.classList.add("is_hidden");
+			lst_Verse.classList.add("is_hidden");
 			lst_Verse.innerHTML = DEFAULT_LAST_VERSE;
 		}
 		
@@ -1180,6 +1143,8 @@ function toggle_verse_ed(dv_citation){
 		} else {
 			dv_citation.childNodes[VRS_BIB_VER_IDX].innerHTML = inp_bib_ver_sel.innerHTML;
 		}
+		
+		set_cit_side(dv_citation, dv_ok);
 		
 		dv_ed_cit.remove();
 
@@ -1194,47 +1159,8 @@ function toggle_verse_ed(dv_citation){
 		}
 		
 		return;
-	});    
-
-	const dv_del = dv_ed_cit.appendChild(document.createElement("div"));
-	dv_del.classList.add("exam");
-	dv_del.classList.add("is_button");
-	dv_del.classList.add("is_ed_verse");
-	dv_del.innerHTML = glb_curr_lang.msg_del;
-	dv_del.addEventListener('click', function() {
-		remove_answer_for_verse_cit(dv_citation);
-		
-		dv_citation.remove();
-		dv_ed_cit.remove();
-		return;
-	});    
-	
-	const dv_range = dv_ed_cit.appendChild(document.createElement("div"));
-	dv_range.classList.add("exam");
-	dv_range.classList.add("is_button");
-	dv_range.classList.add("is_ed_verse");
-	dv_range.innerHTML = glb_curr_lang.msg_range;
-	dv_range.addEventListener('click', function() {
-		sep2.classList.toggle("is_hidden");
-		inp_last_verse.classList.toggle("is_hidden");
-		return;
-	});    
-
-	const dv_any = dv_ed_cit.appendChild(document.createElement("div"));
-	dv_any.classList.add("exam");
-	dv_any.classList.add("is_button");
-	dv_any.classList.add("is_ed_verse");
-	dv_any.innerHTML = glb_curr_lang.msg_any;
-	dv_any.addEventListener('click', function() {
-		if(inp_bib_ver_sel.classList.contains("is_hidden")){
-			inp_bib_ver_sel.innerHTML = inp_bib_ver_txt.value;
-		} else {
-			inp_bib_ver_txt.value = inp_bib_ver_sel.innerHTML;
-		}
-		inp_bib_ver_sel.classList.toggle("is_hidden");
-		inp_bib_ver_txt.classList.toggle("is_hidden");
-		return;
-	});    
+	});
+	add_toggle_side_handler(dv_ok);
 	
 	if(! is_in_viewport(dv_ed_cit)){
 		dv_ed_cit.scrollIntoView({
@@ -1522,14 +1448,8 @@ function add_strong_cit(qid, stg_obj, support_suf){
 	const dv_code = dv_support.appendChild(document.createElement("div"));
 	dv_code.id = id_dv_last_strong;
 	dv_code.classList.add("exam");
-	//dv_code.classList.add("is_answer");
-	dv_code.classList.add("is_strong_cit");
-	dv_code.classList.add("is_option");
-	if(support_suf == SUF_ID_IN_FAVOR){
-		dv_code.classList.add("is_green_border");
-	} else {
-		dv_code.classList.add("is_red_border");
-	}
+	dv_code.classList.add("is_answer");
+	set_cit_border(stg_obj, dv_code);
 	if(stg_obj == null){
 		dv_code.innerHTML = DEFAULT_STRONG;
 	} else {
@@ -1552,7 +1472,7 @@ function calc_strong_cit_object(dv_citation){
 	if(dv_citation != null){
 		const scode = dv_citation.innerHTML;
 		cit_obj.kind = STG_CIT_KIND;
-		cit_obj.side = get_cit_side(dv_citation);
+		cit_obj.side = dv_citation.tc_cit_side;
 		cit_obj.lang = scode[0];
 		cit_obj.num = scode.substring(1);
 		cit_obj.rclk_href = make_strong_ref(scode);
@@ -1573,17 +1493,16 @@ function toggle_strong_ed(dv_code){
 	dv_ed_strong.classList.add("exam");
 	dv_ed_strong.classList.add("is_block");
 
+	const cit_obj = calc_strong_cit_object(dv_code);
+	
 	var strong_lang = "H";
 	var strong_num = "0";
 	const scode = dv_code.innerHTML;
 	if((scode != DEFAULT_STRONG) && (scode.length > 1)){
-		const cit_obj = calc_strong_cit_object(dv_code);
 		strong_lang = cit_obj.lang;
 		strong_num = cit_obj.num;
 	}
 
-	//console.log("IN toggle_strong_ed " + strong_lang + strong_num);
-	
 	const inp_slang = dv_ed_strong.appendChild(document.createElement("div"));
 	inp_slang.classList.add("exam");
 	inp_slang.classList.add("is_ed_verse");
@@ -1602,29 +1521,6 @@ function toggle_strong_ed(dv_code){
 	inp_snum.classList.add("exam");
 	inp_snum.classList.add("is_ed_verse");
 
-	const dv_ok = dv_ed_strong.appendChild(document.createElement("div"));
-	dv_ok.classList.add("exam");
-	dv_ok.classList.add("is_button");
-	dv_ok.classList.add("is_ed_verse");
-	dv_ok.innerHTML = glb_curr_lang.msg_ok;
-	dv_ok.addEventListener('click', function() {
-		//const all_chd = dv_code.childNodes;
-		dv_code.innerHTML = inp_slang.innerHTML + inp_snum.value;
-		dv_ed_strong.remove();
-		
-		set_answer_for_strong_cit(dv_code);
-		
-		if(! is_in_viewport(dv_code)){
-			dv_code.scrollIntoView({
-				behavior: 'auto',
-				block: 'start',
-				inline: 'center'
-			});	
-		}
-		
-		return;
-	});    
-
 	const dv_del = dv_ed_strong.appendChild(document.createElement("div"));
 	dv_del.classList.add("exam");
 	dv_del.classList.add("is_button");
@@ -1637,6 +1533,38 @@ function toggle_strong_ed(dv_code){
 		dv_ed_strong.remove();
 		return;
 	});    
+	
+	const dv_ok = dv_ed_strong.appendChild(document.createElement("div"));
+	dv_ok.classList.add("exam");
+	dv_ok.classList.add("is_button");
+	dv_ok.classList.add("is_ed_verse");
+	dv_ok.innerHTML = glb_curr_lang.msg_ok;
+	if(cit_obj.side == refs_ids.in_favor_side){
+		dv_ok.innerHTML = glb_curr_lang.msg_in_favor;
+		dv_ok.classList.add("is_green_border");
+	} else {
+		dv_ok.innerHTML = glb_curr_lang.msg_against;
+		dv_ok.classList.add("is_red_border");
+	}
+	dv_ok.addEventListener('click', function() {
+		//const all_chd = dv_code.childNodes;
+		dv_code.innerHTML = inp_slang.innerHTML + inp_snum.value;
+		dv_ed_strong.remove();
+		
+		set_cit_side(dv_code, dv_ok);
+		set_answer_for_strong_cit(dv_code);
+		
+		if(! is_in_viewport(dv_code)){
+			dv_code.scrollIntoView({
+				behavior: 'auto',
+				block: 'start',
+				inline: 'center'
+			});	
+		}
+		
+		return;
+	});    
+	add_toggle_side_handler(dv_ok);
 	
 	if(! is_in_viewport(dv_ed_strong)){
 		dv_ed_strong.scrollIntoView({
@@ -1714,14 +1642,8 @@ function add_link_cit(qid, link_obj, support_suf){
 	const dv_link = dv_support.appendChild(document.createElement("div"));
 	dv_link.id = id_dv_last_link;
 	dv_link.classList.add("exam");
-	//dv_link.classList.add("is_answer");
-	dv_link.classList.add("is_link_cit");
-	dv_link.classList.add("is_option");
-	if(support_suf == SUF_ID_IN_FAVOR){
-		dv_link.classList.add("is_green_border");
-	} else {
-		dv_link.classList.add("is_red_border");
-	}
+	dv_link.classList.add("is_answer");
+	set_cit_border(link_obj, dv_link);
 	
 	const dv_name = dv_link.appendChild(document.createElement("div"));
 	dv_name.classList.add("exam");
@@ -1756,7 +1678,7 @@ function calc_link_cit_object(dv_citation){
 	if(dv_citation != null){
 		const chls = dv_citation.childNodes;
 		cit_obj.kind = LNK_CIT_KIND;
-		cit_obj.side = get_cit_side(dv_citation);
+		cit_obj.side = dv_citation.tc_cit_side;
 		cit_obj.name = chls[LNK_NAME_IDX].innerHTML;
 		cit_obj.href = chls[LNK_HREF_IDX].href;
 		cit_obj.rclk_href = cit_obj.href;
@@ -1781,8 +1703,6 @@ function toggle_link_ed(dv_link){
 	var link_name = lnk_cit_obj.name;
 	var link_href = lnk_cit_obj.href;
 
-	//console.log("IN toggle_link_ed " + link_lang + link_num);
-	
 	const inp_name = dv_ed_link.appendChild(document.createElement("input"));
 	inp_name.value = link_name;
 	inp_name.type = "text";
@@ -1797,30 +1717,6 @@ function toggle_link_ed(dv_link){
 	inp_href.classList.add("exam");
 	inp_href.classList.add("is_ed_verse");
 
-	const dv_ok = dv_ed_link.appendChild(document.createElement("div"));
-	dv_ok.classList.add("exam");
-	dv_ok.classList.add("is_button");
-	dv_ok.classList.add("is_ed_verse");
-	dv_ok.innerHTML = glb_curr_lang.msg_ok;
-	dv_ok.addEventListener('click', function() {
-		const all_chd = dv_link.childNodes;
-		all_chd[LNK_NAME_IDX].innerHTML = inp_name.value;
-		all_chd[LNK_HREF_IDX].href = inp_href.value;
-		dv_ed_link.remove();
-		
-		set_answer_for_link_cit(dv_link);
-		
-		if(! is_in_viewport(dv_link)){
-			dv_link.scrollIntoView({
-				behavior: 'auto',
-				block: 'start',
-				inline: 'center'
-			});	
-		}
-		
-		return;
-	});    
-
 	const dv_del = dv_ed_link.appendChild(document.createElement("div"));
 	dv_del.classList.add("exam");
 	dv_del.classList.add("is_button");
@@ -1833,6 +1729,39 @@ function toggle_link_ed(dv_link){
 		dv_ed_link.remove();
 		return;
 	});    
+	
+	const dv_ok = dv_ed_link.appendChild(document.createElement("div"));
+	dv_ok.classList.add("exam");
+	dv_ok.classList.add("is_button");
+	dv_ok.classList.add("is_ed_verse");
+	dv_ok.innerHTML = glb_curr_lang.msg_ok;
+	if(lnk_cit_obj.side == refs_ids.in_favor_side){
+		dv_ok.innerHTML = glb_curr_lang.msg_in_favor;
+		dv_ok.classList.add("is_green_border");
+	} else {
+		dv_ok.innerHTML = glb_curr_lang.msg_against;
+		dv_ok.classList.add("is_red_border");
+	}
+	dv_ok.addEventListener('click', function() {
+		const all_chd = dv_link.childNodes;
+		all_chd[LNK_NAME_IDX].innerHTML = inp_name.value;
+		all_chd[LNK_HREF_IDX].href = inp_href.value;
+		dv_ed_link.remove();
+		
+		set_cit_side(dv_link, dv_ok);
+		set_answer_for_link_cit(dv_link);
+		
+		if(! is_in_viewport(dv_link)){
+			dv_link.scrollIntoView({
+				behavior: 'auto',
+				block: 'start',
+				inline: 'center'
+			});	
+		}
+		
+		return;
+	});    
+	add_toggle_side_handler(dv_ok);
 	
 	if(! is_in_viewport(dv_ed_link)){
 		dv_ed_link.scrollIntoView({
@@ -1871,8 +1800,6 @@ function toggle_exam_name_ed(dv_name, save_fn){
 
 	const exam_name = dv_name.innerHTML;
 
-	//console.log("IN toggle_link_ed " + link_lang + link_num);
-	
 	const inp_name = dv_ed_name.appendChild(document.createElement("input"));
 	inp_name.value = exam_name;
 	inp_name.type = "text";
@@ -1924,9 +1851,7 @@ export function init_page_exam(){
 	init_exam_database();
 	init_exam_module_vars();
 	init_exam_buttons();
-	
-	//console.log("db_nodes_exam.q1_1__.responses = " + JSON.stringify(db_nodes_exam.q1_1__.responses, null, "  "));
-	
+		
 	let added = null;
 	for(const qq of STARTING_QUESTIONS){
 		//console.log("Adding question " + qq + " to page");
@@ -1944,28 +1869,6 @@ export function init_page_exam(){
 	return added;
 };
 
-function calc_support_save_array(qid, support_suf){
-	const id_dv_support = qid + support_suf;
-	const dv_support = document.getElementById(id_dv_support);
-	const sv_obj = [];
-	for (const dv_citation of dv_support.children) {
-		let ct_obj = null;
-		if(dv_citation.classList.contains("is_verse_cit")){
-			ct_obj = calc_verse_cit_object(dv_citation);	
-		}
-		if(dv_citation.classList.contains("is_strong_cit")){
-			ct_obj = calc_strong_cit_object(dv_citation);	
-		}
-		if(dv_citation.classList.contains("is_link_cit")){
-			ct_obj = calc_link_cit_object(dv_citation);
-		}
-		if(ct_obj != null){
-			sv_obj.push(ct_obj);
-		}
-	}
-	return sv_obj;
-}
-
 function calc_quest_save_object(dv_quest){
 	const qid = dv_quest.id;
 	const quest = db_nodes_exam[qid];
@@ -1975,10 +1878,6 @@ function calc_quest_save_object(dv_quest){
 	let sv_obj = {};
 	
 	sv_obj = JSON.parse(JSON.stringify(quest));
-	
-	sv_obj.refs_in_favor = calc_support_save_array(dv_quest.id, SUF_ID_IN_FAVOR);
-	sv_obj.refs_against = calc_support_save_array(dv_quest.id, SUF_ID_AGAINST);
-	//in_fav.concat(agains);
 	
 	return sv_obj;
 }
@@ -2002,25 +1901,8 @@ function update_nodes_exam_with(ld_obj){
 		let reacs = db[qid].set_reactions;
 		
 		db[qid] = JSON.parse(JSON.stringify(quest));
-		db[qid].refs_in_favor = null;
-		db[qid].refs_against = null;
 		db[qid].set_reactions = reacs;		
 	}
-}
-
-function display_support_for_question(qid, all_supp){
-	if(all_supp == null){
-		return;
-	}
-	all_supp.forEach((cit_obj) => {
-		if(cit_obj.kind == VRS_CIT_KIND){
-			add_verse_cit(qid, cit_obj, cit_obj.side);
-		} else if(cit_obj.kind == STG_CIT_KIND){
-			add_strong_cit(qid, cit_obj, cit_obj.side);
-		} else if(cit_obj.kind == LNK_CIT_KIND){
-			add_link_cit(qid, cit_obj, cit_obj.side);
-		}
-	});
 }
 
 function display_exam_load_object(ld_obj){
@@ -2034,13 +1916,6 @@ function display_exam_load_object(ld_obj){
 		const added = add_question(qid);
 		if(added == null){
 			console.log("Question " + qid + " could NOT be DISPLAYED in page !!!");
-		} else {
-			const quest = ld_obj[qid];
-			if(quest != null){
-				display_support_for_question(qid, quest.refs_in_favor);
-				display_support_for_question(qid, quest.refs_against);
-				//add_respond_button(qid);
-			}
 		}
 	}
 }
@@ -2166,10 +2041,4 @@ function get_contradictions_qhrefs(qid, skip_qid){
 	return all_qhrefs;
 }
 
-function respond_support(qid){
-	let r_in_favor = calc_support_save_array(qid, SUF_ID_IN_FAVOR);
-	let r_against = calc_support_save_array(qid, SUF_ID_AGAINST);
-	
-	
-}
 
