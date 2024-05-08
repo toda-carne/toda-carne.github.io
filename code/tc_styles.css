@@ -660,14 +660,6 @@ color: white;
 	margin-bottom: 0.5vh;
 }
 
-.exam.selected {
-	background-color: #13234c;
-}
-
-.exam.is_contradiction {
-	background-color: #ff0000;
-}
-
 .exam.is_answer {
 	display: block;
 	margin: 0.7vw;
@@ -678,6 +670,18 @@ color: white;
 .exam.is_answer:hover,.exam.is_answer:hover>* {
 	background-color: #3263cb;
 	color: white;
+}
+
+.exam.selected {
+	background-color: #13234c;
+}
+
+.exam.selected:hover,.exam.selected:hover>* {
+	background-color: #1d3674;
+}
+
+.exam.is_contradiction {
+	background-color: #ff0000;
 }
 
 .exam.answ_bib {

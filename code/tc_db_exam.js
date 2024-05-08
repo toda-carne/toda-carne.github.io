@@ -522,9 +522,9 @@ export function init_exam_database(){
 		presentation: "q3_1__resurrection_section",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q3_1__physical" },
-			r1: { htm_answ: "q3_1__not_to_die" },
-			r2: { htm_answ: "q3_1__in_heaven" },
+			r0: { htm_answ: "q3_1__physical", should_on: "q3_1__physical", },
+			r1: { htm_answ: "q3_1__not_to_die", should_on: "q3_1__not_to_die", },
+			r2: { htm_answ: "q3_1__in_heaven", should_on: "q3_1__in_heaven", },
 		},
 		set_reactions: function () {
 			if(this.all_nxt != null){
@@ -539,12 +539,12 @@ export function init_exam_database(){
 		htm_stm: "q3_2__people_resurrection_claims",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q3_2__like_jesus" },
-			r1: { htm_answ: "q3_2__for_all" },
-			r2: { htm_answ: "q3_2__not_yet_most" },
-			r3: { htm_answ: "q3_2__happened_for_few" },
-			r4: { htm_answ: "q3_2__new_earth" },
-			r5: { htm_answ: "q3_2__sleep" },
+			r0: { htm_answ: "q3_2__like_jesus", should_on: "q3_2__like_jesus", },
+			r1: { htm_answ: "q3_2__for_all", should_on: "q3_2__for_all", },
+			r2: { htm_answ: "q3_2__not_yet_most", should_on: "q3_2__not_yet_most", },
+			r3: { htm_answ: "q3_2__happened_for_few", should_on: "q3_2__happened_for_few", },
+			r4: { htm_answ: "q3_2__new_earth", should_on: "q3_2__new_earth", },
+			r5: { htm_answ: "q3_2__sleep", should_on: "q3_2__sleep", },
 		},
 		set_reactions: function () {
 			if(this.all_nxt != null){
@@ -613,13 +613,13 @@ export function init_exam_database(){
 		presentation: "q4_1__physical_sec",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q4_1__verse1_str", rclk_href: "q4_1__verse1_href", should_on: "q1_1__verse1_should", },
-			r1: { htm_answ: "q4_1__verse2_str", rclk_href: "q4_1__verse2_href", should_on: "q1_1__verse2_should", },
-			r2: { htm_answ: "q4_1__verse3_str", rclk_href: "q4_1__verse3_href", should_on: "q1_1__verse3_should", },
-			r3: { htm_answ: "q4_1__verse4_str", rclk_href: "q4_1__verse4_href", should_on: "q1_1__verse4_should", },
-			r4: { htm_answ: "q4_1__verse5_str", rclk_href: "q4_1__verse5_href", should_on: "q1_1__verse5_should", },
-			r5: { htm_answ: "q4_1__verse6_str", rclk_href: "q4_1__verse6_href", should_on: "q1_1__verse6_should", },
-			r6: { htm_answ: "q4_1__verse7_str", rclk_href: "q4_1__verse7_href", should_on: "q1_1__verse7_should", },
+			r0: { htm_answ: "q4_1__verse1_str", rclk_href: "q4_1__verse1_href", should_on: "q4_1__verse1_should", },
+			r1: { htm_answ: "q4_1__verse2_str", rclk_href: "q4_1__verse2_href", should_on: "q4_1__verse2_should", },
+			r2: { htm_answ: "q4_1__verse3_str", rclk_href: "q4_1__verse3_href", should_on: "q4_1__verse3_should", },
+			r3: { htm_answ: "q4_1__verse4_str", rclk_href: "q4_1__verse4_href", should_on: "q4_1__verse4_should", },
+			r4: { htm_answ: "q4_1__verse5_str", rclk_href: "q4_1__verse5_href", should_on: "q4_1__verse5_should", },
+			r5: { htm_answ: "q4_1__verse6_str", rclk_href: "q4_1__verse6_href", should_on: "q4_1__verse6_should", },
+			r6: { htm_answ: "q4_1__verse7_str", rclk_href: "q4_1__verse7_href", should_on: "q4_1__verse7_should", },
 		},
 		set_reactions: function () {
 			if(this.all_nxt != null){
@@ -648,9 +648,12 @@ export function init_exam_database(){
 	db.q5_1__ = { 
 		htm_stm: "q5_1__not_die",
 		presentation: "q5_1__not_die_sec",
+		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q5_1__go" },
-			r1: { htm_answ: "q5_1__stay" },
+			r0: { htm_answ: "q5_1__verse1_str", rclk_href: "q5_1__verse1_href", should_on: "q5_1__verse1_should", },
+			r1: { htm_answ: "q5_1__verse2_str", rclk_href: "q5_1__verse2_href", should_on: "q5_1__verse2_should", },
+			r2: { htm_answ: "q5_1__verse3_str", rclk_href: "q5_1__verse3_href", should_on: "q5_1__verse3_should", },
+			r3: { htm_answ: "q5_1__verse4_str", rclk_href: "q5_1__verse4_href", should_on: "q5_1__verse4_should", },
 		},
 		set_reactions: function () {
 			if(this.all_nxt != null){
@@ -672,9 +675,15 @@ export function init_exam_database(){
 	db.q6_1__ = { 
 		htm_stm: "q6_1__in_heaven",
 		presentation: "q6_1__in_heaven_sec",
+		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q6_1__go" },
-			r1: { htm_answ: "q6_1__stay" },
+			r0: { htm_answ: "q6_1__verse1_str", rclk_href: "q6_1__verse1_href", should_on: "q6_1__verse1_should", },
+			r1: { htm_answ: "q6_1__verse2_str", rclk_href: "q6_1__verse2_href", should_on: "q6_1__verse2_should", },
+			r2: { htm_answ: "q6_1__verse3_str", rclk_href: "q6_1__verse3_href", should_on: "q6_1__verse3_should", },
+			r3: { htm_answ: "q6_1__verse4_str", rclk_href: "q6_1__verse4_href", should_on: "q6_1__verse4_should", },
+			r4: { htm_answ: "q6_1__verse5_str", rclk_href: "q6_1__verse5_href", should_on: "q6_1__verse5_should", },
+			r5: { htm_answ: "q6_1__verse6_str", rclk_href: "q6_1__verse6_href", should_on: "q6_1__verse6_should", },
+			r6: { htm_answ: "q6_1__verse7_str", rclk_href: "q6_1__verse7_href", should_on: "q6_1__verse7_should", },
 		},
 		set_reactions: function () {
 			if(this.all_nxt != null){

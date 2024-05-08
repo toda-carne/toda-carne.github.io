@@ -127,6 +127,8 @@ function init_es_basic_msg(){
 	obj.msg_help_statement_right_click = "Click derecho para abrir/cerrar la iteraccion de citas en contra o a favor";
 	obj.msg_help_answer_right_click = "Click derecho para ir al enlace web correspondiente";
 	obj.msg_help_cit_ed_ok_right_click = "Click derecho para cambiar entre A favor/En contra";
+	obj.msg_help_cit_ed_range_right_click = "Click derecho para mostrar o no el campo de rango";
+	obj.msg_help_cit_ed_any_bib_right_click = "Click derecho para mostrar o no la seleccion de cualquier version de biblia";
 	
 }
 

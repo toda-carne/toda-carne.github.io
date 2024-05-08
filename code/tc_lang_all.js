@@ -232,6 +232,9 @@ function init_en_basic_msg(){
 	obj.msg_help_statement_right_click = "Right click to open/close interaction of against or in favor citations ";
 	obj.msg_help_answer_right_click = "Right click to go to corresponding web link";
 	obj.msg_help_cit_ed_ok_right_click = "Right click to toggle In favor/Against";
+	obj.msg_help_cit_ed_range_right_click = "Right click to toggle range field";
+	obj.msg_help_cit_ed_any_bib_right_click = "Right click to toggle any bible version selection";
+	
 }
 
 export let get_msg = null;
@@ -287,6 +290,19 @@ export function init_en_module(){
 }
 
 //init_en_module();
+function uppercase_words_in_string(the_str, to_up_arr){
+	const words = the_str.split(' ');
+	console.log(JSON.stringify(words, null, "  "));
+	const nw_words = [];
+	words.forEach((word) => {
+		if(to_up_arr.includes(word)){
+			word = word.toUpperCase();
+		} 
+		nw_words.push(word);
+	});	
+	const nwstr = nw_words.join(' ');
+	return nwstr;
+}
 
 function citation_to_en(cit_obj){ // websites use english names for citations
 	var num_b = glb_books_nums[cit_obj.book];
@@ -356,23 +372,51 @@ export function make_strong_ref(scode){
 }
 
 const all_bibrefs = {
-	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_all_bibrefs_href gets called.
+	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_all_bibrefs_href gets called
+	mat_26_64_obj: { book: "matthew", chapter: 26, verse: 64, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	mat_26_64_str: `Mat 26:64. Jesus said to him, "You have said so. Nevertheless, I tell you, after this you will see the Son of Man sitting at the right hand of Power, and coming on the clouds of the sky."`,
 	mat_28_9_obj: { book: "matthew", chapter: 28, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	mat_28_9_str: "Mat 28:9: As they went to tell his disciples, behold, Jesus met them, saying, “Rejoice!” They came and took hold of his feet, and worshiped him.",
+	mat_28_9_str: `Mat 28:9. As they went to tell his disciples, behold, Jesus met them, saying, “Rejoice!” They came and took hold of his feet, and worshiped him.`,
+	mar_16_19_obj: { book: "mark", chapter: 16, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	mar_16_19_str: `Mar 16:19. So then the Lord, after he had spoken to them, was received up into heaven, and sat down at the right hand of God.`,
 	luk_24_30_obj: { book: "luke", chapter: 24, verse: 30, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	luk_24_30_str: "Luk 24:30: When he had sat down at the table with them, he took the bread and gave thanks. Breaking it, he gave it to them.",
+	luk_24_30_str: `Luk 24:30. When he had sat down at the table with them, he took the bread and gave thanks. Breaking it, he gave it to them.`,
 	luk_24_39_obj: { book: "luke", chapter: 24, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	luk_24_39_str: "Luk 24:39: See my hands and my feet, that it is truly me. Touch me and see, for a spirit doesn’t have flesh and bones, as you see that I have",
+	luk_24_39_str: `Luk 24:39. See my hands and my feet, that it is truly me. Touch me and see, for a spirit doesn’t have flesh and bones, as you see that I have`,
 	luk_24_43_obj: { book: "luke", chapter: 24, verse: 43, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	luk_24_43_str: "Luk 24:43: He took them, and ate in front of them.",
+	luk_24_43_str: `Luk 24:43. He took them, and ate in front of them.`,
 	jhn_2_19_obj: { book: "john", chapter: 2, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	jhn_2_19_str: `Jhn 2:19: Jesus answered them, "Destroy this temple, and in three days I will raise it up."`,
+	jhn_2_19_str: `Jhn 2:19. Jesus answered them, "Destroy this temple, and in three days I will raise it up."`,
 	jhn_20_20_obj: { book: "john", chapter: 20, verse: 20, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	jhn_20_20_str: "Jhn 20:20: When he had said this, he showed them his hands and his side. The disciples therefore were glad when they saw the Lord.",
+	jhn_20_20_str: `Jhn 20:20. When he had said this, he showed them his hands and his side. The disciples therefore were glad when they saw the Lord.`,
 	jhn_20_27_obj: { book: "john", chapter: 20, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	jhn_20_27_str: "Jhn 20:27: Then he said to Thomas, “Reach here your finger, and see my hands. Reach here your hand, and put it into my side. Don’t be unbelieving, but believing",
+	jhn_20_27_str: `Jhn 20:27. Then he said to Thomas, “Reach here your finger, and see my hands. Reach here your hand, and put it into my side. Don’t be unbelieving, but believing`,
+	jhn_14_2_obj: { book: "john", chapter: 14, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_14_2_str: `Jhn 14:2. In my Father’s house are many homes. If it weren’t so, I would have told you. I am going to prepare a place for you.`,
+	act_1_11_obj: { book: "acts", chapter: 1, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	act_1_11_str: `Act 1:11. who also said, “You men of Galilee, why do you stand looking into the sky? This Jesus, who was received up from you into the sky, will come back in the same way as you saw him going into the sky.”`,
 	act_10_41_obj: { book: "acts", chapter: 10, verse: 41, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	act_10_41_str: "Act 10:41: not to all the people, but to witnesses who were chosen before by God, to us, who ate and drank with him after he rose from the dead",
+	act_10_41_str: `Act 10:41. not to all the people, but to witnesses who were chosen before by God, to us, who ate and drank with him after he rose from the dead`,
+	rom_6_9_obj: { book: "romans", chapter: 6, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	rom_6_9_str: `Rom 6:9. knowing that Christ, being raised from the dead, dies no more. Death no longer has dominion over him`,
+	heb_7_16_obj: { book: "hebrews", chapter: 7, verse: 16, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	heb_7_16_str: `Heb 7:16. who has been made, not after the law of a fleshly commandment, but after the power of an endless life;`,
+	heb_7_25_obj: { book: "hebrews", chapter: 7, verse: 25, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	heb_7_25_str: `Heb 7:25. Therefore he is also able to save to the uttermost those who draw near to God through him, seeing that he lives forever to make intercession for them.`,
+	heb_9_12_obj: { book: "hebrews", chapter: 9, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	heb_9_12_str: `Heb 9:12. nor yet through the blood of goats and calves, but through his own blood, entered in once for all into the Holy Place, having obtained eternal redemption.`,
+	heb_9_27_obj: { book: "hebrews", chapter: 9, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	heb_9_27_str: `Heb 9:27. Inasmuch as it is appointed for men to die once, and after this, judgment,`,
+	heb_9_28_obj: { book: "hebrews", chapter: 9, verse: 28, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	heb_9_28_str: `Heb 9:28. so Christ also, having been offered once to bear the sins of many, will appear a second time, without sin, to those who are eagerly waiting for him for salvation.`,
+	heb_10_12_obj: { book: "hebrews", chapter: 10, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	heb_10_12_str: `Heb 10:12. but he, when he had offered one sacrifice for sins forever, sat down on the right hand of God,`,
+	heb_13_8_obj: { book: "hebrews", chapter: 13, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	heb_13_8_str: `Heb 13:8. Jesus Christ is the same yesterday, today, and forever.`,
+	col_1_15_obj: { book: "colossians", chapter: 1, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	col_1_15_str: `Col 1:15. He is the image of the invisible God, the firstborn of all creation.`,
+	rev_1_18_obj: { book: "revelation", chapter: 1, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	rev_1_18_str: `Rev 1:18. and the Living one. I was dead, and behold, I am alive forever and ever. Amen. I have the keys of Death and of Hades`,
 	
 };
 
@@ -525,37 +569,67 @@ function init_en_exam_msg(){
 
 	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${href_physical_resu}'>Physical</a>`;
 	lg.q4_1__physical = `Select all verses that you believe support a physical resurrection`;
-	lg.q4_1__verse1_str = all_bibrefs.luk_24_39_str;
+	lg.q4_1__verse1_str = uppercase_words_in_string(all_bibrefs.luk_24_39_str, ["Touch", "flesh", "bones,"]);
 	lg.q4_1__verse1_href = all_bibrefs.luk_24_39_href;
-	lg.q1_1__verse1_should = "FLESH and BONES are PHYSICAL.";
-	lg.q4_1__verse2_str = all_bibrefs.jhn_20_27_str;
+	lg.q4_1__verse1_should = "FLESH and BONES are PHYSICAL.";
+	lg.q4_1__verse2_str = uppercase_words_in_string(all_bibrefs.jhn_20_27_str, ["hand,", "put", "side."]);
 	lg.q4_1__verse2_href = all_bibrefs.jhn_20_27_href;
-	lg.q1_1__verse2_should = "Putting a hand into FLESH is something PHYSICAL.";
-	lg.q4_1__verse3_str = all_bibrefs.act_10_41_str;
+	lg.q4_1__verse2_should = "Putting a hand into FLESH is something PHYSICAL.";
+	lg.q4_1__verse3_str = uppercase_words_in_string(all_bibrefs.act_10_41_str, ["ate", "drank"]);
 	lg.q4_1__verse3_href = all_bibrefs.act_10_41_href;
-	lg.q1_1__verse3_should = "EATING and DRINKING is something PHYSICAL.";
-	lg.q4_1__verse4_str = all_bibrefs.mat_28_9_str;
+	lg.q4_1__verse3_should = "EATING and DRINKING is something PHYSICAL.";
+	lg.q4_1__verse4_str = uppercase_words_in_string(all_bibrefs.mat_28_9_str, ["took", "hold", "feet,"]);
 	lg.q4_1__verse4_href = all_bibrefs.mat_28_9_href;
-	lg.q1_1__verse4_should = "TAKING hold of somebody's feet is something PHYSICAL.";
-	lg.q4_1__verse5_str = all_bibrefs.luk_24_30_str;
+	lg.q4_1__verse4_should = "TAKING hold of somebody's feet is something PHYSICAL.";
+	lg.q4_1__verse5_str = uppercase_words_in_string(all_bibrefs.luk_24_30_str, ["took", "bread"]);
 	lg.q4_1__verse5_href = all_bibrefs.luk_24_30_href;
-	lg.q1_1__verse5_should = "BREAKING bread is something PHYSICAL.";
-	lg.q4_1__verse6_str = all_bibrefs.jhn_2_19_str;
+	lg.q4_1__verse5_should = "BREAKING bread is something PHYSICAL.";
+	lg.q4_1__verse6_str = uppercase_words_in_string(all_bibrefs.jhn_2_19_str, ["temple,", "raise"]);
 	lg.q4_1__verse6_href = all_bibrefs.jhn_2_19_href;
-	lg.q1_1__verse6_should = "REBUILDING a body is something PHYSICAL.";
-	lg.q4_1__verse7_str = all_bibrefs.luk_24_43_str;
+	lg.q4_1__verse6_should = "REBUILDING a body is something PHYSICAL.";
+	lg.q4_1__verse7_str = uppercase_words_in_string(all_bibrefs.luk_24_43_str, ["took", "ate"]);
 	lg.q4_1__verse7_href = all_bibrefs.luk_24_43_href;
-	lg.q1_1__verse7_should = "EATING is something PHYSICAL.";
+	lg.q4_1__verse7_should = "EATING is something PHYSICAL.";
 	
 	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To Not die again</a>`;
-	lg.q5_1__not_die = `1st quest NOT DIE`;
-	lg.q5_1__go = "Go";
-	lg.q5_1__stay = "Stay";
+	lg.q5_1__not_die = `Select all verses that you believe support a resurrection to NOT die again`;
+	lg.q5_1__verse1_str = uppercase_words_in_string(all_bibrefs.rom_6_9_str, ["dies", "no", "more."]);
+	lg.q5_1__verse1_href = all_bibrefs.rom_6_9_href;
+	lg.q5_1__verse1_should = "DIES NO MORE.";
+	lg.q5_1__verse2_str = uppercase_words_in_string(all_bibrefs.heb_7_16_str, ["endless", "life;"]);
+	lg.q5_1__verse2_href = all_bibrefs.heb_7_16_href;
+	lg.q5_1__verse2_should = "ENDLESS LIFE.";
+	lg.q5_1__verse3_str = uppercase_words_in_string(all_bibrefs.rev_1_18_str, ["alive", "forever", "ever."]);
+	lg.q5_1__verse3_href = all_bibrefs.rev_1_18_href;
+	lg.q5_1__verse3_should = "ALIVE FOREVER and EVER.";
+	lg.q5_1__verse4_str = uppercase_words_in_string(all_bibrefs.heb_7_25_str, ["lives", "forever", ]);
+	lg.q5_1__verse4_href = all_bibrefs.heb_7_25_href;
+	lg.q5_1__verse4_should = "LIVES FOREVER.";
 	
 	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${href_in_heaven_resu}'>In Heaven</a>`;
-	lg.q6_1__in_heaven = `1st quest IN HEAVEN`;
-	lg.q6_1__go = "Go";
-	lg.q6_1__stay = "Stay";
+	lg.q6_1__in_heaven = `Select all verses that you believe support a resurrected Jesus that is in heaven in BODY and spirit.`;
+	lg.q6_1__verse1_str = uppercase_words_in_string(all_bibrefs.act_1_11_str, ["going", "into", "sky."]);
+	lg.q6_1__verse1_href = all_bibrefs.act_1_11_href;
+	lg.q6_1__verse1_should = "GOING INTO the SKY. He went physically into the heavens";
+	lg.q6_1__verse2_str = uppercase_words_in_string(all_bibrefs.mat_26_64_str, ["sitting", "clouds", "sky"]);
+	lg.q6_1__verse2_href = all_bibrefs.mat_26_64_href;
+	lg.q6_1__verse2_should = "He is SITTING and coming on the CLOUDS";
+	lg.q6_1__verse3_str = uppercase_words_in_string(all_bibrefs.jhn_14_2_str, ["house", "mansions;", "place"]);
+	lg.q6_1__verse3_href = all_bibrefs.jhn_14_2_href;
+	lg.q6_1__verse3_should = "He makes in a PLACE for his disciples";
+	lg.q6_1__verse4_str = uppercase_words_in_string(all_bibrefs.heb_9_12_str, ["entered", "Place,", "heaven"]);
+	lg.q6_1__verse4_href = all_bibrefs.heb_9_12_href;
+	lg.q6_1__verse4_should = "He ENTERED the Holy PLACE in the heavens";
+	lg.q6_1__verse5_str = uppercase_words_in_string(all_bibrefs.heb_10_12_str, ["sat", "down"]);
+	lg.q6_1__verse5_href = all_bibrefs.heb_10_12_href;
+	lg.q6_1__verse5_should = "He SAT DOWN in the heavens";
+	lg.q6_1__verse6_str = uppercase_words_in_string(all_bibrefs.heb_13_8_str, ["is", "same", "forever."]);
+	lg.q6_1__verse6_href = all_bibrefs.heb_13_8_href;
+	lg.q6_1__verse6_should = "He is ALWAYS the same. So if He resurrected in BODY and spirit, He MUST be in BODY and spirit in the heavens.";
+	lg.q6_1__verse7_str = uppercase_words_in_string(all_bibrefs.col_1_15_str, ["image", "invisible"]);
+	lg.q6_1__verse7_href = all_bibrefs.col_1_15_href;
+	lg.q6_1__verse7_should = "He is the IMAGE of the INVISIBLE God. So if He was visible when He resurrected, He must STILL be visible in the heavens.";
+	
 
 	lg.q7_1__like_jesus_sec = `<a class='exam_ref exam_title' href='${href_like_jesus_resu}'>Like Jesus</a>`;
 	lg.q7_1__like_jesus = `1st quest LIKE JESUS`;

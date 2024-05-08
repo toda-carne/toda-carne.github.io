@@ -2,7 +2,6 @@
 
 let	db_nodes_exam = {};
 
-
 function pru_stringfy(){
 	const db = db_nodes_exam;
 	db.q1_1__ = { 
@@ -32,5 +31,21 @@ function pru_stringfy(){
 	//console.log("HOLA _MUNDO");
 }
 
-pru_stringfy();
- 
+//pru_stringfy();
+
+function uppercase_words_in_string(the_str, to_up_arr){
+	const words = the_str.split(' ');
+	console.log(JSON.stringify(words, null, "  "));
+	const nw_words = [];
+	words.forEach((word) => {
+		if(to_up_arr.includes(word)){
+			word = word.toUpperCase();
+		} 
+		nw_words.push(word);
+	});	
+	const nwstr = nw_words.join(' ');
+	return nwstr;
+}
+
+console.log(uppercase_words_in_string("and the Living one. I was dead, and behold, I am alive forever and ever. Amen. I have the keys of Death and of Hades", ["forever", "ever."]));
+

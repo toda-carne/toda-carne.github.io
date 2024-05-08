@@ -265,7 +265,8 @@ function init_answers(qid){
 			continue; // continue with next elem
 		}
 		if(! is_init_to_answer && ! an_answ.is_on){
-			if(has_contra && (an_answ.should_on != null)){
+			//if(has_contra && (an_answ.should_on != null)){
+			if(an_answ.should_on != null){
 				const dv_shd_on = dv_answers.appendChild(document.createElement("div"));
 				dv_shd_on.classList.add("exam");
 				dv_shd_on.classList.add("is_answer");
@@ -1016,6 +1017,7 @@ function toggle_verse_ed(dv_citation){
 	
 	const inp_verse = dv_ed_cit.appendChild(document.createElement("input"));
 	inp_verse.id = id_ed_verse;
+	inp_verse.title = glb_curr_lang.msg_help_cit_ed_range_right_click;
 	inp_verse.value = cit_obj.verse;
 	inp_verse.type = "number";
 	inp_verse.size = 3;
@@ -1056,6 +1058,7 @@ function toggle_verse_ed(dv_citation){
 	
 	const inp_bib_ver_sel = dv_ed_cit.appendChild(document.createElement("div"));
 	inp_bib_ver_sel.id = id_ed_bib_ver_sel;
+	inp_bib_ver_sel.title = glb_curr_lang.msg_help_cit_ed_any_bib_right_click;
 	inp_bib_ver_sel.classList.add("exam");
 	inp_bib_ver_sel.classList.add("is_ed_verse");
 	inp_bib_ver_sel.classList.add("is_button");
@@ -1082,6 +1085,7 @@ function toggle_verse_ed(dv_citation){
 	const id_ed_bib_ver_txt = "id_ed_bib_ver_txt";
 	const inp_bib_ver_txt = dv_ed_cit.appendChild(document.createElement("input"));
 	inp_bib_ver_txt.id = id_ed_bib_ver_txt;
+	inp_bib_ver_txt.title = glb_curr_lang.msg_help_cit_ed_any_bib_right_click;
 	inp_bib_ver_txt.value = cit_obj.bib_ver;
 	inp_bib_ver_txt.type = "text";
 	inp_bib_ver_txt.size = 6;
