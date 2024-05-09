@@ -379,6 +379,8 @@ const all_bibrefs = {
 	mat_28_9_str: `Mat 28:9. As they went to tell his disciples, behold, Jesus met them, saying, “Rejoice!” They came and took hold of his feet, and worshiped him.`,
 	mar_16_19_obj: { book: "mark", chapter: 16, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	mar_16_19_str: `Mar 16:19. So then the Lord, after he had spoken to them, was received up into heaven, and sat down at the right hand of God.`,
+	luk_20_36_obj: { book: "luke", chapter: 20, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	luk_20_36_str: `Luk 20:36. For they can’t die any more, for they are like the angels, and are children of God, being children of the resurrection.`,
 	luk_24_30_obj: { book: "luke", chapter: 24, verse: 30, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	luk_24_30_str: `Luk 24:30. When he had sat down at the table with them, he took the bread and gave thanks. Breaking it, he gave it to them.`,
 	luk_24_39_obj: { book: "luke", chapter: 24, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -387,6 +389,22 @@ const all_bibrefs = {
 	luk_24_43_str: `Luk 24:43. He took them, and ate in front of them.`,
 	jhn_2_19_obj: { book: "john", chapter: 2, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	jhn_2_19_str: `Jhn 2:19. Jesus answered them, "Destroy this temple, and in three days I will raise it up."`,
+	jhn_5_28_obj: { book: "john", chapter: 5, verse: 28, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_5_28_str: `Jhn 5:28. Don’t marvel at this, for the hour comes in which all who are in the tombs will hear his voice,`,
+	jhn_5_29_obj: { book: "john", chapter: 5, verse: 29, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_5_29_str: `Jhn 5:29. and will come out; those who have done good, to the resurrection of life; and those who have done evil, to the resurrection of judgment.`,
+	jhn_6_39_obj: { book: "john", chapter: 6, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_6_39_str: `Jhn 6:39. This is the will of my Father who sent me, that of all he has given to me I should lose nothing, but should raise him up at the last day.`,
+	jhn_6_40_obj: { book: "john", chapter: 6, verse: 40, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_6_40_str: `Jhn 6:40. This is the will of the one who sent me, that everyone who sees the Son, and believes in him, should have eternal life; and I will raise him up at the last day.`,
+	jhn_6_44_obj: { book: "john", chapter: 6, verse: 44, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_6_44_str: `Jhn 6:44. No one can come to me unless the Father who sent me draws him, and I will raise him up in the last day.`,
+	jhn_6_54_obj: { book: "john", chapter: 6, verse: 54, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_6_54_str: `Jhn 6:54. He who eats my flesh and drinks my blood has eternal life, and I will raise him up at the last day.`,
+	jhn_11_24_obj: { book: "john", chapter: 11, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_11_24_str: `Jhn 11:24. Martha said to him, "I know that he will rise again in the resurrection at the last day."`,
+	jhn_17_2_obj: { book: "john", chapter: 17, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	jhn_17_2_str: `Jhn 17:2. even as you gave him authority over all flesh, so he will give eternal life to all whom you have given him.`,
 	jhn_20_20_obj: { book: "john", chapter: 20, verse: 20, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	jhn_20_20_str: `Jhn 20:20. When he had said this, he showed them his hands and his side. The disciples therefore were glad when they saw the Lord.`,
 	jhn_20_27_obj: { book: "john", chapter: 20, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -397,8 +415,22 @@ const all_bibrefs = {
 	act_1_11_str: `Act 1:11. who also said, “You men of Galilee, why do you stand looking into the sky? This Jesus, who was received up from you into the sky, will come back in the same way as you saw him going into the sky.”`,
 	act_10_41_obj: { book: "acts", chapter: 10, verse: 41, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	act_10_41_str: `Act 10:41. not to all the people, but to witnesses who were chosen before by God, to us, who ate and drank with him after he rose from the dead`,
+	act_24_15_obj: { book: "acts", chapter: 24, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	act_24_15_str: `Act 24:15. having hope toward God, which these also themselves look for, that there will be a resurrection of the dead, both of the just and unjust.`,
 	rom_6_9_obj: { book: "romans", chapter: 6, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	rom_6_9_str: `Rom 6:9. knowing that Christ, being raised from the dead, dies no more. Death no longer has dominion over him`,
+	_1co_15_22_obj: { book: "1_corinthians", chapter: 15, verse: 22, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	_1co_15_22_str: `1Co 15:22. For as in Adam all die, so also in Christ all will be made alive.`,
+	_1co_15_42_obj: { book: "1_corinthians", chapter: 15, verse: 42, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	_1co_15_42_str: `1Co 15:42. So also is the resurrection of the dead. The body is sown perishable; it is raised imperishable.`,
+	_1co_15_49_obj: { book: "1_corinthians", chapter: 15, verse: 49, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	_1co_15_49_str: `1Co 15:49. As we have borne the image of those made of dust, let’s also bear the image of the heavenly.`,
+	phl_3_21_obj: { book: "philippians", chapter: 3, verse: 21, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	phl_3_21_str: `Phl 3:21. who will change the body of our humiliation to be conformed to the body of his glory, according to the working by which he is able even to subject all things to himself.`,
+	col_1_15_obj: { book: "colossians", chapter: 1, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	col_1_15_str: `Col 1:15. He is the image of the invisible God, the firstborn of all creation.`,
+	_2ti_2_18_obj: { book: "2_timothy", chapter: 2, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	_2ti_2_18_str: `2Ti 2:18. men who have erred concerning the truth, saying that the resurrection is already past, and overthrowing the faith of some.`,
 	heb_7_16_obj: { book: "hebrews", chapter: 7, verse: 16, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	heb_7_16_str: `Heb 7:16. who has been made, not after the law of a fleshly commandment, but after the power of an endless life;`,
 	heb_7_25_obj: { book: "hebrews", chapter: 7, verse: 25, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -413,10 +445,12 @@ const all_bibrefs = {
 	heb_10_12_str: `Heb 10:12. but he, when he had offered one sacrifice for sins forever, sat down on the right hand of God,`,
 	heb_13_8_obj: { book: "hebrews", chapter: 13, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	heb_13_8_str: `Heb 13:8. Jesus Christ is the same yesterday, today, and forever.`,
-	col_1_15_obj: { book: "colossians", chapter: 1, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	col_1_15_str: `Col 1:15. He is the image of the invisible God, the firstborn of all creation.`,
+	_1jo_3_2_obj: { book: "1_john", chapter: 3, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	_1jo_3_2_str: `1Jo 3:2. Beloved, now we are children of God. It is not yet revealed what we will be; but we know that when he is revealed, we will be like him; for we will see him just as he is.`,
 	rev_1_18_obj: { book: "revelation", chapter: 1, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	rev_1_18_str: `Rev 1:18. and the Living one. I was dead, and behold, I am alive forever and ever. Amen. I have the keys of Death and of Hades`,
+	rev_20_13_obj: { book: "revelation", chapter: 20, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	rev_20_13_str: `Rev 20:13. The sea gave up the dead who were in it. Death and Hades[a] gave up the dead who were in them. They were judged, each one according to his works.`,
 	
 };
 
@@ -568,7 +602,7 @@ function init_en_exam_msg(){
 	lg.q3_3__go_on = "NONE of them. I ACCEPT they are all claimed by The Bible. Let's go on.";
 
 	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${href_physical_resu}'>Physical</a>`;
-	lg.q4_1__physical = `Select all verses that you believe support a physical resurrection`;
+	lg.q4_1__physical = `Select all verses that support a physical resurrection`;
 	lg.q4_1__verse1_str = uppercase_words_in_string(all_bibrefs.luk_24_39_str, ["Touch", "flesh", "bones,"]);
 	lg.q4_1__verse1_href = all_bibrefs.luk_24_39_href;
 	lg.q4_1__verse1_should = "FLESH and BONES are PHYSICAL.";
@@ -592,7 +626,7 @@ function init_en_exam_msg(){
 	lg.q4_1__verse7_should = "EATING is something PHYSICAL.";
 	
 	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To Not die again</a>`;
-	lg.q5_1__not_die = `Select all verses that you believe support a resurrection to NOT die again`;
+	lg.q5_1__not_die = `Select all verses that support a resurrection to NOT die again`;
 	lg.q5_1__verse1_str = uppercase_words_in_string(all_bibrefs.rom_6_9_str, ["dies", "no", "more."]);
 	lg.q5_1__verse1_href = all_bibrefs.rom_6_9_href;
 	lg.q5_1__verse1_should = "DIES NO MORE.";
@@ -607,7 +641,7 @@ function init_en_exam_msg(){
 	lg.q5_1__verse4_should = "LIVES FOREVER.";
 	
 	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${href_in_heaven_resu}'>In Heaven</a>`;
-	lg.q6_1__in_heaven = `Select all verses that you believe support a resurrected Jesus that is in heaven in BODY and spirit.`;
+	lg.q6_1__in_heaven = `Select all verses that support a resurrected Jesus that is in heaven in BODY and spirit.`;
 	lg.q6_1__verse1_str = uppercase_words_in_string(all_bibrefs.act_1_11_str, ["going", "into", "sky."]);
 	lg.q6_1__verse1_href = all_bibrefs.act_1_11_href;
 	lg.q6_1__verse1_should = "GOING INTO the SKY. He went physically into the heavens";
@@ -632,18 +666,50 @@ function init_en_exam_msg(){
 	
 
 	lg.q7_1__like_jesus_sec = `<a class='exam_ref exam_title' href='${href_like_jesus_resu}'>Like Jesus</a>`;
-	lg.q7_1__like_jesus = `1st quest LIKE JESUS`;
-	lg.q7_1__go = "Go";
-	lg.q7_1__stay = "Stay";
+	lg.q7_1__like_jesus = `Select all verses that support a resurrection of the dead that is like Jesus resurrection`;
+	lg.q7_1__verse1_str = uppercase_words_in_string(all_bibrefs.phl_3_21_str, ["conformed", "body", ]);
+	lg.q7_1__verse1_href = all_bibrefs.phl_3_21_href;
+	lg.q7_1__verse1_should = "Just LIKE the BODY of Jesus";
+	lg.q7_1__verse2_str = uppercase_words_in_string(all_bibrefs._1jo_3_2_str, ["like", "him;", ]);
+	lg.q7_1__verse2_href = all_bibrefs._1jo_3_2_href;
+	lg.q7_1__verse2_should = "We will be LIKE HIM";
+	lg.q7_1__verse3_str = uppercase_words_in_string(all_bibrefs.luk_20_36_str, ["can’t", "die", ]);
+	lg.q7_1__verse3_href = all_bibrefs.luk_20_36_href;
+	lg.q7_1__verse3_should = "Thos bodies CAN'T DIE";
+	lg.q7_1__verse4_str = uppercase_words_in_string(all_bibrefs.heb_9_27_str, ["die", "once,", ]);
+	lg.q7_1__verse4_href = all_bibrefs.heb_9_27_href;
+	lg.q7_1__verse4_should = "He ENTERED the Holy PLACE in the heavens";
+	lg.q7_1__verse5_str = uppercase_words_in_string(all_bibrefs._1co_15_49_str, ["bear", "image", "heavenly.", ]);
+	lg.q7_1__verse5_href = all_bibrefs._1co_15_49_href;
+	lg.q7_1__verse5_should = "We are destined to DIE ONCE. No more.";
+	lg.q7_1__verse6_str = uppercase_words_in_string(all_bibrefs._1co_15_42_str, ["body", "raised", "imperishable."]);
+	lg.q7_1__verse6_href = all_bibrefs._1co_15_42_href;
+	lg.q7_1__verse6_should = "THe raised body is IMPERISHABLE";
 	
 	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${href_for_all_resu}'>For All</a>`;
-	lg.q8_1__for_all = `1st quest FOR ALL`;
-	lg.q8_1__go = "Go";
-	lg.q8_1__stay = "Stay";
+	lg.q8_1__for_all = `Select all verses that support a resurrection of the dead that is for ALL people`;
+	lg.q8_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_5_28_str, ["conformed", "body", ]);
+	lg.q8_1__verse1_href = all_bibrefs.jhn_5_28_href;
+	lg.q8_1__verse1_should = "Just LIKE the BODY of Jesus";
+	lg.q8_1__verse2_str = uppercase_words_in_string(all_bibrefs.jhn_5_29_str, ["like", "him;", ]);
+	lg.q8_1__verse2_href = all_bibrefs.jhn_5_29_href;
+	lg.q8_1__verse2_should = "We will be LIKE HIM";
+	lg.q8_1__verse3_str = uppercase_words_in_string(all_bibrefs.act_24_15_str, ["can’t", "die", ]);
+	lg.q8_1__verse3_href = all_bibrefs.act_24_15_href;
+	lg.q8_1__verse3_should = "Thos bodies CAN'T DIE";
+	lg.q8_1__verse4_str = uppercase_words_in_string(all_bibrefs.jhn_6_39_str, ["die", "once,", ]);
+	lg.q8_1__verse4_href = all_bibrefs.jhn_6_39_href;
+	lg.q8_1__verse4_should = "He ENTERED the Holy PLACE in the heavens";
+	lg.q8_1__verse5_str = uppercase_words_in_string(all_bibrefs.jhn_17_2_str, ["bear", "image", "heavenly.", ]);
+	lg.q8_1__verse5_href = all_bibrefs.jhn_17_2_href;
+	lg.q8_1__verse5_should = "We are destined to DIE ONCE. No more.";
+	lg.q8_1__verse6_str = uppercase_words_in_string(all_bibrefs._1co_15_22_str, ["body", "raised", "imperishable."]);
+	lg.q8_1__verse6_href = all_bibrefs._1co_15_22_href;
+	lg.q8_1__verse6_should = "THe raised body is IMPERISHABLE";
 	
 	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>Not yet for most</a>`;
 	lg.q9_1__not_yet = `1st quest NOT YET FOR MOST`;
-	lg.q9_1__go = "Go";
+	lg.q9_1__go = "Go"; // jhn_6_39_str _2ti_2_18_str jhn_6_40_str jhn_6_44_str jhn_6_54_str jhn_11_24_str rev_20_13_str
 	lg.q9_1__stay = "Stay";
 	
 	lg.q10_1__has_for_few_sec = `<a class='exam_ref exam_title' href='${href_only_few_resu}'>Only for few</a>`;

@@ -706,8 +706,12 @@ export function init_exam_database(){
 		htm_stm: "q7_1__like_jesus",
 		presentation: "q7_1__like_jesus_sec",
 		answers: {
-			r0: { htm_answ: "q7_1__go" },
-			r1: { htm_answ: "q7_1__stay" },
+			r0: { htm_answ: "q7_1__verse1_str", rclk_href: "q7_1__verse1_href", should_on: "q7_1__verse1_should", },
+			r1: { htm_answ: "q7_1__verse2_str", rclk_href: "q7_1__verse2_href", should_on: "q7_1__verse2_should", },
+			r2: { htm_answ: "q7_1__verse3_str", rclk_href: "q7_1__verse3_href", should_on: "q7_1__verse3_should", },
+			r3: { htm_answ: "q7_1__verse4_str", rclk_href: "q7_1__verse4_href", should_on: "q7_1__verse4_should", },
+			r4: { htm_answ: "q7_1__verse5_str", rclk_href: "q7_1__verse5_href", should_on: "q7_1__verse5_should", },
+			r5: { htm_answ: "q7_1__verse6_str", rclk_href: "q7_1__verse6_href", should_on: "q7_1__verse6_should", },
 		},
 		set_reactions: function () {
 			if(this.all_nxt != null){
@@ -730,8 +734,12 @@ export function init_exam_database(){
 		htm_stm: "q8_1__for_all",
 		presentation: "q8_1__for_all_sec",
 		answers: {
-			r0: { htm_answ: "q8_1__go" },
-			r1: { htm_answ: "q8_1__stay" },
+			r0: { htm_answ: "q8_1__verse1_str", rclk_href: "q8_1__verse1_href", should_on: "q8_1__verse1_should", },
+			r1: { htm_answ: "q8_1__verse2_str", rclk_href: "q8_1__verse2_href", should_on: "q8_1__verse2_should", },
+			r2: { htm_answ: "q8_1__verse3_str", rclk_href: "q8_1__verse3_href", should_on: "q8_1__verse3_should", },
+			r3: { htm_answ: "q8_1__verse4_str", rclk_href: "q8_1__verse4_href", should_on: "q8_1__verse4_should", },
+			r4: { htm_answ: "q8_1__verse5_str", rclk_href: "q8_1__verse5_href", should_on: "q8_1__verse5_should", },
+			r5: { htm_answ: "q8_1__verse6_str", rclk_href: "q8_1__verse6_href", should_on: "q8_1__verse6_should", },
 		},
 		set_reactions: function () {
 			if(this.all_nxt != null){
