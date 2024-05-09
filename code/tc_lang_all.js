@@ -450,7 +450,7 @@ const all_bibrefs = {
 	rev_1_18_obj: { book: "revelation", chapter: 1, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	rev_1_18_str: `Rev 1:18. and the Living one. I was dead, and behold, I am alive forever and ever. Amen. I have the keys of Death and of Hades`,
 	rev_20_13_obj: { book: "revelation", chapter: 20, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	rev_20_13_str: `Rev 20:13. The sea gave up the dead who were in it. Death and Hades[a] gave up the dead who were in them. They were judged, each one according to his works.`,
+	rev_20_13_str: `Rev 20:13. The sea gave up the dead who were in it. Death and Hades gave up the dead who were in them. They were judged, each one according to his works.`,
 	
 };
 
@@ -688,29 +688,48 @@ function init_en_exam_msg(){
 	
 	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${href_for_all_resu}'>For All</a>`;
 	lg.q8_1__for_all = `Select all verses that support a resurrection of the dead that is for ALL people`;
-	lg.q8_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_5_28_str, ["conformed", "body", ]);
+	lg.q8_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_5_28_str, ["all", "tombs", ]);
 	lg.q8_1__verse1_href = all_bibrefs.jhn_5_28_href;
-	lg.q8_1__verse1_should = "Just LIKE the BODY of Jesus";
-	lg.q8_1__verse2_str = uppercase_words_in_string(all_bibrefs.jhn_5_29_str, ["like", "him;", ]);
+	lg.q8_1__verse1_should = "ALL is ALL";
+	lg.q8_1__verse2_str = uppercase_words_in_string(all_bibrefs.jhn_5_29_str, ["good,", "evil,", ]);
 	lg.q8_1__verse2_href = all_bibrefs.jhn_5_29_href;
-	lg.q8_1__verse2_should = "We will be LIKE HIM";
-	lg.q8_1__verse3_str = uppercase_words_in_string(all_bibrefs.act_24_15_str, ["can’t", "die", ]);
+	lg.q8_1__verse2_should = "GOOD and EVIL";
+	lg.q8_1__verse3_str = uppercase_words_in_string(all_bibrefs.act_24_15_str, ["both", "just", "unjust.", ]);
 	lg.q8_1__verse3_href = all_bibrefs.act_24_15_href;
-	lg.q8_1__verse3_should = "Thos bodies CAN'T DIE";
-	lg.q8_1__verse4_str = uppercase_words_in_string(all_bibrefs.jhn_6_39_str, ["die", "once,", ]);
+	lg.q8_1__verse3_should = "BOTH JUST and UNJUST";
+	lg.q8_1__verse4_str = uppercase_words_in_string(all_bibrefs.jhn_6_39_str, ["all", "lose", "nothing,", ]);
 	lg.q8_1__verse4_href = all_bibrefs.jhn_6_39_href;
-	lg.q8_1__verse4_should = "He ENTERED the Holy PLACE in the heavens";
-	lg.q8_1__verse5_str = uppercase_words_in_string(all_bibrefs.jhn_17_2_str, ["bear", "image", "heavenly.", ]);
+	lg.q8_1__verse4_should = "ALL and LOSE NOTHING";
+	lg.q8_1__verse5_str = uppercase_words_in_string(all_bibrefs.jhn_17_2_str, ["all", "flesh", "eternal", "life", ]);
 	lg.q8_1__verse5_href = all_bibrefs.jhn_17_2_href;
-	lg.q8_1__verse5_should = "We are destined to DIE ONCE. No more.";
-	lg.q8_1__verse6_str = uppercase_words_in_string(all_bibrefs._1co_15_22_str, ["body", "raised", "imperishable."]);
+	lg.q8_1__verse5_should = "ALL FLESH ETERNAL LIFE";
+	lg.q8_1__verse6_str = uppercase_words_in_string(all_bibrefs._1co_15_22_str, ["all", "alive.", ]);
 	lg.q8_1__verse6_href = all_bibrefs._1co_15_22_href;
-	lg.q8_1__verse6_should = "THe raised body is IMPERISHABLE";
+	lg.q8_1__verse6_should = "ALL is ALL";
 	
 	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>Not yet for most</a>`;
-	lg.q9_1__not_yet = `1st quest NOT YET FOR MOST`;
-	lg.q9_1__go = "Go"; // jhn_6_39_str _2ti_2_18_str jhn_6_40_str jhn_6_44_str jhn_6_54_str jhn_11_24_str rev_20_13_str
-	lg.q9_1__stay = "Stay";
+	lg.q9_1__not_yet = `Select all verses that support a resurrection of the dead that has NOT happend for most people`;
+	lg.q9_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_6_39_str, ["last", "day.", ]);
+	lg.q9_1__verse1_href = all_bibrefs.jhn_6_39_href;
+	lg.q9_1__verse1_should = "It is on the LAST DAY";
+	lg.q9_1__verse2_str = uppercase_words_in_string(all_bibrefs._2ti_2_18_str, ["erred", "already", "past,"]);
+	lg.q9_1__verse2_href = all_bibrefs._2ti_2_18_href;
+	lg.q9_1__verse2_should = "It is NOT already past";
+	lg.q9_1__verse3_str = uppercase_words_in_string(all_bibrefs.jhn_6_40_str, ["last", "day.", ]);
+	lg.q9_1__verse3_href = all_bibrefs.jhn_6_40_href;
+	lg.q9_1__verse3_should = "It is on the LAST DAY";
+	lg.q9_1__verse4_str = uppercase_words_in_string(all_bibrefs.jhn_6_44_str, ["last", "day.", ]);
+	lg.q9_1__verse4_href = all_bibrefs.jhn_6_44_href;
+	lg.q9_1__verse4_should = "It is on the LAST DAY";
+	lg.q9_1__verse5_str = uppercase_words_in_string(all_bibrefs.jhn_6_54_str, ["last", "day.", ]);
+	lg.q9_1__verse5_href = all_bibrefs.jhn_6_54_href;
+	lg.q9_1__verse5_should = "It is on the LAST DAY";
+	lg.q9_1__verse6_str = uppercase_words_in_string(all_bibrefs.jhn_11_24_str, ["last", 'day."', ]);
+	lg.q9_1__verse6_href = all_bibrefs.jhn_11_24_href;
+	lg.q9_1__verse6_should = "It is on the LAST DAY";
+	lg.q9_1__verse7_str = uppercase_words_in_string(all_bibrefs.rev_20_13_str, ["gave", "dead"]);
+	lg.q9_1__verse7_href = all_bibrefs.rev_20_13_href;
+	lg.q9_1__verse7_should = "It is AFTER this earth and these heavens get destroyed";
 	
 	lg.q10_1__has_for_few_sec = `<a class='exam_ref exam_title' href='${href_only_few_resu}'>Only for few</a>`;
 	lg.q10_1__has_for_few = `1st quest ONLY FOR FEW`;
