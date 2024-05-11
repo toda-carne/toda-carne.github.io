@@ -273,6 +273,9 @@ function init_answers(qid){
 				dv_shd_on.classList.add("is_contradiction");
 				dv_shd_on.innerHTML = get_msg(an_answ.should_on);
 				add_listener_to_add_edit_button(dv_answers, dv_shd_on, qid);
+				dv_shd_on.tc_answ_obj = an_answ;
+				dv_shd_on.tc_is_should = true;
+				add_right_click_listener_for_answer(qid, dv_shd_on);
 			}
 			//return; // continue with next elem
 			continue; // continue with next elem
@@ -332,6 +335,13 @@ function init_answers(qid){
 function add_right_click_listener_for_answer(qid, dv_answ){
 	dv_answ.addEventListener('contextmenu', (ev1) => {
 		ev1.preventDefault();
+		if(dv_answ.tc_is_should){
+			const val_shd_href = dv_answ.tc_answ_obj.rclk_should_href;
+			if(val_shd_href != null){
+				window.open(get_msg(val_shd_href), '_blank');				
+				return false;
+			}
+		}
 		const val_href = dv_answ.tc_answ_obj.rclk_href;
 		if(val_href == null){
 			return false;

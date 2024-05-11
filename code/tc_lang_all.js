@@ -373,6 +373,10 @@ export function make_strong_ref(scode){
 
 const all_bibrefs = {
 	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_all_bibrefs_href gets called
+	isa_65_17_obj: { book: "isaiah", chapter: 65, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	isa_65_17_str: `Isa 65:17. For, behold, I create new heavens and a new earth; and the former things will not be remembered, nor come into mind.`,
+	isa_66_22_obj: { book: "isaiah", chapter: 66, verse: 22, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	isa_66_22_str: `Isa 66:22. "For as the new heavens and the new earth, which I will make, shall remain before me," says Yahweh, "so your offspring and your name shall remain."`,
 	mat_26_64_obj: { book: "matthew", chapter: 26, verse: 64, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	mat_26_64_str: `Mat 26:64. Jesus said to him, "You have said so. Nevertheless, I tell you, after this you will see the Son of Man sitting at the right hand of Power, and coming on the clouds of the sky."`,
 	mat_28_9_obj: { book: "matthew", chapter: 28, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -445,13 +449,16 @@ const all_bibrefs = {
 	heb_10_12_str: `Heb 10:12. but he, when he had offered one sacrifice for sins forever, sat down on the right hand of God,`,
 	heb_13_8_obj: { book: "hebrews", chapter: 13, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	heb_13_8_str: `Heb 13:8. Jesus Christ is the same yesterday, today, and forever.`,
+	_2pe_3_13_obj: { book: "2_peter", chapter: 3, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	_2pe_3_13_str: `2Pe 3:13. But, according to his promise, we look for new heavens and a new earth, in which righteousness dwells.`,
 	_1jo_3_2_obj: { book: "1_john", chapter: 3, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	_1jo_3_2_str: `1Jo 3:2. Beloved, now we are children of God. It is not yet revealed what we will be; but we know that when he is revealed, we will be like him; for we will see him just as he is.`,
 	rev_1_18_obj: { book: "revelation", chapter: 1, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	rev_1_18_str: `Rev 1:18. and the Living one. I was dead, and behold, I am alive forever and ever. Amen. I have the keys of Death and of Hades`,
 	rev_20_13_obj: { book: "revelation", chapter: 20, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	rev_20_13_str: `Rev 20:13. The sea gave up the dead who were in it. Death and Hades gave up the dead who were in them. They were judged, each one according to his works.`,
-	
+	rev_21_1_obj: { book: "revelation", chapter: 21, verse: 1, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	rev_21_1_str: `Rev 21:1. I saw a new heaven and a new earth: for the first heaven and the first earth have passed away, and the sea is no more.`,
 };
 
 function init_en_exam_msg(){
@@ -491,6 +498,7 @@ function init_en_exam_msg(){
 	lg.q1_1__should_yes = "All people answering these questions are required to be RATIONAL and REASONABLE.";
 	lg.q1_1__pru_pos_txt = `<span class="is_big">+</span>`;
 	lg.q1_1__pru_href = all_bibrefs.luk_24_39_href;
+	lg.q1_1__pru_should_href = all_bibrefs.mat_26_64_href;
 	lg.q1_1__no = "I am NOT a rational and reasonable person.";
 	
 	lg.q1_2__experience_is_evidence = "A claim that most people can see, hear, smell, taste, touch, or confirm by perceptual experience, ";
@@ -591,8 +599,8 @@ function init_en_exam_msg(){
 	lg.q3_2__people_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead promissed by Jesus Christ: `;
 	lg.q3_2__like_jesus = "It is in BODY and SPIRIT just like Jesus Chist. And it is in a new body, similar to Jesus's one, that cannot die.";
 	lg.q3_2__for_all = "It is for everyone. ALL people, just and unjust.";
-	lg.q3_2__not_yet_most = "It has NOT happened for the great MAJORITY of people. The promissed event is on the last day.";
-	lg.q3_2__happened_for_few = "It HAS happened for a FEW ones. Some male genetic decendants of Jacob, of Israel, have been resurrected.";
+	lg.q3_2__not_yet_most = "It has NOT happened for almost anybody. The promissed event is on the last day.";
+	//lg.q3_2__happened_for_few = "It HAS happened for a FEW ones. Some male genetic decendants of Jacob, of Israel, have been resurrected.";
 	lg.q3_2__new_earth = "It is to live forever in a new physical EARTH with new physical HEAVENS";
 	lg.q3_2__sleep = "Before resurrection, the dead person has NO body, NO consciousness, and therefore cannot do anything. The dead ARE dead.";
 
@@ -602,7 +610,7 @@ function init_en_exam_msg(){
 	lg.q3_3__go_on = "NONE of them. I ACCEPT they are all claimed by The Bible. Let's go on.";
 
 	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${href_physical_resu}'>Physical</a>`;
-	lg.q4_1__physical = `Select all verses that support a physical resurrection`;
+	lg.q4_1__physical = `Select all verses that support a physical resurrection of Jesus Christ`;
 	lg.q4_1__verse1_str = uppercase_words_in_string(all_bibrefs.luk_24_39_str, ["Touch", "flesh", "bones,"]);
 	lg.q4_1__verse1_href = all_bibrefs.luk_24_39_href;
 	lg.q4_1__verse1_should = "FLESH and BONES are PHYSICAL.";
@@ -626,7 +634,7 @@ function init_en_exam_msg(){
 	lg.q4_1__verse7_should = "EATING is something PHYSICAL.";
 	
 	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To Not die again</a>`;
-	lg.q5_1__not_die = `Select all verses that support a resurrection to NOT die again`;
+	lg.q5_1__not_die = `Select all verses that support a resurrection of Jesus Christ to NOT die again`;
 	lg.q5_1__verse1_str = uppercase_words_in_string(all_bibrefs.rom_6_9_str, ["dies", "no", "more."]);
 	lg.q5_1__verse1_href = all_bibrefs.rom_6_9_href;
 	lg.q5_1__verse1_should = "DIES NO MORE.";
@@ -641,7 +649,7 @@ function init_en_exam_msg(){
 	lg.q5_1__verse4_should = "LIVES FOREVER.";
 	
 	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${href_in_heaven_resu}'>In Heaven</a>`;
-	lg.q6_1__in_heaven = `Select all verses that support a resurrected Jesus that is in heaven in BODY and spirit.`;
+	lg.q6_1__in_heaven = `Select all verses that support a resurrected Jesus Christ that is in heaven in BODY and spirit.`;
 	lg.q6_1__verse1_str = uppercase_words_in_string(all_bibrefs.act_1_11_str, ["going", "into", "sky."]);
 	lg.q6_1__verse1_href = all_bibrefs.act_1_11_href;
 	lg.q6_1__verse1_should = "GOING INTO the SKY. He went physically into the heavens";
@@ -707,8 +715,8 @@ function init_en_exam_msg(){
 	lg.q8_1__verse6_href = all_bibrefs._1co_15_22_href;
 	lg.q8_1__verse6_should = "ALL is ALL";
 	
-	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>Not yet for most</a>`;
-	lg.q9_1__not_yet = `Select all verses that support a resurrection of the dead that has NOT happend for most people`;
+	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>NOT yet for almost ANYBODY</a>`;
+	lg.q9_1__not_yet = `Select all verses that support a resurrection of the dead that has NOT happend for almost ANYBODY`;
 	lg.q9_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_6_39_str, ["last", "day.", ]);
 	lg.q9_1__verse1_href = all_bibrefs.jhn_6_39_href;
 	lg.q9_1__verse1_should = "It is on the LAST DAY";
@@ -731,15 +739,27 @@ function init_en_exam_msg(){
 	lg.q9_1__verse7_href = all_bibrefs.rev_20_13_href;
 	lg.q9_1__verse7_should = "It is AFTER this earth and these heavens get destroyed";
 	
+	/*
 	lg.q10_1__has_for_few_sec = `<a class='exam_ref exam_title' href='${href_only_few_resu}'>Only for few</a>`;
 	lg.q10_1__has_for_few = `1st quest ONLY FOR FEW`;
 	lg.q10_1__go = "Go";
 	lg.q10_1__stay = "Stay";
+	*/
 	
 	lg.q11_1__new_earth_sec = `<a class='exam_ref exam_title' href='${href_new_earth_resu}'>New Earth</a>`;
-	lg.q11_1__new_earth = `1st quest NEW EARTH`;
-	lg.q11_1__go = "Go";
-	lg.q11_1__stay = "Stay";
+	lg.q11_1__new_earth = `Select all verses that support a resurrection of the dead to live in a NEW EARTH with a new heavens`;
+	lg.q11_1__verse1_str = uppercase_words_in_string(all_bibrefs.rev_21_1_str, ["new", "earth:", ]);
+	lg.q11_1__verse1_href = all_bibrefs.rev_21_1_href;
+	lg.q11_1__verse1_should = "It is on a NEW EARTH with a new heavens";
+	lg.q11_1__verse2_str = uppercase_words_in_string(all_bibrefs._2pe_3_13_str, ["new", "earth,", ]);
+	lg.q11_1__verse2_href = all_bibrefs._2pe_3_13_href;
+	lg.q11_1__verse2_should = "It is on a NEW EARTH with a new heavens";
+	lg.q11_1__verse3_str = uppercase_words_in_string(all_bibrefs.isa_65_17_str, ["new", "earth;", ]);
+	lg.q11_1__verse3_href = all_bibrefs.isa_65_17_href;
+	lg.q11_1__verse3_should = "It is on a NEW EARTH with a new heavens";
+	lg.q11_1__verse4_str = uppercase_words_in_string(all_bibrefs.isa_66_22_str, ["new", "earth,", ]);
+	lg.q11_1__verse4_href = all_bibrefs.isa_66_22_href;
+	lg.q11_1__verse4_should = "It is on a NEW EARTH with a new heavens";
 	
 	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleep_resu}'>Sleep</a>`;
 	lg.q12_1__sleep = `1st quest SLEEP`;

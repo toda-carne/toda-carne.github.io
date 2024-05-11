@@ -37,6 +37,7 @@ export function init_exam_database(){
 			r0: { htm_answ: "q1_1__yes", 
 				should_on: "q1_1__should_yes",
 				rclk_href: "q1_1__pru_href", // uncomment to debug right_click 
+				//rclk_should_href: "q1_1__pru_should_href", // uncomment to debug right_click of should_href
 			},
 			r1: { htm_answ: "q1_1__no" },
 		},
@@ -542,9 +543,9 @@ export function init_exam_database(){
 			r0: { htm_answ: "q3_2__like_jesus", should_on: "q3_2__like_jesus", },
 			r1: { htm_answ: "q3_2__for_all", should_on: "q3_2__for_all", },
 			r2: { htm_answ: "q3_2__not_yet_most", should_on: "q3_2__not_yet_most", },
-			r3: { htm_answ: "q3_2__happened_for_few", should_on: "q3_2__happened_for_few", },
-			r4: { htm_answ: "q3_2__new_earth", should_on: "q3_2__new_earth", },
-			r5: { htm_answ: "q3_2__sleep", should_on: "q3_2__sleep", },
+			//r3: { htm_answ: "q3_2__happened_for_few", should_on: "q3_2__happened_for_few", }, // NO_FEW
+			r3: { htm_answ: "q3_2__new_earth", should_on: "q3_2__new_earth", },
+			r4: { htm_answ: "q3_2__sleep", should_on: "q3_2__sleep", },
 		},
 		set_reactions: function () {
 			if(this.all_nxt != null){
@@ -569,7 +570,7 @@ export function init_exam_database(){
 			q3_2__like_jesus: "q7_1__",
 			q3_2__for_all: "q8_1__",
 			q3_2__not_yet_most: "q9_1__",
-			q3_2__happened_for_few: "q10_1__",
+			//q3_2__happened_for_few: "q10_1__", // NO_FEW
 			q3_2__new_earth: "q11_1__",
 			q3_2__sleep: "q12_1__",
 		},
@@ -790,6 +791,7 @@ export function init_exam_database(){
 		},
 	};
 	
+	/* NO_FEW
 	db.q10_1__ = { 
 		htm_stm: "q10_1__has_for_few",
 		presentation: "q10_1__has_for_few_sec",
@@ -813,13 +815,16 @@ export function init_exam_database(){
 			this.all_contra = ["q0_2__", "q10_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
+	*/
 	
 	db.q11_1__ = { 
 		htm_stm: "q11_1__new_earth",
 		presentation: "q11_1__new_earth_sec",
 		answers: {
-			r0: { htm_answ: "q11_1__go" },
-			r1: { htm_answ: "q11_1__stay" },
+			r0: { htm_answ: "q11_1__verse1_str", rclk_href: "q11_1__verse1_href", should_on: "q11_1__verse1_should", },
+			r1: { htm_answ: "q11_1__verse2_str", rclk_href: "q11_1__verse2_href", should_on: "q11_1__verse2_should", },
+			r2: { htm_answ: "q11_1__verse3_str", rclk_href: "q11_1__verse3_href", should_on: "q11_1__verse3_should", },
+			r3: { htm_answ: "q11_1__verse4_str", rclk_href: "q11_1__verse4_href", should_on: "q11_1__verse4_should", },
 		},
 		set_reactions: function () {
 			if(this.all_nxt != null){
