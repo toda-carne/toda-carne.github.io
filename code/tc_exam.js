@@ -20,6 +20,8 @@ let fb_sign_out = null;
 
 const ROOT_QUEST_ID = "root_quest_id";
 
+const MIN_ANSW_SHOW_INVERT = 3;
+
 const qref_prefix = "QREF_";
 
 function init_exam_fb(){
@@ -227,7 +229,7 @@ function add_question(qid){
 	return dv_quest;
 }
 
-function init_answers(qid){
+export function init_answers(qid){
 	//console.log("init_answers of qid = " + qid);
 	set_is_contra_if_so(qid);
 	const quest = db_nodes_exam[qid];
@@ -253,13 +255,11 @@ function init_answers(qid){
 	
 	dv_answers.innerHTML = "";
 	
-	const arr_answers = quest.answers;
-	if(arr_answers == null){
+	if(quest.answers == null){
 		return;
 	}
-	const is_mult = quest.is_multi;
-	//arr_answers.forEach((an_answ) => {
-	for (const [aid, an_answ] of Object.entries(arr_answers)) {
+	const all_answ = Object.entries(quest.answers);
+	for (const [aid, an_answ] of all_answ) {
 		//console.log("aid=" + aid + " an_answ=" + JSON.stringify(an_answ, null, "  "));
 		if(an_answ == null){
 			continue; // continue with next elem
@@ -315,7 +315,17 @@ function init_answers(qid){
 	}
 	//});
 	
-	if(is_mult && is_init_to_answer){
+	if(quest.is_multi && is_init_to_answer){
+		if(all_answ.length > MIN_ANSW_SHOW_INVERT){
+			const dv_invert = dv_answers.appendChild(document.createElement("div"));
+			dv_invert.classList.add("exam");
+			dv_invert.classList.add("is_button");
+			dv_invert.innerHTML = glb_curr_lang.msg_invert_ans;
+			dv_invert.addEventListener('click', function() {
+				invert_answers(qid);
+				init_answers(qid);
+			});
+		}
 		const dv_end = dv_answers.appendChild(document.createElement("div"));
 		dv_end.classList.add("exam");
 		dv_end.classList.add("is_button");
@@ -330,6 +340,17 @@ function init_answers(qid){
 		remove_all_children_descendants(quest.parent);
 	}
 	
+}
+
+function invert_answers(qid){
+	const quest = db_nodes_exam[qid];
+	for (const [aid, an_answ] of Object.entries(quest.answers)) {
+		if(an_answ.is_on == null){
+			an_answ.is_on = true;
+			continue;
+		}
+		an_answ.is_on = ! an_answ.is_on;
+	}	
 }
 
 function add_right_click_listener_for_answer(qid, dv_answ){
@@ -364,8 +385,10 @@ function add_click_listener_for_answer(qid, dv_answ) {
 		dv_answ.tc_answ_obj = {};
 	}
 	
-	dv_answ.classList.remove("selected");
-	dv_answ.tc_answ_obj.is_on = false;
+	if(! quest.is_multi || quest.reset_answ){
+		dv_answ.classList.remove("selected");
+		dv_answ.tc_answ_obj.is_on = false;
+	}
 	
 	dv_answ.addEventListener('click', function() {
 		if(dv_answ.tc_answ_obj == null){
@@ -469,7 +492,14 @@ function add_all_nxt(qid){
 	const all_added = [];
 	for(const qq of quest.all_nxt){
 		//console.log("Adding question " + qq + " to page");
+		const qq_nd = db_nodes_exam[qq];
+		if(qq_nd == null){ 
+			console.log("Trying to add NULL question " + qq + " !!!");
+			continue;
+		}
+		qq_nd.reset_answ = true;
 		const added = add_question(qq);
+		qq_nd.reset_answ = null;
 		if(added == null){
 			console.log("Question " + qq + " could NOT be added to page !!!");
 		} else {
@@ -507,7 +537,7 @@ function add_contradictions(qid){
 	const dv_qstm = document.getElementById(qid_nxt + SUF_ID_QSTM);
 	if(dv_qstm != null){
 		const sufix_qhrefs = get_contradictions_qhrefs(qid, qid_nxt);
-		dv_qstm.innerHTML = dv_qstm.innerHTML + " <br>Change one of these: " + sufix_qhrefs;
+		dv_qstm.innerHTML = dv_qstm.innerHTML + " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs;
 	}
 }
 

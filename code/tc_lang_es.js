@@ -96,6 +96,7 @@ function init_es_basic_msg(){
 	obj.msg_del = "BORRAR";
 	obj.msg_range = "RANGO";
 	obj.msg_any = "CUALQUIERA";
+	obj.msg_invert_ans = "INVERTIR RESPUESTA";
 	obj.msg_end_ans = "TERMINAR RESPUESTA";
 	obj.msg_edit_ans = "CAMBIAR RESPUESTA";
 	
@@ -119,6 +120,8 @@ function init_es_basic_msg(){
 	obj.msg_todacarne_answers_writing = "Guardando...";
 	obj.msg_todacarne_answers_reading = "Abriendo...";
 	obj.msg_todacarne_no_internet = "Sin conexion a internet.";
+
+	obj.msg_change_one_answer = "Cambie una de estas respuestas: ";
 	
 	obj.msg_in_favor = "A favor";
 	obj.msg_against = "En contra";

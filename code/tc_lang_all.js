@@ -201,6 +201,7 @@ function init_en_basic_msg(){
 	obj.msg_del = "DEL";
 	obj.msg_range = "RANGE";
 	obj.msg_any = "ANY";
+	obj.msg_invert_ans = "INVERT ANSWER";
 	obj.msg_end_ans = "END ANSWER";
 	obj.msg_edit_ans = "CHANGE ANSWER";
 	
@@ -225,6 +226,8 @@ function init_en_basic_msg(){
 	obj.msg_todacarne_answers_reading = "Opening...";
 	obj.msg_todacarne_no_internet = "No internet conection.";
 
+	obj.msg_change_one_answer = "Change one of these answers: ";
+	
 	obj.msg_in_favor = "In favor";
 	obj.msg_against = "Against";
 	obj.msg_respond = "RESPOND";

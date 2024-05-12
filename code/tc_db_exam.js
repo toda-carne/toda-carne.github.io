@@ -1,5 +1,6 @@
 
 import { refs_ids } from './tc_lang_all.js';
+import { init_answers } from './tc_exam.js';
 
 "use strict";
 
@@ -604,6 +605,10 @@ export function init_exam_database(){
 			}
 			if(a2_on){
 				this.all_nxt = [nxt_topic];
+				set_all_on(db.q3_1__);
+				set_all_on(db.q3_2__);
+				init_answers("q3_1__");
+				init_answers("q3_2__");
 				return;
 			}
 		},
@@ -906,5 +911,13 @@ function add_sections(nxt_sec, secs, answs, ck_val, value, fst_stm){
 	return prv_stm;
 }
 
+function set_all_on(quest){
+	if(! quest.is_multi){
+		return;
+	}
+	for (const [aid, an_answ] of Object.entries(quest.answers)) {
+		an_answ.is_on = true;
+	}
+}
 
 
