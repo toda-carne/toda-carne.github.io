@@ -636,7 +636,7 @@ function init_en_exam_msg(){
 	lg.q4_1__verse7_href = all_bibrefs.luk_24_43_href;
 	lg.q4_1__verse7_should = "EATING is something PHYSICAL.";
 	
-	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To Not die again</a>`;
+	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To NOT die again</a>`;
 	lg.q5_1__not_die = `Select all verses that support a resurrection of Jesus Christ to NOT die again`;
 	lg.q5_1__verse1_str = uppercase_words_in_string(all_bibrefs.rom_6_9_str, ["dies", "no", "more."]);
 	lg.q5_1__verse1_href = all_bibrefs.rom_6_9_href;
@@ -689,13 +689,13 @@ function init_en_exam_msg(){
 	lg.q7_1__verse3_should = "Thos bodies CAN'T DIE";
 	lg.q7_1__verse4_str = uppercase_words_in_string(all_bibrefs.heb_9_27_str, ["die", "once,", ]);
 	lg.q7_1__verse4_href = all_bibrefs.heb_9_27_href;
-	lg.q7_1__verse4_should = "He ENTERED the Holy PLACE in the heavens";
+	lg.q7_1__verse4_should = "We are destined to DIE ONCE. No more.";
 	lg.q7_1__verse5_str = uppercase_words_in_string(all_bibrefs._1co_15_49_str, ["bear", "image", "heavenly.", ]);
 	lg.q7_1__verse5_href = all_bibrefs._1co_15_49_href;
-	lg.q7_1__verse5_should = "We are destined to DIE ONCE. No more.";
+	lg.q7_1__verse5_should = "We BARE the image of the HEAVENLY";
 	lg.q7_1__verse6_str = uppercase_words_in_string(all_bibrefs._1co_15_42_str, ["body", "raised", "imperishable."]);
 	lg.q7_1__verse6_href = all_bibrefs._1co_15_42_href;
-	lg.q7_1__verse6_should = "THe raised body is IMPERISHABLE";
+	lg.q7_1__verse6_should = "The raised body is IMPERISHABLE";
 	
 	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${href_for_all_resu}'>For All</a>`;
 	lg.q8_1__for_all = `Select all verses that support a resurrection of the dead that is for ALL people`;
@@ -718,7 +718,7 @@ function init_en_exam_msg(){
 	lg.q8_1__verse6_href = all_bibrefs._1co_15_22_href;
 	lg.q8_1__verse6_should = "ALL is ALL";
 	
-	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>NOT yet for almost ANYBODY</a>`;
+	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>Has NOT happend</a>`;
 	lg.q9_1__not_yet = `Select all verses that support a resurrection of the dead that has NOT happend for almost ANYBODY`;
 	lg.q9_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_6_39_str, ["last", "day.", ]);
 	lg.q9_1__verse1_href = all_bibrefs.jhn_6_39_href;

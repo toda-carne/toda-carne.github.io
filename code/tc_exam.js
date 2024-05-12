@@ -1944,7 +1944,7 @@ function calc_exam_save_object(){
 			sv_obj[dv_quest.id] = q_obj;
 		}
 	}
-	console.log("FULL_SAVE_OBJ = " + JSON.stringify(sv_obj, null, "  "));
+	//console.log("FULL_OBJECT_SAVE = " + JSON.stringify(sv_obj, null, "  "));
 	return sv_obj;
 }
 
@@ -1959,7 +1959,7 @@ function update_nodes_exam_with(ld_obj){
 }
 
 function display_exam_load_object(ld_obj){
-	console.log("FULL_READ_OBJ = " + JSON.stringify(ld_obj, null, "  "));
+	//console.log("FULL_OBJECT_READ = " + JSON.stringify(ld_obj, null, "  "));
 	init_exam_database();
 	update_nodes_exam_with(ld_obj);
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
