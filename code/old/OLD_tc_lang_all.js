@@ -15,22 +15,6 @@ export function fill_reversed_object(orig, reverse){
 	}  
 }
 
-export function is_mobile_browser() {
-	const m_list = [
-		/Android/i,
-		/webOS/i,
-		/iPhone/i,
-		/iPad/i,
-		/iPod/i,
-		/BlackBerry/i,
-		/Windows Phone/i
-	];
-	
-	return m_list.some((m_item) => {
-		return navigator.userAgent.match(m_item);
-	});
-}
-
 export const num2abbr = {
 	"1":"Gen",
 	"2":"Exo",
@@ -243,9 +227,6 @@ function init_en_basic_msg(){
 	obj.msg_todacarne_no_internet = "No internet conection.";
 
 	obj.msg_change_one_answer = "Change one of these answers: ";
-
-	obj.msg_dispute_rclick = "To dispute right click";
-	obj.msg_dispute_hold_click = "To dispute hold click";
 	
 	obj.msg_in_favor = "In favor";
 	obj.msg_against = "Against";
@@ -281,13 +262,6 @@ export function init_all_glb(lang, books, bibles, nums, curr){
 	glb_curr_lang = curr;
 }
 
-export function get_dispute_msg() {
-	if(is_mobile_browser()){
-		return glb_curr_lang.msg_dispute_hold_click;
-	}
-	return glb_curr_lang.msg_dispute_rclick;
-}
-
 function fill_all_bibrefs_href(){
 	for (const [key, value] of Object.entries(all_bibrefs)) {
 		const ob_sufx = "_obj";
@@ -321,7 +295,7 @@ export function init_en_module(){
 //init_en_module();
 function uppercase_words_in_string(the_str, to_up_arr){
 	const words = the_str.split(' ');
-	//console.log(JSON.stringify(words, null, "  "));
+	console.log(JSON.stringify(words, null, "  "));
 	const nw_words = [];
 	words.forEach((word) => {
 		if(to_up_arr.includes(word)){
@@ -352,7 +326,7 @@ export function make_bible_ref(cit_obj){
 		let num = Number(cit_obj.book);
 		book_nam =  num2book_en[num];  // normal references
 	}
-	//console.log("make_bible_ref. cit_obj= " + JSON.stringify(cit_obj, null, "  ") + "\nbook_nam=" + book_nam);
+	console.log("make_bible_ref. cit_obj= " + JSON.stringify(cit_obj, null, "  ") + "\nbook_nam=" + book_nam);
 	var bibref = null;
 	if(cit_obj.site == "blueletterbible"){
 		bibref = "https://www.blueletterbible.org/" + cit_obj.bib_ver + "/" + cit_obj.abbr + "/" + cit_obj.chapter + "/" + cit_obj.verse;
@@ -402,46 +376,18 @@ export function make_strong_ref(scode){
 
 const all_bibrefs = {
 	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_all_bibrefs_href gets called
-	gen_15_15_obj: { book: "genesis", chapter: 15, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	gen_15_15_str: `Gen 15:15. but you will go to your fathers in peace. You will be buried at a good old age.`,
-	job_7_21_obj: { book: "job", chapter: 7, verse: 21, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	job_7_21_str: `Job 7:21. Why do you not pardon my disobedience, and take away my iniquity? For now will I lie down in the dust. You will seek me diligently, but I will not be.`,
-	job_14_12_obj: { book: "job", chapter: 14, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	job_14_12_str: `Job 14:12. so man lies down and doesn’t rise. Until the heavens are no more, they will not awake, nor be roused out of their sleep.`,
-	psa_16_11_obj: { book: "psalms", chapter: 16, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	psa_16_11_str: `Psa 16:11. You will show me the path of life. In your presence is fullness of joy. In your right hand there are pleasures forever more.`,
-	psa_115_17_obj: { book: "psalms", chapter: 115, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	psa_115_17_str: `Psa 115:17. The dead don’t praise Yah, neither any who go down into silence;`,
-	ecc_9_10_obj: { book: "ecclesiastes", chapter: 9, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	ecc_9_10_str: `Ecc 9:10. Whatever your hand finds to do, do it with your might; for there is no work, nor plan, nor knowledge, nor wisdom, in Sheol, where you are going.`,
-	ecc_12_7_obj: { book: "ecclesiastes", chapter: 12, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	ecc_12_7_str: `Ecc 12:7. and the dust returns to the earth as it was, and the spirit returns to God who gave it.`,
-	isa_14_10_obj: { book: "isaiah", chapter: 14, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	isa_14_10_str: `Isa 14:10. They all will answer and ask you, "Have you also become as weak as we are? Have you become like us?"`,
 	isa_65_17_obj: { book: "isaiah", chapter: 65, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	isa_65_17_str: `Isa 65:17. For, behold, I create new heavens and a new earth; and the former things will not be remembered, nor come into mind.`,
 	isa_66_22_obj: { book: "isaiah", chapter: 66, verse: 22, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	isa_66_22_str: `Isa 66:22. "For as the new heavens and the new earth, which I will make, shall remain before me," says Yahweh, "so your offspring and your name shall remain."`,
-	mat_17_3_obj: { book: "matthew", chapter: 17, verse: 3, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	mat_17_3_str: `Mat 17:3. Behold, Moses and Elijah appeared to them talking with him.`,
 	mat_26_64_obj: { book: "matthew", chapter: 26, verse: 64, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	mat_26_64_str: `Mat 26:64. Jesus said to him, "You have said so. Nevertheless, I tell you, after this you will see the Son of Man sitting at the right hand of Power, and coming on the clouds of the sky."`,
 	mat_28_9_obj: { book: "matthew", chapter: 28, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	mat_28_9_str: `Mat 28:9. As they went to tell his disciples, behold, Jesus met them, saying, "Rejoice!" They came and took hold of his feet, and worshiped him.`,
+	mat_28_9_str: `Mat 28:9. As they went to tell his disciples, behold, Jesus met them, saying, “Rejoice!” They came and took hold of his feet, and worshiped him.`,
 	mar_16_19_obj: { book: "mark", chapter: 16, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	mar_16_19_str: `Mar 16:19. So then the Lord, after he had spoken to them, was received up into heaven, and sat down at the right hand of God.`,
-	luk_8_52_obj: { book: "luke", chapter: 8, verse: 52, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	luk_8_52_str: `Luk 8:52. All were weeping and mourning her, but he said, "Don’t weep. She isn’t dead, but sleeping."`,
-	luk_15_24_obj: { book: "luke", chapter: 15, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	luk_15_24_str: `Luk 15:24. for this, my son, was dead, and is alive again. He was lost, and is found.’ Then they began to celebrate.`,
-	luk_16_24_obj: { book: "luke", chapter: 16, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	luk_16_24_str: `Luk 16:24. He cried and said, ‘Father Abraham, have mercy on me, and send Lazarus, that he may dip the tip of his finger in water, and cool my tongue! For I am in anguish in this flame.’`,
 	luk_20_36_obj: { book: "luke", chapter: 20, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	luk_20_36_str: `Luk 20:36. For they can’t die any more, for they are like the angels, and are children of God, being children of the resurrection.`,
-	luk_20_38_obj: { book: "luke", chapter: 20, verse: 38, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	luk_20_38_str: `Luk 20:38. Now he is not the God of the dead, but of the living, for all are alive to him.`,
-	luk_23_43_obj: { book: "luke", chapter: 23, verse: 43, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	luk_23_43_str: `Luk 23:43.  Jesus said to him, "Assuredly I tell you, today you will be with me in Paradise."`,
 	luk_24_30_obj: { book: "luke", chapter: 24, verse: 30, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	luk_24_30_str: `Luk 24:30. When he had sat down at the table with them, he took the bread and gave thanks. Breaking it, he gave it to them.`,
 	luk_24_39_obj: { book: "luke", chapter: 24, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -450,8 +396,6 @@ const all_bibrefs = {
 	luk_24_43_str: `Luk 24:43. He took them, and ate in front of them.`,
 	jhn_2_19_obj: { book: "john", chapter: 2, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	jhn_2_19_str: `Jhn 2:19. Jesus answered them, "Destroy this temple, and in three days I will raise it up."`,
-	jhn_4_24_obj: { book: "john", chapter: 4, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	jhn_4_24_str: `Jhn 4:24. God is spirit, and those who worship him must worship in spirit and truth.`,
 	jhn_5_28_obj: { book: "john", chapter: 5, verse: 28, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	jhn_5_28_str: `Jhn 5:28. Don’t marvel at this, for the hour comes in which all who are in the tombs will hear his voice,`,
 	jhn_5_29_obj: { book: "john", chapter: 5, verse: 29, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -464,8 +408,6 @@ const all_bibrefs = {
 	jhn_6_44_str: `Jhn 6:44. No one can come to me unless the Father who sent me draws him, and I will raise him up in the last day.`,
 	jhn_6_54_obj: { book: "john", chapter: 6, verse: 54, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	jhn_6_54_str: `Jhn 6:54. He who eats my flesh and drinks my blood has eternal life, and I will raise him up at the last day.`,
-	jhn_11_11_obj: { book: "john", chapter: 11, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	jhn_11_11_str: `Jhn 11:11. He said these things, and after that, he said to them, "Our friend, Lazarus, has fallen asleep, but I am going so that I may awake him out of sleep."`,
 	jhn_11_24_obj: { book: "john", chapter: 11, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	jhn_11_24_str: `Jhn 11:24. Martha said to him, "I know that he will rise again in the resurrection at the last day."`,
 	jhn_17_2_obj: { book: "john", chapter: 17, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -473,17 +415,13 @@ const all_bibrefs = {
 	jhn_20_20_obj: { book: "john", chapter: 20, verse: 20, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	jhn_20_20_str: `Jhn 20:20. When he had said this, he showed them his hands and his side. The disciples therefore were glad when they saw the Lord.`,
 	jhn_20_27_obj: { book: "john", chapter: 20, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	jhn_20_27_str: `Jhn 20:27. Then he said to Thomas, "Reach here your finger, and see my hands. Reach here your hand, and put it into my side. Don’t be unbelieving, but believing"`,
+	jhn_20_27_str: `Jhn 20:27. Then he said to Thomas, “Reach here your finger, and see my hands. Reach here your hand, and put it into my side. Don’t be unbelieving, but believing`,
 	jhn_14_2_obj: { book: "john", chapter: 14, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	jhn_14_2_str: `Jhn 14:2. In my Father’s house are many homes. If it weren’t so, I would have told you. I am going to prepare a place for you.`,
 	act_1_11_obj: { book: "acts", chapter: 1, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	act_1_11_str: `Act 1:11. who also said, "You men of Galilee, why do you stand looking into the sky? This Jesus, who was received up from you into the sky, will come back in the same way as you saw him going into the sky."`,
-	act_7_59_obj: { book: "acts", chapter: 7, verse: 59, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	act_7_59_str: `Act 7:59. They stoned Stephen as he called out, saying, "Lord Jesus, receive my spirit!"`,
+	act_1_11_str: `Act 1:11. who also said, “You men of Galilee, why do you stand looking into the sky? This Jesus, who was received up from you into the sky, will come back in the same way as you saw him going into the sky.”`,
 	act_10_41_obj: { book: "acts", chapter: 10, verse: 41, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	act_10_41_str: `Act 10:41. not to all the people, but to witnesses who were chosen before by God, to us, who ate and drank with him after he rose from the dead`,
-	act_13_36_obj: { book: "acts", chapter: 13, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	act_13_36_str: `Act 13:36. For David, after he had in his own generation served the counsel of God, fell asleep, was laid with his fathers, and saw decay.`,
 	act_24_15_obj: { book: "acts", chapter: 24, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	act_24_15_str: `Act 24:15. having hope toward God, which these also themselves look for, that there will be a resurrection of the dead, both of the just and unjust.`,
 	rom_6_9_obj: { book: "romans", chapter: 6, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -494,22 +432,12 @@ const all_bibrefs = {
 	_1co_15_42_str: `1Co 15:42. So also is the resurrection of the dead. The body is sown perishable; it is raised imperishable.`,
 	_1co_15_49_obj: { book: "1_corinthians", chapter: 15, verse: 49, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	_1co_15_49_str: `1Co 15:49. As we have borne the image of those made of dust, let’s also bear the image of the heavenly.`,
-	_2co_5_8_obj: { book: "2_corinthians", chapter: 5, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	_2co_5_8_str: `2Co 5:8. We are courageous, I say, and are willing rather to be absent from the body and to be at home with the Lord.`,
-	_2co_12_4_obj: { book: "2_corinthians", chapter: 12, verse: 4, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	_2co_12_4_str: `2Co 12:4. how he was caught up into Paradise, and heard unspeakable words, which it is not lawful for a man to utter.`,
-	phl_1_23_obj: { book: "philippians", chapter: 1, verse: 23, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	phl_1_23_str: `Phl 1:23. But I am hard pressed between the two, having the desire to depart and be with Christ, which is far better.`,
 	phl_3_21_obj: { book: "philippians", chapter: 3, verse: 21, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	phl_3_21_str: `Phl 3:21. who will change the body of our humiliation to be conformed to the body of his glory, according to the working by which he is able even to subject all things to himself.`,
 	col_1_15_obj: { book: "colossians", chapter: 1, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	col_1_15_str: `Col 1:15. He is the image of the invisible God, the firstborn of all creation.`,
-	_1ti_5_6_obj: { book: "1_timothy", chapter: 5, verse: 6, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	_1ti_5_6_str: `1Ti 5:6. But she who gives herself to pleasure is dead while she lives. `,
 	_2ti_2_18_obj: { book: "2_timothy", chapter: 2, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	_2ti_2_18_str: `2Ti 2:18. men who have erred concerning the truth, saying that the resurrection is already past, and overthrowing the faith of some.`,
-	heb_1_14_obj: { book: "hebrews", chapter: 1, verse: 14, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	heb_1_14_str: `Heb 1:14. Aren’t they all serving spirits, sent out to do service for the sake of those who will inherit salvation?`,
 	heb_7_16_obj: { book: "hebrews", chapter: 7, verse: 16, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	heb_7_16_str: `Heb 7:16. who has been made, not after the law of a fleshly commandment, but after the power of an endless life;`,
 	heb_7_25_obj: { book: "hebrews", chapter: 7, verse: 25, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -522,20 +450,12 @@ const all_bibrefs = {
 	heb_9_28_str: `Heb 9:28. so Christ also, having been offered once to bear the sins of many, will appear a second time, without sin, to those who are eagerly waiting for him for salvation.`,
 	heb_10_12_obj: { book: "hebrews", chapter: 10, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	heb_10_12_str: `Heb 10:12. but he, when he had offered one sacrifice for sins forever, sat down on the right hand of God,`,
-	heb_12_23_obj: { book: "hebrews", chapter: 12, verse: 23, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	heb_12_23_str: `Heb 12:23. to the festal gathering and assembly of the firstborn who are enrolled in heaven, to God the Judge of all, to the spirits of just men made perfect,`,
 	heb_13_8_obj: { book: "hebrews", chapter: 13, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	heb_13_8_str: `Heb 13:8. Jesus Christ is the same yesterday, today, and forever.`,
-	_1pe_3_19_obj: { book: "1_peter", chapter: 3, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	_1pe_3_19_str: `1Pe 3:19. in whom he also went and preached to the spirits in prison, `,
 	_2pe_3_13_obj: { book: "2_peter", chapter: 3, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	_2pe_3_13_str: `2Pe 3:13. But, according to his promise, we look for new heavens and a new earth, in which righteousness dwells.`,
 	_1jo_3_2_obj: { book: "1_john", chapter: 3, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	_1jo_3_2_str: `1Jo 3:2. Beloved, now we are children of God. It is not yet revealed what we will be; but we know that when he is revealed, we will be like him; for we will see him just as he is.`,
-	rev_6_10_obj: { book: "revelation", chapter: 6, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	rev_6_10_str: `Rev 6:10. They cried with a loud voice, saying, "How long, Master, the holy and true, until you judge and avenge our blood on those who dwell on the earth?"`,
-	rev_14_13_obj: { book: "revelation", chapter: 14, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
-	rev_14_13_str: `Rev 14:13. I heard a voice from heaven saying, "Write, ‘Blessed are the dead who die in the Lord from now on.’" "Yes," says the Spirit, "that they may rest from their labors; for their works follow with them."`,
 	rev_1_18_obj: { book: "revelation", chapter: 1, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	rev_1_18_str: `Rev 1:18. and the Living one. I was dead, and behold, I am alive forever and ever. Amen. I have the keys of Death and of Hades`,
 	rev_20_13_obj: { book: "revelation", chapter: 20, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -568,7 +488,6 @@ function init_en_exam_msg(){
 	const href_only_few_resu = "../en/book.html#has-not-happened_DOT_";
 	const href_new_earth_resu = "../en/book.html#a-new-earth_DOT_";
 	const href_sleep_resu = "../en/book.html#asleep_DOT_";
-	const href_sleep2_resu = "../en/book.html#sleeping_DOT_";
 	const href_the_cloth = "../en/book.html#the-cloth_DOT_";
 	
 	const lg = all_en_msg;
@@ -675,7 +594,7 @@ function init_en_exam_msg(){
 	
 	
 	lg.q3_1__resurrection_section = `<a class='exam_ref exam_title' href='${href_resurrection_tit}'>Resurrection</a>`;
-	lg.q3_1__jesus_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>RESURRECTED</a> Jesus Christ: `;
+	lg.q3_1__jesus_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of Jesus Christ: `;
 	lg.q3_1__physical = "He was physically resurrected, in BODY and spirit";
 	lg.q3_1__not_to_die = "He is alive FOREVER, to not die again, because He cannot longer die.";
 	lg.q3_1__in_heaven = "He is, in BODY and spirit, in the heavens, that PHYSICAL sky that we can see, and that has clouds";
@@ -733,7 +652,7 @@ function init_en_exam_msg(){
 	lg.q5_1__verse4_should = "LIVES FOREVER.";
 	
 	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${href_in_heaven_resu}'>In Heaven</a>`;
-	lg.q6_1__in_heaven = `Select all verses that support a RESURRECTED Jesus Christ that is in heaven in BODY and spirit.`;
+	lg.q6_1__in_heaven = `Select all verses that support a resurrected Jesus Christ that is in heaven in BODY and spirit.`;
 	lg.q6_1__verse1_str = uppercase_words_in_string(all_bibrefs.act_1_11_str, ["going", "into", "sky."]);
 	lg.q6_1__verse1_href = all_bibrefs.act_1_11_href;
 	lg.q6_1__verse1_should = "GOING INTO the SKY. He went physically into the heavens";
@@ -845,60 +764,15 @@ function init_en_exam_msg(){
 	lg.q11_1__verse4_href = all_bibrefs.isa_66_22_href;
 	lg.q11_1__verse4_should = "It is on a NEW EARTH with a new heavens";
 	
-	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleep2_resu}'>Sleep</a>`;
-	lg.q12_1__sleep = `Select all verses that support that dead people HAVE CONSCIOUSNESS before resurrected.`;
-	lg.q12_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_11_11_str, ["asleep,", "awake", ]);
-	lg.q12_1__verse1_href = all_bibrefs.jhn_11_11_href;
-	lg.q12_1__verse1_should = "Lazarous is ASLEEP until he is AWAKEN";
-	lg.q12_1__verse2_str = `In 1 Corinthians 11:30 PEOPLE (not bodies) are sleeping (STILL going on) according to the greek conjugation: κοιμῶνται`;
-	lg.q12_1__verse2_href = "INVALID";
-	lg.q12_1__verse2_should = "They SLEEPING acording to the conjugation of the greek verb";
-	lg.q12_1__verse3_str = uppercase_words_in_string(all_bibrefs.ecc_9_10_str, ["no", "work,", "nor", "plan,", "knowledge,", "wisdom,", "Sheol,", ]);
-	lg.q12_1__verse3_href = all_bibrefs.ecc_9_10_href;
-	lg.q12_1__verse3_should = "WORK, PLAN, KNOWLEDGE, WISDOM. These words specifically refer to actions of CONSCIOUSNESS. A property of living PEOPLE not just bodies made dust.";
-	lg.q12_1__verse4_str = uppercase_words_in_string(all_bibrefs.ecc_12_7_str, ["dust", "returns", "spirit", ]);
-	lg.q12_1__verse4_href = all_bibrefs.ecc_12_7_href;
-	lg.q12_1__verse4_should = "After dead things RETURN as they were. You did NOT have CONSCIOUSNESS before being born.";
-	lg.q12_1__verse5_str = uppercase_words_in_string(all_bibrefs.job_7_21_str, ["not", 'be.', ]);
-	lg.q12_1__verse5_href = all_bibrefs.job_7_21_href;
-	lg.q12_1__verse5_should = "When a person dies it will NOT BE anymore.";
-	
-	// isa_14_10_str mat_17_3_str rev_6_10_str heb_12_23_str luk_16_24_str _1pe_3_19_str _2co_5_8_str act_7_59_str luk_20_38_str _2co_12_4_str 
-	// luk_23_43_str _1ti_5_6_str luk_15_24_str 
-	// jhn_4_24_str heb_1_14_str phl_1_23_str psa_16_11_str
-	
-	lg.q13_1__sleep = `Select all verses that support that dead people do NOT have CONSCIOUSNESS until resurrected.`;
-	lg.q13_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_11_11_str, ["asleep,", "awake", ]);
-	lg.q13_1__verse1_href = all_bibrefs.jhn_11_11_href;
-	lg.q13_1__verse1_should = "Lazarous is ASLEEP until he is AWAKEN";
-	lg.q13_1__verse2_str = `In 1 Corinthians 11:30 PEOPLE (not bodies) are sleeping (STILL going on) according to the greek conjugation: κοιμῶνται`;
-	const obj_1co_11_30 = { book: "1_corinthians", chapter: 11, verse: 30, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", };
-	lg.q13_1__verse2_href = make_bible_ref(obj_1co_11_30);
-	lg.q13_1__verse2_should = "They SLEEPING acording to the conjugation of the greek verb";
-	lg.q13_1__verse3_str = uppercase_words_in_string(all_bibrefs.ecc_9_10_str, ["no", "work,", "nor", "plan,", "knowledge,", "wisdom,", "Sheol,", ]);
-	lg.q13_1__verse3_href = all_bibrefs.ecc_9_10_href;
-	lg.q13_1__verse3_should = "WORK, PLAN, KNOWLEDGE, WISDOM. These words specifically refer to actions of CONSCIOUSNESS. A property of living PEOPLE not just bodies made dust.";
-	lg.q13_1__verse4_str = uppercase_words_in_string(all_bibrefs.ecc_12_7_str, ["dust", "returns", "spirit", ]);
-	lg.q13_1__verse4_href = all_bibrefs.ecc_12_7_href;
-	lg.q13_1__verse4_should = "After dead things RETURN as they were. You did NOT have CONSCIOUSNESS before being born.";
-	lg.q13_1__verse5_str = uppercase_words_in_string(all_bibrefs.job_7_21_str, ["not", 'be.', ]);
-	lg.q13_1__verse5_href = all_bibrefs.job_7_21_href;
-	lg.q13_1__verse5_should = "When a person dies it will NOT BE anymore.";
-	lg.q13_1__verse6_str = uppercase_words_in_string(all_bibrefs.job_14_12_str, ["Until", "nor", "roused", "out", "sleep.", ]);
-	lg.q13_1__verse6_href = all_bibrefs.job_14_12_href;
-	lg.q13_1__verse6_should = "People will NOT be ROUSED OUT of their SLEEP UNTIL these heavens are no more";
-	lg.q13_1__verse7_str = uppercase_words_in_string(all_bibrefs.psa_115_17_str, ["dead", "don’t", "praise", ]);
-	lg.q13_1__verse7_href = all_bibrefs.psa_115_17_href;
-	lg.q13_1__verse7_should = "DEAD people (NOT just bodies) do NOT PRAISE";	
-	lg.q13_1__verse8_str = uppercase_words_in_string(all_bibrefs.jhn_5_28_str, ["are", "in", "tombs"]);
-	lg.q13_1__verse8_href = all_bibrefs.jhn_5_28_href;
-	lg.q13_1__verse8_should = "People who get resurrection ARE IN the TOMBS, the sepulcre, the hebrew Sheol, the poorly translated greek Hades, NOT in heaven or hell.";
-	
+	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleep_resu}'>Sleep</a>`;
+	lg.q12_1__sleep = `1st quest SLEEP`;
+	lg.q12_1__go = "Go";
+	lg.q12_1__stay = "Stay";
 
-	lg.q14_1__the_cloth_sec = `<a class='exam_ref exam_title' href='${href_the_cloth}'>The Cloth</a>`;
-	lg.q14_1__the_cloth = `1st quest THE CLOTH`;
-	lg.q14_1__go = "Go";
-	lg.q14_1__stay = "Stay";
+	lg.q13_1__the_cloth_sec = `<a class='exam_ref exam_title' href='${href_the_cloth}'>The Cloth</a>`;
+	lg.q13_1__the_cloth = `1st quest THE CLOTH`;
+	lg.q13_1__go = "Go";
+	lg.q13_1__stay = "Stay";
 	
 }
 

@@ -1,5 +1,5 @@
 
-import { init_get_msg, init_all_glb, fill_reversed_object, init_en_module } from '../code/tc_lang_all.js';
+import { init_get_msg, init_all_glb, fill_reversed_object, init_en_module, get_dispute_msg } from '../code/tc_lang_all.js';
 
 "use strict";
 
@@ -96,6 +96,7 @@ function init_es_basic_msg(){
 	obj.msg_del = "BORRAR";
 	obj.msg_range = "RANGO";
 	obj.msg_any = "CUALQUIERA";
+	obj.msg_invert_ans = "INVERTIR RESPUESTA";
 	obj.msg_end_ans = "TERMINAR RESPUESTA";
 	obj.msg_edit_ans = "CAMBIAR RESPUESTA";
 	
@@ -119,21 +120,38 @@ function init_es_basic_msg(){
 	obj.msg_todacarne_answers_writing = "Guardando...";
 	obj.msg_todacarne_answers_reading = "Abriendo...";
 	obj.msg_todacarne_no_internet = "Sin conexion a internet.";
+
+	obj.msg_change_one_answer = "Cambie una de estas respuestas: ";
+
+	obj.msg_dispute_rclick = "Dispute con clik derecho";
+	obj.msg_dispute_hold_click = "Dispute manteniendo clik";
+	
+	obj.msg_in_favor = "A favor";
+	obj.msg_against = "En contra";
+	obj.msg_respond = "RESPONDER";
+	
+	obj.msg_help_statement_right_click = "Click derecho para abrir/cerrar la iteraccion de citas en contra o a favor";
+	obj.msg_help_answer_right_click = "Click derecho para ir al enlace web correspondiente";
+	obj.msg_help_cit_ed_ok_right_click = "Click derecho para cambiar entre A favor/En contra";
+	obj.msg_help_cit_ed_range_right_click = "Click derecho para mostrar o no el campo de rango";
+	obj.msg_help_cit_ed_any_bib_right_click = "Click derecho para mostrar o no la seleccion de cualquier version de biblia";
 	
 }
 
 export function init_es_module(){
 	init_en_module();
+	init_es_basic_msg();
 	
 	console.log("Called init_es_module");
 	
 	init_get_msg(all_es_msg);
+	
+	num2book_es["-1"] = all_es_msg.msg_def_book;
 	fill_reversed_object(num2book_es, book2num_es);
 	
-	init_es_basic_msg();
 	init_es_exam_msg();
 	
-	init_all_glb("es", num2book_es, bibles_es, book2num_es, all_es_msg);	
+	init_all_glb("es", num2book_es, bibles_es, book2num_es, all_es_msg);
 }
 
 //init_es_module();
@@ -168,8 +186,9 @@ function init_es_exam_msg(){
 
 	lg.q1_21__creator_section = `<a class='exam_ref exam_title' href='${href_creator_tit}'>Creador</a>`;
 	
-	lg.q1_3__are_humans_intelligent = `Con respecto a la <a class='exam_ref' href='${href_tch_crea}'>creatividad écnica</a>, hay <a class='exam_ref' href='${href_evidence}'>evidencia</a> que el ser humano `;
+	lg.q1_3__are_humans_intelligent = `Con respecto a la <a class='exam_ref' href='${href_tch_crea}'>creatividad técnica</a>, hay <a class='exam_ref' href='${href_evidence}'>evidencia</a> que el ser humano `;
 	lg.q1_3__yes = "es inteligente, diseñador y tiene creatividad técnica.";
+	lg.q1_3__should = "EVIDENCIA son todos los edificios, transistores, automóviles, satélites, neveras, lavadoras, pulidoras, retroescabadoras, máquinas que hacen máquinas, fábricas que usan máquinas hechas por otras fábricas, que ha hecho el hombre";
 	lg.q1_3__no = "NO es inteligente, o NO es diseñador, o NO tiene creatividad técnica.";
 	
 	lg.q1_31__all_biological_machines = "Toda la maquinaria biologica observada en plantas, animales y personas:";

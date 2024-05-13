@@ -522,7 +522,7 @@ export function init_exam_database(){
 			const a1_on = this.answers.r1.is_on;
 			const a2_on = this.answers.r2.is_on;
 			
-			const nxt_topic = "q13_1__";
+			const nxt_topic = "q14_1__";
 			
 			let ck_val = false;
 			if(a0_on){ ck_val = true; }
@@ -563,7 +563,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on(this);
+			const all_on = are_all_on_up_to(this, "r6");
 			if(all_on){ 
 				if(! db.q3_1__.answers.r0.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -592,7 +592,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on(this);
+			const all_on = are_all_on_up_to(this, "r3");
 			if(all_on){ 
 				if(! db.q3_1__.answers.r1.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -624,7 +624,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on(this);
+			const all_on = are_all_on_up_to(this, "r6");
 			if(all_on){ 
 				if(! db.q3_1__.answers.r2.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -655,7 +655,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on(this);
+			const all_on = are_all_on_up_to(this, "r5");
 			if(all_on){ 
 				if(! db.q3_2__.answers.r0.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -686,7 +686,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on(this);
+			const all_on = are_all_on_up_to(this, "r5");
 			if(all_on){ 
 				if(! db.q3_2__.answers.r1.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -718,7 +718,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on(this);
+			const all_on = are_all_on_up_to(this, "r6");
 			if(all_on){ 
 				if(! db.q3_2__.answers.r2.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -770,7 +770,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on(this);
+			const all_on = are_all_on_up_to(this, "r3");
 			if(all_on){ 
 				if(! db.q3_2__.answers.r3.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -792,12 +792,15 @@ export function init_exam_database(){
 		presentation: "q12_1__sleep_sec",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q12_1__go" },
-			r1: { htm_answ: "q12_1__stay" },
+			r0: { htm_answ: "q12_1__verse1_str", rclk_href: "q12_1__verse1_href", should_on: "q12_1__verse1_should", },
+			r1: { htm_answ: "q12_1__verse2_str", rclk_href: "q12_1__verse2_href", should_on: "q12_1__verse2_should", },
+			r2: { htm_answ: "q12_1__verse3_str", rclk_href: "q12_1__verse3_href", should_on: "q12_1__verse3_should", },
+			r3: { htm_answ: "q12_1__verse4_str", rclk_href: "q12_1__verse4_href", should_on: "q12_1__verse4_should", },
+			r4: { htm_answ: "q12_1__verse5_str", rclk_href: "q12_1__verse5_href", should_on: "q12_1__verse5_should", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on(this);
+			const all_on = are_all_on_up_to(this, "r4");
 			if(all_on){ 
 				if(! db.q3_2__.answers.r4.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -814,12 +817,12 @@ export function init_exam_database(){
 		},
 	};
 	
-	db.q13_1__ = { 
-		htm_stm: "q13_1__the_cloth",
-		presentation: "q13_1__the_cloth_sec",
+	db.q14_1__ = { 
+		htm_stm: "q14_1__the_cloth",
+		presentation: "q14_1__the_cloth_sec",
 		answers: {
-			r0: { htm_answ: "q13_1__go" },
-			r1: { htm_answ: "q13_1__stay" },
+			r0: { htm_answ: "q14_1__go" },
+			r1: { htm_answ: "q14_1__stay" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
@@ -867,13 +870,16 @@ function has_all_next(quest){
 	return false;
 }
 
-function are_all_on(quest){
+function are_all_on_up_to(quest, lst_key){
 	if(quest.answers == null){
 		return false;
 	}
 	for (const [aid, an_answ] of Object.entries(quest.answers)) {
 		if(! an_answ.is_on){
 			return false;
+		}
+		if(aid == lst_key){
+			break;
 		}
 	}
 	return true;

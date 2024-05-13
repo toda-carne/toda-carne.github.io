@@ -1,5 +1,5 @@
 
-import { num2abbr, num2book_en, get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids,
+import { num2abbr, num2book_en, get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, is_mobile_browser,
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang } from './tc_lang_all.js';
 	
 import { STARTING_QUESTIONS, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
@@ -1337,22 +1337,6 @@ function add_input_interaction(dv_inter, id_input, label, curr_val){
 	inp_1.size = 5;
 	inp_1.classList.add("exam");
 	inp_1.classList.add("is_inline_input");
-}
-
-function is_mobile_browser() {
-	const m_list = [
-		/Android/i,
-		/webOS/i,
-		/iPhone/i,
-		/iPad/i,
-		/iPod/i,
-		/BlackBerry/i,
-		/Windows Phone/i
-	];
-	
-	return m_list.some((m_item) => {
-		return navigator.userAgent.match(m_item);
-	});
 }
 
 function get_id_pos_array(dv_elem){

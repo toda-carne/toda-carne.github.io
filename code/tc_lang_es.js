@@ -1,5 +1,5 @@
 
-import { init_get_msg, init_all_glb, fill_reversed_object, init_en_module } from '../code/tc_lang_all.js';
+import { init_get_msg, init_all_glb, fill_reversed_object, init_en_module, get_dispute_msg } from '../code/tc_lang_all.js';
 
 "use strict";
 
@@ -122,6 +122,9 @@ function init_es_basic_msg(){
 	obj.msg_todacarne_no_internet = "Sin conexion a internet.";
 
 	obj.msg_change_one_answer = "Cambie una de estas respuestas: ";
+
+	obj.msg_dispute_rclick = "Dispute con clik derecho";
+	obj.msg_dispute_hold_click = "Dispute manteniendo clik";
 	
 	obj.msg_in_favor = "A favor";
 	obj.msg_against = "En contra";
