@@ -404,6 +404,10 @@ const all_bibrefs = {
 	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_all_bibrefs_href gets called
 	gen_15_15_obj: { book: "genesis", chapter: 15, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	gen_15_15_str: `Gen 15:15. but you will go to your fathers in peace. You will be buried at a good old age.`,
+	gen_25_8_obj: { book: "genesis", chapter: 25, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	gen_25_8_str: `Gen 25:8. Abraham gave up his spirit, and died at a good old age, an old man, and full of years, and was gathered to his people.`,
+	gen_35_29_obj: { book: "genesis", chapter: 35, verse: 29, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	gen_35_29_str: `Gen 35:29. Isaac gave up the spirit and died, and was gathered to his people, old and full of days. Esau and Jacob, his sons, buried him.`,
 	job_7_21_obj: { book: "job", chapter: 7, verse: 21, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	job_7_21_str: `Job 7:21. Why do you not pardon my disobedience, and take away my iniquity? For now will I lie down in the dust. You will seek me diligently, but I will not be.`,
 	job_14_12_obj: { book: "job", chapter: 14, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -416,6 +420,8 @@ const all_bibrefs = {
 	ecc_9_10_str: `Ecc 9:10. Whatever your hand finds to do, do it with your might; for there is no work, nor plan, nor knowledge, nor wisdom, in Sheol, where you are going.`,
 	ecc_12_7_obj: { book: "ecclesiastes", chapter: 12, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	ecc_12_7_str: `Ecc 12:7. and the dust returns to the earth as it was, and the spirit returns to God who gave it.`,
+	isa_8_19_obj: { book: "isaiah", chapter: 8, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	isa_8_19_str: `Isa 8:19. When they tell you, “Consult with those who have familiar spirits and with the wizards, who chirp and who mutter,” shouldn’t a people consult with their God? Should they consult the dead on behalf of the living?`,
 	isa_14_10_obj: { book: "isaiah", chapter: 14, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	isa_14_10_str: `Isa 14:10. They all will answer and ask you, "Have you also become as weak as we are? Have you become like us?"`,
 	isa_65_17_obj: { book: "isaiah", chapter: 65, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -504,6 +510,8 @@ const all_bibrefs = {
 	phl_3_21_str: `Phl 3:21. who will change the body of our humiliation to be conformed to the body of his glory, according to the working by which he is able even to subject all things to himself.`,
 	col_1_15_obj: { book: "colossians", chapter: 1, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	col_1_15_str: `Col 1:15. He is the image of the invisible God, the firstborn of all creation.`,
+	_1th_4_14_obj: { book: "1_thessalonians", chapter: 4, verse: 14, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	_1th_4_14_str: `1Th 4:14. For if we believe that Jesus died and rose again, even so God will bring with him those who have fallen asleep in Jesus.`,
 	_1ti_5_6_obj: { book: "1_timothy", chapter: 5, verse: 6, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	_1ti_5_6_str: `1Ti 5:6. But she who gives herself to pleasure is dead while she lives. `,
 	_2ti_2_18_obj: { book: "2_timothy", chapter: 2, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -847,25 +855,21 @@ function init_en_exam_msg(){
 	
 	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleep2_resu}'>Sleep</a>`;
 	lg.q12_1__sleep = `Select all verses that support that dead people HAVE CONSCIOUSNESS before resurrected.`;
-	lg.q12_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_11_11_str, ["asleep,", "awake", ]);
-	lg.q12_1__verse1_href = all_bibrefs.jhn_11_11_href;
-	lg.q12_1__verse1_should = "Lazarous is ASLEEP until he is AWAKEN";
-	lg.q12_1__verse2_str = `In 1 Corinthians 11:30 PEOPLE (not bodies) are sleeping (STILL going on) according to the greek conjugation: κοιμῶνται`;
-	lg.q12_1__verse2_href = "INVALID";
-	lg.q12_1__verse2_should = "They SLEEPING acording to the conjugation of the greek verb";
-	lg.q12_1__verse3_str = uppercase_words_in_string(all_bibrefs.ecc_9_10_str, ["no", "work,", "nor", "plan,", "knowledge,", "wisdom,", "Sheol,", ]);
-	lg.q12_1__verse3_href = all_bibrefs.ecc_9_10_href;
-	lg.q12_1__verse3_should = "WORK, PLAN, KNOWLEDGE, WISDOM. These words specifically refer to actions of CONSCIOUSNESS. A property of living PEOPLE not just bodies made dust.";
-	lg.q12_1__verse4_str = uppercase_words_in_string(all_bibrefs.ecc_12_7_str, ["dust", "returns", "spirit", ]);
-	lg.q12_1__verse4_href = all_bibrefs.ecc_12_7_href;
-	lg.q12_1__verse4_should = "After dead things RETURN as they were. You did NOT have CONSCIOUSNESS before being born.";
-	lg.q12_1__verse5_str = uppercase_words_in_string(all_bibrefs.job_7_21_str, ["not", 'be.', ]);
-	lg.q12_1__verse5_href = all_bibrefs.job_7_21_href;
-	lg.q12_1__verse5_should = "When a person dies it will NOT BE anymore.";
+	lg.q12_1__verse1_str = uppercase_words_in_string(all_bibrefs.isa_14_10_str, ["answer", "ask", "you,", ]);
+	lg.q12_1__verse1_href = all_bibrefs.isa_14_10_href;
+	lg.q12_1__verse2_str = uppercase_words_in_string(all_bibrefs.mat_17_3_str, ["talking", "him.", ]);;
+	lg.q12_1__verse2_href = all_bibrefs.mat_17_3_href;
+	lg.q12_1__verse3_str = uppercase_words_in_string(all_bibrefs.rev_6_10_str, ["cried", "loud", "voice,", "saying,", ]);
+	lg.q12_1__verse3_href = all_bibrefs.rev_6_10_href;
+	lg.q12_1__verse4_str = uppercase_words_in_string(all_bibrefs.heb_12_23_str, ["festal", "gathering", "assembly", ]);
+	lg.q12_1__verse4_href = all_bibrefs.heb_12_23_href;
+	lg.q12_1__verse5_str = uppercase_words_in_string(all_bibrefs.luk_16_24_str, ["cried", "said,", ]);
+	lg.q12_1__verse5_href = all_bibrefs.luk_16_24_href;
 	
 	// isa_14_10_str mat_17_3_str rev_6_10_str heb_12_23_str luk_16_24_str _1pe_3_19_str _2co_5_8_str act_7_59_str luk_20_38_str _2co_12_4_str 
 	// luk_23_43_str _1ti_5_6_str luk_15_24_str 
-	// jhn_4_24_str heb_1_14_str phl_1_23_str psa_16_11_str
+	// jhn_4_24_str heb_1_14_str phl_1_23_str psa_16_11_str 
+	// gen_15_15_str gen_25_8_str gen_35_29_str isa_8_19_str _1th_4_14_str
 	
 	lg.q13_1__sleep = `Select all verses that support that dead people do NOT have CONSCIOUSNESS until resurrected.`;
 	lg.q13_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_11_11_str, ["asleep,", "awake", ]);
