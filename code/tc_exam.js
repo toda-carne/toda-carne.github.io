@@ -985,7 +985,7 @@ function calc_verse_cit_object(dv_citation){
 	return cit_obj;
 }
 
-function get_verse_cit_key(obj){
+export function get_verse_cit_key(obj){
 	const kk = "ver_" + obj.book + "_" + obj.chapter + "_" + obj.verse;
 	if(obj.last_verse != bib_defaults.LAST_VERSE){
 		kk = kk + "_" + obj.last_verse;

@@ -400,7 +400,7 @@ export function make_strong_ref(scode){
 	return bibref;
 }
 
-const all_bibrefs = {
+export const all_bibrefs = {
 	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_all_bibrefs_href gets called
 	gen_15_15_obj: { book: "genesis", chapter: 15, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	gen_15_15_str: `Gen 15:15. but you will go to your fathers in peace. You will be buried at a good old age.`,
@@ -865,6 +865,14 @@ function init_en_exam_msg(){
 	lg.q12_1__verse4_href = all_bibrefs.heb_12_23_href;
 	lg.q12_1__verse5_str = uppercase_words_in_string(all_bibrefs.luk_16_24_str, ["cried", "said,", ]);
 	lg.q12_1__verse5_href = all_bibrefs.luk_16_24_href;
+
+	lg.q12_1__response_to_verse1 = `RESPONSE TO VERSE 1`;
+	lg.q12_1__response_to_verse2 = `RESPONSE TO VERSE 2`;
+	lg.q12_1__response_to_verse3 = `RESPONSE TO VERSE 3`;
+	lg.q12_1__response_to_verse4 = `RESPONSE TO VERSE 4`;
+	lg.q12_1__response_to_verse5 = `RESPONSE TO VERSE 5`;
+	lg.q12_1__response_to_gen_15_15 = `RESPONSE TO VERSE gen_15_15`;
+	lg.q12_1__response_to_gen_25_8 = `RESPONSE TO VERSE gen_25_8`;
 	
 	// isa_14_10_str mat_17_3_str rev_6_10_str heb_12_23_str luk_16_24_str _1pe_3_19_str _2co_5_8_str act_7_59_str luk_20_38_str _2co_12_4_str 
 	// luk_23_43_str _1ti_5_6_str luk_15_24_str 

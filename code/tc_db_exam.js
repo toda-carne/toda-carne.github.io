@@ -1,6 +1,6 @@
 
-import { refs_ids } from './tc_lang_all.js';
-import { init_answers } from './tc_exam.js';
+import { refs_ids, all_bibrefs } from './tc_lang_all.js';
+import { init_answers, get_verse_cit_key } from './tc_exam.js';
 
 "use strict";
 
@@ -786,7 +786,7 @@ export function init_exam_database(){
 			this.all_contra = ["q0_2__", "q11_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
-	
+
 	db.q12_1__ = { 
 		htm_stm: "q12_1__sleep",
 		presentation: "q12_1__sleep_sec",
@@ -803,38 +803,65 @@ export function init_exam_database(){
 			this.all_nxt = [];
 			let bad_on = this.answers.r0.is_on;
 			if(bad_on){ 
-				this.all_nxt = ["q12_2__"];
-				this.all_contra = ["q0_2__", "q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+				this.all_nxt = ["q12_rv1__"];
+				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
 			bad_on = this.answers.r1.is_on;
 			if(bad_on){ 
-				this.all_nxt = ["q12_3__"];
-				this.all_contra = ["q0_2__", "q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+				this.all_nxt = ["q12_rv2__"];
+				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
 			bad_on = this.answers.r2.is_on;
 			if(bad_on){ 
-				this.all_nxt = ["q12_4__"];
-				this.all_contra = ["q0_2__", "q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+				this.all_nxt = ["q12_rv3__"];
+				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
 			bad_on = this.answers.r3.is_on;
 			if(bad_on){ 
-				this.all_nxt = ["q12_5__"];
-				this.all_contra = ["q0_2__", "q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+				this.all_nxt = ["q12_rv4__"];
+				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
 			bad_on = this.answers.r4.is_on;
 			if(bad_on){ 
-				this.all_nxt = ["q12_6__"];
-				this.all_contra = ["q0_2__", "q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+				this.all_nxt = ["q12_rv5__"];
+				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
+			bad_on = false;
+			let key_bad = get_verse_cit_key(all_bibrefs.gen_15_15_obj);
+			let bad_ans = this.answers[key_bad];
+			if(bad_ans != null){ bad_on = bad_ans.is_on; }
+			if(bad_on){ 
+				this.all_nxt = ["q12_rv6__"]; //  
+				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+				return;
+			}
+			bad_on = false;
+			key_bad = get_verse_cit_key(all_bibrefs.gen_25_8_obj);
+			bad_ans = this.answers[key_bad];
+			if(bad_ans != null){ bad_on = bad_ans.is_on; }
+			if(bad_on){ 
+				this.all_nxt = ["q12_rv7__"];
+				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
+				return;
+			}
+			
 			
 			this.all_nxt = ["q13_1__"];
 		},
 	};
+	
+	db.q12_rv1__ = { htm_stm: "q12_1__response_to_verse1", };
+	db.q12_rv2__ = { htm_stm: "q12_1__response_to_verse2", };
+	db.q12_rv3__ = { htm_stm: "q12_1__response_to_verse3", };
+	db.q12_rv4__ = { htm_stm: "q12_1__response_to_verse4", };
+	db.q12_rv5__ = { htm_stm: "q12_1__response_to_verse5", };
+	db.q12_rv6__ = { htm_stm: "q12_1__response_to_gen_15_15", };
+	db.q12_rv7__ = { htm_stm: "q12_1__response_to_gen_25_8", };
 	
 	db.q13_1__ = { 
 		htm_stm: "q13_1__sleep",
