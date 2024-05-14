@@ -356,17 +356,31 @@ function citation_to_en(cit_obj){ // websites use english names for citations
 	return cit_obj;
 }
 
+export function get_book_nam(book){
+	let book_nam =  book; // all_bibrefs references
+	if(isNaN(book)){
+		book_nam =  book;
+	} else {
+		let num = Number(book);
+		book_nam =  num2book_en[num];  // normal references
+	}
+	return book_nam;
+}
+
+export function get_verse_cit_key(cit_obj){
+	const book_nam =  get_book_nam(cit_obj.book);
+	const kk = "ver_" + book_nam + "_" + cit_obj.chapter + "_" + cit_obj.verse;
+	if(cit_obj.last_verse != bib_defaults.LAST_VERSE){
+		kk = kk + "_" + cit_obj.last_verse;
+	}
+	return kk;
+}
+
 //export function make_bible_ref(cit_obj_orig){
 export function make_bible_ref(cit_obj){
 	// https://www.biblegateway.com/passage/?search=exodus+1%3A4-7&version=RVR1960
 	//const cit_obj = citation_to_en(cit_obj_orig); // websites use english names for citations
-	let book_nam =  cit_obj.book; // all_bibrefs references
-	if(isNaN(cit_obj.book)){
-		book_nam =  cit_obj.book;
-	} else {
-		let num = Number(cit_obj.book);
-		book_nam =  num2book_en[num];  // normal references
-	}
+	const book_nam =  get_book_nam(cit_obj.book);
 	//console.log("make_bible_ref. cit_obj= " + JSON.stringify(cit_obj, null, "  ") + "\nbook_nam=" + book_nam);
 	var bibref = null;
 	if(cit_obj.site == "blueletterbible"){

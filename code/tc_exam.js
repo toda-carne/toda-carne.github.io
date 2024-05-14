@@ -1,5 +1,5 @@
 
-import { num2abbr, num2book_en, get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, is_mobile_browser,
+import { get_msg, get_verse_cit_key, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, is_mobile_browser,
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang } from './tc_lang_all.js';
 	
 import { STARTING_QUESTIONS, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
@@ -1003,14 +1003,6 @@ function calc_verse_cit_object(dv_citation){
 	return cit_obj;
 }
 
-export function get_verse_cit_key(obj){
-	const kk = "ver_" + obj.book + "_" + obj.chapter + "_" + obj.verse;
-	if(obj.last_verse != bib_defaults.LAST_VERSE){
-		kk = kk + "_" + obj.last_verse;
-	}
-	return kk;
-}
-
 function add_toggle_side_handler(dv_ok){
 	dv_ok.title = glb_curr_lang.msg_help_cit_ed_ok_right_click;
 	dv_ok.addEventListener('contextmenu', (ev1) => {
@@ -1252,6 +1244,7 @@ function set_answer_for_verse_cit(dv_citation){
 	const quest = db_nodes_exam[qid];
 	quest.answers[kk] = obj_ok;
 	dv_citation.tc_answ_obj = obj_ok;
+	//console.log("QUESTION " + qid + "=" + JSON.stringify(quest, null, "  "));
 }
 
 function remove_answer_for_verse_cit(dv_citation){

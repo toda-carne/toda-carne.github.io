@@ -1,6 +1,6 @@
 
-import { refs_ids, all_bibrefs } from './tc_lang_all.js';
-import { init_answers, get_verse_cit_key } from './tc_exam.js';
+import { get_book_nam, get_verse_cit_key, refs_ids, all_bibrefs } from './tc_lang_all.js';
+import { init_answers } from './tc_exam.js';
 
 "use strict";
 
@@ -831,6 +831,10 @@ export function init_exam_database(){
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
+			
+			// ADDED BY USER
+			const with_response = [all_bibrefs.gen_15_15_obj, all_bibrefs.gen_25_8_obj];
+			
 			bad_on = false;
 			let key_bad = get_verse_cit_key(all_bibrefs.gen_15_15_obj);
 			let bad_ans = this.answers[key_bad];
@@ -840,6 +844,7 @@ export function init_exam_database(){
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
+			
 			bad_on = false;
 			key_bad = get_verse_cit_key(all_bibrefs.gen_25_8_obj);
 			bad_ans = this.answers[key_bad];
@@ -961,4 +966,21 @@ function are_all_on_up_to(quest, lst_key){
 		}
 	}
 	return true;
+}
+
+function get_matches(quest, lst_key, with_resp){
+	const all_matches = {};
+	if(quest.answers == null){
+		return all_matches;
+	}
+	const all_ranges = {};
+	let to_skip = true;
+	for (const [aid, an_answ] of Object.entries(quest.answers)) {
+		if(to_skip){
+			if(aid == lst_key){ to_skip = false; }
+			continue;
+		}
+		//const book_nam = get_book_nam(an_answ.book);
+		//all_ranges[
+	}
 }
