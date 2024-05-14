@@ -224,6 +224,7 @@ function init_en_basic_msg(){
 	obj.msg_add_verse = "ADD VERSE";
 	obj.msg_add_strong = "ADD STRONG CODE";
 	obj.msg_add_link = "ADD WEB LINK";
+	obj.msg_end_edit = "END EDIT";
 	
 	obj.msg_def_book = "BOOK";
 	obj.msg_def_strong = "STRONG_CODE";
@@ -288,6 +289,19 @@ export function get_dispute_msg() {
 	return glb_curr_lang.msg_dispute_rclick;
 }
 
+function fill_all_strongrefs_href(){
+	for (const [key, value] of Object.entries(all_strongrefs)) {
+		const ob_sufx = "_cod";
+		if(key.endsWith(ob_sufx)){
+			const prefx = key.slice(0, key.length - ob_sufx.length);
+			const href_attr = prefx + "_href";
+			const href_val = make_strong_ref(value);
+			all_strongrefs[href_attr] = href_val;
+			//console.log(`${href_attr} = ${href_val}`);
+		}
+	}  	
+}
+
 function fill_all_bibrefs_href(){
 	for (const [key, value] of Object.entries(all_bibrefs)) {
 		const ob_sufx = "_obj";
@@ -314,6 +328,7 @@ export function init_en_module(){
 	fill_reversed_object(num2abbr, abbr2num);
 	
 	fill_all_bibrefs_href();
+	fill_all_strongrefs_href();
 
 	init_en_exam_msg();
 }
@@ -400,6 +415,11 @@ export function make_strong_ref(scode){
 	return bibref;
 }
 
+export const all_strongrefs = {
+	H1004_cod: "H1004",
+	H5782_cod: "H5782",
+}
+
 export const all_bibrefs = {
 	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_all_bibrefs_href gets called
 	gen_15_15_obj: { book: "genesis", chapter: 15, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -422,14 +442,20 @@ export const all_bibrefs = {
 	ecc_12_7_str: `Ecc 12:7. and the dust returns to the earth as it was, and the spirit returns to God who gave it.`,
 	isa_8_19_obj: { book: "isaiah", chapter: 8, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	isa_8_19_str: `Isa 8:19. When they tell you, “Consult with those who have familiar spirits and with the wizards, who chirp and who mutter,” shouldn’t a people consult with their God? Should they consult the dead on behalf of the living?`,
+	isa_14_7_obj: { book: "isaiah", chapter: 14, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	isa_14_8_obj: { book: "isaiah", chapter: 14, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	isa_14_9_txt_obj: { book: "isaiah", chapter: 14, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", },
 	isa_14_10_obj: { book: "isaiah", chapter: 14, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	isa_14_10_str: `Isa 14:10. They all will answer and ask you, "Have you also become as weak as we are? Have you become like us?"`,
+	isa_14_12_obj: { book: "isaiah", chapter: 14, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
+	isa_14_18_txt_obj: { book: "isaiah", chapter: 14, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", },
 	isa_65_17_obj: { book: "isaiah", chapter: 65, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	isa_65_17_str: `Isa 65:17. For, behold, I create new heavens and a new earth; and the former things will not be remembered, nor come into mind.`,
 	isa_66_22_obj: { book: "isaiah", chapter: 66, verse: 22, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	isa_66_22_str: `Isa 66:22. "For as the new heavens and the new earth, which I will make, shall remain before me," says Yahweh, "so your offspring and your name shall remain."`,
 	mat_17_3_obj: { book: "matthew", chapter: 17, verse: 3, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	mat_17_3_str: `Mat 17:3. Behold, Moses and Elijah appeared to them talking with him.`,
+	mat_17_4_obj: { book: "matthew", chapter: 17, verse: 4, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	mat_26_64_obj: { book: "matthew", chapter: 26, verse: 64, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	mat_26_64_str: `Mat 26:64. Jesus said to him, "You have said so. Nevertheless, I tell you, after this you will see the Son of Man sitting at the right hand of Power, and coming on the clouds of the sky."`,
 	mat_28_9_obj: { book: "matthew", chapter: 28, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -558,7 +584,6 @@ function init_en_exam_msg(){
 	const href_creator_tit = "../en/book.html#creator_DOT_";
 	const href_tch_crea = "../en/book.html#technical-creativity_DOT_";
 	const href_tch_cplx = "../en/book.html#technical-complexity_DOT_";
-	const href_factories = "../en/book.html#factories_DOT_";
 	const href_biology = "../en/book.html#biology_DOT_";
 	const href_creator = "../en/book.html#creator_DOT_-1";
 	const href_evidence = "../en/book.html#evidence_DOT_";
@@ -576,8 +601,12 @@ function init_en_exam_msg(){
 	const href_only_few_resu = "../en/book.html#has-not-happened_DOT_";
 	const href_new_earth_resu = "../en/book.html#a-new-earth_DOT_";
 	const href_sleep_resu = "../en/book.html#asleep_DOT_";
-	const href_sleep2_resu = "../en/book.html#sleeping_DOT_";
 	const href_the_cloth = "../en/book.html#the-cloth_DOT_";
+	const href_sleep2_resu = "../en/book.html#sleeping_DOT_";
+	const href_rich_and_laza = "../en/book.html#the-rich-and-the-poor-lazarus_DOT_";
+	const href_144000 = "../en/book.html#section";
+	const href_eternal_abhorrence = "../en/book.html#eternal-abhorrence_DOT_";
+	const href_factories = "../en/book.html#factories_DOT_";
 	
 	const lg = all_en_msg;
 	lg.q0_1__end_of_test = "These questions are not for you. This is the end of the questions for you, unless you did not really mean it and change your answer. Click on your answer to change it.";
@@ -866,11 +895,43 @@ function init_en_exam_msg(){
 	lg.q12_1__verse5_str = uppercase_words_in_string(all_bibrefs.luk_16_24_str, ["cried", "said,", ]);
 	lg.q12_1__verse5_href = all_bibrefs.luk_16_24_href;
 
-	lg.q12_1__response_to_verse1 = `RESPONSE TO VERSE 1`;
-	lg.q12_1__response_to_verse2 = `RESPONSE TO VERSE 2`;
-	lg.q12_1__response_to_verse3 = `RESPONSE TO VERSE 3`;
-	lg.q12_1__response_to_verse4 = `RESPONSE TO VERSE 4`;
-	lg.q12_1__response_to_verse5 = `RESPONSE TO VERSE 5`;
+	const q12_1__response_INTRO = `<p> This is a commonly cited verse as objection to SPIRIT (NOT soul) <a class='exam_ref' href='${href_sleep2_resu}'>sleep</a>.</p>
+	<p> When arguing against SPIRIT <a class='exam_ref' href='${href_sleep2_resu}'>sleep</a> always remember that the whole bible refers to the dead as <a class='exam_ref' href='${href_sleep2_resu}'>SLEEP</a>, specially our Lord Jesus Christ. The reason is obvious: NO <a class='exam_ref' href='${href_sleep2_resu}'>sleeping</a> person has CONSCIUOSNESS. That is the most prominent characteristic of a <a class='exam_ref' href='${href_sleep2_resu}'>sleeping</a> person. Please read the section introducing the biblical concept of SPIRIT <a class='exam_ref' href='${href_sleep2_resu}'>sleep</a>. </p>`;
+	
+	lg.q12_1__response_to_verse1 = `<a class='exam_ref' href=${all_bibrefs.isa_14_10_href}>Isa 14:10</a> ${q12_1__response_INTRO}
+	<p> This verse refers to a literal future time or an spiritual one that happend as reafirmation of the literal case. The king of Babilon represents The Satan, that is why <a class='exam_ref' href=${all_bibrefs.isa_14_12_href}>verse 12</a> is commonly cited to refer to The Satan. </p>
+	<p>Note that:</p> 
+	<li> <a class='exam_ref' href=${all_bibrefs.isa_14_8_href}>Verse 8</a> says: Yes, the cypress trees rejoice with you, with the cedars of Lebanon, saying, "Since you are humbled, no lumberjack has come up against us". So for the spiritual case it is a metaphor and the literal case has not nappened yet because <a class='exam_ref' href=${all_bibrefs.isa_14_7_href}>verse 7</a> has NOT happened literally: "The whole earth is at rest, and is quiet". 
+	<li> <a class='exam_ref' href=${all_bibrefs.isa_14_9_txt_href}>Verse 9</a> shows that the literal case implies that the dead have AWAKEN (word <a class='exam_ref' href=${all_strongrefs.H5782_href}>H5782</a>) which has NOT happend either because the resurrection of the dead has not happend. 
+	<li> <a class='exam_ref' href=${all_bibrefs.isa_14_18_txt_href}>Verse 18</a> tell us that each king is in his own HOUSE (word <a class='exam_ref' href=${all_strongrefs.H1004_href}>H1004</a>). For the literal case they have been resurrected. 
+	<p> So this verse <b>DOES NOT REFER</b> to the dead having CONSCIOUSNESS.</p>`;
+	
+	
+	lg.q12_1__response_to_verse2 = `<a class='exam_ref' href=${all_bibrefs.mat_17_3_href}>Mat 17:3</a> ${q12_1__response_INTRO}
+	<p>It is also recommended that you have at least read the section introducing the biblical concept of <a class='exam_ref' href='${href_resurrection}'>Resurrection</a> and in particular the fact that <a class='exam_ref' href='${href_not_yet_resu}'>It has not happend</a>.</p>
+	<p> The most important thing to note about this verse is that they were physically present, they all have BODIES, and that is why Peter, in <a class='exam_ref' href=${all_bibrefs.mat_17_4_href}>verse 4</a>, offers to build three tents. Two tents for Moses and Elijah and one for Our Lord. They where in the Jewish festival of Sukkot. The feast of Tabernacles. Very appropiate signal to show that these "tabernacles" are going to be replaced by permanent "houses". </p>
+	<p> So this verse <b>DOES NOT REFER</b> to the dead having CONSCIOUSNESS.</p>
+	`;
+	
+	const q12_1__response_144000 = `<p>This verse refers to the 144.000. Please read the section <a class='exam_ref' href='${href_144000}'>144.000</a> of the completely FREE book TodaCarne.com.	Another section that could help is the one called <a class='exam_ref' href='${href_eternal_abhorrence}'>Eternal Abhorrence</a>.</p>
+	<p> The most important thing to note about this verse is that it refers to people that have been resurrected. The Saints. The Great ones. The first fruits. The firstborn. They are a FEW: 144.000 male genetic descendants of Israel when completed. They all have BODIES, and that is why they can actually CRY, SPEAK, GATHER and ASSEMBLY.</p>
+	<p> So this verse <b>DOES NOT REFER</b> to the dead having CONSCIOUSNESS.</p>`;
+	
+	
+	lg.q12_1__response_to_verse3 = `<a class='exam_ref' href=${all_bibrefs.rev_6_10_href}>Rev 6:10</a> ${q12_1__response_INTRO} 
+	${q12_1__response_144000}`;
+	
+	
+	lg.q12_1__response_to_verse4 = `<a class='exam_ref' href=${all_bibrefs.heb_12_23_href}>Heb 12:23</a> ${q12_1__response_INTRO} 
+	${q12_1__response_144000}`;
+	
+	
+	lg.q12_1__response_to_verse5 = `<a class='exam_ref' href=${all_bibrefs.luk_16_24_href}>Luk 16:24</a> ${q12_1__response_INTRO}
+	<p>This verse is part of the famous PARABLE in Luke. Please read the section called <a class='exam_ref' href='${href_rich_and_laza}'>The rich and the poor Lazarus.</a> of the completely FREE book TodaCarne.com.</p>
+	<p> The most important thing to note about this verse is that it part of a PARABLE. So please read the correct <a class='exam_ref' href='${href_rich_and_laza}'>INTERPRETATION</a>.</p>
+	<p> So this verse <b>DOES NOT REFER</b> to the dead having CONSCIOUSNESS.</p>
+	`;
+	
 	lg.q12_1__response_to_gen_15_15 = `RESPONSE TO VERSE gen_15_15`;
 	lg.q12_1__response_to_gen_25_8 = `RESPONSE TO VERSE gen_25_8`;
 	

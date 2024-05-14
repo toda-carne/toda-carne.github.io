@@ -61,6 +61,7 @@ const SUF_ID_INTER = "_inter";
 const SUF_ID_ANSWERS = "_answers";
 const SUF_ID_SCODES = "_scodes";
 const SUF_ID_LINKS = "_links";
+const SUF_ID_END_ANS = "_end_all_ans";
 
 const SUF_ID_LAST_ADDED_CITATION = "_last_added_citation";
 const SUF_ID_LAST_ADDED_STRONG = "_last_added_strong";
@@ -217,7 +218,7 @@ function add_question(qid){
 	}
 
 	init_answers(qid);
-	
+
 	if(! is_in_viewport(dv_stm)){
 		dv_stm.scrollIntoView({
 			behavior: 'auto',
@@ -315,9 +316,18 @@ export function init_answers(qid){
 	}
 	//});
 	
+	const id_dv_end_ans = qid + SUF_ID_END_ANS;
+	let dv_end_ans = document.getElementById(id_dv_end_ans);
+	if(dv_end_ans == null){
+		dv_end_ans = dv_quest.appendChild(document.createElement("div"));
+		dv_end_ans.id = id_dv_end_ans;
+		dv_end_ans.classList.add("exam");
+		dv_end_ans.classList.add("is_block");
+	}
+	dv_end_ans.innerHTML = "";
 	if(quest.is_multi && is_init_to_answer){
 		if(all_answ.length > MIN_ANSW_SHOW_INVERT){
-			const dv_invert = dv_answers.appendChild(document.createElement("div"));
+			const dv_invert = dv_end_ans.appendChild(document.createElement("div"));
 			dv_invert.classList.add("exam");
 			dv_invert.classList.add("is_button");
 			dv_invert.innerHTML = glb_curr_lang.msg_invert_ans;
@@ -326,7 +336,7 @@ export function init_answers(qid){
 				init_answers(qid);
 			});
 		}
-		const dv_end = dv_answers.appendChild(document.createElement("div"));
+		const dv_end = dv_end_ans.appendChild(document.createElement("div"));
 		dv_end.classList.add("exam");
 		dv_end.classList.add("is_button");
 		dv_end.innerHTML = glb_curr_lang.msg_end_ans;
@@ -468,10 +478,6 @@ function remove_all_children_descendants(qid){
 
 function end_question(qid){
 	const quest = db_nodes_exam[qid];
-	/*if(quest.parent != null){
-		remove_all_children_descendants(quest.parent);
-	}*/
-	
 	if(quest.set_reactions != null){
 		//console.log("BEFORE set_reactions = " + quest.all_nxt);
 		quest.set_reactions();
@@ -700,27 +706,6 @@ function toggle_support_interaction(qid, support_suf){
 
 	dv_support.classList.add("ed_support");	
 	
-	const dv_ok = dv_inter.appendChild(document.createElement("div"));
-	dv_ok.classList.add("exam");
-	dv_ok.classList.add("is_block");
-	dv_ok.classList.add("is_button");
-	dv_ok.innerHTML = glb_curr_lang.msg_ok;
-	dv_ok.addEventListener('click', function() {
-		dv_support.classList.remove("ed_support");
-		dv_inter.remove();
-		remove_all_ed(qid);
-
-		if(! is_in_viewport(dv_inter)){
-			dv_inter.scrollIntoView({
-				behavior: 'auto',
-				block: 'start',
-				inline: 'center'
-			});	
-		}
-		
-		return;
-	});    
-	
 	const dv_add_cit = dv_inter.appendChild(document.createElement("div"));
 	dv_add_cit.classList.add("exam");
 	dv_add_cit.classList.add("is_block");
@@ -763,6 +748,32 @@ function toggle_support_interaction(qid, support_suf){
 		return;
 	});
 	
+	const dv_ok = dv_inter.appendChild(document.createElement("div"));
+	dv_ok.classList.add("exam");
+	dv_ok.classList.add("is_block");
+	dv_ok.classList.add("is_button");
+	dv_ok.innerHTML = glb_curr_lang.msg_end_edit;
+	dv_ok.addEventListener('click', function() {
+		dv_support.classList.remove("ed_support");
+		dv_inter.remove();
+		remove_all_ed(qid);
+		const quest = db_nodes_exam[qid];
+		if(quest.has_answ && has_citations(dv_support)){
+			quest.has_answ = null;
+			init_answers(qid);
+		}
+
+		if(! is_in_viewport(dv_inter)){
+			dv_inter.scrollIntoView({
+				behavior: 'auto',
+				block: 'start',
+				inline: 'center'
+			});	
+		}
+		
+		return;
+	});    
+	
 	if(! is_in_viewport(dv_inter)){
 		dv_inter.scrollIntoView({
 			behavior: 'auto',
@@ -773,6 +784,13 @@ function toggle_support_interaction(qid, support_suf){
 	
 }
 
+function has_citations(dv_support){
+	const chd = dv_support.lastChild;
+	if(chd == null){ return false; }
+	const ans = chd.tc_answ_obj;
+	if(ans == null){ return false; }
+	return (ans.kind != null);
+}
 
 function toggle_pos_interaction(qid){
 	const dv_quest = document.getElementById(qid);
@@ -844,10 +862,10 @@ function is_last_added_verse_cit_ok(qid){
 		return true;
 	}
 	if(dv_last_cit != null){
-		var chls = dv_last_cit.childNodes;
-		var ck1 = (chls[VRS_BOOK_IDX].innerHTML != DEFAULT_BOOK);
-		var ck2 = (chls[VRS_CHAPTER_IDX].innerHTML != DEFAULT_CHAPTER);
-		var ck3 = (chls[VRS_VERSE_IDX].innerHTML != DEFAULT_VERSE);
+		const chls = dv_last_cit.childNodes;
+		const ck1 = (chls[VRS_BOOK_IDX].innerHTML != DEFAULT_BOOK);
+		const ck2 = (chls[VRS_CHAPTER_IDX].innerHTML != DEFAULT_CHAPTER);
+		const ck3 = (chls[VRS_VERSE_IDX].innerHTML != DEFAULT_VERSE);
 		if(ck1 && ck2 && ck3){ 
 			dv_last_cit.removeAttribute('id');  // ONLY ONE LAST ADDED
 			return true;		

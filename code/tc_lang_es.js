@@ -103,6 +103,7 @@ function init_es_basic_msg(){
 	obj.msg_add_verse = "AGREGAR VERSICULO";
 	obj.msg_add_strong = "AGREGAR CODIGO STRONG";
 	obj.msg_add_link = "AGREGAR ENLACE WEB";
+	obj.msg_end_edit = "TERMINAR EDICION";
 	
 	obj.msg_def_book = "LIBRO";
 	obj.msg_def_strong = "CODIGO STRONG";

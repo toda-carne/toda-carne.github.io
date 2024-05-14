@@ -770,7 +770,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on_up_to(this, "r3");
+			const all_on = are_all_on_up_to(this, null);
 			if(all_on){ 
 				if(! db.q3_2__.answers.r3.is_on){
 					this.all_nxt = ["q0_2__"];
