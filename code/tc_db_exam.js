@@ -1,5 +1,5 @@
 
-import { get_book_nam, get_verse_cit_key, refs_ids, all_bibrefs } from './tc_lang_all.js';
+import { get_book_nam, refs_ids, all_bibrefs } from './tc_lang_all.js';
 import { init_answers } from './tc_exam.js';
 
 "use strict";
@@ -1029,6 +1029,8 @@ function val_in_range(val, range){
 }
 
 function cit_in_range(cit_obj, range){
+	//console.log("cit_in_range. cit_obj=" + JSON.stringify(cit_obj, null, "  "));
+	//console.log("cit_in_range. range=" + JSON.stringify(range, null, "  "));
 	return (val_in_range(cit_obj.verse, range) || val_in_range(cit_obj.last_verse, range));
 }
 

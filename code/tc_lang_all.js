@@ -186,6 +186,7 @@ export const bib_defaults = {
 export const refs_ids = {
 	in_favor_side: "_in_favor",
 	against_side: "_against",
+	added_pfx: "added_",
 	verse_kind: "vrs_kind",
 	strong_kind: "stg_kind",
 	ling_kind: "lnk_kind",
