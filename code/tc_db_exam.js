@@ -563,7 +563,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on_up_to(this, "r6");
+			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
 				if(! db.q3_1__.answers.r0.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -592,7 +592,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on_up_to(this, "r3");
+			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
 				if(! db.q3_1__.answers.r1.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -624,7 +624,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on_up_to(this, "r6");
+			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
 				if(! db.q3_1__.answers.r2.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -655,7 +655,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on_up_to(this, "r5");
+			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
 				if(! db.q3_2__.answers.r0.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -686,7 +686,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on_up_to(this, "r5");
+			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
 				if(! db.q3_2__.answers.r1.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -718,7 +718,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on_up_to(this, "r6");
+			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
 				if(! db.q3_2__.answers.r2.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -770,7 +770,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on_up_to(this, null);
+			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
 				if(! db.q3_2__.answers.r3.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -833,29 +833,32 @@ export function init_exam_database(){
 			}
 			
 			// ADDED BY USER
-			const with_response = [all_bibrefs.gen_15_15_obj, all_bibrefs.gen_25_8_obj];
+			const by_kind = get_added_by_kind(this);
+			//console.log("by_kind=" + JSON.stringify(by_kind, null, "  "));
 			
-			bad_on = false;
-			let key_bad = get_verse_cit_key(all_bibrefs.gen_15_15_obj);
-			let bad_ans = this.answers[key_bad];
-			if(bad_ans != null){ bad_on = bad_ans.is_on; }
-			if(bad_on){ 
+			const with_response = [all_bibrefs.gen_15_15_obj, all_bibrefs.gen_25_8_obj];
+			const all_matches = get_verse_matches(by_kind[refs_ids.verse_kind], with_response);
+			//console.log("get_verse_matches. all_matches=" + JSON.stringify(all_matches, null, "  "));
+			
+			if(all_matches.length == 0){
+				this.all_nxt = ["q13_1__"];
+				return;
+			}
+			
+			const fst_match = all_matches[0];
+			
+			if(fst_match == all_bibrefs.gen_15_15_obj){ 
 				this.all_nxt = ["q12_rv6__"]; //  
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
 			
-			bad_on = false;
-			key_bad = get_verse_cit_key(all_bibrefs.gen_25_8_obj);
-			bad_ans = this.answers[key_bad];
-			if(bad_ans != null){ bad_on = bad_ans.is_on; }
-			if(bad_on){ 
+			if(fst_match == all_bibrefs.gen_25_8_obj){ 
 				this.all_nxt = ["q12_rv7__"];
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
-			
-			
+					
 			this.all_nxt = ["q13_1__"];
 		},
 	};
@@ -883,7 +886,7 @@ export function init_exam_database(){
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
-			const all_on = are_all_on_up_to(this, "r7");
+			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
 				if(! db.q3_2__.answers.r4.is_on){
 					this.all_nxt = ["q0_2__"];
@@ -941,6 +944,7 @@ function set_all_on(quest){
 		return;
 	}
 	for (const [aid, an_answ] of Object.entries(quest.answers)) {
+		if(an_answ == null){ continue; }
 		an_answ.is_on = true;
 	}
 }
@@ -953,34 +957,97 @@ function has_all_next(quest){
 	return false;
 }
 
-function are_all_on_up_to(quest, lst_key){
-	if(quest.answers == null){
-		return false;
-	}
+function get_all_on(quest){
+	const all_on = [0, [], 0, []];
 	for (const [aid, an_answ] of Object.entries(quest.answers)) {
-		if(! an_answ.is_on){
-			return false;
+		if(an_answ == null){ continue; }
+		const is_orig = (an_answ.kind == null);
+		if(is_orig){ 
+			all_on[0]++;
+		} else {
+			all_on[2]++;
 		}
-		if(aid == lst_key){
-			break;
+		if(! an_answ.is_on){ continue; }
+		if(is_orig){ 
+			all_on[1].push(an_answ);		
+		} else {
+			all_on[3].push(an_answ);		
 		}
 	}
-	return true;
+	return all_on;
 }
 
-function get_matches(quest, lst_key, with_resp){
-	const all_matches = {};
+function are_only_all_orig_on(quest){
 	if(quest.answers == null){
-		return all_matches;
+		return true;
 	}
-	const all_ranges = {};
+	const all_on = get_all_on(quest);
+	return ((all_on[0] == all_on[1].length) && (all_on[3].length == 0));
+}
+
+function get_range(cit_obj){
+	const book_nam = get_book_nam(cit_obj.book);
+	const range = [cit_obj.verse, cit_obj.verse];
+	if(cit_obj.last_verse > cit_obj.verse){
+		range[1] = cit_obj.last_verse;
+	}
+	return range;
+}
+
+function has_added_on(by_kind){
+	return (Object.entries(by_kind).length == 0);
+}
+
+function get_added_by_kind(quest){
+	const by_kind = {};
 	let to_skip = true;
 	for (const [aid, an_answ] of Object.entries(quest.answers)) {
-		if(to_skip){
-			if(aid == lst_key){ to_skip = false; }
-			continue;
+		if(an_answ == null){ continue; }
+		if(! an_answ.is_on){ continue; }
+		if(an_answ.kind == null){ continue; }
+		if(by_kind[an_answ.kind] == null){ by_kind[an_answ.kind] = {}; }
+		const in_kind = by_kind[an_answ.kind];
+		if(an_answ.kind == refs_ids.verse_kind){
+			const cit_obj = an_answ;
+			//console.log("by_kind. cit_obj=" + JSON.stringify(cit_obj, null, "  "));
+			const book_nam = get_book_nam(cit_obj.book);
+			//console.log("by_kind. book_nam=" + book_nam);
+			if(in_kind[book_nam] == null){ in_kind[book_nam] = {}; }
+			const in_book = in_kind[book_nam];
+			if(in_book[cit_obj.chapter] == null){ in_book[cit_obj.chapter] = []; }
+			const in_chapter = in_book[cit_obj.chapter];
+			in_chapter.push(cit_obj);
 		}
-		//const book_nam = get_book_nam(an_answ.book);
-		//all_ranges[
+		if(an_answ.kind == refs_ids.strong_kind){
+		}
 	}
+	return by_kind;
+}
+
+function val_in_range(val, range){
+	return ((val >= range[0]) || (val <= range[1]));
+}
+
+function cit_in_range(cit_obj, range){
+	return (val_in_range(cit_obj.verse, range) || val_in_range(cit_obj.last_verse, range));
+}
+
+function get_verse_matches(in_verse_kind, with_resp){
+	const all_matches = [];
+	if(in_verse_kind == null){
+		return all_matches;
+	}
+	with_resp.forEach((cit_obj) => {
+		const book_nam = get_book_nam(cit_obj.book);
+		if(in_verse_kind[book_nam] == null){ return; } // continue
+		const in_chapter = in_verse_kind[book_nam][cit_obj.chapter];
+		if(in_chapter == null){ return; } // continue
+		in_chapter.forEach((cit_added) => {
+			const range = get_range(cit_added);
+			if(cit_in_range(cit_obj, range)){
+				all_matches.push(cit_obj);
+			}
+		});
+	});
+	return all_matches;
 }
