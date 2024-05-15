@@ -935,19 +935,25 @@ function add_verse_cit(qid, verse_obj){
 	} else {
 		dv_verse.innerHTML = verse_obj.verse;
 	}
+	
+	const has_last = ((verse_obj != null) && (verse_obj.last_verse != DEFAULT_LAST_VERSE));
 
 	const sep2 = dv_citation.appendChild(document.createElement("div"));
 	sep2.classList.add("exam");
 	sep2.classList.add("is_citation_item");
-	sep2.classList.add("is_hidden");
+	if(! has_last){
+		sep2.classList.add("is_hidden");
+	}
 	sep2.innerHTML = " - ";
 	
 	const dv_last_verse = dv_citation.appendChild(document.createElement("div"));
 	dv_last_verse.classList.add("exam");
 	dv_last_verse.classList.add("is_citation_item");
-	dv_last_verse.classList.add("is_hidden");
+	if(! has_last){
+		dv_last_verse.classList.add("is_hidden");
+	}
 	if(verse_obj == null){
-		dv_last_verse.innerHTML = DEFAULT_VERSE;
+		dv_last_verse.innerHTML = DEFAULT_LAST_VERSE;
 	} else {
 		dv_last_verse.innerHTML = verse_obj.last_verse;
 	}
@@ -1041,6 +1047,7 @@ function set_answer_cit(dv_citation, cit_obj){
 	const kk = refs_ids.added_pfx + dv_citation.answ_idx;
 	quest.answers[kk] = cit_obj;
 	dv_citation.tc_answ_obj = cit_obj;
+	console.log("QUESTION " + qid + "=" + JSON.stringify(quest, null, "  "));
 }
 
 function remove_answer_cit(dv_citation){
@@ -1109,8 +1116,8 @@ function toggle_verse_ed(dv_citation){
 	inp_last_verse.classList.add("is_ed_verse");
 	
 	if(cit_obj.last_verse == DEFAULT_LAST_VERSE){
-		sep2.classList.toggle("is_hidden");
-		inp_last_verse.classList.toggle("is_hidden");
+		sep2.classList.add("is_hidden");
+		inp_last_verse.classList.add("is_hidden");
 	}
 
 	inp_verse.addEventListener('contextmenu', (ev1) => {
@@ -1262,7 +1269,6 @@ function toggle_verse_ed(dv_citation){
 function set_answer_for_verse_cit(dv_citation){
 	const obj_ok = calc_verse_cit_object(dv_citation);
 	set_answer_cit(dv_citation, obj_ok);
-	//console.log("QUESTION " + qid + "=" + JSON.stringify(quest, null, "  "));
 }
 
 function get_new_dv_under(dv_pop_up, id_dv){
