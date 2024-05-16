@@ -13,7 +13,9 @@ export let db_nodes_exam = {};
 
 export function init_exam_database(){
 	db_nodes_exam = {};
+	
 	const db = db_nodes_exam;
+	const rf = all_bibrefs;
 
 	db.q0_1__ = { 
 		htm_stm: "q0_1__end_of_test",
@@ -788,8 +790,10 @@ export function init_exam_database(){
 			this.all_contra = ["q0_2__", "q11_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
-	
-	const all_q12_1__with_response = [all_bibrefs.gen_15_15_obj, all_bibrefs.gen_25_8_obj, all_bibrefs._1pe_3_19_obj, all_bibrefs._2co_5_8_obj];
+
+	const all_q12_1__with_response = [rf.gen_15_15_obj, rf.gen_25_8_obj, rf._1pe_3_19_obj, rf._2co_5_8_obj, rf.act_7_59_obj, rf.luk_20_38_obj, rf._2co_12_4_obj, rf.luk_23_43_obj, rf._1ti_5_6_obj, rf.luk_15_24_obj, rf.jhn_4_24_obj, rf.heb_1_14_obj, rf.phl_1_23_obj, rf.psa_16_11_obj, 
+	rf.isa_8_19_obj, rf._1th_4_14_obj, 
+	];
 	add_reponse_questions(db, "q12_1__", all_q12_1__with_response);
 
 	db.q12_1__ = { 
