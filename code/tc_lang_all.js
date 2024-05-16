@@ -970,12 +970,18 @@ function init_en_exam_msg(){
 	rnam = get_verse_reponse_name("q12_1__", all_bibrefs._1pe_3_19_obj);
 	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs._1pe_3_19_href}>1Pe 3:19</a> ${q12_1__response_INTRO}
 	<p> This verse refers to spiritually dead people. Please read the sections called <a class='exam_ref' href='${href_life}'>Life</a>, <a class='exam_ref' href='${href_death}'>Death</a>, and <a class='exam_ref' href='${href_liberator}'>Liberator</a> of the completely FREE book TodaCarne.com.</p> 
-	<p> The most importatn thing to note in this verse and its context is that ALL people are DEAD without Jesus Christ who is LIFE itself. So the verse refers to people PHISICALLY alive but spiritually dead. </p>.
+	<p> The most importatn thing to note in this verse and its context is that ALL people are DEAD without Jesus Christ who is LIFE itself. So the verse refers to people PHISICALLY alive but spiritually dead.</p>
 	<p> The second thing is that nowhere in the verse or its context appears the word for greek Hades, the hebrew Sheol, the place where the dead go. This passage is NOT talking about PHISICALLY dead people. It is about spiritually dead people and they were all dead when Jesus died and resurrected. </p>
 	<p> So this verse <b>DOES NOT REFER</b> to the dead having CONSCIOUSNESS.</p>
 	`;
 	
-	// _1pe_3_19_str _2co_5_8_str act_7_59_str luk_20_38_str _2co_12_4_str 
+	rnam = get_verse_reponse_name("q12_1__", all_bibrefs._2co_5_8_obj);
+	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs._2co_5_8_href}>2Co 5:8</a> ${q12_1__response_INTRO}
+	<p> Nowhere in the context or in the verse is there any thing remote that refers to CONSCIOUSNESS of dead people. It is really remarkable how the greek culture has affected the hebrew teachings of the hebrew scriptures. Ofcourse any believer in the RESURRECTION of Jesus Christ prefers to be absent of this body and when RESURRECTED be present with the Lord. He is after all RESURRECTED in BODY and SPIRIT so the ONLY way to be PRESENT with Him is to be ALSO RESURRECTED.</p>
+	<p> So this verse <b>DOES NOT REFER</b> to the dead having CONSCIOUSNESS.</p>
+	`;
+	
+	// act_7_59_str luk_20_38_str _2co_12_4_str 
 	// luk_23_43_str _1ti_5_6_str luk_15_24_str 
 	// jhn_4_24_str heb_1_14_str phl_1_23_str psa_16_11_str 
 	// isa_8_19_str _1th_4_14_str

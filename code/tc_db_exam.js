@@ -789,7 +789,7 @@ export function init_exam_database(){
 		},
 	};
 	
-	const all_q12_1__with_response = [all_bibrefs.gen_15_15_obj, all_bibrefs.gen_25_8_obj, all_bibrefs._1pe_3_19_obj];
+	const all_q12_1__with_response = [all_bibrefs.gen_15_15_obj, all_bibrefs.gen_25_8_obj, all_bibrefs._1pe_3_19_obj, all_bibrefs._2co_5_8_obj];
 	add_reponse_questions(db, "q12_1__", all_q12_1__with_response);
 
 	db.q12_1__ = { 
