@@ -595,6 +595,7 @@ export const all_bibrefs = {
 
 function init_en_exam_msg(){
 	let bibref = {};
+	let rnam = null;
 	
 	const href_creator_tit = "../en/book.html#creator_DOT_";
 	const href_tch_crea = "../en/book.html#technical-creativity_DOT_";
@@ -615,9 +616,12 @@ function init_en_exam_msg(){
 	const href_not_yet_resu = "../en/book.html#has-not-happened_DOT_";
 	const href_only_few_resu = "../en/book.html#has-not-happened_DOT_";
 	const href_new_earth_resu = "../en/book.html#a-new-earth_DOT_";
-	const href_sleep_resu = "../en/book.html#asleep_DOT_";
+	const href_asleep = "../en/book.html#asleep_DOT_";
 	const href_the_cloth = "../en/book.html#the-cloth_DOT_";
-	const href_sleep2_resu = "../en/book.html#sleeping_DOT_";
+	const href_life = "../en/book.html#life_DOT_";
+	const href_death = "../en/book.html#death_DOT_";
+	const href_liberator = "../en/book.html#liberator_DOT_";
+	const href_sleeping = "../en/book.html#sleeping_DOT_";
 	const href_rich_and_laza = "../en/book.html#the-rich-and-the-poor-lazarus_DOT_";
 	const href_144000 = "../en/book.html#section";
 	const href_eternal_abhorrence = "../en/book.html#eternal-abhorrence_DOT_";
@@ -897,7 +901,7 @@ function init_en_exam_msg(){
 	lg.q11_1__verse4_href = all_bibrefs.isa_66_22_href;
 	lg.q11_1__verse4_should = "It is on a NEW EARTH with a new heavens";
 	
-	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleep2_resu}'>Sleep</a>`;
+	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleeping}'>Sleep</a>`;
 	lg.q12_1__sleep = `Select all verses that support that dead people HAVE CONSCIOUSNESS before resurrected.`;
 	lg.q12_1__verse1_str = uppercase_words_in_string(all_bibrefs.isa_14_10_str, ["answer", "ask", "you,", ]);
 	lg.q12_1__verse1_href = all_bibrefs.isa_14_10_href;
@@ -910,8 +914,8 @@ function init_en_exam_msg(){
 	lg.q12_1__verse5_str = uppercase_words_in_string(all_bibrefs.luk_16_24_str, ["cried", "said,", ]);
 	lg.q12_1__verse5_href = all_bibrefs.luk_16_24_href;
 
-	const q12_1__response_INTRO = `<p> This is a commonly cited verse as objection to SPIRIT (NOT soul) <a class='exam_ref' href='${href_sleep2_resu}'>sleep</a>.</p>
-	<p> When arguing against SPIRIT <a class='exam_ref' href='${href_sleep2_resu}'>sleep</a> always remember that the whole bible refers to the dead as <a class='exam_ref' href='${href_sleep2_resu}'>SLEEP</a>, specially our Lord Jesus Christ. The reason is obvious: NO <a class='exam_ref' href='${href_sleep2_resu}'>sleeping</a> person has CONSCIUOSNESS. That is the most prominent characteristic of a <a class='exam_ref' href='${href_sleep2_resu}'>sleeping</a> person. Please read the section introducing the biblical concept of SPIRIT <a class='exam_ref' href='${href_sleep2_resu}'>sleep</a>. </p>`;
+	const q12_1__response_INTRO = `<p> This is a commonly cited verse as objection to SPIRIT (NOT soul) <a class='exam_ref' href='${href_sleeping}'>sleep</a>.</p>
+	<p> When arguing against SPIRIT <a class='exam_ref' href='${href_sleeping}'>sleep</a> always remember that the whole bible refers to the dead as <a class='exam_ref' href='${href_sleeping}'>SLEEP</a>, specially our Lord Jesus Christ. The reason is obvious: NO <a class='exam_ref' href='${href_sleeping}'>sleeping</a> person has CONSCIUOSNESS. That is the most prominent characteristic of a <a class='exam_ref' href='${href_sleeping}'>sleeping</a> person. Please read the section introducing the biblical concept of SPIRIT <a class='exam_ref' href='${href_sleeping}'>sleep</a>. </p>`;
 	
 	lg.q12_1__response_to_verse1 = `<a class='exam_ref' href=${all_bibrefs.isa_14_10_href}>Isa 14:10</a> ${q12_1__response_INTRO}
 	<p> This verse refers to a literal future time or an spiritual one that happend as reafirmation of the literal case. The king of Babilon represents The Satan, that is why <a class='exam_ref' href=${all_bibrefs.isa_14_12_href}>verse 12</a> is commonly cited to refer to The Satan. </p>
@@ -946,14 +950,35 @@ function init_en_exam_msg(){
 	<p> The most important thing to note about this verse is that it part of a PARABLE. So please read the correct <a class='exam_ref' href='${href_rich_and_laza}'>INTERPRETATION</a>.</p>
 	<p> So this verse <b>DOES NOT REFER</b> to the dead having CONSCIOUSNESS.</p>
 	`;
+		
+	const q12_1__response_sheol = `<p> This verse refers to the fact that ALL dead people go to Sheol, to the tomb, to the Sepulcre, to the pit. </p>
+	<p> Nowhere in the context or in the verse is there any thing remote that refers to CONSCIOUSNESS. It is really remarkable how the greek culture has affected the hebrew teachings of the hebrew scriptures. </p>
+	<p> So this verse <b>DOES NOT REFER</b> to the dead having CONSCIOUSNESS.</p>`;
 	
-	lg.q12_1__response_to_gen_15_15 = `RESPONSE TO VERSE gen_15_15`;
-	lg.q12_1__response_to_gen_25_8 = `RESPONSE TO VERSE gen_25_8`;
+	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.gen_15_15_obj);
+	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.gen_15_15_href}>Gen 15:15</a> ${q12_1__response_INTRO}
+	${q12_1__response_sheol}`;
 	
-	// isa_14_10_str mat_17_3_str rev_6_10_str heb_12_23_str luk_16_24_str _1pe_3_19_str _2co_5_8_str act_7_59_str luk_20_38_str _2co_12_4_str 
+	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.gen_25_8_obj);
+	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.gen_25_8_href}>Gen 25:8</a> ${q12_1__response_INTRO}
+	${q12_1__response_sheol}`;
+	
+	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.gen_35_29_obj);
+	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.gen_35_29_href}>Gen 35:29</a> ${q12_1__response_INTRO}
+	${q12_1__response_sheol}`;
+	
+	rnam = get_verse_reponse_name("q12_1__", all_bibrefs._1pe_3_19_obj);
+	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs._1pe_3_19_href}>1Pe 3:19</a> ${q12_1__response_INTRO}
+	<p> This verse refers to spiritually dead people. Please read the sections called <a class='exam_ref' href='${href_life}'>Life</a>, <a class='exam_ref' href='${href_death}'>Death</a>, and <a class='exam_ref' href='${href_liberator}'>Liberator</a> of the completely FREE book TodaCarne.com.</p> 
+	<p> The most importatn thing to note in this verse and its context is that ALL people are DEAD without Jesus Christ who is LIFE itself. So the verse refers to people PHISICALLY alive but spiritually dead. </p>.
+	<p> The second thing is that nowhere in the verse or its context appears the word for greek Hades, the hebrew Sheol, the place where the dead go. This passage is NOT talking about PHISICALLY dead people. It is about spiritually dead people and they were all dead when Jesus died and resurrected. </p>
+	<p> So this verse <b>DOES NOT REFER</b> to the dead having CONSCIOUSNESS.</p>
+	`;
+	
+	// _1pe_3_19_str _2co_5_8_str act_7_59_str luk_20_38_str _2co_12_4_str 
 	// luk_23_43_str _1ti_5_6_str luk_15_24_str 
 	// jhn_4_24_str heb_1_14_str phl_1_23_str psa_16_11_str 
-	// gen_15_15_str gen_25_8_str gen_35_29_str isa_8_19_str _1th_4_14_str
+	// isa_8_19_str _1th_4_14_str
 	
 	lg.q13_1__sleep = `Select all verses that support that dead people do NOT have CONSCIOUSNESS until resurrected.`;
 	lg.q13_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_11_11_str, ["asleep,", "awake", ]);
@@ -990,3 +1015,8 @@ function init_en_exam_msg(){
 	
 }
 
+export function get_verse_reponse_name(qid, cit_obj){
+	const kk = get_verse_cit_key(cit_obj);
+	const r_nam = qid + "reponse_" + kk;
+	return r_nam;
+}

@@ -1,11 +1,13 @@
 
-import { get_book_nam, refs_ids, all_bibrefs } from './tc_lang_all.js';
+import { get_book_nam, get_verse_reponse_name, get_verse_cit_key, refs_ids, all_bibrefs } from './tc_lang_all.js';
 import { init_answers } from './tc_exam.js';
 
 "use strict";
 
 export const STARTING_QUESTIONS = ["q0_4__", "q1_1__"];
 export const db_user_info = {};
+
+export const SUF_QID = "__";
 
 export let db_nodes_exam = {};
 
@@ -786,6 +788,9 @@ export function init_exam_database(){
 			this.all_contra = ["q0_2__", "q11_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 		},
 	};
+	
+	const all_q12_1__with_response = [all_bibrefs.gen_15_15_obj, all_bibrefs.gen_25_8_obj, all_bibrefs._1pe_3_19_obj];
+	add_reponse_questions(db, "q12_1__", all_q12_1__with_response);
 
 	db.q12_1__ = { 
 		htm_stm: "q12_1__sleep",
@@ -836,30 +841,14 @@ export function init_exam_database(){
 			const by_kind = get_added_by_kind(this);
 			//console.log("by_kind=" + JSON.stringify(by_kind, null, "  "));
 			
-			const with_response = [all_bibrefs.gen_15_15_obj, all_bibrefs.gen_25_8_obj];
-			const all_matches = get_verse_matches(by_kind[refs_ids.verse_kind], with_response);
+			const all_matches = get_verse_matches(by_kind[refs_ids.verse_kind], all_q12_1__with_response);
 			//console.log("get_verse_matches. all_matches=" + JSON.stringify(all_matches, null, "  "));
 			
-			if(all_matches.length == 0){
+			const ok = respond_first_match(this, "q12_1__", all_matches);
+			if(! ok){
 				this.all_nxt = ["q13_1__"];
 				return;
 			}
-			
-			const fst_match = all_matches[0];
-			
-			if(fst_match == all_bibrefs.gen_15_15_obj){ 
-				this.all_nxt = ["q12_rv6__"]; //  
-				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
-				return;
-			}
-			
-			if(fst_match == all_bibrefs.gen_25_8_obj){ 
-				this.all_nxt = ["q12_rv7__"];
-				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
-				return;
-			}
-					
-			this.all_nxt = ["q13_1__"];
 		},
 	};
 	
@@ -868,8 +857,6 @@ export function init_exam_database(){
 	db.q12_rv3__ = { htm_stm: "q12_1__response_to_verse3", };
 	db.q12_rv4__ = { htm_stm: "q12_1__response_to_verse4", };
 	db.q12_rv5__ = { htm_stm: "q12_1__response_to_verse5", };
-	db.q12_rv6__ = { htm_stm: "q12_1__response_to_gen_15_15", };
-	db.q12_rv7__ = { htm_stm: "q12_1__response_to_gen_25_8", };
 	
 	db.q13_1__ = { 
 		htm_stm: "q13_1__sleep",
@@ -1052,4 +1039,40 @@ function get_verse_matches(in_verse_kind, with_resp){
 		});
 	});
 	return all_matches;
+}
+
+function get_qid_base(qid){
+	if(qid.endsWith(SUF_QID)){
+		return qid.slice(0, - SUF_QID.length);
+	}
+	return null;
+}
+
+function get_reponse_qid(qid, cit_obj){
+	const kk = get_verse_cit_key(cit_obj);
+	const bb = get_qid_base(qid);
+	const rqid = bb + kk + SUF_QID;
+	return rqid;
+}
+
+function add_reponse_questions(db, qid, with_resp){
+	with_resp.forEach((cit_obj) => {
+		const rqid = get_reponse_qid(qid, cit_obj);
+		const rnam = get_verse_reponse_name(qid, cit_obj);
+		db[rqid] = { htm_stm: rnam, };
+	});
+}
+
+function respond_first_match(quest, qid, all_matches){
+	if(all_matches.length == 0){
+		return false;
+	}
+	
+	const fst_match = all_matches[0];
+	const rqid = get_reponse_qid(qid, fst_match);
+	
+	quest.all_nxt = [rqid];
+	quest.all_contra = [qid];
+	
+	return true;
 }
