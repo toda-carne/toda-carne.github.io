@@ -807,6 +807,9 @@ export function init_exam_database(){
 			r3: { htm_answ: "q12_1__verse4_str", rclk_href: "q12_1__verse4_href", },
 			r4: { htm_answ: "q12_1__verse5_str", rclk_href: "q12_1__verse5_href", },
 		},
+		vrs_with_response: all_q12_1__with_response,
+		// stg_with_response: [],
+		// lnk_with_response: [],
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];

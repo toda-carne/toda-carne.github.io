@@ -601,6 +601,10 @@ color: white;
 	border: 0.1vw solid white;
 }
 
+.exam.has_margin_bot {
+	margin-bottom: 1em;
+}
+
 .exam.is_button {
 	border: 0.2vw solid white;
 	background-color: #1c396f;

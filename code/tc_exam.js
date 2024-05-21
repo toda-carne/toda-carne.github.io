@@ -1,5 +1,5 @@
 
-import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, is_mobile_browser,
+import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, bib_obj_to_cit_obj, is_mobile_browser,
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang } from './tc_lang_all.js';
 	
 import { STARTING_QUESTIONS, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
@@ -23,6 +23,8 @@ const ROOT_QUEST_ID = "root_quest_id";
 const MIN_ANSW_SHOW_INVERT = 3;
 
 const qref_prefix = "QREF_";
+const stg_prefix = "STRONG";
+const lnk_prefix = "LINK";
 
 function init_exam_fb(){
 	const mod_nm = "./tc_firebase.js";
@@ -86,7 +88,7 @@ const VRS_BIB_VER_IDX = 7;
 
 const STG_CIT_KIND = refs_ids.strong_kind;
 
-const LNK_CIT_KIND = refs_ids.ling_kind;
+const LNK_CIT_KIND = refs_ids.link_kind;
 const LNK_NAME_IDX = 0;
 const LNK_HREF_IDX = 1;
 
@@ -256,6 +258,7 @@ export function init_answers(qid){
 	dv_answers.innerHTML = "";
 	
 	if(quest.answers == null){
+		set_anchors_target(dv_quest);
 		return;
 	}
 	const all_answ = Object.entries(quest.answers);
@@ -349,6 +352,7 @@ export function init_answers(qid){
 		remove_all_children_descendants(quest.parent);
 	}
 	
+	set_anchors_target(dv_quest);
 }
 
 function invert_answers(qid){
@@ -675,6 +679,26 @@ function get_qid_of_citation(dv_citation){
 	return pnt_qid;
 }*/
 
+function add_all_vrs_to_ops(all_vrs, all_ops){
+	all_vrs.forEach((bib_obj) => {
+		//console.log("bib_obj=" + JSON.stringify(bib_obj, null, "  "));
+		const txt = bib_obj_to_txt(bib_obj);
+		all_ops.all_txt.push(txt);
+		all_ops.all_ref[txt] = bib_obj_to_cit_obj(bib_obj);
+	});
+}
+
+function get_all_response_ops(quest){
+	const has_vrs = (quest.vrs_with_response != null);
+	const has_stg = (quest.stg_with_response != null);
+	const has_lnk = (quest.lnk_with_response != null);
+	const all_ops = { all_txt: [], all_ref: {}};
+	if(has_vrs){
+		add_all_vrs_to_ops(quest.vrs_with_response, all_ops);
+	}
+	return all_ops;
+}
+
 function toggle_support_interaction(qid){
 	const id_dv_inter = "id_support_ed";
 	let dv_inter = document.getElementById(id_dv_inter);
@@ -702,8 +726,40 @@ function toggle_support_interaction(qid){
 	
 	dv_inter.classList.add("exam");
 	dv_inter.classList.add("pos_inter");
+	dv_inter.classList.add("has_margin_bot");
 
 	dv_support.classList.add("ed_support");	
+
+	const quest = db_nodes_exam[qid];
+	const has_vrs = (quest.vrs_with_response != null);
+	const has_stg = (quest.stg_with_response != null);
+	const has_lnk = (quest.lnk_with_response != null);
+	//console.log("has_vrs=" + has_vrs);
+	
+	if(has_vrs || has_stg || has_lnk){
+		const dv_sel_cit = dv_inter.appendChild(document.createElement("div"));
+		dv_sel_cit.classList.add("exam");
+		dv_sel_cit.classList.add("is_block");
+		dv_sel_cit.classList.add("is_button");
+		dv_sel_cit.innerHTML = glb_curr_lang.msg_sel_cit;
+		dv_sel_cit.addEventListener('click', function() {
+			const all_ops = get_all_response_ops(quest);
+			toggle_select_option(dv_sel_cit, all_ops.all_txt, function(dv_ret, dv_ops, val_sel){
+				if (val_sel.startsWith(stg_prefix)){
+				} else if (val_sel.startsWith(lnk_prefix)){
+				} else {
+					const cit_obj = all_ops.all_ref[val_sel];
+					const dv_cit = add_verse_cit(qid, cit_obj);
+					dv_cit.tc_answ_obj = cit_obj;
+					set_answer_cit(dv_cit, cit_obj);
+					add_click_listener_for_answer(qid, dv_cit);
+					add_right_click_listener_for_answer(qid, dv_cit);
+				}
+				dv_ops.remove();
+			});
+			return;
+		});
+	}
 	
 	const dv_add_cit = dv_inter.appendChild(document.createElement("div"));
 	dv_add_cit.classList.add("exam");
@@ -756,7 +812,6 @@ function toggle_support_interaction(qid){
 		dv_support.classList.remove("ed_support");
 		dv_inter.remove();
 		remove_all_ed(qid);
-		const quest = db_nodes_exam[qid];
 		if(quest.has_answ && has_citations(dv_support)){
 			quest.has_answ = null;
 			init_answers(qid);
@@ -1009,37 +1064,6 @@ function calc_verse_cit_object(dv_citation){
 	}
 	return cit_obj;
 }
-
-/*
-function add_toggle_side_handler(dv_ok){
-	dv_ok.title = glb_curr_lang.msg_help_cit_ed_ok_right_click;
-	dv_ok.addEventListener('contextmenu', (ev1) => {
-		ev1.preventDefault();
-		//dv_ok.classList.toggle("is_red_border");
-		//dv_ok.classList.toggle("is_green_border");
-		//dv_ok.innerHTML = glb_curr_lang.msg_ok;
-		if(dv_ok.classList.contains("is_red_border")){
-			dv_ok.innerHTML = glb_curr_lang.msg_against;
-		} else {
-			dv_ok.innerHTML = glb_curr_lang.msg_in_favor;
-		}
-		return false;
-	});	
-}*/
-
-/*
-function set_cit_side(dv_citation, dv_ok){
-	if(dv_ok.classList.contains("is_red_border")){
-		dv_citation.classList.add("is_red_border");
-		dv_citation.classList.remove("is_green_border");
-		dv_citation.tc_cit_side = refs_ids.against_side;
-	} else {
-		dv_citation.classList.remove("is_red_border");
-		dv_citation.classList.add("is_green_border");
-		dv_citation.tc_cit_side = refs_ids.in_favor_side;
-	}
-}
-*/
 
 function set_answer_cit(dv_citation, cit_obj){
 	const qid = dv_citation.owner_qid;
@@ -2080,6 +2104,14 @@ function get_contradictions_qhrefs(qid, skip_qid){
 		}
 	}
 	return all_qhrefs;
+}
+
+function set_anchors_target(the_div){
+	const all_anchor = the_div.querySelectorAll("a");
+
+	all_anchor.forEach((aa) => {
+		aa.setAttribute('target', '_blank');
+	});
 }
 
 

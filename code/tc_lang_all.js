@@ -189,7 +189,7 @@ export const refs_ids = {
 	added_pfx: "added_",
 	verse_kind: "vrs_kind",
 	strong_kind: "stg_kind",
-	ling_kind: "lnk_kind",
+	link_kind: "lnk_kind",
 	qid_kind: "qid_kind",
 };
 
@@ -222,6 +222,7 @@ function init_en_basic_msg(){
 	obj.msg_end_ans = "END ANSWER";
 	obj.msg_edit_ans = "CHANGE ANSWER";
 	
+	obj.msg_sel_cit = "SELECT FROM DB";
 	obj.msg_add_verse = "ADD VERSE";
 	obj.msg_add_strong = "ADD STRONG CODE";
 	obj.msg_add_link = "ADD WEB LINK";
@@ -304,12 +305,12 @@ function fill_all_strongrefs_href(){
 }
 
 function fill_all_bibrefs_href(){
-	for (const [key, value] of Object.entries(all_bibrefs)) {
+	for (const [key, bib_obj] of Object.entries(all_bibrefs)) {
 		const ob_sufx = "_obj";
 		if(key.endsWith(ob_sufx)){
 			const prefx = key.slice(0, key.length - ob_sufx.length);
 			const href_attr = prefx + "_href";
-			const href_val = make_bible_ref(value);
+			const href_val = make_bible_ref(bib_obj);
 			all_bibrefs[href_attr] = href_val;
 			//console.log(`${href_attr} = ${href_val}`);
 		}
@@ -358,13 +359,24 @@ function citation_to_en(cit_obj){ // websites use english names for citations
 }
 
 export function get_book_nam(book){
-	let book_nam =  book; // all_bibrefs references
-	if(isNaN(book)){
-		book_nam =  book;
-	} else {
+	let book_nam = book; 
+	if(isNaN(book)){ // all_bibrefs references
+		book_nam = book;
+	} else { // normal references
 		let num = Number(book);
-		book_nam =  num2book_en[num];  // normal references
+		book_nam =  num2book_en[num];
 	}
+	return book_nam;
+}
+
+export function get_loc_book_nam(book){
+	let num = -1;
+	if(isNaN(book)){ // all_bibrefs references
+		num = book2num_en[book];
+	} else { // normal references
+		num = Number(book);
+	}
+	let book_nam =  glb_all_books[num];  
 	return book_nam;
 }
 
@@ -383,7 +395,7 @@ export function make_bible_ref(cit_obj){
 	//const cit_obj = citation_to_en(cit_obj_orig); // websites use english names for citations
 	const book_nam =  get_book_nam(cit_obj.book);
 	//console.log("make_bible_ref. cit_obj= " + JSON.stringify(cit_obj, null, "  ") + "\nbook_nam=" + book_nam);
-	var bibref = null;
+	let bibref = null;
 	if(cit_obj.site == "blueletterbible"){
 		bibref = "https://www.blueletterbible.org/" + cit_obj.bib_ver + "/" + cit_obj.abbr + "/" + cit_obj.chapter + "/" + cit_obj.verse;
 		return bibref;
@@ -412,6 +424,25 @@ export function make_bible_ref(cit_obj){
 		return bibref;
 	}
 	
+}
+
+export function bib_obj_to_txt(bib_obj){
+	const loc_book_nam =  get_loc_book_nam(bib_obj.book);
+	//console.log("loc_book_nam=" + loc_book_nam);
+	let cit_txt = loc_book_nam + " " + bib_obj.chapter + ":" + bib_obj.verse;
+	if(! (bib_obj.last_verse == bib_defaults.LAST_VERSE)){
+		cit_txt += " - " + bib_obj.last_verse;
+	}
+	cit_txt += " (" + bib_obj.bib_ver + ")";
+	return cit_txt;
+}
+
+export function bib_obj_to_cit_obj(bib_obj){
+	const cit_obj = JSON.parse(JSON.stringify(bib_obj));
+	cit_obj.book = book2num_en[bib_obj.book];
+	cit_obj.kind = refs_ids.verse_kind;
+	cit_obj.rclk_href = make_bible_ref(bib_obj);
+	return cit_obj;
 }
 
 export function make_strong_ref(scode){
@@ -618,6 +649,8 @@ function init_en_exam_msg(){
 	const href_new_earth_resu = "../en/book.html#a-new-earth_DOT_";
 	const href_asleep = "../en/book.html#asleep_DOT_";
 	const href_the_cloth = "../en/book.html#the-cloth_DOT_";
+	const href_angels = "../en/book.html#angels_DOT_";
+	const href_wings = "../en/book.html#wings_DOT_";
 	const href_life = "../en/book.html#life_DOT_";
 	const href_death = "../en/book.html#death_DOT_";
 	const href_liberator = "../en/book.html#liberator_DOT_";
@@ -628,6 +661,8 @@ function init_en_exam_msg(){
 	const href_factories = "../en/book.html#factories_DOT_";
 	
 	const lg = all_en_msg;
+	const rf = all_bibrefs;
+	
 	lg.q0_1__end_of_test = "These questions are not for you. This is the end of the questions for you, unless you did not really mean it and change your answer. Click on your answer to change it.";
 	lg.q0_2__contradiction = "You have a contradiction in your answers. Please change one of your answers to the questions shown in red. The contradiction is in one of them. Otherwise you cannot continue with these questions. Click on your answer to change it.";
 	lg.q0_3__end_so_far = "These questions are in construction. This is the end of the questions for you so far...";
@@ -637,8 +672,8 @@ function init_en_exam_msg(){
 	lg.q1_1__yes = "I am a rational and reasonable person.";
 	lg.q1_1__should_yes = "All people answering these questions are required to be RATIONAL and REASONABLE.";
 	lg.q1_1__pru_pos_txt = `<span class="is_big">+</span>`;
-	lg.q1_1__pru_href = all_bibrefs.luk_24_39_href;
-	lg.q1_1__pru_should_href = all_bibrefs.mat_26_64_href;
+	lg.q1_1__pru_href = rf.luk_24_39_href;
+	lg.q1_1__pru_should_href = rf.mat_26_64_href;
 	lg.q1_1__no = "I am NOT a rational and reasonable person.";
 	
 	lg.q1_2__experience_is_evidence = "A claim that most people can see, hear, smell, taste, touch, or confirm by perceptual experience, ";
@@ -751,132 +786,132 @@ function init_en_exam_msg(){
 
 	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${href_physical_resu}'>Physical</a>`;
 	lg.q4_1__physical = `Select all verses that support a physical resurrection of Jesus Christ`;
-	lg.q4_1__verse1_str = uppercase_words_in_string(all_bibrefs.luk_24_39_str, ["Touch", "flesh", "bones,"]);
-	lg.q4_1__verse1_href = all_bibrefs.luk_24_39_href;
+	lg.q4_1__verse1_str = uppercase_words_in_string(rf.luk_24_39_str, ["Touch", "flesh", "bones,"]);
+	lg.q4_1__verse1_href = rf.luk_24_39_href;
 	lg.q4_1__verse1_should = "FLESH and BONES are PHYSICAL.";
-	lg.q4_1__verse2_str = uppercase_words_in_string(all_bibrefs.jhn_20_27_str, ["hand,", "put", "side."]);
-	lg.q4_1__verse2_href = all_bibrefs.jhn_20_27_href;
+	lg.q4_1__verse2_str = uppercase_words_in_string(rf.jhn_20_27_str, ["hand,", "put", "side."]);
+	lg.q4_1__verse2_href = rf.jhn_20_27_href;
 	lg.q4_1__verse2_should = "Putting a hand into FLESH is something PHYSICAL.";
-	lg.q4_1__verse3_str = uppercase_words_in_string(all_bibrefs.act_10_41_str, ["ate", "drank"]);
-	lg.q4_1__verse3_href = all_bibrefs.act_10_41_href;
+	lg.q4_1__verse3_str = uppercase_words_in_string(rf.act_10_41_str, ["ate", "drank"]);
+	lg.q4_1__verse3_href = rf.act_10_41_href;
 	lg.q4_1__verse3_should = "EATING and DRINKING is something PHYSICAL.";
-	lg.q4_1__verse4_str = uppercase_words_in_string(all_bibrefs.mat_28_9_str, ["took", "hold", "feet,"]);
-	lg.q4_1__verse4_href = all_bibrefs.mat_28_9_href;
+	lg.q4_1__verse4_str = uppercase_words_in_string(rf.mat_28_9_str, ["took", "hold", "feet,"]);
+	lg.q4_1__verse4_href = rf.mat_28_9_href;
 	lg.q4_1__verse4_should = "TAKING hold of somebody's feet is something PHYSICAL.";
-	lg.q4_1__verse5_str = uppercase_words_in_string(all_bibrefs.luk_24_30_str, ["took", "bread"]);
-	lg.q4_1__verse5_href = all_bibrefs.luk_24_30_href;
+	lg.q4_1__verse5_str = uppercase_words_in_string(rf.luk_24_30_str, ["took", "bread"]);
+	lg.q4_1__verse5_href = rf.luk_24_30_href;
 	lg.q4_1__verse5_should = "BREAKING bread is something PHYSICAL.";
-	lg.q4_1__verse6_str = uppercase_words_in_string(all_bibrefs.jhn_2_19_str, ["temple,", "raise"]);
-	lg.q4_1__verse6_href = all_bibrefs.jhn_2_19_href;
+	lg.q4_1__verse6_str = uppercase_words_in_string(rf.jhn_2_19_str, ["temple,", "raise"]);
+	lg.q4_1__verse6_href = rf.jhn_2_19_href;
 	lg.q4_1__verse6_should = "REBUILDING a body is something PHYSICAL.";
-	lg.q4_1__verse7_str = uppercase_words_in_string(all_bibrefs.luk_24_43_str, ["took", "ate"]);
-	lg.q4_1__verse7_href = all_bibrefs.luk_24_43_href;
+	lg.q4_1__verse7_str = uppercase_words_in_string(rf.luk_24_43_str, ["took", "ate"]);
+	lg.q4_1__verse7_href = rf.luk_24_43_href;
 	lg.q4_1__verse7_should = "EATING is something PHYSICAL.";
 	
 	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To NOT die again</a>`;
 	lg.q5_1__not_die = `Select all verses that support a resurrection of Jesus Christ to NOT die again`;
-	lg.q5_1__verse1_str = uppercase_words_in_string(all_bibrefs.rom_6_9_str, ["dies", "no", "more."]);
-	lg.q5_1__verse1_href = all_bibrefs.rom_6_9_href;
+	lg.q5_1__verse1_str = uppercase_words_in_string(rf.rom_6_9_str, ["dies", "no", "more."]);
+	lg.q5_1__verse1_href = rf.rom_6_9_href;
 	lg.q5_1__verse1_should = "DIES NO MORE.";
-	lg.q5_1__verse2_str = uppercase_words_in_string(all_bibrefs.heb_7_16_str, ["endless", "life;"]);
-	lg.q5_1__verse2_href = all_bibrefs.heb_7_16_href;
+	lg.q5_1__verse2_str = uppercase_words_in_string(rf.heb_7_16_str, ["endless", "life;"]);
+	lg.q5_1__verse2_href = rf.heb_7_16_href;
 	lg.q5_1__verse2_should = "ENDLESS LIFE.";
-	lg.q5_1__verse3_str = uppercase_words_in_string(all_bibrefs.rev_1_18_str, ["alive", "forever", "ever."]);
-	lg.q5_1__verse3_href = all_bibrefs.rev_1_18_href;
+	lg.q5_1__verse3_str = uppercase_words_in_string(rf.rev_1_18_str, ["alive", "forever", "ever."]);
+	lg.q5_1__verse3_href = rf.rev_1_18_href;
 	lg.q5_1__verse3_should = "ALIVE FOREVER and EVER.";
-	lg.q5_1__verse4_str = uppercase_words_in_string(all_bibrefs.heb_7_25_str, ["lives", "forever", ]);
-	lg.q5_1__verse4_href = all_bibrefs.heb_7_25_href;
+	lg.q5_1__verse4_str = uppercase_words_in_string(rf.heb_7_25_str, ["lives", "forever", ]);
+	lg.q5_1__verse4_href = rf.heb_7_25_href;
 	lg.q5_1__verse4_should = "LIVES FOREVER.";
 	
 	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${href_in_heaven_resu}'>In Heaven</a>`;
 	lg.q6_1__in_heaven = `Select all verses that support a RESURRECTED Jesus Christ that is in heaven in BODY and spirit.`;
-	lg.q6_1__verse1_str = uppercase_words_in_string(all_bibrefs.act_1_11_str, ["going", "into", "sky."]);
-	lg.q6_1__verse1_href = all_bibrefs.act_1_11_href;
+	lg.q6_1__verse1_str = uppercase_words_in_string(rf.act_1_11_str, ["going", "into", "sky."]);
+	lg.q6_1__verse1_href = rf.act_1_11_href;
 	lg.q6_1__verse1_should = "GOING INTO the SKY. He went physically into the heavens";
-	lg.q6_1__verse2_str = uppercase_words_in_string(all_bibrefs.mat_26_64_str, ["sitting", "clouds", "sky"]);
-	lg.q6_1__verse2_href = all_bibrefs.mat_26_64_href;
+	lg.q6_1__verse2_str = uppercase_words_in_string(rf.mat_26_64_str, ["sitting", "clouds", "sky"]);
+	lg.q6_1__verse2_href = rf.mat_26_64_href;
 	lg.q6_1__verse2_should = "He is SITTING and coming on the CLOUDS";
-	lg.q6_1__verse3_str = uppercase_words_in_string(all_bibrefs.jhn_14_2_str, ["house", "mansions;", "place"]);
-	lg.q6_1__verse3_href = all_bibrefs.jhn_14_2_href;
+	lg.q6_1__verse3_str = uppercase_words_in_string(rf.jhn_14_2_str, ["house", "mansions;", "place"]);
+	lg.q6_1__verse3_href = rf.jhn_14_2_href;
 	lg.q6_1__verse3_should = "He makes in a PLACE for his disciples";
-	lg.q6_1__verse4_str = uppercase_words_in_string(all_bibrefs.heb_9_12_str, ["entered", "Place,", "heaven"]);
-	lg.q6_1__verse4_href = all_bibrefs.heb_9_12_href;
+	lg.q6_1__verse4_str = uppercase_words_in_string(rf.heb_9_12_str, ["entered", "Place,", "heaven"]);
+	lg.q6_1__verse4_href = rf.heb_9_12_href;
 	lg.q6_1__verse4_should = "He ENTERED the Holy PLACE in the heavens";
-	lg.q6_1__verse5_str = uppercase_words_in_string(all_bibrefs.heb_10_12_str, ["sat", "down"]);
-	lg.q6_1__verse5_href = all_bibrefs.heb_10_12_href;
+	lg.q6_1__verse5_str = uppercase_words_in_string(rf.heb_10_12_str, ["sat", "down"]);
+	lg.q6_1__verse5_href = rf.heb_10_12_href;
 	lg.q6_1__verse5_should = "He SAT DOWN in the heavens";
-	lg.q6_1__verse6_str = uppercase_words_in_string(all_bibrefs.heb_13_8_str, ["is", "same", "forever."]);
-	lg.q6_1__verse6_href = all_bibrefs.heb_13_8_href;
+	lg.q6_1__verse6_str = uppercase_words_in_string(rf.heb_13_8_str, ["is", "same", "forever."]);
+	lg.q6_1__verse6_href = rf.heb_13_8_href;
 	lg.q6_1__verse6_should = "He is ALWAYS the same. So if He resurrected in BODY and spirit, He MUST be in BODY and spirit in the heavens.";
-	lg.q6_1__verse7_str = uppercase_words_in_string(all_bibrefs.col_1_15_str, ["image", "invisible"]);
-	lg.q6_1__verse7_href = all_bibrefs.col_1_15_href;
+	lg.q6_1__verse7_str = uppercase_words_in_string(rf.col_1_15_str, ["image", "invisible"]);
+	lg.q6_1__verse7_href = rf.col_1_15_href;
 	lg.q6_1__verse7_should = "He is the IMAGE of the INVISIBLE God. So if He was visible when He resurrected, He must STILL be visible in the heavens.";
 	
 
 	lg.q7_1__like_jesus_sec = `<a class='exam_ref exam_title' href='${href_like_jesus_resu}'>Like Jesus</a>`;
 	lg.q7_1__like_jesus = `Select all verses that support a resurrection of the dead that is like Jesus resurrection`;
-	lg.q7_1__verse1_str = uppercase_words_in_string(all_bibrefs.phl_3_21_str, ["conformed", "body", ]);
-	lg.q7_1__verse1_href = all_bibrefs.phl_3_21_href;
+	lg.q7_1__verse1_str = uppercase_words_in_string(rf.phl_3_21_str, ["conformed", "body", ]);
+	lg.q7_1__verse1_href = rf.phl_3_21_href;
 	lg.q7_1__verse1_should = "Just LIKE the BODY of Jesus";
-	lg.q7_1__verse2_str = uppercase_words_in_string(all_bibrefs._1jo_3_2_str, ["like", "him;", ]);
-	lg.q7_1__verse2_href = all_bibrefs._1jo_3_2_href;
+	lg.q7_1__verse2_str = uppercase_words_in_string(rf._1jo_3_2_str, ["like", "him;", ]);
+	lg.q7_1__verse2_href = rf._1jo_3_2_href;
 	lg.q7_1__verse2_should = "We will be LIKE HIM";
-	lg.q7_1__verse3_str = uppercase_words_in_string(all_bibrefs.luk_20_36_str, ["can’t", "die", ]);
-	lg.q7_1__verse3_href = all_bibrefs.luk_20_36_href;
+	lg.q7_1__verse3_str = uppercase_words_in_string(rf.luk_20_36_str, ["can’t", "die", ]);
+	lg.q7_1__verse3_href = rf.luk_20_36_href;
 	lg.q7_1__verse3_should = "Thos bodies CAN'T DIE";
-	lg.q7_1__verse4_str = uppercase_words_in_string(all_bibrefs.heb_9_27_str, ["die", "once,", ]);
-	lg.q7_1__verse4_href = all_bibrefs.heb_9_27_href;
+	lg.q7_1__verse4_str = uppercase_words_in_string(rf.heb_9_27_str, ["die", "once,", ]);
+	lg.q7_1__verse4_href = rf.heb_9_27_href;
 	lg.q7_1__verse4_should = "We are destined to DIE ONCE. No more.";
-	lg.q7_1__verse5_str = uppercase_words_in_string(all_bibrefs._1co_15_49_str, ["bear", "image", "heavenly.", ]);
-	lg.q7_1__verse5_href = all_bibrefs._1co_15_49_href;
+	lg.q7_1__verse5_str = uppercase_words_in_string(rf._1co_15_49_str, ["bear", "image", "heavenly.", ]);
+	lg.q7_1__verse5_href = rf._1co_15_49_href;
 	lg.q7_1__verse5_should = "We BARE the image of the HEAVENLY";
-	lg.q7_1__verse6_str = uppercase_words_in_string(all_bibrefs._1co_15_42_str, ["body", "raised", "imperishable."]);
-	lg.q7_1__verse6_href = all_bibrefs._1co_15_42_href;
+	lg.q7_1__verse6_str = uppercase_words_in_string(rf._1co_15_42_str, ["body", "raised", "imperishable."]);
+	lg.q7_1__verse6_href = rf._1co_15_42_href;
 	lg.q7_1__verse6_should = "The raised body is IMPERISHABLE";
 	
 	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${href_for_all_resu}'>For All</a>`;
 	lg.q8_1__for_all = `Select all verses that support a resurrection of the dead that is for ALL people`;
-	lg.q8_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_5_28_str, ["all", "tombs", ]);
-	lg.q8_1__verse1_href = all_bibrefs.jhn_5_28_href;
+	lg.q8_1__verse1_str = uppercase_words_in_string(rf.jhn_5_28_str, ["all", "tombs", ]);
+	lg.q8_1__verse1_href = rf.jhn_5_28_href;
 	lg.q8_1__verse1_should = "ALL is ALL";
-	lg.q8_1__verse2_str = uppercase_words_in_string(all_bibrefs.jhn_5_29_str, ["good,", "evil,", ]);
-	lg.q8_1__verse2_href = all_bibrefs.jhn_5_29_href;
+	lg.q8_1__verse2_str = uppercase_words_in_string(rf.jhn_5_29_str, ["good,", "evil,", ]);
+	lg.q8_1__verse2_href = rf.jhn_5_29_href;
 	lg.q8_1__verse2_should = "GOOD and EVIL";
-	lg.q8_1__verse3_str = uppercase_words_in_string(all_bibrefs.act_24_15_str, ["both", "just", "unjust.", ]);
-	lg.q8_1__verse3_href = all_bibrefs.act_24_15_href;
+	lg.q8_1__verse3_str = uppercase_words_in_string(rf.act_24_15_str, ["both", "just", "unjust.", ]);
+	lg.q8_1__verse3_href = rf.act_24_15_href;
 	lg.q8_1__verse3_should = "BOTH JUST and UNJUST";
-	lg.q8_1__verse4_str = uppercase_words_in_string(all_bibrefs.jhn_6_39_str, ["all", "lose", "nothing,", ]);
-	lg.q8_1__verse4_href = all_bibrefs.jhn_6_39_href;
+	lg.q8_1__verse4_str = uppercase_words_in_string(rf.jhn_6_39_str, ["all", "lose", "nothing,", ]);
+	lg.q8_1__verse4_href = rf.jhn_6_39_href;
 	lg.q8_1__verse4_should = "ALL and LOSE NOTHING";
-	lg.q8_1__verse5_str = uppercase_words_in_string(all_bibrefs.jhn_17_2_str, ["all", "flesh", "eternal", "life", ]);
-	lg.q8_1__verse5_href = all_bibrefs.jhn_17_2_href;
+	lg.q8_1__verse5_str = uppercase_words_in_string(rf.jhn_17_2_str, ["all", "flesh", "eternal", "life", ]);
+	lg.q8_1__verse5_href = rf.jhn_17_2_href;
 	lg.q8_1__verse5_should = "ALL FLESH ETERNAL LIFE";
-	lg.q8_1__verse6_str = uppercase_words_in_string(all_bibrefs._1co_15_22_str, ["all", "alive.", ]);
-	lg.q8_1__verse6_href = all_bibrefs._1co_15_22_href;
+	lg.q8_1__verse6_str = uppercase_words_in_string(rf._1co_15_22_str, ["all", "alive.", ]);
+	lg.q8_1__verse6_href = rf._1co_15_22_href;
 	lg.q8_1__verse6_should = "ALL is ALL";
 	
 	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>Has NOT happend</a>`;
 	lg.q9_1__not_yet = `Select all verses that support a resurrection of the dead that has NOT happend for almost ANYBODY`;
-	lg.q9_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_6_39_str, ["last", "day.", ]);
-	lg.q9_1__verse1_href = all_bibrefs.jhn_6_39_href;
+	lg.q9_1__verse1_str = uppercase_words_in_string(rf.jhn_6_39_str, ["last", "day.", ]);
+	lg.q9_1__verse1_href = rf.jhn_6_39_href;
 	lg.q9_1__verse1_should = "It is on the LAST DAY";
-	lg.q9_1__verse2_str = uppercase_words_in_string(all_bibrefs._2ti_2_18_str, ["erred", "already", "past,"]);
-	lg.q9_1__verse2_href = all_bibrefs._2ti_2_18_href;
+	lg.q9_1__verse2_str = uppercase_words_in_string(rf._2ti_2_18_str, ["erred", "already", "past,"]);
+	lg.q9_1__verse2_href = rf._2ti_2_18_href;
 	lg.q9_1__verse2_should = "It is NOT already past";
-	lg.q9_1__verse3_str = uppercase_words_in_string(all_bibrefs.jhn_6_40_str, ["last", "day.", ]);
-	lg.q9_1__verse3_href = all_bibrefs.jhn_6_40_href;
+	lg.q9_1__verse3_str = uppercase_words_in_string(rf.jhn_6_40_str, ["last", "day.", ]);
+	lg.q9_1__verse3_href = rf.jhn_6_40_href;
 	lg.q9_1__verse3_should = "It is on the LAST DAY";
-	lg.q9_1__verse4_str = uppercase_words_in_string(all_bibrefs.jhn_6_44_str, ["last", "day.", ]);
-	lg.q9_1__verse4_href = all_bibrefs.jhn_6_44_href;
+	lg.q9_1__verse4_str = uppercase_words_in_string(rf.jhn_6_44_str, ["last", "day.", ]);
+	lg.q9_1__verse4_href = rf.jhn_6_44_href;
 	lg.q9_1__verse4_should = "It is on the LAST DAY";
-	lg.q9_1__verse5_str = uppercase_words_in_string(all_bibrefs.jhn_6_54_str, ["last", "day.", ]);
-	lg.q9_1__verse5_href = all_bibrefs.jhn_6_54_href;
+	lg.q9_1__verse5_str = uppercase_words_in_string(rf.jhn_6_54_str, ["last", "day.", ]);
+	lg.q9_1__verse5_href = rf.jhn_6_54_href;
 	lg.q9_1__verse5_should = "It is on the LAST DAY";
-	lg.q9_1__verse6_str = uppercase_words_in_string(all_bibrefs.jhn_11_24_str, ["last", 'day."', ]);
-	lg.q9_1__verse6_href = all_bibrefs.jhn_11_24_href;
+	lg.q9_1__verse6_str = uppercase_words_in_string(rf.jhn_11_24_str, ["last", 'day."', ]);
+	lg.q9_1__verse6_href = rf.jhn_11_24_href;
 	lg.q9_1__verse6_should = "It is on the LAST DAY";
-	lg.q9_1__verse7_str = uppercase_words_in_string(all_bibrefs.rev_20_13_str, ["gave", "dead"]);
-	lg.q9_1__verse7_href = all_bibrefs.rev_20_13_href;
+	lg.q9_1__verse7_str = uppercase_words_in_string(rf.rev_20_13_str, ["gave", "dead"]);
+	lg.q9_1__verse7_href = rf.rev_20_13_href;
 	lg.q9_1__verse7_should = "It is AFTER this earth and these heavens get destroyed";
 	
 	/*
@@ -888,187 +923,218 @@ function init_en_exam_msg(){
 	
 	lg.q11_1__new_earth_sec = `<a class='exam_ref exam_title' href='${href_new_earth_resu}'>New Earth</a>`;
 	lg.q11_1__new_earth = `Select all verses that support a resurrection of the dead to live in a NEW EARTH with a new heavens`;
-	lg.q11_1__verse1_str = uppercase_words_in_string(all_bibrefs.rev_21_1_str, ["new", "earth:", ]);
-	lg.q11_1__verse1_href = all_bibrefs.rev_21_1_href;
+	lg.q11_1__verse1_str = uppercase_words_in_string(rf.rev_21_1_str, ["new", "earth:", ]);
+	lg.q11_1__verse1_href = rf.rev_21_1_href;
 	lg.q11_1__verse1_should = "It is on a NEW EARTH with a new heavens";
-	lg.q11_1__verse2_str = uppercase_words_in_string(all_bibrefs._2pe_3_13_str, ["new", "earth,", ]);
-	lg.q11_1__verse2_href = all_bibrefs._2pe_3_13_href;
+	lg.q11_1__verse2_str = uppercase_words_in_string(rf._2pe_3_13_str, ["new", "earth,", ]);
+	lg.q11_1__verse2_href = rf._2pe_3_13_href;
 	lg.q11_1__verse2_should = "It is on a NEW EARTH with a new heavens";
-	lg.q11_1__verse3_str = uppercase_words_in_string(all_bibrefs.isa_65_17_str, ["new", "earth;", ]);
-	lg.q11_1__verse3_href = all_bibrefs.isa_65_17_href;
+	lg.q11_1__verse3_str = uppercase_words_in_string(rf.isa_65_17_str, ["new", "earth;", ]);
+	lg.q11_1__verse3_href = rf.isa_65_17_href;
 	lg.q11_1__verse3_should = "It is on a NEW EARTH with a new heavens";
-	lg.q11_1__verse4_str = uppercase_words_in_string(all_bibrefs.isa_66_22_str, ["new", "earth,", ]);
-	lg.q11_1__verse4_href = all_bibrefs.isa_66_22_href;
+	lg.q11_1__verse4_str = uppercase_words_in_string(rf.isa_66_22_str, ["new", "earth,", ]);
+	lg.q11_1__verse4_href = rf.isa_66_22_href;
 	lg.q11_1__verse4_should = "It is on a NEW EARTH with a new heavens";
 	
 	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleeping}'>Sleep</a>`;
-	lg.q12_1__sleep = `Select all verses that support that dead people HAVE CONSCIOUSNESS before resurrected.`;
-	lg.q12_1__verse1_str = uppercase_words_in_string(all_bibrefs.isa_14_10_str, ["answer", "ask", "you,", ]);
-	lg.q12_1__verse1_href = all_bibrefs.isa_14_10_href;
-	lg.q12_1__verse2_str = uppercase_words_in_string(all_bibrefs.mat_17_3_str, ["talking", "him.", ]);;
-	lg.q12_1__verse2_href = all_bibrefs.mat_17_3_href;
-	lg.q12_1__verse3_str = uppercase_words_in_string(all_bibrefs.rev_6_10_str, ["cried", "loud", "voice,", "saying,", ]);
-	lg.q12_1__verse3_href = all_bibrefs.rev_6_10_href;
-	lg.q12_1__verse4_str = uppercase_words_in_string(all_bibrefs.heb_12_23_str, ["festal", "gathering", "assembly", ]);
-	lg.q12_1__verse4_href = all_bibrefs.heb_12_23_href;
-	lg.q12_1__verse5_str = uppercase_words_in_string(all_bibrefs.luk_16_24_str, ["cried", "said,", ]);
-	lg.q12_1__verse5_href = all_bibrefs.luk_16_24_href;
+	lg.q12_1__sleep = `Select all verses that support that physically dead people DO HAVE CONSCIOUSNESS before resurrected.`;
+	lg.q12_1__verse1_str = uppercase_words_in_string(rf.isa_14_10_str, ["answer", "ask", "you,", ]);
+	lg.q12_1__verse1_href = rf.isa_14_10_href;
+	lg.q12_1__verse2_str = uppercase_words_in_string(rf.mat_17_3_str, ["talking", "him.", ]);;
+	lg.q12_1__verse2_href = rf.mat_17_3_href;
+	lg.q12_1__verse3_str = uppercase_words_in_string(rf.rev_6_10_str, ["cried", "loud", "voice,", "saying,", ]);
+	lg.q12_1__verse3_href = rf.rev_6_10_href;
+	lg.q12_1__verse4_str = uppercase_words_in_string(rf.heb_12_23_str, ["festal", "gathering", "assembly", ]);
+	lg.q12_1__verse4_href = rf.heb_12_23_href;
+	lg.q12_1__verse5_str = uppercase_words_in_string(rf.luk_16_24_str, ["cried", "said,", ]);
+	lg.q12_1__verse5_href = rf.luk_16_24_href;
 
-	const q12_1__response_INTRO = `<p> This is a commonly cited verse as objection to SPIRIT (NOT soul) <a class='exam_ref' href='${href_sleeping}'>sleep</a>.</p>
-	<p> When arguing against SPIRIT <a class='exam_ref' href='${href_sleeping}'>sleep</a> always remember that the whole bible refers to the dead as <a class='exam_ref' href='${href_sleeping}'>SLEEP</a>, specially our Lord Jesus Christ. The reason is obvious: NO <a class='exam_ref' href='${href_sleeping}'>sleeping</a> person has CONSCIUOSNESS. That is the most prominent characteristic of a <a class='exam_ref' href='${href_sleeping}'>sleeping</a> person. Please read the section introducing the biblical concept of SPIRIT <a class='exam_ref' href='${href_sleeping}'>sleep</a>. </p>`;
+	const q12_1__response_INTRO = `<p> This is a commonly cited verse as objection to SPIRIT <a class='exam_ref' href='${href_sleeping}'>sleep</a>.</p>
+	<p> When arguing against SPIRIT (NOT soul) <a class='exam_ref' href='${href_sleeping}'>sleep</a> always remember that the whole bible refers to the dead as <a class='exam_ref' href='${href_sleeping}'>SLEEP</a>, specially our Lord Jesus Christ. The reason is obvious: NO <a class='exam_ref' href='${href_sleeping}'>sleeping</a> person has CONSCIOUSNESS. That is the most prominent characteristic of a <a class='exam_ref' href='${href_sleeping}'>sleeping</a> person. Please read the section introducing the biblical concept of SPIRIT <a class='exam_ref' href='${href_sleeping}'>sleep</a>. </p>`;
 	
 	const q12_1__response_END = `<p> So this verse <b>DOES NOT REFER</b> to the physically dead having CONSCIOUSNESS.</p>`;
 
 	
-	lg.q12_1__response_to_verse1 = `<a class='exam_ref' href=${all_bibrefs.isa_14_10_href}>Isa 14:10</a> ${q12_1__response_INTRO}
-	<p> This verse refers to a literal future time or an spiritual one that happend as reafirmation of the literal case. The king of Babilon represents The Satan, that is why <a class='exam_ref' href=${all_bibrefs.isa_14_12_href}>verse 12</a> is commonly cited to refer to The Satan. </p>
+	lg.q12_1__response_to_verse1 = `<a class='exam_ref' target='_blank' href=${rf.isa_14_10_href}>Isa 14:10</a> ${q12_1__response_INTRO}
+	<p> This verse refers to a literal future time or an spiritual one that happend as reafirmation of the literal case. The king of Babilon represents The Satan, that is why <a class='exam_ref' href=${rf.isa_14_12_href}>verse 12</a> is commonly cited to refer to The Satan. </p>
 	<p>Note that:</p> 
-	<li> <a class='exam_ref' href=${all_bibrefs.isa_14_8_href}>Verse 8</a> says: Yes, the cypress trees rejoice with you, with the cedars of Lebanon, saying, "Since you are humbled, no lumberjack has come up against us". So for the spiritual case it is a metaphor and the literal case has not nappened yet because <a class='exam_ref' href=${all_bibrefs.isa_14_7_href}>verse 7</a> has NOT happened literally: "The whole earth is at rest, and is quiet". 
-	<li> <a class='exam_ref' href=${all_bibrefs.isa_14_9_txt_href}>Verse 9</a> shows that the literal case implies that the dead have AWAKEN (word <a class='exam_ref' href=${all_strongrefs.H5782_href}>H5782</a>) which has NOT happend either because the resurrection of the dead has not happend. 
-	<li> <a class='exam_ref' href=${all_bibrefs.isa_14_18_txt_href}>Verse 18</a> tell us that each king is in his own HOUSE (word <a class='exam_ref' href=${all_strongrefs.H1004_href}>H1004</a>). For the literal case they have been resurrected. 
+	<li> <a class='exam_ref' href=${rf.isa_14_8_href}>Verse 8</a> says: Yes, the cypress trees rejoice with you, with the cedars of Lebanon, saying, "Since you are humbled, no lumberjack has come up against us". So for the spiritual case it is a metaphor and the literal case has not nappened yet because <a class='exam_ref' href=${rf.isa_14_7_href}>verse 7</a> has NOT happened literally: "The whole earth is at rest, and is quiet". 
+	<li> <a class='exam_ref' href=${rf.isa_14_9_txt_href}>Verse 9</a> shows that the literal case implies that the dead have AWAKEN (word <a class='exam_ref' href=${all_strongrefs.H5782_href}>H5782</a>) which has NOT happend either because the resurrection of the dead has not happend. 
+	<li> <a class='exam_ref' href=${rf.isa_14_18_txt_href}>Verse 18</a> tell us that each king is in his own HOUSE (word <a class='exam_ref' href=${all_strongrefs.H1004_href}>H1004</a>). For the literal case they have been resurrected. 
 	${q12_1__response_END}`;
 	
 	
-	lg.q12_1__response_to_verse2 = `<a class='exam_ref' href=${all_bibrefs.mat_17_3_href}>Mat 17:3</a> ${q12_1__response_INTRO}
+	lg.q12_1__response_to_verse2 = `<a class='exam_ref' href=${rf.mat_17_3_href}>Mat 17:3</a> ${q12_1__response_INTRO}
 	<p>It is also recommended that you have at least read the section introducing the biblical concept of <a class='exam_ref' href='${href_resurrection}'>Resurrection</a> and in particular the fact that <a class='exam_ref' href='${href_not_yet_resu}'>It has not happend</a>.</p>
-	<p> The most important thing to note about this verse is that they were physically present, they all have BODIES, and that is why Peter, in <a class='exam_ref' href=${all_bibrefs.mat_17_4_href}>verse 4</a>, offers to build three tents. Two tents for Moses and Elijah and one for Our Lord. They where in the Jewish festival of Sukkot. The feast of Tabernacles. Very appropiate signal to show that these "tabernacles" are going to be replaced by permanent "houses". </p>
+	<p> The most important thing to note about this verse is that they were physically present, they all have BODIES, and that is why Peter, in <a class='exam_ref' href=${rf.mat_17_4_href}>verse 4</a>, offers to build three tents. Two tents for Moses and Elijah and one for Our Lord. They where in the Jewish festival of Sukkot. The feast of Tabernacles. Very appropiate signal to show that these "tabernacles" are going to be replaced by permanent "houses". </p>
 	${q12_1__response_END}
 	`;
 	
 	const q12_1__response_144000 = `<p>This verse refers to the 144.000. Please read the section <a class='exam_ref' href='${href_144000}'>144.000</a> of the completely FREE book TodaCarne.com.	Another section that could help is the one called <a class='exam_ref' href='${href_eternal_abhorrence}'>Eternal Abhorrence</a>.</p>
-	<p> The most important thing to note about this verse is that it refers to people that have been resurrected. The Saints. The Great ones. The first fruits. The firstborn. They are a FEW: 144.000 male genetic descendants of Israel when completed. They all have BODIES, and that is why they can actually CRY, SPEAK, GATHER and ASSEMBLY.</p>
+	<p> The most important thing to note about this verse is that it refers to people that have been resurrected. The Saints. The Great ones. The first fruits. The firstborn. The ones God brings with Jesus Christ. They are a FEW: 144.000 male genetic descendants of Israel when completed. They all have BODIES, and that is why they can actually CRY, SPEAK, GATHER and ASSEMBLY.</p>`;
+	
+	
+	lg.q12_1__response_to_verse3 = `<a class='exam_ref' href=${rf.rev_6_10_href}>Rev 6:10</a> ${q12_1__response_INTRO} 
+	${q12_1__response_144000}
 	${q12_1__response_END}`;
 	
 	
-	lg.q12_1__response_to_verse3 = `<a class='exam_ref' href=${all_bibrefs.rev_6_10_href}>Rev 6:10</a> ${q12_1__response_INTRO} 
-	${q12_1__response_144000}`;
+	lg.q12_1__response_to_verse4 = `<a class='exam_ref' href=${rf.heb_12_23_href}>Heb 12:23</a> ${q12_1__response_INTRO} 
+	${q12_1__response_144000}
+	${q12_1__response_END}`;
 	
 	
-	lg.q12_1__response_to_verse4 = `<a class='exam_ref' href=${all_bibrefs.heb_12_23_href}>Heb 12:23</a> ${q12_1__response_INTRO} 
-	${q12_1__response_144000}`;
-	
-	
-	lg.q12_1__response_to_verse5 = `<a class='exam_ref' href=${all_bibrefs.luk_16_24_href}>Luk 16:24</a> ${q12_1__response_INTRO}
+	lg.q12_1__response_to_verse5 = `<a class='exam_ref' href=${rf.luk_16_24_href}>Luk 16:24</a> ${q12_1__response_INTRO}
 	<p>This verse is part of the famous PARABLE in Luke. Please read the section called <a class='exam_ref' href='${href_rich_and_laza}'>The rich and the poor Lazarus.</a> of the completely FREE book TodaCarne.com.</p>
 	<p> The most important thing to note about this verse is that it part of a PARABLE. So please read the correct <a class='exam_ref' href='${href_rich_and_laza}'>INTERPRETATION</a>.</p>
 	${q12_1__response_END}
 	`;
 		
-	const q12_1__response_sheol = `<p> This verse refers to the fact that ALL dead people go to Sheol, to the tomb, to the Sepulcre, to the pit. </p>
-	<p> Nowhere in the context or in the verse is there any thing remote that refers to CONSCIOUSNESS. It is really remarkable how the greek culture has affected the hebrew teachings of the hebrew scriptures. </p>
+	const q12_1__nowhere_consciousness = `<p> NOWHERE in this verse and its context is there any thing that remotely refers to CONSCIOUSNESS of physically dead people. It is really remarkable how the greek culture has affected the hebrew teachings of the hebrew scriptures.</p>`;
+	
+	const q12_1__response_sheol = `<p> This verse refers to the fact that ALL dead people go to the Sheol, to the tomb, to the Sepulcre, to the pit. </p>
+	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.gen_15_15_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.gen_15_15_href}>Gen 15:15</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.gen_15_15_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.gen_15_15_href}>Gen 15:15</a> ${q12_1__response_INTRO}
 	${q12_1__response_sheol}`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.gen_25_8_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.gen_25_8_href}>Gen 25:8</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.gen_25_8_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.gen_25_8_href}>Gen 25:8</a> ${q12_1__response_INTRO}
 	${q12_1__response_sheol}`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.gen_35_29_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.gen_35_29_href}>Gen 35:29</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.gen_35_29_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.gen_35_29_href}>Gen 35:29</a> ${q12_1__response_INTRO}
 	${q12_1__response_sheol}`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs._1pe_3_19_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs._1pe_3_19_href}>1Pe 3:19</a> ${q12_1__response_INTRO}
-	<p> This verse refers to spiritually dead people. Please read the sections called <a class='exam_ref' href='${href_life}'>Life</a>, <a class='exam_ref' href='${href_death}'>Death</a>, and <a class='exam_ref' href='${href_liberator}'>Liberator</a> of the completely FREE book TodaCarne.com.</p> 
+	const q12_1__response_spiritually_dead = `<p> This verse refers to spiritually dead people. Please read the sections called <a class='exam_ref' href='${href_life}'>Life</a>, <a class='exam_ref' href='${href_death}'>Death</a>, and <a class='exam_ref' href='${href_liberator}'>Liberator</a> of the completely FREE book TodaCarne.com.</p>`;
+	
+	rnam = get_verse_reponse_name("q12_1__", rf._1pe_3_19_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf._1pe_3_19_href}>1Pe 3:19</a> ${q12_1__response_INTRO}
+	${q12_1__response_spiritually_dead}
 	<p> The most important thing to note in this verse and its context is that ALL people are DEAD without Jesus Christ who is LIFE itself. So the verse refers to people PHYSICALLY alive but spiritually dead. Any person that does not believe in Jesus Christ is a slave, a PRISONER of the Spirit that rules this world, that person is a "spirit in prison". Jesus's RESURRECTION good news set that person free. It is a new begining. And the times of Noah, which were a new begining, were a SIGN of the new begining in the times of Christ. That is what the passage is about. Maybe NOT in a bad translation but certanly in the ancient koine greek.</p>
 	<p> The second thing to note is that NOWHERE, in the verse or its context, appears the greek word Hades, the greek word used in ancient greek manuscripts for the hebrew Sheol, the place where dead people go: the tomb, the Sepulcre, the pit. This passage is NOT talking about PHYSICALLY dead people. It is about spiritually dead people and they were ALL spiritually dead when Jesus died and resurrected. </p>
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs._2co_5_8_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs._2co_5_8_href}>2Co 5:8</a> ${q12_1__response_INTRO}
-	<p> NOWHERE in this verse and its context is there any thing that remotely refers to CONSCIOUSNESS of physically dead people. It is really remarkable how the greek culture has affected the hebrew teachings of the hebrew scriptures. Ofcourse any believer in the RESURRECTION of Jesus Christ prefers to be absent of this body that dies AND, when RESURRECTED in a new body that cannot die, be present with the Lord. He is, after all, RESURRECTED in BODY and SPIRIT. So the ONLY way to be PRESENT with Him is to be ALSO RESURRECTED.</p>
+	rnam = get_verse_reponse_name("q12_1__", rf._2co_5_8_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf._2co_5_8_href}>2Co 5:8</a> ${q12_1__response_INTRO}
+	${q12_1__nowhere_consciousness}
+	<p>Ofcourse any believer in the RESURRECTION of Jesus Christ prefers to be absent of this body that dies AND, when RESURRECTED in a new body that cannot die, be present with the Lord. He is, after all, RESURRECTED in BODY and SPIRIT. So the ONLY way to be PRESENT with Him is to be ALSO RESURRECTED.</p>
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.act_7_59_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.act_7_59_href}>Act 7:59</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.act_7_59_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.act_7_59_href}>Act 7:59</a> ${q12_1__response_INTRO}
+	<p> This verse refers to the fact that when people die, as <a class='exam_ref' href=${rf.ecc_12_7_href}>Ecc 12:7</a> tells us, the spirit RETURNS to Elohim who gave it, so everything goes back as it was BEFORE the person was physically born. </p>
+	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.luk_20_38_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.luk_20_38_href}>Luk 20:38</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.luk_20_38_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.luk_20_38_href}>Luk 20:38</a> ${q12_1__response_INTRO}
+	<p> This verse refers to the fact that dead people CAN be AWAKEN from their <a class='exam_ref' href='${href_sleeping}'>SLEEP</a>, and that is why to the one who can WAKE them up they are still ALIVE.</p>
+	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs._2co_12_4_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs._2co_12_4_href}>2Co 12:4</a> ${q12_1__response_INTRO}
+	const q12_1__response_paradise = `<p> This verse refers to the PARADISE, a physical PLACE where RESURRECTED people will live eternally with Jesus Christ, NOT to the Sheol, to the tomb, to the Sepulcre, to the pit.</p>
+	${q12_1__nowhere_consciousness}
+	`;
+	
+	rnam = get_verse_reponse_name("q12_1__", rf._2co_12_4_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf._2co_12_4_href}>2Co 12:4</a> ${q12_1__response_INTRO}
+	${q12_1__response_paradise}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.luk_23_43_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.luk_23_43_href}>Luk 23:43</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.luk_23_43_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.luk_23_43_href}>Luk 23:43</a> ${q12_1__response_INTRO}
+	${q12_1__response_paradise}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs._1ti_5_6_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs._1ti_5_6_href}>1Ti 5:6</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf._1ti_5_6_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf._1ti_5_6_href}>1Ti 5:6</a> ${q12_1__response_INTRO}
+	${q12_1__response_spiritually_dead}
+	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.luk_15_24_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.luk_15_24_href}>Luk 15:24</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.luk_15_24_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.luk_15_24_href}>Luk 15:24</a> ${q12_1__response_INTRO}
+	${q12_1__response_spiritually_dead}
+	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.jhn_4_24_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.jhn_4_24_href}>Jhn 4:24</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.jhn_4_24_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.jhn_4_24_href}>Jhn 4:24</a> ${q12_1__response_INTRO}
+	<p> This verse refers to PHYSICALLY alive people to worship in spirit and in truth.
+	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.heb_1_14_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.heb_1_14_href}>Heb 1:14</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.heb_1_14_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.heb_1_14_href}>Heb 1:14</a> ${q12_1__response_INTRO}
+	<p>This verse refers to angels as spirits. The bible refers to any physically living person as a spirit. Please read the sections <a class='exam_ref' href='${href_angels}'>Angels</a> and <a class='exam_ref' href='${href_wings}'>Wings</a> of the completely FREE book TodaCarne.com.</p>
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.phl_1_23_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.phl_1_23_href}>Phl 1:23</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.phl_1_23_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.phl_1_23_href}>Phl 1:23</a> ${q12_1__response_INTRO}
+	${q12_1__nowhere_consciousness}
+	<p>Ofcourse any believer in the RESURRECTION of Jesus Christ prefers depart and be with Christ when RESURRECTED in a new body that cannot die. He is, after all, RESURRECTED in BODY and SPIRIT. So the ONLY way to be with Him is to be ALSO RESURRECTED.</p>
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.psa_16_11_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.psa_16_11_href}>Psa 16:11</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.psa_16_11_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.psa_16_11_href}>Psa 16:11</a> ${q12_1__response_INTRO}
+	${q12_1__nowhere_consciousness}
+	<p>Ofcourse any believer in the RESURRECTION of Jesus Christ knows that he is The Way and The Life and that he will get to be in His presence when RESURRECTED in a new body that cannot die. He is, after all, RESURRECTED in BODY and SPIRIT. So the ONLY way to be in His presence is to be ALSO RESURRECTED.</p>
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs.isa_8_19_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs.isa_8_19_href}>Isa 8:19</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf.isa_8_19_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf.isa_8_19_href}>Isa 8:19</a> ${q12_1__response_INTRO}
+	The prohibition in the Old Testament for people to speak to the dead is to prevent them from speaking to Celestial Powers, commonly known in the New Testament as DEMONS, that will pretend to be the dead person to decieve the one trying to communicate with the dead.
+	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", all_bibrefs._1th_4_14_obj);
-	lg[rnam] = `<a class='exam_ref' href=${all_bibrefs._1th_4_14_href}>1Th 4:14</a> ${q12_1__response_INTRO}
+	rnam = get_verse_reponse_name("q12_1__", rf._1th_4_14_obj);
+	lg[rnam] = `<a class='exam_ref' href=${rf._1th_4_14_href}>1Th 4:14</a> ${q12_1__response_INTRO}
+	${q12_1__response_144000}
+	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;	
 	
 	lg.q13_1__sleep = `Select all verses that support that dead people do NOT have CONSCIOUSNESS until resurrected.`;
-	lg.q13_1__verse1_str = uppercase_words_in_string(all_bibrefs.jhn_11_11_str, ["asleep,", "awake", ]);
-	lg.q13_1__verse1_href = all_bibrefs.jhn_11_11_href;
+	lg.q13_1__verse1_str = uppercase_words_in_string(rf.jhn_11_11_str, ["asleep,", "awake", ]);
+	lg.q13_1__verse1_href = rf.jhn_11_11_href;
 	lg.q13_1__verse1_should = "Lazarous is ASLEEP until he is AWAKEN";
 	lg.q13_1__verse2_str = `In 1 Corinthians 11:30 PEOPLE (not bodies) are sleeping (STILL going on) according to the greek conjugation: κοιμῶνται`;
 	const obj_1co_11_30 = { book: "1_corinthians", chapter: 11, verse: 30, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", };
 	lg.q13_1__verse2_href = make_bible_ref(obj_1co_11_30);
 	lg.q13_1__verse2_should = "They SLEEPING acording to the conjugation of the greek verb";
-	lg.q13_1__verse3_str = uppercase_words_in_string(all_bibrefs.ecc_9_10_str, ["no", "work,", "nor", "plan,", "knowledge,", "wisdom,", "Sheol,", ]);
-	lg.q13_1__verse3_href = all_bibrefs.ecc_9_10_href;
+	lg.q13_1__verse3_str = uppercase_words_in_string(rf.ecc_9_10_str, ["no", "work,", "nor", "plan,", "knowledge,", "wisdom,", "Sheol,", ]);
+	lg.q13_1__verse3_href = rf.ecc_9_10_href;
 	lg.q13_1__verse3_should = "WORK, PLAN, KNOWLEDGE, WISDOM. These words specifically refer to actions of CONSCIOUSNESS. A property of living PEOPLE not just bodies made dust.";
-	lg.q13_1__verse4_str = uppercase_words_in_string(all_bibrefs.ecc_12_7_str, ["dust", "returns", "spirit", ]);
-	lg.q13_1__verse4_href = all_bibrefs.ecc_12_7_href;
+	lg.q13_1__verse4_str = uppercase_words_in_string(rf.ecc_12_7_str, ["dust", "returns", "spirit", ]);
+	lg.q13_1__verse4_href = rf.ecc_12_7_href;
 	lg.q13_1__verse4_should = "After dead things RETURN as they were. You did NOT have CONSCIOUSNESS before being born.";
-	lg.q13_1__verse5_str = uppercase_words_in_string(all_bibrefs.job_7_21_str, ["not", 'be.', ]);
-	lg.q13_1__verse5_href = all_bibrefs.job_7_21_href;
+	lg.q13_1__verse5_str = uppercase_words_in_string(rf.job_7_21_str, ["not", 'be.', ]);
+	lg.q13_1__verse5_href = rf.job_7_21_href;
 	lg.q13_1__verse5_should = "When a person dies it will NOT BE anymore.";
-	lg.q13_1__verse6_str = uppercase_words_in_string(all_bibrefs.job_14_12_str, ["Until", "nor", "roused", "out", "sleep.", ]);
-	lg.q13_1__verse6_href = all_bibrefs.job_14_12_href;
+	lg.q13_1__verse6_str = uppercase_words_in_string(rf.job_14_12_str, ["Until", "nor", "roused", "out", "sleep.", ]);
+	lg.q13_1__verse6_href = rf.job_14_12_href;
 	lg.q13_1__verse6_should = "People will NOT be ROUSED OUT of their SLEEP UNTIL these heavens are no more";
-	lg.q13_1__verse7_str = uppercase_words_in_string(all_bibrefs.psa_115_17_str, ["dead", "don’t", "praise", ]);
-	lg.q13_1__verse7_href = all_bibrefs.psa_115_17_href;
+	lg.q13_1__verse7_str = uppercase_words_in_string(rf.psa_115_17_str, ["dead", "don’t", "praise", ]);
+	lg.q13_1__verse7_href = rf.psa_115_17_href;
 	lg.q13_1__verse7_should = "DEAD people (NOT just bodies) do NOT PRAISE";	
-	lg.q13_1__verse8_str = uppercase_words_in_string(all_bibrefs.jhn_5_28_str, ["are", "in", "tombs"]);
-	lg.q13_1__verse8_href = all_bibrefs.jhn_5_28_href;
+	lg.q13_1__verse8_str = uppercase_words_in_string(rf.jhn_5_28_str, ["are", "in", "tombs"]);
+	lg.q13_1__verse8_href = rf.jhn_5_28_href;
 	lg.q13_1__verse8_should = "People who get resurrection ARE IN the TOMBS, the sepulcre, the hebrew Sheol, the poorly translated greek Hades, NOT in heaven or hell.";
 	
 

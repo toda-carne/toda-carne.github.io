@@ -100,6 +100,7 @@ function init_es_basic_msg(){
 	obj.msg_end_ans = "TERMINAR RESPUESTA";
 	obj.msg_edit_ans = "CAMBIAR RESPUESTA";
 	
+	obj.msg_sel_cit = "ESCOGER DE BD";
 	obj.msg_add_verse = "AGREGAR VERSICULO";
 	obj.msg_add_strong = "AGREGAR CODIGO STRONG";
 	obj.msg_add_link = "AGREGAR ENLACE WEB";
