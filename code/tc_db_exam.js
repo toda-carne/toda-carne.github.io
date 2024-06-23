@@ -791,8 +791,8 @@ export function init_exam_database(){
 		},
 	};
 
-	const all_q12_1__with_response = [rf.gen_15_15_obj, rf.gen_25_8_obj, rf._1pe_3_19_obj, rf._2co_5_8_obj, rf.act_7_59_obj, rf.luk_20_38_obj, rf._2co_12_4_obj, rf.luk_23_43_obj, rf._1ti_5_6_obj, rf.luk_15_24_obj, rf.jhn_4_24_obj, rf.heb_1_14_obj, rf.phl_1_23_obj, rf.psa_16_11_obj, 
-	rf.isa_8_19_obj, rf._1th_4_14_obj, 
+	const all_q12_1__with_response = [
+		rf.gen_15_15_obj, rf.gen_25_8_obj, rf.psa_16_11_obj, rf.isa_8_19_obj, rf.luk_15_24_obj, rf.luk_20_38_obj, rf.luk_23_43_obj, rf.jhn_4_24_obj, rf.act_7_59_obj, rf._2co_5_8_obj, rf._2co_12_4_obj, rf.phl_1_23_obj, rf._1th_4_14_obj, rf._1ti_5_6_obj, rf.heb_1_14_obj, rf._1pe_3_19_obj, 
 	];
 	add_reponse_questions(db, "q12_1__", all_q12_1__with_response);
 

@@ -17,14 +17,17 @@
 
 (declare-const all_perceptual_experience Bool)
 
-(assert (forall ((m1 Machine) (m2 Machine)) 
-        (=> all_perceptual_experience 
-                (=> (> (fc m2) (fc m1)) 
-					(> (ridctr m2) (ridctr m1)))
-        )
-        )
-)
+(define-fun fc_to_rtr ((m1 Machine) (m2 Machine)) Bool
+	(=> (> (fc m2) (fc m1)) 
+		(> (ridctr m2) (ridctr m1)))
+) 
 
+(define-fun pe_of_fc_to_rtr ((m1 Machine) (m2 Machine)) Bool
+	(=> all_perceptual_experience (fc_to_rtr m1 m2))
+) 
+
+
+(assert (forall ((m1 Machine) (m2 Machine)) (pe_of_fc_to_rtr m1 m2)))
 
 (assert (forall ((m1 Machine)) 
 			(=> (human_made m1)
