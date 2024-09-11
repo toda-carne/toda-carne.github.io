@@ -259,6 +259,8 @@ function init_en_basic_msg(){
 	obj.msg_help_cit_ed_ok_right_click = "Right click to toggle In favor/Against";
 	obj.msg_help_cit_ed_range_right_click = "Right click to toggle range field";
 	obj.msg_help_cit_ed_any_bib_right_click = "Right click to toggle any bible version selection";
+
+	obj.msg_qref_question_num = "question number";
 	
 }
 
@@ -304,14 +306,14 @@ function fill_all_strongrefs_href(){
 	}  	
 }
 
-function fill_all_bibrefs_href(){
-	for (const [key, bib_obj] of Object.entries(all_bibrefs)) {
+function fill_bibrefs_href(all_rfs){
+	for (const [key, bib_obj] of Object.entries(all_rfs)) {
 		const ob_sufx = "_obj";
 		if(key.endsWith(ob_sufx)){
 			const prefx = key.slice(0, key.length - ob_sufx.length);
 			const href_attr = prefx + "_href";
 			const href_val = make_bible_ref(bib_obj);
-			all_bibrefs[href_attr] = href_val;
+			all_rfs[href_attr] = href_val;
 			//console.log(`${href_attr} = ${href_val}`);
 		}
 	}  
@@ -329,14 +331,14 @@ export function init_en_module(){
 	
 	fill_reversed_object(num2abbr, abbr2num);
 	
-	fill_all_bibrefs_href();
+	fill_bibrefs_href(all_bibrefs);
 	fill_all_strongrefs_href();
 
 	init_en_exam_msg();
 }
 
 //init_en_module();
-function uppercase_words_in_string(the_str, to_up_arr){
+export function uppercase_words_in_string(the_str, to_up_arr){
 	const words = the_str.split(' ');
 	//console.log(JSON.stringify(words, null, "  "));
 	const nw_words = [];
@@ -360,7 +362,7 @@ function citation_to_en(cit_obj){ // websites use english names for citations
 
 export function get_book_nam(book){
 	let book_nam = book; 
-	if(isNaN(book)){ // all_bibrefs references
+	if(isNaN(book)){ // bibrefs references
 		book_nam = book;
 	} else { // normal references
 		let num = Number(book);
@@ -371,7 +373,7 @@ export function get_book_nam(book){
 
 export function get_loc_book_nam(book){
 	let num = -1;
-	if(isNaN(book)){ // all_bibrefs references
+	if(isNaN(book)){ // bibrefs references
 		num = book2num_en[book];
 	} else { // normal references
 		num = Number(book);
@@ -461,13 +463,19 @@ export function make_strong_ref(scode){
 	return bibref;
 }
 
+export function get_verse_reponse_name(qid, cit_obj){
+	const kk = get_verse_cit_key(cit_obj);
+	const r_nam = qid + "reponse_" + kk;
+	return r_nam;
+}
+
 export const all_strongrefs = {
 	H1004_cod: "H1004",
 	H5782_cod: "H5782",
 }
 
 export const all_bibrefs = {
-	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_all_bibrefs_href gets called
+	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_bibrefs_href gets called
 	gen_15_15_obj: { book: "genesis", chapter: 15, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
 	gen_15_15_str: `Gen 15:15. but you will go to your fathers in peace. You will be buried at a good old age.`,
 	gen_25_8_obj: { book: "genesis", chapter: 25, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", },
@@ -1145,8 +1153,3 @@ function init_en_exam_msg(){
 	
 }
 
-export function get_verse_reponse_name(qid, cit_obj){
-	const kk = get_verse_cit_key(cit_obj);
-	const r_nam = qid + "reponse_" + kk;
-	return r_nam;
-}

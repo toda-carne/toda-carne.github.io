@@ -2076,7 +2076,7 @@ function qid_to_qhref(qid){
 		const bad_qhrf = "<a class='exam_ref' href='#" + qid + "'>invalid question " + qid + "</a>";
 		return bad_qhrf;
 	}
-	const qhrf = "<a class='exam_ref' href='#" + qid + "'>question number " + quest.pos_page + "</a>";
+	const qhrf = "<a class='exam_ref' href='#" + qid + "'>" + glb_curr_lang.msg_qref_question_num + " " + quest.pos_page + "</a>";
 	return qhrf;
 }
 
@@ -2110,7 +2110,10 @@ function set_anchors_target(the_div){
 	const all_anchor = the_div.querySelectorAll("a");
 
 	all_anchor.forEach((aa) => {
-		aa.setAttribute('target', '_blank');
+		const is_local_ref = aa.getAttribute("href").startsWith("#");
+		if(! is_local_ref){
+			aa.setAttribute('target', '_blank');
+		}
 	});
 }
 
