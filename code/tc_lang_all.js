@@ -866,7 +866,7 @@ function init_en_exam_msg(){
 	lg.q7_1__verse2_should = "We will be LIKE HIM";
 	lg.q7_1__verse3_str = uppercase_words_in_string(rf.luk_20_36_str, ["can’t", "die", ]);
 	lg.q7_1__verse3_href = rf.luk_20_36_href;
-	lg.q7_1__verse3_should = "Thos bodies CAN'T DIE";
+	lg.q7_1__verse3_should = "Those bodies CAN'T DIE";
 	lg.q7_1__verse4_str = uppercase_words_in_string(rf.heb_9_27_str, ["die", "once,", ]);
 	lg.q7_1__verse4_href = rf.heb_9_27_href;
 	lg.q7_1__verse4_should = "We are destined to DIE ONCE. No more.";

@@ -205,7 +205,7 @@ export const all_es_bibrefs = {
 	mat_17_3_str: `Mat 17:3. Behold, Moses and Elijah appeared to them talking with him.`,
 	mat_17_4_obj: { book: "matthew", chapter: 17, verse: 4, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	mat_26_64_obj: { book: "matthew", chapter: 26, verse: 64, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	mat_26_64_str: `Mat 26:64. Jesus said to him, "You have said so. Nevertheless, I tell you, after this you will see the Son of Man sitting at the right hand of Power, and coming on the clouds of the sky."`,
+	mat_26_64_str: `Mat 26:64.  Jesús le dijo: Tú lo has dicho: y aun os digo, que desde ahora habéis de ver al Hijo de los hombres sentado á la diestra de la potencia de Dios, y que viene en las nubes del cielo."`,
 	mat_28_9_obj: { book: "matthew", chapter: 28, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	mat_28_9_str: `Mat 28:9. He aquí, Jesús les sale al encuentro, diciendo: Salve. Y ellas se llegaron y abrazaron sus pies, y le adoraron.`,
 	mar_16_19_obj: { book: "mark", chapter: 16, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
@@ -217,7 +217,7 @@ export const all_es_bibrefs = {
 	luk_16_24_obj: { book: "luke", chapter: 16, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	luk_16_24_str: `Luk 16:24. He cried and said, ‘Father Abraham, have mercy on me, and send Lazarus, that he may dip the tip of his finger in water, and cool my tongue! For I am in anguish in this flame.’`,
 	luk_20_36_obj: { book: "luke", chapter: 20, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	luk_20_36_str: `Luk 20:36. For they can’t die any more, for they are like the angels, and are children of God, being children of the resurrection.`,
+	luk_20_36_str: `Luk 20:36. Porque no pueden ya más morir: porque son iguales á los ángeles, y son hijos de Dios, cuando son hijos de la resurrección.`,
 	luk_20_38_obj: { book: "luke", chapter: 20, verse: 38, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	luk_20_38_str: `Luk 20:38. Now he is not the God of the dead, but of the living, for all are alive to him.`,
 	luk_23_43_obj: { book: "luke", chapter: 23, verse: 43, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
@@ -233,11 +233,11 @@ export const all_es_bibrefs = {
 	jhn_4_24_obj: { book: "john", chapter: 4, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	jhn_4_24_str: `Jhn 4:24. God is spirit, and those who worship him must worship in spirit and truth.`,
 	jhn_5_28_obj: { book: "john", chapter: 5, verse: 28, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_5_28_str: `Jhn 5:28. Don’t marvel at this, for the hour comes in which all who are in the tombs will hear his voice,`,
+	jhn_5_28_str: `Jhn 5:28. No os maravilléis de esto; porque vendrá hora, cuando todos los que están en los sepulcros oirán su voz;`,
 	jhn_5_29_obj: { book: "john", chapter: 5, verse: 29, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_5_29_str: `Jhn 5:29. and will come out; those who have done good, to the resurrection of life; and those who have done evil, to the resurrection of judgment.`,
-	jhn_6_39_obj: { book: "john", chapter: 6, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_6_39_str: `Jhn 6:39. This is the will of my Father who sent me, that of all he has given to me I should lose nothing, but should raise him up at the last day.`,
+	jhn_5_29_str: `Jhn 5:29.  Y los que hicieron bien, saldrán á resurrección de vida; mas los que hicieron mal, á resurrección de condenación.`,
+	jhn_6_39_obj: { book: "john", chapter: 6, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "LBLA", },
+	jhn_6_39_str: `Jhn 6:39. Y esta es la voluntad del que me envió: que de todo lo que Él me ha dado yo no pierda nada, sino que lo resucite en el día final.`,
 	jhn_6_40_obj: { book: "john", chapter: 6, verse: 40, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	jhn_6_40_str: `Jhn 6:40. This is the will of the one who sent me, that everyone who sees the Son, and believes in him, should have eternal life; and I will raise him up at the last day.`,
 	jhn_6_44_obj: { book: "john", chapter: 6, verse: 44, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
@@ -249,15 +249,15 @@ export const all_es_bibrefs = {
 	jhn_11_24_obj: { book: "john", chapter: 11, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	jhn_11_24_str: `Jhn 11:24. Martha said to him, "I know that he will rise again in the resurrection at the last day."`,
 	jhn_17_2_obj: { book: "john", chapter: 17, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_17_2_str: `Jhn 17:2. even as you gave him authority over all flesh, so he will give eternal life to all whom you have given him.`,
+	jhn_17_2_str: `Jhn 17:2. Como le has dado la potestad de toda carne, para que dé vida eterna á todos los que le diste.`,
 	jhn_20_20_obj: { book: "john", chapter: 20, verse: 20, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	jhn_20_20_str: `Jhn 20:20. When he had said this, he showed them his hands and his side. The disciples therefore were glad when they saw the Lord.`,
 	jhn_20_27_obj: { book: "john", chapter: 20, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	jhn_20_27_str: `Jhn 20:27. Luego dice á Tomás: Mete tu dedo aquí, y ve mis manos: y alarga acá tu mano, y métela en mi costado: y no seas incrédulo, sino fiel.`,
 	jhn_14_2_obj: { book: "john", chapter: 14, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_14_2_str: `Jhn 14:2. In my Father’s house are many homes. If it weren’t so, I would have told you. I am going to prepare a place for you.`,
+	jhn_14_2_str: `Jhn 14:2. En la casa de mi Padre muchas moradas hay: de otra manera os lo hubiera dicho: voy, pues, á preparar lugar para vosotros.`,
 	act_1_11_obj: { book: "acts", chapter: 1, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	act_1_11_str: `Act 1:11. who also said, "You men of Galilee, why do you stand looking into the sky? This Jesus, who was received up from you into the sky, will come back in the same way as you saw him going into the sky."`,
+	act_1_11_str: `Act 1:11. Los cuales también les dijeron: Varones Galileos, ¿qué estáis mirando al cielo? este mismo Jesús que ha sido tomado desde vosotros arriba en el cielo, así vendrá como le habéis visto ir al cielo."`,
 	act_7_59_obj: { book: "acts", chapter: 7, verse: 59, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	act_7_59_str: `Act 7:59. They stoned Stephen as he called out, saying, "Lord Jesus, receive my spirit!"`,
 	act_10_41_obj: { book: "acts", chapter: 10, verse: 41, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
@@ -265,15 +265,15 @@ export const all_es_bibrefs = {
 	act_13_36_obj: { book: "acts", chapter: 13, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	act_13_36_str: `Act 13:36. For David, after he had in his own generation served the counsel of God, fell asleep, was laid with his fathers, and saw decay.`,
 	act_24_15_obj: { book: "acts", chapter: 24, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	act_24_15_str: `Act 24:15. having hope toward God, which these also themselves look for, that there will be a resurrection of the dead, both of the just and unjust.`,
+	act_24_15_str: `Act 24:15. Teniendo esperanza en Dios que ha de haber resurrección de los muertos, así de justos como de injustos, la cual también ellos esperan.`,
 	rom_6_9_obj: { book: "romans", chapter: 6, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	rom_6_9_str: `Rom 6:9. Sabiendo que Cristo, habiendo resucitado de entre los muertos, ya no muere: la muerte no se enseñoreará más de él.`,
 	_1co_15_22_obj: { book: "1_corinthians", chapter: 15, verse: 22, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_1co_15_22_str: `1Co 15:22. For as in Adam all die, so also in Christ all will be made alive.`,
+	_1co_15_22_str: `1Co 15:22. Porque así como en Adam todos mueren, así también en Cristo todos serán vivificados.`,
 	_1co_15_42_obj: { book: "1_corinthians", chapter: 15, verse: 42, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_1co_15_42_str: `1Co 15:42. So also is the resurrection of the dead. The body is sown perishable; it is raised imperishable.`,
+	_1co_15_42_str: `1Co 15:42. Así también es la resurrección de los muertos. Se siembra en corrupción se levantará en incorrupción;`,
 	_1co_15_49_obj: { book: "1_corinthians", chapter: 15, verse: 49, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_1co_15_49_str: `1Co 15:49. As we have borne the image of those made of dust, let’s also bear the image of the heavenly.`,
+	_1co_15_49_str: `1Co 15:49. Y como trajimos la imagen del terreno, traeremos también la imagen del celestial.`,
 	_2co_5_8_obj: { book: "2_corinthians", chapter: 5, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	_2co_5_8_str: `2Co 5:8. We are courageous, I say, and are willing rather to be absent from the body and to be at home with the Lord.`,
 	_2co_12_4_obj: { book: "2_corinthians", chapter: 12, verse: 4, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
@@ -281,15 +281,15 @@ export const all_es_bibrefs = {
 	phl_1_23_obj: { book: "philippians", chapter: 1, verse: 23, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	phl_1_23_str: `Phl 1:23. But I am hard pressed between the two, having the desire to depart and be with Christ, which is far better.`,
 	phl_3_21_obj: { book: "philippians", chapter: 3, verse: 21, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	phl_3_21_str: `Phl 3:21. who will change the body of our humiliation to be conformed to the body of his glory, according to the working by which he is able even to subject all things to himself.`,
-	col_1_15_obj: { book: "colossians", chapter: 1, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	col_1_15_str: `Col 1:15. He is the image of the invisible God, the firstborn of all creation.`,
+	phl_3_21_str: `Phl 3:21. El cual transformará el cuerpo de nuestra bajeza, para ser semejante al cuerpo de su gloria, por la operación con la cual puede también sujetar á sí todas las cosas.`,
+	col_1_15_obj: { book: "colossians", chapter: 1, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", },
+	col_1_15_str: `Col 1:15. Cristo es la imagen visible de Dios, que es invisible; es su Hijo primogénito, anterior a todo lo creado.`,
 	_1th_4_14_obj: { book: "1_thessalonians", chapter: 4, verse: 14, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	_1th_4_14_str: `1Th 4:14. For if we believe that Jesus died and rose again, even so God will bring with him those who have fallen asleep in Jesus.`,
 	_1ti_5_6_obj: { book: "1_timothy", chapter: 5, verse: 6, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	_1ti_5_6_str: `1Ti 5:6. But she who gives herself to pleasure is dead while she lives. `,
-	_2ti_2_18_obj: { book: "2_timothy", chapter: 2, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_2ti_2_18_str: `2Ti 2:18. men who have erred concerning the truth, saying that the resurrection is already past, and overthrowing the faith of some.`,
+	_2ti_2_18_obj: { book: "2_timothy", chapter: 2, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NTV", },
+	_2ti_2_18_str: `2Ti 2:18. Ellos han abandonado el camino de la verdad al afirmar que la resurrección de los muertos ya ocurrió; de esa manera, desviaron de la fe a algunas personas.`,
 	heb_1_14_obj: { book: "hebrews", chapter: 1, verse: 14, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	heb_1_14_str: `Heb 1:14. Aren’t they all serving spirits, sent out to do service for the sake of those who will inherit salvation?`,
 	heb_7_16_obj: { book: "hebrews", chapter: 7, verse: 16, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", },
@@ -297,23 +297,23 @@ export const all_es_bibrefs = {
 	heb_7_25_obj: { book: "hebrews", chapter: 7, verse: 25, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	heb_7_25_str: `Heb 7:25. Por lo cual puede también salvar eternamente á los que por él se allegan á Dios, viviendo siempre para interceder por ellos.`,
 	heb_9_12_obj: { book: "hebrews", chapter: 9, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_9_12_str: `Heb 9:12. nor yet through the blood of goats and calves, but through his own blood, entered in once for all into the Holy Place, having obtained eternal redemption.`,
+	heb_9_12_str: `Heb 9:12. Y no por sangre de machos cabríos ni de becerros, mas por su propia sangre, entró una sola vez en el santuario, habiendo obtenido eterna redención.`,
 	heb_9_27_obj: { book: "hebrews", chapter: 9, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_9_27_str: `Heb 9:27. Inasmuch as it is appointed for men to die once, and after this, judgment,`,
+	heb_9_27_str: `Heb 9:27. Y de la manera que está establecido á los hombres que mueran una vez, y después el juicio;`,
 	heb_9_28_obj: { book: "hebrews", chapter: 9, verse: 28, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	heb_9_28_str: `Heb 9:28. so Christ also, having been offered once to bear the sins of many, will appear a second time, without sin, to those who are eagerly waiting for him for salvation.`,
 	heb_10_12_obj: { book: "hebrews", chapter: 10, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_10_12_str: `Heb 10:12. but he, when he had offered one sacrifice for sins forever, sat down on the right hand of God,`,
+	heb_10_12_str: `Heb 10:12. Pero éste, habiendo ofrecido por los pecados un solo sacrificio para siempre, está sentado á la diestra de Dios,`,
 	heb_12_23_obj: { book: "hebrews", chapter: 12, verse: 23, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	heb_12_23_str: `Heb 12:23. to the festal gathering and assembly of the firstborn who are enrolled in heaven, to God the Judge of all, to the spirits of just men made perfect,`,
-	heb_13_8_obj: { book: "hebrews", chapter: 13, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_13_8_str: `Heb 13:8. Jesus Christ is the same yesterday, today, and forever.`,
+	heb_13_8_obj: { book: "hebrews", chapter: 13, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", },
+	heb_13_8_str: `Heb 13:8.  Jesucristo es el mismo ayer, hoy y siempre.`,
 	_1pe_3_19_obj: { book: "1_peter", chapter: 3, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	_1pe_3_19_str: `1Pe 3:19. in whom he also went and preached to the spirits in prison, `,
 	_2pe_3_13_obj: { book: "2_peter", chapter: 3, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	_2pe_3_13_str: `2Pe 3:13. But, according to his promise, we look for new heavens and a new earth, in which righteousness dwells.`,
 	_1jo_3_2_obj: { book: "1_john", chapter: 3, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_1jo_3_2_str: `1Jo 3:2. Beloved, now we are children of God. It is not yet revealed what we will be; but we know that when he is revealed, we will be like him; for we will see him just as he is.`,
+	_1jo_3_2_str: `1Jo 3:2. Muy amados, ahora somos hijos de Dios, y aun no se ha manifestado lo que hemos de ser; pero sabemos que cuando él apareciere, seremos semejantes á él, porque le veremos como él es.`,
 	rev_6_10_obj: { book: "revelation", chapter: 6, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	rev_6_10_str: `Rev 6:10. They cried with a loud voice, saying, "How long, Master, the holy and true, until you judge and avenge our blood on those who dwell on the earth?"`,
 	rev_14_13_obj: { book: "revelation", chapter: 14, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
@@ -522,75 +522,99 @@ function init_es_exam_msg(){
 	lg.q5_1__verse4_href = rf.heb_7_25_href;
 	lg.q5_1__verse4_should = `Dice literalmente "VIVIENDO SIEMPRE"`;
 	
+	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${href_in_heaven_resu}'>En los cielos</a>`;
+	lg.q6_1__in_heaven = `Seleccione todos los versiculos que soportan un Jesucristo RESUCITADO que esta en los cielos en CUERPO y Espíritu.`;
+	lg.q6_1__verse1_str = uppercase_words_in_string(rf.act_1_11_str, ["tomado", "vendrá", "ir", "al", "en", "el", "cielo.", "cielo,", "cielo?"]);
+	lg.q6_1__verse1_href = rf.act_1_11_href;
+	lg.q6_1__verse1_should = "IR AL CIELO y VENDRA del cielo. El está físicamente en unos cielos físicos";
+	lg.q6_1__verse2_str = uppercase_words_in_string(rf.mat_26_64_str, ["sentado", "nubes", "cielo."]);
+	lg.q6_1__verse2_href = rf.mat_26_64_href;
+	lg.q6_1__verse2_should = "El está SENTADO y viene en las NUBES del CIELO";
+	lg.q6_1__verse3_str = uppercase_words_in_string(rf.jhn_14_2_str, ["casa", "moradas", "lugar"]);
+	lg.q6_1__verse3_href = rf.jhn_14_2_href;
+	lg.q6_1__verse3_should = "EL hace un LUGAR para sus dicípulos";
+	lg.q6_1__verse4_str = uppercase_words_in_string(rf.heb_9_12_str, ["entró", "santuario,"]);
+	lg.q6_1__verse4_href = rf.heb_9_12_href;
+	lg.q6_1__verse4_should = "El ENTRO al SANTUARIO que está en los cielos";
+	lg.q6_1__verse5_str = uppercase_words_in_string(rf.heb_10_12_str, ["está", "sentado"]);
+	lg.q6_1__verse5_href = rf.heb_10_12_href;
+	lg.q6_1__verse5_should = "El ESTA SENTADO en los cielos";
+	lg.q6_1__verse6_str = uppercase_words_in_string(rf.heb_13_8_str, ["es", "mismo", "siempre."]);
+	lg.q6_1__verse6_href = rf.heb_13_8_href;
+	lg.q6_1__verse6_should = "El es SIEMPRE el MISMO. Luego si resucitó en CUERPO y espíritu, el TIENE que estar en CUERPO y espíritu en los cielos.";
+	lg.q6_1__verse7_str = uppercase_words_in_string(rf.col_1_15_str, ["imagen", "invisible;"]);
+	lg.q6_1__verse7_href = rf.col_1_15_href;
+	lg.q6_1__verse7_should = "El es la IMAGEN del Dios INVISIBLE. Luego si era visible cuando resucitó, El tiene que SEGUIR siendo visible en los cielos.";
+	
+	lg.q7_1__like_jesus_sec = `<a class='exam_ref exam_title' href='${href_like_jesus_resu}'>Como Jesucristo</a>`;
+	lg.q7_1__like_jesus = `Seleccione todos los versiculos que soportan una resurrección de los muertos semejante a la resurrección de Jesucristo`;
+	lg.q7_1__verse1_str = uppercase_words_in_string(rf.phl_3_21_str, ["semejante", "cuerpo", ]);
+	lg.q7_1__verse1_href = rf.phl_3_21_href;
+	lg.q7_1__verse1_should = `Dice literalmente "SEMEJANTE al CUERPO"`;
+	lg.q7_1__verse2_str = uppercase_words_in_string(rf._1jo_3_2_str, ["semejantes", "á", "él,", ]);
+	lg.q7_1__verse2_href = rf._1jo_3_2_href;
+	lg.q7_1__verse2_should = `Dice literalmente "SEMEJANTES a EL"`;
+	lg.q7_1__verse3_str = uppercase_words_in_string(rf.luk_20_36_str, ["no", "pueden", "morir:", ]);
+	lg.q7_1__verse3_href = rf.luk_20_36_href;
+	lg.q7_1__verse3_should = "Esos cuerpos NO PUEDEN MORIR";
+	lg.q7_1__verse4_str = uppercase_words_in_string(rf.heb_9_27_str, ["mueran", "una", ]);
+	lg.q7_1__verse4_href = rf.heb_9_27_href;
+	lg.q7_1__verse4_should = "Estamos destinados a MORIR UNA vez. Solo UNA. No mas.";
+	lg.q7_1__verse5_str = uppercase_words_in_string(rf._1co_15_49_str, ["traeremos", "imagen", "celestial.", ]);
+	lg.q7_1__verse5_href = rf._1co_15_49_href;
+	lg.q7_1__verse5_should = "TRAEREMOS la IMAGEN de lo CELESTIAL.";
+	lg.q7_1__verse6_str = uppercase_words_in_string(rf._1co_15_42_str, ["levantará", "incorrupción;"]);
+	lg.q7_1__verse6_href = rf._1co_15_42_href;
+	lg.q7_1__verse6_should = "Lo que resucita es INCURRUPTIBLE";
+	
+	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${href_for_all_resu}'>Para Todos</a>`;
+	lg.q8_1__for_all = `Seleccione todos los versiculos que soportan una resurrección de los muertos que es para TODOS`;
+	lg.q8_1__verse1_str = uppercase_words_in_string(rf.jhn_5_28_str, ["todos", "sepulcros", ]);
+	lg.q8_1__verse1_href = rf.jhn_5_28_href;
+	lg.q8_1__verse1_should = "TODOS significa TODOS";
+	lg.q8_1__verse2_str = uppercase_words_in_string(rf.jhn_5_29_str, ["bien,", "mal,", ]);
+	lg.q8_1__verse2_href = rf.jhn_5_29_href;
+	lg.q8_1__verse2_should = "Los que hicieron el BIEN y los que hicieron el MAL";
+	lg.q8_1__verse3_str = uppercase_words_in_string(rf.act_24_15_str, ["como", "justos", "injustos,", ]);
+	lg.q8_1__verse3_href = rf.act_24_15_href;
+	lg.q8_1__verse3_should = "Todos resucitan: JUSTOS e INJUSTOS.";
+	lg.q8_1__verse4_str = uppercase_words_in_string(rf.jhn_6_39_str, ["todo", "no", "pierda", "nada,", ]);
+	lg.q8_1__verse4_href = rf.jhn_6_39_href;
+	lg.q8_1__verse4_should = "De TODOS los que le dió NO PIERDA NADA.";
+	lg.q8_1__verse5_str = uppercase_words_in_string(rf.jhn_17_2_str, ["toda", "carne,", "eterna", "vida", "todos", ]);
+	lg.q8_1__verse5_href = rf.jhn_17_2_href;
+	lg.q8_1__verse5_should = "VIDA ETERNA para TODA CARNE, que fué lo que le dió";
+	lg.q8_1__verse6_str = uppercase_words_in_string(rf._1co_15_22_str, ["todos", "vivificados.", ]);
+	lg.q8_1__verse6_href = rf._1co_15_22_href;
+	lg.q8_1__verse6_should = "TODOS significa TODOS";
+	
+	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>NO ha sucedido</a>`;
+	lg.q9_1__not_yet = `Seleccione todos los versiculos que soportan una resurrección de los muertos que NO ha sucedido para casi NADIE`;
+	lg.q9_1__verse1_str = uppercase_words_in_string(rf.jhn_6_39_str, ["día", "final.", ]);
+	lg.q9_1__verse1_href = rf.jhn_6_39_href;
+	lg.q9_1__verse1_should = "Es el en DIA FINAL";
+	lg.q9_1__verse2_str = uppercase_words_in_string(rf._2ti_2_18_str, ["desviaron", "ocurrió;", "past,"]);
+	lg.q9_1__verse2_href = rf._2ti_2_18_href;
+	lg.q9_1__verse2_should = "No ha OCURRIDO";
+	lg.q9_1__verse3_str = uppercase_words_in_string(rf.jhn_6_40_str, ["last", "day.", ]);
+	lg.q9_1__verse3_href = rf.jhn_6_40_href;
+	lg.q9_1__verse3_should = "It is on the LAST DAY";
+	lg.q9_1__verse4_str = uppercase_words_in_string(rf.jhn_6_44_str, ["last", "day.", ]);
+	lg.q9_1__verse4_href = rf.jhn_6_44_href;
+	lg.q9_1__verse4_should = "It is on the LAST DAY";
+	lg.q9_1__verse5_str = uppercase_words_in_string(rf.jhn_6_54_str, ["last", "day.", ]);
+	lg.q9_1__verse5_href = rf.jhn_6_54_href;
+	lg.q9_1__verse5_should = "It is on the LAST DAY";
+	lg.q9_1__verse6_str = uppercase_words_in_string(rf.jhn_11_24_str, ["last", 'day."', ]);
+	lg.q9_1__verse6_href = rf.jhn_11_24_href;
+	lg.q9_1__verse6_should = "It is on the LAST DAY";
+	lg.q9_1__verse7_str = uppercase_words_in_string(rf.rev_20_13_str, ["gave", "dead"]);
+	lg.q9_1__verse7_href = rf.rev_20_13_href;
+	lg.q9_1__verse7_should = "It is AFTER this earth and these heavens get destroyed";
+	
 	// ============= TRADUCIENDO		
 
-	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${href_in_heaven_resu}'>In Heaven</a>`;
-	lg.q6_1__in_heaven = `Select all verses that support a RESURRECTED Jesus Christ that is in heaven in BODY and spirit.`;
-	lg.q6_1__verse1_str = uppercase_words_in_string(rf.act_1_11_str, ["going", "into", "sky."]);
-	lg.q6_1__verse1_href = rf.act_1_11_href;
-	lg.q6_1__verse1_should = "GOING INTO the SKY. He went physically into the heavens";
-	lg.q6_1__verse2_str = uppercase_words_in_string(rf.mat_26_64_str, ["sitting", "clouds", "sky"]);
-	lg.q6_1__verse2_href = rf.mat_26_64_href;
-	lg.q6_1__verse2_should = "He is SITTING and coming on the CLOUDS";
-	lg.q6_1__verse3_str = uppercase_words_in_string(rf.jhn_14_2_str, ["house", "mansions;", "place"]);
-	lg.q6_1__verse3_href = rf.jhn_14_2_href;
-	lg.q6_1__verse3_should = "He makes in a PLACE for his disciples";
-	lg.q6_1__verse4_str = uppercase_words_in_string(rf.heb_9_12_str, ["entered", "Place,", "heaven"]);
-	lg.q6_1__verse4_href = rf.heb_9_12_href;
-	lg.q6_1__verse4_should = "He ENTERED the Holy PLACE in the heavens";
-	lg.q6_1__verse5_str = uppercase_words_in_string(rf.heb_10_12_str, ["sat", "down"]);
-	lg.q6_1__verse5_href = rf.heb_10_12_href;
-	lg.q6_1__verse5_should = "He SAT DOWN in the heavens";
-	lg.q6_1__verse6_str = uppercase_words_in_string(rf.heb_13_8_str, ["is", "same", "forever."]);
-	lg.q6_1__verse6_href = rf.heb_13_8_href;
-	lg.q6_1__verse6_should = "He is ALWAYS the same. So if He resurrected in BODY and spirit, He MUST be in BODY and spirit in the heavens.";
-	lg.q6_1__verse7_str = uppercase_words_in_string(rf.col_1_15_str, ["image", "invisible"]);
-	lg.q6_1__verse7_href = rf.col_1_15_href;
-	lg.q6_1__verse7_should = "He is the IMAGE of the INVISIBLE God. So if He was visible when He resurrected, He must STILL be visible in the heavens.";
-	
-
-	lg.q7_1__like_jesus_sec = `<a class='exam_ref exam_title' href='${href_like_jesus_resu}'>Like Jesus</a>`;
-	lg.q7_1__like_jesus = `Select all verses that support a resurrection of the dead that is like Jesus resurrection`;
-	lg.q7_1__verse1_str = uppercase_words_in_string(rf.phl_3_21_str, ["conformed", "body", ]);
-	lg.q7_1__verse1_href = rf.phl_3_21_href;
-	lg.q7_1__verse1_should = "Just LIKE the BODY of Jesus";
-	lg.q7_1__verse2_str = uppercase_words_in_string(rf._1jo_3_2_str, ["like", "him;", ]);
-	lg.q7_1__verse2_href = rf._1jo_3_2_href;
-	lg.q7_1__verse2_should = "We will be LIKE HIM";
-	lg.q7_1__verse3_str = uppercase_words_in_string(rf.luk_20_36_str, ["can’t", "die", ]);
-	lg.q7_1__verse3_href = rf.luk_20_36_href;
-	lg.q7_1__verse3_should = "Thos bodies CAN'T DIE";
-	lg.q7_1__verse4_str = uppercase_words_in_string(rf.heb_9_27_str, ["die", "once,", ]);
-	lg.q7_1__verse4_href = rf.heb_9_27_href;
-	lg.q7_1__verse4_should = "We are destined to DIE ONCE. No more.";
-	lg.q7_1__verse5_str = uppercase_words_in_string(rf._1co_15_49_str, ["bear", "image", "heavenly.", ]);
-	lg.q7_1__verse5_href = rf._1co_15_49_href;
-	lg.q7_1__verse5_should = "We BARE the image of the HEAVENLY";
-	lg.q7_1__verse6_str = uppercase_words_in_string(rf._1co_15_42_str, ["body", "raised", "imperishable."]);
-	lg.q7_1__verse6_href = rf._1co_15_42_href;
-	lg.q7_1__verse6_should = "The raised body is IMPERISHABLE";
-	
-	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${href_for_all_resu}'>For All</a>`;
-	lg.q8_1__for_all = `Select all verses that support a resurrection of the dead that is for ALL people`;
-	lg.q8_1__verse1_str = uppercase_words_in_string(rf.jhn_5_28_str, ["all", "tombs", ]);
-	lg.q8_1__verse1_href = rf.jhn_5_28_href;
-	lg.q8_1__verse1_should = "ALL is ALL";
-	lg.q8_1__verse2_str = uppercase_words_in_string(rf.jhn_5_29_str, ["good,", "evil,", ]);
-	lg.q8_1__verse2_href = rf.jhn_5_29_href;
-	lg.q8_1__verse2_should = "GOOD and EVIL";
-	lg.q8_1__verse3_str = uppercase_words_in_string(rf.act_24_15_str, ["both", "just", "unjust.", ]);
-	lg.q8_1__verse3_href = rf.act_24_15_href;
-	lg.q8_1__verse3_should = "BOTH JUST and UNJUST";
-	lg.q8_1__verse4_str = uppercase_words_in_string(rf.jhn_6_39_str, ["all", "lose", "nothing,", ]);
-	lg.q8_1__verse4_href = rf.jhn_6_39_href;
-	lg.q8_1__verse4_should = "ALL and LOSE NOTHING";
-	lg.q8_1__verse5_str = uppercase_words_in_string(rf.jhn_17_2_str, ["all", "flesh", "eternal", "life", ]);
-	lg.q8_1__verse5_href = rf.jhn_17_2_href;
-	lg.q8_1__verse5_should = "ALL FLESH ETERNAL LIFE";
-	lg.q8_1__verse6_str = uppercase_words_in_string(rf._1co_15_22_str, ["all", "alive.", ]);
-	lg.q8_1__verse6_href = rf._1co_15_22_href;
-	lg.q8_1__verse6_should = "ALL is ALL";
-	
+	/*
 	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>Has NOT happend</a>`;
 	lg.q9_1__not_yet = `Select all verses that support a resurrection of the dead that has NOT happend for almost ANYBODY`;
 	lg.q9_1__verse1_str = uppercase_words_in_string(rf.jhn_6_39_str, ["last", "day.", ]);
@@ -614,6 +638,7 @@ function init_es_exam_msg(){
 	lg.q9_1__verse7_str = uppercase_words_in_string(rf.rev_20_13_str, ["gave", "dead"]);
 	lg.q9_1__verse7_href = rf.rev_20_13_href;
 	lg.q9_1__verse7_should = "It is AFTER this earth and these heavens get destroyed";
+	*/
 	
 	/*
 	lg.q10_1__has_for_few_sec = `<a class='exam_ref exam_title' href='${href_only_few_resu}'>Only for few</a>`;
