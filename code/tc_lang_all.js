@@ -293,7 +293,7 @@ export function get_dispute_msg() {
 	return glb_curr_lang.msg_dispute_rclick;
 }
 
-function fill_all_strongrefs_href(){
+export function fill_all_strongrefs_href(){
 	for (const [key, value] of Object.entries(all_strongrefs)) {
 		const ob_sufx = "_cod";
 		if(key.endsWith(ob_sufx)){
@@ -306,7 +306,7 @@ function fill_all_strongrefs_href(){
 	}  	
 }
 
-function fill_bibrefs_href(all_rfs){
+export function fill_bibrefs_href(all_rfs){
 	for (const [key, bib_obj] of Object.entries(all_rfs)) {
 		const ob_sufx = "_obj";
 		if(key.endsWith(ob_sufx)){
