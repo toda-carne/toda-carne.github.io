@@ -190,19 +190,19 @@ export const all_es_bibrefs = {
 	ecc_12_7_str: `Ecc 12:7. and the dust returns to the earth as it was, and the spirit returns to God who gave it.`,
 	isa_8_19_obj: { book: "isaiah", chapter: 8, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	isa_8_19_str: `Isa 8:19. When they tell you, “Consult with those who have familiar spirits and with the wizards, who chirp and who mutter,” shouldn’t a people consult with their God? Should they consult the dead on behalf of the living?`,
-	isa_14_7_obj: { book: "isaiah", chapter: 14, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	isa_14_8_obj: { book: "isaiah", chapter: 14, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
+	isa_14_7_obj: { book: "isaiah", chapter: 14, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
+	isa_14_8_obj: { book: "isaiah", chapter: 14, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "LBLA", },
 	isa_14_9_txt_obj: { book: "isaiah", chapter: 14, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", },
 	isa_14_10_obj: { book: "isaiah", chapter: 14, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	isa_14_10_str: `Isa 14:10. They all will answer and ask you, "Have you also become as weak as we are? Have you become like us?"`,
+	isa_14_10_str: `Isa 14:10. Todos ellos darán voces, y te dirán: ¿Tú también enfermaste como nosotros, y como nosotros fuiste?`,
 	isa_14_12_obj: { book: "isaiah", chapter: 14, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	isa_14_18_txt_obj: { book: "isaiah", chapter: 14, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", },
 	isa_65_17_obj: { book: "isaiah", chapter: 65, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	isa_65_17_str: `Isa 65:17. For, behold, I create new heavens and a new earth; and the former things will not be remembered, nor come into mind.`,
+	isa_65_17_str: `Isa 65:17.  Porque he aquí que yo crío nuevos cielos y nueva tierra: y de lo primero no habrá memoria, ni más vendrá al pensamiento.`,
 	isa_66_22_obj: { book: "isaiah", chapter: 66, verse: 22, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	isa_66_22_str: `Isa 66:22. "For as the new heavens and the new earth, which I will make, shall remain before me," says Yahweh, "so your offspring and your name shall remain."`,
+	isa_66_22_str: `Isa 66:22. Porque como los cielos nuevos y la nueva tierra, que yo hago, permanecen delante de mí, dice Jehová, así permanecerá vuestra simiente y vuestro nombre.`,
 	mat_17_3_obj: { book: "matthew", chapter: 17, verse: 3, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	mat_17_3_str: `Mat 17:3. Behold, Moses and Elijah appeared to them talking with him.`,
+	mat_17_3_str: `Mat 17:3.  Y he aquí les aparecieron Moisés y Elías, hablando con él.`,
 	mat_17_4_obj: { book: "matthew", chapter: 17, verse: 4, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	mat_26_64_obj: { book: "matthew", chapter: 26, verse: 64, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	mat_26_64_str: `Mat 26:64.  Jesús le dijo: Tú lo has dicho: y aun os digo, que desde ahora habéis de ver al Hijo de los hombres sentado á la diestra de la potencia de Dios, y que viene en las nubes del cielo."`,
@@ -215,7 +215,7 @@ export const all_es_bibrefs = {
 	luk_15_24_obj: { book: "luke", chapter: 15, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	luk_15_24_str: `Luk 15:24. for this, my son, was dead, and is alive again. He was lost, and is found.’ Then they began to celebrate.`,
 	luk_16_24_obj: { book: "luke", chapter: 16, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	luk_16_24_str: `Luk 16:24. He cried and said, ‘Father Abraham, have mercy on me, and send Lazarus, that he may dip the tip of his finger in water, and cool my tongue! For I am in anguish in this flame.’`,
+	luk_16_24_str: `Luk 16:24. Entonces él, dando voces, dijo: Padre Abraham, ten misericordia de mí, y envía á Lázaro que moje la punta de su dedo en agua, y refresque mi lengua; porque soy atormentado en esta llama.`,
 	luk_20_36_obj: { book: "luke", chapter: 20, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	luk_20_36_str: `Luk 20:36. Porque no pueden ya más morir: porque son iguales á los ángeles, y son hijos de Dios, cuando son hijos de la resurrección.`,
 	luk_20_38_obj: { book: "luke", chapter: 20, verse: 38, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
@@ -238,16 +238,16 @@ export const all_es_bibrefs = {
 	jhn_5_29_str: `Jhn 5:29.  Y los que hicieron bien, saldrán á resurrección de vida; mas los que hicieron mal, á resurrección de condenación.`,
 	jhn_6_39_obj: { book: "john", chapter: 6, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "LBLA", },
 	jhn_6_39_str: `Jhn 6:39. Y esta es la voluntad del que me envió: que de todo lo que Él me ha dado yo no pierda nada, sino que lo resucite en el día final.`,
-	jhn_6_40_obj: { book: "john", chapter: 6, verse: 40, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_6_40_str: `Jhn 6:40. This is the will of the one who sent me, that everyone who sees the Son, and believes in him, should have eternal life; and I will raise him up at the last day.`,
-	jhn_6_44_obj: { book: "john", chapter: 6, verse: 44, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_6_44_str: `Jhn 6:44. No one can come to me unless the Father who sent me draws him, and I will raise him up in the last day.`,
-	jhn_6_54_obj: { book: "john", chapter: 6, verse: 54, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_6_54_str: `Jhn 6:54. He who eats my flesh and drinks my blood has eternal life, and I will raise him up at the last day.`,
+	jhn_6_40_obj: { book: "john", chapter: 6, verse: 40, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
+	jhn_6_40_str: `Jhn 6:40. Porque esta es la voluntad de Mi Padre: que todo aquel que ve al Hijo y cree en Él, tenga vida eterna, y Yo mismo lo resucitaré en el día final.`,
+	jhn_6_44_obj: { book: "john", chapter: 6, verse: 44, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
+	jhn_6_44_str: `Jhn 6:44.  Nadie puede venir a Mí si no lo trae el Padre que me envió, y Yo lo resucitaré en el día final.`,
+	jhn_6_54_obj: { book: "john", chapter: 6, verse: 54, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
+	jhn_6_54_str: `Jhn 6:54. El que come Mi carne y bebe Mi sangre, tiene vida eterna, y Yo lo resucitaré en el día final.`,
 	jhn_11_11_obj: { book: "john", chapter: 11, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	jhn_11_11_str: `Jhn 11:11. He said these things, and after that, he said to them, "Our friend, Lazarus, has fallen asleep, but I am going so that I may awake him out of sleep."`,
-	jhn_11_24_obj: { book: "john", chapter: 11, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_11_24_str: `Jhn 11:24. Martha said to him, "I know that he will rise again in the resurrection at the last day."`,
+	jhn_11_24_obj: { book: "john", chapter: 11, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
+	jhn_11_24_str: `Jhn 11:24. Marta le contestó: Yo sé que resucitará en la resurrección, en el día final.`,
 	jhn_17_2_obj: { book: "john", chapter: 17, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	jhn_17_2_str: `Jhn 17:2. Como le has dado la potestad de toda carne, para que dé vida eterna á todos los que le diste.`,
 	jhn_20_20_obj: { book: "john", chapter: 20, verse: 20, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
@@ -305,31 +305,32 @@ export const all_es_bibrefs = {
 	heb_10_12_obj: { book: "hebrews", chapter: 10, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	heb_10_12_str: `Heb 10:12. Pero éste, habiendo ofrecido por los pecados un solo sacrificio para siempre, está sentado á la diestra de Dios,`,
 	heb_12_23_obj: { book: "hebrews", chapter: 12, verse: 23, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_12_23_str: `Heb 12:23. to the festal gathering and assembly of the firstborn who are enrolled in heaven, to God the Judge of all, to the spirits of just men made perfect,`,
+	heb_12_23_str: `Heb 12:23. Y á la congregación de los primogénitos que están alistados en los cielos, y á Dios el Juez de todos, y á los espíritus de los justos hechos perfectos,`,
 	heb_13_8_obj: { book: "hebrews", chapter: 13, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", },
 	heb_13_8_str: `Heb 13:8.  Jesucristo es el mismo ayer, hoy y siempre.`,
 	_1pe_3_19_obj: { book: "1_peter", chapter: 3, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	_1pe_3_19_str: `1Pe 3:19. in whom he also went and preached to the spirits in prison, `,
 	_2pe_3_13_obj: { book: "2_peter", chapter: 3, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_2pe_3_13_str: `2Pe 3:13. But, according to his promise, we look for new heavens and a new earth, in which righteousness dwells.`,
+	_2pe_3_13_str: `2Pe 3:13. Bien que esperamos cielos nuevos y tierra nueva, según sus promesas, en los cuales mora la justicia.`,
 	_1jo_3_2_obj: { book: "1_john", chapter: 3, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	_1jo_3_2_str: `1Jo 3:2. Muy amados, ahora somos hijos de Dios, y aun no se ha manifestado lo que hemos de ser; pero sabemos que cuando él apareciere, seremos semejantes á él, porque le veremos como él es.`,
 	rev_6_10_obj: { book: "revelation", chapter: 6, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	rev_6_10_str: `Rev 6:10. They cried with a loud voice, saying, "How long, Master, the holy and true, until you judge and avenge our blood on those who dwell on the earth?"`,
+	rev_6_10_str: `Rev 6:10. Y clamaban en alta voz diciendo: ¿Hasta cuándo, Señor, santo y verdadero, no juzgas y vengas nuestra sangre de los que moran en la tierra?`,
 	rev_14_13_obj: { book: "revelation", chapter: 14, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	rev_14_13_str: `Rev 14:13. I heard a voice from heaven saying, "Write, ‘Blessed are the dead who die in the Lord from now on.’" "Yes," says the Spirit, "that they may rest from their labors; for their works follow with them."`,
 	rev_1_18_obj: { book: "revelation", chapter: 1, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", },
 	rev_1_18_str: `Rev 1:18. y el que vive. Estuve muerto, pero ahora vivo para siempre. Yo tengo las llaves del reino de la muerte.`,
-	rev_20_13_obj: { book: "revelation", chapter: 20, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	rev_20_13_str: `Rev 20:13. The sea gave up the dead who were in it. Death and Hades gave up the dead who were in them. They were judged, each one according to his works.`,
+	rev_20_13_obj: { book: "revelation", chapter: 20, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVR1960", },
+	rev_20_13_str: `Rev 20:13. Y el mar entregó los muertos que había en él; y la muerte y el Hades entregaron los muertos que había en ellos; y fueron juzgados cada uno según sus obras.`,
 	rev_21_1_obj: { book: "revelation", chapter: 21, verse: 1, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	rev_21_1_str: `Rev 21:1. I saw a new heaven and a new earth: for the first heaven and the first earth have passed away, and the sea is no more.`,
+	rev_21_1_str: `Rev 21:1. Y VI un cielo nuevo, y una tierra nueva: porque el primer cielo y la primera tierra se fueron, y el mar ya no es.`,
 };
 
 function init_es_exam_msg(){
 	let bibref = {};
 	let rnam = null;	
 
+	const href_home = "../es/index.html";
 	const href_creator_tit = "../es/book.html#creador_DOT_";
 	const href_tch_crea = "../es/book.html#creatividad-técnica_DOT_";
 	const href_tch_cplx = "../es/book.html#complejidad-técnica_DOT_";
@@ -596,49 +597,21 @@ function init_es_exam_msg(){
 	lg.q9_1__verse2_str = uppercase_words_in_string(rf._2ti_2_18_str, ["desviaron", "ocurrió;", "past,"]);
 	lg.q9_1__verse2_href = rf._2ti_2_18_href;
 	lg.q9_1__verse2_should = "No ha OCURRIDO";
-	lg.q9_1__verse3_str = uppercase_words_in_string(rf.jhn_6_40_str, ["last", "day.", ]);
+	lg.q9_1__verse3_str = uppercase_words_in_string(rf.jhn_6_40_str, ["final.", "día", ]);
 	lg.q9_1__verse3_href = rf.jhn_6_40_href;
-	lg.q9_1__verse3_should = "It is on the LAST DAY";
-	lg.q9_1__verse4_str = uppercase_words_in_string(rf.jhn_6_44_str, ["last", "day.", ]);
+	lg.q9_1__verse3_should = "Es en el DIA FINAL";
+	lg.q9_1__verse4_str = uppercase_words_in_string(rf.jhn_6_44_str, ["final.", "día", ]);
 	lg.q9_1__verse4_href = rf.jhn_6_44_href;
-	lg.q9_1__verse4_should = "It is on the LAST DAY";
-	lg.q9_1__verse5_str = uppercase_words_in_string(rf.jhn_6_54_str, ["last", "day.", ]);
+	lg.q9_1__verse4_should = "Es en el DIA FINAL";
+	lg.q9_1__verse5_str = uppercase_words_in_string(rf.jhn_6_54_str, ["final.", "día", ]);
 	lg.q9_1__verse5_href = rf.jhn_6_54_href;
-	lg.q9_1__verse5_should = "It is on the LAST DAY";
-	lg.q9_1__verse6_str = uppercase_words_in_string(rf.jhn_11_24_str, ["last", 'day."', ]);
+	lg.q9_1__verse5_should = "Es en el DIA FINAL";
+	lg.q9_1__verse6_str = uppercase_words_in_string(rf.jhn_11_24_str, ["final.", "día", ]);
 	lg.q9_1__verse6_href = rf.jhn_11_24_href;
-	lg.q9_1__verse6_should = "It is on the LAST DAY";
-	lg.q9_1__verse7_str = uppercase_words_in_string(rf.rev_20_13_str, ["gave", "dead"]);
+	lg.q9_1__verse6_should = "Es en el DIA FINAL";
+	lg.q9_1__verse7_str = uppercase_words_in_string(rf.rev_20_13_str, ["entregó", "entregaron", "muertos"]);
 	lg.q9_1__verse7_href = rf.rev_20_13_href;
-	lg.q9_1__verse7_should = "It is AFTER this earth and these heavens get destroyed";
-	
-	// ============= TRADUCIENDO		
-
-	/*
-	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>Has NOT happend</a>`;
-	lg.q9_1__not_yet = `Select all verses that support a resurrection of the dead that has NOT happend for almost ANYBODY`;
-	lg.q9_1__verse1_str = uppercase_words_in_string(rf.jhn_6_39_str, ["last", "day.", ]);
-	lg.q9_1__verse1_href = rf.jhn_6_39_href;
-	lg.q9_1__verse1_should = "It is on the LAST DAY";
-	lg.q9_1__verse2_str = uppercase_words_in_string(rf._2ti_2_18_str, ["erred", "already", "past,"]);
-	lg.q9_1__verse2_href = rf._2ti_2_18_href;
-	lg.q9_1__verse2_should = "It is NOT already past";
-	lg.q9_1__verse3_str = uppercase_words_in_string(rf.jhn_6_40_str, ["last", "day.", ]);
-	lg.q9_1__verse3_href = rf.jhn_6_40_href;
-	lg.q9_1__verse3_should = "It is on the LAST DAY";
-	lg.q9_1__verse4_str = uppercase_words_in_string(rf.jhn_6_44_str, ["last", "day.", ]);
-	lg.q9_1__verse4_href = rf.jhn_6_44_href;
-	lg.q9_1__verse4_should = "It is on the LAST DAY";
-	lg.q9_1__verse5_str = uppercase_words_in_string(rf.jhn_6_54_str, ["last", "day.", ]);
-	lg.q9_1__verse5_href = rf.jhn_6_54_href;
-	lg.q9_1__verse5_should = "It is on the LAST DAY";
-	lg.q9_1__verse6_str = uppercase_words_in_string(rf.jhn_11_24_str, ["last", 'day."', ]);
-	lg.q9_1__verse6_href = rf.jhn_11_24_href;
-	lg.q9_1__verse6_should = "It is on the LAST DAY";
-	lg.q9_1__verse7_str = uppercase_words_in_string(rf.rev_20_13_str, ["gave", "dead"]);
-	lg.q9_1__verse7_href = rf.rev_20_13_href;
-	lg.q9_1__verse7_should = "It is AFTER this earth and these heavens get destroyed";
-	*/
+	lg.q9_1__verse7_should = "Es DESPUES de que esta tierra y estos cielos sean destruidos";
 	
 	/*
 	lg.q10_1__has_for_few_sec = `<a class='exam_ref exam_title' href='${href_only_few_resu}'>Only for few</a>`;
@@ -647,57 +620,63 @@ function init_es_exam_msg(){
 	lg.q10_1__stay = "Stay";
 	*/
 	
-	lg.q11_1__new_earth_sec = `<a class='exam_ref exam_title' href='${href_new_earth_resu}'>New Earth</a>`;
-	lg.q11_1__new_earth = `Select all verses that support a resurrection of the dead to live in a NEW EARTH with a new heavens`;
-	lg.q11_1__verse1_str = uppercase_words_in_string(rf.rev_21_1_str, ["new", "earth:", ]);
+	lg.q11_1__new_earth_sec = `<a class='exam_ref exam_title' href='${href_new_earth_resu}'>Tierra Nueva</a>`;
+	lg.q11_1__new_earth = `Seleccione todos los versiculos que soportan una resurrección de los muertos para vivir en una TIERRA NUEVA con unos cielos nuevos`;
+	lg.q11_1__verse1_str = uppercase_words_in_string(rf.rev_21_1_str, ["tierra", "nueva:", ]);
 	lg.q11_1__verse1_href = rf.rev_21_1_href;
-	lg.q11_1__verse1_should = "It is on a NEW EARTH with a new heavens";
-	lg.q11_1__verse2_str = uppercase_words_in_string(rf._2pe_3_13_str, ["new", "earth,", ]);
+	lg.q11_1__verse1_should = "Es en una TIERRA NUEVA con unos cielos nuevos";
+	lg.q11_1__verse2_str = uppercase_words_in_string(rf._2pe_3_13_str, ["tierra", "nueva,", ]);
 	lg.q11_1__verse2_href = rf._2pe_3_13_href;
-	lg.q11_1__verse2_should = "It is on a NEW EARTH with a new heavens";
-	lg.q11_1__verse3_str = uppercase_words_in_string(rf.isa_65_17_str, ["new", "earth;", ]);
+	lg.q11_1__verse2_should = "Es en una TIERRA NUEVA con unos cielos nuevos";
+	lg.q11_1__verse3_str = uppercase_words_in_string(rf.isa_65_17_str, ["nueva", "tierra:", ]);
 	lg.q11_1__verse3_href = rf.isa_65_17_href;
-	lg.q11_1__verse3_should = "It is on a NEW EARTH with a new heavens";
-	lg.q11_1__verse4_str = uppercase_words_in_string(rf.isa_66_22_str, ["new", "earth,", ]);
+	lg.q11_1__verse3_should = "Es en una TIERRA NUEVA con unos cielos nuevos";
+	lg.q11_1__verse4_str = uppercase_words_in_string(rf.isa_66_22_str, ["nueva", "tierra,", ]);
 	lg.q11_1__verse4_href = rf.isa_66_22_href;
-	lg.q11_1__verse4_should = "It is on a NEW EARTH with a new heavens";
+	lg.q11_1__verse4_should = "Es en una TIERRA NUEVA con unos cielos nuevos";
 	
-	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleeping}'>Sleep</a>`;
-	lg.q12_1__sleep = `Select all verses that support that physically dead people DO HAVE CONSCIOUSNESS before resurrected.`;
-	lg.q12_1__verse1_str = uppercase_words_in_string(rf.isa_14_10_str, ["answer", "ask", "you,", ]);
+	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleeping}'>Dormiditos</a>`;
+	lg.q12_1__sleep = `Seleccione un BUEN versiculo que soporte que las personas que están físicamente muertas (antes de la resurrección) TIENEN CONCIENCIA`;
+	lg.q12_1__no_consciousness = "No existe un buen versículo";
+	lg.q12_1__verse1_str = uppercase_words_in_string(rf.isa_14_10_str, ["voces,", "dirán:" ]);
 	lg.q12_1__verse1_href = rf.isa_14_10_href;
-	lg.q12_1__verse2_str = uppercase_words_in_string(rf.mat_17_3_str, ["talking", "him.", ]);;
+	lg.q12_1__verse2_str = uppercase_words_in_string(rf.mat_17_3_str, ["hablando", "él.", ]);
 	lg.q12_1__verse2_href = rf.mat_17_3_href;
-	lg.q12_1__verse3_str = uppercase_words_in_string(rf.rev_6_10_str, ["cried", "loud", "voice,", "saying,", ]);
+	lg.q12_1__verse3_str = uppercase_words_in_string(rf.rev_6_10_str, ["clamaban", "alta", "voz", "diciendo:", ]);
 	lg.q12_1__verse3_href = rf.rev_6_10_href;
-	lg.q12_1__verse4_str = uppercase_words_in_string(rf.heb_12_23_str, ["festal", "gathering", "assembly", ]);
+	lg.q12_1__verse4_str = uppercase_words_in_string(rf.heb_12_23_str, ["alistados", "congregación", ]);
 	lg.q12_1__verse4_href = rf.heb_12_23_href;
-	lg.q12_1__verse5_str = uppercase_words_in_string(rf.luk_16_24_str, ["cried", "said,", ]);
+	lg.q12_1__verse5_str = uppercase_words_in_string(rf.luk_16_24_str, ["voces,", "dijo:", ]);
 	lg.q12_1__verse5_href = rf.luk_16_24_href;
 
-	const q12_1__response_INTRO = `<p> This is a commonly cited verse as objection to SPIRIT <a class='exam_ref' href='${href_sleeping}'>sleep</a>.</p>
-	<p> When arguing against SPIRIT (NOT soul) <a class='exam_ref' href='${href_sleeping}'>sleep</a> always remember that the whole bible refers to the dead as <a class='exam_ref' href='${href_sleeping}'>SLEEP</a>, specially our Lord Jesus Christ. The reason is obvious: NO <a class='exam_ref' href='${href_sleeping}'>sleeping</a> person has CONSCIOUSNESS. That is the most prominent characteristic of a <a class='exam_ref' href='${href_sleeping}'>sleeping</a> person. Please read the section introducing the biblical concept of SPIRIT <a class='exam_ref' href='${href_sleeping}'>sleep</a>. </p>`;
+	const q12_1__response_INTRO = `<p> Este es un versículo que se cita con frecuencia como objeción a que en el muerto el ESPIRITU está <a class='exam_ref' href='${href_sleeping}'>dormido</a>.</p>
 	
-	const q12_1__response_END = `<p> So this verse <b>DOES NOT REFER</b> to the physically dead having CONSCIOUSNESS.</p>`;
+	<p> Cuando se argumenta en contra del ESPIRITU (NO alma) <a class='exam_ref' href='${href_sleeping}'>dormido</a> siempre hay que recordar que toda la Biblia se refiere a los muertos como a los que <a class='exam_ref' href='${href_sleeping}'>DUERMEN</a>, especialmente a nuestro Señor Jesucristo. La razón es obvia: NINGUNA persona que <a class='exam_ref' href='${href_sleeping}'>duerme</a> tiene CONCIENCIA. Esa es la característica más destacada de una persona que <a class='exam_ref' href='${href_sleeping}'>duerme</a>. Por favor, lea la sección que presenta el concepto bíblico del ESPIRITU <a class='exam_ref' href='${href_sleeping}'>dormido</a> del libro completamente GRATUITO <a class='exam_ref' href='${href_home}'>TodaCarne.com</a>. </p>`;
+	
+	const q12_1__response_END = `<p> Así que este versículo <b>NO SE REFIERE</b> a que las personas que están físicamente muertas tengan CONCIENCIA.</p>`;
 
 	
 	lg.q12_1__response_to_verse1 = `<a class='exam_ref' target='_blank' href=${rf.isa_14_10_href}>Isa 14:10</a> ${q12_1__response_INTRO}
-	<p> This verse refers to a literal future time or an spiritual one that happend as reafirmation of the literal case. The king of Babilon represents The Satan, that is why <a class='exam_ref' href=${rf.isa_14_12_href}>verse 12</a> is commonly cited to refer to The Satan. </p>
-	<p>Note that:</p> 
-	<li> <a class='exam_ref' href=${rf.isa_14_8_href}>Verse 8</a> says: Yes, the cypress trees rejoice with you, with the cedars of Lebanon, saying, "Since you are humbled, no lumberjack has come up against us". So for the spiritual case it is a metaphor and the literal case has not nappened yet because <a class='exam_ref' href=${rf.isa_14_7_href}>verse 7</a> has NOT happened literally: "The whole earth is at rest, and is quiet". 
-	<li> <a class='exam_ref' href=${rf.isa_14_9_txt_href}>Verse 9</a> shows that the literal case implies that the dead have AWAKEN (word <a class='exam_ref' href=${all_strongrefs.H5782_href}>H5782</a>) which has NOT happend either because the resurrection of the dead has not happend. 
-	<li> <a class='exam_ref' href=${rf.isa_14_18_txt_href}>Verse 18</a> tell us that each king is in his own HOUSE (word <a class='exam_ref' href=${all_strongrefs.H1004_href}>H1004</a>). For the literal case they have been resurrected. 
+	<p> Este versículo se refiere a un tiempo futuro literal o espiritual que sucedió como reafirmación del caso literal. El rey de Babilonia representa a El Satán, por eso es que el <a class='exam_ref' href=${rf.isa_14_12_href}>versículo 12</a> es comúnmente citado para referirse a El Satán. </p>
+
+	<p>Nótese que: </p>
+	<li>El <a class='exam_ref' href=${rf.isa_14_8_href}>versículo 8</a> dice: Aun los cipreses y los cedros del Líbano se alegran a causa de ti, diciendo: "Desde que fuiste derribado, no ha subido talador contra nosotros". Así que para el caso espiritual es una metáfora y el caso literal aún no ha sucedido porque el <a class='exam_ref' href=${rf.isa_14_7_href}>versículo 7</a> NO ha sucedido literalmente: "Toda la tierra está en reposo, está tranquila. Prorrumpe en gritos de júbilo.".
+
+	<li>El <a class='exam_ref' href=${rf.isa_14_9_txt_href}>versículo 9</a> muestra que el caso literal implica que los muertos han DESPERTADO (vocablo <a class='exam_ref' href=${all_strongrefs.H5782_href}>H5782</a>) lo cual NO ha sucedido tampoco porque la resurrección de los muertos no ha sucedido.
+
+	<li>El <a class='exam_ref' href=${rf.isa_14_18_txt_href}>versículo 18</a> nos dice que cada rey está en su propia CASA (vocablo <a class='exam_ref' href=${all_strongrefs.H1004_href}>H1004</a>). Para el caso literal han sido resucitados.
 	${q12_1__response_END}`;
 	
-	
 	lg.q12_1__response_to_verse2 = `<a class='exam_ref' href=${rf.mat_17_3_href}>Mat 17:3</a> ${q12_1__response_INTRO}
-	<p>It is also recommended that you have at least read the section introducing the biblical concept of <a class='exam_ref' href='${href_resurrection}'>Resurrection</a> and in particular the fact that <a class='exam_ref' href='${href_not_yet_resu}'>It has not happend</a>.</p>
-	<p> The most important thing to note about this verse is that they were physically present, they all have BODIES, and that is why Peter, in <a class='exam_ref' href=${rf.mat_17_4_href}>verse 4</a>, offers to build three tents. Two tents for Moses and Elijah and one for Our Lord. They where in the Jewish festival of Sukkot. The feast of Tabernacles. Very appropiate signal to show that these "tabernacles" are going to be replaced by permanent "houses". </p>
+	<p> También es recomendable que hayas leído al menos la sección que introduce el concepto bíblico de la <a class='exam_ref' href='${href_resurrection}'>Resurrección</a> y en particular el hecho de que <a class='exam_ref' href='${href_not_yet_resu}'>No ha sucedido</a>.</p>
+
+	<p> Lo más importante a destacar de este versículo es que ellos estaban físicamente presentes, todos tienen CUERPOS, y es por eso que Pedro, en el <a class='exam_ref' href=${rf.mat_17_4_href}>versículo 4</a>, ofrece construir tres tiendas. Dos tiendas para Moisés y Elías y una para Nuestro Señor. Estaban en la fiesta judía de Sucot. La fiesta de los Tabernáculos. Señal muy apropiada para mostrar que estos "tabernáculos" van a ser reemplazados por "casas" permanentes.</p>
 	${q12_1__response_END}
 	`;
 	
-	const q12_1__response_144000 = `<p>This verse refers to the 144.000. Please read the section <a class='exam_ref' href='${href_144000}'>144.000</a> of the completely FREE book TodaCarne.com.	Another section that could help is the one called <a class='exam_ref' href='${href_eternal_abhorrence}'>Eternal Abhorrence</a>.</p>
-	<p> The most important thing to note about this verse is that it refers to people that have been resurrected. The Saints. The Great ones. The first fruits. The firstborn. The ones God brings with Jesus Christ. They are a FEW: 144.000 male genetic descendants of Israel when completed. They all have BODIES, and that is why they can actually CRY, SPEAK, GATHER and ASSEMBLY.</p>`;
+	const q12_1__response_144000 = `<p>	Este versículo se refiere a los 144.000. Por favor, lea la sección <a class='exam_ref' href='${href_144000}'>144.000</a>. Otra sección que podría ayudar es la que se llama <a class='exam_ref' href='${href_eternal_abhorrence}'>Horror Eterno</a>.
+
+	<p> Lo más importante que hay que notar sobre este versículo es que se refiere a las personas que han sido resucitadas. Los Santos. Los Grandes. Las primicias. Los primogénitos. Los que Dios trae con Jesucristo. Son unos POCOS: 144.000 descendientes genéticos masculinos de Israel cuando se complete el número. Todos ellos tienen CUERPOS, y es por eso que realmente pueden LLORAR, HABLAR, REUNIRSE y hacer ASAMBLEA.</p>`;
 	
 	
 	lg.q12_1__response_to_verse3 = `<a class='exam_ref' href=${rf.rev_6_10_href}>Rev 6:10</a> ${q12_1__response_INTRO} 
@@ -709,16 +688,16 @@ function init_es_exam_msg(){
 	${q12_1__response_144000}
 	${q12_1__response_END}`;
 	
-	
 	lg.q12_1__response_to_verse5 = `<a class='exam_ref' href=${rf.luk_16_24_href}>Luk 16:24</a> ${q12_1__response_INTRO}
-	<p>This verse is part of the famous PARABLE in Luke. Please read the section called <a class='exam_ref' href='${href_rich_and_laza}'>The rich and the poor Lazarus.</a> of the completely FREE book TodaCarne.com.</p>
-	<p> The most important thing to note about this verse is that it part of a PARABLE. So please read the correct <a class='exam_ref' href='${href_rich_and_laza}'>INTERPRETATION</a>.</p>
+	<p>Este versículo es parte de la famosa PARÁBOLA de Lucas. Por favor, lea la sección llamada <a class='exam_ref' href='${href_rich_and_laza}'>El rico y el pobre Lázaro</a>.</p>
+
+	Lo más importante que hay que tener en cuenta sobre este versículo es que es parte de una PARÁBOLA. Por lo tanto, lea la <a class='exam_ref' href='${href_rich_and_laza}'>INTERPRETACIÓN</a> correcta.</p>
 	${q12_1__response_END}
 	`;
 		
-	const q12_1__nowhere_consciousness = `<p> NOWHERE in this verse and its context is there any thing that remotely refers to CONSCIOUSNESS of physically dead people. It is really remarkable how the greek culture has affected the hebrew teachings of the hebrew scriptures.</p>`;
+	const q12_1__nowhere_consciousness = `<p> EN NINGUNA PARTE de este versículo y su contexto hay algo que se refiera remotamente a la CONCIENCIA de personas físicamente muertas. Es realmente notable cómo la cultura griega ha afectado las enseñanzas hebreas de las escrituras hebreas.</p>`;
 	
-	const q12_1__response_sheol = `<p> This verse refers to the fact that ALL dead people go to the Sheol, to the tomb, to the Sepulcre, to the pit. </p>
+	const q12_1__response_sheol = `<p> Este versículo se refiere al hecho de que TODOS los muertos van al Seol, a la tumba, al Sepulcro, al foso. </p>
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}`;
 	
@@ -734,38 +713,39 @@ function init_es_exam_msg(){
 	lg[rnam] = `<a class='exam_ref' href=${rf.gen_35_29_href}>Gen 35:29</a> ${q12_1__response_INTRO}
 	${q12_1__response_sheol}`;
 	
-	const q12_1__response_spiritually_dead = `<p> This verse refers to spiritually dead people. Please read the sections called <a class='exam_ref' href='${href_life}'>Life</a>, <a class='exam_ref' href='${href_death}'>Death</a>, and <a class='exam_ref' href='${href_liberator}'>Liberator</a> of the completely FREE book TodaCarne.com.</p>`;
+	const q12_1__response_spiritually_dead = `<p> Este versículo se refiere a personas espiritualmente muertas. Por favor, lea las secciones llamadas <a class='exam_ref' href='${href_life}'>Vida</a>, <a class='exam_ref' href='${href_death}'>Muerte</a>, and <a class='exam_ref' href='${href_liberator}'>Libertador</a>.</p>`;
 	
 	rnam = get_verse_reponse_name("q12_1__", rf._1pe_3_19_obj);
 	lg[rnam] = `<a class='exam_ref' href=${rf._1pe_3_19_href}>1Pe 3:19</a> ${q12_1__response_INTRO}
 	${q12_1__response_spiritually_dead}
-	<p> The most important thing to note in this verse and its context is that ALL people are DEAD without Jesus Christ who is LIFE itself. So the verse refers to people PHYSICALLY alive but spiritually dead. Any person that does not believe in Jesus Christ is a slave, a PRISONER of the Spirit that rules this world, that person is a "spirit in prison". Jesus's RESURRECTION good news set that person free. It is a new begining. And the times of Noah, which were a new begining, were a SIGN of the new begining in the times of Christ. That is what the passage is about. Maybe NOT in a bad translation but certanly in the ancient koine greek.</p>
-	<p> The second thing to note is that NOWHERE, in the verse or its context, appears the greek word Hades, the greek word used in ancient greek manuscripts for the hebrew Sheol, the place where dead people go: the tomb, the Sepulcre, the pit. This passage is NOT talking about PHYSICALLY dead people. It is about spiritually dead people and they were ALL spiritually dead when Jesus died and resurrected. </p>
+	<p> Lo más importante que hay que notar en este versículo y su contexto es que TODAS las personas están MUERTAS sin Jesucristo, quien es la VIDA misma. Así que el versículo se refiere a personas FÍSICAMENTE vivas pero espiritualmente muertas. Cualquier persona que no cree en Jesucristo es un esclavo, un PRISIONERO del Espíritu que gobierna este mundo, esa persona es un "espíritu en prisión". La buena noticia de la RESURRECCIÓN de Jesucristo es que liberó a esa persona. Es un nuevo comienzo. Y los tiempos de Noé, que fueron un nuevo comienzo, fueron una SEÑAL del nuevo comienzo en los tiempos de Jesucristo. De eso se trata el pasaje. Quizás NO en una mala traducción, pero ciertamente en el griego koiné antiguo.</p>
+
+	<p> La segunda cosa que hay que notar es que EN NINGÚN LUGAR, en el versículo o en su contexto, aparece la palabra griega Hades, la palabra griega usada en los manuscritos griegos antiguos para el Seol hebreo, el lugar donde van los muertos: la tumba, el Sepulcro, el pozo. Este pasaje NO está hablando de personas FÍSICAMENTE muertas. Se trata de personas espiritualmente muertas y TODOS estaban espiritualmente muertos cuando Jesucristo murió y resucitó.</p>
 	${q12_1__response_END}
 	`;
 	
 	rnam = get_verse_reponse_name("q12_1__", rf._2co_5_8_obj);
 	lg[rnam] = `<a class='exam_ref' href=${rf._2co_5_8_href}>2Co 5:8</a> ${q12_1__response_INTRO}
 	${q12_1__nowhere_consciousness}
-	<p>Ofcourse any believer in the RESURRECTION of Jesus Christ prefers to be absent of this body that dies AND, when RESURRECTED in a new body that cannot die, be present with the Lord. He is, after all, RESURRECTED in BODY and SPIRIT. So the ONLY way to be PRESENT with Him is to be ALSO RESURRECTED.</p>
+	<p>Por supuesto, cualquier creyente en la RESURRECCIÓN de Jesucristo prefiere estar ausente de este cuerpo que muere y, cuando RESUCITE en un cuerpo nuevo que no puede morir, estar presente con el Señor. Él, después de todo, RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de estar PRESENTE con Él es estar TAMBIÉN RESUCITADO.</p>
 	${q12_1__response_END}
 	`;
 	
 	rnam = get_verse_reponse_name("q12_1__", rf.act_7_59_obj);
 	lg[rnam] = `<a class='exam_ref' href=${rf.act_7_59_href}>Act 7:59</a> ${q12_1__response_INTRO}
-	<p> This verse refers to the fact that when people die, as <a class='exam_ref' href=${rf.ecc_12_7_href}>Ecc 12:7</a> tells us, the spirit RETURNS to Elohim who gave it, so everything goes back as it was BEFORE the person was physically born. </p>
+	<p> Este versiculo se refiere al hecho de que cuando una persona muere, como dice <a class='exam_ref' href=${rf.ecc_12_7_href}>Ecc 12:7</a>, el espíritu VUELVE a Elohim, que lo dió, asi que todo vuelve a estar como estaba ANTES de que la persona naciera físicamente.</p>
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
 	rnam = get_verse_reponse_name("q12_1__", rf.luk_20_38_obj);
 	lg[rnam] = `<a class='exam_ref' href=${rf.luk_20_38_href}>Luk 20:38</a> ${q12_1__response_INTRO}
-	<p> This verse refers to the fact that dead people CAN be AWAKEN from their <a class='exam_ref' href='${href_sleeping}'>SLEEP</a>, and that is why to the one who can WAKE them up they are still ALIVE.</p>
+	<p> Este versiculo se refiere al hecho de que la gente muerta PUEDE ser DESPERTADA cuando esta <a class='exam_ref' href='${href_sleeping}'>DORMIDITA</a>, y que para el que las puede DESPERTAR siguen VIVAS.</p>
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	const q12_1__response_paradise = `<p> This verse refers to the PARADISE, a physical PLACE where RESURRECTED people will live eternally with Jesus Christ, NOT to the Sheol, to the tomb, to the Sepulcre, to the pit.</p>
+	const q12_1__response_paradise = `<p> Este versiculo se refiere al PARAISO, un LUGAR físico donde los RESUCITADOS vivirán eternamente con Jesucristo, NO se refiere al Sheol, a la tumba, al Sepulcro, al foso.</p>
 	${q12_1__nowhere_consciousness}
 	`;
 	
@@ -797,34 +777,34 @@ function init_es_exam_msg(){
 	
 	rnam = get_verse_reponse_name("q12_1__", rf.jhn_4_24_obj);
 	lg[rnam] = `<a class='exam_ref' href=${rf.jhn_4_24_href}>Jhn 4:24</a> ${q12_1__response_INTRO}
-	<p> This verse refers to PHYSICALLY alive people to worship in spirit and in truth.
+	<p> Este versiculo se refiere a personas FISICAMENTE vivas que adoran en Espíritu y en Verdad.</p>
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
 	rnam = get_verse_reponse_name("q12_1__", rf.heb_1_14_obj);
 	lg[rnam] = `<a class='exam_ref' href=${rf.heb_1_14_href}>Heb 1:14</a> ${q12_1__response_INTRO}
-	<p>This verse refers to angels as spirits. The bible refers to any physically living person as a spirit. Please read the sections <a class='exam_ref' href='${href_angels}'>Angels</a> and <a class='exam_ref' href='${href_wings}'>Wings</a> of the completely FREE book TodaCarne.com.</p>
+	<p>Este versículo se refiere a los ángeles como espíritus. La Biblia se refiere a cualquier persona físicamente viva como espíritu. Por favor lea las secciones de <a class='exam_ref' href='${href_angels}'>Angeles</a> y <a class='exam_ref' href='${href_wings}'>Alados</a>.</p>
 	${q12_1__response_END}
 	`;
 	
 	rnam = get_verse_reponse_name("q12_1__", rf.phl_1_23_obj);
 	lg[rnam] = `<a class='exam_ref' href=${rf.phl_1_23_href}>Phl 1:23</a> ${q12_1__response_INTRO}
 	${q12_1__nowhere_consciousness}
-	<p>Ofcourse any believer in the RESURRECTION of Jesus Christ prefers depart and be with Christ when RESURRECTED in a new body that cannot die. He is, after all, RESURRECTED in BODY and SPIRIT. So the ONLY way to be with Him is to be ALSO RESURRECTED.</p>
+	<p>Por supuesto, cualquier creyente en la RESURRECCIÓN de Jesucristo prefiere partir y estar con Cristo cuando RESUCITE en un cuerpo nuevo que no puede morir. Después de todo, Él RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de estar con Él es estar RESUCITANDO TAMBIÉN.</p>
 	${q12_1__response_END}
 	`;
 	
 	rnam = get_verse_reponse_name("q12_1__", rf.psa_16_11_obj);
 	lg[rnam] = `<a class='exam_ref' href=${rf.psa_16_11_href}>Psa 16:11</a> ${q12_1__response_INTRO}
 	${q12_1__nowhere_consciousness}
-	<p>Ofcourse any believer in the RESURRECTION of Jesus Christ knows that he is The Way and The Life and that he will get to be in His presence when RESURRECTED in a new body that cannot die. He is, after all, RESURRECTED in BODY and SPIRIT. So the ONLY way to be in His presence is to be ALSO RESURRECTED.</p>
+	<p>Por supuesto, todo aquel que cree en la RESURRECCIÓN de Jesucristo sabe que Él es el Camino y la Vida y que podrá estar en Su presencia cuando RESUCITE en un cuerpo nuevo que no puede morir. Después de todo, Él RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de ver su ROSTRO es estar TAMBIÉN RESUCITADO.</p>
 	${q12_1__response_END}
 	`;
 	
 	rnam = get_verse_reponse_name("q12_1__", rf.isa_8_19_obj);
 	lg[rnam] = `<a class='exam_ref' href=${rf.isa_8_19_href}>Isa 8:19</a> ${q12_1__response_INTRO}
-	The prohibition in the Old Testament for people to speak to the dead is to prevent them from speaking to Celestial Powers, commonly known in the New Testament as DEMONS, that will pretend to be the dead person to decieve the one trying to communicate with the dead.
+	<p> La prohibición en el Antiguo Testamento de que las personas hablen con los muertos es para evitar que hablen con los Poderes Celestiales, comúnmente conocidos en el Nuevo Testamento como DEMONIOS, que se harán pasar por la persona muerta para engañar a quien intente comunicarse con el muerto.</p>
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
@@ -836,7 +816,9 @@ function init_es_exam_msg(){
 	${q12_1__response_END}
 	`;	
 	
-	lg.q13_1__sleep = `Select all verses that support that dead people do NOT have CONSCIOUSNESS until resurrected.`;
+	// ============= TRADUCIENDO		
+	
+	lg.q13_1__sleep = `Seleccione todos los versiculos que soportan que las personas muertas NO tienen CONCIENCIA hasta que son resucitadas.`;
 	lg.q13_1__verse1_str = uppercase_words_in_string(rf.jhn_11_11_str, ["asleep,", "awake", ]);
 	lg.q13_1__verse1_href = rf.jhn_11_11_href;
 	lg.q13_1__verse1_should = "Lazarous is ASLEEP until he is AWAKEN";

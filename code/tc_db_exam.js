@@ -799,13 +799,14 @@ export function init_exam_database(){
 	db.q12_1__ = { 
 		htm_stm: "q12_1__sleep",
 		presentation: "q12_1__sleep_sec",
-		is_multi: true,
+		//is_multi: true,
 		answers: {
-			r0: { htm_answ: "q12_1__verse1_str", rclk_href: "q12_1__verse1_href", },
-			r1: { htm_answ: "q12_1__verse2_str", rclk_href: "q12_1__verse2_href", },
-			r2: { htm_answ: "q12_1__verse3_str", rclk_href: "q12_1__verse3_href", },
-			r3: { htm_answ: "q12_1__verse4_str", rclk_href: "q12_1__verse4_href", },
-			r4: { htm_answ: "q12_1__verse5_str", rclk_href: "q12_1__verse5_href", },
+			r0: { htm_answ: "q12_1__no_consciousness", },
+			r1: { htm_answ: "q12_1__verse1_str", rclk_href: "q12_1__verse1_href", },
+			r2: { htm_answ: "q12_1__verse2_str", rclk_href: "q12_1__verse2_href", },
+			r3: { htm_answ: "q12_1__verse3_str", rclk_href: "q12_1__verse3_href", },
+			r4: { htm_answ: "q12_1__verse4_str", rclk_href: "q12_1__verse4_href", },
+			r5: { htm_answ: "q12_1__verse5_str", rclk_href: "q12_1__verse5_href", },
 		},
 		vrs_with_response: all_q12_1__with_response,
 		// stg_with_response: [],
@@ -813,31 +814,35 @@ export function init_exam_database(){
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
-			let bad_on = this.answers.r0.is_on;
+			if(this.answers.r0.is_on){ 
+				this.all_nxt = ["q13_1__"];
+				return;
+			}
+			let bad_on = this.answers.r1.is_on;
 			if(bad_on){ 
 				this.all_nxt = ["q12_rv1__"];
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
-			bad_on = this.answers.r1.is_on;
+			bad_on = this.answers.r2.is_on;
 			if(bad_on){ 
 				this.all_nxt = ["q12_rv2__"];
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
-			bad_on = this.answers.r2.is_on;
+			bad_on = this.answers.r3.is_on;
 			if(bad_on){ 
 				this.all_nxt = ["q12_rv3__"];
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
-			bad_on = this.answers.r3.is_on;
+			bad_on = this.answers.r4.is_on;
 			if(bad_on){ 
 				this.all_nxt = ["q12_rv4__"];
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
-			bad_on = this.answers.r4.is_on;
+			bad_on = this.answers.r5.is_on;
 			if(bad_on){ 
 				this.all_nxt = ["q12_rv5__"];
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
