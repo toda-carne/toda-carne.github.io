@@ -177,17 +177,17 @@ export const all_es_bibrefs = {
 	gen_35_29_obj: { book: "genesis", chapter: 35, verse: 29, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	gen_35_29_str: `Gen 35:29. Isaac gave up the spirit and died, and was gathered to his people, old and full of days. Esau and Jacob, his sons, buried him.`,
 	job_7_21_obj: { book: "job", chapter: 7, verse: 21, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	job_7_21_str: `Job 7:21. Why do you not pardon my disobedience, and take away my iniquity? For now will I lie down in the dust. You will seek me diligently, but I will not be.`,
+	job_7_21_str: `Job 7:21. ¿Y por qué no quitas mi rebelión, y perdonas mi iniquidad? Porque ahora dormiré en el polvo, Y si me buscares de mañana, ya no seré.`,
 	job_14_12_obj: { book: "job", chapter: 14, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	job_14_12_str: `Job 14:12. so man lies down and doesn’t rise. Until the heavens are no more, they will not awake, nor be roused out of their sleep.`,
+	job_14_12_str: `Job 14:12. Así el hombre yace, y no se tornará á levantar: Hasta que no haya cielo no despertarán, Ni se levantarán de su sueño.`,
 	psa_16_11_obj: { book: "psalms", chapter: 16, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	psa_16_11_str: `Psa 16:11. You will show me the path of life. In your presence is fullness of joy. In your right hand there are pleasures forever more.`,
 	psa_115_17_obj: { book: "psalms", chapter: 115, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	psa_115_17_str: `Psa 115:17. The dead don’t praise Yah, neither any who go down into silence;`,
-	ecc_9_10_obj: { book: "ecclesiastes", chapter: 9, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	ecc_9_10_str: `Ecc 9:10. Whatever your hand finds to do, do it with your might; for there is no work, nor plan, nor knowledge, nor wisdom, in Sheol, where you are going.`,
+	psa_115_17_str: `Psa 115:17. No alabarán los muertos á JAH, Ni cuantos descienden al silencio;`,
+	ecc_9_10_obj: { book: "ecclesiastes", chapter: 9, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVR1960", },
+	ecc_9_10_str: `Ecc 9:10. Todo lo que te viniere a la mano para hacer, hazlo según tus fuerzas; porque en el Seol, adonde vas, no hay obra, ni trabajo, ni ciencia, ni sabiduría.`,
 	ecc_12_7_obj: { book: "ecclesiastes", chapter: 12, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	ecc_12_7_str: `Ecc 12:7. and the dust returns to the earth as it was, and the spirit returns to God who gave it.`,
+	ecc_12_7_str: `Ecc 12:7. Y el polvo se torne á la tierra, como era, y el espíritu se vuelva á Dios que lo dió.`,
 	isa_8_19_obj: { book: "isaiah", chapter: 8, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
 	isa_8_19_str: `Isa 8:19. When they tell you, “Consult with those who have familiar spirits and with the wizards, who chirp and who mutter,” shouldn’t a people consult with their God? Should they consult the dead on behalf of the living?`,
 	isa_14_7_obj: { book: "isaiah", chapter: 14, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
@@ -245,7 +245,7 @@ export const all_es_bibrefs = {
 	jhn_6_54_obj: { book: "john", chapter: 6, verse: 54, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
 	jhn_6_54_str: `Jhn 6:54. El que come Mi carne y bebe Mi sangre, tiene vida eterna, y Yo lo resucitaré en el día final.`,
 	jhn_11_11_obj: { book: "john", chapter: 11, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_11_11_str: `Jhn 11:11. He said these things, and after that, he said to them, "Our friend, Lazarus, has fallen asleep, but I am going so that I may awake him out of sleep."`,
+	jhn_11_11_str: `Jhn 11:11. Dicho esto, díceles después: Lázaro nuestro amigo duerme; mas voy á despertarle del sueño.`,
 	jhn_11_24_obj: { book: "john", chapter: 11, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
 	jhn_11_24_str: `Jhn 11:24. Marta le contestó: Yo sé que resucitará en la resurrección, en el día final.`,
 	jhn_17_2_obj: { book: "john", chapter: 17, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
@@ -819,31 +819,31 @@ function init_es_exam_msg(){
 	// ============= TRADUCIENDO		
 	
 	lg.q13_1__sleep = `Seleccione todos los versiculos que soportan que las personas muertas NO tienen CONCIENCIA hasta que son resucitadas.`;
-	lg.q13_1__verse1_str = uppercase_words_in_string(rf.jhn_11_11_str, ["asleep,", "awake", ]);
+	lg.q13_1__verse1_str = uppercase_words_in_string(rf.jhn_11_11_str, ["duerme;", "despertarle", ]);
 	lg.q13_1__verse1_href = rf.jhn_11_11_href;
-	lg.q13_1__verse1_should = "Lazarous is ASLEEP until he is AWAKEN";
-	lg.q13_1__verse2_str = `In 1 Corinthians 11:30 PEOPLE (not bodies) are sleeping (STILL going on) according to the greek conjugation: κοιμῶνται`;
+	lg.q13_1__verse1_should = "Lazaro DUERME hasta que es DESPERTADO";
+	lg.q13_1__verse2_str = `En 1 Corintios 11:30 las PERSONAS (no los cuerpos) estan durmiendo (SIGUEN durmiendo) segun la conjugación del griego: κοιμῶνται`;
 	const obj_1co_11_30 = { book: "1_corinthians", chapter: 11, verse: 30, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", };
 	lg.q13_1__verse2_href = make_bible_ref(obj_1co_11_30);
-	lg.q13_1__verse2_should = "They SLEEPING acording to the conjugation of the greek verb";
-	lg.q13_1__verse3_str = uppercase_words_in_string(rf.ecc_9_10_str, ["no", "work,", "nor", "plan,", "knowledge,", "wisdom,", "Sheol,", ]);
+	lg.q13_1__verse2_should = "Esas personas estan DURMIENDO según la conjugación del griego";
+	lg.q13_1__verse3_str = uppercase_words_in_string(rf.ecc_9_10_str, ["no", "obra,", "ni", "trabajo,", "ciencia,", "sabiduría.", "Seol,", ]);
 	lg.q13_1__verse3_href = rf.ecc_9_10_href;
-	lg.q13_1__verse3_should = "WORK, PLAN, KNOWLEDGE, WISDOM. These words specifically refer to actions of CONSCIOUSNESS. A property of living PEOPLE not just bodies made dust.";
-	lg.q13_1__verse4_str = uppercase_words_in_string(rf.ecc_12_7_str, ["dust", "returns", "spirit", ]);
+	lg.q13_1__verse3_should = "OBRA, TRABAJO, CIENCIA, SABIDURIA. Estas palabras se refieren específicamente a acciones de CONCIENCIA, una propiedad de las PERSONAS vivas, no sólo de cuerpos convertidos en polvo.";
+	lg.q13_1__verse4_str = uppercase_words_in_string(rf.ecc_12_7_str, ["polvo", "torne", "vuelva", "espíritu", ]);
 	lg.q13_1__verse4_href = rf.ecc_12_7_href;
-	lg.q13_1__verse4_should = "After dead things RETURN as they were. You did NOT have CONSCIOUSNESS before being born.";
-	lg.q13_1__verse5_str = uppercase_words_in_string(rf.job_7_21_str, ["not", 'be.', ]);
+	lg.q13_1__verse4_should = "Despues de morir las cosas REGRESAN a como eran antes de nacer. Usted NO tenia CONCIENCIA antes de nacer.";
+	lg.q13_1__verse5_str = uppercase_words_in_string(rf.job_7_21_str, ["no", 'seré.', ]);
 	lg.q13_1__verse5_href = rf.job_7_21_href;
-	lg.q13_1__verse5_should = "When a person dies it will NOT BE anymore.";
-	lg.q13_1__verse6_str = uppercase_words_in_string(rf.job_14_12_str, ["Until", "nor", "roused", "out", "sleep.", ]);
+	lg.q13_1__verse5_should = "Cuando una persona muere ya NO SERA";
+	lg.q13_1__verse6_str = uppercase_words_in_string(rf.job_14_12_str, ["Hasta", "no", "despertarán,", "Ni", "levantarán", "sueño.", ]);
 	lg.q13_1__verse6_href = rf.job_14_12_href;
-	lg.q13_1__verse6_should = "People will NOT be ROUSED OUT of their SLEEP UNTIL these heavens are no more";
-	lg.q13_1__verse7_str = uppercase_words_in_string(rf.psa_115_17_str, ["dead", "don’t", "praise", ]);
+	lg.q13_1__verse6_should = "Los muertos NO se LEVANTARAN ni se DESPERTARAN de su SUEÑO HASTA que no haya cielos";
+	lg.q13_1__verse7_str = uppercase_words_in_string(rf.psa_115_17_str, ["muertos", "No", "alabarán", ]);
 	lg.q13_1__verse7_href = rf.psa_115_17_href;
-	lg.q13_1__verse7_should = "DEAD people (NOT just bodies) do NOT PRAISE";	
-	lg.q13_1__verse8_str = uppercase_words_in_string(rf.jhn_5_28_str, ["are", "in", "tombs"]);
+	lg.q13_1__verse7_should = "Los MUERTOS (NO solo los cuerpos) NO ALABAN";	
+	lg.q13_1__verse8_str = uppercase_words_in_string(rf.jhn_5_28_str, ["están", "en", "sepulcros"]);
 	lg.q13_1__verse8_href = rf.jhn_5_28_href;
-	lg.q13_1__verse8_should = "People who get resurrection ARE IN the TOMBS, the sepulcre, the hebrew Sheol, the poorly translated greek Hades, NOT in heaven or hell.";
+	lg.q13_1__verse8_should = "Los que van a resucitar ESTAN EN SEPULCROS, el Sheol hebreo, el mal traducido al griego Hades, NO en el cielo o en el infierno.";
 	
 
 	lg.q14_1__the_cloth_sec = `<a class='exam_ref exam_title' href='${href_the_cloth}'>The Cloth</a>`;
