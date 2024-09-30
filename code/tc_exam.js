@@ -197,9 +197,13 @@ function add_question(qid){
 	if(quest.has_qrefs){
 		the_stm = replace_all_qrefs(the_stm);
 	}
-	let qnum = "" + quest.pos_page;
+	
+	let sp_num = document.createElement("span")
+	
+	sp_num.innerHTML = "<b>" + quest.pos_page + ". </b>";
+	
 	if(DEBUG_QNUMS){
-		qnum = "<span title='" + quest.htm_stm + "'>" + qnum + "</span>";
+		sp_num.title = quest.htm_stm;
 	}
 	
 	const dv_qstm = dv_stm.appendChild(document.createElement("div"));
@@ -209,10 +213,17 @@ function add_question(qid){
 	}
 	dv_qstm.classList.add("exam");
 	dv_qstm.classList.add("msg");
-	dv_qstm.innerHTML = qnum + ". " + the_stm;
+	dv_qstm.innerHTML = "" + the_stm;
+	dv_qstm.prepend(sp_num);
+	
 	//dv_qstm.classList.toggle("contradiction");
 	if(quest.answers != null){
-		dv_qstm.addEventListener('contextmenu', (ev1) => {
+		/*dv_qstm.addEventListener('contextmenu', (ev1) => {
+			ev1.preventDefault();
+			toggle_support_interaction(qid, SUF_ID_ANSWERS);
+			return false;				
+		});*/
+		sp_num.addEventListener('click', (ev1) => {
 			ev1.preventDefault();
 			toggle_support_interaction(qid, SUF_ID_ANSWERS);
 			return false;				

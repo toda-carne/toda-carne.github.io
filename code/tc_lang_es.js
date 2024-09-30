@@ -485,7 +485,7 @@ function init_es_exam_msg(){
 	lg.q3_3__go_on = "NINGUNA. ACEPTO que todas son afirmadas por La Biblia. Continuemos.";
 
 	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${href_physical_resu}'>Física</a>`;
-	lg.q4_1__physical = `Seleccione todos los versiculos que soportan una resurrección física de Jesucristo`;
+	lg.q4_1__physical = `Seleccione todos los versiculos que soportan una <a class='exam_ref' href='${href_resurrection}'>resurrección</a> física de Jesucristo`;
 	lg.q4_1__verse1_str = uppercase_words_in_string(rf.luk_24_39_str, ["Tóquenme", "carne", "huesos,"]);
 	lg.q4_1__verse1_href = rf.luk_24_39_href;
 	lg.q4_1__verse1_should = "La CARNE y los HUESOS son FISICOS.";
@@ -509,7 +509,7 @@ function init_es_exam_msg(){
 	lg.q4_1__verse7_should = "COMER pescado asado es algo FISICO.";
 	
 	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>Para NO volver a morir</a>`;
-	lg.q5_1__not_die = `Seleccione todos los versiculos que soportan una resurrección de Jesucristo para NO VOLVER a morir`;
+	lg.q5_1__not_die = `Seleccione todos los versiculos que soportan una <a class='exam_ref' href='${href_resurrection}'>resurrección</a> de Jesucristo para NO VOLVER a morir`;
 	lg.q5_1__verse1_str = uppercase_words_in_string(rf.rom_6_9_str, ["ya", "no", "muere:"]);
 	lg.q5_1__verse1_href = rf.rom_6_9_href;
 	lg.q5_1__verse1_should = `Dice literalmente "YA NO MUERE"`;
@@ -524,7 +524,7 @@ function init_es_exam_msg(){
 	lg.q5_1__verse4_should = `Dice literalmente "VIVIENDO SIEMPRE"`;
 	
 	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${href_in_heaven_resu}'>En los cielos</a>`;
-	lg.q6_1__in_heaven = `Seleccione todos los versiculos que soportan un Jesucristo RESUCITADO que esta en los cielos en CUERPO y Espíritu.`;
+	lg.q6_1__in_heaven = `Seleccione todos los versiculos que soportan un Jesucristo <a class='exam_ref' href='${href_resurrection}'>RESUCITADO</a> que esta en los cielos en CUERPO y Espíritu.`;
 	lg.q6_1__verse1_str = uppercase_words_in_string(rf.act_1_11_str, ["tomado", "vendrá", "ir", "al", "en", "el", "cielo.", "cielo,", "cielo?"]);
 	lg.q6_1__verse1_href = rf.act_1_11_href;
 	lg.q6_1__verse1_should = "IR AL CIELO y VENDRA del cielo. El está físicamente en unos cielos físicos";
@@ -548,7 +548,7 @@ function init_es_exam_msg(){
 	lg.q6_1__verse7_should = "El es la IMAGEN del Dios INVISIBLE. Luego si era visible cuando resucitó, El tiene que SEGUIR siendo visible en los cielos.";
 	
 	lg.q7_1__like_jesus_sec = `<a class='exam_ref exam_title' href='${href_like_jesus_resu}'>Como Jesucristo</a>`;
-	lg.q7_1__like_jesus = `Seleccione todos los versiculos que soportan una resurrección de los muertos semejante a la resurrección de Jesucristo`;
+	lg.q7_1__like_jesus = `Seleccione todos los versiculos que soportan una <a class='exam_ref' href='${href_resurrection}'>resurrección</a> de los muertos semejante a la <a class='exam_ref' href='${href_resurrection}'>resurrección</a> de Jesucristo`;
 	lg.q7_1__verse1_str = uppercase_words_in_string(rf.phl_3_21_str, ["semejante", "cuerpo", ]);
 	lg.q7_1__verse1_href = rf.phl_3_21_href;
 	lg.q7_1__verse1_should = `Dice literalmente "SEMEJANTE al CUERPO"`;
@@ -569,7 +569,7 @@ function init_es_exam_msg(){
 	lg.q7_1__verse6_should = "Lo que resucita es INCURRUPTIBLE";
 	
 	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${href_for_all_resu}'>Para Todos</a>`;
-	lg.q8_1__for_all = `Seleccione todos los versiculos que soportan una resurrección de los muertos que es para TODOS`;
+	lg.q8_1__for_all = `Seleccione todos los versiculos que soportan una <a class='exam_ref' href='${href_resurrection}'>resurrección</a> de los muertos que es para TODOS`;
 	lg.q8_1__verse1_str = uppercase_words_in_string(rf.jhn_5_28_str, ["todos", "sepulcros", ]);
 	lg.q8_1__verse1_href = rf.jhn_5_28_href;
 	lg.q8_1__verse1_should = "TODOS significa TODOS";
@@ -590,7 +590,7 @@ function init_es_exam_msg(){
 	lg.q8_1__verse6_should = "TODOS significa TODOS";
 	
 	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>NO ha sucedido</a>`;
-	lg.q9_1__not_yet = `Seleccione todos los versiculos que soportan una resurrección de los muertos que NO ha sucedido para casi NADIE`;
+	lg.q9_1__not_yet = `Seleccione todos los versiculos que soportan una <a class='exam_ref' href='${href_resurrection}'>resurrección</a> de los muertos que NO ha sucedido para casi NADIE`;
 	lg.q9_1__verse1_str = uppercase_words_in_string(rf.jhn_6_39_str, ["día", "final.", ]);
 	lg.q9_1__verse1_href = rf.jhn_6_39_href;
 	lg.q9_1__verse1_should = "Es el en DIA FINAL";
@@ -621,7 +621,7 @@ function init_es_exam_msg(){
 	*/
 	
 	lg.q11_1__new_earth_sec = `<a class='exam_ref exam_title' href='${href_new_earth_resu}'>Tierra Nueva</a>`;
-	lg.q11_1__new_earth = `Seleccione todos los versiculos que soportan una resurrección de los muertos para vivir en una TIERRA NUEVA con unos cielos nuevos`;
+	lg.q11_1__new_earth = `Seleccione todos los versiculos que soportan una <a class='exam_ref' href='${href_resurrection}'>resurrección</a> de los muertos para vivir en una TIERRA NUEVA con unos cielos nuevos`;
 	lg.q11_1__verse1_str = uppercase_words_in_string(rf.rev_21_1_str, ["tierra", "nueva:", ]);
 	lg.q11_1__verse1_href = rf.rev_21_1_href;
 	lg.q11_1__verse1_should = "Es en una TIERRA NUEVA con unos cielos nuevos";
@@ -636,7 +636,7 @@ function init_es_exam_msg(){
 	lg.q11_1__verse4_should = "Es en una TIERRA NUEVA con unos cielos nuevos";
 	
 	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleeping}'>Dormiditos</a>`;
-	lg.q12_1__sleep = `Seleccione un BUEN versiculo que soporte que las personas que están físicamente muertas (antes de la resurrección) TIENEN CONCIENCIA`;
+	lg.q12_1__sleep = `Seleccione un BUEN versiculo que soporte que las personas que están físicamente muertas (antes de la <a class='exam_ref' href='${href_resurrection}'>resurrección</a>) TIENEN CONCIENCIA`;
 	lg.q12_1__no_consciousness = "No existe un buen versículo";
 	lg.q12_1__verse1_str = uppercase_words_in_string(rf.isa_14_10_str, ["voces,", "dirán:" ]);
 	lg.q12_1__verse1_href = rf.isa_14_10_href;
@@ -816,9 +816,7 @@ function init_es_exam_msg(){
 	${q12_1__response_END}
 	`;	
 	
-	// ============= TRADUCIENDO		
-	
-	lg.q13_1__sleep = `Seleccione todos los versiculos que soportan que las personas muertas NO tienen CONCIENCIA hasta que son resucitadas.`;
+	lg.q13_1__sleep = `Seleccione todos los versiculos que soportan que las personas muertas NO tienen CONCIENCIA hasta la <a class='exam_ref' href='${href_resurrection}'>resurrección</a>.`;
 	lg.q13_1__verse1_str = uppercase_words_in_string(rf.jhn_11_11_str, ["duerme;", "despertarle", ]);
 	lg.q13_1__verse1_href = rf.jhn_11_11_href;
 	lg.q13_1__verse1_should = "Lazaro DUERME hasta que es DESPERTADO";

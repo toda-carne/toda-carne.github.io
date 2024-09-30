@@ -794,7 +794,7 @@ function init_en_exam_msg(){
 	lg.q3_3__go_on = "NONE of them. I ACCEPT they are all claimed by The Bible. Let's go on.";
 
 	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${href_physical_resu}'>Physical</a>`;
-	lg.q4_1__physical = `Select all verses that support a physical resurrection of Jesus Christ`;
+	lg.q4_1__physical = `Select all verses that support a physical <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of Jesus Christ`;
 	lg.q4_1__verse1_str = uppercase_words_in_string(rf.luk_24_39_str, ["Touch", "flesh", "bones,"]);
 	lg.q4_1__verse1_href = rf.luk_24_39_href;
 	lg.q4_1__verse1_should = "FLESH and BONES are PHYSICAL.";
@@ -818,7 +818,7 @@ function init_en_exam_msg(){
 	lg.q4_1__verse7_should = "EATING is something PHYSICAL.";
 	
 	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To NOT die again</a>`;
-	lg.q5_1__not_die = `Select all verses that support a resurrection of Jesus Christ to NOT die again`;
+	lg.q5_1__not_die = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of Jesus Christ to NOT die again`;
 	lg.q5_1__verse1_str = uppercase_words_in_string(rf.rom_6_9_str, ["dies", "no", "more."]);
 	lg.q5_1__verse1_href = rf.rom_6_9_href;
 	lg.q5_1__verse1_should = "DIES NO MORE.";
@@ -833,7 +833,7 @@ function init_en_exam_msg(){
 	lg.q5_1__verse4_should = "LIVES FOREVER.";
 	
 	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${href_in_heaven_resu}'>In Heaven</a>`;
-	lg.q6_1__in_heaven = `Select all verses that support a RESURRECTED Jesus Christ that is in heaven in BODY and spirit.`;
+	lg.q6_1__in_heaven = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>RESURRECTED</a> Jesus Christ that is in heaven in BODY and spirit.`;
 	lg.q6_1__verse1_str = uppercase_words_in_string(rf.act_1_11_str, ["going", "into", "sky."]);
 	lg.q6_1__verse1_href = rf.act_1_11_href;
 	lg.q6_1__verse1_should = "GOING INTO the SKY. He went physically into the heavens";
@@ -858,7 +858,7 @@ function init_en_exam_msg(){
 	
 
 	lg.q7_1__like_jesus_sec = `<a class='exam_ref exam_title' href='${href_like_jesus_resu}'>Like Jesus</a>`;
-	lg.q7_1__like_jesus = `Select all verses that support a resurrection of the dead that is like Jesus resurrection`;
+	lg.q7_1__like_jesus = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead that is like Jesus <a class='exam_ref' href='${href_resurrection}'>resurrection</a>`;
 	lg.q7_1__verse1_str = uppercase_words_in_string(rf.phl_3_21_str, ["conformed", "body", ]);
 	lg.q7_1__verse1_href = rf.phl_3_21_href;
 	lg.q7_1__verse1_should = "Just LIKE the BODY of Jesus";
@@ -879,7 +879,7 @@ function init_en_exam_msg(){
 	lg.q7_1__verse6_should = "The raised body is IMPERISHABLE";
 	
 	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${href_for_all_resu}'>For All</a>`;
-	lg.q8_1__for_all = `Select all verses that support a resurrection of the dead that is for ALL people`;
+	lg.q8_1__for_all = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead that is for ALL people`;
 	lg.q8_1__verse1_str = uppercase_words_in_string(rf.jhn_5_28_str, ["all", "tombs", ]);
 	lg.q8_1__verse1_href = rf.jhn_5_28_href;
 	lg.q8_1__verse1_should = "ALL is ALL";
@@ -900,7 +900,7 @@ function init_en_exam_msg(){
 	lg.q8_1__verse6_should = "ALL is ALL";
 	
 	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>Has NOT happend</a>`;
-	lg.q9_1__not_yet = `Select all verses that support a resurrection of the dead that has NOT happend for almost ANYBODY`;
+	lg.q9_1__not_yet = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead that has NOT happend for almost ANYBODY`;
 	lg.q9_1__verse1_str = uppercase_words_in_string(rf.jhn_6_39_str, ["last", "day.", ]);
 	lg.q9_1__verse1_href = rf.jhn_6_39_href;
 	lg.q9_1__verse1_should = "It is on the LAST DAY";
@@ -931,7 +931,7 @@ function init_en_exam_msg(){
 	*/
 	
 	lg.q11_1__new_earth_sec = `<a class='exam_ref exam_title' href='${href_new_earth_resu}'>New Earth</a>`;
-	lg.q11_1__new_earth = `Select all verses that support a resurrection of the dead to live in a NEW EARTH with a new heavens`;
+	lg.q11_1__new_earth = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead to live in a NEW EARTH with a new heavens`;
 	lg.q11_1__verse1_str = uppercase_words_in_string(rf.rev_21_1_str, ["new", "earth:", ]);
 	lg.q11_1__verse1_href = rf.rev_21_1_href;
 	lg.q11_1__verse1_should = "It is on a NEW EARTH with a new heavens";
@@ -946,7 +946,7 @@ function init_en_exam_msg(){
 	lg.q11_1__verse4_should = "It is on a NEW EARTH with a new heavens";
 	
 	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleeping}'>Sleep</a>`;
-	lg.q12_1__sleep = `Select a GOOD verse that supports that physically dead people DO HAVE CONSCIOUSNESS before resurrected.`;
+	lg.q12_1__sleep = `Select a GOOD verse that supports that physically dead people DO HAVE CONSCIOUSNESS before <a class='exam_ref' href='${href_resurrection}'>resurrection</a>.`;
 	lg.q12_1__no_consciousness = "There is no good verse";
 	lg.q12_1__verse1_str = uppercase_words_in_string(rf.isa_14_10_str, ["answer", "ask", "you,", ]);
 	lg.q12_1__verse1_href = rf.isa_14_10_href;
@@ -1120,7 +1120,7 @@ function init_en_exam_msg(){
 	${q12_1__response_END}
 	`;	
 	
-	lg.q13_1__sleep = `Select all verses that support that dead people do NOT have CONSCIOUSNESS until resurrected.`;
+	lg.q13_1__sleep = `Select all verses that support that dead people do NOT have CONSCIOUSNESS until <a class='exam_ref' href='${href_resurrection}'>resurrection</a>.`;
 	lg.q13_1__verse1_str = uppercase_words_in_string(rf.jhn_11_11_str, ["asleep,", "awake", ]);
 	lg.q13_1__verse1_href = rf.jhn_11_11_href;
 	lg.q13_1__verse1_should = "Lazarous is ASLEEP until he is AWAKEN";
