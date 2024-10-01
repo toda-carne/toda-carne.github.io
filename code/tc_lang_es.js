@@ -14,7 +14,10 @@ const bibles_es = {
 	blueletterbible: [ "RVR09", "RVR60", "EM", "VUL", "NASB95", "VUL", "WLC", "LXX", "MGNT", "TR", ],
 };
 
+const DEFAULT_BOOK_NAME = "LIBRO";
+
 const num2book_es = {
+	"-1":DEFAULT_BOOK_NAME,
 	"1":"génesis",
 	"2":"éxodo",
 	"3":"levítico",
@@ -107,7 +110,7 @@ function init_es_basic_msg(){
 	obj.msg_add_link = "AGREGAR ENLACE WEB";
 	obj.msg_end_edit = "TERMINAR EDICION";
 	
-	obj.msg_def_book = "LIBRO";
+	obj.msg_def_book = DEFAULT_BOOK_NAME;
 	obj.msg_def_strong = "CODIGO STRONG";
 	obj.msg_def_link_name = "ENLACE WEB";
 	

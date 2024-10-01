@@ -31,7 +31,19 @@ export function is_mobile_browser() {
 	});
 }
 
+export const bib_defaults = {
+	BOOK: -1,
+	CHAPTER: 0,
+	VERSE: 0,
+	LAST_VERSE: 0,
+	BIBLES_SITE: "biblegateway",
+	BIB_VER: "BIB",
+};
+
+const DEFAULT_BOOK_NAME = "BOOK";
+
 export const num2abbr = {
+	"-1":DEFAULT_BOOK_NAME,
 	"1":"Gen",
 	"2":"Exo",
 	"3":"Lev",
@@ -101,6 +113,7 @@ export const num2abbr = {
 };
 
 export const num2book_en = {
+	"-1":DEFAULT_BOOK_NAME,
 	"1":"genesis",
 	"2":"exodus",
 	"3":"leviticus",
@@ -175,14 +188,6 @@ const bibles_en = {
 	blueletterbible: [ "KJV", "WEB", "YLT", "VUL", "NASB95", "VUL", "WLC", "LXX", "MGNT", "TR", ],
 };
 
-export const bib_defaults = {
-	CHAPTER: 0,
-	VERSE: 0,
-	LAST_VERSE: 0,
-	BIBLES_SITE: "biblegateway",
-	BIB_VER: "BIB",
-};
-
 export const refs_ids = {
 	in_favor_side: "_in_favor",
 	against_side: "_against",
@@ -228,7 +233,7 @@ function init_en_basic_msg(){
 	obj.msg_add_link = "ADD WEB LINK";
 	obj.msg_end_edit = "END EDIT";
 	
-	obj.msg_def_book = "BOOK";
+	obj.msg_def_book = DEFAULT_BOOK_NAME;
 	obj.msg_def_strong = "STRONG_CODE";
 	obj.msg_def_link_name = "WEB LINK";
 	
@@ -326,7 +331,7 @@ export function init_en_module(){
 	init_en_basic_msg();
 	init_get_msg(all_en_msg);
 	
-	num2book_en["-1"] = all_en_msg.msg_def_book;	
+	//num2book_en["-1"] = all_en_msg.msg_def_book;
 	fill_reversed_object(num2book_en, book2num_en);
 	
 	fill_reversed_object(num2abbr, abbr2num);
