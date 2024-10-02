@@ -1,5 +1,5 @@
 
-import { get_book_nam, get_verse_reponse_name, get_verse_cit_key, refs_ids, all_bibrefs } from './tc_lang_all.js';
+import { get_book_nam, get_verse_reponse_name, get_verse_cit_key, refs_ids, glb_all_bibrefs } from './tc_lang_all.js';
 import { init_answers } from './tc_exam.js';
 
 "use strict";
@@ -15,7 +15,7 @@ export function init_exam_database(){
 	db_nodes_exam = {};
 	
 	const db = db_nodes_exam;
-	const rf = all_bibrefs;
+	const rf = glb_all_bibrefs;
 
 	db.q0_1__ = { 
 		htm_stm: "q0_1__end_of_test",

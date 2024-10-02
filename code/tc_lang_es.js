@@ -86,13 +86,15 @@ const num2book_es = {
 	"66":"apocalipsis",
 };
 
+/*
 function set_glb_lang(){
 	glb_exam_language = "es";
 	glb_all_books = num2book_es;
 	glb_all_bibles = bibles_es;
 	glb_books_nums = book2num_es;
 	glb_curr_lang = all_es_msg;
-}
+	glb_all_bibrefs = all_es_bibrefs;
+}*/
 
 function init_es_basic_msg(){
 	const obj = all_es_msg;
@@ -161,7 +163,7 @@ export function init_es_module(){
 
 	init_es_exam_msg();
 	
-	init_all_glb("es", num2book_es, bibles_es, book2num_es, all_es_msg);
+	init_all_glb("es", num2book_es, bibles_es, book2num_es, all_es_msg, all_es_bibrefs);
 }
 
 //init_es_module();
