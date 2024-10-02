@@ -952,7 +952,7 @@ function init_en_exam_msg(){
 	
 	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleeping}'>Sleep</a>`;
 	lg.q12_1__sleep = `Select a GOOD verse that supports that physically dead people DO HAVE CONSCIOUSNESS before <a class='exam_ref' href='${href_resurrection}'>resurrection</a>.`;
-	lg.q12_1__no_consciousness = "There is no good verse";
+	lg.q12_1__no_consciousness = "According to TodaCarne.com none of these is a good verse";
 	lg.q12_1__verse1_str = uppercase_words_in_string(rf.isa_14_10_str, ["answer", "ask", "you,", ]);
 	lg.q12_1__verse1_href = rf.isa_14_10_href;
 	lg.q12_1__verse2_str = uppercase_words_in_string(rf.mat_17_3_str, ["talking", "him.", ]);;

@@ -640,7 +640,7 @@ function init_es_exam_msg(){
 	
 	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleeping}'>Dormiditos</a>`;
 	lg.q12_1__sleep = `Seleccione un BUEN versiculo que soporte que las personas que están físicamente muertas (antes de la <a class='exam_ref' href='${href_resurrection}'>resurrección</a>) TIENEN CONCIENCIA`;
-	lg.q12_1__no_consciousness = "No existe un buen versículo";
+	lg.q12_1__no_consciousness = "Según TodaCarne.com ninguno de estos es un buen versiculo";
 	lg.q12_1__verse1_str = uppercase_words_in_string(rf.isa_14_10_str, ["voces,", "dirán:" ]);
 	lg.q12_1__verse1_href = rf.isa_14_10_href;
 	lg.q12_1__verse2_str = uppercase_words_in_string(rf.mat_17_3_str, ["hablando", "él.", ]);
