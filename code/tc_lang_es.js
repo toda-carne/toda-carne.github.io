@@ -1,6 +1,6 @@
 
 import { init_get_msg, init_all_glb, fill_reversed_object, init_en_module, get_dispute_msg, bib_defaults, uppercase_words_in_string, 
-	all_strongrefs, get_verse_reponse_name, make_bible_ref, fill_bibrefs_href, fill_all_strongrefs_href } from '../code/tc_lang_all.js';
+	all_strongrefs, get_verse_reponse_name, make_bible_ref, fill_bibrefs_href, fill_all_strongrefs_href, get_verse_cit_key } from '../code/tc_lang_all.js';
 
 "use strict";
 
@@ -147,6 +147,8 @@ function init_es_basic_msg(){
 	obj.msg_qref_question_num = "pregunta número";
 }
 
+const all_es_bibrefs = {};
+
 export function init_es_module(){
 	init_en_module();
 	init_es_basic_msg();
@@ -154,6 +156,7 @@ export function init_es_module(){
 	console.log("Called init_es_module");
 	
 	init_get_msg(all_es_msg);
+	init_es_bibrefs();
 	
 	num2book_es["-1"] = all_es_msg.msg_def_book;
 	fill_reversed_object(num2book_es, book2num_es);
@@ -173,162 +176,175 @@ export const all_es_strongrefs = {
 	H5782_cod: "H5782",
 }
 
-export const all_es_bibrefs = {
+function init_es_bibrefs(){
+	let cit_obj = null;
+	let kk = null;
+	const rf = all_es_bibrefs;
 	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_bibrefs_href gets called
-	gen_15_15_obj: { book: "genesis", chapter: 15, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	gen_15_15_str: `Gen 15:15. but you will go to your fathers in peace. You will be buried at a good old age.`,
-	gen_25_8_obj: { book: "genesis", chapter: 25, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	gen_25_8_str: `Gen 25:8. Abraham gave up his spirit, and died at a good old age, an old man, and full of years, and was gathered to his people.`,
-	gen_35_29_obj: { book: "genesis", chapter: 35, verse: 29, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	gen_35_29_str: `Gen 35:29. Isaac gave up the spirit and died, and was gathered to his people, old and full of days. Esau and Jacob, his sons, buried him.`,
-	job_7_21_obj: { book: "job", chapter: 7, verse: 21, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	job_7_21_str: `Job 7:21. ¿Y por qué no quitas mi rebelión, y perdonas mi iniquidad? Porque ahora dormiré en el polvo, Y si me buscares de mañana, ya no seré.`,
-	job_14_12_obj: { book: "job", chapter: 14, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	job_14_12_str: `Job 14:12. Así el hombre yace, y no se tornará á levantar: Hasta que no haya cielo no despertarán, Ni se levantarán de su sueño.`,
-	psa_16_11_obj: { book: "psalms", chapter: 16, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	psa_16_11_str: `Psa 16:11. You will show me the path of life. In your presence is fullness of joy. In your right hand there are pleasures forever more.`,
-	psa_115_17_obj: { book: "psalms", chapter: 115, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	psa_115_17_str: `Psa 115:17. No alabarán los muertos á JAH, Ni cuantos descienden al silencio;`,
-	ecc_9_10_obj: { book: "ecclesiastes", chapter: 9, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVR1960", },
-	ecc_9_10_str: `Ecc 9:10. Todo lo que te viniere a la mano para hacer, hazlo según tus fuerzas; porque en el Seol, adonde vas, no hay obra, ni trabajo, ni ciencia, ni sabiduría.`,
-	ecc_12_7_obj: { book: "ecclesiastes", chapter: 12, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	ecc_12_7_str: `Ecc 12:7. Y el polvo se torne á la tierra, como era, y el espíritu se vuelva á Dios que lo dió.`,
-	isa_8_19_obj: { book: "isaiah", chapter: 8, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	isa_8_19_str: `Isa 8:19. When they tell you, “Consult with those who have familiar spirits and with the wizards, who chirp and who mutter,” shouldn’t a people consult with their God? Should they consult the dead on behalf of the living?`,
-	isa_14_7_obj: { book: "isaiah", chapter: 14, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
-	isa_14_8_obj: { book: "isaiah", chapter: 14, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "LBLA", },
-	isa_14_9_txt_obj: { book: "isaiah", chapter: 14, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", },
-	isa_14_10_obj: { book: "isaiah", chapter: 14, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	isa_14_10_str: `Isa 14:10. Todos ellos darán voces, y te dirán: ¿Tú también enfermaste como nosotros, y como nosotros fuiste?`,
-	isa_14_12_obj: { book: "isaiah", chapter: 14, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	isa_14_18_txt_obj: { book: "isaiah", chapter: 14, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", },
-	isa_65_17_obj: { book: "isaiah", chapter: 65, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	isa_65_17_str: `Isa 65:17.  Porque he aquí que yo crío nuevos cielos y nueva tierra: y de lo primero no habrá memoria, ni más vendrá al pensamiento.`,
-	isa_66_22_obj: { book: "isaiah", chapter: 66, verse: 22, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	isa_66_22_str: `Isa 66:22. Porque como los cielos nuevos y la nueva tierra, que yo hago, permanecen delante de mí, dice Jehová, así permanecerá vuestra simiente y vuestro nombre.`,
-	mat_17_3_obj: { book: "matthew", chapter: 17, verse: 3, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	mat_17_3_str: `Mat 17:3.  Y he aquí les aparecieron Moisés y Elías, hablando con él.`,
-	mat_17_4_obj: { book: "matthew", chapter: 17, verse: 4, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	mat_26_64_obj: { book: "matthew", chapter: 26, verse: 64, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	mat_26_64_str: `Mat 26:64.  Jesús le dijo: Tú lo has dicho: y aun os digo, que desde ahora habéis de ver al Hijo de los hombres sentado á la diestra de la potencia de Dios, y que viene en las nubes del cielo."`,
-	mat_28_9_obj: { book: "matthew", chapter: 28, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	mat_28_9_str: `Mat 28:9. He aquí, Jesús les sale al encuentro, diciendo: Salve. Y ellas se llegaron y abrazaron sus pies, y le adoraron.`,
-	mar_16_19_obj: { book: "mark", chapter: 16, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	mar_16_19_str: `Mar 16:19. So then the Lord, after he had spoken to them, was received up into heaven, and sat down at the right hand of God.`,
-	luk_8_52_obj: { book: "luke", chapter: 8, verse: 52, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	luk_8_52_str: `Luk 8:52. All were weeping and mourning her, but he said, "Don’t weep. She isn’t dead, but sleeping."`,
-	luk_15_24_obj: { book: "luke", chapter: 15, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	luk_15_24_str: `Luk 15:24. for this, my son, was dead, and is alive again. He was lost, and is found.’ Then they began to celebrate.`,
-	luk_16_24_obj: { book: "luke", chapter: 16, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	luk_16_24_str: `Luk 16:24. Entonces él, dando voces, dijo: Padre Abraham, ten misericordia de mí, y envía á Lázaro que moje la punta de su dedo en agua, y refresque mi lengua; porque soy atormentado en esta llama.`,
-	luk_20_36_obj: { book: "luke", chapter: 20, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	luk_20_36_str: `Luk 20:36. Porque no pueden ya más morir: porque son iguales á los ángeles, y son hijos de Dios, cuando son hijos de la resurrección.`,
-	luk_20_38_obj: { book: "luke", chapter: 20, verse: 38, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	luk_20_38_str: `Luk 20:38. Now he is not the God of the dead, but of the living, for all are alive to him.`,
-	luk_23_43_obj: { book: "luke", chapter: 23, verse: 43, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	luk_23_43_str: `Luk 23:43.  Jesus said to him, "Assuredly I tell you, today you will be with me in Paradise."`,
-	luk_24_30_obj: { book: "luke", chapter: 24, verse: 30, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	luk_24_30_str: `Luk 24:30. Y aconteció, que estando sentado con ellos á la mesa, tomando el pan, bendijo, y partió, y dióles.`,
-	luk_24_39_obj: { book: "luke", chapter: 24, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", },
-	luk_24_39_str: `Luk 24:39. Miren mis manos y mis pies. Soy yo mismo. Tóquenme y vean: un espíritu no tiene carne ni huesos, como ustedes ven que tengo yo.`,
-	luk_24_43_obj: { book: "luke", chapter: 24, verse: 43, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	luk_24_43_str: `Luk 24:43. Y él tomó, y comió delante de ellos.`,
-	jhn_2_19_obj: { book: "john", chapter: 2, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_2_19_str: `Jhn 2:19. Respondió Jesús, y díjoles: Destruid este templo, y en tres días lo levantaré.`,
-	jhn_4_24_obj: { book: "john", chapter: 4, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_4_24_str: `Jhn 4:24. God is spirit, and those who worship him must worship in spirit and truth.`,
-	jhn_5_28_obj: { book: "john", chapter: 5, verse: 28, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_5_28_str: `Jhn 5:28. No os maravilléis de esto; porque vendrá hora, cuando todos los que están en los sepulcros oirán su voz;`,
-	jhn_5_29_obj: { book: "john", chapter: 5, verse: 29, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_5_29_str: `Jhn 5:29.  Y los que hicieron bien, saldrán á resurrección de vida; mas los que hicieron mal, á resurrección de condenación.`,
-	jhn_6_39_obj: { book: "john", chapter: 6, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "LBLA", },
-	jhn_6_39_str: `Jhn 6:39. Y esta es la voluntad del que me envió: que de todo lo que Él me ha dado yo no pierda nada, sino que lo resucite en el día final.`,
-	jhn_6_40_obj: { book: "john", chapter: 6, verse: 40, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
-	jhn_6_40_str: `Jhn 6:40. Porque esta es la voluntad de Mi Padre: que todo aquel que ve al Hijo y cree en Él, tenga vida eterna, y Yo mismo lo resucitaré en el día final.`,
-	jhn_6_44_obj: { book: "john", chapter: 6, verse: 44, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
-	jhn_6_44_str: `Jhn 6:44.  Nadie puede venir a Mí si no lo trae el Padre que me envió, y Yo lo resucitaré en el día final.`,
-	jhn_6_54_obj: { book: "john", chapter: 6, verse: 54, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
-	jhn_6_54_str: `Jhn 6:54. El que come Mi carne y bebe Mi sangre, tiene vida eterna, y Yo lo resucitaré en el día final.`,
-	jhn_11_11_obj: { book: "john", chapter: 11, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_11_11_str: `Jhn 11:11. Dicho esto, díceles después: Lázaro nuestro amigo duerme; mas voy á despertarle del sueño.`,
-	jhn_11_24_obj: { book: "john", chapter: 11, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", },
-	jhn_11_24_str: `Jhn 11:24. Marta le contestó: Yo sé que resucitará en la resurrección, en el día final.`,
-	jhn_17_2_obj: { book: "john", chapter: 17, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_17_2_str: `Jhn 17:2. Como le has dado la potestad de toda carne, para que dé vida eterna á todos los que le diste.`,
-	jhn_20_20_obj: { book: "john", chapter: 20, verse: 20, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_20_20_str: `Jhn 20:20. When he had said this, he showed them his hands and his side. The disciples therefore were glad when they saw the Lord.`,
-	jhn_20_27_obj: { book: "john", chapter: 20, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_20_27_str: `Jhn 20:27. Luego dice á Tomás: Mete tu dedo aquí, y ve mis manos: y alarga acá tu mano, y métela en mi costado: y no seas incrédulo, sino fiel.`,
-	jhn_14_2_obj: { book: "john", chapter: 14, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	jhn_14_2_str: `Jhn 14:2. En la casa de mi Padre muchas moradas hay: de otra manera os lo hubiera dicho: voy, pues, á preparar lugar para vosotros.`,
-	act_1_11_obj: { book: "acts", chapter: 1, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	act_1_11_str: `Act 1:11. Los cuales también les dijeron: Varones Galileos, ¿qué estáis mirando al cielo? este mismo Jesús que ha sido tomado desde vosotros arriba en el cielo, así vendrá como le habéis visto ir al cielo."`,
-	act_7_59_obj: { book: "acts", chapter: 7, verse: 59, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	act_7_59_str: `Act 7:59. They stoned Stephen as he called out, saying, "Lord Jesus, receive my spirit!"`,
-	act_10_41_obj: { book: "acts", chapter: 10, verse: 41, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	act_10_41_str: `Act 10:41. No á todo el pueblo, sino á los testigos que Dios antes había ordenado, es á saber, á nosotros que comimos y bebimos con él, después que resucitó de los muertos.`,
-	act_13_36_obj: { book: "acts", chapter: 13, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	act_13_36_str: `Act 13:36. For David, after he had in his own generation served the counsel of God, fell asleep, was laid with his fathers, and saw decay.`,
-	act_24_15_obj: { book: "acts", chapter: 24, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	act_24_15_str: `Act 24:15. Teniendo esperanza en Dios que ha de haber resurrección de los muertos, así de justos como de injustos, la cual también ellos esperan.`,
-	rom_6_9_obj: { book: "romans", chapter: 6, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	rom_6_9_str: `Rom 6:9. Sabiendo que Cristo, habiendo resucitado de entre los muertos, ya no muere: la muerte no se enseñoreará más de él.`,
-	_1co_15_22_obj: { book: "1_corinthians", chapter: 15, verse: 22, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_1co_15_22_str: `1Co 15:22. Porque así como en Adam todos mueren, así también en Cristo todos serán vivificados.`,
-	_1co_15_42_obj: { book: "1_corinthians", chapter: 15, verse: 42, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_1co_15_42_str: `1Co 15:42. Así también es la resurrección de los muertos. Se siembra en corrupción se levantará en incorrupción;`,
-	_1co_15_49_obj: { book: "1_corinthians", chapter: 15, verse: 49, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_1co_15_49_str: `1Co 15:49. Y como trajimos la imagen del terreno, traeremos también la imagen del celestial.`,
-	_2co_5_8_obj: { book: "2_corinthians", chapter: 5, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_2co_5_8_str: `2Co 5:8. We are courageous, I say, and are willing rather to be absent from the body and to be at home with the Lord.`,
-	_2co_12_4_obj: { book: "2_corinthians", chapter: 12, verse: 4, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_2co_12_4_str: `2Co 12:4. how he was caught up into Paradise, and heard unspeakable words, which it is not lawful for a man to utter.`,
-	phl_1_23_obj: { book: "philippians", chapter: 1, verse: 23, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	phl_1_23_str: `Phl 1:23. But I am hard pressed between the two, having the desire to depart and be with Christ, which is far better.`,
-	phl_3_21_obj: { book: "philippians", chapter: 3, verse: 21, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	phl_3_21_str: `Phl 3:21. El cual transformará el cuerpo de nuestra bajeza, para ser semejante al cuerpo de su gloria, por la operación con la cual puede también sujetar á sí todas las cosas.`,
-	col_1_15_obj: { book: "colossians", chapter: 1, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", },
-	col_1_15_str: `Col 1:15. Cristo es la imagen visible de Dios, que es invisible; es su Hijo primogénito, anterior a todo lo creado.`,
-	_1th_4_14_obj: { book: "1_thessalonians", chapter: 4, verse: 14, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_1th_4_14_str: `1Th 4:14. For if we believe that Jesus died and rose again, even so God will bring with him those who have fallen asleep in Jesus.`,
-	_1ti_5_6_obj: { book: "1_timothy", chapter: 5, verse: 6, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_1ti_5_6_str: `1Ti 5:6. But she who gives herself to pleasure is dead while she lives. `,
-	_2ti_2_18_obj: { book: "2_timothy", chapter: 2, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NTV", },
-	_2ti_2_18_str: `2Ti 2:18. Ellos han abandonado el camino de la verdad al afirmar que la resurrección de los muertos ya ocurrió; de esa manera, desviaron de la fe a algunas personas.`,
-	heb_1_14_obj: { book: "hebrews", chapter: 1, verse: 14, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_1_14_str: `Heb 1:14. Aren’t they all serving spirits, sent out to do service for the sake of those who will inherit salvation?`,
-	heb_7_16_obj: { book: "hebrews", chapter: 7, verse: 16, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", },
-	heb_7_16_str: `Heb 7:16. que no fue sacerdote según una ley que toma en cuenta elementos puramente humanos, sino según el poder de una vida indestructible.`,
-	heb_7_25_obj: { book: "hebrews", chapter: 7, verse: 25, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_7_25_str: `Heb 7:25. Por lo cual puede también salvar eternamente á los que por él se allegan á Dios, viviendo siempre para interceder por ellos.`,
-	heb_9_12_obj: { book: "hebrews", chapter: 9, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_9_12_str: `Heb 9:12. Y no por sangre de machos cabríos ni de becerros, mas por su propia sangre, entró una sola vez en el santuario, habiendo obtenido eterna redención.`,
-	heb_9_27_obj: { book: "hebrews", chapter: 9, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_9_27_str: `Heb 9:27. Y de la manera que está establecido á los hombres que mueran una vez, y después el juicio;`,
-	heb_9_28_obj: { book: "hebrews", chapter: 9, verse: 28, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_9_28_str: `Heb 9:28. so Christ also, having been offered once to bear the sins of many, will appear a second time, without sin, to those who are eagerly waiting for him for salvation.`,
-	heb_10_12_obj: { book: "hebrews", chapter: 10, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_10_12_str: `Heb 10:12. Pero éste, habiendo ofrecido por los pecados un solo sacrificio para siempre, está sentado á la diestra de Dios,`,
-	heb_12_23_obj: { book: "hebrews", chapter: 12, verse: 23, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	heb_12_23_str: `Heb 12:23. Y á la congregación de los primogénitos que están alistados en los cielos, y á Dios el Juez de todos, y á los espíritus de los justos hechos perfectos,`,
-	heb_13_8_obj: { book: "hebrews", chapter: 13, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", },
-	heb_13_8_str: `Heb 13:8.  Jesucristo es el mismo ayer, hoy y siempre.`,
-	_1pe_3_19_obj: { book: "1_peter", chapter: 3, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_1pe_3_19_str: `1Pe 3:19. in whom he also went and preached to the spirits in prison, `,
-	_2pe_3_13_obj: { book: "2_peter", chapter: 3, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_2pe_3_13_str: `2Pe 3:13. Bien que esperamos cielos nuevos y tierra nueva, según sus promesas, en los cuales mora la justicia.`,
-	_1jo_3_2_obj: { book: "1_john", chapter: 3, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	_1jo_3_2_str: `1Jo 3:2. Muy amados, ahora somos hijos de Dios, y aun no se ha manifestado lo que hemos de ser; pero sabemos que cuando él apareciere, seremos semejantes á él, porque le veremos como él es.`,
-	rev_6_10_obj: { book: "revelation", chapter: 6, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	rev_6_10_str: `Rev 6:10. Y clamaban en alta voz diciendo: ¿Hasta cuándo, Señor, santo y verdadero, no juzgas y vengas nuestra sangre de los que moran en la tierra?`,
-	rev_14_13_obj: { book: "revelation", chapter: 14, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	rev_14_13_str: `Rev 14:13. I heard a voice from heaven saying, "Write, ‘Blessed are the dead who die in the Lord from now on.’" "Yes," says the Spirit, "that they may rest from their labors; for their works follow with them."`,
-	rev_1_18_obj: { book: "revelation", chapter: 1, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", },
-	rev_1_18_str: `Rev 1:18. y el que vive. Estuve muerto, pero ahora vivo para siempre. Yo tengo las llaves del reino de la muerte.`,
-	rev_20_13_obj: { book: "revelation", chapter: 20, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVR1960", },
-	rev_20_13_str: `Rev 20:13. Y el mar entregó los muertos que había en él; y la muerte y el Hades entregaron los muertos que había en ellos; y fueron juzgados cada uno según sus obras.`,
-	rev_21_1_obj: { book: "revelation", chapter: 21, verse: 1, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", },
-	rev_21_1_str: `Rev 21:1. Y VI un cielo nuevo, y una tierra nueva: porque el primer cielo y la primera tierra se fueron, y el mar ya no es.`,
+	cit_obj = rf.gen_15_15_obj = { book: "genesis", chapter: 15, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	kk = get_verse_cit_key(cit_obj) + "_str";
+	rf[kk] = `Y tú vendrás á tus padres en paz, y serás sepultado en buena vejez.`;
+	cit_obj = rf.gen_25_8_obj = { book: "genesis", chapter: 25, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	kk = get_verse_cit_key(cit_obj) + "_str";
+	rf[kk] = `Y exhaló el espíritu, y murió Abraham en buena vejez, anciano y lleno de días y fué unido á su pueblo.`;	
+	rf.gen_25_8_str = `Gen 25:8. Abraham gave up his spirit, and died at a good old age, an old man, and full of years, and was gathered to his people.`;
+	rf.gen_35_29_obj = { book: "genesis", chapter: 35, verse: 29, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.gen_35_29_str = `Gen 35:29. Isaac gave up the spirit and died, and was gathered to his people, old and full of days. Esau and Jacob, his sons, buried him.`;
+	rf.job_7_21_obj = { book: "job", chapter: 7, verse: 21, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.job_7_21_str = `Job 7:21. ¿Y por qué no quitas mi rebelión, y perdonas mi iniquidad? Porque ahora dormiré en el polvo, Y si me buscares de mañana, ya no seré.`;
+	rf.job_14_12_obj = { book: "job", chapter: 14, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.job_14_12_str = `Job 14:12. Así el hombre yace, y no se tornará á levantar: Hasta que no haya cielo no despertarán, Ni se levantarán de su sueño.`;
+	cit_obj = rf.psa_16_11_obj = { book: "psalms", chapter: 16, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	kk = get_verse_cit_key(cit_obj) + "_str";
+	rf[kk] = `Me mostrarás la senda de la vida: Hartura de alegrías hay con tu rostro; Deleites en tu diestra para siempre.`;	
+	rf.psa_115_17_obj = { book: "psalms", chapter: 115, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.psa_115_17_str = `Psa 115:17. No alabarán los muertos á JAH, Ni cuantos descienden al silencio;`;
+	rf.ecc_9_10_obj = { book: "ecclesiastes", chapter: 9, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVR1960", };
+	rf.ecc_9_10_str = `Ecc 9:10. Todo lo que te viniere a la mano para hacer, hazlo según tus fuerzas; porque en el Seol, adonde vas, no hay obra, ni trabajo, ni ciencia, ni sabiduría.`;
+	rf.ecc_12_7_obj = { book: "ecclesiastes", chapter: 12, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.ecc_12_7_str = `Ecc 12:7. Y el polvo se torne á la tierra, como era, y el espíritu se vuelva á Dios que lo dió.`;
+	cit_obj = rf.isa_8_19_obj = { book: "isaiah", chapter: 8, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	kk = get_verse_cit_key(cit_obj) + "_str";
+	rf[kk] = `Y si os dijeren: Preguntad á los pythones y á los adivinos, que susurran hablando, responded: ¿No consultará el pueblo á su Dios? ¿Apelará por los vivos á los muertos?`;	
+	rf.isa_14_7_obj = { book: "isaiah", chapter: 14, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", };
+	rf.isa_14_8_obj = { book: "isaiah", chapter: 14, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "LBLA", };
+	rf.isa_14_9_txt_obj = { book: "isaiah", chapter: 14, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", };
+	rf.isa_14_10_obj = { book: "isaiah", chapter: 14, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.isa_14_10_str = `Isa 14:10. Todos ellos darán voces, y te dirán: ¿Tú también enfermaste como nosotros, y como nosotros fuiste?`;
+	rf.isa_14_12_obj = { book: "isaiah", chapter: 14, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.isa_14_18_txt_obj = { book: "isaiah", chapter: 14, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", };
+	rf.isa_65_17_obj = { book: "isaiah", chapter: 65, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.isa_65_17_str = `Isa 65:17.  Porque he aquí que yo crío nuevos cielos y nueva tierra: y de lo primero no habrá memoria, ni más vendrá al pensamiento.`;
+	rf.isa_66_22_obj = { book: "isaiah", chapter: 66, verse: 22, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.isa_66_22_str = `Isa 66:22. Porque como los cielos nuevos y la nueva tierra, que yo hago, permanecen delante de mí, dice Jehová, así permanecerá vuestra simiente y vuestro nombre.`;
+	rf.mat_17_3_obj = { book: "matthew", chapter: 17, verse: 3, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.mat_17_3_str = `Mat 17:3.  Y he aquí les aparecieron Moisés y Elías, hablando con él.`;
+	rf.mat_17_4_obj = { book: "matthew", chapter: 17, verse: 4, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.mat_26_64_obj = { book: "matthew", chapter: 26, verse: 64, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.mat_26_64_str = `Mat 26:64.  Jesús le dijo: Tú lo has dicho: y aun os digo, que desde ahora habéis de ver al Hijo de los hombres sentado á la diestra de la potencia de Dios, y que viene en las nubes del cielo."`;
+	rf.mat_28_9_obj = { book: "matthew", chapter: 28, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.mat_28_9_str = `Mat 28:9. He aquí, Jesús les sale al encuentro, diciendo: Salve. Y ellas se llegaron y abrazaron sus pies, y le adoraron.`;
+	rf.mar_16_19_obj = { book: "mark", chapter: 16, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.mar_16_19_str = `Mar 16:19. So then the Lord, after he had spoken to them, was received up into heaven, and sat down at the right hand of God.`;
+	rf.luk_8_52_obj = { book: "luke", chapter: 8, verse: 52, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.luk_8_52_str = `Luk 8:52. All were weeping and mourning her, but he said, "Don’t weep. She isn’t dead, but sleeping."`;
+	cit_obj = rf.luk_15_24_obj = { book: "luke", chapter: 15, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	kk = get_verse_cit_key(cit_obj) + "_str";
+	rf[kk] = `Porque este mi hijo muerto era, y ha revivido; habíase perdido, y es hallado. Y comenzaron á regocijarse.`;
+	rf.luk_16_24_obj = { book: "luke", chapter: 16, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.luk_16_24_str = `Luk 16:24. Entonces él, dando voces, dijo: Padre Abraham, ten misericordia de mí, y envía á Lázaro que moje la punta de su dedo en agua, y refresque mi lengua; porque soy atormentado en esta llama.`;
+	rf.luk_20_36_obj = { book: "luke", chapter: 20, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.luk_20_36_str = `Luk 20:36. Porque no pueden ya más morir: porque son iguales á los ángeles, y son hijos de Dios, cuando son hijos de la resurrección.`;
+	cit_obj = rf.luk_20_38_obj = { book: "luke", chapter: 20, verse: 38, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	kk = get_verse_cit_key(cit_obj) + "_str";
+	rf[kk] = `Porque Dios no es Dios de muertos, mas de vivos: porque todos viven á él.`;
+	cit_obj = rf.luk_23_43_obj = { book: "luke", chapter: 23, verse: 43, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	kk = get_verse_cit_key(cit_obj) + "_str";
+	rf[kk] = `Entonces Jesús le dijo: De cierto te digo, que hoy estarás conmigo en el paraíso.`;
+	rf.luk_24_30_obj = { book: "luke", chapter: 24, verse: 30, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.luk_24_30_str = `Luk 24:30. Y aconteció, que estando sentado con ellos á la mesa, tomando el pan, bendijo, y partió, y dióles.`;
+	rf.luk_24_39_obj = { book: "luke", chapter: 24, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", };
+	rf.luk_24_39_str = `Luk 24:39. Miren mis manos y mis pies. Soy yo mismo. Tóquenme y vean: un espíritu no tiene carne ni huesos, como ustedes ven que tengo yo.`;
+	rf.luk_24_43_obj = { book: "luke", chapter: 24, verse: 43, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.luk_24_43_str = `Luk 24:43. Y él tomó, y comió delante de ellos.`;
+	rf.jhn_2_19_obj = { book: "john", chapter: 2, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.jhn_2_19_str = `Jhn 2:19. Respondió Jesús, y díjoles: Destruid este templo, y en tres días lo levantaré.`;
+	cit_obj = rf.jhn_4_24_obj = { book: "john", chapter: 4, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	kk = get_verse_cit_key(cit_obj) + "_str";
+	rf[kk] = `Dios es Espíritu; y los que le adoran, en espíritu y en verdad es necesario que adoren.`;
+	rf.jhn_5_28_obj = { book: "john", chapter: 5, verse: 28, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.jhn_5_28_str = `Jhn 5:28. No os maravilléis de esto; porque vendrá hora, cuando todos los que están en los sepulcros oirán su voz;`;
+	rf.jhn_5_29_obj = { book: "john", chapter: 5, verse: 29, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.jhn_5_29_str = `Jhn 5:29.  Y los que hicieron bien, saldrán á resurrección de vida; mas los que hicieron mal, á resurrección de condenación.`;
+	rf.jhn_6_39_obj = { book: "john", chapter: 6, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "LBLA", };
+	rf.jhn_6_39_str = `Jhn 6:39. Y esta es la voluntad del que me envió: que de todo lo que Él me ha dado yo no pierda nada, sino que lo resucite en el día final.`;
+	rf.jhn_6_40_obj = { book: "john", chapter: 6, verse: 40, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", };
+	rf.jhn_6_40_str = `Jhn 6:40. Porque esta es la voluntad de Mi Padre: que todo aquel que ve al Hijo y cree en Él, tenga vida eterna, y Yo mismo lo resucitaré en el día final.`;
+	rf.jhn_6_44_obj = { book: "john", chapter: 6, verse: 44, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", };
+	rf.jhn_6_44_str = `Jhn 6:44.  Nadie puede venir a Mí si no lo trae el Padre que me envió, y Yo lo resucitaré en el día final.`;
+	rf.jhn_6_54_obj = { book: "john", chapter: 6, verse: 54, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", };
+	rf.jhn_6_54_str = `Jhn 6:54. El que come Mi carne y bebe Mi sangre, tiene vida eterna, y Yo lo resucitaré en el día final.`;
+	rf.jhn_11_11_obj = { book: "john", chapter: 11, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.jhn_11_11_str = `Jhn 11:11. Dicho esto, díceles después: Lázaro nuestro amigo duerme; mas voy á despertarle del sueño.`;
+	rf.jhn_11_24_obj = { book: "john", chapter: 11, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", };
+	rf.jhn_11_24_str = `Jhn 11:24. Marta le contestó: Yo sé que resucitará en la resurrección, en el día final.`;
+	rf.jhn_17_2_obj = { book: "john", chapter: 17, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.jhn_17_2_str = `Jhn 17:2. Como le has dado la potestad de toda carne, para que dé vida eterna á todos los que le diste.`;
+	rf.jhn_20_20_obj = { book: "john", chapter: 20, verse: 20, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.jhn_20_20_str = `Jhn 20:20. When he had said this, he showed them his hands and his side. The disciples therefore were glad when they saw the Lord.`;
+	rf.jhn_20_27_obj = { book: "john", chapter: 20, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.jhn_20_27_str = `Jhn 20:27. Luego dice á Tomás: Mete tu dedo aquí, y ve mis manos: y alarga acá tu mano, y métela en mi costado: y no seas incrédulo, sino fiel.`;
+	rf.jhn_14_2_obj = { book: "john", chapter: 14, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.jhn_14_2_str = `Jhn 14:2. En la casa de mi Padre muchas moradas hay: de otra manera os lo hubiera dicho: voy, pues, á preparar lugar para vosotros.`;
+	rf.act_1_11_obj = { book: "acts", chapter: 1, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.act_1_11_str = `Act 1:11. Los cuales también les dijeron: Varones Galileos, ¿qué estáis mirando al cielo? este mismo Jesús que ha sido tomado desde vosotros arriba en el cielo, así vendrá como le habéis visto ir al cielo."`;
+	cit_obj = rf.act_7_59_obj = { book: "acts", chapter: 7, verse: 59, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	kk = get_verse_cit_key(cit_obj) + "_str";
+	rf[kk] = `Y apedrearon á Esteban, invocando él y diciendo: Señor Jesús, recibe mi espíritu.`;
+	rf.act_10_41_obj = { book: "acts", chapter: 10, verse: 41, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.act_10_41_str = `Act 10:41. No á todo el pueblo, sino á los testigos que Dios antes había ordenado, es á saber, á nosotros que comimos y bebimos con él, después que resucitó de los muertos.`;
+	rf.act_13_36_obj = { book: "acts", chapter: 13, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.act_13_36_str = `Act 13:36. For David, after he had in his own generation served the counsel of God, fell asleep, was laid with his fathers, and saw decay.`;
+	rf.act_24_15_obj = { book: "acts", chapter: 24, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.act_24_15_str = `Act 24:15. Teniendo esperanza en Dios que ha de haber resurrección de los muertos, así de justos como de injustos, la cual también ellos esperan.`;
+	rf.rom_6_9_obj = { book: "romans", chapter: 6, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.rom_6_9_str = `Rom 6:9. Sabiendo que Cristo, habiendo resucitado de entre los muertos, ya no muere: la muerte no se enseñoreará más de él.`;
+	rf._1co_15_22_obj = { book: "1_corinthians", chapter: 15, verse: 22, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf._1co_15_22_str = `1Co 15:22. Porque así como en Adam todos mueren, así también en Cristo todos serán vivificados.`;
+	rf._1co_15_42_obj = { book: "1_corinthians", chapter: 15, verse: 42, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf._1co_15_42_str = `1Co 15:42. Así también es la resurrección de los muertos. Se siembra en corrupción se levantará en incorrupción;`;
+	rf._1co_15_49_obj = { book: "1_corinthians", chapter: 15, verse: 49, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf._1co_15_49_str = `1Co 15:49. Y como trajimos la imagen del terreno, traeremos también la imagen del celestial.`;
+	rf._2co_5_8_obj = { book: "2_corinthians", chapter: 5, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf._2co_5_8_str = `2Co 5:8. We are courageous, I say, and are willing rather to be absent from the body and to be at home with the Lord.`;
+	rf._2co_12_4_obj = { book: "2_corinthians", chapter: 12, verse: 4, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf._2co_12_4_str = `2Co 12:4. how he was caught up into Paradise, and heard unspeakable words, which it is not lawful for a man to utter.`;
+	rf.phl_1_23_obj = { book: "philippians", chapter: 1, verse: 23, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.phl_1_23_str = `Phl 1:23. But I am hard pressed between the two, having the desire to depart and be with Christ, which is far better.`;
+	rf.phl_3_21_obj = { book: "philippians", chapter: 3, verse: 21, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.phl_3_21_str = `Phl 3:21. El cual transformará el cuerpo de nuestra bajeza, para ser semejante al cuerpo de su gloria, por la operación con la cual puede también sujetar á sí todas las cosas.`;
+	rf.col_1_15_obj = { book: "colossians", chapter: 1, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", };
+	rf.col_1_15_str = `Col 1:15. Cristo es la imagen visible de Dios, que es invisible; es su Hijo primogénito, anterior a todo lo creado.`;
+	rf._1th_4_14_obj = { book: "1_thessalonians", chapter: 4, verse: 14, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf._1th_4_14_str = `1Th 4:14. For if we believe that Jesus died and rose again, even so God will bring with him those who have fallen asleep in Jesus.`;
+	rf._1ti_5_6_obj = { book: "1_timothy", chapter: 5, verse: 6, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf._1ti_5_6_str = `1Ti 5:6. But she who gives herself to pleasure is dead while she lives. `;
+	rf._2ti_2_18_obj = { book: "2_timothy", chapter: 2, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NTV", };
+	rf._2ti_2_18_str = `2Ti 2:18. Ellos han abandonado el camino de la verdad al afirmar que la resurrección de los muertos ya ocurrió; de esa manera, desviaron de la fe a algunas personas.`;
+	rf.heb_1_14_obj = { book: "hebrews", chapter: 1, verse: 14, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.heb_1_14_str = `Heb 1:14. Aren’t they all serving spirits, sent out to do service for the sake of those who will inherit salvation?`;
+	rf.heb_7_16_obj = { book: "hebrews", chapter: 7, verse: 16, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", };
+	rf.heb_7_16_str = `Heb 7:16. que no fue sacerdote según una ley que toma en cuenta elementos puramente humanos, sino según el poder de una vida indestructible.`;
+	rf.heb_7_25_obj = { book: "hebrews", chapter: 7, verse: 25, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.heb_7_25_str = `Heb 7:25. Por lo cual puede también salvar eternamente á los que por él se allegan á Dios, viviendo siempre para interceder por ellos.`;
+	rf.heb_9_12_obj = { book: "hebrews", chapter: 9, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.heb_9_12_str = `Heb 9:12. Y no por sangre de machos cabríos ni de becerros, mas por su propia sangre, entró una sola vez en el santuario, habiendo obtenido eterna redención.`;
+	rf.heb_9_27_obj = { book: "hebrews", chapter: 9, verse: 27, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.heb_9_27_str = `Heb 9:27. Y de la manera que está establecido á los hombres que mueran una vez, y después el juicio;`;
+	rf.heb_9_28_obj = { book: "hebrews", chapter: 9, verse: 28, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.heb_9_28_str = `Heb 9:28. so Christ also, having been offered once to bear the sins of many, will appear a second time, without sin, to those who are eagerly waiting for him for salvation.`;
+	rf.heb_10_12_obj = { book: "hebrews", chapter: 10, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.heb_10_12_str = `Heb 10:12. Pero éste, habiendo ofrecido por los pecados un solo sacrificio para siempre, está sentado á la diestra de Dios,`;
+	rf.heb_12_23_obj = { book: "hebrews", chapter: 12, verse: 23, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.heb_12_23_str = `Heb 12:23. Y á la congregación de los primogénitos que están alistados en los cielos, y á Dios el Juez de todos, y á los espíritus de los justos hechos perfectos,`;
+	rf.heb_13_8_obj = { book: "hebrews", chapter: 13, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", };
+	rf.heb_13_8_str = `Heb 13:8.  Jesucristo es el mismo ayer, hoy y siempre.`;
+	rf._1pe_3_19_obj = { book: "1_peter", chapter: 3, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf._1pe_3_19_str = `1Pe 3:19. in whom he also went and preached to the spirits in prison, `;
+	rf._2pe_3_13_obj = { book: "2_peter", chapter: 3, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf._2pe_3_13_str = `2Pe 3:13. Bien que esperamos cielos nuevos y tierra nueva, según sus promesas, en los cuales mora la justicia.`;
+	rf._1jo_3_2_obj = { book: "1_john", chapter: 3, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf._1jo_3_2_str = `1Jo 3:2. Muy amados, ahora somos hijos de Dios, y aun no se ha manifestado lo que hemos de ser; pero sabemos que cuando él apareciere, seremos semejantes á él, porque le veremos como él es.`;
+	rf.rev_6_10_obj = { book: "revelation", chapter: 6, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.rev_6_10_str = `Rev 6:10. Y clamaban en alta voz diciendo: ¿Hasta cuándo, Señor, santo y verdadero, no juzgas y vengas nuestra sangre de los que moran en la tierra?`;
+	rf.rev_14_13_obj = { book: "revelation", chapter: 14, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.rev_14_13_str = `Rev 14:13. I heard a voice from heaven saying, "Write, ‘Blessed are the dead who die in the Lord from now on.’" "Yes," says the Spirit, "that they may rest from their labors; for their works follow with them."`;
+	rf.rev_1_18_obj = { book: "revelation", chapter: 1, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", };
+	rf.rev_1_18_str = `Rev 1:18. y el que vive. Estuve muerto, pero ahora vivo para siempre. Yo tengo las llaves del reino de la muerte.`;
+	rf.rev_20_13_obj = { book: "revelation", chapter: 20, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVR1960", };
+	rf.rev_20_13_str = `Rev 20:13. Y el mar entregó los muertos que había en él; y la muerte y el Hades entregaron los muertos que había en ellos; y fueron juzgados cada uno según sus obras.`;
+	rf.rev_21_1_obj = { book: "revelation", chapter: 21, verse: 1, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+	rf.rev_21_1_str = `Rev 21:1. Y VI un cielo nuevo, y una tierra nueva: porque el primer cielo y la primera tierra se fueron, y el mar ya no es.`;
 };
 
 function init_es_exam_msg(){

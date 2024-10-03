@@ -1,5 +1,5 @@
 
-import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, bib_obj_to_cit_obj, is_mobile_browser,
+import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, is_mobile_browser,
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang, glb_all_bibrefs } from './tc_lang_all.js';
 	
 import { STARTING_QUESTIONS, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
@@ -933,6 +933,18 @@ function is_last_added_verse_cit_ok(qid){
 	return false;
 }
 
+function update_dv_verse(dv_citation){
+	const verse_obj = dv_citation.tc_cit_obj;
+	verse_obj.rclk_href = make_bible_ref(verse_obj);
+	verse_obj.txtref = bib_obj_to_txt(verse_obj);
+	verse_obj.cit_txt = get_verse_cit_txt(verse_obj);
+	if(verse_obj.cit_txt == null){
+		dv_citation.innerHTML = verse_obj.txtref;
+	} else {
+		dv_citation.innerHTML = verse_obj.txtref + " " + verse_obj.cit_txt;
+	}
+}
+
 function add_verse_cit(qid, verse_obj){
 	const id_dv_support = qid + SUF_ID_ANSWERS;
 	const dv_support = document.getElementById(id_dv_support);
@@ -957,9 +969,6 @@ function add_verse_cit(qid, verse_obj){
 		if(bibs.length > 0){ verse_obj.bib_ver = bibs[0]; }
 	}
 	
-	verse_obj.rclk_href = make_bible_ref(verse_obj);
-	verse_obj.txtref = bib_obj_to_txt(verse_obj);
-	
 	const dv_citation = dv_support.appendChild(document.createElement("div"));
 	dv_citation.id = id_dv_last_cit;
 	dv_citation.answ_idx = dv_support.childNodes.length - 1;
@@ -967,9 +976,9 @@ function add_verse_cit(qid, verse_obj){
 	dv_citation.classList.add("exam");
 	dv_citation.classList.add("is_answer");
 	dv_citation.title = glb_curr_lang.msg_help_answer_right_click;
-	
 	dv_citation.tc_cit_obj = JSON.parse(JSON.stringify(verse_obj));
-	dv_citation.innerHTML = verse_obj.txtref;
+
+	update_dv_verse(dv_citation);
 	
 	if(! is_in_viewport(dv_citation)){
 		dv_citation.scrollIntoView({
@@ -1154,12 +1163,8 @@ function toggle_verse_ed(dv_citation){
 		}
 		verse_obj.bib_ver = bib_ver;
 		
-		verse_obj.rclk_href = make_bible_ref(verse_obj);
-		verse_obj.txtref = bib_obj_to_txt(verse_obj);
-		
-		dv_citation.tc_cit_obj = JSON.parse(JSON.stringify(verse_obj));
-		dv_citation.innerHTML = verse_obj.txtref;
-		
+		update_dv_verse(dv_citation);
+				
 		dv_ed_cit.remove();
 
 		set_answer_for_verse_cit(dv_citation);
