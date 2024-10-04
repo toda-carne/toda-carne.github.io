@@ -1,6 +1,8 @@
 
 import { init_get_msg, init_all_glb, fill_reversed_object, init_en_module, get_dispute_msg, bib_defaults, uppercase_words_in_string, 
-	all_strongrefs, get_verse_reponse_name, make_bible_ref, fill_bibrefs_href, fill_all_strongrefs_href, get_verse_cit_key } from '../code/tc_lang_all.js';
+	all_strongrefs, get_verse_reponse_name, make_bible_ref, fill_bibrefs_href, fill_all_strongrefs_href, get_verse_cit_key, 
+	bib_obj_to_txt
+} from '../code/tc_lang_all.js';
 
 "use strict";
 
@@ -181,12 +183,14 @@ function init_es_bibrefs(){
 	let kk = null;
 	const rf = all_es_bibrefs;
 	// all '_href' terminated entries it will be filled with '_obj' terminated data when fill_bibrefs_href gets called
-	cit_obj = rf.gen_15_15_obj = { book: "genesis", chapter: 15, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	kk = get_verse_cit_key(cit_obj) + "_str";
-	rf[kk] = `Y tú vendrás á tus padres en paz, y serás sepultado en buena vejez.`;
-	cit_obj = rf.gen_25_8_obj = { book: "genesis", chapter: 25, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	kk = get_verse_cit_key(cit_obj) + "_str";
-	rf[kk] = `Y exhaló el espíritu, y murió Abraham en buena vejez, anciano y lleno de días y fué unido á su pueblo.`;	
+	cit_obj = 
+	rf.gen_15_15_obj = { book: "genesis", chapter: 15, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Y tú vendrás á tus padres en paz, y serás sepultado en buena vejez.`;
+	cit_obj = 
+	rf.gen_25_8_obj = { book: "genesis", chapter: 25, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Y exhaló el espíritu, y murió Abraham en buena vejez, anciano y lleno de días y fué unido á su pueblo.`;	
 	rf.gen_25_8_str = `Gen 25:8. Abraham gave up his spirit, and died at a good old age, an old man, and full of years, and was gathered to his people.`;
 	rf.gen_35_29_obj = { book: "genesis", chapter: 35, verse: 29, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.gen_35_29_str = `Gen 35:29. Isaac gave up the spirit and died, and was gathered to his people, old and full of days. Esau and Jacob, his sons, buried him.`;
@@ -194,18 +198,20 @@ function init_es_bibrefs(){
 	rf.job_7_21_str = `Job 7:21. ¿Y por qué no quitas mi rebelión, y perdonas mi iniquidad? Porque ahora dormiré en el polvo, Y si me buscares de mañana, ya no seré.`;
 	rf.job_14_12_obj = { book: "job", chapter: 14, verse: 12, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.job_14_12_str = `Job 14:12. Así el hombre yace, y no se tornará á levantar: Hasta que no haya cielo no despertarán, Ni se levantarán de su sueño.`;
-	cit_obj = rf.psa_16_11_obj = { book: "psalms", chapter: 16, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	kk = get_verse_cit_key(cit_obj) + "_str";
-	rf[kk] = `Me mostrarás la senda de la vida: Hartura de alegrías hay con tu rostro; Deleites en tu diestra para siempre.`;	
+	cit_obj = 
+	rf.psa_16_11_obj = { book: "psalms", chapter: 16, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Me mostrarás la senda de la vida: Hartura de alegrías hay con tu rostro; Deleites en tu diestra para siempre.`;	
 	rf.psa_115_17_obj = { book: "psalms", chapter: 115, verse: 17, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.psa_115_17_str = `Psa 115:17. No alabarán los muertos á JAH, Ni cuantos descienden al silencio;`;
 	rf.ecc_9_10_obj = { book: "ecclesiastes", chapter: 9, verse: 10, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVR1960", };
 	rf.ecc_9_10_str = `Ecc 9:10. Todo lo que te viniere a la mano para hacer, hazlo según tus fuerzas; porque en el Seol, adonde vas, no hay obra, ni trabajo, ni ciencia, ni sabiduría.`;
 	rf.ecc_12_7_obj = { book: "ecclesiastes", chapter: 12, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.ecc_12_7_str = `Ecc 12:7. Y el polvo se torne á la tierra, como era, y el espíritu se vuelva á Dios que lo dió.`;
-	cit_obj = rf.isa_8_19_obj = { book: "isaiah", chapter: 8, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	kk = get_verse_cit_key(cit_obj) + "_str";
-	rf[kk] = `Y si os dijeren: Preguntad á los pythones y á los adivinos, que susurran hablando, responded: ¿No consultará el pueblo á su Dios? ¿Apelará por los vivos á los muertos?`;	
+	cit_obj = 
+	rf.isa_8_19_obj = { book: "isaiah", chapter: 8, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Y si os dijeren: Preguntad á los pythones y á los adivinos, que susurran hablando, responded: ¿No consultará el pueblo á su Dios? ¿Apelará por los vivos á los muertos?`;	
 	rf.isa_14_7_obj = { book: "isaiah", chapter: 14, verse: 7, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NBLA", };
 	rf.isa_14_8_obj = { book: "isaiah", chapter: 14, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "LBLA", };
 	rf.isa_14_9_txt_obj = { book: "isaiah", chapter: 14, verse: 9, last_verse: bib_defaults.LAST_VERSE, site: "biblehub", bib_ver: "text", };
@@ -228,19 +234,22 @@ function init_es_bibrefs(){
 	rf.mar_16_19_str = `Mar 16:19. So then the Lord, after he had spoken to them, was received up into heaven, and sat down at the right hand of God.`;
 	rf.luk_8_52_obj = { book: "luke", chapter: 8, verse: 52, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.luk_8_52_str = `Luk 8:52. All were weeping and mourning her, but he said, "Don’t weep. She isn’t dead, but sleeping."`;
-	cit_obj = rf.luk_15_24_obj = { book: "luke", chapter: 15, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	kk = get_verse_cit_key(cit_obj) + "_str";
-	rf[kk] = `Porque este mi hijo muerto era, y ha revivido; habíase perdido, y es hallado. Y comenzaron á regocijarse.`;
+	cit_obj = 
+	rf.luk_15_24_obj = { book: "luke", chapter: 15, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Porque este mi hijo muerto era, y ha revivido; habíase perdido, y es hallado. Y comenzaron á regocijarse.`;
 	rf.luk_16_24_obj = { book: "luke", chapter: 16, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.luk_16_24_str = `Luk 16:24. Entonces él, dando voces, dijo: Padre Abraham, ten misericordia de mí, y envía á Lázaro que moje la punta de su dedo en agua, y refresque mi lengua; porque soy atormentado en esta llama.`;
 	rf.luk_20_36_obj = { book: "luke", chapter: 20, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.luk_20_36_str = `Luk 20:36. Porque no pueden ya más morir: porque son iguales á los ángeles, y son hijos de Dios, cuando son hijos de la resurrección.`;
-	cit_obj = rf.luk_20_38_obj = { book: "luke", chapter: 20, verse: 38, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	kk = get_verse_cit_key(cit_obj) + "_str";
-	rf[kk] = `Porque Dios no es Dios de muertos, mas de vivos: porque todos viven á él.`;
-	cit_obj = rf.luk_23_43_obj = { book: "luke", chapter: 23, verse: 43, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	kk = get_verse_cit_key(cit_obj) + "_str";
-	rf[kk] = `Entonces Jesús le dijo: De cierto te digo, que hoy estarás conmigo en el paraíso.`;
+	cit_obj = 
+	rf.luk_20_38_obj = { book: "luke", chapter: 20, verse: 38, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Porque Dios no es Dios de muertos, mas de vivos: porque todos viven á él.`;
+	cit_obj = 
+	rf.luk_23_43_obj = { book: "luke", chapter: 23, verse: 43, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Entonces Jesús le dijo: De cierto te digo, que hoy estarás conmigo en el paraíso.`;
 	rf.luk_24_30_obj = { book: "luke", chapter: 24, verse: 30, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.luk_24_30_str = `Luk 24:30. Y aconteció, que estando sentado con ellos á la mesa, tomando el pan, bendijo, y partió, y dióles.`;
 	rf.luk_24_39_obj = { book: "luke", chapter: 24, verse: 39, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", };
@@ -249,9 +258,10 @@ function init_es_bibrefs(){
 	rf.luk_24_43_str = `Luk 24:43. Y él tomó, y comió delante de ellos.`;
 	rf.jhn_2_19_obj = { book: "john", chapter: 2, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.jhn_2_19_str = `Jhn 2:19. Respondió Jesús, y díjoles: Destruid este templo, y en tres días lo levantaré.`;
-	cit_obj = rf.jhn_4_24_obj = { book: "john", chapter: 4, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	kk = get_verse_cit_key(cit_obj) + "_str";
-	rf[kk] = `Dios es Espíritu; y los que le adoran, en espíritu y en verdad es necesario que adoren.`;
+	cit_obj = 
+	rf.jhn_4_24_obj = { book: "john", chapter: 4, verse: 24, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Dios es Espíritu; y los que le adoran, en espíritu y en verdad es necesario que adoren.`;
 	rf.jhn_5_28_obj = { book: "john", chapter: 5, verse: 28, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.jhn_5_28_str = `Jhn 5:28. No os maravilléis de esto; porque vendrá hora, cuando todos los que están en los sepulcros oirán su voz;`;
 	rf.jhn_5_29_obj = { book: "john", chapter: 5, verse: 29, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
@@ -278,9 +288,10 @@ function init_es_bibrefs(){
 	rf.jhn_14_2_str = `Jhn 14:2. En la casa de mi Padre muchas moradas hay: de otra manera os lo hubiera dicho: voy, pues, á preparar lugar para vosotros.`;
 	rf.act_1_11_obj = { book: "acts", chapter: 1, verse: 11, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.act_1_11_str = `Act 1:11. Los cuales también les dijeron: Varones Galileos, ¿qué estáis mirando al cielo? este mismo Jesús que ha sido tomado desde vosotros arriba en el cielo, así vendrá como le habéis visto ir al cielo."`;
-	cit_obj = rf.act_7_59_obj = { book: "acts", chapter: 7, verse: 59, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	kk = get_verse_cit_key(cit_obj) + "_str";
-	rf[kk] = `Y apedrearon á Esteban, invocando él y diciendo: Señor Jesús, recibe mi espíritu.`;
+	cit_obj = 
+	rf.act_7_59_obj = { book: "acts", chapter: 7, verse: 59, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Y apedrearon á Esteban, invocando él y diciendo: Señor Jesús, recibe mi espíritu.`;
 	rf.act_10_41_obj = { book: "acts", chapter: 10, verse: 41, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.act_10_41_str = `Act 10:41. No á todo el pueblo, sino á los testigos que Dios antes había ordenado, es á saber, á nosotros que comimos y bebimos con él, después que resucitó de los muertos.`;
 	rf.act_13_36_obj = { book: "acts", chapter: 13, verse: 36, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
@@ -295,24 +306,36 @@ function init_es_bibrefs(){
 	rf._1co_15_42_str = `1Co 15:42. Así también es la resurrección de los muertos. Se siembra en corrupción se levantará en incorrupción;`;
 	rf._1co_15_49_obj = { book: "1_corinthians", chapter: 15, verse: 49, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf._1co_15_49_str = `1Co 15:49. Y como trajimos la imagen del terreno, traeremos también la imagen del celestial.`;
+	cit_obj = 
 	rf._2co_5_8_obj = { book: "2_corinthians", chapter: 5, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	rf._2co_5_8_str = `2Co 5:8. We are courageous, I say, and are willing rather to be absent from the body and to be at home with the Lord.`;
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Mas confiamos, y más quisiéramos partir del cuerpo, y estar presentes al Señor.`;
+	cit_obj = 
 	rf._2co_12_4_obj = { book: "2_corinthians", chapter: 12, verse: 4, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	rf._2co_12_4_str = `2Co 12:4. how he was caught up into Paradise, and heard unspeakable words, which it is not lawful for a man to utter.`;
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Que fué arrebatado al paraíso, donde oyó palabras secretas que el hombre no puede decir.`;
+	cit_obj = 
 	rf.phl_1_23_obj = { book: "philippians", chapter: 1, verse: 23, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	rf.phl_1_23_str = `Phl 1:23. But I am hard pressed between the two, having the desire to depart and be with Christ, which is far better.`;
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Porque de ambas cosas estoy puesto en estrecho, teniendo deseo de ser desatado, y estar con Cristo, lo cual es mucho mejor:`;
 	rf.phl_3_21_obj = { book: "philippians", chapter: 3, verse: 21, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf.phl_3_21_str = `Phl 3:21. El cual transformará el cuerpo de nuestra bajeza, para ser semejante al cuerpo de su gloria, por la operación con la cual puede también sujetar á sí todas las cosas.`;
 	rf.col_1_15_obj = { book: "colossians", chapter: 1, verse: 15, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", };
 	rf.col_1_15_str = `Col 1:15. Cristo es la imagen visible de Dios, que es invisible; es su Hijo primogénito, anterior a todo lo creado.`;
+	cit_obj = 
 	rf._1th_4_14_obj = { book: "1_thessalonians", chapter: 4, verse: 14, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	rf._1th_4_14_str = `1Th 4:14. For if we believe that Jesus died and rose again, even so God will bring with him those who have fallen asleep in Jesus.`;
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Porque de ambas cosas estoy puesto en estrecho, teniendo deseo de ser desatado, y estar con Cristo, lo cual es mucho mejor:`;
+	cit_obj = 
 	rf._1ti_5_6_obj = { book: "1_timothy", chapter: 5, verse: 6, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	rf._1ti_5_6_str = `1Ti 5:6. But she who gives herself to pleasure is dead while she lives. `;
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `Pero la que vive en delicias, viviendo está muerta.`;
 	rf._2ti_2_18_obj = { book: "2_timothy", chapter: 2, verse: 18, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "NTV", };
 	rf._2ti_2_18_str = `2Ti 2:18. Ellos han abandonado el camino de la verdad al afirmar que la resurrección de los muertos ya ocurrió; de esa manera, desviaron de la fe a algunas personas.`;
-	rf.heb_1_14_obj = { book: "hebrews", chapter: 1, verse: 14, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	rf.heb_1_14_str = `Heb 1:14. Aren’t they all serving spirits, sent out to do service for the sake of those who will inherit salvation?`;
+	cit_obj = 
+	rf.heb_1_14_obj = { book: "hebrews", chapter: 1, verse: 14, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "LBLA", };
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `¿No son todos ellos espíritus ministradores, enviados para servir por causa de los que heredarán la salvación?`;
 	rf.heb_7_16_obj = { book: "hebrews", chapter: 7, verse: 16, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", };
 	rf.heb_7_16_str = `Heb 7:16. que no fue sacerdote según una ley que toma en cuenta elementos puramente humanos, sino según el poder de una vida indestructible.`;
 	rf.heb_7_25_obj = { book: "hebrews", chapter: 7, verse: 25, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
@@ -329,8 +352,10 @@ function init_es_bibrefs(){
 	rf.heb_12_23_str = `Heb 12:23. Y á la congregación de los primogénitos que están alistados en los cielos, y á Dios el Juez de todos, y á los espíritus de los justos hechos perfectos,`;
 	rf.heb_13_8_obj = { book: "hebrews", chapter: 13, verse: 8, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "DHH", };
 	rf.heb_13_8_str = `Heb 13:8.  Jesucristo es el mismo ayer, hoy y siempre.`;
+	cit_obj = 
 	rf._1pe_3_19_obj = { book: "1_peter", chapter: 3, verse: 19, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
-	rf._1pe_3_19_str = `1Pe 3:19. in whom he also went and preached to the spirits in prison, `;
+		kk = get_verse_cit_key(cit_obj) + "_str";
+		rf[kk] = `En el cual también fué y predicó á los espíritus encarcelados;`;
 	rf._2pe_3_13_obj = { book: "2_peter", chapter: 3, verse: 13, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
 	rf._2pe_3_13_str = `2Pe 3:13. Bien que esperamos cielos nuevos y tierra nueva, según sus promesas, en los cuales mora la justicia.`;
 	rf._1jo_3_2_obj = { book: "1_john", chapter: 3, verse: 2, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "RVA", };
@@ -348,6 +373,10 @@ function init_es_bibrefs(){
 };
 
 function init_es_exam_msg(){
+	let cit_obj = null;
+	let cit_kk = null;
+	let cit_ref = null;
+	let cit_txt = null;
 	let bibref = {};
 	let rnam = null;	
 
@@ -670,7 +699,7 @@ function init_es_exam_msg(){
 	lg.q12_1__verse5_str = uppercase_words_in_string(rf.luk_16_24_str, ["voces,", "dijo:", ]);
 	lg.q12_1__verse5_href = rf.luk_16_24_href;
 
-	const q12_1__response_INTRO = `<p> Este es un versículo que se cita con frecuencia como objeción a que en el muerto el ESPIRITU está <a class='exam_ref' href='${href_sleeping}'>dormido</a>.</p>
+	const q12_1__response_INTRO = `<p> Este es un versículo que se cita con frecuencia como objeción a que el ESPIRITU de la persona muerta está <a class='exam_ref' href='${href_sleeping}'>dormido</a>.</p>
 	
 	<p> Cuando se argumenta en contra del ESPIRITU (NO alma) <a class='exam_ref' href='${href_sleeping}'>dormido</a> siempre hay que recordar que toda la Biblia se refiere a los muertos como a los que <a class='exam_ref' href='${href_sleeping}'>DUERMEN</a>, especialmente a nuestro Señor Jesucristo. La razón es obvia: NINGUNA persona que <a class='exam_ref' href='${href_sleeping}'>duerme</a> tiene CONCIENCIA. Esa es la característica más destacada de una persona que <a class='exam_ref' href='${href_sleeping}'>duerme</a>. Por favor, lea la sección que presenta el concepto bíblico del ESPIRITU <a class='exam_ref' href='${href_sleeping}'>dormido</a> del libro completamente GRATUITO <a class='exam_ref' href='${href_home}'>TodaCarne.com</a>. </p>`;
 	
@@ -722,22 +751,38 @@ function init_es_exam_msg(){
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.gen_15_15_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.gen_15_15_href}>Gen 15:15</a> ${q12_1__response_INTRO}
+	cit_obj = rf.gen_15_15_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.gen_15_15_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__response_sheol}`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.gen_25_8_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.gen_25_8_href}>Gen 25:8</a> ${q12_1__response_INTRO}
+	cit_obj = rf.gen_25_8_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.gen_25_8_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__response_sheol}`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.gen_35_29_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.gen_35_29_href}>Gen 35:29</a> ${q12_1__response_INTRO}
+	cit_obj = rf.gen_35_29_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.gen_35_29_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__response_sheol}`;
 	
 	const q12_1__response_spiritually_dead = `<p> Este versículo se refiere a personas espiritualmente muertas. Por favor, lea las secciones llamadas <a class='exam_ref' href='${href_life}'>Vida</a>, <a class='exam_ref' href='${href_death}'>Muerte</a>, and <a class='exam_ref' href='${href_liberator}'>Libertador</a>.</p>`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf._1pe_3_19_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf._1pe_3_19_href}>1Pe 3:19</a> ${q12_1__response_INTRO}
+	cit_obj = rf._1pe_3_19_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf._1pe_3_19_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__response_spiritually_dead}
 	<p> Lo más importante que hay que notar en este versículo y su contexto es que TODAS las personas están MUERTAS sin Jesucristo, quien es la VIDA misma. Así que el versículo se refiere a personas FÍSICAMENTE vivas pero espiritualmente muertas. Cualquier persona que no cree en Jesucristo es un esclavo, un PRISIONERO del Espíritu que gobierna este mundo, esa persona es un "espíritu en prisión". La buena noticia de la RESURRECCIÓN de Jesucristo es que liberó a esa persona. Es un nuevo comienzo. Y los tiempos de Noé, que fueron un nuevo comienzo, fueron una SEÑAL del nuevo comienzo en los tiempos de Jesucristo. De eso se trata el pasaje. Quizás NO en una mala traducción, pero ciertamente en el griego koiné antiguo.</p>
 
@@ -745,22 +790,34 @@ function init_es_exam_msg(){
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf._2co_5_8_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf._2co_5_8_href}>2Co 5:8</a> ${q12_1__response_INTRO}
+	cit_obj = rf._2co_5_8_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf._2co_5_8_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__nowhere_consciousness}
 	<p>Por supuesto, cualquier creyente en la RESURRECCIÓN de Jesucristo prefiere estar ausente de este cuerpo que muere y, cuando RESUCITE en un cuerpo nuevo que no puede morir, estar presente con el Señor. Él, después de todo, RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de estar PRESENTE con Él es estar TAMBIÉN RESUCITADO.</p>
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.act_7_59_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.act_7_59_href}>Act 7:59</a> ${q12_1__response_INTRO}
+	cit_obj = rf.act_7_59_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.act_7_59_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	<p> Este versiculo se refiere al hecho de que cuando una persona muere, como dice <a class='exam_ref' href=${rf.ecc_12_7_href}>Ecc 12:7</a>, el espíritu VUELVE a Elohim, que lo dió, asi que todo vuelve a estar como estaba ANTES de que la persona naciera físicamente.</p>
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.luk_20_38_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.luk_20_38_href}>Luk 20:38</a> ${q12_1__response_INTRO}
+	cit_obj = rf.luk_20_38_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.luk_20_38_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	<p> Este versiculo se refiere al hecho de que la gente muerta PUEDE ser DESPERTADA cuando esta <a class='exam_ref' href='${href_sleeping}'>DORMIDITA</a>, y que para el que las puede DESPERTAR siguen VIVAS.</p>
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
@@ -770,68 +827,108 @@ function init_es_exam_msg(){
 	${q12_1__nowhere_consciousness}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf._2co_12_4_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf._2co_12_4_href}>2Co 12:4</a> ${q12_1__response_INTRO}
+	cit_obj = rf._2co_12_4_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf._2co_12_4_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__response_paradise}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.luk_23_43_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.luk_23_43_href}>Luk 23:43</a> ${q12_1__response_INTRO}
+	cit_obj = rf.luk_23_43_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.luk_23_43_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__response_paradise}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf._1ti_5_6_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf._1ti_5_6_href}>1Ti 5:6</a> ${q12_1__response_INTRO}
+	cit_obj = rf._1ti_5_6_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf._1ti_5_6_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__response_spiritually_dead}
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.luk_15_24_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.luk_15_24_href}>Luk 15:24</a> ${q12_1__response_INTRO}
+	cit_obj = rf.luk_15_24_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.luk_15_24_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__response_spiritually_dead}
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.jhn_4_24_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.jhn_4_24_href}>Jhn 4:24</a> ${q12_1__response_INTRO}
+	cit_obj = rf.jhn_4_24_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.jhn_4_24_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	<p> Este versiculo se refiere a personas FISICAMENTE vivas que adoran en Espíritu y en Verdad.</p>
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.heb_1_14_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.heb_1_14_href}>Heb 1:14</a> ${q12_1__response_INTRO}
+	cit_obj = rf.heb_1_14_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.heb_1_14_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	<p>Este versículo se refiere a los ángeles como espíritus. La Biblia se refiere a cualquier persona físicamente viva como espíritu. Por favor lea las secciones de <a class='exam_ref' href='${href_angels}'>Angeles</a> y <a class='exam_ref' href='${href_wings}'>Alados</a>.</p>
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.phl_1_23_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.phl_1_23_href}>Phl 1:23</a> ${q12_1__response_INTRO}
+	cit_obj = rf.phl_1_23_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.phl_1_23_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__nowhere_consciousness}
 	<p>Por supuesto, cualquier creyente en la RESURRECCIÓN de Jesucristo prefiere partir y estar con Cristo cuando RESUCITE en un cuerpo nuevo que no puede morir. Después de todo, Él RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de estar con Él es estar RESUCITANDO TAMBIÉN.</p>
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.psa_16_11_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.psa_16_11_href}>Psa 16:11</a> ${q12_1__response_INTRO}
+	cit_obj = rf.psa_16_11_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.psa_16_11_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__nowhere_consciousness}
 	<p>Por supuesto, todo aquel que cree en la RESURRECCIÓN de Jesucristo sabe que Él es el Camino y la Vida y que podrá estar en Su presencia cuando RESUCITE en un cuerpo nuevo que no puede morir. Después de todo, Él RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de ver su ROSTRO es estar TAMBIÉN RESUCITADO.</p>
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf.isa_8_19_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf.isa_8_19_href}>Isa 8:19</a> ${q12_1__response_INTRO}
+	cit_obj = rf.isa_8_19_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf.isa_8_19_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	<p> La prohibición en el Antiguo Testamento de que las personas hablen con los muertos es para evitar que hablen con los Poderes Celestiales, comúnmente conocidos en el Nuevo Testamento como DEMONIOS, que se harán pasar por la persona muerta para engañar a quien intente comunicarse con el muerto.</p>
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
 	
-	rnam = get_verse_reponse_name("q12_1__", rf._1th_4_14_obj);
-	lg[rnam] = `<a class='exam_ref' href=${rf._1th_4_14_href}>1Th 4:14</a> ${q12_1__response_INTRO}
+	cit_obj = rf._1th_4_14_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	cit_kk = get_verse_cit_key(cit_obj);
+	cit_ref = bib_obj_to_txt(cit_obj);
+	cit_txt = rf[cit_kk + "_str"];
+	lg[rnam] = `<a class='exam_ref' href=${rf._1th_4_14_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__response_144000}
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
