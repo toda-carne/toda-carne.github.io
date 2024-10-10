@@ -1,8 +1,10 @@
 
 import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, is_mobile_browser,
-	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang, glb_all_bibrefs } from './tc_lang_all.js';
+	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang, glb_all_bibrefs,
+	glb_poll_user_info, glb_poll_starting_questions, glb_poll_db
+} from './tc_lang_all.js';
 	
-import { STARTING_QUESTIONS, db_nodes_exam, db_user_info, init_exam_database } from './tc_db_exam.js';
+import { init_exam_database } from './tc_db_exam.js';
 
 // import { firebase_write_object, firebase_read_object, firebase_sign_out } from './tc_firebase.js';
 
@@ -115,7 +117,7 @@ function is_in_viewport(elem) {
 }
 
 function add_question(qid){
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	if(quest == null){
 		console.log("Could not find question " + qid + " in questions db.");
 		return null;
@@ -238,7 +240,7 @@ function add_question(qid){
 export function init_answers(qid){
 	//console.log("init_answers of qid = " + qid);
 	set_is_contra_if_so(qid);
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	const has_contra = ((quest.all_contra != null) && (quest.all_contra.length > 0));
 	
 	const is_init_to_answer = (quest.has_answ == null);
@@ -359,7 +361,7 @@ export function init_answers(qid){
 }
 
 function invert_answers(qid){
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	for (const [aid, an_answ] of Object.entries(quest.answers)) {
 		if(an_answ.is_on == null){
 			an_answ.is_on = true;
@@ -394,7 +396,7 @@ function add_right_click_listener_for_answer(qid, dv_answ){
 }
 
 function add_click_listener_for_answer(qid, dv_answ) {
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	let dv_answers = dv_answ.parentNode;
 	
 	if(dv_answ.tc_answ_obj == null){
@@ -445,7 +447,7 @@ function toggle_answer_ed(dv_answ, ans_kind){
 }
 
 function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	dv_answ.addEventListener('click', function() {
 		// togle edit button
 		var dv_answ_ed = document.getElementById(id_dv_answ_ed);
@@ -467,12 +469,12 @@ function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
 
 function remove_all_children_descendants(qid){
 	if(qid == ROOT_QUEST_ID){
-		for(const qq of STARTING_QUESTIONS){
+		for(const qq of glb_poll_starting_questions){
 			remove_all_descendants(qq);
 		}
 		return;
 	}
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	if((quest == null) || (quest.all_nxt == null)){
 		return;
 	}
@@ -483,7 +485,7 @@ function remove_all_children_descendants(qid){
 }
 
 function end_question(qid){
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	if(quest.set_reactions != null){
 		//console.log("BEFORE set_reactions = " + quest.all_nxt);
 		quest.set_reactions();
@@ -497,14 +499,14 @@ function end_question(qid){
 }
 
 function add_all_nxt(qid){
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	if(quest.all_nxt == null){
 		return;
 	}
 	const all_added = [];
 	for(const qq of quest.all_nxt){
 		//console.log("Adding question " + qq + " to page");
-		const qq_nd = db_nodes_exam[qq];
+		const qq_nd = glb_poll_db[qq];
 		if(qq_nd == null){ 
 			console.log("Trying to add NULL question " + qq + " !!!");
 			continue;
@@ -516,10 +518,10 @@ function add_all_nxt(qid){
 			console.log("Question " + qq + " could NOT be added to page !!!");
 		} else {
 			all_added.push(qq);
-			const chld = db_nodes_exam[qq];
+			const chld = glb_poll_db[qq];
 			if(chld != null){
-				db_nodes_exam[qq].parent = qid;
-				//console.log("db_nodes_exam[" + qq + "].parent = " + qid);
+				glb_poll_db[qq].parent = qid;
+				//console.log("glb_poll_db[" + qq + "].parent = " + qid);
 			}
 		}
 	}
@@ -529,7 +531,7 @@ function add_all_nxt(qid){
 }
 
 function add_contradictions(qid){
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	const all_ctra = quest.all_contra;
 	if(all_ctra == null){
 		return;
@@ -541,7 +543,7 @@ function add_contradictions(qid){
 		return;
 	}
 	const qid_nxt = quest.all_nxt[quest.all_nxt.length - 1];
-	const qlnxt = db_nodes_exam[qid_nxt];
+	const qlnxt = glb_poll_db[qid_nxt];
 	if((qlnxt == null) || (qlnxt.pos_page < quest.pos_page)){
 		console.log("add_contradictions. Invalid qid order !! (" + qlnxt.pos_page + " < " + quest.pos_page + ")");
 		return;
@@ -554,7 +556,7 @@ function add_contradictions(qid){
 }
 
 function add_contradicted_by(ctra, qid){
-	const quest = db_nodes_exam[ctra];
+	const quest = glb_poll_db[ctra];
 	if(quest.all_dicted_by == null){
 		quest.all_dicted_by = [];
 	}
@@ -563,7 +565,7 @@ function add_contradicted_by(ctra, qid){
 }
 
 function set_is_contra_if_so(qid){
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	if(quest.all_dicted_by == null){
 		return;
 	}
@@ -578,7 +580,7 @@ function set_is_contra_if_so(qid){
 
 function remove_all_descendants(qid){
 	//console.log("removing ALL_NXT of " + qid + " from page");
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	const all_desc = quest.all_nxt;
 	quest.all_nxt = null;
 	if(all_desc != null){
@@ -592,7 +594,7 @@ function remove_all_descendants(qid){
 }
 
 function remove_contradictions(qid){
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	const all_ctra = quest.all_contra;
 	quest.all_contra = null;
 	if(all_ctra != null){
@@ -604,7 +606,7 @@ function remove_contradictions(qid){
 
 function remove_contradicted_by(ctra, qid){ 
 	//console.log("Removing all_dicted_by of " + ctra + " with qid=" + qid);
-	const quest = db_nodes_exam[ctra];
+	const quest = glb_poll_db[ctra];
 	const all_dictd_by = quest.all_dicted_by;
 	if(all_dictd_by == null){
 		console.log("Cannot find all_dicted_by of " + ctra + " !!!");
@@ -622,7 +624,7 @@ function remove_contradicted_by(ctra, qid){
 }
 
 function remove_descendant(qid){
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	quest.has_answ = null;
 	quest.parent = null;
 	
@@ -727,7 +729,7 @@ function toggle_support_interaction(qid){
 
 	dv_support.classList.add("ed_support");	
 
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	const has_vrs = (quest.vrs_with_response != null);
 	const has_stg = (quest.stg_with_response != null);
 	const has_lnk = (quest.lnk_with_response != null);
@@ -1191,7 +1193,7 @@ function toggle_verse_ed(dv_citation){
 
 function set_answer_cit(dv_citation, cit_obj){
 	const qid = dv_citation.owner_qid;
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	const kk = refs_ids.added_pfx + dv_citation.answ_idx;
 	quest.answers[kk] = cit_obj;
 	dv_citation.tc_answ_obj = cit_obj;
@@ -1200,7 +1202,7 @@ function set_answer_cit(dv_citation, cit_obj){
 
 function remove_answer_cit(dv_citation){
 	const qid = dv_citation.owner_qid;
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	const kk = refs_ids.added_pfx + dv_citation.answ_idx;
 	quest.answers[kk] = null;
 	dv_citation.tc_answ_obj = null;
@@ -1832,16 +1834,16 @@ export function init_page_exam(){
 	init_exam_buttons();
 		
 	let added = null;
-	for(const qq of STARTING_QUESTIONS){
+	for(const qq of glb_poll_starting_questions){
 		//console.log("Adding question " + qq + " to page");
 		added = add_question(qq);
 		if(added == null){
 			console.log("Question " + qq + " could NOT be added to page !!!");
 		} else {
-			const top_quest = db_nodes_exam[qq];
+			const top_quest = glb_poll_db[qq];
 			if(top_quest != null){
-				db_nodes_exam[qq].parent = ROOT_QUEST_ID;
-				//console.log("db_nodes_exam[" + qq + "].parent = " + ROOT_QUEST_ID);
+				glb_poll_db[qq].parent = ROOT_QUEST_ID;
+				//console.log("glb_poll_db[" + qq + "].parent = " + ROOT_QUEST_ID);
 			}
 		}
 	}
@@ -1850,7 +1852,7 @@ export function init_page_exam(){
 
 function calc_quest_save_object(dv_quest){
 	const qid = dv_quest.id;
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	if(quest == null){
 		return null;
 	}
@@ -1875,7 +1877,7 @@ function calc_exam_save_object(){
 }
 
 function update_nodes_exam_with(ld_obj){
-	const db = db_nodes_exam;
+	const db = glb_poll_db;
 	for (const [qid, quest] of Object.entries(ld_obj)) {
 		let reacs = db[qid].set_reactions;
 		
@@ -1985,7 +1987,7 @@ function qref_to_qid(qrf){
 }
 
 function qid_to_qhref(qid){
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	if(quest == null){
 		const bad_qhrf = "<a class='exam_ref' href='#" + qid + "'>invalid question " + qid + "</a>";
 		return bad_qhrf;
@@ -2007,7 +2009,7 @@ function replace_all_qrefs(str){
 }
 
 function get_contradictions_qhrefs(qid, skip_qid){
-	const quest = db_nodes_exam[qid];
+	const quest = glb_poll_db[qid];
 	const all_ctra = quest.all_contra;
 	let all_qhrefs = "";
 	if(all_ctra != null){
