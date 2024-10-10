@@ -7,6 +7,8 @@
 const abbr2num = {};
 const book2num_en = {};
 const all_en_msg = {};
+const all_en_poll_txt = {};
+const book_en_hrefs = {};
 
 export function fill_reversed_object(orig, reverse){
 	for (const [key, value] of Object.entries(orig)) {
@@ -202,19 +204,13 @@ export const refs_ids = {
 function get_traduced_message(trad_msg, nom_msg){
 	const tr_mg = trad_msg[nom_msg];
 	if(tr_mg == null){
-		const en_mg = all_en_msg[nom_msg];
+		const en_mg = all_en_poll_txt[nom_msg];
 		if(en_mg == null){
 			return nom_msg;
 		}
 		return en_mg;
 	}
 	return tr_mg;
-}
-
-function nom1(){
-	const lg = glb_curr_lang;
-	//return lg.msg_there_is_a_creator;
-	return lg.msg_i_do_not_know_if_there_is_creator;
 }
 
 function init_en_basic_msg(){
@@ -311,7 +307,7 @@ export function fill_all_strongrefs_href(){
 			const href_attr = prefx + "_href";
 			const href_val = make_strong_ref(value);
 			all_strongrefs[href_attr] = href_val;
-			//console.log(`${href_attr} = ${href_val}`);
+			//console.log(`${hb.href_attr} = ${hb.href_val}`);
 		}
 	}  	
 }
@@ -324,7 +320,7 @@ export function fill_bibrefs_href(all_rfs){
 			const href_attr = prefx + "_href";
 			const href_val = make_bible_ref(bib_obj);
 			all_rfs[href_attr] = href_val;
-			//console.log(`${href_attr} = ${href_val}`);
+			//console.log(`${hb.href_attr} = ${hb.href_val}`);
 		}
 	}  
 	
@@ -334,8 +330,9 @@ export function init_en_module(){
 	console.log("Called init_en_module");
 	
 	init_en_basic_msg();
-	init_get_msg(all_en_msg);
+	init_get_msg(all_en_poll_txt);
 	init_en_bibrefs();
+	init_en_book_hrefs();
 	
 	//num2book_en["-1"] = all_en_msg.msg_def_book;
 	fill_reversed_object(num2book_en, book2num_en);
@@ -681,7 +678,43 @@ function init_en_bibrefs(){
 	rf.rev_20_13_str = `Rev 20:13. The sea gave up the dead who were in it. Death and Hades gave up the dead who were in them. They were judged, each one according to his works.`;
 	rf.rev_21_1_obj = { book: "revelation", chapter: 21, verse: 1, last_verse: bib_defaults.LAST_VERSE, site: "biblegateway", bib_ver: "WEB", };
 	rf.rev_21_1_str = `Rev 21:1. I saw a new heaven and a new earth: for the first heaven and the first earth have passed away, and the sea is no more.`;
-};
+}
+
+function init_en_book_hrefs(){
+	const hb = book_en_hrefs;
+	hb.href_home = "../en/index.html";
+	hb.href_creator_tit = "../en/book.html#creator_DOT_";
+	hb.href_tch_crea = "../en/book.html#technical-creativity_DOT_";
+	hb.href_tch_cplx = "../en/book.html#technical-complexity_DOT_";
+	hb.href_biology = "../en/book.html#biology_DOT_";
+	hb.href_creator = "../en/book.html#creator_DOT_-1";
+	hb.href_evidence = "../en/book.html#evidence_DOT_";
+	hb.href_reproduction_tit = "../en/book.html#reproduction_DOT_";
+	hb.href_reproduction = "../en/book.html#reproduction_DOT_";
+	hb.href_resurrection = "../en/book.html#resurrection_DOT_";
+	hb.href_resurrection_tit = "../en/book.html#resurrection_DOT_";
+	hb.href_physical_resu = "../en/book.html#physical_DOT_";
+	hb.href_still_physical = "../en/book.html#physical_DOT_";
+	hb.href_not_die_resu = "../en/book.html#they-cant-die_DOT_";
+	hb.href_in_heaven_resu = "../en/book.html#in-the-sky_DOT_";
+	hb.href_like_jesus_resu = "../en/book.html#physical_DOT_";
+	hb.href_for_all_resu = "../en/book.html#for-all_DOT_";
+	hb.href_not_yet_resu = "../en/book.html#has-not-happened_DOT_";
+	hb.href_only_few_resu = "../en/book.html#has-not-happened_DOT_";
+	hb.href_new_earth_resu = "../en/book.html#a-new-earth_DOT_";
+	hb.href_asleep = "../en/book.html#asleep_DOT_";
+	hb.href_the_cloth = "../en/book.html#the-cloth_DOT_";
+	hb.href_angels = "../en/book.html#angels_DOT_";
+	hb.href_wings = "../en/book.html#wings_DOT_";
+	hb.href_life = "../en/book.html#life_DOT_";
+	hb.href_death = "../en/book.html#death_DOT_";
+	hb.href_liberator = "../en/book.html#liberator_DOT_";
+	hb.href_sleeping = "../en/book.html#sleeping_DOT_";
+	hb.href_rich_and_laza = "../en/book.html#the-rich-and-the-poor-lazarus_DOT_";
+	hb.href_144000 = "../en/book.html#section";
+	hb.href_eternal_abhorrence = "../en/book.html#eternal-abhorrence_DOT_";
+	hb.href_factories = "../en/book.html#factories_DOT_";
+}
 
 function init_en_exam_msg(){
 	let cit_obj = null;
@@ -689,42 +722,10 @@ function init_en_exam_msg(){
 	let cit_ref = null;
 	let cit_txt = null;
 	let bibref = {};
-	let rnam = null;
+	let rnam = null;	
 	
-	const href_home = "../en/index.html";
-	const href_creator_tit = "../en/book.html#creator_DOT_";
-	const href_tch_crea = "../en/book.html#technical-creativity_DOT_";
-	const href_tch_cplx = "../en/book.html#technical-complexity_DOT_";
-	const href_biology = "../en/book.html#biology_DOT_";
-	const href_creator = "../en/book.html#creator_DOT_-1";
-	const href_evidence = "../en/book.html#evidence_DOT_";
-	const href_reproduction_tit = "../en/book.html#reproduction_DOT_";
-	const href_reproduction = "../en/book.html#reproduction_DOT_";
-	const href_resurrection = "../en/book.html#resurrection_DOT_";
-	const href_resurrection_tit = "../en/book.html#resurrection_DOT_";
-	const href_physical_resu = "../en/book.html#physical_DOT_";
-	const href_still_physical = "../en/book.html#physical_DOT_";
-	const href_not_die_resu = "../en/book.html#they-cant-die_DOT_";
-	const href_in_heaven_resu = "../en/book.html#in-the-sky_DOT_";
-	const href_like_jesus_resu = "../en/book.html#physical_DOT_";
-	const href_for_all_resu = "../en/book.html#for-all_DOT_";
-	const href_not_yet_resu = "../en/book.html#has-not-happened_DOT_";
-	const href_only_few_resu = "../en/book.html#has-not-happened_DOT_";
-	const href_new_earth_resu = "../en/book.html#a-new-earth_DOT_";
-	const href_asleep = "../en/book.html#asleep_DOT_";
-	const href_the_cloth = "../en/book.html#the-cloth_DOT_";
-	const href_angels = "../en/book.html#angels_DOT_";
-	const href_wings = "../en/book.html#wings_DOT_";
-	const href_life = "../en/book.html#life_DOT_";
-	const href_death = "../en/book.html#death_DOT_";
-	const href_liberator = "../en/book.html#liberator_DOT_";
-	const href_sleeping = "../en/book.html#sleeping_DOT_";
-	const href_rich_and_laza = "../en/book.html#the-rich-and-the-poor-lazarus_DOT_";
-	const href_144000 = "../en/book.html#section";
-	const href_eternal_abhorrence = "../en/book.html#eternal-abhorrence_DOT_";
-	const href_factories = "../en/book.html#factories_DOT_";
-	
-	const lg = all_en_msg;
+	const hb = book_en_hrefs;
+	const lg = all_en_poll_txt;
 	const rf = all_en_bibrefs;
 	
 	lg.q0_1__end_of_test = "These questions are not for you. This is the end of the questions for you, unless you did not really mean it and change your answer. Click on your answer to change it.";
@@ -744,8 +745,8 @@ function init_en_exam_msg(){
 	lg.q1_2__yes = "it is evidence.";
 	lg.q1_2__no = "it is NOT evidence";
 	
-	lg.q1_3__creator_section = `<a class='exam_ref exam_title' href='${href_creator_tit}'>Creator</a>`;
-	lg.q1_3__are_humans_intelligent = `With respect to <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a>, there is <a class='exam_ref' href='${href_evidence}'>evidence</a> that the human being `;
+	lg.q1_3__creator_section = `<a class='exam_ref exam_title' href='${hb.href_creator_tit}'>Creator</a>`;
+	lg.q1_3__are_humans_intelligent = `With respect to <a class='exam_ref' href='${hb.href_tch_crea}'>technical creativity</a>, there is <a class='exam_ref' href='${hb.href_evidence}'>evidence</a> that the human being `;
 	lg.q1_3__yes = "is intelligent, designer and has technical creativity.";
 	lg.q1_3__should = "EVIDENCE are all the buildings, transistors, cars, satellites, refrigerators, washing machines, polishers, MACHINES that make machines, factories that use machines made by other factories, that humans have made";
 	lg.q1_3__no = "is NOT intelligent, or NOT a designer, or has NO technical creativity";
@@ -754,11 +755,11 @@ function init_en_exam_msg(){
 	lg.q1_31__creator = "Were created by a CREATOR";
 	lg.q1_31__other = "Are result of an OTHER cause, not a creator";
 
-	lg.q1_32__the_creator = `The statement: 'Just like the human being, the CREATOR of all biological machines observed in plants, animals and people is intelligent, designer and has <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a>'`;
+	lg.q1_32__the_creator = `The statement: 'Just like the human being, the CREATOR of all biological machines observed in plants, animals and people is intelligent, designer and has <a class='exam_ref' href='${hb.href_tch_crea}'>technical creativity</a>'`;
 	lg.q1_32__intelligent = "It is true.";
 	lg.q1_32__not_intelligent = "It is false.";
 	
-	lg.q1_33__the_evolution = `The statement: 'The creator used EVOLUTION as means to create all <a class='exam_ref' href='${href_factories}'>biological machines</a> observed in plants, animals and people'`;
+	lg.q1_33__the_evolution = `The statement: 'The creator used EVOLUTION as means to create all <a class='exam_ref' href='${hb.href_factories}'>biological machines</a> observed in plants, animals and people'`;
 	lg.q1_33__yes = "It is true.";
 	lg.q1_33__no = "It is false.";
 	
@@ -770,7 +771,7 @@ function init_en_exam_msg(){
 	lg.q1_35__yes = "Yes, SKIP the questions.";
 	lg.q1_35__no = "No, let me ANSWER them.";
 	
-	lg.q1_4__requires_technical_creativity = `Select ALL claims about <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> supported by evidence: `;
+	lg.q1_4__requires_technical_creativity = `Select ALL claims about <a class='exam_ref' href='${hb.href_tch_crea}'>technical creativity</a> supported by evidence: `;
 	lg.q1_4__knife = "a knife requires technical creativity to reproduce";
 	lg.q1_4__should1 = "a knife is EVIDENCE of men's technical creativity";
 	lg.q1_4__lamp = "a lamp requires technical creativity to reproduce";
@@ -778,7 +779,7 @@ function init_en_exam_msg(){
 	lg.q1_4__clock = "a clock requires technical creativity to reproduce";
 	lg.q1_4__should3 = "a clock is EVIDENCE of men's technical creativity";
 	
-	lg.q1_5__more_complex_than = `Select ALL claims about <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> supported by evidence: `;
+	lg.q1_5__more_complex_than = `Select ALL claims about <a class='exam_ref' href='${hb.href_tch_cplx}'>technical complexity</a> supported by evidence: `;
 	lg.q1_5__building_vs_knife = "a building has more technical complexity than a knife";
 	lg.q1_5__should1 = "generally speaking a building is HARDER to make than a knife, just by the fact that usually you need knives to make a building";
 	lg.q1_5__car_vs_lamp = "a car has more technical complexity than a lamp";
@@ -786,56 +787,56 @@ function init_en_exam_msg(){
 	lg.q1_5__cellphone_vs_clock = "a cellphone has more technical complexity than a clock";
 	lg.q1_5__should3 = "generally speaking a cellphone is HARDER to make than a clock, just by the fact that usually a cellphone has a built-in clock";
 	
-	lg.q1_7__more_complexity_then_more_creativity = `Given all normal perceptual experience, the statement: "the more <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> an object or machine has, THEN, the bigger the <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> needed to reproduce it"`;
+	lg.q1_7__more_complexity_then_more_creativity = `Given all normal perceptual experience, the statement: "the more <a class='exam_ref' href='${hb.href_tch_cplx}'>technical complexity</a> an object or machine has, THEN, the bigger the <a class='exam_ref' href='${hb.href_tch_crea}'>technical creativity</a> needed to reproduce it"`;
 	lg.q1_7__yes = "It is true.";
 	lg.q1_7__no = "It is false.";
 	
-	lg.q1_8__more_creativity = `Select ALL claims about <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> supported by evidence: `;
+	lg.q1_8__more_creativity = `Select ALL claims about <a class='exam_ref' href='${hb.href_tch_crea}'>technical creativity</a> supported by evidence: `;
 	lg.q1_8__building_vs_knife = "a building requires more technical creativity to reproduce than a knife";
 	lg.q1_8__car_vs_lamp = "a car requires more technical creativity to reproduce than a lamp";
 	lg.q1_8__cellphone_vs_clock = "a cellphone requires more technical creativity to reproduce than a clock";
 	
-	lg.q1_9__coplexity_of_biological_machines = `Select ALL claims supported by normal perceptual experience about man made machines and <a class='exam_ref' href='${href_factories}'>factories</a> compared to <a class='exam_ref' href='${href_biology}'>biological machines</a>: `;
+	lg.q1_9__coplexity_of_biological_machines = `Select ALL claims supported by normal perceptual experience about man made machines and <a class='exam_ref' href='${hb.href_factories}'>factories</a> compared to <a class='exam_ref' href='${hb.href_biology}'>biological machines</a>: `;
 	lg.q1_9__car_vs_mitosis = "We do NOT observe in CARS that one can start a process in which it divides in two of them identical to the original, nor we observe it in any other man made machine, yet we observe it in the MITOSIS of biological machines like the CELL.";
 	lg.q1_9__smartphone_vs_sex = "We do NOT observe in SMARTPHONES that a male one joins with a female one, and after a while, a third small one comes out of the female one, that resembles a mix of two of them, and that it grows in size as time goes by, nor we observe it in any other man made machine, yet we observe it in SEX reproduction of biological machines like the HUMAN BODY.";
 	lg.q1_9__bicycle_vs_healing = "We do NOT observe in BICYCLES that when one crashes and its surface gets damaged, in a few days it has fixed its surface, nor we observe it in any other man made machine, yet we observe it in HEALING of biological machines like in the SKIN of animals.";
 	lg.q1_9__knife_vs_regeneration = "We do NOT observe in KNIFES that when one brakes and looses its tip, in a few days it has grown a new tip, nor we observe it in any other man made machine, yet we observe it in REGENERATION of biological machines like the TAIL of some lizards.";
 	
-	lg.q1_91__more_complexity_in_biology = `Given all normal perceptual experience, the statement: "<a class='exam_ref' href='${href_biology}'>biological machines</a> have more <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> that human made machines"`;
+	lg.q1_91__more_complexity_in_biology = `Given all normal perceptual experience, the statement: "<a class='exam_ref' href='${hb.href_biology}'>biological machines</a> have more <a class='exam_ref' href='${hb.href_tch_cplx}'>technical complexity</a> that human made machines"`;
 	lg.q1_91__yes = "It is true.";
 	lg.q1_91__no = "It is false.";
 	
-	lg.q1_92__human_complexity = `Select ALL claims about <a class='exam_ref' href='${href_tch_cplx}'>technical complexity</a> and <a class='exam_ref' href='${href_factories}'>factories</a> supported by evidence: `;
+	lg.q1_92__human_complexity = `Select ALL claims about <a class='exam_ref' href='${hb.href_tch_cplx}'>technical complexity</a> and <a class='exam_ref' href='${hb.href_factories}'>factories</a> supported by evidence: `;
 	lg.q1_92__leg = "a LEG is so complex that if we understood how they are made we could take a drop of blood of the person missing a leg, make a custom leg for him, and install it, just like we do with a car WHEEL.";
 	lg.q1_92__liver = "a LIVER is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged liver, make a custom liver for him, and install it, just like we do with a distribution and logistics warehouse of a FACTORY.";
 	lg.q1_92__lung = "a LUNG is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged lung, make a custom lung for him, and install it, just like we do with the air filtering equipment of a VENTILATION system.";
 	
-	lg.q1_93__biological_requires_creativity = `Given your answers in QREF_q1_91__ and QREF_q1_7__ you MUST conclude that the statement: "biological machines require more <a class='exam_ref' href='${href_tch_crea}'>technical creativity</a> than human made machines"`;
+	lg.q1_93__biological_requires_creativity = `Given your answers in QREF_q1_91__ and QREF_q1_7__ you MUST conclude that the statement: "biological machines require more <a class='exam_ref' href='${hb.href_tch_crea}'>technical creativity</a> than human made machines"`;
 	lg.q1_93__yes = "It is true.";
 	lg.q1_93__no = "It is false.";
 	
-	lg.q1_94__if_human_then_creator = `Given your answer in QREF_q1_93__ you MUST conclude that the statement: "IF the human being is going to call himself intelligent, designer and <a class='exam_ref' href='${href_creator}'>creator</a>, due to all the <a class='exam_ref' href='${href_evidence}'>EVIDENCE</a> in the tecnology that he has made, THEN, he has to admit that there EXISTS an intelligent, designer and creator of all <a class='exam_ref' href='${href_biology}'>biological machines</a> that we observe"`;
+	lg.q1_94__if_human_then_creator = `Given your answer in QREF_q1_93__ you MUST conclude that the statement: "IF the human being is going to call himself intelligent, designer and <a class='exam_ref' href='${hb.href_creator}'>creator</a>, due to all the <a class='exam_ref' href='${hb.href_evidence}'>EVIDENCE</a> in the tecnology that he has made, THEN, he has to admit that there EXISTS an intelligent, designer and creator of all <a class='exam_ref' href='${hb.href_biology}'>biological machines</a> that we observe"`;
 	lg.q1_94__yes = "It is true.";
 	lg.q1_94__no = "It is false.";
 	
-	lg.q2_0__reproduction_section = `<a class='exam_ref exam_title' href='${href_reproduction_tit}'>Reproduction</a>`;
+	lg.q2_0__reproduction_section = `<a class='exam_ref exam_title' href='${hb.href_reproduction_tit}'>Reproduction</a>`;
 	
-	lg.q2_1__can_an_engineer_rebuild_his_house = `If an engineer has <a class='exam_ref' href='${href_reproduction}'>reproduced</a>, built, the same house many times, and one of them gets destroyed, by fire, in an accident, or by someone else `;
+	lg.q2_1__can_an_engineer_rebuild_his_house = `If an engineer has <a class='exam_ref' href='${hb.href_reproduction}'>reproduced</a>, built, the same house many times, and one of them gets destroyed, by fire, in an accident, or by someone else `;
 	lg.q2_1__yes = "he can BUILD the destroyed house again.";
 	lg.q2_1__no = "he CANNOT build the destroyed house again";
 	
-	lg.q2_2__future_resurrection = `Given your answer in QREF_q2_1__ you must accept that it is REASONABLE to visualize a future, maybe distant, when we understand enough about the human body, in which humans will be able to <a class='exam_ref' href='${href_reproduction}'>reproduce</a> the human body and simulate a <a class='exam_ref' href='${href_resurrection}'>resurrection</a>`;
+	lg.q2_2__future_resurrection = `Given your answer in QREF_q2_1__ you must accept that it is REASONABLE to visualize a future, maybe distant, when we understand enough about the human body, in which humans will be able to <a class='exam_ref' href='${hb.href_reproduction}'>reproduce</a> the human body and simulate a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a>`;
 	lg.q2_2__yes = "Yes. I DO";
 	lg.q2_2__no = "No. I do NOT";
 	
 	
-	lg.q3_1__resurrection_section = `<a class='exam_ref exam_title' href='${href_resurrection_tit}'>Resurrection</a>`;
-	lg.q3_1__jesus_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>RESURRECTED</a> Jesus Christ: `;
+	lg.q3_1__resurrection_section = `<a class='exam_ref exam_title' href='${hb.href_resurrection_tit}'>Resurrection</a>`;
+	lg.q3_1__jesus_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${hb.href_resurrection}'>RESURRECTED</a> Jesus Christ: `;
 	lg.q3_1__physical = "He was physically resurrected, in BODY and spirit";
 	lg.q3_1__not_to_die = "He is alive FOREVER, to not die again, because He cannot longer die.";
 	lg.q3_1__in_heaven = "He is, in BODY and spirit, in the heavens, that PHYSICAL sky that we can see, and that has clouds";
 	
-	lg.q3_2__people_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead promissed by Jesus Christ: `;
+	lg.q3_2__people_resurrection_claims = `Select ALL statements that you believe are claimed by The Bible about the <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead promissed by Jesus Christ: `;
 	lg.q3_2__like_jesus = "It is in BODY and SPIRIT just like Jesus Chist. And it is in a new body, similar to Jesus's one, that cannot die.";
 	lg.q3_2__for_all = "It is for everyone. ALL people, just and unjust.";
 	lg.q3_2__not_yet_most = "It has NOT happened for almost anybody. The promissed event is on the last day.";
@@ -843,13 +844,13 @@ function init_en_exam_msg(){
 	lg.q3_2__new_earth = "It is to live forever in a new physical EARTH with new physical HEAVENS";
 	lg.q3_2__sleep = "Before resurrection, the dead person has NO body, NO consciousness, and therefore cannot do anything. The dead ARE dead.";
 
-	lg.q3_3__dispute_or_accept_resurrection = `What statements about <a class='exam_ref' href='${href_resurrection}'>resurrection</a> would you like to explore and optionally dispute? `;
+	lg.q3_3__dispute_or_accept_resurrection = `What statements about <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> would you like to explore and optionally dispute? `;
 	lg.q3_3__not_believed = "The ones I DO NOT believe are claimed by The Bible.";
 	lg.q3_3__all_stms = "ALL of them.";
 	lg.q3_3__go_on = "NONE of them. I ACCEPT they are all claimed by The Bible. Let's go on.";
 
-	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${href_physical_resu}'>Physical</a>`;
-	lg.q4_1__physical = `Select all verses that support a physical <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of Jesus Christ`;
+	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${hb.href_physical_resu}'>Physical</a>`;
+	lg.q4_1__physical = `Select all verses that support a physical <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of Jesus Christ`;
 	lg.q4_1__verse1_str = uppercase_words_in_string(rf.luk_24_39_str, ["Touch", "flesh", "bones,"]);
 	lg.q4_1__verse1_href = rf.luk_24_39_href;
 	lg.q4_1__verse1_should = "FLESH and BONES are PHYSICAL.";
@@ -872,8 +873,8 @@ function init_en_exam_msg(){
 	lg.q4_1__verse7_href = rf.luk_24_43_href;
 	lg.q4_1__verse7_should = "EATING is something PHYSICAL.";
 	
-	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${href_not_die_resu}'>To NOT die again</a>`;
-	lg.q5_1__not_die = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of Jesus Christ to NOT die again`;
+	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${hb.href_not_die_resu}'>To NOT die again</a>`;
+	lg.q5_1__not_die = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of Jesus Christ to NOT die again`;
 	lg.q5_1__verse1_str = uppercase_words_in_string(rf.rom_6_9_str, ["dies", "no", "more."]);
 	lg.q5_1__verse1_href = rf.rom_6_9_href;
 	lg.q5_1__verse1_should = "DIES NO MORE.";
@@ -887,8 +888,8 @@ function init_en_exam_msg(){
 	lg.q5_1__verse4_href = rf.heb_7_25_href;
 	lg.q5_1__verse4_should = "LIVES FOREVER.";
 	
-	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${href_in_heaven_resu}'>In Heaven</a>`;
-	lg.q6_1__in_heaven = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>RESURRECTED</a> Jesus Christ that is in heaven in BODY and spirit.`;
+	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${hb.href_in_heaven_resu}'>In Heaven</a>`;
+	lg.q6_1__in_heaven = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>RESURRECTED</a> Jesus Christ that is in heaven in BODY and spirit.`;
 	lg.q6_1__verse1_str = uppercase_words_in_string(rf.act_1_11_str, ["going", "into", "sky."]);
 	lg.q6_1__verse1_href = rf.act_1_11_href;
 	lg.q6_1__verse1_should = "GOING INTO the SKY. He went physically into the heavens";
@@ -912,8 +913,8 @@ function init_en_exam_msg(){
 	lg.q6_1__verse7_should = "He is the IMAGE of the INVISIBLE God. So if He was visible when He resurrected, He must STILL be visible in the heavens.";
 	
 
-	lg.q7_1__like_jesus_sec = `<a class='exam_ref exam_title' href='${href_like_jesus_resu}'>Like Jesus</a>`;
-	lg.q7_1__like_jesus = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead that is like Jesus <a class='exam_ref' href='${href_resurrection}'>resurrection</a>`;
+	lg.q7_1__like_jesus_sec = `<a class='exam_ref exam_title' href='${hb.href_like_jesus_resu}'>Like Jesus</a>`;
+	lg.q7_1__like_jesus = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead that is like Jesus <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a>`;
 	lg.q7_1__verse1_str = uppercase_words_in_string(rf.phl_3_21_str, ["conformed", "body", ]);
 	lg.q7_1__verse1_href = rf.phl_3_21_href;
 	lg.q7_1__verse1_should = "Just LIKE the BODY of Jesus";
@@ -933,8 +934,8 @@ function init_en_exam_msg(){
 	lg.q7_1__verse6_href = rf._1co_15_42_href;
 	lg.q7_1__verse6_should = "The raised body is IMPERISHABLE";
 	
-	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${href_for_all_resu}'>For All</a>`;
-	lg.q8_1__for_all = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead that is for ALL people`;
+	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${hb.href_for_all_resu}'>For All</a>`;
+	lg.q8_1__for_all = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead that is for ALL people`;
 	lg.q8_1__verse1_str = uppercase_words_in_string(rf.jhn_5_28_str, ["all", "tombs", ]);
 	lg.q8_1__verse1_href = rf.jhn_5_28_href;
 	lg.q8_1__verse1_should = "ALL is ALL";
@@ -954,8 +955,8 @@ function init_en_exam_msg(){
 	lg.q8_1__verse6_href = rf._1co_15_22_href;
 	lg.q8_1__verse6_should = "ALL is ALL";
 	
-	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${href_not_yet_resu}'>Has NOT happend</a>`;
-	lg.q9_1__not_yet = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead that has NOT happend for almost ANYBODY`;
+	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${hb.href_not_yet_resu}'>Has NOT happend</a>`;
+	lg.q9_1__not_yet = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead that has NOT happend for almost ANYBODY`;
 	lg.q9_1__verse1_str = uppercase_words_in_string(rf.jhn_6_39_str, ["last", "day.", ]);
 	lg.q9_1__verse1_href = rf.jhn_6_39_href;
 	lg.q9_1__verse1_should = "It is on the LAST DAY";
@@ -979,14 +980,14 @@ function init_en_exam_msg(){
 	lg.q9_1__verse7_should = "It is AFTER this earth and these heavens get destroyed";
 	
 	/*
-	lg.q10_1__has_for_few_sec = `<a class='exam_ref exam_title' href='${href_only_few_resu}'>Only for few</a>`;
+	lg.q10_1__has_for_few_sec = `<a class='exam_ref exam_title' href='${hb.href_only_few_resu}'>Only for few</a>`;
 	lg.q10_1__has_for_few = `1st quest ONLY FOR FEW`;
 	lg.q10_1__go = "Go";
 	lg.q10_1__stay = "Stay";
 	*/
 	
-	lg.q11_1__new_earth_sec = `<a class='exam_ref exam_title' href='${href_new_earth_resu}'>New Earth</a>`;
-	lg.q11_1__new_earth = `Select all verses that support a <a class='exam_ref' href='${href_resurrection}'>resurrection</a> of the dead to live in a NEW EARTH with a new heavens`;
+	lg.q11_1__new_earth_sec = `<a class='exam_ref exam_title' href='${hb.href_new_earth_resu}'>New Earth</a>`;
+	lg.q11_1__new_earth = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead to live in a NEW EARTH with a new heavens`;
 	lg.q11_1__verse1_str = uppercase_words_in_string(rf.rev_21_1_str, ["new", "earth:", ]);
 	lg.q11_1__verse1_href = rf.rev_21_1_href;
 	lg.q11_1__verse1_should = "It is on a NEW EARTH with a new heavens";
@@ -1000,8 +1001,8 @@ function init_en_exam_msg(){
 	lg.q11_1__verse4_href = rf.isa_66_22_href;
 	lg.q11_1__verse4_should = "It is on a NEW EARTH with a new heavens";
 	
-	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${href_sleeping}'>Sleep</a>`;
-	lg.q12_1__sleep = `Select a GOOD verse that supports that physically dead people DO HAVE CONSCIOUSNESS before <a class='exam_ref' href='${href_resurrection}'>resurrection</a>.`;
+	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${hb.href_sleeping}'>Sleep</a>`;
+	lg.q12_1__sleep = `Select a GOOD verse that supports that physically dead people DO HAVE CONSCIOUSNESS before <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a>.`;
 	lg.q12_1__no_consciousness = "According to TodaCarne.com none of these is a good verse";
 	lg.q12_1__verse1_str = uppercase_words_in_string(rf.isa_14_10_str, ["answer", "ask", "you,", ]);
 	lg.q12_1__verse1_href = rf.isa_14_10_href;
@@ -1014,8 +1015,8 @@ function init_en_exam_msg(){
 	lg.q12_1__verse5_str = uppercase_words_in_string(rf.luk_16_24_str, ["cried", "said,", ]);
 	lg.q12_1__verse5_href = rf.luk_16_24_href;
 
-	const q12_1__response_INTRO = `<p> This is a commonly cited verse as objection to SPIRIT <a class='exam_ref' href='${href_sleeping}'>sleep</a>.</p>
-	<p> When arguing against SPIRIT (NOT soul) <a class='exam_ref' href='${href_sleeping}'>sleep</a> always remember that the whole bible refers to the dead as <a class='exam_ref' href='${href_sleeping}'>SLEEP</a>, specially our Lord Jesus Christ. The reason is obvious: NO <a class='exam_ref' href='${href_sleeping}'>sleeping</a> person has CONSCIOUSNESS. That is the most prominent characteristic of a <a class='exam_ref' href='${href_sleeping}'>sleeping</a> person. Please read the section introducing the biblical concept of SPIRIT <a class='exam_ref' href='${href_sleeping}'>sleep</a> of the completely FREE book <a class='exam_ref' href='${href_home}'>TodaCarne.com</a>. </p>`;
+	const q12_1__response_INTRO = `<p> This is a commonly cited verse as objection to SPIRIT <a class='exam_ref' href='${hb.href_sleeping}'>sleep</a>.</p>
+	<p> When arguing against SPIRIT (NOT soul) <a class='exam_ref' href='${hb.href_sleeping}'>sleep</a> always remember that the whole bible refers to the dead as <a class='exam_ref' href='${hb.href_sleeping}'>SLEEP</a>, specially our Lord Jesus Christ. The reason is obvious: NO <a class='exam_ref' href='${hb.href_sleeping}'>sleeping</a> person has CONSCIOUSNESS. That is the most prominent characteristic of a <a class='exam_ref' href='${hb.href_sleeping}'>sleeping</a> person. Please read the section introducing the biblical concept of SPIRIT <a class='exam_ref' href='${hb.href_sleeping}'>sleep</a> of the completely FREE book <a class='exam_ref' href='${hb.href_home}'>TodaCarne.com</a>. </p>`;
 	
 	const q12_1__response_END = `<p> So this verse <b>DOES NOT REFER</b> to the physically dead having CONSCIOUSNESS.</p>`;
 
@@ -1030,12 +1031,12 @@ function init_en_exam_msg(){
 	
 	
 	lg.q12_1__response_to_verse2 = `<a class='exam_ref' href=${rf.mat_17_3_href}>Mat 17:3</a> ${q12_1__response_INTRO}
-	<p>It is also recommended that you have at least read the section introducing the biblical concept of <a class='exam_ref' href='${href_resurrection}'>Resurrection</a> and in particular the fact that <a class='exam_ref' href='${href_not_yet_resu}'>It has not happend</a>.</p>
+	<p>It is also recommended that you have at least read the section introducing the biblical concept of <a class='exam_ref' href='${hb.href_resurrection}'>Resurrection</a> and in particular the fact that <a class='exam_ref' href='${hb.href_not_yet_resu}'>It has not happend</a>.</p>
 	<p> The most important thing to note about this verse is that they were physically present, they all have BODIES, and that is why Peter, in <a class='exam_ref' href=${rf.mat_17_4_href}>verse 4</a>, offers to build three tents. Two tents for Moses and Elijah and one for Our Lord. They are physically ALIVE. They where in the Jewish festival of Sukkot. The feast of Tabernacles. Very appropiate signal to show that these "tabernacles" are going to be replaced by permanent "houses". </p>
 	${q12_1__response_END}
 	`;
 	
-	const q12_1__response_144000 = `<p>This verse refers to the 144.000. Please read the section <a class='exam_ref' href='${href_144000}'>144.000</a>.	Another section that could help is the one called <a class='exam_ref' href='${href_eternal_abhorrence}'>Eternal Abhorrence</a>.</p>
+	const q12_1__response_144000 = `<p>This verse refers to the 144.000. Please read the section <a class='exam_ref' href='${hb.href_144000}'>144.000</a>.	Another section that could help is the one called <a class='exam_ref' href='${hb.href_eternal_abhorrence}'>Eternal Abhorrence</a>.</p>
 	<p> The most important thing to note about this verse is that it refers to people that have been resurrected. The Saints. The Great ones. The first fruits. The firstborn. The ones God brings with Jesus Christ. They are a FEW: 144.000 male genetic descendants of Israel when completed. They all have BODIES, and that is why they can actually CRY, SPEAK, GATHER and ASSEMBLY.</p>`;
 	
 	
@@ -1050,8 +1051,8 @@ function init_en_exam_msg(){
 	
 	
 	lg.q12_1__response_to_verse5 = `<a class='exam_ref' href=${rf.luk_16_24_href}>Luk 16:24</a> ${q12_1__response_INTRO}
-	<p>This verse is part of the famous PARABLE in Luke. Please read the section called <a class='exam_ref' href='${href_rich_and_laza}'>The rich and the poor Lazarus.</a>.</p>
-	<p> The most important thing to note about this verse is that it part of a PARABLE. So please read the correct <a class='exam_ref' href='${href_rich_and_laza}'>INTERPRETATION</a>.</p>
+	<p>This verse is part of the famous PARABLE in Luke. Please read the section called <a class='exam_ref' href='${hb.href_rich_and_laza}'>The rich and the poor Lazarus.</a>.</p>
+	<p> The most important thing to note about this verse is that it part of a PARABLE. So please read the correct <a class='exam_ref' href='${hb.href_rich_and_laza}'>INTERPRETATION</a>.</p>
 	${q12_1__response_END}
 	`;
 		
@@ -1085,7 +1086,7 @@ function init_en_exam_msg(){
 	lg[rnam] = `<a class='exam_ref' href=${rf.gen_35_29_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
 	${q12_1__response_sheol}`;
 	
-	const q12_1__response_spiritually_dead = `<p> This verse refers to spiritually dead people. Please read the sections called <a class='exam_ref' href='${href_life}'>Life</a>, <a class='exam_ref' href='${href_death}'>Death</a>, and <a class='exam_ref' href='${href_liberator}'>Liberator</a>.</p>`;
+	const q12_1__response_spiritually_dead = `<p> This verse refers to spiritually dead people. Please read the sections called <a class='exam_ref' href='${hb.href_life}'>Life</a>, <a class='exam_ref' href='${hb.href_death}'>Death</a>, and <a class='exam_ref' href='${hb.href_liberator}'>Liberator</a>.</p>`;
 	
 	cit_obj = rf._1pe_3_19_obj;
 	rnam = get_verse_reponse_name("q12_1__", cit_obj);
@@ -1127,7 +1128,7 @@ function init_en_exam_msg(){
 	cit_ref = bib_obj_to_txt(cit_obj);
 	cit_txt = rf[cit_kk + "_str"];
 	lg[rnam] = `<a class='exam_ref' href=${rf.luk_20_38_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	<p> This verse refers to the fact that dead people CAN be AWAKEN from their <a class='exam_ref' href='${href_sleeping}'>SLEEP</a>, and that is why to the one who can WAKE them up they are still ALIVE.</p>
+	<p> This verse refers to the fact that dead people CAN be AWAKEN from their <a class='exam_ref' href='${hb.href_sleeping}'>SLEEP</a>, and that is why to the one who can WAKE them up they are still ALIVE.</p>
 	${q12_1__nowhere_consciousness}
 	${q12_1__response_END}
 	`;
@@ -1195,7 +1196,7 @@ function init_en_exam_msg(){
 	cit_ref = bib_obj_to_txt(cit_obj);
 	cit_txt = rf[cit_kk + "_str"];
 	lg[rnam] = `<a class='exam_ref' href=${rf.heb_1_14_href}>${cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	<p>This verse refers to angels as spirits. The bible refers to any physically living person as a spirit. Please read the sections <a class='exam_ref' href='${href_angels}'>Angels</a> and <a class='exam_ref' href='${href_wings}'>Wings</a>.</p>
+	<p>This verse refers to angels as spirits. The bible refers to any physically living person as a spirit. Please read the sections <a class='exam_ref' href='${hb.href_angels}'>Angels</a> and <a class='exam_ref' href='${hb.href_wings}'>Wings</a>.</p>
 	${q12_1__response_END}
 	`;
 	
@@ -1243,7 +1244,7 @@ function init_en_exam_msg(){
 	${q12_1__response_END}
 	`;	
 	
-	lg.q13_1__sleep = `Select all verses that support that dead people do NOT have CONSCIOUSNESS until <a class='exam_ref' href='${href_resurrection}'>resurrection</a>.`;
+	lg.q13_1__sleep = `Select all verses that support that dead people do NOT have CONSCIOUSNESS until <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a>.`;
 	lg.q13_1__verse1_str = uppercase_words_in_string(rf.jhn_11_11_str, ["asleep,", "awake", ]);
 	lg.q13_1__verse1_href = rf.jhn_11_11_href;
 	lg.q13_1__verse1_should = "Lazarous is ASLEEP until he is AWAKEN";
@@ -1271,7 +1272,7 @@ function init_en_exam_msg(){
 	lg.q13_1__verse8_should = "People who get resurrection ARE IN the TOMBS, the sepulcre, the hebrew Sheol, the poorly translated greek Hades, NOT in heaven or hell.";
 	
 
-	lg.q14_1__the_cloth_sec = `<a class='exam_ref exam_title' href='${href_the_cloth}'>The Cloth</a>`;
+	lg.q14_1__the_cloth_sec = `<a class='exam_ref exam_title' href='${hb.href_the_cloth}'>The Cloth</a>`;
 	lg.q14_1__the_cloth = `1st quest THE CLOTH`;
 	lg.q14_1__go = "Go";
 	lg.q14_1__stay = "Stay";
