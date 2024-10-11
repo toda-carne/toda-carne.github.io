@@ -70,12 +70,13 @@
 <script type="module">
 
 import * as en_lang from '../code/tc_lang_en.js';
-import * as en_poll from '../code/poll_en_creator_resu.js';
+import * as en_txt from '../code/cont_creator_resurrection/en_text.js';
+import * as cont_db from '../code/cont_creator_resurrection/cont_db.js';
 import * as exm from '../code/tc_exam.js';
 
 en_lang.init_en_module();
-en_poll.init_en_poll_txt();
-exm.init_page_exam();
+en_txt.init_en_poll_txt();
+exm.init_page_exam(cont_db.init_exam_database);
 
 </script>
  

@@ -5,7 +5,6 @@ init_page();
 function init_page() {
 	window.onclick = window_onclick_handler;
 	init_side_nav();
-	//fn_init_page_exam();
 }
 
 function toggle_top_menu() {

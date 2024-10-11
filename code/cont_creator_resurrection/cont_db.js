@@ -1,9 +1,9 @@
 
-import { get_book_nam, get_verse_reponse_name, get_verse_cit_key, refs_ids, glb_all_bibrefs, init_poll_glb } from './tc_lang_all.js';
-import { init_answers } from './tc_exam.js';
+import { get_book_nam, get_verse_reponse_name, get_verse_cit_key, refs_ids, glb_all_bibrefs, init_poll_glb } from '../tc_lang_all.js';
+import { init_answers } from '../tc_exam.js';
 
 import { add_sections, set_all_on, has_all_next, are_only_all_orig_on, get_added_by_kind, get_verse_matches, add_reponse_questions, 
-	respond_first_match } from './tc_poll_db_funcs.js';
+	respond_first_match } from '../tc_contest_funcs.js';
 
 "use strict";
 

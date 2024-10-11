@@ -4,11 +4,11 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 	glb_poll_user_info, glb_poll_starting_questions, glb_poll_db
 } from './tc_lang_all.js';
 	
-import { init_exam_database } from './tc_db_exam.js';
-
 // import { firebase_write_object, firebase_read_object, firebase_sign_out } from './tc_firebase.js';
 
 "use strict";
+
+let INIT_EXAM_FUNC = null;
 
 let DEBUG_QNUMS = true;
 
@@ -1821,15 +1821,15 @@ function toggle_exam_name_ed(dv_name, save_fn){
 	}
 }
 
-//function init_page_exam(){
-export function init_page_exam(){
+export function init_page_exam(ini_func){
 	console.log("Called init_page_exam");
 
 	//let sd_menu = document.getElementById("id_side_menu");
 	//sd_menu.classList.toggle("has_side_nav");
+	INIT_EXAM_FUNC = ini_func;
 	
 	init_exam_fb();
-	init_exam_database();
+	if(INIT_EXAM_FUNC != null){ INIT_EXAM_FUNC(); }
 	init_exam_module_vars();
 	init_exam_buttons();
 		
@@ -1888,7 +1888,7 @@ function update_nodes_exam_with(ld_obj){
 
 function display_exam_load_object(ld_obj){
 	//console.log("FULL_OBJECT_READ = " + JSON.stringify(ld_obj, null, "  "));
-	init_exam_database();
+	if(INIT_EXAM_FUNC != null){ INIT_EXAM_FUNC(); }
 	update_nodes_exam_with(ld_obj);
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
 	dv_all_quest.innerHTML = "";
