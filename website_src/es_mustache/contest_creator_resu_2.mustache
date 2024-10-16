@@ -1,0 +1,37 @@
+
+{{> top}}
+
+<div class="exam_top_menu">
+	<div id="id_exam_save_button" class="exam_menu">GUARDAR</div>
+	<div id="id_exam_open_button" class="exam_menu">ABRIR</div>
+	<div id="id_exam_delete_button" class="exam_menu">BORRAR</div>
+	<div id="id_exam_sort_button" class="exam_menu">ORDENAR</div>
+	<div id="id_exam_mode_button" class="exam_menu">APRENDER</div>
+</div>
+
+<div id="id_exam_content" class="exam_content">
+	<div id="id_exam_top_content"></div>
+	<div id="id_exam_name" class="big_title">
+	</div>
+    <h1 class="big_title">Examen Interactivo de Teologia</h1>
+    <div id="id_exam_all_questions">
+    </div>  
+	<br><br><br><br><br><br><br><br><br>
+</div>  
+</div>
+
+<script type="module">
+
+import * as es_lang from '../code/tc_lang_es.js';
+import * as en_txt from '../code/cont_creator_resu_2/es_text.js';
+import * as cont_db from '../code/cont_creator_resu_2/cont_db.js';
+import * as exm from '../code/tc_exam.js';
+
+es_lang.init_es_module();
+en_txt.init_es_poll_txt();
+exm.init_page_exam(cont_db.init_exam_database);
+
+</script>
+
+{{> bottom}}
+

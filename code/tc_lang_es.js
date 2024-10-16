@@ -1,8 +1,6 @@
 
-import { init_get_msg, init_all_glb, fill_reversed_object, init_en_module, get_dispute_msg, bib_defaults, uppercase_words_in_string, 
-	all_strongrefs, get_verse_reponse_name, make_bible_ref, fill_bibrefs_href, fill_all_strongrefs_href, get_verse_cit_key, 
-	bib_obj_to_txt
-} from '../code/tc_lang_all.js';
+import { init_get_msg, init_all_glb, fill_reversed_object, init_en_module, bib_defaults, fill_bibrefs_href, fill_all_strongrefs_href, 
+	get_verse_cit_key, } from '../code/tc_lang_all.js';
 
 "use strict";
 
