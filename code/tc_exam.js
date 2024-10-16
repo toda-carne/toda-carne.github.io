@@ -1,7 +1,7 @@
 
 import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, is_mobile_browser,
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang, glb_all_bibrefs,
-	glb_poll_user_info, glb_poll_starting_questions, glb_poll_db
+	glb_poll_user_info, glb_poll_starting_questions, glb_poll_db, get_verse_match
 } from './tc_lang_all.js';
 	
 // import { firebase_write_object, firebase_read_object, firebase_sign_out } from './tc_firebase.js';
@@ -1151,20 +1151,32 @@ function toggle_verse_ed(dv_citation){
 	dv_ok.innerHTML = glb_curr_lang.msg_ok;
 	dv_ok.addEventListener('click', function() {
 
-		let verse_obj = dv_citation.tc_cit_obj;
-		verse_obj.book = glb_books_nums[inp_book.innerHTML];
-		verse_obj.chapter = inp_chapter.value;
-		verse_obj.verse = inp_verse.value;
+		const cit_adding = dv_citation.tc_cit_obj;
+		cit_adding.book = glb_books_nums[inp_book.innerHTML];
+		cit_adding.chapter = inp_chapter.value;
+		cit_adding.verse = inp_verse.value;
 
-		verse_obj.last_verse = inp_last_verse.value;
-		verse_obj.site = inp_site.innerHTML;
+		cit_adding.last_verse = inp_last_verse.value;
+		cit_adding.site = inp_site.innerHTML;
 		
 		let bib_ver = inp_bib_ver_sel.innerHTML;
 		if(inp_bib_ver_sel.classList.contains("is_hidden")){
 			bib_ver = inp_bib_ver_txt.value;
 		}
-		verse_obj.bib_ver = bib_ver;
+		cit_adding.bib_ver = bib_ver;
 		
+		const quest = glb_poll_db[dv_citation.owner_qid];
+		const has_vrs = (quest.vrs_with_response != null);
+		if(has_vrs){
+			const cit_match = get_verse_match(cit_adding, quest.vrs_with_response);
+			if(cit_match != null){
+				cit_adding.verse = cit_match.verse;
+				cit_adding.last_verse = cit_match.last_verse;
+				cit_adding.site = cit_match.site;
+				cit_adding.bib_ver = cit_match.bib_ver;
+			}
+		}
+
 		update_dv_verse(dv_citation);
 				
 		dv_ed_cit.remove();

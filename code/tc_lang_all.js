@@ -407,7 +407,7 @@ export function get_loc_book_nam(book){
 
 export function get_verse_cit_key(cit_obj){
 	const book_nam =  get_book_nam(cit_obj.book);
-	const kk = "bib_" + cit_obj.site + "_" + cit_obj.bib_ver + "_" + book_nam + "_" + cit_obj.chapter + "_" + cit_obj.verse;
+	let kk = "bib_" + cit_obj.site + "_" + cit_obj.bib_ver + "_" + book_nam + "_" + cit_obj.chapter + "_" + cit_obj.verse;
 	if(cit_obj.last_verse != bib_defaults.LAST_VERSE){
 		kk = kk + "_" + cit_obj.last_verse;
 	}
@@ -564,7 +564,7 @@ export function are_only_all_orig_on(quest){
 }
 
 function get_range(cit_obj){
-	const book_nam = get_book_nam(cit_obj.book);
+	//const book_nam = get_book_nam(cit_obj.book);
 	const range = [cit_obj.verse, cit_obj.verse];
 	if(cit_obj.last_verse > cit_obj.verse){
 		range[1] = cit_obj.last_verse;
@@ -610,6 +610,22 @@ function cit_in_range(cit_obj, range){
 	//console.log("cit_in_range. cit_obj=" + JSON.stringify(cit_obj, null, "  "));
 	//console.log("cit_in_range. range=" + JSON.stringify(range, null, "  "));
 	return (val_in_range(cit_obj.verse, range) || val_in_range(cit_obj.last_verse, range));
+}
+
+export function get_verse_match(cit_adding, with_resp){
+	const book_nam_1 = get_book_nam(cit_adding.book);
+	let found = null;
+	with_resp.forEach((cit_obj) => {
+		const book_nam_2 = get_book_nam(cit_obj.book);
+		if(book_nam_1 != book_nam_2){ return; } // continue
+		if(cit_adding.chapter != cit_obj.chapter){ return; } // continue
+		const range = get_range(cit_adding);
+		if(cit_in_range(cit_obj, range)){
+			found = cit_obj;
+			return;
+		}
+	});
+	return found;
 }
 
 export function get_verse_matches(in_verse_kind, with_resp){
