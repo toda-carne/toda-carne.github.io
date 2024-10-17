@@ -40,18 +40,18 @@ export function init_exam_database(){
 		//v_min: -500,  // uncomment to debug sort
 		//v_max: 200,  // uncomment to debug sort
 		answers: {
-			r0: { htm_answ: "q1_1__yes", 
+			q1_1__yes: { htm_answ: "q1_1__yes", 
 				should_on: "q1_1__should_yes",
 				rclk_href: "q1_1__pru_href", // uncomment to debug right_click 
 				//rclk_should_href: "q1_1__pru_should_href", // uncomment to debug right_click of should_href
 			},
-			r1: { htm_answ: "q1_1__no" },
+			q1_1__no: { htm_answ: "q1_1__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			if(this.answers.r0.is_on){ 
+			if(this.answers.q1_1__yes.is_on){ 
 				this.all_nxt = ["q1_2__"];
 				return;
 			}
@@ -64,14 +64,14 @@ export function init_exam_database(){
 	db.q1_2__ = { 
 		htm_stm: "q1_2__experience_is_evidence",
 		answers: {
-			r0: { htm_answ: "q1_2__yes" },
-			r1: { htm_answ: "q1_2__no" },
+			q1_2__yes: { htm_answ: "q1_2__yes" },
+			q1_2__no: { htm_answ: "q1_2__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			if(this.answers.r0.is_on){ 
+			if(this.answers.q1_2__yes.is_on){ 
 				this.all_nxt = ["q1_3__"];
 				return;
 			}
@@ -85,14 +85,14 @@ export function init_exam_database(){
 		htm_stm: "q1_3__are_humans_intelligent",
 		presentation: "q1_3__creator_section",
 		answers: {
-			r0: { htm_answ: "q1_3__yes", should_on: "q1_3__should", },
-			r1: { htm_answ: "q1_3__no" },
+			q1_3__yes: { htm_answ: "q1_3__yes", should_on: "q1_3__should", },
+			q1_3__no: { htm_answ: "q1_3__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			if(this.answers.r0.is_on){ 
+			if(this.answers.q1_3__yes.is_on){ 
 				this.all_nxt = ["q1_31__"];
 				return;
 			}
@@ -105,15 +105,15 @@ export function init_exam_database(){
 	db.q1_31__ = { 
 		htm_stm: "q1_31__all_biological_machines",
 		answers: {
-			r0: { htm_answ: "q1_31__creator" },
-			r1: { htm_answ: "q1_31__other" },
+			q1_31__creator: { htm_answ: "q1_31__creator" },
+			q1_31__other: { htm_answ: "q1_31__other" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			const a0 = this.answers.r0.is_on;
-			const a1 = this.answers.r1.is_on;
+			const a0 = this.answers.q1_31__creator.is_on;
+			const a1 = this.answers.q1_31__other.is_on;
 			if(a0){ 
 				this.all_nxt = ["q1_32__"];
 				return;
@@ -126,15 +126,15 @@ export function init_exam_database(){
 	db.q1_32__ = { 
 		htm_stm: "q1_32__the_creator",
 		answers: {
-			r0: { htm_answ: "q1_32__intelligent" },
-			r1: { htm_answ: "q1_32__not_intelligent" },
+			q1_32__intelligent: { htm_answ: "q1_32__intelligent" },
+			q1_32__not_intelligent: { htm_answ: "q1_32__not_intelligent" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			const a0 = this.answers.r0.is_on;
-			const a1 = this.answers.r1.is_on;
+			const a0 = this.answers.q1_32__intelligent.is_on;
+			const a1 = this.answers.q1_32__not_intelligent.is_on;
 			if(a0){ 
 				this.all_nxt = ["q1_33__"];
 				return;
@@ -148,14 +148,14 @@ export function init_exam_database(){
 	db.q1_33__ = { 
 		htm_stm: "q1_33__the_evolution",
 		answers: {
-			r0: { htm_answ: "q1_33__yes" },
-			r1: { htm_answ: "q1_33__no" },
+			q1_33__yes: { htm_answ: "q1_33__yes" },
+			q1_33__no: { htm_answ: "q1_33__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			const a0 = this.answers.r0.is_on;
+			const a0 = this.answers.q1_33__yes.is_on;
 			if(a0){ 
 				this.all_nxt = ["q1_4__"];
 				return;
@@ -169,14 +169,14 @@ export function init_exam_database(){
 	db.q1_34__ = { 
 		htm_stm: "q1_34__six_spins",
 		answers: {
-			r0: { htm_answ: "q1_34__yes" },
-			r1: { htm_answ: "q1_34__no" },
+			q1_34__yes: { htm_answ: "q1_34__yes" },
+			q1_34__no: { htm_answ: "q1_34__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			const a0 = this.answers.r0.is_on;
+			const a0 = this.answers.q1_34__yes.is_on;
 			if(a0){ 
 				this.all_nxt = ["q1_35__"];
 				return;
@@ -190,14 +190,14 @@ export function init_exam_database(){
 	db.q1_35__ = { 
 		htm_stm: "q1_35__skip_creator_proof",
 		answers: {
-			r0: { htm_answ: "q1_35__yes" },
-			r1: { htm_answ: "q1_35__no" },
+			q1_35__yes: { htm_answ: "q1_35__yes" },
+			q1_35__no: { htm_answ: "q1_35__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			const a0 = this.answers.r0.is_on;
+			const a0 = this.answers.q1_35__yes.is_on;
 			if(a0){ 
 				this.all_nxt = ["q2_1__"];
 				return;
@@ -212,17 +212,20 @@ export function init_exam_database(){
 		htm_stm: "q1_4__requires_technical_creativity",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q1_4__knife", should_on: "q1_4__should1", },
-			r1: { htm_answ: "q1_4__lamp", should_on: "q1_4__should2", },
-			r2: { htm_answ: "q1_4__clock", should_on: "q1_4__should3", },
+			q1_4__knife: { htm_answ: "q1_4__knife", should_on: "q1_4__should1", },
+			q1_4__lamp: { htm_answ: "q1_4__lamp", should_on: "q1_4__should2", },
+			q1_4__clock: { htm_answ: "q1_4__clock", should_on: "q1_4__should3", },
+		},
+		depends_on: { // EXAMPLE of the field to build the DAG
+			q1_35__: { q1_35__yes: "off", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			const a0_on = this.answers.r0.is_on;
-			const a1_on = this.answers.r1.is_on;
-			const a2_on = this.answers.r2.is_on;
+			const a0_on = this.answers.q1_4__knife.is_on;
+			const a1_on = this.answers.q1_4__lamp.is_on;
+			const a2_on = this.answers.q1_4__clock.is_on;
 			if(! a0_on || ! a1_on || ! a2_on){ 
 				this.all_nxt = ["q0_2__"];
 				this.all_contra = ["q0_2__", "q1_2__", "q1_4__"];
@@ -237,17 +240,17 @@ export function init_exam_database(){
 		htm_stm: "q1_5__more_complex_than",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q1_5__building_vs_knife", should_on: "q1_5__should1", },
-			r1: { htm_answ: "q1_5__car_vs_lamp", should_on: "q1_5__should2", },
-			r2: { htm_answ: "q1_5__cellphone_vs_clock", should_on: "q1_5__should3", },
+			q1_5__building_vs_knife: { htm_answ: "q1_5__building_vs_knife", should_on: "q1_5__should1", },
+			q1_5__car_vs_lamp: { htm_answ: "q1_5__car_vs_lamp", should_on: "q1_5__should2", },
+			q1_5__cellphone_vs_clock: { htm_answ: "q1_5__cellphone_vs_clock", should_on: "q1_5__should3", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			const a0_on = this.answers.r0.is_on;
-			const a1_on = this.answers.r1.is_on;
-			const a2_on = this.answers.r2.is_on;
+			const a0_on = this.answers.q1_5__building_vs_knife.is_on;
+			const a1_on = this.answers.q1_5__car_vs_lamp.is_on;
+			const a2_on = this.answers.q1_5__cellphone_vs_clock.is_on;
 			if(! a0_on || ! a1_on || ! a2_on){ 
 				this.all_nxt = ["q0_2__"];
 				this.all_contra = ["q0_2__", "q1_2__", "q1_5__"];
@@ -261,15 +264,15 @@ export function init_exam_database(){
 	db.q1_7__ = { 
 		htm_stm: "q1_7__more_complexity_then_more_creativity",
 		answers: {
-			r0: { htm_answ: "q1_7__yes" },
-			r1: { htm_answ: "q1_7__no" },
+			q1_7__yes: { htm_answ: "q1_7__yes" },
+			q1_7__no: { htm_answ: "q1_7__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			const a0_on = this.answers.r0.is_on;
-			//const a1_on = this.answers.r1.is_on;
+			const a0_on = this.answers.q1_7__yes.is_on;
+			//const a1_on = this.answers.q1_7__no.is_on;
 			if(a0_on){ 
 				this.all_nxt = ["q1_9__"];
 				return;
@@ -282,17 +285,17 @@ export function init_exam_database(){
 		htm_stm: "q1_8__more_creativity",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q1_8__building_vs_knife" },
-			r1: { htm_answ: "q1_8__car_vs_lamp" },
-			r2: { htm_answ: "q1_8__cellphone_vs_clock" },
+			q1_8__building_vs_knife: { htm_answ: "q1_8__building_vs_knife" },
+			q1_8__car_vs_lamp: { htm_answ: "q1_8__car_vs_lamp" },
+			q1_8__cellphone_vs_clock: { htm_answ: "q1_8__cellphone_vs_clock" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 
-			const a0_on = this.answers.r0.is_on;
-			const a1_on = this.answers.r1.is_on;
-			const a2_on = this.answers.r2.is_on;
+			const a0_on = this.answers.q1_8__building_vs_knife.is_on;
+			const a1_on = this.answers.q1_8__car_vs_lamp.is_on;
+			const a2_on = this.answers.q1_8__cellphone_vs_clock.is_on;
 			if(! a0_on || ! a1_on || ! a2_on){ 
 				this.all_nxt = ["q0_2__"];
 				this.all_contra = ["q0_2__", "q1_2__", "q1_8__"];
@@ -308,19 +311,19 @@ export function init_exam_database(){
 		htm_stm: "q1_9__coplexity_of_biological_machines",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q1_9__car_vs_mitosis" },
-			r1: { htm_answ: "q1_9__smartphone_vs_sex" },
-			r2: { htm_answ: "q1_9__bicycle_vs_healing" },
-			r3: { htm_answ: "q1_9__knife_vs_regeneration" },
+			q1_9__car_vs_mitosis: { htm_answ: "q1_9__car_vs_mitosis" },
+			q1_9__smartphone_vs_sex: { htm_answ: "q1_9__smartphone_vs_sex" },
+			q1_9__bicycle_vs_healing: { htm_answ: "q1_9__bicycle_vs_healing" },
+			q1_9__knife_vs_regeneration: { htm_answ: "q1_9__knife_vs_regeneration" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 
-			const a0_on = this.answers.r0.is_on;
-			const a1_on = this.answers.r1.is_on;
-			const a2_on = this.answers.r2.is_on;
-			const a3_on = this.answers.r3.is_on;
+			const a0_on = this.answers.q1_9__car_vs_mitosis.is_on;
+			const a1_on = this.answers.q1_9__smartphone_vs_sex.is_on;
+			const a2_on = this.answers.q1_9__bicycle_vs_healing.is_on;
+			const a3_on = this.answers.q1_9__knife_vs_regeneration.is_on;
 			if(! a0_on || ! a1_on || ! a2_on || ! a3_on){ 
 				this.all_nxt = ["q0_2__"];
 				this.all_contra = ["q0_2__", "q1_2__", "q1_9__"];
@@ -334,15 +337,15 @@ export function init_exam_database(){
 	db.q1_91__ = { 
 		htm_stm: "q1_91__more_complexity_in_biology",
 		answers: {
-			r0: { htm_answ: "q1_91__yes" },
-			r1: { htm_answ: "q1_91__no" },
+			q1_91__yes: { htm_answ: "q1_91__yes" },
+			q1_91__no: { htm_answ: "q1_91__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 			
-			const a0_on = this.answers.r0.is_on;
-			//const a1_on = this.answers.r1.is_on;
+			const a0_on = this.answers.q1_91__yes.is_on;
+			//const a1_on = this.answers.q1_91__no.is_on;
 			if(a0_on){ 
 				this.all_nxt = ["q1_93__"];
 				return;
@@ -355,17 +358,17 @@ export function init_exam_database(){
 		htm_stm: "q1_92__human_complexity",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q1_92__leg" },
-			r1: { htm_answ: "q1_92__liver" },
-			r2: { htm_answ: "q1_92__lung" },
+			q1_92__leg: { htm_answ: "q1_92__leg" },
+			q1_92__liver: { htm_answ: "q1_92__liver" },
+			q1_92__lung: { htm_answ: "q1_92__lung" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 
-			const a0_on = this.answers.r0.is_on;
-			const a1_on = this.answers.r1.is_on;
-			const a2_on = this.answers.r2.is_on;
+			const a0_on = this.answers.q1_92__leg.is_on;
+			const a1_on = this.answers.q1_92__liver.is_on;
+			const a2_on = this.answers.q1_92__lung.is_on;
 			if(! a0_on || ! a1_on || ! a2_on){ 
 				this.all_nxt = ["q0_2__"];
 				this.all_contra = ["q0_2__", "q1_2__", "q1_92__"];
@@ -381,15 +384,15 @@ export function init_exam_database(){
 		htm_stm: "q1_93__biological_requires_creativity",
 		has_qrefs: true,
 		answers: {
-			r0: { htm_answ: "q1_93__yes" },
-			r1: { htm_answ: "q1_93__no" },
+			q1_93__yes: { htm_answ: "q1_93__yes" },
+			q1_93__no: { htm_answ: "q1_93__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 
-			const a0_on = this.answers.r0.is_on;
-			const a1_on = this.answers.r1.is_on;
+			const a0_on = this.answers.q1_93__yes.is_on;
+			const a1_on = this.answers.q1_93__no.is_on;
 			if(a0_on){ 
 				this.all_nxt = ["q1_94__"];
 				return;
@@ -404,14 +407,14 @@ export function init_exam_database(){
 		htm_stm: "q1_94__if_human_then_creator",
 		has_qrefs: true,
 		answers: {
-			r0: { htm_answ: "q1_94__yes" },
-			r1: { htm_answ: "q1_94__no" },
+			q1_94__yes: { htm_answ: "q1_94__yes" },
+			q1_94__no: { htm_answ: "q1_94__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 
-			const a0_on = this.answers.r0.is_on;
+			const a0_on = this.answers.q1_94__yes.is_on;
 			if(a0_on){ 
 				this.all_nxt = ["q2_1__"];
 				return;
@@ -426,15 +429,15 @@ export function init_exam_database(){
 		htm_stm: "q2_1__can_an_engineer_rebuild_his_house",
 		presentation: "q2_0__reproduction_section",
 		answers: {
-			r0: { htm_answ: "q2_1__yes" },
-			r1: { htm_answ: "q2_1__no" },
+			q2_1__yes: { htm_answ: "q2_1__yes" },
+			q2_1__no: { htm_answ: "q2_1__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 
-			const a0_on = this.answers.r0.is_on;
-			const a1_on = this.answers.r1.is_on;
+			const a0_on = this.answers.q2_1__yes.is_on;
+			const a1_on = this.answers.q2_1__no.is_on;
 			if(a0_on){ 
 				this.all_nxt = ["q2_2__"];
 				return;
@@ -449,14 +452,14 @@ export function init_exam_database(){
 		htm_stm: "q2_2__future_resurrection",
 		has_qrefs: true,
 		answers: {
-			r0: { htm_answ: "q2_2__yes" },
-			r1: { htm_answ: "q2_2__no" },
+			q2_2__yes: { htm_answ: "q2_2__yes" },
+			q2_2__no: { htm_answ: "q2_2__no" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
 
-			const a0_on = this.answers.r0.is_on;
+			const a0_on = this.answers.q2_2__yes.is_on;
 			if(a0_on){ 
 				this.all_nxt = ["q3_1__"];
 				return;
@@ -472,9 +475,9 @@ export function init_exam_database(){
 		presentation: "q3_1__resurrection_section",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q3_1__physical", should_on: "q3_1__physical", },
-			r1: { htm_answ: "q3_1__not_to_die", should_on: "q3_1__not_to_die", },
-			r2: { htm_answ: "q3_1__in_heaven", should_on: "q3_1__in_heaven", },
+			q3_1__physical: { htm_answ: "q3_1__physical", should_on: "q3_1__physical", },
+			q3_1__not_to_die: { htm_answ: "q3_1__not_to_die", should_on: "q3_1__not_to_die", },
+			q3_1__in_heaven: { htm_answ: "q3_1__in_heaven", should_on: "q3_1__in_heaven", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
@@ -486,12 +489,11 @@ export function init_exam_database(){
 		htm_stm: "q3_2__people_resurrection_claims",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q3_2__like_jesus", should_on: "q3_2__like_jesus", },
-			r1: { htm_answ: "q3_2__for_all", should_on: "q3_2__for_all", },
-			r2: { htm_answ: "q3_2__not_yet_most", should_on: "q3_2__not_yet_most", },
-			//r3: { htm_answ: "q3_2__happened_for_few", should_on: "q3_2__happened_for_few", }, // NO_FEW
-			r3: { htm_answ: "q3_2__new_earth", should_on: "q3_2__new_earth", },
-			r4: { htm_answ: "q3_2__sleep", should_on: "q3_2__sleep", },
+			q3_2__like_jesus: { htm_answ: "q3_2__like_jesus", should_on: "q3_2__like_jesus", },
+			q3_2__for_all: { htm_answ: "q3_2__for_all", should_on: "q3_2__for_all", },
+			q3_2__not_yet_most: { htm_answ: "q3_2__not_yet_most", should_on: "q3_2__not_yet_most", },
+			q3_2__new_earth: { htm_answ: "q3_2__new_earth", should_on: "q3_2__new_earth", },
+			q3_2__sleep: { htm_answ: "q3_2__sleep", should_on: "q3_2__sleep", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
@@ -502,9 +504,9 @@ export function init_exam_database(){
 	db.q3_3__ = { 
 		htm_stm: "q3_3__dispute_or_accept_resurrection",
 		answers: {
-			r0: { htm_answ: "q3_3__not_believed" },
-			r1: { htm_answ: "q3_3__all_stms" },
-			r2: { htm_answ: "q3_3__go_on" },
+			q3_3__not_believed: { htm_answ: "q3_3__not_believed" },
+			q3_3__all_stms: { htm_answ: "q3_3__all_stms" },
+			q3_3__go_on: { htm_answ: "q3_3__go_on" },
 		},
 		sections: {
 			q3_1__physical: "q4_1__",
@@ -513,7 +515,6 @@ export function init_exam_database(){
 			q3_2__like_jesus: "q7_1__",
 			q3_2__for_all: "q8_1__",
 			q3_2__not_yet_most: "q9_1__",
-			//q3_2__happened_for_few: "q10_1__", // NO_FEW
 			q3_2__new_earth: "q11_1__",
 			q3_2__sleep: "q12_1__",
 		},
@@ -523,9 +524,9 @@ export function init_exam_database(){
 			if(has_all_next(this)){ return; }
 			this.nxt_sec = {};
 			this.all_nxt = [];
-			const a0_on = this.answers.r0.is_on;
-			const a1_on = this.answers.r1.is_on;
-			const a2_on = this.answers.r2.is_on;
+			const a0_on = this.answers.q3_3__not_believed.is_on;
+			const a1_on = this.answers.q3_3__all_stms.is_on;
+			const a2_on = this.answers.q3_3__go_on.is_on;
 			
 			const nxt_topic = "q14_1__";
 			
@@ -558,19 +559,19 @@ export function init_exam_database(){
 		presentation: "q4_1__physical_sec",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q4_1__verse1_str", rclk_href: "q4_1__verse1_href", should_on: "q4_1__verse1_should", },
-			r1: { htm_answ: "q4_1__verse2_str", rclk_href: "q4_1__verse2_href", should_on: "q4_1__verse2_should", },
-			r2: { htm_answ: "q4_1__verse3_str", rclk_href: "q4_1__verse3_href", should_on: "q4_1__verse3_should", },
-			r3: { htm_answ: "q4_1__verse4_str", rclk_href: "q4_1__verse4_href", should_on: "q4_1__verse4_should", },
-			r4: { htm_answ: "q4_1__verse5_str", rclk_href: "q4_1__verse5_href", should_on: "q4_1__verse5_should", },
-			r5: { htm_answ: "q4_1__verse6_str", rclk_href: "q4_1__verse6_href", should_on: "q4_1__verse6_should", },
-			r6: { htm_answ: "q4_1__verse7_str", rclk_href: "q4_1__verse7_href", should_on: "q4_1__verse7_should", },
+			q4_1__verse1_str: { htm_answ: "q4_1__verse1_str", rclk_href: "q4_1__verse1_href", should_on: "q4_1__verse1_should", },
+			q4_1__verse2_str: { htm_answ: "q4_1__verse2_str", rclk_href: "q4_1__verse2_href", should_on: "q4_1__verse2_should", },
+			q4_1__verse3_str: { htm_answ: "q4_1__verse3_str", rclk_href: "q4_1__verse3_href", should_on: "q4_1__verse3_should", },
+			q4_1__verse4_str: { htm_answ: "q4_1__verse4_str", rclk_href: "q4_1__verse4_href", should_on: "q4_1__verse4_should", },
+			q4_1__verse5_str: { htm_answ: "q4_1__verse5_str", rclk_href: "q4_1__verse5_href", should_on: "q4_1__verse5_should", },
+			q4_1__verse6_str: { htm_answ: "q4_1__verse6_str", rclk_href: "q4_1__verse6_href", should_on: "q4_1__verse6_should", },
+			q4_1__verse7_str: { htm_answ: "q4_1__verse7_str", rclk_href: "q4_1__verse7_href", should_on: "q4_1__verse7_should", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
-				if(! db.q3_1__.answers.r0.is_on){
+				if(! db.q3_1__.answers.q3_1__physical.is_on){
 					this.all_nxt = ["q0_2__"];
 					this.all_contra = ["q0_2__", "q3_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 					return;
@@ -590,16 +591,16 @@ export function init_exam_database(){
 		presentation: "q5_1__not_die_sec",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q5_1__verse1_str", rclk_href: "q5_1__verse1_href", should_on: "q5_1__verse1_should", },
-			r1: { htm_answ: "q5_1__verse2_str", rclk_href: "q5_1__verse2_href", should_on: "q5_1__verse2_should", },
-			r2: { htm_answ: "q5_1__verse3_str", rclk_href: "q5_1__verse3_href", should_on: "q5_1__verse3_should", },
-			r3: { htm_answ: "q5_1__verse4_str", rclk_href: "q5_1__verse4_href", should_on: "q5_1__verse4_should", },
+			q5_1__verse1_str: { htm_answ: "q5_1__verse1_str", rclk_href: "q5_1__verse1_href", should_on: "q5_1__verse1_should", },
+			q5_1__verse2_str: { htm_answ: "q5_1__verse2_str", rclk_href: "q5_1__verse2_href", should_on: "q5_1__verse2_should", },
+			q5_1__verse3_str: { htm_answ: "q5_1__verse3_str", rclk_href: "q5_1__verse3_href", should_on: "q5_1__verse3_should", },
+			q5_1__verse4_str: { htm_answ: "q5_1__verse4_str", rclk_href: "q5_1__verse4_href", should_on: "q5_1__verse4_should", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
-				if(! db.q3_1__.answers.r1.is_on){
+				if(! db.q3_1__.answers.q3_1__not_to_die.is_on){
 					this.all_nxt = ["q0_2__"];
 					this.all_contra = ["q0_2__", "q3_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 					return;
@@ -619,19 +620,19 @@ export function init_exam_database(){
 		presentation: "q6_1__in_heaven_sec",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q6_1__verse1_str", rclk_href: "q6_1__verse1_href", should_on: "q6_1__verse1_should", },
-			r1: { htm_answ: "q6_1__verse2_str", rclk_href: "q6_1__verse2_href", should_on: "q6_1__verse2_should", },
-			r2: { htm_answ: "q6_1__verse3_str", rclk_href: "q6_1__verse3_href", should_on: "q6_1__verse3_should", },
-			r3: { htm_answ: "q6_1__verse4_str", rclk_href: "q6_1__verse4_href", should_on: "q6_1__verse4_should", },
-			r4: { htm_answ: "q6_1__verse5_str", rclk_href: "q6_1__verse5_href", should_on: "q6_1__verse5_should", },
-			r5: { htm_answ: "q6_1__verse6_str", rclk_href: "q6_1__verse6_href", should_on: "q6_1__verse6_should", },
-			r6: { htm_answ: "q6_1__verse7_str", rclk_href: "q6_1__verse7_href", should_on: "q6_1__verse7_should", },
+			q6_1__verse1_str: { htm_answ: "q6_1__verse1_str", rclk_href: "q6_1__verse1_href", should_on: "q6_1__verse1_should", },
+			q6_1__verse2_str: { htm_answ: "q6_1__verse2_str", rclk_href: "q6_1__verse2_href", should_on: "q6_1__verse2_should", },
+			q6_1__verse3_str: { htm_answ: "q6_1__verse3_str", rclk_href: "q6_1__verse3_href", should_on: "q6_1__verse3_should", },
+			q6_1__verse4_str: { htm_answ: "q6_1__verse4_str", rclk_href: "q6_1__verse4_href", should_on: "q6_1__verse4_should", },
+			q6_1__verse5_str: { htm_answ: "q6_1__verse5_str", rclk_href: "q6_1__verse5_href", should_on: "q6_1__verse5_should", },
+			q6_1__verse6_str: { htm_answ: "q6_1__verse6_str", rclk_href: "q6_1__verse6_href", should_on: "q6_1__verse6_should", },
+			q6_1__verse7_str: { htm_answ: "q6_1__verse7_str", rclk_href: "q6_1__verse7_href", should_on: "q6_1__verse7_should", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
-				if(! db.q3_1__.answers.r2.is_on){
+				if(! db.q3_1__.answers.q3_1__in_heaven.is_on){
 					this.all_nxt = ["q0_2__"];
 					this.all_contra = ["q0_2__", "q3_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 					return;
@@ -651,18 +652,18 @@ export function init_exam_database(){
 		presentation: "q7_1__like_jesus_sec",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q7_1__verse1_str", rclk_href: "q7_1__verse1_href", should_on: "q7_1__verse1_should", },
-			r1: { htm_answ: "q7_1__verse2_str", rclk_href: "q7_1__verse2_href", should_on: "q7_1__verse2_should", },
-			r2: { htm_answ: "q7_1__verse3_str", rclk_href: "q7_1__verse3_href", should_on: "q7_1__verse3_should", },
-			r3: { htm_answ: "q7_1__verse4_str", rclk_href: "q7_1__verse4_href", should_on: "q7_1__verse4_should", },
-			r4: { htm_answ: "q7_1__verse5_str", rclk_href: "q7_1__verse5_href", should_on: "q7_1__verse5_should", },
-			r5: { htm_answ: "q7_1__verse6_str", rclk_href: "q7_1__verse6_href", should_on: "q7_1__verse6_should", },
+			q7_1__verse1_str: { htm_answ: "q7_1__verse1_str", rclk_href: "q7_1__verse1_href", should_on: "q7_1__verse1_should", },
+			q7_1__verse2_str: { htm_answ: "q7_1__verse2_str", rclk_href: "q7_1__verse2_href", should_on: "q7_1__verse2_should", },
+			q7_1__verse3_str: { htm_answ: "q7_1__verse3_str", rclk_href: "q7_1__verse3_href", should_on: "q7_1__verse3_should", },
+			q7_1__verse4_str: { htm_answ: "q7_1__verse4_str", rclk_href: "q7_1__verse4_href", should_on: "q7_1__verse4_should", },
+			q7_1__verse5_str: { htm_answ: "q7_1__verse5_str", rclk_href: "q7_1__verse5_href", should_on: "q7_1__verse5_should", },
+			q7_1__verse6_str: { htm_answ: "q7_1__verse6_str", rclk_href: "q7_1__verse6_href", should_on: "q7_1__verse6_should", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
-				if(! db.q3_2__.answers.r0.is_on){
+				if(! db.q3_2__.answers.q3_2__like_jesus.is_on){
 					this.all_nxt = ["q0_2__"];
 					this.all_contra = ["q0_2__", "q3_2__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 					return;
@@ -682,18 +683,18 @@ export function init_exam_database(){
 		presentation: "q8_1__for_all_sec",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q8_1__verse1_str", rclk_href: "q8_1__verse1_href", should_on: "q8_1__verse1_should", },
-			r1: { htm_answ: "q8_1__verse2_str", rclk_href: "q8_1__verse2_href", should_on: "q8_1__verse2_should", },
-			r2: { htm_answ: "q8_1__verse3_str", rclk_href: "q8_1__verse3_href", should_on: "q8_1__verse3_should", },
-			r3: { htm_answ: "q8_1__verse4_str", rclk_href: "q8_1__verse4_href", should_on: "q8_1__verse4_should", },
-			r4: { htm_answ: "q8_1__verse5_str", rclk_href: "q8_1__verse5_href", should_on: "q8_1__verse5_should", },
-			r5: { htm_answ: "q8_1__verse6_str", rclk_href: "q8_1__verse6_href", should_on: "q8_1__verse6_should", },
+			q8_1__verse1_str: { htm_answ: "q8_1__verse1_str", rclk_href: "q8_1__verse1_href", should_on: "q8_1__verse1_should", },
+			q8_1__verse2_str: { htm_answ: "q8_1__verse2_str", rclk_href: "q8_1__verse2_href", should_on: "q8_1__verse2_should", },
+			q8_1__verse3_str: { htm_answ: "q8_1__verse3_str", rclk_href: "q8_1__verse3_href", should_on: "q8_1__verse3_should", },
+			q8_1__verse4_str: { htm_answ: "q8_1__verse4_str", rclk_href: "q8_1__verse4_href", should_on: "q8_1__verse4_should", },
+			q8_1__verse5_str: { htm_answ: "q8_1__verse5_str", rclk_href: "q8_1__verse5_href", should_on: "q8_1__verse5_should", },
+			q8_1__verse6_str: { htm_answ: "q8_1__verse6_str", rclk_href: "q8_1__verse6_href", should_on: "q8_1__verse6_should", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
-				if(! db.q3_2__.answers.r1.is_on){
+				if(! db.q3_2__.answers.q3_2__for_all.is_on){
 					this.all_nxt = ["q0_2__"];
 					this.all_contra = ["q0_2__", "q3_2__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 					return;
@@ -713,19 +714,19 @@ export function init_exam_database(){
 		presentation: "q9_1__not_yet_sec",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q9_1__verse1_str", rclk_href: "q9_1__verse1_href", should_on: "q9_1__verse1_should", },
-			r1: { htm_answ: "q9_1__verse2_str", rclk_href: "q9_1__verse2_href", should_on: "q9_1__verse2_should", },
-			r2: { htm_answ: "q9_1__verse3_str", rclk_href: "q9_1__verse3_href", should_on: "q9_1__verse3_should", },
-			r3: { htm_answ: "q9_1__verse4_str", rclk_href: "q9_1__verse4_href", should_on: "q9_1__verse4_should", },
-			r4: { htm_answ: "q9_1__verse5_str", rclk_href: "q9_1__verse5_href", should_on: "q9_1__verse5_should", },
-			r5: { htm_answ: "q9_1__verse6_str", rclk_href: "q9_1__verse6_href", should_on: "q9_1__verse6_should", },
-			r6: { htm_answ: "q9_1__verse7_str", rclk_href: "q9_1__verse7_href", should_on: "q9_1__verse7_should", },
+			q9_1__verse1_str: { htm_answ: "q9_1__verse1_str", rclk_href: "q9_1__verse1_href", should_on: "q9_1__verse1_should", },
+			q9_1__verse2_str: { htm_answ: "q9_1__verse2_str", rclk_href: "q9_1__verse2_href", should_on: "q9_1__verse2_should", },
+			q9_1__verse3_str: { htm_answ: "q9_1__verse3_str", rclk_href: "q9_1__verse3_href", should_on: "q9_1__verse3_should", },
+			q9_1__verse4_str: { htm_answ: "q9_1__verse4_str", rclk_href: "q9_1__verse4_href", should_on: "q9_1__verse4_should", },
+			q9_1__verse5_str: { htm_answ: "q9_1__verse5_str", rclk_href: "q9_1__verse5_href", should_on: "q9_1__verse5_should", },
+			q9_1__verse6_str: { htm_answ: "q9_1__verse6_str", rclk_href: "q9_1__verse6_href", should_on: "q9_1__verse6_should", },
+			q9_1__verse7_str: { htm_answ: "q9_1__verse7_str", rclk_href: "q9_1__verse7_href", should_on: "q9_1__verse7_should", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
-				if(! db.q3_2__.answers.r2.is_on){
+				if(! db.q3_2__.answers.q3_2__not_yet_most.is_on){
 					this.all_nxt = ["q0_2__"];
 					this.all_contra = ["q0_2__", "q3_2__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 					return;
@@ -740,44 +741,21 @@ export function init_exam_database(){
 		},
 	};
 	
-	/* NO_FEW
-	db.q10_1__ = { 
-		htm_stm: "q10_1__has_for_few",
-		presentation: "q10_1__has_for_few_sec",
-		answers: {
-			r0: { htm_answ: "q10_1__go" },
-			r1: { htm_answ: "q10_1__stay" },
-		},
-		set_reactions: function () {
-			if(has_all_next(this)){ return; }
-			const a0_on = this.answers.r0.is_on;
-			if(a0_on){ 
-				const nxt_qid = db.q3_3__.nxt_sec["q3_2__happened_for_few"];
-				this.all_nxt = [nxt_qid];
-				return;
-			}
-			
-			this.all_nxt = ["q0_2__"];
-			this.all_contra = ["q0_2__", "q10_1__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
-		},
-	};
-	*/
-	
 	db.q11_1__ = { 
 		htm_stm: "q11_1__new_earth",
 		presentation: "q11_1__new_earth_sec",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q11_1__verse1_str", rclk_href: "q11_1__verse1_href", should_on: "q11_1__verse1_should", },
-			r1: { htm_answ: "q11_1__verse2_str", rclk_href: "q11_1__verse2_href", should_on: "q11_1__verse2_should", },
-			r2: { htm_answ: "q11_1__verse3_str", rclk_href: "q11_1__verse3_href", should_on: "q11_1__verse3_should", },
-			r3: { htm_answ: "q11_1__verse4_str", rclk_href: "q11_1__verse4_href", should_on: "q11_1__verse4_should", },
+			q11_1__verse1_str: { htm_answ: "q11_1__verse1_str", rclk_href: "q11_1__verse1_href", should_on: "q11_1__verse1_should", },
+			q11_1__verse2_str: { htm_answ: "q11_1__verse2_str", rclk_href: "q11_1__verse2_href", should_on: "q11_1__verse2_should", },
+			q11_1__verse3_str: { htm_answ: "q11_1__verse3_str", rclk_href: "q11_1__verse3_href", should_on: "q11_1__verse3_should", },
+			q11_1__verse4_str: { htm_answ: "q11_1__verse4_str", rclk_href: "q11_1__verse4_href", should_on: "q11_1__verse4_should", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
-				if(! db.q3_2__.answers.r3.is_on){
+				if(! db.q3_2__.answers.q3_2__new_earth.is_on){
 					this.all_nxt = ["q0_2__"];
 					this.all_contra = ["q0_2__", "q3_2__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 					return;
@@ -802,12 +780,12 @@ export function init_exam_database(){
 		presentation: "q12_1__sleep_sec",
 		//is_multi: true,
 		answers: {
-			r0: { htm_answ: "q12_1__no_consciousness", },
-			r1: { htm_answ: "q12_1__verse1_str", rclk_href: "q12_1__verse1_href", },
-			r2: { htm_answ: "q12_1__verse2_str", rclk_href: "q12_1__verse2_href", },
-			r3: { htm_answ: "q12_1__verse3_str", rclk_href: "q12_1__verse3_href", },
-			r4: { htm_answ: "q12_1__verse4_str", rclk_href: "q12_1__verse4_href", },
-			r5: { htm_answ: "q12_1__verse5_str", rclk_href: "q12_1__verse5_href", },
+			q12_1__no_consciousness: { htm_answ: "q12_1__no_consciousness", },
+			q12_1__verse1_str: { htm_answ: "q12_1__verse1_str", rclk_href: "q12_1__verse1_href", },
+			q12_1__verse2_str: { htm_answ: "q12_1__verse2_str", rclk_href: "q12_1__verse2_href", },
+			q12_1__verse3_str: { htm_answ: "q12_1__verse3_str", rclk_href: "q12_1__verse3_href", },
+			q12_1__verse4_str: { htm_answ: "q12_1__verse4_str", rclk_href: "q12_1__verse4_href", },
+			q12_1__verse5_str: { htm_answ: "q12_1__verse5_str", rclk_href: "q12_1__verse5_href", },
 		},
 		vrs_with_response: all_q12_1__with_response,
 		// stg_with_response: [],
@@ -815,35 +793,35 @@ export function init_exam_database(){
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			this.all_nxt = [];
-			if(this.answers.r0.is_on){ 
+			if(this.answers.q12_1__no_consciousness.is_on){ 
 				this.all_nxt = ["q13_1__"];
 				return;
 			}
-			let bad_on = this.answers.r1.is_on;
+			let bad_on = this.answers.q12_1__verse1_str.is_on;
 			if(bad_on){ 
 				this.all_nxt = ["q12_rv1__"];
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
-			bad_on = this.answers.r2.is_on;
+			bad_on = this.answers.q12_1__verse2_str.is_on;
 			if(bad_on){ 
 				this.all_nxt = ["q12_rv2__"];
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
-			bad_on = this.answers.r3.is_on;
+			bad_on = this.answers.q12_1__verse3_str.is_on;
 			if(bad_on){ 
 				this.all_nxt = ["q12_rv3__"];
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
-			bad_on = this.answers.r4.is_on;
+			bad_on = this.answers.q12_1__verse4_str.is_on;
 			if(bad_on){ 
 				this.all_nxt = ["q12_rv4__"];
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 				return;
 			}
-			bad_on = this.answers.r5.is_on;
+			bad_on = this.answers.q12_1__verse5_str.is_on;
 			if(bad_on){ 
 				this.all_nxt = ["q12_rv5__"];
 				this.all_contra = ["q12_1__", ]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
@@ -874,20 +852,20 @@ export function init_exam_database(){
 		htm_stm: "q13_1__sleep",
 		is_multi: true,
 		answers: {
-			r0: { htm_answ: "q13_1__verse1_str", rclk_href: "q13_1__verse1_href", should_on: "q13_1__verse1_should", },
-			r1: { htm_answ: "q13_1__verse2_str", rclk_href: "q13_1__verse2_href", should_on: "q13_1__verse2_should", },
-			r2: { htm_answ: "q13_1__verse3_str", rclk_href: "q13_1__verse3_href", should_on: "q13_1__verse3_should", },
-			r3: { htm_answ: "q13_1__verse4_str", rclk_href: "q13_1__verse4_href", should_on: "q13_1__verse4_should", },
-			r4: { htm_answ: "q13_1__verse5_str", rclk_href: "q13_1__verse5_href", should_on: "q13_1__verse5_should", },
-			r5: { htm_answ: "q13_1__verse6_str", rclk_href: "q13_1__verse6_href", should_on: "q13_1__verse6_should", },
-			r6: { htm_answ: "q13_1__verse7_str", rclk_href: "q13_1__verse7_href", should_on: "q13_1__verse7_should", },
-			r7: { htm_answ: "q13_1__verse8_str", rclk_href: "q13_1__verse8_href", should_on: "q13_1__verse8_should", },
+			q13_1__verse1_str: { htm_answ: "q13_1__verse1_str", rclk_href: "q13_1__verse1_href", should_on: "q13_1__verse1_should", },
+			q13_1__verse2_str: { htm_answ: "q13_1__verse2_str", rclk_href: "q13_1__verse2_href", should_on: "q13_1__verse2_should", },
+			q13_1__verse3_str: { htm_answ: "q13_1__verse3_str", rclk_href: "q13_1__verse3_href", should_on: "q13_1__verse3_should", },
+			q13_1__verse4_str: { htm_answ: "q13_1__verse4_str", rclk_href: "q13_1__verse4_href", should_on: "q13_1__verse4_should", },
+			q13_1__verse5_str: { htm_answ: "q13_1__verse5_str", rclk_href: "q13_1__verse5_href", should_on: "q13_1__verse5_should", },
+			q13_1__verse6_str: { htm_answ: "q13_1__verse6_str", rclk_href: "q13_1__verse6_href", should_on: "q13_1__verse6_should", },
+			q13_1__verse7_str: { htm_answ: "q13_1__verse7_str", rclk_href: "q13_1__verse7_href", should_on: "q13_1__verse7_should", },
+			q13_1__verse8_str: { htm_answ: "q13_1__verse8_str", rclk_href: "q13_1__verse8_href", should_on: "q13_1__verse8_should", },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
 			const all_on = are_only_all_orig_on(this);
 			if(all_on){ 
-				if(! db.q3_2__.answers.r4.is_on){
+				if(! db.q3_2__.answers.q3_2__sleep.is_on){
 					this.all_nxt = ["q0_2__"];
 					this.all_contra = ["q0_2__", "q3_2__"]; // q1_1__are_you_reasonable q1_2__experience_is_evidence
 					return;
@@ -906,8 +884,8 @@ export function init_exam_database(){
 		htm_stm: "q14_1__the_cloth",
 		presentation: "q14_1__the_cloth_sec",
 		answers: {
-			r0: { htm_answ: "q14_1__go" },
-			r1: { htm_answ: "q14_1__stay" },
+			q14_1__go: { htm_answ: "q14_1__go" },
+			q14_1__stay: { htm_answ: "q14_1__stay" },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
