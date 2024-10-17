@@ -3,7 +3,10 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang, glb_all_bibrefs,
 	glb_poll_user_info, glb_poll_starting_questions, glb_poll_db, get_verse_match
 } from './tc_lang_all.js';
-	
+
+import { init_binder, bind_to_my_right, bind_to_my_left, all_to_array, check_all, calc_size, 
+} from './tc_binder.js';
+
 // import { firebase_write_object, firebase_read_object, firebase_sign_out } from './tc_firebase.js';
 
 "use strict";
@@ -19,6 +22,12 @@ let DEFAULT_LINK_NAME = null;
 let fb_write_object = null;
 let fb_read_object = null;
 let fb_sign_out = null;
+
+const glb_all_wrk_str = "all_wrk_quests";
+let ALL_WORKING = null;
+
+const ANSWD_BNDR = "answd_bndr";
+const PEND_BNDR = "pend_bndr";
 
 const ROOT_QUEST_ID = "root_quest_id";
 
@@ -44,6 +53,10 @@ function init_exam_fb(){
 
 function init_exam_module_vars(){
 	console.log("Calling init_exam_module_vars");
+
+	ALL_WORKING = { glb_all_wrk_str };
+	init_binder(ALL_WORKING, ANSWD_BNDR);
+	init_binder(ALL_WORKING, PEND_BNDR);
 	
 	DEFAULT_BOOK = glb_curr_lang.msg_def_book;
 	DEFAULT_STRONG = glb_curr_lang.msg_def_strong;
@@ -267,8 +280,8 @@ export function init_answers(qid){
 		return;
 	}
 	const all_answ = Object.entries(quest.answers);
-	for (const [aid, an_answ] of all_answ) {
-		//console.log("aid=" + aid + " an_answ=" + JSON.stringify(an_answ, null, "  "));
+	for (const [anid, an_answ] of all_answ) {
+		//console.log("anid=" + anid + " an_answ=" + JSON.stringify(an_answ, null, "  "));
 		if(an_answ == null){
 			continue; // continue with next elem
 		}
@@ -362,7 +375,7 @@ export function init_answers(qid){
 
 function invert_answers(qid){
 	const quest = glb_poll_db[qid];
-	for (const [aid, an_answ] of Object.entries(quest.answers)) {
+	for (const [anid, an_answ] of Object.entries(quest.answers)) {
 		if(an_answ.is_on == null){
 			an_answ.is_on = true;
 			continue;
@@ -2043,5 +2056,101 @@ function set_anchors_target(the_div){
 			aa.setAttribute('target', '_blank');
 		}
 	});
+}
+
+function init_signals_for(qid){
+	const quest = glb_poll_db[qid];
+	if(quest == null){ return; }
+	init_binder(quest, ANSWD_BNDR);
+	init_binder(quest, PEND_BNDR);
+	if(quest.activated_if == null){ return; }
+	const act_if = Object.entries(quest.activated_if);
+	for (const [conj_id, conj_obj] of act_if) {
+		if(conj_obj == null){ continue; }
+		const conj = Object.entries(conj_obj);
+		for (const [qid_signl, resps_obj] of conj) {
+			if(resps_obj == null){ continue; }
+			const qst_to_signl = glb_poll_db[qid_signl]; 
+			const qst_answs = qst_to_signl.answers; 
+			const resps = Object.entries(resps_obj);
+			for (const [anid, val] of resps) {
+				const an_answ = qst_answs[anid];
+				if(val == "on"){ an_answ.signal_if_on.push(qid); }
+				if(val == "off"){ an_answ.signal_if_off.push(qid); }
+			}
+		}
+	}
+}
+
+function check_if_dnf_activates(qid){
+	const quest = glb_poll_db[qid];
+	if(quest == null){ return; }
+	//if
+	if(quest.activated_if == null){ return; }
+	const act_if = Object.entries(quest.activated_if);
+	for (const [conj_id, conj_obj] of act_if) {
+		if(conj_obj == null){ continue; }
+		const conj = Object.entries(conj_obj);
+		let conj_act = true;
+		for (const [qid_signl, resps_obj] of conj) {
+			if(resps_obj == null){ continue; }
+			const qst_to_signl = glb_poll_db[qid_signl]; 
+			const qst_answs = qst_to_signl.answers; 
+			const resps = Object.entries(resps_obj);
+			let all_act_2 = true;
+			for (const [anid, val] of resps) {
+				const an_answ = qst_answs[anid];
+				const is_act = (((val == "on") && an_answ.is_on) || ((val == "off") && ! an_answ.is_on));
+				all_act_2 = all_act_2 && is_act;
+				if(! all_act_2){
+					break;
+				}
+			}
+			conj_act = conj_act && all_act_2;
+			if(! conj_act){
+				break;
+			}
+		}
+		if(conj_act){
+			return conj_id;
+		}
+	}
+	return null;
+}
+
+function is_active(qid){
+	const quest = glb_poll_db[qid];
+	if(quest == null){ return; }
+	if(! is_alone(quest, ANSWD_BNDR)){ return true; }
+	if(! is_alone(quest, PEND_BNDR)){ return true; }
+	return false;
+}
+
+function set_active(qid){
+	if(is_active(qid)){
+		return;
+	}
+	const quest = glb_poll_db[qid];
+	if(quest == null){ return; }
+	bind_to_my_left(ALL_WORKING, PEND_BNDR, quest);
+}
+
+function send_all_signals(qid){
+	const quest = glb_poll_db[qid];
+	if(quest == null){ return; }
+	const all_answ = Object.entries(quest.answers);
+	for (const [anid, an_answ] of all_answ) {
+		if(an_answ == null){ continue; }
+		let all_to_signl = null;
+		if(an_answ.is_on){
+			all_to_signl = an_answ.signal_if_on;
+		} else {
+			all_to_signl = an_answ.signal_if_off;
+		}
+		for(const qid_signl of all_to_signl){
+			const to_act = check_if_dnf_activates(qid_signl);
+			if(to_act){ set_active(qid_signl); }
+		}
+	}
 }
 

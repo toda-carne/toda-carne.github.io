@@ -12,6 +12,7 @@ export function set_right(obj, bdr, rgt){
 }
 
 export function init_binder(obj, bdr){
+	if(obj[bdr] != null){ return; }
 	obj[bdr] = {};
 	set_left(obj, bdr, obj);
 	set_right(obj, bdr, obj);

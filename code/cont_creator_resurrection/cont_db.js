@@ -216,8 +216,9 @@ export function init_exam_database(){
 			q1_4__lamp: { htm_answ: "q1_4__lamp", should_on: "q1_4__should2", },
 			q1_4__clock: { htm_answ: "q1_4__clock", should_on: "q1_4__should3", },
 		},
-		depends_on: { // EXAMPLE of the field to build the DAG
-			q1_35__: { q1_35__yes: "off", },
+		activated_if: { // EXAMPLE of the field to build the DAG. THe field has DNF form: (! q1_35__yes && q1_34__no) || q1_35__no)
+			c1: { q1_35__: { q1_35__yes: "off", }, q1_34__: { q1_34__no: "on", }, },
+			c2: { q1_35__: { q1_35__no: "on", }, },
 		},
 		set_reactions: function () {
 			if(has_all_next(this)){ return; }
