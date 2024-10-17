@@ -576,6 +576,16 @@ function has_added_on(by_kind){
 	return (Object.entries(by_kind).length == 0);
 }
 
+export function get_first_added_on(quest){
+	for (const [aid, an_answ] of Object.entries(quest.answers)) {
+		if(an_answ == null){ continue; }
+		if(! an_answ.is_on){ continue; }
+		if(an_answ.kind == null){ continue; }
+		return an_answ;
+	}
+	return null;
+}
+
 export function get_added_by_kind(quest){
 	const by_kind = {};
 	let to_skip = true;
@@ -655,7 +665,7 @@ function get_qid_base(qid){
 	return null;
 }
 
-function get_reponse_qid(qid, cit_obj){
+export function get_response_qid(qid, cit_obj){
 	const kk = get_verse_cit_key(cit_obj);
 	const bb = get_qid_base(qid);
 	const rqid = bb + kk + SUF_QID;
@@ -664,7 +674,7 @@ function get_reponse_qid(qid, cit_obj){
 
 export function add_reponse_questions(db, qid, with_resp){
 	with_resp.forEach((cit_obj) => {
-		const rqid = get_reponse_qid(qid, cit_obj);
+		const rqid = get_response_qid(qid, cit_obj);
 		const rnam = get_verse_reponse_name(qid, cit_obj);
 		db[rqid] = { htm_stm: rnam, };
 	});
@@ -676,7 +686,7 @@ export function respond_first_match(quest, qid, all_matches){
 	}
 	
 	const fst_match = all_matches[0];
-	const rqid = get_reponse_qid(qid, fst_match);
+	const rqid = get_response_qid(qid, fst_match);
 	
 	quest.all_nxt = [rqid];
 	quest.all_contra = [qid];

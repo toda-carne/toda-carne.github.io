@@ -1,7 +1,7 @@
 
 import { get_book_nam, get_verse_reponse_name, get_verse_cit_key, refs_ids, glb_all_bibrefs, init_poll_glb, 
-	add_sections, set_all_on, has_all_next, are_only_all_orig_on, get_added_by_kind, get_verse_matches, add_reponse_questions, 
-	respond_first_match, 
+	add_sections, set_all_on, has_all_next, are_only_all_orig_on, get_first_added_on, get_response_qid, 
+	get_added_by_kind, get_verse_matches, add_reponse_questions, respond_first_match, 
 } from '../tc_lang_all.js';
 
 import { init_answers } from '../tc_exam.js';
@@ -851,6 +851,19 @@ export function init_exam_database(){
 				return;
 			}
 			
+			const fst_match = get_first_added_on(this);
+			if(fst_match == null){
+				this.all_nxt = ["q13_1__"];
+				return;
+			}		
+			const qid = "q12_1__";
+			const rqid = get_response_qid(qid, fst_match);
+			
+			this.all_nxt = [rqid];
+			this.all_contra = [qid];
+			return;	
+			
+			/*
 			// ADDED BY USER
 			const by_kind = get_added_by_kind(this);
 			//console.log("by_kind=" + JSON.stringify(by_kind, null, "  "));
@@ -863,6 +876,7 @@ export function init_exam_database(){
 				this.all_nxt = ["q13_1__"];
 				return;
 			}
+			*/
 		},
 	};
 	
