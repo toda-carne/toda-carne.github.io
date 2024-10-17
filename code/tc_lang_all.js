@@ -586,7 +586,8 @@ export function get_first_added_on(quest){
 	return null;
 }
 
-export function get_added_by_kind(quest){
+/*
+function get_added_by_kind(quest){
 	const by_kind = {};
 	let to_skip = true;
 	for (const [aid, an_answ] of Object.entries(quest.answers)) {
@@ -611,6 +612,7 @@ export function get_added_by_kind(quest){
 	}
 	return by_kind;
 }
+*/
 
 function val_in_range(val, range){
 	return ((val >= range[0]) || (val <= range[1]));
@@ -638,7 +640,8 @@ export function get_verse_match(cit_adding, with_resp){
 	return found;
 }
 
-export function get_verse_matches(in_verse_kind, with_resp){
+/*
+function get_verse_matches(in_verse_kind, with_resp){
 	const all_matches = [];
 	if(in_verse_kind == null){
 		return all_matches;
@@ -657,6 +660,7 @@ export function get_verse_matches(in_verse_kind, with_resp){
 	});
 	return all_matches;
 }
+*/
 
 function get_qid_base(qid){
 	if(qid.endsWith(SUF_QID)){
@@ -680,7 +684,8 @@ export function add_reponse_questions(db, qid, with_resp){
 	});
 }
 
-export function respond_first_match(quest, qid, all_matches){
+/*
+function respond_first_match(quest, qid, all_matches){
 	if(all_matches.length == 0){
 		return false;
 	}
@@ -693,6 +698,7 @@ export function respond_first_match(quest, qid, all_matches){
 	
 	return true;
 }
+*/
 
 export const all_strongrefs = {
 	H1004_cod: "H1004",
