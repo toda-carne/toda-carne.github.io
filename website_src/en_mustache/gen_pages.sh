@@ -19,7 +19,7 @@ mustach $CONF_DIR/config_default.json tips.mustache > $DEST_DIR/tips.html
 mustach $CONF_DIR/config_default.json language.mustache > $DEST_DIR/language.html
 mustach $CONF_DIR/config_default.json home.mustache > $DEST_DIR/index.html
 mustach $CONF_DIR/config_exam.json contest_creator_resu.mustache > $DEST_DIR/contest_creator_resu.html
-mustach $CONF_DIR/config_exam.json contest_creator_resu_2.mustache > $DEST_DIR/contest_creator_resu_2.html
+mustach $CONF_DIR/config_exam.json contest_dbg_DAG.mustache > $DEST_DIR/contest_dbg_DAG.html
 
 cd $CURR_DIR
 

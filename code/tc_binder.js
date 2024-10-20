@@ -1,12 +1,12 @@
 
 "use strict";
 
-export function set_left(obj, bdr, lft){
+function set_left(obj, bdr, lft){
 	// is a func so that there are no cicles and the JSON func can be used with structures containing the obj
 	obj[bdr].left = () => { return lft; };
 }
 
-export function set_right(obj, bdr, rgt){
+function set_right(obj, bdr, rgt){
 	// is a func so that there are no cicles and the JSON func can be used with structures containing the obj
 	obj[bdr].right = () => { return rgt; };
 }

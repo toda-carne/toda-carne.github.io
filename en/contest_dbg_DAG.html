@@ -25,21 +25,21 @@
 <div class="cl_top_nav">
   <a href="javascript:void(0);" class="cl_top_elem" id="id_side_menu" onclick="toggle_side_menu('id_side_nav')">
     <i class="has_icons icon-side-menu"></i></a>
-  <a href="index.html" class="cl_top_elem" title="Inicio" onclick="close_top_menu()" id="id_home">
+  <a href="index.html" class="cl_top_elem" title="Home" onclick="close_top_menu()" id="id_home">
     <i class="has_icons icon-home"></i></a>
-  <a href="book.html" class="cl_top_elem" title="Libro" onclick="close_top_menu()">
-    <i class='has_icons icon-book'></i> Libro</a>
-  <a href="download.html" class="cl_top_elem" title="Bajar" onclick="close_top_menu()">
-    <i class='has_icons icon-download'></i> Bajar</a>
-  <a href="media.html" class="cl_top_elem" title="Medios" onclick="close_top_menu()">
-    <i class='has_icons icon-media'></i> Medios</a>
-  <a href="schema.html" class="cl_top_elem" title="Esquema" onclick="close_top_menu()">
+  <a href="book.html" class="cl_top_elem" title="Book" onclick="close_top_menu()">
+    <i class='has_icons icon-book'></i> Book</a>
+  <a href="download.html" class="cl_top_elem" title="Download" onclick="close_top_menu()">
+    <i class='has_icons icon-download'></i> Download</a>
+  <a href="media.html" class="cl_top_elem" title="Media" onclick="close_top_menu()">
+    <i class='has_icons icon-media'></i> Media</a>
+  <a href="schema.html" class="cl_top_elem" title="Schema" onclick="close_top_menu()">
     <i class="has_icons icon-schema"></i></a>
   <a href="info.html" class="cl_top_elem" title="Info" onclick="close_top_menu()">
     <i class="has_icons icon-info"></i></a>
-  <a href="tips.html" class="cl_top_elem" title="Propinas" onclick="close_top_menu()">
+  <a href="tips.html" class="cl_top_elem" title="Tips" onclick="close_top_menu()">
     <i class="has_icons icon-tips"></i></a>
-  <a href="language.html" class="cl_top_elem" title="Idioma" onclick="close_top_menu()">
+  <a href="language.html" class="cl_top_elem" title="Language" onclick="close_top_menu()">
     <i class="has_icons icon-language"></i></a>
   <a href="javascript:void(0);" class="cl_top_elem" id="id_top_menu" onclick="toggle_top_menu()">
     <i class="has_icons icon-menu"></i>
@@ -49,37 +49,37 @@
 
 
 <div class="exam_top_menu">
-	<div id="id_exam_save_button" class="exam_menu">GUARDAR</div>
-	<div id="id_exam_open_button" class="exam_menu">ABRIR</div>
-	<div id="id_exam_delete_button" class="exam_menu">BORRAR</div>
-	<div id="id_exam_sort_button" class="exam_menu">ORDENAR</div>
-	<div id="id_exam_mode_button" class="exam_menu">APRENDER</div>
+	<div id="id_exam_save_button" class="exam_menu">SAVE</div>
+	<div id="id_exam_open_button" class="exam_menu">OPEN</div>
+	<div id="id_exam_delete_button" class="exam_menu">DELETE</div>
+	<div id="id_exam_sort_button" class="exam_menu">SORT</div>
+	<div id="id_exam_mode_button" class="exam_menu">LEARN</div>
 </div>
 
 <div id="id_exam_content" class="exam_content">
 	<div id="id_exam_top_content"></div>
 	<div id="id_exam_name" class="big_title">
 	</div>
-    <h1 class="big_title">Examen Interactivo de Teologia</h1>
+    <h1 class="big_title">debug DAG behaviour</h1>
     <div id="id_exam_all_questions">
     </div>  
 	<br><br><br><br><br><br><br><br><br>
-</div>  
+</div>
 </div>
 
 <script type="module">
 
-import * as es_lang from '../code/tc_lang_es.js';
-import * as en_txt from '../code/cont_creator_resu_2/es_text.js';
-import * as cont_db from '../code/cont_creator_resu_2/cont_db.js';
+import * as loc_lang from '../code/tc_lang_en.js';
+import * as loc_txt from '../code/cont_dbg_DAG/en_text.js'; // change this line directory and lang file
+import * as cont_db from '../code/cont_dbg_DAG/cont_db.js'; // change this line directory
 import * as exm from '../code/tc_exam.js';
 
-es_lang.init_es_module();
-en_txt.init_es_poll_txt();
+loc_lang.init_en_module();
+loc_txt.init_en_poll_txt();
 exm.init_page_exam(cont_db.init_exam_database);
 
 </script>
-
+ 
 
 
 <script src="../code/tc_script.js"></script>

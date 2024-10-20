@@ -586,34 +586,6 @@ export function get_first_added_on(quest){
 	return null;
 }
 
-/*
-function get_added_by_kind(quest){
-	const by_kind = {};
-	let to_skip = true;
-	for (const [aid, an_answ] of Object.entries(quest.answers)) {
-		if(an_answ == null){ continue; }
-		if(! an_answ.is_on){ continue; }
-		if(an_answ.kind == null){ continue; }
-		if(by_kind[an_answ.kind] == null){ by_kind[an_answ.kind] = {}; }
-		const in_kind = by_kind[an_answ.kind];
-		if(an_answ.kind == refs_ids.verse_kind){
-			const cit_obj = an_answ;
-			//console.log("by_kind. cit_obj=" + JSON.stringify(cit_obj, null, "  "));
-			const book_nam = get_book_nam(cit_obj.book);
-			//console.log("by_kind. book_nam=" + book_nam);
-			if(in_kind[book_nam] == null){ in_kind[book_nam] = {}; }
-			const in_book = in_kind[book_nam];
-			if(in_book[cit_obj.chapter] == null){ in_book[cit_obj.chapter] = []; }
-			const in_chapter = in_book[cit_obj.chapter];
-			in_chapter.push(cit_obj);
-		}
-		if(an_answ.kind == refs_ids.strong_kind){
-		}
-	}
-	return by_kind;
-}
-*/
-
 function val_in_range(val, range){
 	return ((val >= range[0]) || (val <= range[1]));
 }
@@ -640,29 +612,7 @@ export function get_verse_match(cit_adding, with_resp){
 	return found;
 }
 
-/*
-function get_verse_matches(in_verse_kind, with_resp){
-	const all_matches = [];
-	if(in_verse_kind == null){
-		return all_matches;
-	}
-	with_resp.forEach((cit_obj) => {
-		const book_nam = get_book_nam(cit_obj.book);
-		if(in_verse_kind[book_nam] == null){ return; } // continue
-		const in_chapter = in_verse_kind[book_nam][cit_obj.chapter];
-		if(in_chapter == null){ return; } // continue
-		in_chapter.forEach((cit_added) => {
-			const range = get_range(cit_added);
-			if(cit_in_range(cit_obj, range)){
-				all_matches.push(cit_obj);
-			}
-		});
-	});
-	return all_matches;
-}
-*/
-
-function get_qid_base(qid){
+export function get_qid_base(qid){
 	if(qid.endsWith(SUF_QID)){
 		return qid.slice(0, - SUF_QID.length);
 	}
@@ -683,22 +633,6 @@ export function add_reponse_questions(db, qid, with_resp){
 		db[rqid] = { htm_stm: rnam, };
 	});
 }
-
-/*
-function respond_first_match(quest, qid, all_matches){
-	if(all_matches.length == 0){
-		return false;
-	}
-	
-	const fst_match = all_matches[0];
-	const rqid = get_response_qid(qid, fst_match);
-	
-	quest.all_nxt = [rqid];
-	quest.all_contra = [qid];
-	
-	return true;
-}
-*/
 
 export const all_strongrefs = {
 	H1004_cod: "H1004",

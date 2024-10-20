@@ -681,11 +681,15 @@ color: white;
 }
 
 .exam.selected:hover,.exam.selected:hover>* {
-	background-color: #1d3674;
+	background-color: #0c142c;
 }
 
 .exam.is_contradiction {
 	background-color: #ff0000;
+}
+
+.exam.is_contradiction:hover,.exam.is_contradiction:hover>*  {
+	background-color: #d10000;
 }
 
 .exam.answ_bib {

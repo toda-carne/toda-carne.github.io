@@ -13,7 +13,7 @@
 	<div id="id_exam_top_content"></div>
 	<div id="id_exam_name" class="big_title">
 	</div>
-    <h1 class="big_title">Interactive Theology Test</h1>
+    <h1 class="big_title">debug DAG behaviour</h1>
     <div id="id_exam_all_questions">
     </div>  
 	<br><br><br><br><br><br><br><br><br>
@@ -22,17 +22,16 @@
 
 <script type="module">
 
-import * as en_lang from '../code/tc_lang_en.js';
-import * as en_txt from '../code/cont_creator_resu_2/en_text.js';
-import * as cont_db from '../code/cont_creator_resu_2/cont_db.js';
+import * as loc_lang from '../code/tc_lang_en.js';
+import * as loc_txt from '../code/cont_dbg_DAG/en_text.js'; // change this line directory and lang file
+import * as cont_db from '../code/cont_dbg_DAG/cont_db.js'; // change this line directory
 import * as exm from '../code/tc_exam.js';
 
-en_lang.init_en_module();
-en_txt.init_en_poll_txt();
+loc_lang.init_en_module();
+loc_txt.init_en_poll_txt();
 exm.init_page_exam(cont_db.init_exam_database);
 
 </script>
  
-
 {{> bottom}}
 
