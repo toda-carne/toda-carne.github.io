@@ -126,6 +126,26 @@ function is_in_viewport(elem) {
 	);
 }
 
+function get_last_quest(){
+	const dv_all_quest = document.getElementById("id_exam_all_questions");
+	const all_q = dv_all_quest.childNodes;
+	let curr_idx = all_q.length - 1;
+	let quest = null;
+	while(curr_idx > 0){
+		//console.log("get_curr_pos_page [1] curr_idx=" + curr_idx);
+		const qid = all_q[curr_idx].id;
+		if(qid == null){ continue; }
+		quest = glb_poll_db[qid];
+		if(quest == null){ continue; }
+		if(! quest.is_inconsistency){
+			break;
+		}
+		curr_idx--;
+	}
+	//console.log("get_curr_pos_page [2] curr_idx=" + curr_idx);
+	return quest;
+}
+
 function add_question(qid){
 	const quest = glb_poll_db[qid];
 	if(quest == null){
@@ -143,13 +163,18 @@ function add_question(qid){
 	const v_min = quest.v_min;
 	const v_max = quest.v_max;
 	
-	var dv_all_quest = document.getElementById("id_exam_all_questions");
+	const lst_quest = get_last_quest();
+	let lst_pos = 0;
+	if(lst_quest != null){ lst_pos = lst_quest.pos_page; }
+	
+	const dv_all_quest = document.getElementById("id_exam_all_questions");
 	const dv_quest = dv_all_quest.appendChild(document.createElement("div"));
 	dv_quest.id = qid;
 	dv_quest.classList.add("exam");
 	dv_quest.classList.add("has_border");
+	dv_quest.tc_quest = quest;
 	
-	quest.pos_page = dv_all_quest.childNodes.length - 1;
+	quest.pos_page = lst_pos + 1;
 	
 	if(quest.presentation != null){
 		const dv_title = dv_quest.appendChild(document.createElement("div"));
@@ -1625,22 +1650,22 @@ function set_answer_for_strong_cit(dv_citation){
 }
 
 function init_exam_buttons(){
-	const id_save_butt = "id_exam_save_button"; // this must be the same to the id in the HTML page.
-	const dv_save_butt = document.getElementById(id_save_butt);
-	dv_save_butt.addEventListener('click', save_button_handler);
+	let dv_button = null;
 	
-	const id_open_butt = "id_exam_open_button"; // this must be the same to the id in the HTML page.
-	const dv_open_butt = document.getElementById(id_open_butt);
-	dv_open_butt.addEventListener('click', open_button_handler);
+	dv_button = document.getElementById("id_exam_save_button"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', save_button_handler); }
 	
-	const id_del_butt = "id_exam_delete_button"; // this must be the same to the id in the HTML page.
-	const dv_del_butt = document.getElementById(id_del_butt);
-	dv_del_butt.addEventListener('click', delete_button_handler);
+	dv_button = document.getElementById("id_exam_open_button"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', open_button_handler); }
 	
-	const id_sort_butt = "id_exam_sort_button"; // this must be the same to the id in the HTML page.
-	const dv_sort_butt = document.getElementById(id_sort_butt);
-	dv_sort_butt.addEventListener('click', sort_button_handler);
+	dv_button = document.getElementById("id_exam_delete_button"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', delete_button_handler); }
 	
+	dv_button = document.getElementById("id_exam_sort_button"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', sort_button_handler); }
+	
+	dv_button = document.getElementById("id_exam_undo_button"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', undo_button_handler); }
 }
 
 function is_last_added_link_ok(qid){
@@ -1940,6 +1965,11 @@ function display_exam_load_object(ld_obj){
 	dv_all_quest.innerHTML = "";
 	
 	for (const [qid, quest] of Object.entries(ld_obj)) {
+		if(quest.is_inconsistency){
+			show_inconsistency(qid);
+			continue;
+		}
+		
 		const added = add_question(qid);
 		if(added == null){
 			console.log("Question " + qid + " could NOT be DISPLAYED in page !!!");
@@ -2105,6 +2135,8 @@ function init_signals_for(qid){
 	
 	if(quest.signals_inited){ return; }
 	quest.signals_inited = true;
+	
+	quest.qid = qid;  // very convinient self ref
 
 	if(quest.activated_if == null){ 
 		if(quest.is_base_question){
@@ -2381,6 +2413,55 @@ function get_sat_conj_qids(qid){
 	const conj = quest.activated_if[quest.last_sat_conj];
 	const incos_qids = Object.keys(conj);
 	return incos_qids;
+}
+
+function undo_last_quest(){
+	const dv_all_quest = document.getElementById("id_exam_all_questions");
+	const all_q = dv_all_quest.childNodes;
+	let curr_idx = all_q.length - 1;
+	let quest = null;
+	let found_last = false;
+	while(curr_idx > 0){
+		//console.log("get_curr_pos_page [1] curr_idx=" + curr_idx);
+		const qid = all_q[curr_idx].id;
+		if(qid == null){ continue; }
+		
+		quest = glb_poll_db[qid];
+		if(quest == null){ continue; }
+		
+		if((quest.pos_page == 1) && (quest.has_answ == null)){ break; }
+		
+		quest.has_answ = null;
+		quest.qparent = null;
+	
+		if(! quest.is_inconsistency){
+			if(! found_last){ 
+				if(quest.is_base_question){
+					glb_poll_db.all_base_questions.unshift(qid);
+				} else {
+					glb_poll_db.all_pending.unshift(qid);
+					quest.in_pending = true;
+				}
+				found_last = true; 
+			} else {
+				glb_poll_db.last_added_qid = qid;
+				init_answers(qid);
+				break;
+			}
+		}
+		
+		const dv_quest = document.getElementById(qid);
+		if(dv_quest == null){ continue; }
+		dv_quest.remove();
+			
+		curr_idx--;
+	}
+	//console.log("get_curr_pos_page [2] curr_idx=" + curr_idx);
+	return quest;
+}
+
+function undo_button_handler(){
+	undo_last_quest();
 }
 
 
