@@ -2351,13 +2351,14 @@ function show_inconsistency(qid){
 	dv_quest = dv_all_quest.appendChild(document.createElement("div"));
 	dv_quest.id = qid;
 	dv_quest.classList.add("exam");
-	dv_quest.classList.add("has_border");
+	dv_quest.classList.add("is_observ");
 	
 	quest.pos_page = INVALID_PAGE_POS;
 	
 	const dv_stm = dv_quest.appendChild(document.createElement("div"));
 	dv_stm.classList.add("exam");
 	dv_stm.classList.add("stm");
+	dv_stm.classList.add("observ_color");
 	
 	let the_stm = get_msg(quest.htm_stm);
 	if(quest.has_qrefs){
@@ -2368,6 +2369,7 @@ function show_inconsistency(qid){
 	dv_qstm.id = qid + SUF_ID_QSTM;
 	dv_qstm.classList.add("exam");
 	dv_qstm.classList.add("msg");
+	dv_qstm.classList.add("observ_color");
 	dv_qstm.innerHTML = "" + the_stm;
 
 	const sp_qrefs_inconsis = document.createElement("span");

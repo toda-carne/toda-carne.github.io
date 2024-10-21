@@ -641,6 +641,17 @@ color: white;
 	padding-left: 1vw;
 }
 
+.exam.is_observ {
+	margin-top: 1vw;
+	border: 0.5vw solid #ffff00;
+}
+
+.exam.observ_color {
+	padding: 0.5vw;
+	background-color: #13234c;
+	color: #ffff00;
+}
+
 .exam.pos_inter {
 	display: block;
 	width: 100%;

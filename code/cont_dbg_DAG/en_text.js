@@ -20,7 +20,7 @@ export function init_en_poll_txt(){
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
 	lg.q0_1__end_of_test = "These questions are not for you. This is the end of the questions for you, unless you did not really mean it and change your answer. Click on your answer to change it.";
-	lg.q0_2__contradiction = "You have a contradiction in your answers. Please change one of your answers to the questions shown in red. The contradiction is in one of them. Otherwise you cannot continue with these questions. Click on your answer to change it.";
+	lg.q0_2__contradiction = "<b>Observation.</b> It seems you have an inconsistency with your answers. To change an answer click on it.";
 	lg.q0_3__end_so_far = "These questions are in construction. This is the end of the questions for you so far...";
 	lg.q0_4__about_beliefs = "<b>All these questions are about what you believe, NOT about what you think you have certainty. Some of them might be check questions to avoid silly behaviour. Answer them all properly. You can change any answer at any time by clicking on it.</b>";
 	

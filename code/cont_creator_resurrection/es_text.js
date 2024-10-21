@@ -18,7 +18,7 @@ export function init_es_poll_txt(){
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
 	lg.q0_1__end_of_test = "Este cuestionario no es para usted. Aqui termina el examen para usted, a menos que no fuera la respuesta que queria decir. Hagale clik a su respuesta para cambiarla.";
-	lg.q0_2__contradiction = "Usted tiene una contradiccion en sus respuestas. Por favor cambie una de las respuestas en rojo. La contradiccion está en una de ellas. De otra manera no puede continuar con el cuestionario. Hagale clik a su respuesta para cambiarla.";
+	lg.q0_2__contradiction = "<b>Observación.</b> Parece que hay una inconsistencia en sus respuestas. Para cambiar una respuesta hagale click. ";
 	lg.q0_3__end_so_far = "Este cuestionario está en construcción. Este es el final del cuestionario por el momento...";
 	lg.q0_4__about_beliefs = "<b>Todas estas preguntas son sobre lo que usted cree, NO sobre lo que usted cree tener certeza. Algunas preguntas son para evitar que se haga el tonto. Conteste todas apropiadamente. Usted puede cambiar cualquier respuesta en cualquier momento haciendole clik a la respuesta.</b>";
 	

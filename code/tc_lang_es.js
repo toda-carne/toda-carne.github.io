@@ -121,7 +121,7 @@ function init_es_basic_msg(){
 	obj.msg_todacarne_answers_reading = "Abriendo...";
 	obj.msg_todacarne_no_internet = "Sin conexion a internet.";
 
-	obj.msg_change_one_answer = "Cambie una de estas respuestas: ";
+	obj.msg_change_one_answer = "Para deshacerse de esta observación tiene que cambiar una de estas respuestas: ";
 
 	obj.msg_dispute_rclick = "Dispute con clik derecho";
 	obj.msg_dispute_hold_click = "Dispute manteniendo clik";
