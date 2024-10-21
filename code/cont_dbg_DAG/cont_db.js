@@ -50,13 +50,13 @@ export function init_exam_database(){
 		},
 	};
 	
-	/*db.q1_10__ = { 
+	db.q1_10__ = { 
 		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_1__: { q1_1__no: "on", }, },
 		},
-	};*/
+	};
 	
 	db.q1_2__ = { 
 		is_base_question: true,
