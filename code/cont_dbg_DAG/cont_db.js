@@ -1,9 +1,5 @@
 
-import { get_book_nam, get_verse_reponse_name, get_verse_cit_key, refs_ids, glb_all_bibrefs, init_poll_glb, 
-	add_sections, set_all_on, has_all_next, are_only_all_orig_on, get_first_added_on, get_response_qid, add_reponse_questions, 
-} from '../tc_lang_all.js';
-
-import { init_answers } from '../tc_exam.js';
+import { get_verse_reponse_name, get_answer_key, glb_all_bibrefs, init_poll_glb, } from '../tc_lang_all.js';
 
 "use strict";
 
@@ -140,7 +136,7 @@ export function init_exam_database(){
 			q1_35__no: { htm_answ: "q1_35__no" },
 		},
 		activated_if: {
-			c1: { q1_32__: { q1_32__intelligent: "on", }, q1_33__: { q1_33__no: "on", }, q1_34__: { q1_34__yes: "on", }, q1_4__: { shown : "no", } },
+			c1: { q1_32__: { q1_32__intelligent: "on", }, q1_33__: { q1_33__no: "on", }, q1_34__: { q1_34__yes: "on", }, q1_4__: { shown : "off", } },
 		},
 	};*/
 	
@@ -296,7 +292,15 @@ export function init_exam_database(){
 			q1_93__no: { htm_answ: "q1_93__no" },
 		},
 		activated_if: {
-			c1: { q1_7__: { shown: "yes", }, q1_91__: { shown: "yes", }, q1_70__: { shown: "no", }, q1_91_0__: { shown: "no", }, },
+			c1: { q1_7__: { shown: "on", }, q1_91__: { shown: "on", }, q1_70__: { shown: "off", }, q1_91_0__: { shown: "off", }, },
+		},
+	};
+	
+	db.q1_93_0__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q1_93__: { q1_93__no: "on", }, },
 		},
 	};
 	
@@ -307,14 +311,34 @@ export function init_exam_database(){
 			q1_94__yes: { htm_answ: "q1_94__yes" },
 			q1_94__no: { htm_answ: "q1_94__no" },
 		},
+		activated_if: {
+			c1: { q1_93__: { q1_93__yes: "on", }, q1_50__: { shown: "off", }, q1_40__: { shown: "off", }, q1_30__: { shown: "off", }, },
+		},
+	};
+	
+	db.q1_94_0__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q1_94__: { q1_94__no: "on", }, },
+		},
 	};
 	
 	db.q2_1__ = { 
+		is_base_question: true,
 		htm_stm: "q2_1__can_an_engineer_rebuild_his_house",
 		presentation: "q2_0__reproduction_section",
 		answers: {
 			q2_1__yes: { htm_answ: "q2_1__yes" },
 			q2_1__no: { htm_answ: "q2_1__no" },
+		},
+	};
+	
+	db.q2_10__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q2_1__: { q2_1__no: "on", }, q1_30__: { shown: "off", }, },
 		},
 	};
 	
@@ -325,9 +349,21 @@ export function init_exam_database(){
 			q2_2__yes: { htm_answ: "q2_2__yes" },
 			q2_2__no: { htm_answ: "q2_2__no" },
 		},
+		activated_if: {
+			c1: { q2_1__: { q2_1__yes: "on", }, },
+		},
+	};
+	
+	db.q2_20__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q2_2__: { q2_2__no: "on", }, },
+		},
 	};
 	
 	db.q3_1__ = { 
+		is_base_question: true,
 		htm_stm: "q3_1__jesus_resurrection_claims",
 		presentation: "q3_1__resurrection_section",
 		is_multi: true,
@@ -339,6 +375,7 @@ export function init_exam_database(){
 	};
 	
 	db.q3_2__ = { 
+		is_base_question: true,
 		htm_stm: "q3_2__people_resurrection_claims",
 		is_multi: true,
 		answers: {
@@ -351,23 +388,12 @@ export function init_exam_database(){
 	};
 	
 	db.q3_3__ = { 
+		is_base_question: true,
 		htm_stm: "q3_3__dispute_or_accept_resurrection",
 		answers: {
 			q3_3__not_believed: { htm_answ: "q3_3__not_believed" },
 			q3_3__all_stms: { htm_answ: "q3_3__all_stms" },
 			q3_3__go_on: { htm_answ: "q3_3__go_on" },
-		},
-		sections: {
-			q3_1__physical: "q4_1__",
-			q3_1__not_to_die: "q5_1__",
-			q3_1__in_heaven: "q6_1__",
-			q3_2__like_jesus: "q7_1__",
-			q3_2__for_all: "q8_1__",
-			q3_2__not_yet_most: "q9_1__",
-			q3_2__new_earth: "q11_1__",
-			q3_2__sleep: "q12_1__",
-		},
-		nxt_sec: {
 		},
 	};
 	
@@ -384,6 +410,10 @@ export function init_exam_database(){
 			q4_1__verse6_str: { htm_answ: "q4_1__verse6_str", rclk_href: "q4_1__verse6_href", should_on: "q4_1__verse6_should", },
 			q4_1__verse7_str: { htm_answ: "q4_1__verse7_str", rclk_href: "q4_1__verse7_href", should_on: "q4_1__verse7_should", },
 		},
+		activated_if: {
+			c1: { q3_3__: { q3_3__all_stms: "on", }, },
+			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_1__: { q3_1__physical: "off", }, },
+		},
 	};
 	
 	db.q5_1__ = { 
@@ -395,6 +425,10 @@ export function init_exam_database(){
 			q5_1__verse2_str: { htm_answ: "q5_1__verse2_str", rclk_href: "q5_1__verse2_href", should_on: "q5_1__verse2_should", },
 			q5_1__verse3_str: { htm_answ: "q5_1__verse3_str", rclk_href: "q5_1__verse3_href", should_on: "q5_1__verse3_should", },
 			q5_1__verse4_str: { htm_answ: "q5_1__verse4_str", rclk_href: "q5_1__verse4_href", should_on: "q5_1__verse4_should", },
+		},
+		activated_if: {
+			c1: { q3_3__: { q3_3__all_stms: "on", }, },
+			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_1__: { q3_1__not_to_die: "off", }, },
 		},
 	};
 	
@@ -411,6 +445,10 @@ export function init_exam_database(){
 			q6_1__verse6_str: { htm_answ: "q6_1__verse6_str", rclk_href: "q6_1__verse6_href", should_on: "q6_1__verse6_should", },
 			q6_1__verse7_str: { htm_answ: "q6_1__verse7_str", rclk_href: "q6_1__verse7_href", should_on: "q6_1__verse7_should", },
 		},
+		activated_if: {
+			c1: { q3_3__: { q3_3__all_stms: "on", }, },
+			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_1__: { q3_1__in_heaven: "off", }, },
+		},
 	};
 	
 	db.q7_1__ = { 
@@ -425,6 +463,10 @@ export function init_exam_database(){
 			q7_1__verse5_str: { htm_answ: "q7_1__verse5_str", rclk_href: "q7_1__verse5_href", should_on: "q7_1__verse5_should", },
 			q7_1__verse6_str: { htm_answ: "q7_1__verse6_str", rclk_href: "q7_1__verse6_href", should_on: "q7_1__verse6_should", },
 		},
+		activated_if: {
+			c1: { q3_3__: { q3_3__all_stms: "on", }, },
+			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__like_jesus: "off", }, },
+		},
 	};
 	
 	db.q8_1__ = { 
@@ -438,6 +480,10 @@ export function init_exam_database(){
 			q8_1__verse4_str: { htm_answ: "q8_1__verse4_str", rclk_href: "q8_1__verse4_href", should_on: "q8_1__verse4_should", },
 			q8_1__verse5_str: { htm_answ: "q8_1__verse5_str", rclk_href: "q8_1__verse5_href", should_on: "q8_1__verse5_should", },
 			q8_1__verse6_str: { htm_answ: "q8_1__verse6_str", rclk_href: "q8_1__verse6_href", should_on: "q8_1__verse6_should", },
+		},
+		activated_if: {
+			c1: { q3_3__: { q3_3__all_stms: "on", }, },
+			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__for_all: "off", }, },
 		},
 	};
 	
@@ -454,6 +500,10 @@ export function init_exam_database(){
 			q9_1__verse6_str: { htm_answ: "q9_1__verse6_str", rclk_href: "q9_1__verse6_href", should_on: "q9_1__verse6_should", },
 			q9_1__verse7_str: { htm_answ: "q9_1__verse7_str", rclk_href: "q9_1__verse7_href", should_on: "q9_1__verse7_should", },
 		},
+		activated_if: {
+			c1: { q3_3__: { q3_3__all_stms: "on", }, },
+			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__not_yet_most: "off", }, },
+		},
 	};
 	
 	db.q11_1__ = { 
@@ -466,17 +516,15 @@ export function init_exam_database(){
 			q11_1__verse3_str: { htm_answ: "q11_1__verse3_str", rclk_href: "q11_1__verse3_href", should_on: "q11_1__verse3_should", },
 			q11_1__verse4_str: { htm_answ: "q11_1__verse4_str", rclk_href: "q11_1__verse4_href", should_on: "q11_1__verse4_should", },
 		},
+		activated_if: {
+			c1: { q3_3__: { q3_3__all_stms: "on", }, },
+			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__new_earth: "off", }, },
+		},
 	};
-
-	const all_q12_1__with_response = [
-		rf.gen_15_15_obj, rf.gen_25_8_obj, rf.psa_16_11_obj, rf.isa_8_19_obj, rf.luk_15_24_obj, rf.luk_20_38_obj, rf.luk_23_43_obj, rf.jhn_4_24_obj, rf.act_7_59_obj, rf._2co_5_8_obj, rf._2co_12_4_obj, rf.phl_1_23_obj, rf._1th_4_14_obj, rf._1ti_5_6_obj, rf.heb_1_14_obj, rf._1pe_3_19_obj, 
-	];
-	add_reponse_questions(db, "q12_1__", all_q12_1__with_response);
 
 	db.q12_1__ = { 
 		htm_stm: "q12_1__sleep",
 		presentation: "q12_1__sleep_sec",
-		//is_multi: true,
 		answers: {
 			q12_1__no_consciousness: { htm_answ: "q12_1__no_consciousness", },
 			q12_1__verse1_str: { htm_answ: "q12_1__verse1_str", rclk_href: "q12_1__verse1_href", },
@@ -485,16 +533,67 @@ export function init_exam_database(){
 			q12_1__verse4_str: { htm_answ: "q12_1__verse4_str", rclk_href: "q12_1__verse4_href", },
 			q12_1__verse5_str: { htm_answ: "q12_1__verse5_str", rclk_href: "q12_1__verse5_href", },
 		},
-		vrs_with_response: all_q12_1__with_response,
-		// stg_with_response: [],
-		// lnk_with_response: [],
+		activated_if: {
+			c1: { q3_3__: { q3_3__all_stms: "on", }, },
+			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__sleep: "off", }, },
+		},
 	};
 	
-	db.q12_rv1__ = { htm_stm: "q12_1__response_to_verse1", };
-	db.q12_rv2__ = { htm_stm: "q12_1__response_to_verse2", };
-	db.q12_rv3__ = { htm_stm: "q12_1__response_to_verse3", };
-	db.q12_rv4__ = { htm_stm: "q12_1__response_to_verse4", };
-	db.q12_rv5__ = { htm_stm: "q12_1__response_to_verse5", };
+	db.q12_rv1__ = { 
+		is_inconsistency: true,
+		htm_stm: "q12_1__response_to_verse1", 
+		activated_if: {
+			c1: { q12_1__: { q12_1__verse1_str: "on", }, },
+		},		
+	};
+	db.q12_rv2__ = { 
+		is_inconsistency: true,
+		htm_stm: "q12_1__response_to_verse2", 
+		activated_if: {
+			c1: { q12_1__: { q12_1__verse2_str: "on", }, },
+		},		
+	};
+	db.q12_rv3__ = { 
+		is_inconsistency: true,
+		htm_stm: "q12_1__response_to_verse3", 
+		activated_if: {
+			c1: { q12_1__: { q12_1__verse3_str: "on", }, },
+		},		
+	};
+	db.q12_rv4__ = { 
+		is_inconsistency: true,
+		htm_stm: "q12_1__response_to_verse4", 
+		activated_if: {
+			c1: { q12_1__: { q12_1__verse4_str: "on", }, },
+		},		
+	};
+	db.q12_rv5__ = { 
+		is_inconsistency: true,
+		htm_stm: "q12_1__response_to_verse5", 
+		activated_if: {
+			c1: { q12_1__: { q12_1__verse5_str: "on", }, },
+		},		
+	};
+
+	const all_q12_1__with_response = [
+		rf.gen_15_15_obj, rf.gen_25_8_obj, rf.psa_16_11_obj, rf.isa_8_19_obj, rf.luk_15_24_obj, rf.luk_20_38_obj, rf.luk_23_43_obj, rf.jhn_4_24_obj, rf.act_7_59_obj, rf._2co_5_8_obj, rf._2co_12_4_obj, rf.phl_1_23_obj, rf._1th_4_14_obj, rf._1ti_5_6_obj, rf.heb_1_14_obj, rf._1pe_3_19_obj, 
+	];
+	
+	db.q12_1__.vrs_with_response = all_q12_1__with_response;
+	
+	let cit_obj = null;
+	let rnam = null;
+	let ans_key = null;
+	
+	cit_obj = rf.gen_15_15_obj;
+	rnam = get_verse_reponse_name("q12_1__", cit_obj);
+	ans_key = get_answer_key("q12_1__", cit_obj);
+	db.q12_resp1__ = { 
+		is_inconsistency: true,
+		htm_stm: rnam, 
+		activated_if: {	c1: { q12_1__: {}, }, },		
+	};
+	db.q12_resp1__.activated_if.c1.q12_1__[ans_key] = "on";
 	
 	db.q13_1__ = { 
 		htm_stm: "q13_1__sleep",
@@ -509,9 +608,14 @@ export function init_exam_database(){
 			q13_1__verse7_str: { htm_answ: "q13_1__verse7_str", rclk_href: "q13_1__verse7_href", should_on: "q13_1__verse7_should", },
 			q13_1__verse8_str: { htm_answ: "q13_1__verse8_str", rclk_href: "q13_1__verse8_href", should_on: "q13_1__verse8_should", },
 		},
+		activated_if: {
+			c1: { q3_3__: { q3_3__all_stms: "on", }, },
+			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__sleep: "off", }, },
+		},
 	};
 	
 	db.q14_1__ = { 
+		is_base_question: true,
 		htm_stm: "q14_1__the_cloth",
 		presentation: "q14_1__the_cloth_sec",
 		answers: {

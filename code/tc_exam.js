@@ -1,7 +1,7 @@
 
 import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, is_mobile_browser,
 	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang, glb_all_bibrefs, get_qid_base, 
-	glb_poll_user_info, glb_poll_starting_questions, glb_poll_db, get_verse_match
+	glb_poll_user_info, glb_poll_starting_questions, glb_poll_db, get_verse_match, get_answer_key
 } from './tc_lang_all.js';
 
 // import { firebase_write_object, firebase_read_object, firebase_sign_out } from './tc_firebase.js';
@@ -540,14 +540,14 @@ function add_all_nxt(qid){
 		//console.log("Adding question " + qq + " to page");
 		const qq_nd = glb_poll_db[qq];
 		if(qq_nd == null){ 
-			console.log("Trying to add NULL question " + qq + " !!!");
+			console.log("Internal error. add_all_nxt. Trying to add NULL question " + qq + " !!!");
 			continue;
 		}
 		qq_nd.reset_answ = true;
 		const added = add_question(qq);
 		qq_nd.reset_answ = null;
 		if(added == null){
-			console.log("Question " + qq + " could NOT be added to page !!!");
+			console.log("Internal error. add_all_nxt. Question " + qq + " could NOT be added to page !!!");
 		} else {
 			all_added.push(qq);
 			const chld = glb_poll_db[qq];
@@ -577,7 +577,8 @@ function add_contradictions(qid){
 	const qid_nxt = quest.all_nxt[quest.all_nxt.length - 1];
 	const qlnxt = glb_poll_db[qid_nxt];
 	if((qlnxt == null) || (qlnxt.pos_page < quest.pos_page)){
-		console.log("add_contradictions. Invalid qid order !! (" + qlnxt.pos_page + " < " + quest.pos_page + ")");
+		console.log("add_contradictions. qid_nxt=" + qid_nxt);
+		if(qlnxt != null){ console.log("add_contradictions. Invalid qid order !! (" + qlnxt.pos_page + " < " + quest.pos_page + ")"); }
 		return;
 	}
 	const dv_qstm = document.getElementById(qid_nxt + SUF_ID_QSTM);
@@ -1255,7 +1256,8 @@ function toggle_verse_ed(dv_citation){
 function set_answer_cit(dv_citation, cit_obj){
 	const qid = dv_citation.owner_qid;
 	const quest = glb_poll_db[qid];
-	const kk = refs_ids.added_pfx + dv_citation.answ_idx;
+	//const kk = refs_ids.added_pfx + dv_citation.answ_idx;
+	const kk = get_answer_key(qid, cit_obj);
 	quest.answers[kk] = cit_obj;
 	dv_citation.tc_answ_obj = cit_obj;
 	console.log("QUESTION " + qid + "=" + JSON.stringify(quest, null, "  "));
@@ -1264,7 +1266,9 @@ function set_answer_cit(dv_citation, cit_obj){
 function remove_answer_cit(dv_citation){
 	const qid = dv_citation.owner_qid;
 	const quest = glb_poll_db[qid];
-	const kk = refs_ids.added_pfx + dv_citation.answ_idx;
+	//const kk = refs_ids.added_pfx + dv_citation.answ_idx;
+	const cit_obj = dv_citation.tc_answ_obj;
+	const kk = get_answer_key(qid, cit_obj);
 	quest.answers[kk] = null;
 	dv_citation.tc_answ_obj = null;
 }
@@ -2159,31 +2163,34 @@ function init_signals_for(qid){
 			if(qst_to_signl.signal_if_shown == null){ qst_to_signl.signal_if_shown = []; }
 			if(qst_to_signl.signal_if_not_shown == null){ qst_to_signl.signal_if_not_shown = []; }
 			
-			const qst_answs = qst_to_signl.answers; 
+			if(qst_to_signl.signals_to_fire == null){ qst_to_signl.signals_to_fire = {}; }  // added_for_signals
+			const all_to_fire = qst_to_signl.signals_to_fire; 
+			//const qst_answs = qst_to_signl.answers;  // removed_for_signals
 			
 			const resps = Object.entries(resps_obj);
 			for (const [anid, val] of resps) {
 				if(anid == "shown"){
-					if(val == "yes"){ 
+					if(val == "on"){ 
 						qst_to_signl.signal_if_shown.push(qid); 
 					}
-					if(val == "no"){ 
+					if(val == "off"){ 
 						qst_to_signl.signal_if_not_shown.push(qid); 
 					}
 					continue;
 				}
 				
-				if(qst_answs == null){ continue; }
-				const an_answ = qst_answs[anid];
-				if(an_answ == null){ continue; }
+				if(all_to_fire == null){ continue; }
+				if(all_to_fire[anid] == null){ all_to_fire[anid] = {}; } // added_for_signals
+				const anid_fire = all_to_fire[anid];
+				if(anid_fire == null){ continue; }
 				
 				if((val == "on") || quest.is_inconsistency){ 
-					if(an_answ.signal_if_on == null){ an_answ.signal_if_on = []; }
-					an_answ.signal_if_on.push(qid); 
+					if(anid_fire.signal_if_on == null){ anid_fire.signal_if_on = []; }
+					anid_fire.signal_if_on.push(qid); 
 				}
 				if((val == "off") || quest.is_inconsistency){ 
-					if(an_answ.signal_if_off == null){ an_answ.signal_if_off = []; }
-					an_answ.signal_if_off.push(qid); 
+					if(anid_fire.signal_if_off == null){ anid_fire.signal_if_off = []; }
+					anid_fire.signal_if_off.push(qid); 
 				}
 			}
 		}
@@ -2194,6 +2201,7 @@ function check_if_dnf_is_sat(qid){
 	if(qid == null){ return null; }
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return null; }
+	if(quest.debug){ console.log("DEBUGING qid=" + qid + " called check_if_dnf_is_sat"); }
 	//if
 	if(quest.activated_if == null){ return null; }
 	const act_if = Object.entries(quest.activated_if);
@@ -2216,7 +2224,7 @@ function check_if_dnf_is_sat(qid){
 				let is_act = false;
 				if(anid == "shown"){
 					const is_shown = (document.getElementById(qid_signl) != null);
-					is_act = (((val == "yes") && is_shown) || ((val == "no") && ! is_shown));
+					is_act = (((val == "on") && is_shown) || ((val == "off") && ! is_shown));
 					//console.log(" | qid=" + qid + " | qid_signl=" + qid_signl + " | is_act=" + is_act + " | val=" + val + " | is_shown=" + is_shown);
 				} else {				
 					if(qst_answs == null){ continue; } // if (anid == "shown") of an inconsistency it CAN be null
@@ -2236,10 +2244,12 @@ function check_if_dnf_is_sat(qid){
 			}
 		}
 		if(conj_act){
+			if(quest.debug){ console.log("DEBUGING qid=" + qid + " check_if_dnf_is_sat IS_SAT"); }
 			quest.last_sat_conj = conj_id;
 			return conj_id;
 		}
 	}
+	if(quest.debug){ console.log("DEBUGING qid=" + qid + " check_if_dnf_is_sat NOT_sat"); }
 	quest.last_sat_conj = null;
 	return null;
 }
@@ -2300,15 +2310,24 @@ function send_all_signals(qid){
 	if(all_to_signl != null){
 		send_signals_to(all_to_signl, all_to_act);
 	}
+	if(quest.debug){ 
+		console.log("DEBUGING qid=" + qid + " send_all_signals | all_to_signl=" + JSON.stringify(all_to_signl, null, "  ")); 
+		console.log("DEBUGING qid=" + qid + " send_all_signals | signals_to_fire=" + JSON.stringify(quest.signals_to_fire, null, "  ")); 		
+	}
 	
-	const all_answ = Object.entries(quest.answers);
-	for (const [anid, an_answ] of all_answ) {
+	if(quest.signals_to_fire == null){ return all_to_act; } // added_for_signals
+	const all_signals = Object.entries(quest.signals_to_fire); // added_for_signals
+	if(quest.answers == null){ return all_to_act; } // added_for_signals
+	for (const [anid, a_sgl] of all_signals) {
+		if(a_sgl == null){ continue; }
+		const an_answ = quest.answers[anid];
 		if(an_answ == null){ continue; }
+		
 		all_to_signl = null;
 		if(an_answ.is_on){
-			all_to_signl = an_answ.signal_if_on;
+			all_to_signl = a_sgl.signal_if_on;
 		} else {
-			all_to_signl = an_answ.signal_if_off;
+			all_to_signl = a_sgl.signal_if_off;
 		}
 		if(all_to_signl == null){
 			continue;
