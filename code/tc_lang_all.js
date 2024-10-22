@@ -652,6 +652,22 @@ export function get_answer_key(qid, cit_obj){
 	return rqid;	
 }
 
+export function add_response_observation(qid, cit_obj){
+	const rnam = get_verse_reponse_name(qid, cit_obj);
+	const ans_key = get_answer_key(qid, cit_obj);
+	const obj_resp = { 
+		is_inconsistency: true,
+		debug: true,
+		htm_stm: rnam, 
+		activated_if: {	c1: {}, },
+	};
+	const conj1 = obj_resp.activated_if.c1;
+	conj1[qid] = {};
+	conj1[qid][ans_key] = "on";
+	
+	return obj_resp;
+}
+
 export function add_reponse_questions(db, qid, with_resp){
 	with_resp.forEach((cit_obj) => {
 		const rqid = get_response_qid(qid, cit_obj);

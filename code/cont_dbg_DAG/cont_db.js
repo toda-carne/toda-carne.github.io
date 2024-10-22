@@ -1,5 +1,5 @@
 
-import { get_verse_reponse_name, get_answer_key, glb_all_bibrefs, init_poll_glb, } from '../tc_lang_all.js';
+import { get_verse_reponse_name, get_answer_key, glb_all_bibrefs, init_poll_glb, add_response_observation, } from '../tc_lang_all.js';
 
 "use strict";
 
@@ -581,19 +581,22 @@ export function init_exam_database(){
 	
 	db.q12_1__.vrs_with_response = all_q12_1__with_response;
 	
-	let cit_obj = null;
-	let rnam = null;
-	let ans_key = null;
-	
-	cit_obj = rf.gen_15_15_obj;
-	rnam = get_verse_reponse_name("q12_1__", cit_obj);
-	ans_key = get_answer_key("q12_1__", cit_obj);
-	db.q12_resp1__ = { 
-		is_inconsistency: true,
-		htm_stm: rnam, 
-		activated_if: {	c1: { q12_1__: {}, }, },		
-	};
-	db.q12_resp1__.activated_if.c1.q12_1__[ans_key] = "on";
+	db.q12_resp1__ = add_response_observation("q12_1__", rf.gen_15_15_obj);
+	db.q12_resp2__ = add_response_observation("q12_1__", rf.gen_25_8_obj);
+	db.q12_resp3__ = add_response_observation("q12_1__", rf.psa_16_11_obj);
+	db.q12_resp4__ = add_response_observation("q12_1__", rf.isa_8_19_obj);
+	db.q12_resp5__ = add_response_observation("q12_1__", rf.luk_15_24_obj);
+	db.q12_resp6__ = add_response_observation("q12_1__", rf.luk_20_38_obj);
+	db.q12_resp7__ = add_response_observation("q12_1__", rf.luk_23_43_obj);
+	db.q12_resp8__ = add_response_observation("q12_1__", rf.jhn_4_24_obj);
+	db.q12_resp9__ = add_response_observation("q12_1__", rf.act_7_59_obj);
+	db.q12_resp10__ = add_response_observation("q12_1__", rf._2co_5_8_obj);
+	db.q12_resp11__ = add_response_observation("q12_1__", rf._2co_12_4_obj);
+	db.q12_resp12__ = add_response_observation("q12_1__", rf.phl_1_23_obj);
+	db.q12_resp13__ = add_response_observation("q12_1__", rf._1th_4_14_obj);
+	db.q12_resp14__ = add_response_observation("q12_1__", rf._1ti_5_6_obj);
+	db.q12_resp15__ = add_response_observation("q12_1__", rf.heb_1_14_obj);
+	db.q12_resp16__ = add_response_observation("q12_1__", rf._1pe_3_19_obj);
 	
 	db.q13_1__ = { 
 		htm_stm: "q13_1__sleep",

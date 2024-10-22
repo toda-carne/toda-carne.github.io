@@ -1944,6 +1944,13 @@ function calc_exam_save_object(){
 			sv_obj[dv_quest.id] = q_obj;
 		}
 	}
+	const db = glb_poll_db;
+	if(db.all_base_questions != null){
+		sv_obj.all_base_questions = JSON.parse(JSON.stringify(db.all_base_questions));
+	}
+	if(db.all_pending != null){
+		sv_obj.all_pending = JSON.parse(JSON.stringify(db.all_pending));
+	}
 	//console.log("FULL_OBJECT_SAVE = " + JSON.stringify(sv_obj, null, "  "));
 	return sv_obj;
 }
@@ -1955,6 +1962,12 @@ function update_nodes_exam_with(ld_obj){
 		
 		db[qid] = JSON.parse(JSON.stringify(quest));
 		db[qid].set_reactions = reacs;		
+	}
+	if(ld_obj.all_base_questions != null){
+		db.all_base_questions = JSON.parse(JSON.stringify(ld_obj.all_base_questions));
+	}
+	if(ld_obj.all_pending != null){
+		db.all_pending = JSON.parse(JSON.stringify(ld_obj.all_pending));
 	}
 }
 
@@ -1969,6 +1982,9 @@ function display_exam_load_object(ld_obj){
 	dv_all_quest.innerHTML = "";
 	
 	for (const [qid, quest] of Object.entries(ld_obj)) {
+		if(get_qid_base(qid) == null){
+			continue; // it is not a question
+		}
 		if(quest.is_inconsistency){
 			show_inconsistency(qid, null);
 			continue;
@@ -2532,6 +2548,9 @@ function update_inconsistency(qid, all_to_act){
 	}
 	const sufix_qhrefs = get_qhrefs_of(incos_qids, null);
 	sp_qrefs_inconsis.innerHTML = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs;
+	
+	const dv_quest_2 = document.getElementById(qid);
+	set_anchors_target(dv_quest_2);
 }
 
 
