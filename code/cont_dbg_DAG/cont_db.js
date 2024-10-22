@@ -67,6 +67,14 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q1_20__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q1_2__: { q1_2__no: "on", }, },
+		},
+	};
+	
 	db.q1_3__ = { 
 		is_base_question: true,
 		htm_stm: "q1_3__are_humans_intelligent",
@@ -74,6 +82,14 @@ export function init_exam_database(){
 		answers: {
 			q1_3__yes: { htm_answ: "q1_3__yes", should_on: "q1_3__should", },
 			q1_3__no: { htm_answ: "q1_3__no" },
+		},
+	};
+	
+	db.q1_30__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q1_3__: { q1_3__no: "on", }, },
 		},
 	};
 	
@@ -117,18 +133,19 @@ export function init_exam_database(){
 		},
 	};
 	
-	db.q1_35__ = { 
+	/*db.q1_35__ = { 
 		htm_stm: "q1_35__skip_creator_proof",
 		answers: {
 			q1_35__yes: { htm_answ: "q1_35__yes" },
 			q1_35__no: { htm_answ: "q1_35__no" },
 		},
 		activated_if: {
-			c1: { q1_32__: { q1_32__intelligent: "on", }, q1_33__: { q1_33__no: "on", }, q1_34__: { q1_34__yes: "on", }, },
+			c1: { q1_32__: { q1_32__intelligent: "on", }, q1_33__: { q1_33__no: "on", }, q1_34__: { q1_34__yes: "on", }, q1_4__: { shown : "no", } },
 		},
-	};
+	};*/
 	
 	db.q1_4__ = { 
+		is_base_question: true,
 		htm_stm: "q1_4__requires_technical_creativity",
 		is_multi: true,
 		answers: {
@@ -136,16 +153,20 @@ export function init_exam_database(){
 			q1_4__lamp: { htm_answ: "q1_4__lamp", should_on: "q1_4__should2", },
 			q1_4__clock: { htm_answ: "q1_4__clock", should_on: "q1_4__should3", },
 		},
-		activated_if: { 
-			c1: { q1_31__: { q1_31__other: "on", }, },
-			c2: { q1_32__: { q1_32__not_intelligent: "on", }, },
-			c3: { q1_33__: { q1_33__yes: "on", }, },
-			c4: { q1_34__: { q1_34__no: "on", }, },
-			c5: { q1_35__: { q1_35__yes: "on", }, },
+	};
+	
+	db.q1_40__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q1_4__: { q1_4__knife: "off", }, },
+			c2: { q1_4__: { q1_4__lamp: "off", }, },
+			c3: { q1_4__: { q1_4__clock: "off", }, },
 		},
 	};
 	
 	db.q1_5__ = { 
+		is_base_question: true,
 		htm_stm: "q1_5__more_complex_than",
 		is_multi: true,
 		answers: {
@@ -155,7 +176,18 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q1_50__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q1_5__: { q1_5__building_vs_knife: "off", }, },
+			c2: { q1_5__: { q1_5__car_vs_lamp: "off", }, },
+			c3: { q1_5__: { q1_5__cellphone_vs_clock: "off", }, },
+		},
+	};
+	
 	db.q1_7__ = { 
+		is_base_question: true,
 		htm_stm: "q1_7__more_complexity_then_more_creativity",
 		answers: {
 			q1_7__yes: { htm_answ: "q1_7__yes" },
@@ -163,7 +195,16 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q1_70__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q1_7__: { q1_7__no: "on", }, },
+		},
+	};
+	
 	db.q1_8__ = { 
+		is_base_question: true,
 		htm_stm: "q1_8__more_creativity",
 		is_multi: true,
 		answers: {
@@ -173,7 +214,18 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q1_80__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q1_8__: { q1_8__building_vs_knife: "off", }, },
+			c2: { q1_8__: { q1_8__car_vs_lamp: "off", }, },
+			c3: { q1_8__: { q1_8__cellphone_vs_clock: "off", }, },
+		},
+	};
+	
 	db.q1_9__ = { 
+		is_base_question: true,
 		htm_stm: "q1_9__coplexity_of_biological_machines",
 		is_multi: true,
 		answers: {
@@ -184,7 +236,19 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q1_90__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q1_9__: { q1_9__car_vs_mitosis: "off", }, },
+			c2: { q1_9__: { q1_9__smartphone_vs_sex: "off", }, },
+			c3: { q1_9__: { q1_9__bicycle_vs_healing: "off", }, },
+			c4: { q1_9__: { q1_9__knife_vs_regeneration: "off", }, },
+		},
+	};
+	
 	db.q1_91__ = { 
+		is_base_question: true,
 		htm_stm: "q1_91__more_complexity_in_biology",
 		answers: {
 			q1_91__yes: { htm_answ: "q1_91__yes" },
@@ -192,7 +256,16 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q1_91_0__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q1_91__: { q1_91__no: "on", }, },
+		},
+	};
+	
 	db.q1_92__ = { 
+		is_base_question: true,
 		htm_stm: "q1_92__human_complexity",
 		is_multi: true,
 		answers: {
@@ -202,12 +275,28 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q1_92_0__ = { 
+		is_inconsistency: true,
+		htm_stm: "q0_2__contradiction",
+		activated_if: {
+			c1: { q1_92__: { q1_92__leg: "off", }, },
+			c2: { q1_92__: { q1_92__liver: "off", }, },
+			c3: { q1_92__: { q1_92__lung: "off", }, },
+		},
+	};
+	
+	// UPDATING_HERE
+	
 	db.q1_93__ = { 
+		//is_base_question: true,
 		htm_stm: "q1_93__biological_requires_creativity",
 		has_qrefs: true,
 		answers: {
 			q1_93__yes: { htm_answ: "q1_93__yes" },
 			q1_93__no: { htm_answ: "q1_93__no" },
+		},
+		activated_if: {
+			c1: { q1_7__: { shown: "yes", }, q1_91__: { shown: "yes", }, q1_70__: { shown: "no", }, q1_91_0__: { shown: "no", }, },
 		},
 	};
 	

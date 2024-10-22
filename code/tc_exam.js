@@ -1966,7 +1966,7 @@ function display_exam_load_object(ld_obj){
 	
 	for (const [qid, quest] of Object.entries(ld_obj)) {
 		if(quest.is_inconsistency){
-			show_inconsistency(qid);
+			show_inconsistency(qid, null);
 			continue;
 		}
 		
@@ -2155,12 +2155,25 @@ function init_signals_for(qid){
 			
 			const qst_to_signl = glb_poll_db[qid_signl]; 
 			if(qst_to_signl == null){ continue; }
+
+			if(qst_to_signl.signal_if_shown == null){ qst_to_signl.signal_if_shown = []; }
+			if(qst_to_signl.signal_if_not_shown == null){ qst_to_signl.signal_if_not_shown = []; }
 			
 			const qst_answs = qst_to_signl.answers; 
-			if(qst_answs == null){ continue; }
 			
 			const resps = Object.entries(resps_obj);
 			for (const [anid, val] of resps) {
+				if(anid == "shown"){
+					if(val == "yes"){ 
+						qst_to_signl.signal_if_shown.push(qid); 
+					}
+					if(val == "no"){ 
+						qst_to_signl.signal_if_not_shown.push(qid); 
+					}
+					continue;
+				}
+				
+				if(qst_answs == null){ continue; }
 				const an_answ = qst_answs[anid];
 				if(an_answ == null){ continue; }
 				
@@ -2188,21 +2201,30 @@ function check_if_dnf_is_sat(qid){
 		if(conj_obj == null){ continue; }
 		const conj = Object.entries(conj_obj);
 		let conj_act = true;
+		
+		//console.log(" | qid=" + qid + " | conj_id=" + conj_id + " conj_obj=" + JSON.stringify(conj_obj, null, "  "));
 		for (const [qid_signl, resps_obj] of conj) {
 			if(resps_obj == null){ continue; }
 			
-			const qst_to_signl = glb_poll_db[qid_signl]; 
+			const qst_to_signl = glb_poll_db[qid_signl];
 			if(qst_to_signl == null){ continue; }
 			const qst_answs = qst_to_signl.answers; 
-			if(qst_answs == null){ continue; }
 			
 			const resps = Object.entries(resps_obj);
 			let all_act_2 = true;
 			for (const [anid, val] of resps) {
-				const an_answ = qst_answs[anid];
-				if(an_answ == null){ continue; }
-				
-				const is_act = (((val == "on") && an_answ.is_on) || ((val == "off") && ! an_answ.is_on));
+				let is_act = false;
+				if(anid == "shown"){
+					const is_shown = (document.getElementById(qid_signl) != null);
+					is_act = (((val == "yes") && is_shown) || ((val == "no") && ! is_shown));
+					//console.log(" | qid=" + qid + " | qid_signl=" + qid_signl + " | is_act=" + is_act + " | val=" + val + " | is_shown=" + is_shown);
+				} else {				
+					if(qst_answs == null){ continue; } // if (anid == "shown") of an inconsistency it CAN be null
+					const an_answ = qst_answs[anid];
+					if(an_answ == null){ continue; }
+					
+					is_act = (((val == "on") && an_answ.is_on) || ((val == "off") && ! an_answ.is_on));
+				}
 				all_act_2 = all_act_2 && is_act;
 				if(! all_act_2){
 					break;
@@ -2230,8 +2252,8 @@ function add_pending(qid){
 		return false;		
 	}
 	const dv_qid = document.getElementById(qid);
-	const is_asked = (dv_qid != null);
-	if(is_asked || quest.in_pending){
+	const is_shown = (dv_qid != null);
+	if(is_shown || quest.in_pending){
 		return false;
 	}
 	glb_poll_db.all_pending.push(qid);
@@ -2249,14 +2271,40 @@ function get_pending(){
 	return qid;
 }
 
+function send_signals_to(all_to_signl, all_to_act){
+	for(const qid_signl of all_to_signl){
+		const qsignl = glb_poll_db[qid_signl];
+		if(qsignl == null){ continue; }
+		
+		const csat = (check_if_dnf_is_sat(qid_signl) != null);
+		
+		if(qsignl.is_inconsistency){
+			const dv_qsignl = document.getElementById(qid_signl);
+			if(dv_qsignl != null){
+				all_to_act.old_incons.push(qid_signl);
+			} else {
+				if(csat){ all_to_act.new_incons.push(qid_signl); }
+			}
+		} else {
+			if(csat){ all_to_act.pends.push(qid_signl); }
+		}
+	}
+}
+
 function send_all_signals(qid){
 	const all_to_act = { pends:[], old_incons:[], new_incons:[], };
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return all_to_act; }
+	
+	let all_to_signl = quest.signal_if_shown;
+	if(all_to_signl != null){
+		send_signals_to(all_to_signl, all_to_act);
+	}
+	
 	const all_answ = Object.entries(quest.answers);
 	for (const [anid, an_answ] of all_answ) {
 		if(an_answ == null){ continue; }
-		let all_to_signl = null;
+		all_to_signl = null;
 		if(an_answ.is_on){
 			all_to_signl = an_answ.signal_if_on;
 		} else {
@@ -2265,37 +2313,21 @@ function send_all_signals(qid){
 		if(all_to_signl == null){
 			continue;
 		}
-		for(const qid_signl of all_to_signl){
-			const qsignl = glb_poll_db[qid_signl];
-			if(qsignl == null){ continue; }
-			
-			const csat = (check_if_dnf_is_sat(qid_signl) != null);
-			
-			if(qsignl.is_inconsistency){
-				const dv_qsignl = document.getElementById(qid_signl);
-				if(dv_qsignl != null){
-					all_to_act.old_incons.push(qid_signl);
-				} else {
-					if(csat){ all_to_act.new_incons.push(qid_signl); }
-				}
-			} else {
-				if(csat){ all_to_act.pends.push(qid_signl); }
-			}
-		}
+		send_signals_to(all_to_signl, all_to_act);
 	}
 	return all_to_act;
 }
 
 function activate_signals(all_to_act){
-	for(const qid of all_to_act.pends){
-		add_pending(qid);
-	}
 	for(const qid of all_to_act.old_incons){
 		console.log("Updating OLD inconsistency qid=" + qid);
-		update_inconsistency(qid);
+		update_inconsistency(qid, all_to_act);
 	}
 	for(const qid of all_to_act.new_incons){
-		show_inconsistency(qid);
+		show_inconsistency(qid, all_to_act);
+	}
+	for(const qid of all_to_act.pends){
+		add_pending(qid);
 	}
 }
 
@@ -2329,7 +2361,7 @@ function ask_next(){
 	return false;
 }
 
-function show_inconsistency(qid){
+function show_inconsistency(qid, all_to_act){
 	const quest = glb_poll_db[qid];
 	if(quest == null){
 		console.log("Could not find inconsistency " + qid + " in questions db.");
@@ -2342,7 +2374,7 @@ function show_inconsistency(qid){
 	let dv_quest = document.getElementById(qid);
 	if(dv_quest != null){ 
 		console.log("Updating OLD inconsistency from show_inconsistency qid=" + qid);
-		update_inconsistency(qid);
+		update_inconsistency(qid, all_to_act);
 		return null;
 	}
 	//console.log("ADDING inconsistency " + qid + " to page.");
@@ -2372,12 +2404,16 @@ function show_inconsistency(qid){
 	dv_qstm.classList.add("observ_color");
 	dv_qstm.innerHTML = "" + the_stm;
 
+	if(DEBUG_QNUMS){
+		dv_qstm.title = qid;
+	}	
+	
 	const sp_qrefs_inconsis = document.createElement("span");
 	sp_qrefs_inconsis.id = qid + SUF_ID_QREFS_INCONSIS;
 	dv_qstm.append(sp_qrefs_inconsis);
 	
 	console.log("Updating NEW inconsistency from show_inconsistency qid=" + qid);
-	update_inconsistency(qid);
+	update_inconsistency(qid, all_to_act);
 
 	if(! is_in_viewport(dv_stm)){
 		dv_stm.scrollIntoView({
@@ -2388,22 +2424,6 @@ function show_inconsistency(qid){
 	}
 	
 	return dv_quest;
-}
-
-function update_inconsistency(qid){
-	let sp_qrefs_inconsis = document.getElementById(qid + SUF_ID_QREFS_INCONSIS);
-	if(sp_qrefs_inconsis == null){ 
-		console.log("Internal error. Trying to update inconsistency qid=" + qid + " without qrefs span");
-		return null;
-	}
-	const incos_qids = get_sat_conj_qids(qid);
-	if(incos_qids == null){
-		let dv_quest = document.getElementById(qid);
-		if(dv_quest != null){ dv_quest.remove(); }
-		return;
-	}
-	const sufix_qhrefs = get_qhrefs_of(incos_qids, null);
-	sp_qrefs_inconsis.innerHTML = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs;
 }
 
 function get_sat_conj_qids(qid){
@@ -2464,6 +2484,35 @@ function undo_last_quest(){
 
 function undo_button_handler(){
 	undo_last_quest();
+}
+
+function update_inconsistency(qid, all_to_act){
+	let sp_qrefs_inconsis = document.getElementById(qid + SUF_ID_QREFS_INCONSIS);
+	if(sp_qrefs_inconsis == null){ 
+		console.log("Internal error. Trying to update inconsistency qid=" + qid + " without qrefs span");
+		return null;
+	}
+	const incos_qids = get_sat_conj_qids(qid);
+	if(incos_qids == null){
+		let dv_quest = document.getElementById(qid);
+		if(dv_quest != null){ 
+			dv_quest.remove(); 
+		
+			const quest = glb_poll_db[qid];
+			if(quest == null){ return; }
+			let all_to_signl = quest.signal_if_not_shown;
+			if(all_to_signl != null){
+				/*console.log("AFTER_REMOVE | qid=" + qid + " | all_to_signl=" + JSON.stringify(all_to_signl, null, "  ")
+					+ " | all_to_act=" + JSON.stringify(all_to_act, null, "  ")
+				);*/
+				send_signals_to(all_to_signl, all_to_act);
+				//console.log("AFTER_REMOVE [2] | all_to_act=" + JSON.stringify(all_to_act, null, "  "));
+			}
+		}
+		return;
+	}
+	const sufix_qhrefs = get_qhrefs_of(incos_qids, null);
+	sp_qrefs_inconsis.innerHTML = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs;
 }
 
 
