@@ -405,18 +405,35 @@ export function get_loc_book_nam(book){
 	return book_nam;
 }
 
-export function get_verse_cit_key(cit_obj){
-	/*if(cit_obj.book == null){
+function get_verse_key(cit_obj, with_lang){
+	if(cit_obj.book == null){
 		console.log("Internal error. get_verse_cit_key. cit_obj= " + JSON.stringify(cit_obj, null, "  "));
 		return "invalid_verse_cit_key";
-	}*/
+	}
+	const book_nam =  get_book_nam(cit_obj.book);
+	let kk = "bib_";
+	if(with_lang){
+		kk = kk + cit_obj.site + "_" + cit_obj.bib_ver + "_";
+	}
+	kk = kk + book_nam + "_" + cit_obj.chapter + "_" + cit_obj.verse;
+	if(cit_obj.last_verse != bib_defaults.LAST_VERSE){
+		kk = kk + "_" + cit_obj.last_verse;
+	}
+	return kk;
+}
+
+export function get_verse_cit_key(cit_obj){
+	return get_verse_key(cit_obj, true);
+}
+/*
+export function get_verse_cit_key(cit_obj){
 	const book_nam =  get_book_nam(cit_obj.book);
 	let kk = "bib_" + cit_obj.site + "_" + cit_obj.bib_ver + "_" + book_nam + "_" + cit_obj.chapter + "_" + cit_obj.verse;
 	if(cit_obj.last_verse != bib_defaults.LAST_VERSE){
 		kk = kk + "_" + cit_obj.last_verse;
 	}
 	return kk;
-}
+}*/
 
 export function get_verse_cit_txt(cit_obj){
 	const kk = get_verse_cit_key(cit_obj) + "_str";
@@ -646,7 +663,7 @@ export function get_answer_key(qid, cit_obj){
 	}
 	const rqid = bb + "_" + kk + SUF_QID;
 	*/
-	const kk = get_verse_cit_key(cit_obj);
+	const kk = get_verse_key(cit_obj, false);
 	const bb = get_qid_base(qid);
 	const rqid = bb + "_answ_" + kk;
 	return rqid;	
