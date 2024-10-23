@@ -307,13 +307,6 @@ export function init_poll_glb(usrinfo, startquest, polldb){
 	glb_poll_db = polldb;
 }
 
-export function get_dispute_msg() {
-	if(is_mobile_browser()){
-		return glb_curr_lang.msg_dispute_hold_click;
-	}
-	return glb_curr_lang.msg_dispute_rclick;
-}
-
 export function fill_all_strongrefs_href(){
 	for (const [key, value] of Object.entries(all_strongrefs)) {
 		const ob_sufx = "_cod";
@@ -375,15 +368,7 @@ export function uppercase_words_in_string(the_str, to_up_arr){
 	return nwstr;
 }
 
-function citation_to_en(cit_obj){ // websites use english names for citations
-	var num_b = glb_books_nums[cit_obj.book];
-	cit_obj.lang = "en";
-	cit_obj.abbr = num2abbr[num_b];
-	cit_obj.book = num2book_en[num_b];  
-	return cit_obj;
-}
-
-export function get_book_nam(book){
+function get_book_nam(book){
 	let book_nam = book; 
 	if(isNaN(book)){ // bibrefs references
 		book_nam = book;
@@ -394,7 +379,7 @@ export function get_book_nam(book){
 	return book_nam;
 }
 
-export function get_loc_book_nam(book){
+function get_loc_book_nam(book){
 	let num = -1;
 	if(isNaN(book)){ // bibrefs references
 		num = book2num_en[book];
@@ -425,25 +410,14 @@ function get_verse_key(cit_obj, with_lang){
 export function get_verse_cit_key(cit_obj){
 	return get_verse_key(cit_obj, true);
 }
-/*
-export function get_verse_cit_key(cit_obj){
-	const book_nam =  get_book_nam(cit_obj.book);
-	let kk = "bib_" + cit_obj.site + "_" + cit_obj.bib_ver + "_" + book_nam + "_" + cit_obj.chapter + "_" + cit_obj.verse;
-	if(cit_obj.last_verse != bib_defaults.LAST_VERSE){
-		kk = kk + "_" + cit_obj.last_verse;
-	}
-	return kk;
-}*/
 
 export function get_verse_cit_txt(cit_obj){
 	const kk = get_verse_cit_key(cit_obj) + "_str";
 	return glb_all_bibrefs[kk];
 }
 
-//export function make_bible_ref(cit_obj_orig){
 export function make_bible_ref(cit_obj){
 	// https://www.biblegateway.com/passage/?search=exodus+1%3A4-7&version=RVR1960
-	//const cit_obj = citation_to_en(cit_obj_orig); // websites use english names for citations
 	const book_nam =  get_book_nam(cit_obj.book);
 	//console.log("make_bible_ref. cit_obj= " + JSON.stringify(cit_obj, null, "  ") + "\nbook_nam=" + book_nam);
 	let bibref = null;
@@ -518,72 +492,6 @@ export function get_verse_reponse_name(qid, cit_obj){
 	return r_nam;
 }
 
-export function add_sections(nxt_sec, secs, answs, ck_val, value, fst_stm){
-	let prv_stm = fst_stm;
-	//answs.forEach((an_answ) => {
-	for (const [aid, an_answ] of Object.entries(answs)) {
-		let curr_stm = an_answ.htm_answ;
-		if(! ck_val || (an_answ.is_on == value)){
-			const fst_qid = secs[curr_stm];
-			if(fst_qid != null){
-				nxt_sec[prv_stm] = fst_qid;
-			} else {
-				console.log("add_sections. Could not find " + curr_stm + " in " + JSON.stringify(secs));
-			}
-			prv_stm = curr_stm;
-		}
-	}
-	//});
-		
-	return prv_stm;
-}
-
-export function set_all_on(quest){
-	if(! quest.is_multi){
-		return;
-	}
-	for (const [aid, an_answ] of Object.entries(quest.answers)) {
-		if(an_answ == null){ continue; }
-		an_answ.is_on = true;
-	}
-}
-
-export function has_all_next(quest){
-	if(quest.all_nxt != null){
-		console.log("Already set_reactions for question " + quest.htm_stm);
-		return true;
-	}
-	return false;
-}
-
-function get_all_on(quest){
-	const all_on = [0, [], 0, []];
-	for (const [aid, an_answ] of Object.entries(quest.answers)) {
-		if(an_answ == null){ continue; }
-		const is_orig = (an_answ.kind == null);
-		if(is_orig){ 
-			all_on[0]++;
-		} else {
-			all_on[2]++;
-		}
-		if(! an_answ.is_on){ continue; }
-		if(is_orig){ 
-			all_on[1].push(an_answ);		
-		} else {
-			all_on[3].push(an_answ);		
-		}
-	}
-	return all_on;
-}
-
-export function are_only_all_orig_on(quest){
-	if(quest.answers == null){
-		return true;
-	}
-	const all_on = get_all_on(quest);
-	return ((all_on[0] == all_on[1].length) && (all_on[3].length == 0));
-}
-
 function get_range(cit_obj){
 	//const book_nam = get_book_nam(cit_obj.book);
 	const range = [cit_obj.verse, cit_obj.verse];
@@ -591,20 +499,6 @@ function get_range(cit_obj){
 		range[1] = cit_obj.last_verse;
 	}
 	return range;
-}
-
-function has_added_on(by_kind){
-	return (Object.entries(by_kind).length == 0);
-}
-
-export function get_first_added_on(quest){
-	for (const [aid, an_answ] of Object.entries(quest.answers)) {
-		if(an_answ == null){ continue; }
-		if(! an_answ.is_on){ continue; }
-		if(an_answ.kind == null){ continue; }
-		return an_answ;
-	}
-	return null;
 }
 
 function val_in_range(val, range){
@@ -640,17 +534,10 @@ export function get_qid_base(qid){
 	return null;
 }
 
-export function get_response_qid(qid, cit_obj){
-	const kk = get_verse_cit_key(cit_obj);
-	const bb = get_qid_base(qid);
-	const rqid = bb + kk + SUF_QID;
-	return rqid;
-}
-
 export function get_answer_key(qid, cit_obj){
 	/*
 	if(cit_obj == null){
-		console.log("Internal error. get_response_qid");
+		console.log("Internal error. get_answer_key");
 		return "invalid_response_qid";
 	}
 	let kk = get_verse_cit_key(cit_obj);
@@ -683,14 +570,6 @@ export function add_response_observation(qid, cit_obj){
 	conj1[qid][ans_key] = "on";
 	
 	return obj_resp;
-}
-
-export function add_reponse_questions(db, qid, with_resp){
-	with_resp.forEach((cit_obj) => {
-		const rqid = get_response_qid(qid, cit_obj);
-		const rnam = get_verse_reponse_name(qid, cit_obj);
-		db[rqid] = { htm_stm: rnam, };
-	});
 }
 
 export const all_strongrefs = {

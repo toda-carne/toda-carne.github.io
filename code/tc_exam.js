@@ -8,7 +8,6 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 
 "use strict";
 
-const DBG_DAG_CODE = true;
 const INVALID_PAGE_POS = "???";
 
 let INIT_EXAM_DB_FUNC = null;
@@ -274,9 +273,7 @@ function add_question(qid){
 
 export function init_answers(qid){
 	//console.log("init_answers of qid = " + qid);
-	set_is_contra_if_so(qid);
 	const quest = glb_poll_db[qid];
-	//const has_contra = ((quest.all_contra != null) && (quest.all_contra.length > 0));
 	
 	const is_init_to_answer = (quest.has_answ == null);
 	
@@ -385,11 +382,6 @@ export function init_answers(qid){
 		dv_end.addEventListener('click', function() {
 			end_question(qid);
 		});
-	}
-	
-	if(is_init_to_answer && (quest.qparent != null)){
-		//console.log("removing all SIBLING descendants of " + qid);
-		remove_all_children_descendants(quest.qparent);
 	}
 	
 	set_anchors_target(dv_quest);
@@ -507,186 +499,9 @@ function end_question(qid){
 	quest.has_answ = true;
 	init_answers(qid);
 	
-	if(quest.set_reactions != null){
-		//console.log("BEFORE set_reactions = " + quest.all_nxt);
-		quest.set_reactions();
-		//console.log("AFTER set_reactions = " + quest.all_nxt);
-	}
-	
-	if(DBG_DAG_CODE){
-		const all_to_act = send_all_signals(qid);
-		activate_signals(all_to_act);
-		const found_nxt = ask_next();
-	}
-	
-	add_all_nxt(qid);
-	add_contradictions(qid);
-}
-
-function add_all_nxt(qid){
-	const quest = glb_poll_db[qid];
-	if(quest.all_nxt == null){
-		return;
-	}
-	if(quest.all_nxt.length > 1){
-		console.log("ALL_NXT BIGGER THAN 1");
-		console.log("ALL_NXT BIGGER THAN 1");
-		console.log("ALL_NXT BIGGER THAN 1");
-		console.log("ALL_NXT BIGGER THAN 1");
-		console.log("ALL_NXT BIGGER THAN 1");
-	}
-	const all_added = [];
-	for(const qq of quest.all_nxt){
-		//console.log("Adding question " + qq + " to page");
-		const qq_nd = glb_poll_db[qq];
-		if(qq_nd == null){ 
-			console.log("Internal error. add_all_nxt. Trying to add NULL question " + qq + " !!!");
-			continue;
-		}
-		qq_nd.reset_answ = true;
-		const added = add_question(qq);
-		qq_nd.reset_answ = null;
-		if(added == null){
-			console.log("Internal error. add_all_nxt. Question " + qq + " could NOT be added to page !!!");
-		} else {
-			all_added.push(qq);
-			const chld = glb_poll_db[qq];
-			if(chld != null){
-				glb_poll_db[qq].qparent = qid;
-				//console.log("glb_poll_db[" + qq + "].qparent = " + qid);
-			}
-		}
-	}
-	quest.all_nxt = all_added;
-	//console.log("ALL ADDED = " + quest.all_nxt);
-	//console.log(JSON.stringify(quest, null, "  "));
-}
-
-function add_contradictions(qid){
-	const quest = glb_poll_db[qid];
-	const all_ctra = quest.all_contra;
-	if(all_ctra == null){
-		return;
-	}
-	for(const ctra of all_ctra){
-		add_contradicted_by(ctra, qid);
-	}
-	if(quest.all_nxt == null){
-		return;
-	}
-	const qid_nxt = quest.all_nxt[quest.all_nxt.length - 1];
-	const qlnxt = glb_poll_db[qid_nxt];
-	if((qlnxt == null) || (qlnxt.pos_page < quest.pos_page)){
-		console.log("add_contradictions. qid_nxt=" + qid_nxt);
-		if(qlnxt != null){ console.log("add_contradictions. Invalid qid order !! (" + qlnxt.pos_page + " < " + quest.pos_page + ")"); }
-		return;
-	}
-	const dv_qstm = document.getElementById(qid_nxt + SUF_ID_QSTM);
-	if(dv_qstm != null){
-		const sufix_qhrefs = get_qhrefs_of(all_ctra, qid_nxt);
-		dv_qstm.innerHTML = dv_qstm.innerHTML + " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs;
-	}
-}
-
-function add_contradicted_by(ctra, qid){
-	const quest = glb_poll_db[ctra];
-	if(quest.all_dicted_by == null){
-		quest.all_dicted_by = [];
-	}
-	quest.all_dicted_by.push(qid);
-	set_is_contra_if_so(ctra);
-}
-
-function set_is_contra_if_so(qid){
-	const quest = glb_poll_db[qid];
-	if(quest.all_dicted_by == null){
-		return;
-	}
-	if(quest.all_dicted_by.length == 0){
-		return;
-	}
-	const dv_quest = document.getElementById(qid + SUF_ID_QSTM);
-	if(dv_quest != null){
-		dv_quest.classList.add("is_contradiction");
-	}
-}
-
-function remove_all_children_descendants(qid){
-	if(qid == ROOT_QUEST_ID){
-		for(const qq of glb_poll_starting_questions){
-			remove_all_descendants(qq);
-		}
-		return;
-	}
-	const quest = glb_poll_db[qid];
-	if((quest == null) || (quest.all_nxt == null)){
-		return;
-	}
-	//console.log("remove_all_children_descendants qid " + qid + ".all_nxt=" + quest.all_nxt);
-	for(const qq of quest.all_nxt){
-		remove_all_descendants(qq);
-	}
-}
-
-function remove_descendant(qid){
-	const quest = glb_poll_db[qid];
-	quest.has_answ = null;
-	quest.qparent = null;
-	
-	const dv_quest = document.getElementById(qid);
-	if(dv_quest != null){
-		//console.log("REMOVING QUESTION " + qid + " from page");
-		dv_quest.remove();
-		remove_all_descendants(qid);
-		return true;
-	}
-	console.log("Question " + qid + " was NOT found in page !!!");
-	return false;
-}
-
-function remove_all_descendants(qid){
-	//console.log("removing ALL_NXT of " + qid + " from page");
-	const quest = glb_poll_db[qid];
-	const all_desc = quest.all_nxt;
-	quest.all_nxt = null;
-	if(all_desc != null){
-		//console.log("remove_all_descendants qid "+ qid + ".all_nxt=" + all_desc);
-		for(const qq of all_desc){
-			remove_descendant(qq);
-		}
-	}
-	
-	remove_contradictions(qid);	
-}
-
-function remove_contradictions(qid){
-	const quest = glb_poll_db[qid];
-	const all_ctra = quest.all_contra;
-	quest.all_contra = null;
-	if(all_ctra != null){
-		for(const ctra of all_ctra){
-			remove_contradicted_by(ctra, qid);
-		}
-	}
-}
-
-function remove_contradicted_by(ctra, qid){ 
-	//console.log("Removing all_dicted_by of " + ctra + " with qid=" + qid);
-	const quest = glb_poll_db[ctra];
-	const all_dictd_by = quest.all_dicted_by;
-	if(all_dictd_by == null){
-		console.log("Cannot find all_dicted_by of " + ctra + " !!!");
-		return;
-	}
-	//console.log("BEFORE remove_contradicted_by = " + quest.all_nxt);
-	quest.all_dicted_by = all_dictd_by.filter((val) => (val != qid));
-	if(quest.all_dicted_by.length == 0){
-		//console.log("Removing is_red of " + ctra);
-		const dv_quest = document.getElementById(ctra + SUF_ID_QSTM);
-		if(dv_quest != null){
-			dv_quest.classList.remove("is_contradiction");
-		}
-	}
+	const all_to_act = send_all_signals(qid);
+	activate_signals(all_to_act);
+	ask_next();
 }
 
 function remove_last_added(qid, sufix){
@@ -696,7 +511,6 @@ function remove_last_added(qid, sufix){
 		dv_last.remove();
 	}
 }
-
 
 function remove_id(id_dv){
 	var dv_to_rm = document.getElementById(id_dv);
@@ -1901,10 +1715,8 @@ export function init_page_exam(ini_func){
 	init_exam_module_vars();
 	init_exam_buttons();
 	
-	if(DBG_DAG_CODE){
-		const found_nxt = ask_next();
-	}
-		
+	const found_nxt = ask_next();
+	/*
 	let added = null;
 	for(const qq of glb_poll_starting_questions){
 		//console.log("Adding question " + qq + " to page");
@@ -1920,6 +1732,7 @@ export function init_page_exam(ini_func){
 		}
 	}
 	return added;
+	*/
 };
 
 function calc_quest_save_object(dv_quest){
@@ -1958,10 +1771,7 @@ function calc_exam_save_object(){
 function update_nodes_exam_with(ld_obj){
 	const db = glb_poll_db;
 	for (const [qid, quest] of Object.entries(ld_obj)) {
-		let reacs = db[qid].set_reactions;
-		
 		db[qid] = JSON.parse(JSON.stringify(quest));
-		db[qid].set_reactions = reacs;		
 	}
 	if(ld_obj.all_base_questions != null){
 		db.all_base_questions = JSON.parse(JSON.stringify(ld_obj.all_base_questions));
@@ -2461,17 +2271,6 @@ function show_inconsistency(qid, all_to_act){
 	return dv_quest;
 }
 
-function get_sat_conj_qids(qid){
-	if(qid == null){ return null; }
-	const quest = glb_poll_db[qid];
-	if(quest == null){ return null; }
-	if(quest.activated_if == null){ return null; }
-	if(quest.last_sat_conj == null){ return null; }
-	const conj = quest.activated_if[quest.last_sat_conj];
-	const incos_qids = Object.keys(conj);
-	return incos_qids;
-}
-
 function undo_last_quest(){
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
 	const all_q = dv_all_quest.childNodes;
@@ -2521,16 +2320,29 @@ function undo_button_handler(){
 	undo_last_quest();
 }
 
+function get_sat_conj_qids(qid){
+	if(qid == null){ return null; }
+	const quest = glb_poll_db[qid];
+	if(quest == null){ return null; }
+	if(quest.activated_if == null){ return null; }
+	if(quest.last_sat_conj == null){ return null; }
+	const conj = quest.activated_if[quest.last_sat_conj];
+	const incos_qids = Object.keys(conj);
+	return incos_qids;
+}
+
 function update_inconsistency(qid, all_to_act){
 	let sp_qrefs_inconsis = document.getElementById(qid + SUF_ID_QREFS_INCONSIS);
 	if(sp_qrefs_inconsis == null){ 
-		console.log("Internal error. Trying to update inconsistency qid=" + qid + " without qrefs span");
+		//console.log("Internal error. Trying to update inconsistency qid=" + qid + " without qrefs span");
+		//console.log("Already removed qid=" + qid);
 		return null;
 	}
 	const incos_qids = get_sat_conj_qids(qid);
 	if(incos_qids == null){
 		let dv_quest = document.getElementById(qid);
 		if(dv_quest != null){ 
+			//console.log("REMOVING div for qid=" + qid);
 			dv_quest.remove(); 
 		
 			const quest = glb_poll_db[qid];
