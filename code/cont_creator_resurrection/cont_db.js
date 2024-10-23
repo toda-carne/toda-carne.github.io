@@ -14,28 +14,8 @@ export function init_exam_database(){
 	const db = db_nodes_exam;
 	const rf = glb_all_bibrefs;
 
-	db.q0_1__ = { 
-		htm_stm: "q0_1__end_of_test",
-	};
-	
-	db.q0_2__ = { 
-		htm_stm: "q0_2__contradiction",
-	};
-	
-	db.q0_3__ = { 
-		htm_stm: "q0_3__end_so_far",
-	};
-	
-	db.q0_4__ = { 
-		htm_stm: "q0_4__about_beliefs",
-	};
-	
 	db.q1_1__ = { 
-		is_base_question: true,
 		htm_stm: "q1_1__are_you_reasonable",
-		//pos_txt: "q1_1__pru_pos_txt", // uncomment to debug pos_txt
-		//v_min: -500,  // uncomment to debug sort
-		//v_max: 200,  // uncomment to debug sort
 		answers: {
 			q1_1__yes: { htm_answ: "q1_1__yes", 
 				should_on: "q1_1__should_yes",
@@ -47,7 +27,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_10__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_1__: { q1_1__no: "on", }, },
@@ -55,7 +34,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_2__ = { 
-		is_base_question: true,
 		htm_stm: "q1_2__experience_is_evidence",
 		answers: {
 			q1_2__yes: { htm_answ: "q1_2__yes" },
@@ -64,7 +42,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_20__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_2__: { q1_2__no: "on", }, },
@@ -72,7 +49,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_3__ = { 
-		is_base_question: true,
 		htm_stm: "q1_3__are_humans_intelligent",
 		presentation: "q1_3__creator_section",
 		answers: {
@@ -82,7 +58,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_30__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_3__: { q1_3__no: "on", }, },
@@ -90,7 +65,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_31__ = { 
-		is_base_question: true,
 		htm_stm: "q1_31__all_biological_machines",
 		answers: {
 			q1_31__creator: { htm_answ: "q1_31__creator" },
@@ -110,7 +84,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_33__ = { 
-		is_base_question: true,
 		htm_stm: "q1_33__the_evolution",
 		answers: {
 			q1_33__yes: { htm_answ: "q1_33__yes" },
@@ -129,19 +102,7 @@ export function init_exam_database(){
 		},
 	};
 	
-	/*db.q1_35__ = { 
-		htm_stm: "q1_35__skip_creator_proof",
-		answers: {
-			q1_35__yes: { htm_answ: "q1_35__yes" },
-			q1_35__no: { htm_answ: "q1_35__no" },
-		},
-		activated_if: {
-			c1: { q1_32__: { q1_32__intelligent: "on", }, q1_33__: { q1_33__no: "on", }, q1_34__: { q1_34__yes: "on", }, q1_4__: { shown : "off", } },
-		},
-	};*/
-	
 	db.q1_4__ = { 
-		is_base_question: true,
 		htm_stm: "q1_4__requires_technical_creativity",
 		is_multi: true,
 		answers: {
@@ -152,7 +113,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_40__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_4__: { q1_4__knife: "off", }, },
@@ -162,7 +122,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_5__ = { 
-		is_base_question: true,
 		htm_stm: "q1_5__more_complex_than",
 		is_multi: true,
 		answers: {
@@ -173,7 +132,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_50__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_5__: { q1_5__building_vs_knife: "off", }, },
@@ -183,7 +141,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_7__ = { 
-		is_base_question: true,
 		htm_stm: "q1_7__more_complexity_then_more_creativity",
 		answers: {
 			q1_7__yes: { htm_answ: "q1_7__yes" },
@@ -192,7 +149,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_70__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_7__: { q1_7__no: "on", }, },
@@ -200,7 +156,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_8__ = { 
-		is_base_question: true,
 		htm_stm: "q1_8__more_creativity",
 		is_multi: true,
 		answers: {
@@ -211,7 +166,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_80__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_8__: { q1_8__building_vs_knife: "off", }, },
@@ -221,7 +175,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_9__ = { 
-		is_base_question: true,
 		htm_stm: "q1_9__coplexity_of_biological_machines",
 		is_multi: true,
 		answers: {
@@ -233,7 +186,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_90__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_9__: { q1_9__car_vs_mitosis: "off", }, },
@@ -244,7 +196,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_91__ = { 
-		is_base_question: true,
 		htm_stm: "q1_91__more_complexity_in_biology",
 		answers: {
 			q1_91__yes: { htm_answ: "q1_91__yes" },
@@ -253,7 +204,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_91_0__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_91__: { q1_91__no: "on", }, },
@@ -261,7 +211,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_92__ = { 
-		is_base_question: true,
 		htm_stm: "q1_92__human_complexity",
 		is_multi: true,
 		answers: {
@@ -272,7 +221,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_92_0__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_92__: { q1_92__leg: "off", }, },
@@ -284,7 +232,6 @@ export function init_exam_database(){
 	// UPDATING_HERE
 	
 	db.q1_93__ = { 
-		//is_base_question: true,
 		htm_stm: "q1_93__biological_requires_creativity",
 		has_qrefs: true,
 		answers: {
@@ -297,7 +244,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_93_0__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_93__: { q1_93__no: "on", }, },
@@ -317,7 +263,6 @@ export function init_exam_database(){
 	};
 	
 	db.q1_94_0__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q1_94__: { q1_94__no: "on", }, },
@@ -325,7 +270,6 @@ export function init_exam_database(){
 	};
 	
 	db.q2_1__ = { 
-		is_base_question: true,
 		htm_stm: "q2_1__can_an_engineer_rebuild_his_house",
 		presentation: "q2_0__reproduction_section",
 		answers: {
@@ -335,7 +279,6 @@ export function init_exam_database(){
 	};
 	
 	db.q2_10__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q2_1__: { q2_1__no: "on", }, q1_30__: { shown: "off", }, },
@@ -355,7 +298,6 @@ export function init_exam_database(){
 	};
 	
 	db.q2_20__ = { 
-		is_inconsistency: true,
 		htm_stm: "q0_2__contradiction",
 		activated_if: {
 			c1: { q2_2__: { q2_2__no: "on", }, },
@@ -363,7 +305,6 @@ export function init_exam_database(){
 	};
 	
 	db.q3_1__ = { 
-		is_base_question: true,
 		htm_stm: "q3_1__jesus_resurrection_claims",
 		presentation: "q3_1__resurrection_section",
 		is_multi: true,
@@ -375,7 +316,6 @@ export function init_exam_database(){
 	};
 	
 	db.q3_2__ = { 
-		is_base_question: true,
 		htm_stm: "q3_2__people_resurrection_claims",
 		is_multi: true,
 		answers: {
@@ -388,7 +328,6 @@ export function init_exam_database(){
 	};
 	
 	db.q3_3__ = { 
-		is_base_question: true,
 		htm_stm: "q3_3__dispute_or_accept_resurrection",
 		answers: {
 			q3_3__not_believed: { htm_answ: "q3_3__not_believed" },
@@ -540,35 +479,30 @@ export function init_exam_database(){
 	};
 	
 	db.q12_rv1__ = { 
-		is_inconsistency: true,
 		htm_stm: "q12_1__response_to_verse1", 
 		activated_if: {
 			c1: { q12_1__: { q12_1__verse1_str: "on", }, },
 		},		
 	};
 	db.q12_rv2__ = { 
-		is_inconsistency: true,
 		htm_stm: "q12_1__response_to_verse2", 
 		activated_if: {
 			c1: { q12_1__: { q12_1__verse2_str: "on", }, },
 		},		
 	};
 	db.q12_rv3__ = { 
-		is_inconsistency: true,
 		htm_stm: "q12_1__response_to_verse3", 
 		activated_if: {
 			c1: { q12_1__: { q12_1__verse3_str: "on", }, },
 		},		
 	};
 	db.q12_rv4__ = { 
-		is_inconsistency: true,
 		htm_stm: "q12_1__response_to_verse4", 
 		activated_if: {
 			c1: { q12_1__: { q12_1__verse4_str: "on", }, },
 		},		
 	};
 	db.q12_rv5__ = { 
-		is_inconsistency: true,
 		htm_stm: "q12_1__response_to_verse5", 
 		activated_if: {
 			c1: { q12_1__: { q12_1__verse5_str: "on", }, },
@@ -618,7 +552,6 @@ export function init_exam_database(){
 	};
 	
 	db.q14_1__ = { 
-		is_base_question: true,
 		htm_stm: "q14_1__the_cloth",
 		presentation: "q14_1__the_cloth_sec",
 		answers: {

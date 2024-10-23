@@ -560,8 +560,6 @@ export function add_response_observation(qid, cit_obj){
 	const rnam = get_verse_reponse_name(qid, cit_obj);
 	const ans_key = get_answer_key(qid, cit_obj);
 	const obj_resp = { 
-		is_inconsistency: true,
-		debug: true,
 		htm_stm: rnam, 
 		activated_if: {	c1: {}, },
 	};

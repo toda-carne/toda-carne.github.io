@@ -601,6 +601,18 @@ color: white;
 	border: 0.1vw solid white;
 }
 
+.exam.is_qnum {
+	display: inline-block;
+	margin-top: 2vw;
+	border: 0.1vw solid white;
+	background-color: #142d55;
+}
+
+.exam.is_qnum:hover,.is_qnum:hover>* {
+	background-color: #ddd;
+	color: black;
+}
+
 .exam.has_margin_bot {
 	margin-bottom: 1em;
 }

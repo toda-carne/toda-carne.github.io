@@ -119,6 +119,33 @@ function is_in_viewport(elem) {
 
 // CODE_FOR QUESTION DYSPLAY AND USER OPERATION
 
+function is_observation(quest){
+	if(quest == null){ return false; }
+	const has_answers = (quest.answers != null);
+	const has_activate = (quest.activated_if != null);
+	return (! has_answers && has_activate);
+}
+
+function is_base_question(quest){
+	if(quest == null){ return false; }
+	const has_answers = (quest.answers != null);
+	const has_activate = (quest.activated_if != null);
+	return (has_answers && ! has_activate);
+}
+
+function is_activated_question(quest){
+	if(quest == null){ return false; }
+	const has_answers = (quest.answers != null);
+	const has_activate = (quest.activated_if != null);
+	return (has_answers && has_activate);
+}
+
+function is_question(quest){
+	if(quest == null){ return false; }
+	const has_answers = (quest.answers != null);
+	return has_answers;
+}
+
 function get_last_quest(){
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
 	const all_q = dv_all_quest.childNodes;
@@ -130,7 +157,7 @@ function get_last_quest(){
 		if(qid == null){ continue; }
 		quest = glb_poll_db[qid];
 		if(quest == null){ continue; }
-		if(! quest.is_inconsistency){
+		if(is_question(quest)){
 			break;
 		}
 		curr_idx--;
@@ -180,47 +207,14 @@ function add_question(qid){
 	dv_stm.classList.add("exam");
 	dv_stm.classList.add("stm");
 	
-	const dv_pos = dv_stm.appendChild(document.createElement("div"));
-	dv_pos.classList.add("exam");
-	dv_pos.classList.add("pos");
-	dv_pos.classList.add("is_button");
-	dv_pos.addEventListener('click', function() {
-		toggle_pos_interaction(qid);
-	});
-
-	if(pos_txt != null){
-		const dv_pos_txt = dv_pos.appendChild(document.createElement("div"));
-		dv_pos_txt.id = qid + SUF_ID_POS_TXT;
-		dv_pos_txt.classList.add("exam");
-		//dv_pos_txt.classList.add("is_hover");
-		dv_pos_txt.classList.add("is_block");
-		dv_pos_txt.innerHTML = get_msg(pos_txt);
-	}
-	
-	if(v_min != null){
-		const dv_min = dv_pos.appendChild(document.createElement("div"));
-		dv_min.id = qid + SUF_ID_POS_MIN;
-		dv_min.classList.add("exam");
-		//dv_min.classList.add("is_hover");
-		dv_min.classList.add("is_block");
-		dv_min.innerHTML = v_min;
-
-		if(v_max != null){
-			const dv_max = dv_pos.appendChild(document.createElement("div"));
-			dv_max.id = qid + SUF_ID_POS_MAX;
-			dv_max.classList.add("exam");
-			//dv_max.classList.add("is_hover");
-			dv_max.classList.add("is_block");
-			dv_max.innerHTML = v_max;
-		}
-	}
-	
 	let the_stm = get_msg(quest.htm_stm);
 	if(quest.has_qrefs){
 		the_stm = replace_all_qrefs(the_stm);
 	}
 	
-	let sp_num = document.createElement("span")
+	const sp_num = document.createElement("span")
+	sp_num.classList.add("exam");
+	sp_num.classList.add("is_qnum");
 	
 	sp_num.innerHTML = "<b>" + quest.pos_page + ". </b>";
 	
@@ -238,7 +232,6 @@ function add_question(qid){
 	dv_qstm.innerHTML = "" + the_stm;
 	dv_qstm.prepend(sp_num);
 	
-	//dv_qstm.classList.toggle("contradiction");
 	if(quest.answers != null){
 		/*dv_qstm.addEventListener('contextmenu', (ev1) => {
 			ev1.preventDefault();
@@ -299,7 +292,6 @@ export function init_answers(qid){
 			continue; // continue with next elem
 		}
 		if(! is_init_to_answer && ! an_answ.is_on){
-			//if(has_contra && (an_answ.should_on != null)){
 			if(an_answ.should_on != null){
 				const dv_shd_on = dv_answers.appendChild(document.createElement("div"));
 				dv_shd_on.classList.add("exam");
@@ -311,7 +303,6 @@ export function init_answers(qid){
 				dv_shd_on.tc_is_should = true;
 				add_right_click_listener_for_answer(qid, dv_shd_on);
 			}
-			//return; // continue with next elem
 			continue; // continue with next elem
 		}
 		
@@ -347,7 +338,6 @@ export function init_answers(qid){
 			add_listener_to_add_edit_button(dv_answers, dv_answ, qid);
 		}
 	}
-	//});
 	
 	const id_dv_end_ans = qid + SUF_ID_END_ANS;
 	let dv_end_ans = document.getElementById(id_dv_end_ans);
@@ -722,101 +712,6 @@ function has_citations(dv_support){
 	const ans = chd.tc_answ_obj;
 	if(ans == null){ return false; }
 	return (ans.kind != null);
-}
-
-// CODE_FOR POS ED
-
-function toggle_pos_interaction(qid){
-	const dv_quest = document.getElementById(qid);
-	
-	const id_dv_inter = "id_interac_ed";
-	dv_inter = get_new_dv_under(dv_quest, id_dv_inter);
-	if(dv_inter == null){
-		return;
-	}
-	dv_inter.id = id_dv_inter;
-	
-	dv_inter.classList.add("exam");
-	dv_inter.classList.add("pos_inter");
-	
-	const nd_min = document.getElementById(qid + SUF_ID_POS_MIN);
-	const nd_max = document.getElementById(qid + SUF_ID_POS_MAX);
-	if(nd_min != null){
-		var v_min = nd_min.innerHTML;
-		var id_set_min = qid + SUF_ID_POS_SET_MIN;
-		add_input_interaction(dv_inter, id_set_min, "Year begins", v_min);
-		
-		if(nd_max != null){
-			var v_max = nd_max.innerHTML;
-			var id_set_max = qid + SUF_ID_POS_SET_MAX;
-			add_input_interaction(dv_inter, id_set_max, "Year ends", v_max);
-		}
-	}
-	
-	
-	const dv_ok = dv_inter.appendChild(document.createElement("div"));
-	dv_ok.classList.add("exam");
-	dv_ok.classList.add("is_block");
-	dv_ok.classList.add("is_button");
-	dv_ok.innerHTML = glb_curr_lang.msg_ok;
-	dv_ok.addEventListener('click', function() {
-		if(nd_min != null){
-			nd_min.innerHTML = document.getElementById(qid + SUF_ID_POS_SET_MIN).value;
-			if(nd_max != null){
-				nd_max.innerHTML = document.getElementById(qid + SUF_ID_POS_SET_MAX).value;
-			}
-		}
-		dv_inter.remove();
-
-		if(! is_in_viewport(dv_quest)){
-			dv_quest.scrollIntoView({
-				behavior: 'auto',
-				block: 'start',
-				inline: 'center'
-			});	
-		}
-		
-		return;
-	});    
-	
-	if(! is_in_viewport(dv_inter)){
-		dv_inter.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});
-	}
-	
-}
-
-function add_input_interaction(dv_inter, id_input, label, curr_val){
-	const lab_1 = dv_inter.appendChild(document.createElement("div"));
-	lab_1.classList.add("exam");
-	lab_1.classList.add("is_block");
-	lab_1.innerHTML = label;
-	
-	
-	const full_inp = dv_inter.appendChild(document.createElement("div"));
-	full_inp.classList.add("is_block");
-	if(is_mobile_browser()){
-		const dv_neg = full_inp.appendChild(document.createElement("div"));
-		dv_neg.classList.add("exam");
-		dv_neg.classList.add("is_inline_input");
-		dv_neg.classList.add("is_button");
-		dv_neg.innerHTML = "neg";
-		dv_neg.addEventListener('click', function() {
-			document.getElementById(id_input).value = -document.getElementById(id_input).value;
-			return;
-		});
-		
-	}
-	const inp_1 = full_inp.appendChild(document.createElement("input"));
-	inp_1.id = id_input;
-	inp_1.value = curr_val;
-	inp_1.type = "number";
-	inp_1.size = 5;
-	inp_1.classList.add("exam");
-	inp_1.classList.add("is_inline_input");
 }
 
 // CODE_FOR VERSE ED
@@ -1724,8 +1619,8 @@ function display_exam_load_object(ld_obj){
 		if(get_qid_base(qid) == null){
 			continue; // it is not a question
 		}
-		if(quest.is_inconsistency){
-			show_inconsistency(qid, null);
+		if(is_observation(quest)){
+			show_observation(qid, null);
 			continue;
 		}
 		
@@ -1898,7 +1793,7 @@ function init_signals_for(qid){
 	quest.qid = qid;  // very convinient self ref
 
 	if(quest.activated_if == null){ 
-		if(quest.is_base_question){
+		if(is_base_question(quest)){
 			glb_poll_db.all_base_questions.push(qid);
 		}
 		return; 
@@ -1939,11 +1834,12 @@ function init_signals_for(qid){
 				const anid_fire = all_to_fire[anid];
 				if(anid_fire == null){ continue; }
 				
-				if((val == "on") || quest.is_inconsistency){ 
+				const is_obs = is_observation(quest);
+				if((val == "on") || is_obs){ 
 					if(anid_fire.signal_if_on == null){ anid_fire.signal_if_on = []; }
 					anid_fire.signal_if_on.push(qid); 
 				}
-				if((val == "off") || quest.is_inconsistency){ 
+				if((val == "off") || is_obs){ 
 					if(anid_fire.signal_if_off == null){ anid_fire.signal_if_off = []; }
 					anid_fire.signal_if_off.push(qid); 
 				}
@@ -1982,7 +1878,7 @@ function check_if_dnf_is_sat(qid){
 					is_act = (((val == "on") && is_shown) || ((val == "off") && ! is_shown));
 					//console.log(" | qid=" + qid + " | qid_signl=" + qid_signl + " | is_act=" + is_act + " | val=" + val + " | is_shown=" + is_shown);
 				} else {				
-					if(qst_answs == null){ continue; } // if (anid == "shown") of an inconsistency it CAN be null
+					if(qst_answs == null){ continue; } // if (anid == "shown") of an observation it CAN be null
 					const an_answ = qst_answs[anid];
 					if(an_answ == null){ continue; }
 					
@@ -2012,8 +1908,8 @@ function check_if_dnf_is_sat(qid){
 function add_pending(qid){
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return false; }
-	if(quest.is_inconsistency){ 
-		console.log("Internal error. Trying to add inconsistency as pending qid=" + qid);
+	if(is_observation(quest)){ 
+		console.log("Internal error. Trying to add observation as pending qid=" + qid);
 		return false;		
 	}
 	const dv_qid = document.getElementById(qid);
@@ -2043,7 +1939,7 @@ function send_signals_to(all_to_signl, all_to_act){
 		
 		const csat = (check_if_dnf_is_sat(qid_signl) != null);
 		
-		if(qsignl.is_inconsistency){
+		if(is_observation(qsignl)){
 			const dv_qsignl = document.getElementById(qid_signl);
 			if(dv_qsignl != null){
 				all_to_act.old_incons.push(qid_signl);
@@ -2094,11 +1990,11 @@ function send_all_signals(qid){
 
 function activate_signals(all_to_act){
 	for(const qid of all_to_act.old_incons){
-		console.log("Updating OLD inconsistency qid=" + qid);
-		update_inconsistency(qid, all_to_act);
+		console.log("Updating OLD observation qid=" + qid);
+		update_observation(qid, all_to_act);
 	}
 	for(const qid of all_to_act.new_incons){
-		show_inconsistency(qid, all_to_act);
+		show_observation(qid, all_to_act);
 	}
 	for(const qid of all_to_act.pends){
 		add_pending(qid);
@@ -2154,9 +2050,9 @@ function undo_last_quest(){
 		quest.has_answ = null;
 		quest.qparent = null;
 	
-		if(! quest.is_inconsistency){
+		if(is_question(quest)){
 			if(! found_last){ 
-				if(quest.is_base_question){
+				if(is_base_question(quest)){
 					glb_poll_db.all_base_questions.unshift(qid);
 				} else {
 					glb_poll_db.all_pending.unshift(qid);
@@ -2182,23 +2078,23 @@ function undo_last_quest(){
 
 // CODE_FOR OBSERVATION DISPLAY
 
-function show_inconsistency(qid, all_to_act){
+function show_observation(qid, all_to_act){
 	const quest = glb_poll_db[qid];
 	if(quest == null){
-		console.log("Could not find inconsistency " + qid + " in questions db.");
+		console.log("Could not find observation " + qid + " in questions db.");
 		return null;
 	}
-	if(! quest.is_inconsistency){
-		console.log("Internal error. Trying to add a NON inconsistency as inconsistency qid=" + qid);
+	if(is_question(quest)){
+		console.log("Internal error. Trying to add a NON observation as observation qid=" + qid);
 		return null;
 	}
 	let dv_quest = document.getElementById(qid);
 	if(dv_quest != null){ 
-		console.log("Updating OLD inconsistency from show_inconsistency qid=" + qid);
-		update_inconsistency(qid, all_to_act);
+		console.log("Updating OLD observation from show_observation qid=" + qid);
+		update_observation(qid, all_to_act);
 		return null;
 	}
-	//console.log("ADDING inconsistency " + qid + " to page.");
+	//console.log("ADDING observation " + qid + " to page.");
 	
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
 	dv_quest = dv_all_quest.appendChild(document.createElement("div"));
@@ -2233,8 +2129,8 @@ function show_inconsistency(qid, all_to_act){
 	sp_qrefs_inconsis.id = qid + SUF_ID_QREFS_INCONSIS;
 	dv_qstm.append(sp_qrefs_inconsis);
 	
-	console.log("Updating NEW inconsistency from show_inconsistency qid=" + qid);
-	update_inconsistency(qid, all_to_act);
+	console.log("Updating NEW observation from show_observation qid=" + qid);
+	update_observation(qid, all_to_act);
 
 	if(! is_in_viewport(dv_stm)){
 		dv_stm.scrollIntoView({
@@ -2258,10 +2154,10 @@ function get_sat_conj_qids(qid){
 	return incos_qids;
 }
 
-function update_inconsistency(qid, all_to_act){
+function update_observation(qid, all_to_act){
 	let sp_qrefs_inconsis = document.getElementById(qid + SUF_ID_QREFS_INCONSIS);
 	if(sp_qrefs_inconsis == null){ 
-		//console.log("Internal error. Trying to update inconsistency qid=" + qid + " without qrefs span");
+		//console.log("Internal error. Trying to update observation qid=" + qid + " without qrefs span");
 		//console.log("Already removed qid=" + qid);
 		return null;
 	}
