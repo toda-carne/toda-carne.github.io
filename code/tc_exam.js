@@ -22,14 +22,6 @@ let fb_write_object = null;
 let fb_read_object = null;
 let fb_sign_out = null;
 
-const glb_all_wrk_str = "all_wrk_quests";
-let ALL_WORKING = null;
-
-const ANSWD_BNDR = "answd_bndr";
-const PEND_BNDR = "pend_bndr";
-
-const ROOT_QUEST_ID = "root_quest_id";
-
 const MIN_ANSW_SHOW_INVERT = 3;
 
 const qref_prefix = "QREF_";
@@ -112,7 +104,7 @@ const id_dv_sel_option = "id_dv_sel_option";
 const id_dv_name_ed = "id_dv_name_ed";
 const id_dv_answ_ed = "id_dv_answ_ed"; 
 
-const firebase_answers_path = "/user_answers"; 
+const firebase_answers_path = "/user_answers";
 
 function is_in_viewport(elem) {	
 	var rect = elem.getBoundingClientRect();
@@ -124,6 +116,8 @@ function is_in_viewport(elem) {
 		(rect.bottom <= rect2.bottom)
 	);
 }
+
+// CODE_FOR QUESTION DYSPLAY AND USER OPERATION
 
 function get_last_quest(){
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
@@ -459,7 +453,6 @@ function add_click_listener_for_answer(qid, dv_answ) {
 	});
 }
 
-
 function toggle_answer_ed(dv_answ, ans_kind){
 	if(ans_kind == null){
 		return;
@@ -503,6 +496,8 @@ function end_question(qid){
 	activate_signals(all_to_act);
 	ask_next();
 }
+
+// CODE_FOR QUESTION GIVEN SUPPORT ED (add/remove a verse, add/remove a strong code, add/remove a link to the user support)
 
 function remove_last_added(qid, sufix){
 	const id_dv_last = qid + sufix;
@@ -560,6 +555,26 @@ function get_all_response_ops(quest){
 		add_all_vrs_to_ops(quest.vrs_with_response, all_ops);
 	}
 	return all_ops;
+}
+
+function get_new_dv_under(dv_pop_up, id_dv){
+	var dv_parent = dv_pop_up.parentNode;
+	var dv_options = document.getElementById(id_dv);
+	if(dv_options != null){
+		var was_mine = (dv_pop_up.nextSibling == dv_options);
+		dv_options.remove();
+		if(was_mine){
+			//console.log("get_new_dv_under RETURNS NOTHING !!!!!");
+			return null;
+		}
+	}
+	if(dv_pop_up.nextSibling == null){
+		dv_options = dv_parent.appendChild(document.createElement("div"));
+	} else {
+		dv_options = dv_parent.insertBefore(document.createElement("div"), dv_pop_up.nextSibling);
+	}	
+	dv_options.id = id_dv;
+	return dv_options;
 }
 
 function toggle_support_interaction(qid){
@@ -709,6 +724,8 @@ function has_citations(dv_support){
 	return (ans.kind != null);
 }
 
+// CODE_FOR POS ED
+
 function toggle_pos_interaction(qid){
 	const dv_quest = document.getElementById(qid);
 	
@@ -772,13 +789,37 @@ function toggle_pos_interaction(qid){
 	
 }
 
-function set_cit_params(dv_cit){
-	dv_cit.classList.add("exam");
-	dv_cit.classList.add("is_answer");
-	dv_cit.title = glb_curr_lang.msg_help_answer_right_click;
+function add_input_interaction(dv_inter, id_input, label, curr_val){
+	const lab_1 = dv_inter.appendChild(document.createElement("div"));
+	lab_1.classList.add("exam");
+	lab_1.classList.add("is_block");
+	lab_1.innerHTML = label;
+	
+	
+	const full_inp = dv_inter.appendChild(document.createElement("div"));
+	full_inp.classList.add("is_block");
+	if(is_mobile_browser()){
+		const dv_neg = full_inp.appendChild(document.createElement("div"));
+		dv_neg.classList.add("exam");
+		dv_neg.classList.add("is_inline_input");
+		dv_neg.classList.add("is_button");
+		dv_neg.innerHTML = "neg";
+		dv_neg.addEventListener('click', function() {
+			document.getElementById(id_input).value = -document.getElementById(id_input).value;
+			return;
+		});
+		
+	}
+	const inp_1 = full_inp.appendChild(document.createElement("input"));
+	inp_1.id = id_input;
+	inp_1.value = curr_val;
+	inp_1.type = "number";
+	inp_1.size = 5;
+	inp_1.classList.add("exam");
+	inp_1.classList.add("is_inline_input");
 }
 
-// NEW_IMPLMENTATION WITHOUT VRS_SOMETHING_IDX
+// CODE_FOR VERSE ED
 
 function is_last_added_verse_cit_ok(qid){
 	const id_dv_last_cit = qid + SUF_ID_LAST_ADDED_CITATION;
@@ -1070,7 +1111,6 @@ function toggle_verse_ed(dv_citation){
 function set_answer_cit(dv_citation, cit_obj){
 	const qid = dv_citation.owner_qid;
 	const quest = glb_poll_db[qid];
-	//const kk = refs_ids.added_pfx + dv_citation.answ_idx;
 	const kk = get_answer_key(qid, cit_obj);
 	quest.answers[kk] = cit_obj;
 	dv_citation.tc_answ_obj = cit_obj;
@@ -1080,7 +1120,6 @@ function set_answer_cit(dv_citation, cit_obj){
 function remove_answer_cit(dv_citation){
 	const qid = dv_citation.owner_qid;
 	const quest = glb_poll_db[qid];
-	//const kk = refs_ids.added_pfx + dv_citation.answ_idx;
 	const cit_obj = dv_citation.tc_answ_obj;
 	const kk = get_answer_key(qid, cit_obj);
 	quest.answers[kk] = null;
@@ -1092,25 +1131,7 @@ function set_answer_for_verse_cit(dv_citation){
 	set_answer_cit(dv_citation, obj_ok);
 }
 
-function get_new_dv_under(dv_pop_up, id_dv){
-	var dv_parent = dv_pop_up.parentNode;
-	var dv_options = document.getElementById(id_dv);
-	if(dv_options != null){
-		var was_mine = (dv_pop_up.nextSibling == dv_options);
-		dv_options.remove();
-		if(was_mine){
-			//console.log("get_new_dv_under RETURNS NOTHING !!!!!");
-			return null;
-		}
-	}
-	if(dv_pop_up.nextSibling == null){
-		dv_options = dv_parent.appendChild(document.createElement("div"));
-	} else {
-		dv_options = dv_parent.insertBefore(document.createElement("div"), dv_pop_up.nextSibling);
-	}	
-	dv_options.id = id_dv;
-	return dv_options;
-}
+// CODE_FOR SELECT FROM ARRAY OF OPTIONS (for example several verses)
 
 function toggle_select_option(dv_return, all_options_arr, on_click_fn){
 	var dv_options = get_new_dv_under(dv_return, id_dv_sel_option);
@@ -1120,7 +1141,6 @@ function toggle_select_option(dv_return, all_options_arr, on_click_fn){
 	dv_options.classList.add("exam");
 	dv_options.classList.add("is_block");
 	
-	//for (const [key, value] of Object.entries(all_options)) {
 	all_options_arr.forEach((value) => {
 		const dv_opt = add_option(dv_options, null, value, null);
 		dv_opt.addEventListener('click', function() {
@@ -1156,61 +1176,40 @@ function add_option(dv_parent, id_option, label, handler){
 	return dv_opt; 
 }
 
-function add_input_interaction(dv_inter, id_input, label, curr_val){
-	const lab_1 = dv_inter.appendChild(document.createElement("div"));
-	lab_1.classList.add("exam");
-	lab_1.classList.add("is_block");
-	lab_1.innerHTML = label;
-	
-	
-	const full_inp = dv_inter.appendChild(document.createElement("div"));
-	full_inp.classList.add("is_block");
-	if(is_mobile_browser()){
-		const dv_neg = full_inp.appendChild(document.createElement("div"));
-		dv_neg.classList.add("exam");
-		dv_neg.classList.add("is_inline_input");
-		dv_neg.classList.add("is_button");
-		dv_neg.innerHTML = "neg";
-		dv_neg.addEventListener('click', function() {
-			document.getElementById(id_input).value = -document.getElementById(id_input).value;
-			return;
-		});
-		
-	}
-	const inp_1 = full_inp.appendChild(document.createElement("input"));
-	inp_1.id = id_input;
-	inp_1.value = curr_val;
-	inp_1.type = "number";
-	inp_1.size = 5;
-	inp_1.classList.add("exam");
-	inp_1.classList.add("is_inline_input");
-}
+// CODE_FOR GLOBAL BUTTONS HANDLERS
 
-function get_id_pos_array(dv_elem){
-	if(dv_elem.tagName != "DIV"){
-		return ["INVALID_ID", MIN_DATE];
-	}
-	const id_min = dv_elem.id + SUF_ID_POS_MIN;
-	const dv_min = document.getElementById(id_min);
+export function init_page_exam(ini_func){
+	console.log("Called init_page_exam");
+
+	//let sd_menu = document.getElementById("id_side_menu");
+	//sd_menu.classList.toggle("has_side_nav");
+	INIT_EXAM_DB_FUNC = ini_func;
 	
-	var val_min = MIN_DATE;
-	if(dv_min != null){
-		val_min = parseInt(dv_min.innerHTML);
+	init_exam_fb();
+	if(INIT_EXAM_DB_FUNC != null){ 
+		INIT_EXAM_DB_FUNC(); 
 	}
+	init_DAG_func();
+	init_exam_module_vars();
+	init_exam_buttons();
+	
+	ask_next();
+};
 
-	const id_pos_pair = [dv_elem.id, val_min];
-	return id_pos_pair;
-}
-
-function get_all_id_pos_array(){
-	const dv_all_quest = document.getElementById("id_exam_all_questions");
-	const all_pairs = [];
-	for (const child of dv_all_quest.children) {
-		all_pairs.push(get_id_pos_array(child));
-		//console.log(child.tagName);
-		//console.log(child.id);
-	}
-	return all_pairs;
+function init_exam_buttons(){
+	let dv_button = null;
+	
+	dv_button = document.getElementById("id_exam_save_button"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', save_button_handler); }
+	
+	dv_button = document.getElementById("id_exam_open_button"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', open_button_handler); }
+	
+	dv_button = document.getElementById("id_exam_delete_button"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', delete_button_handler); }
+	
+	dv_button = document.getElementById("id_exam_undo_button"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', undo_button_handler); }
 }
 
 function save_button_handler(){	
@@ -1290,21 +1289,11 @@ function delete_button_handler(){
 	});	
 }
 
-function sort_button_handler(){
-	const all_pairs = get_all_id_pos_array();
-	const sorted_pairs = all_pairs.sort((p1, p2) => p1[1] - p2[1]);
-	//console.log(sorted_pairs);
-	//console.log("PRESSED_SORT_BUTTON");
-	
-	const dv_all_stm = document.getElementById("id_exam_all_questions");
-	sorted_pairs.forEach((pair) => {
-		const qid = pair[0];
-		const dv_quest = document.getElementById(qid);
-		dv_quest.remove();
-		dv_all_stm.appendChild(dv_quest);
-	});
-	
+function undo_button_handler(){
+	undo_last_quest();
 }
+
+// CODE_FOR STRONG REF ED
 
 function is_last_added_strong_ok(qid){
 	const id_dv_last_strong = qid + SUF_ID_LAST_ADDED_STRONG;
@@ -1320,6 +1309,12 @@ function is_last_added_strong_ok(qid){
 		}
 	}
 	return false;
+}
+
+function set_cit_params(dv_cit){
+	dv_cit.classList.add("exam");
+	dv_cit.classList.add("is_answer");
+	dv_cit.title = glb_curr_lang.msg_help_answer_right_click;
 }
 
 function add_strong_cit(qid, stg_obj){
@@ -1427,19 +1422,10 @@ function toggle_strong_ed(dv_code){
 	dv_ok.classList.add("is_button");
 	dv_ok.classList.add("is_ed_verse");
 	dv_ok.innerHTML = glb_curr_lang.msg_ok;
-	/*if(cit_obj.side == refs_ids.in_favor_side){
-		dv_ok.innerHTML = glb_curr_lang.msg_in_favor;
-		dv_ok.classList.add("is_green_border");
-	} else {
-		dv_ok.innerHTML = glb_curr_lang.msg_against;
-		dv_ok.classList.add("is_red_border");
-	}*/
 	dv_ok.addEventListener('click', function() {
-		//const all_chd = dv_code.childNodes;
 		dv_code.innerHTML = inp_slang.innerHTML + inp_snum.value;
 		dv_ed_strong.remove();
 		
-		//set_cit_side(dv_code, dv_ok);
 		set_answer_for_strong_cit(dv_code);
 		
 		if(! is_in_viewport(dv_code)){
@@ -1467,24 +1453,7 @@ function set_answer_for_strong_cit(dv_citation){
 	set_answer_cit(dv_citation, obj_ok);
 }
 
-function init_exam_buttons(){
-	let dv_button = null;
-	
-	dv_button = document.getElementById("id_exam_save_button"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', save_button_handler); }
-	
-	dv_button = document.getElementById("id_exam_open_button"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', open_button_handler); }
-	
-	dv_button = document.getElementById("id_exam_delete_button"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', delete_button_handler); }
-	
-	dv_button = document.getElementById("id_exam_sort_button"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', sort_button_handler); }
-	
-	dv_button = document.getElementById("id_exam_undo_button"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', undo_button_handler); }
-}
+// CODE_FOR LINK ED
 
 function is_last_added_link_ok(qid){
 	const id_dv_last_link = qid + SUF_ID_LAST_ADDED_LINK;
@@ -1609,13 +1578,6 @@ function toggle_link_ed(dv_link){
 	dv_ok.classList.add("is_button");
 	dv_ok.classList.add("is_ed_verse");
 	dv_ok.innerHTML = glb_curr_lang.msg_ok;
-	/*if(lnk_cit_obj.side == refs_ids.in_favor_side){
-		dv_ok.innerHTML = glb_curr_lang.msg_in_favor;
-		dv_ok.classList.add("is_green_border");
-	} else {
-		dv_ok.innerHTML = glb_curr_lang.msg_against;
-		dv_ok.classList.add("is_red_border");
-	}*/
 	dv_ok.addEventListener('click', function() {
 		const all_chd = dv_link.childNodes;
 		all_chd[LNK_NAME_IDX].innerHTML = inp_name.value;
@@ -1649,6 +1611,8 @@ function set_answer_for_link_cit(dv_citation){
 	const obj_ok = calc_link_cit_object(dv_citation);
 	set_answer_cit(dv_citation, obj_ok);
 }
+
+// CODE_FOR SAVE EXAM
 
 function toggle_exam_name_ed(dv_name, save_fn){
 	var dv_ed_name = get_new_dv_under(dv_name, id_dv_name_ed);
@@ -1699,41 +1663,6 @@ function toggle_exam_name_ed(dv_name, save_fn){
 		});
 	}
 }
-
-export function init_page_exam(ini_func){
-	console.log("Called init_page_exam");
-
-	//let sd_menu = document.getElementById("id_side_menu");
-	//sd_menu.classList.toggle("has_side_nav");
-	INIT_EXAM_DB_FUNC = ini_func;
-	
-	init_exam_fb();
-	if(INIT_EXAM_DB_FUNC != null){ 
-		INIT_EXAM_DB_FUNC(); 
-	}
-	init_DAG_func();
-	init_exam_module_vars();
-	init_exam_buttons();
-	
-	const found_nxt = ask_next();
-	/*
-	let added = null;
-	for(const qq of glb_poll_starting_questions){
-		//console.log("Adding question " + qq + " to page");
-		added = add_question(qq);
-		if(added == null){
-			console.log("Question " + qq + " could NOT be added to page !!!");
-		} else {
-			const top_quest = glb_poll_db[qq];
-			if(top_quest != null){
-				glb_poll_db[qq].qparent = ROOT_QUEST_ID;
-				//console.log("glb_poll_db[" + qq + "].qparent = " + ROOT_QUEST_ID);
-			}
-		}
-	}
-	return added;
-	*/
-};
 
 function calc_quest_save_object(dv_quest){
 	const qid = dv_quest.id;
@@ -1888,6 +1817,8 @@ function read_firebase_exam_object(){
 	});	
 }
 
+// CODE_FOR QID, QREF AND HREF CONVERSION AND DISPLAY
+
 function qref_to_qid(qrf){
 	return qrf.slice(qref_prefix.length);
 }
@@ -1937,9 +1868,7 @@ function set_anchors_target(the_div){
 	});
 }
 
-// DAG CODING START
-// DAG CODING START
-// DAG CODING START
+// CODE_FOR DAG HANDLING
 
 function init_DAG_func(){
 	if(glb_poll_db.all_base_questions == null){
@@ -2206,6 +2135,53 @@ function ask_next(){
 	return false;
 }
 
+function undo_last_quest(){
+	const dv_all_quest = document.getElementById("id_exam_all_questions");
+	const all_q = dv_all_quest.childNodes;
+	let curr_idx = all_q.length - 1;
+	let quest = null;
+	let found_last = false;
+	while(curr_idx > 0){
+		//console.log("get_curr_pos_page [1] curr_idx=" + curr_idx);
+		const qid = all_q[curr_idx].id;
+		if(qid == null){ continue; }
+		
+		quest = glb_poll_db[qid];
+		if(quest == null){ continue; }
+		
+		if((quest.pos_page == 1) && (quest.has_answ == null)){ break; }
+		
+		quest.has_answ = null;
+		quest.qparent = null;
+	
+		if(! quest.is_inconsistency){
+			if(! found_last){ 
+				if(quest.is_base_question){
+					glb_poll_db.all_base_questions.unshift(qid);
+				} else {
+					glb_poll_db.all_pending.unshift(qid);
+					quest.in_pending = true;
+				}
+				found_last = true; 
+			} else {
+				glb_poll_db.last_added_qid = qid;
+				init_answers(qid);
+				break;
+			}
+		}
+		
+		const dv_quest = document.getElementById(qid);
+		if(dv_quest == null){ continue; }
+		dv_quest.remove();
+			
+		curr_idx--;
+	}
+	//console.log("get_curr_pos_page [2] curr_idx=" + curr_idx);
+	return quest;
+}
+
+// CODE_FOR OBSERVATION DISPLAY
+
 function show_inconsistency(qid, all_to_act){
 	const quest = glb_poll_db[qid];
 	if(quest == null){
@@ -2271,55 +2247,6 @@ function show_inconsistency(qid, all_to_act){
 	return dv_quest;
 }
 
-function undo_last_quest(){
-	const dv_all_quest = document.getElementById("id_exam_all_questions");
-	const all_q = dv_all_quest.childNodes;
-	let curr_idx = all_q.length - 1;
-	let quest = null;
-	let found_last = false;
-	while(curr_idx > 0){
-		//console.log("get_curr_pos_page [1] curr_idx=" + curr_idx);
-		const qid = all_q[curr_idx].id;
-		if(qid == null){ continue; }
-		
-		quest = glb_poll_db[qid];
-		if(quest == null){ continue; }
-		
-		if((quest.pos_page == 1) && (quest.has_answ == null)){ break; }
-		
-		quest.has_answ = null;
-		quest.qparent = null;
-	
-		if(! quest.is_inconsistency){
-			if(! found_last){ 
-				if(quest.is_base_question){
-					glb_poll_db.all_base_questions.unshift(qid);
-				} else {
-					glb_poll_db.all_pending.unshift(qid);
-					quest.in_pending = true;
-				}
-				found_last = true; 
-			} else {
-				glb_poll_db.last_added_qid = qid;
-				init_answers(qid);
-				break;
-			}
-		}
-		
-		const dv_quest = document.getElementById(qid);
-		if(dv_quest == null){ continue; }
-		dv_quest.remove();
-			
-		curr_idx--;
-	}
-	//console.log("get_curr_pos_page [2] curr_idx=" + curr_idx);
-	return quest;
-}
-
-function undo_button_handler(){
-	undo_last_quest();
-}
-
 function get_sat_conj_qids(qid){
 	if(qid == null){ return null; }
 	const quest = glb_poll_db[qid];
@@ -2365,7 +2292,6 @@ function update_inconsistency(qid, all_to_act){
 	set_anchors_target(dv_quest_2);
 }
 
+// CODE_FOR __________________
 
-// DAG CODING END
-// DAG CODING END
-// DAG CODING END
+
