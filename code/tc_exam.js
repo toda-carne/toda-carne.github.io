@@ -613,7 +613,8 @@ function toggle_support_interaction(qid){
 	dv_inter.id = id_dv_inter;
 	
 	dv_inter.classList.add("exam");
-	dv_inter.classList.add("pos_inter");
+	//dv_inter.classList.add("pos_inter");
+	dv_inter.classList.add("grid_item_2col");
 	dv_inter.classList.add("has_margin_bot");
 
 	dv_support.classList.add("ed_support");	
@@ -827,7 +828,7 @@ function toggle_verse_ed(dv_citation){
 		return;
 	}
 	dv_ed_cit.classList.add("exam");
-	dv_ed_cit.classList.add("is_block");
+	dv_ed_cit.classList.add("grid_item_2col");
 	
 	const cit_obj = calc_verse_cit_object(dv_citation);	
 
