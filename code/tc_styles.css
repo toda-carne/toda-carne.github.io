@@ -670,6 +670,7 @@ color: white;
 }
 
 .exam.is_block {
+	position: relative;	
 	display: block;
 	margin-top: 0.5vh;
 	margin-bottom: 0.5vh;
@@ -688,10 +689,56 @@ color: white;
 }
 
 .exam.is_answer {
+	//position: relative;	
 	display: block;
 	margin: 0.7vw;
 	padding: 0.5em 0.5em 0.5em 0.5em;
 	border: 0.2vw solid white;
+}
+
+.exam.is_answ_img {
+	//display: table-row;
+	//overflow: auto;	
+	//position: absolute;	
+	//width: 100%;
+	//height: max-content;
+	//height: 100%;
+	//display: inline-block;
+	//top: 0;
+	//margin: 0.7vw;
+	//padding: 0.5em 0.5em 0.5em 0.5em;
+	//border: 0.2vw solid white;
+	grid-row: auto;
+}
+
+.exam.is_answ_txt {
+	//display: table-row;
+	//overflow: auto;	
+	//position: absolute;	
+	//width: 100%;
+	//height: max-content;
+	//height: 100%;
+	//display: inline-block;
+	//bottom: 0;
+	//margin: 0.7vw;
+	//padding: 0.5em 0.5em 0.5em 0.5em;
+	//border: 0.2vw solid red;
+	grid-row: auto;
+}
+
+.exam.is_answer_2 {
+	position: relative;	
+	//overflow: auto;	
+	display: grid;
+	grid-template-rows: fit-content(8ch) 1fr;;
+	//display: table;
+	width: 40%;
+	//height: max-content;
+	//height: 500px;
+	margin: 0.7vw;
+	padding: 0.5em 0.5em 0.5em 0.5em;
+	border: 0.2vw solid white;
+	background-color: #005500;
 }
 
 .exam.is_answer:hover,.exam.is_answer:hover>* {

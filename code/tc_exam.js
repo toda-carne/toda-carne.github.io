@@ -52,17 +52,8 @@ function init_exam_module_vars(){
 
 const ALL_SAVED_OBJ_NAMES = "all_saved_object_names";
 
-const SUF_ID_POS = "_pos";
 const SUF_ID_QSTM = "_qstm";
-const SUF_ID_QREFS_INCONSIS = "_qrefs_inconsis";
-const SUF_ID_POS_TXT = "_pos_txt";
-const SUF_ID_POS_MIN = "_pos_min";
-const SUF_ID_POS_MAX = "_pos_max";
-const SUF_ID_POS_SET_MIN = "_pos_set_min";
-const SUF_ID_POS_SET_MAX = "_pos_set_max";
-const SUF_ID_POS_SHOW = "_pos_show";
-const SUF_ID_POS_OK = "_pos_ok";
-const SUF_ID_INTER = "_inter";
+const SUF_ID_QREFS_OBSERVATION = "_qrefs_observation";
 const SUF_ID_ANSWERS = "_answers";
 const SUF_ID_SCODES = "_scodes";
 const SUF_ID_LINKS = "_links";
@@ -103,6 +94,9 @@ const id_dv_link_ed = "id_dv_link_ed";
 const id_dv_sel_option = "id_dv_sel_option";
 const id_dv_name_ed = "id_dv_name_ed";
 const id_dv_answ_ed = "id_dv_answ_ed"; 
+
+// FOR DAG pending management
+const id_ctx_pend = "ctx_pend";
 
 const firebase_answers_path = "/user_answers";
 
@@ -185,7 +179,7 @@ function add_question(qid){
 	
 	const lst_quest = get_last_quest();
 	let lst_pos = 0;
-	if(lst_quest != null){ lst_pos = lst_quest.pos_page; }
+	if((lst_quest != null) && (lst_quest.pos_page != null) && (lst_quest.pos_page != INVALID_PAGE_POS)){ lst_pos = lst_quest.pos_page; }
 	
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
 	const dv_quest = dv_all_quest.appendChild(document.createElement("div"));
@@ -194,7 +188,9 @@ function add_question(qid){
 	dv_quest.classList.add("has_border");
 	dv_quest.tc_quest = quest;
 	
-	quest.pos_page = lst_pos + 1;
+	if(quest.pos_page == null){
+		quest.pos_page = lst_pos + 1;
+	}
 	
 	if(quest.presentation != null){
 		const dv_title = dv_quest.appendChild(document.createElement("div"));
@@ -308,17 +304,43 @@ export function init_answers(qid){
 		
 		let dv_answ = null;
 		
-		if(an_answ.kind == null){
-			dv_answ = dv_answers.appendChild(document.createElement("div"));
-			dv_answ.classList.add("exam");
-			dv_answ.classList.add("is_answer");
-			dv_answ.innerHTML = get_msg(an_answ.htm_answ);
-		} else if (an_answ.kind == VRS_CIT_KIND){
+		if (an_answ.kind == VRS_CIT_KIND){
 			dv_answ = add_verse_cit(qid, an_answ);
 		} else if (an_answ.kind == STG_CIT_KIND){
 			dv_answ = add_strong_cit(qid, an_answ);
 		} else if (an_answ.kind == LNK_CIT_KIND){
 			dv_answ = add_link_cit(qid, an_answ);
+		} else {
+			dv_answ = dv_answers.appendChild(document.createElement("div"));
+			let arr1 = ["exam", "is_answer"];
+			if(an_answ.answer_classes != null){
+				arr1 = an_answ.answer_classes;
+			} else if(quest.answer_classes != null){
+				arr1 = quest.answer_classes;
+			}
+			dv_answ.classList.add(...arr1);
+			
+			let dv_txt = dv_answ;
+			/*
+			//if(an_answ.img_href != null){
+				// <img id="img_cielo_1" src="../img/heaven_1_1.jpg" title="Hagame click" style="width:100%">
+				const dv_img = document.createElement("div");
+				const htm_img = document.createElement("img");
+				if(an_answ.img_href != null){
+					htm_img.src = an_answ.img_href;
+				}
+				dv_img.append(htm_img);
+				
+				dv_txt = document.createElement("div");
+				
+				dv_img.classList.add("exam", "is_answ_img");
+				dv_txt.classList.add("exam", "is_answ_txt");				
+				
+				dv_answ.append(dv_img);
+				dv_answ.append(dv_txt);
+			//}
+			*/
+			dv_txt.innerHTML = get_msg(an_answ.htm_answ);			
 		}
 		
 		if(an_answ.rclk_href != null){
@@ -1582,11 +1604,11 @@ function calc_exam_save_object(){
 		}
 	}
 	const db = glb_poll_db;
-	if(db.all_base_questions != null){
-		sv_obj.all_base_questions = JSON.parse(JSON.stringify(db.all_base_questions));
-	}
 	if(db.all_pending != null){
 		sv_obj.all_pending = JSON.parse(JSON.stringify(db.all_pending));
+	}
+	if(db.last_added_qid != null){
+		sv_obj.last_added_qid = db.last_added_qid;
 	}
 	//console.log("FULL_OBJECT_SAVE = " + JSON.stringify(sv_obj, null, "  "));
 	return sv_obj;
@@ -1597,11 +1619,11 @@ function update_nodes_exam_with(ld_obj){
 	for (const [qid, quest] of Object.entries(ld_obj)) {
 		db[qid] = JSON.parse(JSON.stringify(quest));
 	}
-	if(ld_obj.all_base_questions != null){
-		db.all_base_questions = JSON.parse(JSON.stringify(ld_obj.all_base_questions));
-	}
 	if(ld_obj.all_pending != null){
 		db.all_pending = JSON.parse(JSON.stringify(ld_obj.all_pending));
+	}
+	if(ld_obj.last_added_qid != null){
+		db.last_added_qid = ld_obj.last_added_qid;
 	}
 }
 
@@ -1766,11 +1788,9 @@ function set_anchors_target(the_div){
 // CODE_FOR DAG HANDLING
 
 function init_DAG_func(){
-	if(glb_poll_db.all_base_questions == null){
-		glb_poll_db.all_base_questions = [];
-	}
 	if(glb_poll_db.all_pending == null){
-		glb_poll_db.all_pending = [];
+		glb_poll_db.all_pending = {};
+		get_context();
 	}
 	
 	const all_qids = Object.keys(glb_poll_db);
@@ -1793,10 +1813,8 @@ function init_signals_for(qid){
 	quest.qid = qid;  // very convinient self ref
 
 	if(quest.activated_if == null){ 
-		if(is_base_question(quest)){
-			glb_poll_db.all_base_questions.push(qid);
-		}
-		return; 
+		add_pending(qid);
+		return;
 	}
 	
 	const act_if = Object.entries(quest.activated_if);
@@ -1849,12 +1867,17 @@ function init_signals_for(qid){
 }
 
 function check_if_dnf_is_sat(qid){
-	if(qid == null){ return null; }
+	if(qid == null){ return false; }
 	const quest = glb_poll_db[qid];
-	if(quest == null){ return null; }
+	if(quest == null){ return false; }
 	if(quest.debug){ console.log("DEBUGING qid=" + qid + " called check_if_dnf_is_sat"); }
 	//if
-	if(quest.activated_if == null){ return null; }
+	if(quest.activated_if == null){ 
+		if(is_base_question(quest)){
+			return true;
+		}
+		return false; 
+	}
 	const act_if = Object.entries(quest.activated_if);
 	for (const [conj_id, conj_obj] of act_if) {
 		if(conj_obj == null){ continue; }
@@ -1897,12 +1920,64 @@ function check_if_dnf_is_sat(qid){
 		if(conj_act){
 			if(quest.debug){ console.log("DEBUGING qid=" + qid + " check_if_dnf_is_sat IS_SAT"); }
 			quest.last_sat_conj = conj_id;
-			return conj_id;
+			return true;
 		}
 	}
 	if(quest.debug){ console.log("DEBUGING qid=" + qid + " check_if_dnf_is_sat NOT_sat"); }
 	quest.last_sat_conj = null;
-	return null;
+	return false;
+}
+
+function get_context(arr_context){
+	const db = glb_poll_db;
+	let curr_ctx = db.all_pending;
+	if(arr_context != null){
+		for(const ctx of arr_context){
+			if(ctx == null){ continue; }
+			if(ctx == id_ctx_pend){ continue; }
+			if(curr_ctx[ctx] == null){ 
+				curr_ctx[ctx] = {}; 
+				curr_ctx[ctx][id_ctx_pend] = []; 
+			}
+			curr_ctx = curr_ctx[ctx];
+		}
+	}
+	if(curr_ctx[id_ctx_pend] == null){ curr_ctx[id_ctx_pend] = []; }
+	return curr_ctx[id_ctx_pend];
+}
+
+function get_first_context(){
+	let ctx_pair = get_first_open_context();
+	let parent = ctx_pair[0];
+	let ctx_nam = ctx_pair[1];
+	let curr_ctx = parent[ctx_nam];
+	while((ctx_nam != null) && (curr_ctx[id_ctx_pend].length == 0)){
+		delete parent[ctx_nam];
+		
+		ctx_pair = get_first_open_context();
+		parent = ctx_pair[0];
+		ctx_nam = ctx_pair[1];
+		curr_ctx = parent[ctx_nam];
+	}
+	if(ctx_nam != null){
+		return curr_ctx[id_ctx_pend];
+	}
+	return parent[id_ctx_pend];
+}
+
+function get_first_open_context(){
+	const db = glb_poll_db;
+	let parent = db.all_pending;
+	let curr_ctx = db.all_pending;
+	let ctx_nam = null;
+	let curr_keys = Object.keys(curr_ctx);
+	while(curr_keys.length > 1){
+		parent = curr_ctx;
+		ctx_nam = curr_keys[1];
+		curr_ctx = curr_ctx[ctx_nam];
+		curr_keys = Object.keys(curr_ctx);
+	}
+	return [parent, ctx_nam];
 }
 
 function add_pending(qid){
@@ -1917,16 +1992,25 @@ function add_pending(qid){
 	if(is_shown || quest.in_pending){
 		return false;
 	}
-	glb_poll_db.all_pending.push(qid);
+	//const pending = glb_poll_db.all_pending;
+	const pending = get_context(quest.context);
+	/*if(is_base_question(quest)){
+		pending.push(qid); //fifo
+	} else {
+		pending.unshift(qid); //lifo
+	}*/
+	pending.push(qid);
 	quest.in_pending = true;
 	return true;
 }
 
 function get_pending(){
-	if(glb_poll_db.all_pending.length == 0){
+	//const pending = glb_poll_db.all_pending;
+	const pending = get_first_context();
+	if(pending.length == 0){
 		return null;
 	}
-	const qid = glb_poll_db.all_pending.shift();
+	const qid = pending.shift();
 	const quest = glb_poll_db[qid];
 	quest.in_pending = false;
 	return qid;
@@ -1937,14 +2021,14 @@ function send_signals_to(all_to_signl, all_to_act){
 		const qsignl = glb_poll_db[qid_signl];
 		if(qsignl == null){ continue; }
 		
-		const csat = (check_if_dnf_is_sat(qid_signl) != null);
+		const csat = check_if_dnf_is_sat(qid_signl);
 		
 		if(is_observation(qsignl)){
 			const dv_qsignl = document.getElementById(qid_signl);
 			if(dv_qsignl != null){
-				all_to_act.old_incons.push(qid_signl);
+				all_to_act.old_observ.push(qid_signl);
 			} else {
-				if(csat){ all_to_act.new_incons.push(qid_signl); }
+				if(csat){ all_to_act.new_observ.push(qid_signl); }
 			}
 		} else {
 			if(csat){ all_to_act.pends.push(qid_signl); }
@@ -1953,7 +2037,7 @@ function send_signals_to(all_to_signl, all_to_act){
 }
 
 function send_all_signals(qid){
-	const all_to_act = { pends:[], old_incons:[], new_incons:[], };
+	const all_to_act = { pends:[], old_observ:[], new_observ:[], };
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return all_to_act; }
 	
@@ -1989,11 +2073,11 @@ function send_all_signals(qid){
 }
 
 function activate_signals(all_to_act){
-	for(const qid of all_to_act.old_incons){
+	for(const qid of all_to_act.old_observ){
 		console.log("Updating OLD observation qid=" + qid);
 		update_observation(qid, all_to_act);
 	}
-	for(const qid of all_to_act.new_incons){
+	for(const qid of all_to_act.new_observ){
 		show_observation(qid, all_to_act);
 	}
 	for(const qid of all_to_act.pends){
@@ -2007,7 +2091,7 @@ function ask_next(){
 		return false;
 	}
 	qid = get_pending();
-	while((qid != null) && (check_if_dnf_is_sat(qid) == null)){
+	while((qid != null) && ! check_if_dnf_is_sat(qid)){
 		qid = get_pending();
 	}
 	let added = null;
@@ -2018,15 +2102,6 @@ function ask_next(){
 			return true;
 		}
 		console.log("Question " + qid + " could NOT be added to page during ask_next [1] !!!");
-	}
-	if(glb_poll_db.all_base_questions.length != 0){ 
-		qid = glb_poll_db.all_base_questions.shift();
-		added = add_question(qid);
-		if(added != null){
-			glb_poll_db.last_added_qid = qid;
-			return true;
-		}
-		console.log("Question " + qid + " could NOT be added to page during ask_next [2] !!!");
 	}
 	return false;
 }
@@ -2048,16 +2123,12 @@ function undo_last_quest(){
 		if((quest.pos_page == 1) && (quest.has_answ == null)){ break; }
 		
 		quest.has_answ = null;
-		quest.qparent = null;
 	
 		if(is_question(quest)){
 			if(! found_last){ 
-				if(is_base_question(quest)){
-					glb_poll_db.all_base_questions.unshift(qid);
-				} else {
-					glb_poll_db.all_pending.unshift(qid);
-					quest.in_pending = true;
-				}
+				const pending = get_context(quest.context);
+				pending.unshift(qid);
+				quest.in_pending = true;
 				found_last = true; 
 			} else {
 				glb_poll_db.last_added_qid = qid;
@@ -2125,9 +2196,9 @@ function show_observation(qid, all_to_act){
 		dv_qstm.title = qid;
 	}	
 	
-	const sp_qrefs_inconsis = document.createElement("span");
-	sp_qrefs_inconsis.id = qid + SUF_ID_QREFS_INCONSIS;
-	dv_qstm.append(sp_qrefs_inconsis);
+	const sp_qrefs_observ = document.createElement("span");
+	sp_qrefs_observ.id = qid + SUF_ID_QREFS_OBSERVATION;
+	dv_qstm.append(sp_qrefs_observ);
 	
 	console.log("Updating NEW observation from show_observation qid=" + qid);
 	update_observation(qid, all_to_act);
@@ -2155,8 +2226,8 @@ function get_sat_conj_qids(qid){
 }
 
 function update_observation(qid, all_to_act){
-	let sp_qrefs_inconsis = document.getElementById(qid + SUF_ID_QREFS_INCONSIS);
-	if(sp_qrefs_inconsis == null){ 
+	let sp_qrefs_observ = document.getElementById(qid + SUF_ID_QREFS_OBSERVATION);
+	if(sp_qrefs_observ == null){ 
 		//console.log("Internal error. Trying to update observation qid=" + qid + " without qrefs span");
 		//console.log("Already removed qid=" + qid);
 		return null;
@@ -2182,7 +2253,7 @@ function update_observation(qid, all_to_act){
 		return;
 	}
 	const sufix_qhrefs = get_qhrefs_of(incos_qids, null);
-	sp_qrefs_inconsis.innerHTML = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs;
+	sp_qrefs_observ.innerHTML = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs;
 	
 	const dv_quest_2 = document.getElementById(qid);
 	set_anchors_target(dv_quest_2);

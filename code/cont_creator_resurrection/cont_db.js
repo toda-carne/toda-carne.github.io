@@ -16,18 +16,24 @@ export function init_exam_database(){
 
 	db.q1_1__ = { 
 		htm_stm: "q1_1__are_you_reasonable",
+		answer_classes: ["exam", "is_answer_2"], 
 		answers: {
 			q1_1__yes: { htm_answ: "q1_1__yes", 
 				should_on: "q1_1__should_yes",
 				rclk_href: "q1_1__pru_href", // uncomment to debug right_click 
 				//rclk_should_href: "q1_1__pru_should_href", // uncomment to debug right_click of should_href
 			},
-			q1_1__no: { htm_answ: "q1_1__no" },
+			q1_1__no: { htm_answ: "q1_1__no", 
+				img_href: "../img/heaven_1_1.jpg"
+			},
+			q1_1__other: { htm_answ: "q1_1__no", 
+			},
 		},
 	};
 	
 	db.q1_10__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_1__: { q1_1__no: "on", }, },
 		},
@@ -43,6 +49,7 @@ export function init_exam_database(){
 	
 	db.q1_20__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_2__: { q1_2__no: "on", }, },
 		},
@@ -59,6 +66,7 @@ export function init_exam_database(){
 	
 	db.q1_30__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_3__: { q1_3__no: "on", }, },
 		},
@@ -78,6 +86,7 @@ export function init_exam_database(){
 			q1_32__intelligent: { htm_answ: "q1_32__intelligent" },
 			q1_32__not_intelligent: { htm_answ: "q1_32__not_intelligent" },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q1_31__: { q1_31__creator: "on", }, },
 		},
@@ -97,6 +106,7 @@ export function init_exam_database(){
 			q1_34__yes: { htm_answ: "q1_34__yes" },
 			q1_34__no: { htm_answ: "q1_34__no" },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q1_31__: { q1_31__creator: "on", }, },
 		},
@@ -114,6 +124,7 @@ export function init_exam_database(){
 	
 	db.q1_40__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_4__: { q1_4__knife: "off", }, },
 			c2: { q1_4__: { q1_4__lamp: "off", }, },
@@ -133,6 +144,7 @@ export function init_exam_database(){
 	
 	db.q1_50__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_5__: { q1_5__building_vs_knife: "off", }, },
 			c2: { q1_5__: { q1_5__car_vs_lamp: "off", }, },
@@ -150,6 +162,7 @@ export function init_exam_database(){
 	
 	db.q1_70__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_7__: { q1_7__no: "on", }, },
 		},
@@ -167,6 +180,7 @@ export function init_exam_database(){
 	
 	db.q1_80__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_8__: { q1_8__building_vs_knife: "off", }, },
 			c2: { q1_8__: { q1_8__car_vs_lamp: "off", }, },
@@ -187,6 +201,7 @@ export function init_exam_database(){
 	
 	db.q1_90__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_9__: { q1_9__car_vs_mitosis: "off", }, },
 			c2: { q1_9__: { q1_9__smartphone_vs_sex: "off", }, },
@@ -205,6 +220,7 @@ export function init_exam_database(){
 	
 	db.q1_91_0__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_91__: { q1_91__no: "on", }, },
 		},
@@ -222,6 +238,7 @@ export function init_exam_database(){
 	
 	db.q1_92_0__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_92__: { q1_92__leg: "off", }, },
 			c2: { q1_92__: { q1_92__liver: "off", }, },
@@ -238,6 +255,7 @@ export function init_exam_database(){
 			q1_93__yes: { htm_answ: "q1_93__yes" },
 			q1_93__no: { htm_answ: "q1_93__no" },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q1_7__: { shown: "on", }, q1_91__: { shown: "on", }, q1_70__: { shown: "off", }, q1_91_0__: { shown: "off", }, },
 		},
@@ -245,6 +263,7 @@ export function init_exam_database(){
 	
 	db.q1_93_0__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_93__: { q1_93__no: "on", }, },
 		},
@@ -257,6 +276,7 @@ export function init_exam_database(){
 			q1_94__yes: { htm_answ: "q1_94__yes" },
 			q1_94__no: { htm_answ: "q1_94__no" },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q1_93__: { q1_93__yes: "on", }, q1_50__: { shown: "off", }, q1_40__: { shown: "off", }, q1_30__: { shown: "off", }, },
 		},
@@ -264,6 +284,7 @@ export function init_exam_database(){
 	
 	db.q1_94_0__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q1_94__: { q1_94__no: "on", }, },
 		},
@@ -280,6 +301,7 @@ export function init_exam_database(){
 	
 	db.q2_10__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q2_1__: { q2_1__no: "on", }, q1_30__: { shown: "off", }, },
 		},
@@ -292,6 +314,7 @@ export function init_exam_database(){
 			q2_2__yes: { htm_answ: "q2_2__yes" },
 			q2_2__no: { htm_answ: "q2_2__no" },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q2_1__: { q2_1__yes: "on", }, },
 		},
@@ -299,6 +322,7 @@ export function init_exam_database(){
 	
 	db.q2_20__ = { 
 		htm_stm: "q0_2__contradiction",
+		context: ["act"],
 		activated_if: {
 			c1: { q2_2__: { q2_2__no: "on", }, },
 		},
@@ -349,6 +373,7 @@ export function init_exam_database(){
 			q4_1__verse6_str: { htm_answ: "q4_1__verse6_str", rclk_href: "q4_1__verse6_href", should_on: "q4_1__verse6_should", },
 			q4_1__verse7_str: { htm_answ: "q4_1__verse7_str", rclk_href: "q4_1__verse7_href", should_on: "q4_1__verse7_should", },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q3_3__: { q3_3__all_stms: "on", }, },
 			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_1__: { q3_1__physical: "off", }, },
@@ -365,6 +390,7 @@ export function init_exam_database(){
 			q5_1__verse3_str: { htm_answ: "q5_1__verse3_str", rclk_href: "q5_1__verse3_href", should_on: "q5_1__verse3_should", },
 			q5_1__verse4_str: { htm_answ: "q5_1__verse4_str", rclk_href: "q5_1__verse4_href", should_on: "q5_1__verse4_should", },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q3_3__: { q3_3__all_stms: "on", }, },
 			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_1__: { q3_1__not_to_die: "off", }, },
@@ -384,6 +410,7 @@ export function init_exam_database(){
 			q6_1__verse6_str: { htm_answ: "q6_1__verse6_str", rclk_href: "q6_1__verse6_href", should_on: "q6_1__verse6_should", },
 			q6_1__verse7_str: { htm_answ: "q6_1__verse7_str", rclk_href: "q6_1__verse7_href", should_on: "q6_1__verse7_should", },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q3_3__: { q3_3__all_stms: "on", }, },
 			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_1__: { q3_1__in_heaven: "off", }, },
@@ -402,6 +429,7 @@ export function init_exam_database(){
 			q7_1__verse5_str: { htm_answ: "q7_1__verse5_str", rclk_href: "q7_1__verse5_href", should_on: "q7_1__verse5_should", },
 			q7_1__verse6_str: { htm_answ: "q7_1__verse6_str", rclk_href: "q7_1__verse6_href", should_on: "q7_1__verse6_should", },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q3_3__: { q3_3__all_stms: "on", }, },
 			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__like_jesus: "off", }, },
@@ -420,6 +448,7 @@ export function init_exam_database(){
 			q8_1__verse5_str: { htm_answ: "q8_1__verse5_str", rclk_href: "q8_1__verse5_href", should_on: "q8_1__verse5_should", },
 			q8_1__verse6_str: { htm_answ: "q8_1__verse6_str", rclk_href: "q8_1__verse6_href", should_on: "q8_1__verse6_should", },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q3_3__: { q3_3__all_stms: "on", }, },
 			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__for_all: "off", }, },
@@ -439,6 +468,7 @@ export function init_exam_database(){
 			q9_1__verse6_str: { htm_answ: "q9_1__verse6_str", rclk_href: "q9_1__verse6_href", should_on: "q9_1__verse6_should", },
 			q9_1__verse7_str: { htm_answ: "q9_1__verse7_str", rclk_href: "q9_1__verse7_href", should_on: "q9_1__verse7_should", },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q3_3__: { q3_3__all_stms: "on", }, },
 			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__not_yet_most: "off", }, },
@@ -455,6 +485,7 @@ export function init_exam_database(){
 			q11_1__verse3_str: { htm_answ: "q11_1__verse3_str", rclk_href: "q11_1__verse3_href", should_on: "q11_1__verse3_should", },
 			q11_1__verse4_str: { htm_answ: "q11_1__verse4_str", rclk_href: "q11_1__verse4_href", should_on: "q11_1__verse4_should", },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q3_3__: { q3_3__all_stms: "on", }, },
 			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__new_earth: "off", }, },
@@ -472,6 +503,7 @@ export function init_exam_database(){
 			q12_1__verse4_str: { htm_answ: "q12_1__verse4_str", rclk_href: "q12_1__verse4_href", },
 			q12_1__verse5_str: { htm_answ: "q12_1__verse5_str", rclk_href: "q12_1__verse5_href", },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q3_3__: { q3_3__all_stms: "on", }, },
 			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__sleep: "off", }, },
@@ -480,30 +512,35 @@ export function init_exam_database(){
 	
 	db.q12_rv1__ = { 
 		htm_stm: "q12_1__response_to_verse1", 
+		context: ["act"],
 		activated_if: {
 			c1: { q12_1__: { q12_1__verse1_str: "on", }, },
 		},		
 	};
 	db.q12_rv2__ = { 
 		htm_stm: "q12_1__response_to_verse2", 
+		context: ["act"],
 		activated_if: {
 			c1: { q12_1__: { q12_1__verse2_str: "on", }, },
 		},		
 	};
 	db.q12_rv3__ = { 
 		htm_stm: "q12_1__response_to_verse3", 
+		context: ["act"],
 		activated_if: {
 			c1: { q12_1__: { q12_1__verse3_str: "on", }, },
 		},		
 	};
 	db.q12_rv4__ = { 
 		htm_stm: "q12_1__response_to_verse4", 
+		context: ["act"],
 		activated_if: {
 			c1: { q12_1__: { q12_1__verse4_str: "on", }, },
 		},		
 	};
 	db.q12_rv5__ = { 
 		htm_stm: "q12_1__response_to_verse5", 
+		context: ["act"],
 		activated_if: {
 			c1: { q12_1__: { q12_1__verse5_str: "on", }, },
 		},		
@@ -545,6 +582,7 @@ export function init_exam_database(){
 			q13_1__verse7_str: { htm_answ: "q13_1__verse7_str", rclk_href: "q13_1__verse7_href", should_on: "q13_1__verse7_should", },
 			q13_1__verse8_str: { htm_answ: "q13_1__verse8_str", rclk_href: "q13_1__verse8_href", should_on: "q13_1__verse8_should", },
 		},
+		context: ["act"],
 		activated_if: {
 			c1: { q3_3__: { q3_3__all_stms: "on", }, },
 			c2: { q3_3__: { q3_3__not_believed: "on", }, q3_2__: { q3_2__sleep: "off", }, },
