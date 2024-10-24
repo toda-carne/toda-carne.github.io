@@ -854,3 +854,33 @@ a.exam_ref:hover {
 	margin-bottom: 0.5em;
 }
 
+.jlq_grid1 {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 10px;
+	//grid-auto-columns: auto;
+	grid-auto-rows: auto;
+}
+
+.jlq_grid2 {
+	display: grid;
+	grid-row: auto;
+	grid-column: auto;
+	grid-template-columns: 1fr;
+	grid-auto-rows: auto;
+}
+
+.jlq_grid3 {
+	grid-row: auto;
+	grid-column: auto;
+}
+
+/*
+.jlq_grid3 img {
+	width: %90;
+} 
+*/
+	
+/* or
+  object-fit: cover; */
