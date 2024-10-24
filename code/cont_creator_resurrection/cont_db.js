@@ -16,17 +16,15 @@ export function init_exam_database(){
 
 	db.q1_1__ = { 
 		htm_stm: "q1_1__are_you_reasonable",
-		answer_classes: ["exam", "is_answer_2"], 
 		answers: {
 			q1_1__yes: { htm_answ: "q1_1__yes", 
 				should_on: "q1_1__should_yes",
 				rclk_href: "q1_1__pru_href", // uncomment to debug right_click 
 				//rclk_should_href: "q1_1__pru_should_href", // uncomment to debug right_click of should_href
+				img_href: "../code/cont_creator_resurrection/img/bible_YES.jpg", 
 			},
 			q1_1__no: { htm_answ: "q1_1__no", 
-				img_href: "../img/heaven_1_1.jpg"
-			},
-			q1_1__other: { htm_answ: "q1_1__no", 
+				img_href: "../code/cont_creator_resurrection/img/bible_NO.jpg", 
 			},
 		},
 	};

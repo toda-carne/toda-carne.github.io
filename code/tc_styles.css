@@ -688,62 +688,50 @@ color: white;
 	margin-bottom: 0.5vh;
 }
 
-.exam.is_answer {
-	//position: relative;	
-	display: block;
-	margin: 0.7vw;
+.exam.grid_2cols {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-auto-rows: auto;
+	grid-column: auto;
+	grid-row: auto;	
+}
+
+.exam.margin_top_bot {
+	margin-top: 0.5vh;
+	margin-bottom: 0.5vh;
+}
+
+.exam.grid_1col {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-auto-rows: auto;
+	grid-column: auto;
+	grid-row: auto;	
+}
+
+.exam.can_select {
+	//margin: 0.7vw;
 	padding: 0.5em 0.5em 0.5em 0.5em;
 	border: 0.2vw solid white;
+}
+
+.exam.can_select:hover,.exam.can_select:hover>* {
+	background-color: #3263cb;
+	color: white;
+}
+
+.exam.is_answ_img_div {
+	grid-row: auto;
+	grid-column: auto;
 }
 
 .exam.is_answ_img {
-	//display: table-row;
-	//overflow: auto;	
-	//position: absolute;	
-	//width: 100%;
-	//height: max-content;
-	//height: 100%;
-	//display: inline-block;
-	//top: 0;
-	//margin: 0.7vw;
-	//padding: 0.5em 0.5em 0.5em 0.5em;
-	//border: 0.2vw solid white;
+	width: 100%;
+}
+
+.exam.is_answ_txt_div {
 	grid-row: auto;
-}
-
-.exam.is_answ_txt {
-	//display: table-row;
-	//overflow: auto;	
-	//position: absolute;	
-	//width: 100%;
-	//height: max-content;
-	//height: 100%;
-	//display: inline-block;
-	//bottom: 0;
-	//margin: 0.7vw;
-	//padding: 0.5em 0.5em 0.5em 0.5em;
-	//border: 0.2vw solid red;
-	grid-row: auto;
-}
-
-.exam.is_answer_2 {
-	position: relative;	
-	//overflow: auto;	
-	display: grid;
-	grid-template-rows: fit-content(8ch) 1fr;;
-	//display: table;
-	width: 40%;
-	//height: max-content;
-	//height: 500px;
-	margin: 0.7vw;
-	padding: 0.5em 0.5em 0.5em 0.5em;
-	border: 0.2vw solid white;
-	background-color: #005500;
-}
-
-.exam.is_answer:hover,.exam.is_answer:hover>* {
-	background-color: #3263cb;
-	color: white;
+	grid-column: auto;
 }
 
 .exam.selected {
@@ -755,11 +743,11 @@ color: white;
 }
 
 .exam.is_contradiction {
-	background-color: #ff0000;
+	background-color: #616100;
 }
 
 .exam.is_contradiction:hover,.exam.is_contradiction:hover>*  {
-	background-color: #d10000;
+	background-color: #a8a800;
 }
 
 .exam.answ_bib {
@@ -858,8 +846,7 @@ a.exam_ref:hover {
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	gap: 10px;
-	//grid-auto-columns: auto;
+	gap: 0.5em;
 	grid-auto-rows: auto;
 }
 

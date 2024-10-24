@@ -272,7 +272,8 @@ export function init_answers(qid){
 		dv_answers = dv_quest.appendChild(document.createElement("div"));
 		dv_answers.id = id_dv_answers;
 		dv_answers.classList.add("exam");
-		dv_answers.classList.add("is_block");
+		//dv_answers.classList.add("is_block");
+		dv_answers.classList.add("grid_2cols", "margin_top_bot");
 	}
 	
 	dv_answers.innerHTML = "";
@@ -291,7 +292,7 @@ export function init_answers(qid){
 			if(an_answ.should_on != null){
 				const dv_shd_on = dv_answers.appendChild(document.createElement("div"));
 				dv_shd_on.classList.add("exam");
-				dv_shd_on.classList.add("is_answer");
+				dv_shd_on.classList.add("grid_1col", "can_select");
 				dv_shd_on.classList.add("is_contradiction");
 				dv_shd_on.innerHTML = get_msg(an_answ.should_on);
 				add_listener_to_add_edit_button(dv_answers, dv_shd_on, qid);
@@ -312,35 +313,29 @@ export function init_answers(qid){
 			dv_answ = add_link_cit(qid, an_answ);
 		} else {
 			dv_answ = dv_answers.appendChild(document.createElement("div"));
-			let arr1 = ["exam", "is_answer"];
-			if(an_answ.answer_classes != null){
-				arr1 = an_answ.answer_classes;
-			} else if(quest.answer_classes != null){
-				arr1 = quest.answer_classes;
-			}
+			let arr1 = ["exam", "grid_1col", "can_select"];
 			dv_answ.classList.add(...arr1);
 			
-			let dv_txt = dv_answ;
-			/*
-			//if(an_answ.img_href != null){
+			let dv_txt = dv_answ;			
+			if(an_answ.img_href != null){
 				// <img id="img_cielo_1" src="../img/heaven_1_1.jpg" title="Hagame click" style="width:100%">
 				const dv_img = document.createElement("div");
-				const htm_img = document.createElement("img");
-				if(an_answ.img_href != null){
-					htm_img.src = an_answ.img_href;
-				}
-				dv_img.append(htm_img);
-				
-				dv_txt = document.createElement("div");
-				
-				dv_img.classList.add("exam", "is_answ_img");
-				dv_txt.classList.add("exam", "is_answ_txt");				
-				
+				//dv_img.classList.add("exam", "is_answ_img_div");
+				dv_img.classList.add("exam", "grid_1col");
 				dv_answ.append(dv_img);
+				
+				dv_txt = document.createElement("div");				
+				//dv_txt.classList.add("exam", "is_answ_txt_div");
+				dv_txt.classList.add("exam", "grid_1col");
 				dv_answ.append(dv_txt);
-			//}
-			*/
-			dv_txt.innerHTML = get_msg(an_answ.htm_answ);			
+				
+				const htm_img = document.createElement("img");
+				htm_img.classList.add("exam", "is_answ_img");
+				htm_img.src = an_answ.img_href;
+				dv_img.append(htm_img);
+			}
+			
+			dv_txt.innerHTML = get_msg(an_answ.htm_answ);
 		}
 		
 		if(an_answ.rclk_href != null){
@@ -482,16 +477,19 @@ function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
 	const quest = glb_poll_db[qid];
 	dv_answ.addEventListener('click', function() {
 		// togle edit button
-		var dv_answ_ed = document.getElementById(id_dv_answ_ed);
+		let dv_answ_ed = document.getElementById(id_dv_answ_ed);
 		if(dv_answ_ed != null){
 			dv_answ_ed.remove();
 		} else {
-			dv_answ_ed = dv_answers.appendChild(document.createElement("div"));
+			//dv_answ_ed = dv_answers.appendChild(document.createElement("div"));
+			dv_answ_ed = get_new_dv_under(dv_answers, id_dv_answ_ed);
 			dv_answ_ed.id = id_dv_answ_ed;
 			dv_answ_ed.classList.add("exam");
+			dv_answ_ed.classList.add("is_block");
 			dv_answ_ed.classList.add("is_button");
 			dv_answ_ed.innerHTML = glb_curr_lang.msg_edit_ans;
 			dv_answ_ed.addEventListener('click', function() {
+				dv_answ_ed.remove();
 				quest.has_answ = null;
 				init_answers(qid);
 			});
@@ -798,7 +796,7 @@ function add_verse_cit(qid, verse_obj){
 	dv_citation.answ_idx = dv_support.childNodes.length - 1;
 	dv_citation.owner_qid = qid;
 	dv_citation.classList.add("exam");
-	dv_citation.classList.add("is_answer");
+	dv_citation.classList.add("grid_1col", "can_select");
 	dv_citation.title = glb_curr_lang.msg_help_answer_right_click;
 	dv_citation.tc_cit_obj = JSON.parse(JSON.stringify(verse_obj));
 
@@ -1230,7 +1228,7 @@ function is_last_added_strong_ok(qid){
 
 function set_cit_params(dv_cit){
 	dv_cit.classList.add("exam");
-	dv_cit.classList.add("is_answer");
+	dv_cit.classList.add("grid_1col", "can_select");
 	dv_cit.title = glb_curr_lang.msg_help_answer_right_click;
 }
 
