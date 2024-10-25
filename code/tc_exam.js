@@ -93,7 +93,9 @@ const id_dv_code_ed = "id_dv_code_ed";
 const id_dv_link_ed = "id_dv_link_ed";
 const id_dv_sel_option = "id_dv_sel_option";
 const id_dv_name_ed = "id_dv_name_ed";
-const id_dv_answ_ed = "id_dv_answ_ed"; 
+const id_dv_answ_ed = "id_dv_answ_ed";
+const id_support_ed = "id_support_ed";
+
 
 // FOR DAG pending management
 const id_ctx_pend = "ctx_pend";
@@ -529,7 +531,11 @@ function add_click_listener_for_answer(qid, dv_answ) {
 		}
 		let my_answ = dv_answ.tc_answ_obj;
 		//console.log("my_answ = " + JSON.stringify(my_answ, null, "  "));
-		if((my_answ.kind != null) && dv_answers.classList.contains("ed_support")){
+		
+		let dv_inter = document.getElementById(id_support_ed);
+		const can_ed = ((dv_inter != null) && (dv_inter.current_working_qid == qid));
+		
+		if((my_answ.kind != null) && can_ed){
 			toggle_answer_ed(dv_answ, my_answ.kind);
 			return;
 		} 
@@ -573,12 +579,14 @@ function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
 			dv_answ_ed.id = id_dv_answ_ed;
 			dv_answ_ed.classList.add("exam");
 			dv_answ_ed.classList.add("is_block");
+			//dv_answ_ed.classList.add("grid_item_2col");
 			dv_answ_ed.classList.add("is_button");
 			dv_answ_ed.innerHTML = glb_curr_lang.msg_edit_ans;
 			dv_answ_ed.addEventListener('click', function() {
 				dv_answ_ed.remove();
 				quest.has_answ = null;
 				init_answers(qid);
+				remove_curr_support_ed(true);
 			});
 			
 			//scroll_to_top(dv_answ_ed);
@@ -595,6 +603,7 @@ function end_question(qid){
 	const quest = glb_poll_db[qid];
 	quest.has_answ = true;
 	init_answers(qid);
+	remove_curr_support_ed(true);
 	
 	const all_to_act = send_all_signals(qid);
 	activate_signals(all_to_act);
@@ -634,6 +643,20 @@ function remove_all_ed(qid){
 	remove_id(id_dv_code_ed);
 	remove_id(id_dv_link_ed);
 	remove_id(id_dv_sel_option);
+}
+
+function remove_curr_support_ed(rm_it){
+	let dv_inter = document.getElementById(id_support_ed);
+	if(dv_inter != null){
+		const curr_wrk_qid = dv_inter.current_working_qid;
+		if(curr_wrk_qid != null){
+			remove_all_ed(curr_wrk_qid);
+			dv_inter.current_working_qid = null;
+		}
+		if(rm_it){
+			dv_inter.remove();
+		}
+	}
 }
 
 function get_qid_of_support_id(support_id){
@@ -684,16 +707,19 @@ function get_new_dv_under(dv_pop_up, id_dv){
 }
 
 function toggle_support_interaction(qid){
-	const id_dv_inter = "id_support_ed";
-	let dv_inter = document.getElementById(id_dv_inter);
+	const quest = glb_poll_db[qid];
+	if(quest == null){ return; }
+	
+	remove_curr_support_ed(false);
+	/*
+	let dv_inter = document.getElementById(id_support_ed);
 	if(dv_inter != null){
-		const prv_id = dv_inter.previousSibling.id;
-		const old_qid = get_qid_of_support_id(prv_id);
-		console.log("prv_id=" + prv_id + " old_qid=" + old_qid);
-		const old_dv_support = document.getElementById(prv_id);
-		old_dv_support.classList.remove("ed_support");
-		remove_all_ed(old_qid);
-	}		
+		const curr_wrk_qid = dv_inter.current_working_qid;
+		if(curr_wrk_qid != null){
+			remove_all_ed(curr_wrk_qid);
+			dv_inter.current_working_qid = null;
+		}
+	}*/		
 	
 	const id_dv_support = qid + SUF_ID_ANSWERS;
 	const dv_support = document.getElementById(id_dv_support);
@@ -702,20 +728,23 @@ function toggle_support_interaction(qid){
 		return;
 	}
 	
-	dv_inter = get_new_dv_under(dv_support, id_dv_inter);
+	let dv_inter = get_new_dv_under(dv_support, id_support_ed);
 	if(dv_inter == null){
 		return;
 	}
-	dv_inter.id = id_dv_inter;
+	dv_inter.id = id_support_ed;
+	dv_inter.current_working_qid = qid;
 	
 	dv_inter.classList.add("exam");
-	//dv_inter.classList.add("pos_inter");
-	dv_inter.classList.add("grid_item_2col");
+	dv_inter.classList.add("pos_inter");
 	dv_inter.classList.add("has_margin_bot");
 
-	dv_support.classList.add("ed_support");	
-
-	const quest = glb_poll_db[qid];
+	if(quest.has_answ != null){ 
+		dv_inter.innerHTML = glb_curr_lang.msg_change_answer;
+		scroll_to_top(dv_inter);
+		return; 
+	}
+	
 	const has_vrs = (quest.vrs_with_response != null);
 	const has_stg = (quest.stg_with_response != null);
 	const has_lnk = (quest.lnk_with_response != null);
@@ -794,9 +823,9 @@ function toggle_support_interaction(qid){
 	dv_ok.classList.add("is_button");
 	dv_ok.innerHTML = glb_curr_lang.msg_end_edit;
 	dv_ok.addEventListener('click', function() {
-		dv_support.classList.remove("ed_support");
-		dv_inter.remove();
-		remove_all_ed(qid);
+		remove_curr_support_ed(true);
+		//dv_inter.remove();
+		//remove_all_ed(qid);
 		if(quest.has_answ && has_citations(dv_support)){
 			quest.has_answ = null;
 			init_answers(qid);
@@ -930,6 +959,7 @@ function toggle_verse_ed(dv_citation){
 		return;
 	}
 	dv_ed_cit.classList.add("exam");
+	dv_ed_cit.classList.add("is_block");
 	dv_ed_cit.classList.add("grid_item_2col");
 	
 	const cit_obj = calc_verse_cit_object(dv_citation);	
@@ -1160,6 +1190,7 @@ function toggle_select_option(dv_return, all_options_arr, on_click_fn){
 	}
 	dv_options.classList.add("exam");
 	dv_options.classList.add("is_block");
+	dv_options.classList.add("grid_item_2col");
 	
 	all_options_arr.forEach((value) => {
 		const dv_opt = add_option(dv_options, null, value, null);
@@ -1397,6 +1428,7 @@ function toggle_strong_ed(dv_code){
 	}
 	dv_ed_strong.classList.add("exam");
 	dv_ed_strong.classList.add("is_block");
+	dv_ed_strong.classList.add("grid_item_2col");
 
 	const cit_obj = calc_strong_cit_object(dv_code);
 	
@@ -1566,6 +1598,7 @@ function toggle_link_ed(dv_link){
 	}
 	dv_ed_link.classList.add("exam");
 	dv_ed_link.classList.add("is_block");
+	dv_ed_link.classList.add("grid_item_2col");
 
 	const lnk_cit_obj = calc_link_cit_object(dv_link);
 	var link_name = lnk_cit_obj.name;
@@ -1648,6 +1681,7 @@ function toggle_exam_name_ed(dv_name, save_fn){
 	}
 	dv_ed_name.classList.add("exam");
 	dv_ed_name.classList.add("is_block");
+	//dv_ed_name.classList.add("grid_item_2col");
 
 	const exam_name = dv_name.innerHTML;
 

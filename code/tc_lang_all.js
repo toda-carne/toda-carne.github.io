@@ -250,6 +250,7 @@ function init_en_basic_msg(){
 	obj.msg_todacarne_answers_reading = "Opening...";
 	obj.msg_todacarne_no_internet = "No internet conection.";
 
+	obj.msg_change_answer = "To add answers click on the current answer and click on CHANGE ANSWER";
 	obj.msg_change_one_answer = "To get rid of this observation you must change one of these answers: ";
 
 	obj.msg_dispute_rclick = "To dispute right click";
