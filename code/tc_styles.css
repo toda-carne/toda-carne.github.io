@@ -742,6 +742,19 @@ color: white;
 	color: white;
 }
 
+.exam.is_answer {
+	//position: relative;	
+	display: block;
+	margin: 0.7vw;
+	padding: 0.5em 0.5em 0.5em 0.5em;
+	border: 0.2vw solid white;
+}
+
+.exam.is_answer:hover,.exam.is_answer:hover>* {
+	background-color: #3263cb;
+	color: white;
+}
+
 .exam.is_answ_img_div {
 	grid-row: auto;
 	grid-column: auto;
@@ -876,7 +889,7 @@ a.exam_ref:hover {
 .grid_1c {
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-auto-rows: auto;
+	grid-auto-rows: 3fr 1fr;
 	grid-column: auto;
 	grid-row: auto;
 }

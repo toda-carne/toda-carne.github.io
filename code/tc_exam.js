@@ -118,6 +118,7 @@ function scroll_to_top(dv_elem) {
 	dv_content.scrollBy(0, (rect.top - rect2.top));
 }
 
+
 // CODE_FOR QUESTION DYSPLAY AND USER OPERATION
 
 function is_observation(quest){
@@ -191,7 +192,7 @@ function add_question(qid){
 	dv_quest.classList.add("has_border");
 	dv_quest.classList.add("grid_1col");
 	
-	dv_quest.tc_quest = quest;
+	dv_quest.tc_quest = quest;	
 	
 	if(quest.pos_page == null){
 		quest.pos_page = lst_pos + 1;
@@ -256,7 +257,7 @@ function add_question(qid){
 			inline: 'center'
 		});
 	}*/
-	//scroll_to_top(dv_quest);
+	scroll_to_top(dv_quest);
 	
 	return dv_quest;
 }
@@ -299,6 +300,7 @@ export function init_answers(qid){
 			if(an_answ.should_on != null){
 				const dv_shd_on = dv_answers.appendChild(document.createElement("div"));
 				dv_shd_on.classList.add("exam");
+				//dv_shd_on.classList.add("is_answer");
 				dv_shd_on.classList.add("grid_1col", "can_select");
 				dv_shd_on.classList.add("is_contradiction");
 				dv_shd_on.innerHTML = get_msg(an_answ.should_on);
@@ -328,12 +330,12 @@ export function init_answers(qid){
 				// <img id="img_cielo_1" src="../img/heaven_1_1.jpg" title="Hagame click" style="width:100%">
 				const dv_img = document.createElement("div");
 				//dv_img.classList.add("exam", "is_answ_img_div");
-				dv_img.classList.add("exam", "grid_1col");
+				dv_img.classList.add("exam", "grid_item");
 				dv_answ.append(dv_img);
 				
 				dv_txt = document.createElement("div");				
 				//dv_txt.classList.add("exam", "is_answ_txt_div");
-				dv_txt.classList.add("exam", "grid_1col");
+				dv_txt.classList.add("exam", "grid_item");
 				dv_answ.append(dv_txt);
 				
 				const htm_img = document.createElement("img");
@@ -342,15 +344,15 @@ export function init_answers(qid){
 				dv_img.append(htm_img);
 				
 				if (htm_img.complete) {
-					loaded_img();
+					scroll_to_top(dv_quest);
 				} else {
 					htm_img.addEventListener('load', (ev1) => {
 						scroll_to_top(dv_quest);
 					});
 					htm_img.addEventListener('error', function() {
-						console.log("Could not run loaded_img");
+						console.log("Could not run scroll_to_top on load image");
 					})
-				}				
+				}
 			}
 			
 			dv_txt.innerHTML = get_msg(an_answ.htm_answ);
@@ -748,7 +750,7 @@ function toggle_support_interaction(qid){
 		});
 	}*/
 	scroll_to_top(dv_inter);
-	
+	// scroll is done ONLOAD by handler
 }
 
 function has_citations(dv_support){
@@ -821,7 +823,7 @@ function add_verse_cit(qid, verse_obj){
 	dv_citation.answ_idx = dv_support.childNodes.length - 1;
 	dv_citation.owner_qid = qid;
 	dv_citation.classList.add("exam");
-	dv_citation.classList.add("grid_1col", "can_select");
+	dv_citation.classList.add("is_answer");
 	dv_citation.title = glb_curr_lang.msg_help_answer_right_click;
 	dv_citation.tc_cit_obj = JSON.parse(JSON.stringify(verse_obj));
 
@@ -1138,7 +1140,7 @@ export function init_page_exam(ini_func){
 	init_exam_module_vars();
 	init_exam_buttons();
 	
-	ask_next();
+	ask_next();	
 };
 
 function init_exam_buttons(){
@@ -1258,7 +1260,7 @@ function is_last_added_strong_ok(qid){
 
 function set_cit_params(dv_cit){
 	dv_cit.classList.add("exam");
-	dv_cit.classList.add("grid_1col", "can_select");
+	dv_cit.classList.add("is_answer");
 	dv_cit.title = glb_curr_lang.msg_help_answer_right_click;
 }
 
