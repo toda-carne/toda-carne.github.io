@@ -289,14 +289,6 @@ function add_question(qid){
 
 	init_answers(qid);
 
-	/*
-	if(! is_in_viewport(dv_stm)){
-		dv_stm.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});
-	}*/
 	scroll_to_top(dv_quest);
 	
 	return dv_quest;
@@ -711,15 +703,6 @@ function toggle_support_interaction(qid){
 	if(quest == null){ return; }
 	
 	remove_curr_support_ed(false);
-	/*
-	let dv_inter = document.getElementById(id_support_ed);
-	if(dv_inter != null){
-		const curr_wrk_qid = dv_inter.current_working_qid;
-		if(curr_wrk_qid != null){
-			remove_all_ed(curr_wrk_qid);
-			dv_inter.current_working_qid = null;
-		}
-	}*/		
 	
 	const id_dv_support = qid + SUF_ID_ANSWERS;
 	const dv_support = document.getElementById(id_dv_support);
@@ -824,36 +807,18 @@ function toggle_support_interaction(qid){
 	dv_ok.innerHTML = glb_curr_lang.msg_end_edit;
 	dv_ok.addEventListener('click', function() {
 		remove_curr_support_ed(true);
-		//dv_inter.remove();
-		//remove_all_ed(qid);
 		if(quest.has_answ && has_citations(dv_support)){
 			quest.has_answ = null;
 			init_answers(qid);
 		}
 
-		/*if(! is_in_viewport(dv_inter)){
-			dv_inter.scrollIntoView({
-				behavior: 'auto',
-				block: 'start',
-				inline: 'center'
-			});	
-		}*/
 		const dv_quest = document.getElementById(qid);
 		scroll_to_top(dv_quest);
 		
 		return;
 	});    
 	
-	/*
-	if(! is_in_viewport(dv_inter)){
-		dv_inter.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});
-	}*/
 	scroll_to_top(dv_inter);
-	// scroll is done ONLOAD by handler
 }
 
 function has_citations(dv_support){
@@ -932,14 +897,6 @@ function add_verse_cit(qid, verse_obj){
 
 	update_dv_verse(dv_citation);
 	
-	/*
-	if(! is_in_viewport(dv_citation)){
-		dv_citation.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});	
-	}*/
 	scroll_to_top(dv_citation);
 	
 	return dv_citation;
@@ -1136,25 +1093,11 @@ function toggle_verse_ed(dv_citation){
 
 		set_answer_for_verse_cit(dv_citation);
 		
-		/*if(! is_in_viewport(dv_citation)){
-			dv_citation.scrollIntoView({
-				behavior: 'auto',
-				block: 'start',
-				inline: 'center'
-			});	
-		}*/
 		scroll_to_top(dv_citation);
 		
 		return;
 	});
 	
-	/*if(! is_in_viewport(dv_ed_cit)){
-		dv_ed_cit.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});
-	}*/
 	scroll_to_top(dv_ed_cit);
 }
 
@@ -1204,13 +1147,6 @@ function toggle_select_option(dv_return, all_options_arr, on_click_fn){
 		});
 	});
 
-	/*if(! is_in_viewport(dv_options)){
-		dv_options.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});
-	}*/
 	scroll_to_top(dv_options);
 }
 
@@ -1391,13 +1327,6 @@ function add_strong_cit(qid, stg_obj){
 		dv_citation.innerHTML = stg_obj.lang + stg_obj.num;
 	}
 	
-	/*if(! is_in_viewport(dv_citation)){
-		dv_citation.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});	
-	}*/
 	scroll_to_top(dv_citation);
 	
 	return dv_citation;
@@ -1482,25 +1411,11 @@ function toggle_strong_ed(dv_code){
 		
 		set_answer_for_strong_cit(dv_code);
 		
-		/*if(! is_in_viewport(dv_code)){
-			dv_code.scrollIntoView({
-				behavior: 'auto',
-				block: 'start',
-				inline: 'center'
-			});	
-		}*/
 		scroll_to_top(dv_code);
 		
 		return;
 	});    
 	
-	/*if(! is_in_viewport(dv_ed_strong)){
-		dv_ed_strong.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});
-	}*/
 	scroll_to_top(dv_ed_strong);
 }
 
@@ -1561,13 +1476,6 @@ function add_link_cit(qid, link_obj){
 		dv_href.href = link_obj.href;
 	}
 
-	/*if(! is_in_viewport(dv_citation)){
-		dv_citation.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});	
-	}*/
 	scroll_to_top(dv_citation);
 
 	return dv_citation;	
@@ -1642,28 +1550,13 @@ function toggle_link_ed(dv_link){
 		all_chd[LNK_HREF_IDX].href = inp_href.value;
 		dv_ed_link.remove();
 		
-		//set_cit_side(dv_link, dv_ok);
 		set_answer_for_link_cit(dv_link);
 		
-		/*if(! is_in_viewport(dv_link)){
-			dv_link.scrollIntoView({
-				behavior: 'auto',
-				block: 'start',
-				inline: 'center'
-			});	
-		}*/
 		scroll_to_top(dv_link);
 		
 		return;
 	});    
 	
-	/*if(! is_in_viewport(dv_ed_link)){
-		dv_ed_link.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});
-	}*/
 	scroll_to_top(dv_ed_link);
 }
 
@@ -1705,25 +1598,11 @@ function toggle_exam_name_ed(dv_name, save_fn){
 		dv_name.innerHTML = nm_nm;
 		dv_ed_name.remove();
 		
-		/*if(! is_in_viewport(dv_name)){
-			dv_name.scrollIntoView({
-				behavior: 'auto',
-				block: 'start',
-				inline: 'center'
-			});	
-		}*/
 		scroll_to_top(dv_name);
 		
 		return;
 	});    
 
-	/*if(! is_in_viewport(dv_ed_name)){
-		dv_ed_name.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});
-	}*/
 	scroll_to_top(dv_ed_name);
 }
 
@@ -2349,13 +2228,6 @@ function show_observation(qid, all_to_act){
 	console.log("Updating NEW observation from show_observation qid=" + qid);
 	update_observation(qid, all_to_act);
 
-	/*if(! is_in_viewport(dv_quest)){
-		dv_quest.scrollIntoView({
-			behavior: 'auto',
-			block: 'start',
-			inline: 'center'
-		});
-	}*/
 	scroll_to_top(dv_quest);
 	
 	return dv_quest;
