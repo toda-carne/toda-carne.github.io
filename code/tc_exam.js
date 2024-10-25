@@ -156,16 +156,54 @@ function get_last_quest(){
 	while(curr_idx > 0){
 		//console.log("get_curr_pos_page [1] curr_idx=" + curr_idx);
 		const qid = all_q[curr_idx].id;
+		curr_idx--;
 		if(qid == null){ continue; }
 		quest = glb_poll_db[qid];
 		if(quest == null){ continue; }
 		if(is_question(quest)){
 			break;
 		}
-		curr_idx--;
 	}
 	//console.log("get_curr_pos_page [2] curr_idx=" + curr_idx);
 	return quest;
+}
+
+function get_first_not_answered(){
+	const dv_all_quest = document.getElementById("id_exam_all_questions");
+	const all_q = dv_all_quest.childNodes;
+	let curr_idx = 0;
+	let quest = null;
+	while(curr_idx < all_q.length){
+		//console.log("get_curr_pos_page [1] curr_idx=" + curr_idx);
+		const qid = all_q[curr_idx].id;
+		curr_idx++;
+		if(qid == null){ continue; }
+		quest = glb_poll_db[qid];
+		if(quest == null){ continue; }
+		if(is_question(quest) && (quest.has_answ == null)){
+			break;
+		}
+	}
+	//console.log("get_curr_pos_page [2] curr_idx=" + curr_idx);
+	return quest;
+}
+
+function scroll_to_last_quest(){
+	const quest = get_last_quest();
+	if(quest == null){ return; }
+	if(quest.qid == null){ return; }
+	const dv_quest = document.getElementById(quest.qid);
+	if(dv_quest == null){ return; }
+	scroll_to_top(dv_quest);
+}
+
+function scroll_to_first_not_answered(){
+	const quest = get_first_not_answered();
+	if(quest == null){ return; }
+	if(quest.qid == null){ return; }
+	const dv_quest = document.getElementById(quest.qid);
+	if(dv_quest == null){ return; }
+	scroll_to_top(dv_quest);
 }
 
 function add_question(qid){
@@ -282,6 +320,9 @@ export function init_answers(qid){
 		dv_answers.classList.add("exam");
 		//dv_answers.classList.add("is_block");
 		dv_answers.classList.add("grid_2cols", "margin_top_bot");
+		dv_answers.answers_divs = {};
+		dv_answers.answers_should = {};
+		dv_answers.all_img = {};
 	}
 	
 	dv_answers.innerHTML = "";
@@ -296,9 +337,25 @@ export function init_answers(qid){
 		if(an_answ == null){
 			continue; // continue with next elem
 		}
+		let dv_answ = dv_answers.answers_divs[anid];
+		let dv_shd_on = dv_answers.answers_should[anid];
+		
+		/*
+		// SHOW THE DIV if already created
+		if(dv_answ != null){
+			if(! is_init_to_answer && ! an_answ.is_on){
+				if(dv_shd_on != null){
+					dv_answers.appendChild(dv_shd_on);
+				}
+				continue;
+			}
+			dv_answers.appendChild(dv_answ);
+			continue;
+		}*/
+				
 		if(! is_init_to_answer && ! an_answ.is_on){
 			if(an_answ.should_on != null){
-				const dv_shd_on = dv_answers.appendChild(document.createElement("div"));
+				dv_shd_on = document.createElement("div");
 				dv_shd_on.classList.add("exam");
 				//dv_shd_on.classList.add("is_answer");
 				dv_shd_on.classList.add("grid_1col", "can_select");
@@ -308,11 +365,14 @@ export function init_answers(qid){
 				dv_shd_on.tc_answ_obj = an_answ;
 				dv_shd_on.tc_is_should = true;
 				add_right_click_listener_for_answer(qid, dv_shd_on);
+				
+				//dv_answers.answers_should[anid] = dv_shd_on;
+			}
+			if(dv_shd_on != null){
+				dv_answers.appendChild(dv_shd_on);
 			}
 			continue; // continue with next elem
 		}
-		
-		let dv_answ = null;
 		
 		if (an_answ.kind == VRS_CIT_KIND){
 			dv_answ = add_verse_cit(qid, an_answ);
@@ -338,24 +398,27 @@ export function init_answers(qid){
 				dv_txt.classList.add("exam", "grid_item");
 				dv_answ.append(dv_txt);
 				
-				const htm_img = document.createElement("img");
-				htm_img.classList.add("exam", "is_answ_img");
-				htm_img.src = an_answ.img_href;
-				dv_img.append(htm_img);
-				
-				if (htm_img.complete) {
-					scroll_to_top(dv_quest);
-				} else {
-					htm_img.addEventListener('load', (ev1) => {
+				let htm_img = dv_answers.all_img[anid];
+				if(htm_img == null){
+					htm_img = document.createElement("img");
+					dv_answers.all_img[anid] = htm_img;
+					htm_img.classList.add("exam", "is_answ_img");
+					htm_img.src = an_answ.img_href;
+					if (htm_img.complete) {
 						scroll_to_top(dv_quest);
-					});
-					htm_img.addEventListener('error', function() {
-						console.log("Could not run scroll_to_top on load image");
-					})
+					} else {
+						htm_img.addEventListener('load', (ev1) => {
+							scroll_to_top(dv_quest);
+						});
+						htm_img.addEventListener('error', function() {
+							console.log("Could not run scroll_to_top on load image");
+						})
+					}
 				}
+				dv_img.append(htm_img);
 			}
 			
-			dv_txt.innerHTML = get_msg(an_answ.htm_answ);
+			dv_txt.innerHTML = get_msg(an_answ.htm_answ);			
 		}
 		
 		if(an_answ.rclk_href != null){
@@ -374,6 +437,8 @@ export function init_answers(qid){
 		} else {
 			add_listener_to_add_edit_button(dv_answers, dv_answ, qid);
 		}
+		
+		//dv_answers.answers_divs[anid] = dv_answ;
 	}
 	
 	const id_dv_end_ans = qid + SUF_ID_END_ANS;
@@ -515,6 +580,13 @@ function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
 				quest.has_answ = null;
 				init_answers(qid);
 			});
+			
+			//scroll_to_top(dv_answ_ed);
+			dv_answ_ed.scrollIntoView({
+				behavior: 'auto',
+				block: 'center',
+				inline: 'center'
+			});
 		}
 	});
 }
@@ -527,6 +599,8 @@ function end_question(qid){
 	const all_to_act = send_all_signals(qid);
 	activate_signals(all_to_act);
 	ask_next();
+	
+	scroll_to_first_not_answered();
 }
 
 // CODE_FOR QUESTION GIVEN SUPPORT ED (add/remove a verse, add/remove a strong code, add/remove a link to the user support)
