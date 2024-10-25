@@ -111,6 +111,13 @@ function is_in_viewport(elem) {
 	);
 }
 
+function scroll_to_top(dv_elem) {	
+	const rect = dv_elem.getBoundingClientRect();
+	const dv_content = document.getElementById("id_exam_content");
+	const rect2 = dv_content.getBoundingClientRect();
+	dv_content.scrollBy(0, (rect.top - rect2.top));
+}
+
 // CODE_FOR QUESTION DYSPLAY AND USER OPERATION
 
 function is_observation(quest){
@@ -173,10 +180,6 @@ function add_question(qid){
 	}
 	//console.log("ADDING question " + qid + " to page.");
 	
-	const pos_txt = quest.pos_txt;
-	const v_min = quest.v_min;
-	const v_max = quest.v_max;
-	
 	const lst_quest = get_last_quest();
 	let lst_pos = 0;
 	if((lst_quest != null) && (lst_quest.pos_page != null) && (lst_quest.pos_page != INVALID_PAGE_POS)){ lst_pos = lst_quest.pos_page; }
@@ -186,6 +189,8 @@ function add_question(qid){
 	dv_quest.id = qid;
 	dv_quest.classList.add("exam");
 	dv_quest.classList.add("has_border");
+	dv_quest.classList.add("grid_1col");
+	
 	dv_quest.tc_quest = quest;
 	
 	if(quest.pos_page == null){
@@ -243,13 +248,15 @@ function add_question(qid){
 
 	init_answers(qid);
 
+	/*
 	if(! is_in_viewport(dv_stm)){
 		dv_stm.scrollIntoView({
 			behavior: 'auto',
 			block: 'start',
 			inline: 'center'
 		});
-	}
+	}*/
+	//scroll_to_top(dv_quest);
 	
 	return dv_quest;
 }
@@ -333,6 +340,17 @@ export function init_answers(qid){
 				htm_img.classList.add("exam", "is_answ_img");
 				htm_img.src = an_answ.img_href;
 				dv_img.append(htm_img);
+				
+				if (htm_img.complete) {
+					loaded_img();
+				} else {
+					htm_img.addEventListener('load', (ev1) => {
+						scroll_to_top(dv_quest);
+					});
+					htm_img.addEventListener('error', function() {
+						console.log("Could not run loaded_img");
+					})
+				}				
 			}
 			
 			dv_txt.innerHTML = get_msg(an_answ.htm_answ);
@@ -386,6 +404,8 @@ export function init_answers(qid){
 	}
 	
 	set_anchors_target(dv_quest);
+	
+	scroll_to_top(dv_quest);
 }
 
 function invert_answers(qid){
@@ -706,24 +726,28 @@ function toggle_support_interaction(qid){
 			init_answers(qid);
 		}
 
-		if(! is_in_viewport(dv_inter)){
+		/*if(! is_in_viewport(dv_inter)){
 			dv_inter.scrollIntoView({
 				behavior: 'auto',
 				block: 'start',
 				inline: 'center'
 			});	
-		}
+		}*/
+		const dv_quest = document.getElementById(qid);
+		scroll_to_top(dv_quest);
 		
 		return;
 	});    
 	
+	/*
 	if(! is_in_viewport(dv_inter)){
 		dv_inter.scrollIntoView({
 			behavior: 'auto',
 			block: 'start',
 			inline: 'center'
 		});
-	}
+	}*/
+	scroll_to_top(dv_inter);
 	
 }
 
@@ -803,13 +827,15 @@ function add_verse_cit(qid, verse_obj){
 
 	update_dv_verse(dv_citation);
 	
+	/*
 	if(! is_in_viewport(dv_citation)){
 		dv_citation.scrollIntoView({
 			behavior: 'auto',
 			block: 'start',
 			inline: 'center'
 		});	
-	}
+	}*/
+	scroll_to_top(dv_citation);
 	
 	return dv_citation;
 }
@@ -1004,24 +1030,26 @@ function toggle_verse_ed(dv_citation){
 
 		set_answer_for_verse_cit(dv_citation);
 		
-		if(! is_in_viewport(dv_citation)){
+		/*if(! is_in_viewport(dv_citation)){
 			dv_citation.scrollIntoView({
 				behavior: 'auto',
 				block: 'start',
 				inline: 'center'
 			});	
-		}
+		}*/
+		scroll_to_top(dv_citation);
 		
 		return;
 	});
 	
-	if(! is_in_viewport(dv_ed_cit)){
+	/*if(! is_in_viewport(dv_ed_cit)){
 		dv_ed_cit.scrollIntoView({
 			behavior: 'auto',
 			block: 'start',
 			inline: 'center'
 		});
-	}
+	}*/
+	scroll_to_top(dv_ed_cit);
 }
 
 function set_answer_cit(dv_citation, cit_obj){
@@ -1069,13 +1097,14 @@ function toggle_select_option(dv_return, all_options_arr, on_click_fn){
 		});
 	});
 
-	if(! is_in_viewport(dv_options)){
+	/*if(! is_in_viewport(dv_options)){
 		dv_options.scrollIntoView({
 			behavior: 'auto',
 			block: 'start',
 			inline: 'center'
 		});
-	}	
+	}*/
+	scroll_to_top(dv_options);
 }
 
 function add_option(dv_parent, id_option, label, handler){
@@ -1255,13 +1284,14 @@ function add_strong_cit(qid, stg_obj){
 		dv_citation.innerHTML = stg_obj.lang + stg_obj.num;
 	}
 	
-	if(! is_in_viewport(dv_citation)){
+	/*if(! is_in_viewport(dv_citation)){
 		dv_citation.scrollIntoView({
 			behavior: 'auto',
 			block: 'start',
 			inline: 'center'
 		});	
-	}
+	}*/
+	scroll_to_top(dv_citation);
 	
 	return dv_citation;
 }
@@ -1344,24 +1374,26 @@ function toggle_strong_ed(dv_code){
 		
 		set_answer_for_strong_cit(dv_code);
 		
-		if(! is_in_viewport(dv_code)){
+		/*if(! is_in_viewport(dv_code)){
 			dv_code.scrollIntoView({
 				behavior: 'auto',
 				block: 'start',
 				inline: 'center'
 			});	
-		}
+		}*/
+		scroll_to_top(dv_code);
 		
 		return;
 	});    
 	
-	if(! is_in_viewport(dv_ed_strong)){
+	/*if(! is_in_viewport(dv_ed_strong)){
 		dv_ed_strong.scrollIntoView({
 			behavior: 'auto',
 			block: 'start',
 			inline: 'center'
 		});
-	}
+	}*/
+	scroll_to_top(dv_ed_strong);
 }
 
 function set_answer_for_strong_cit(dv_citation){
@@ -1421,13 +1453,14 @@ function add_link_cit(qid, link_obj){
 		dv_href.href = link_obj.href;
 	}
 
-	if(! is_in_viewport(dv_citation)){
+	/*if(! is_in_viewport(dv_citation)){
 		dv_citation.scrollIntoView({
 			behavior: 'auto',
 			block: 'start',
 			inline: 'center'
 		});	
-	}
+	}*/
+	scroll_to_top(dv_citation);
 
 	return dv_citation;	
 }
@@ -1503,24 +1536,26 @@ function toggle_link_ed(dv_link){
 		//set_cit_side(dv_link, dv_ok);
 		set_answer_for_link_cit(dv_link);
 		
-		if(! is_in_viewport(dv_link)){
+		/*if(! is_in_viewport(dv_link)){
 			dv_link.scrollIntoView({
 				behavior: 'auto',
 				block: 'start',
 				inline: 'center'
 			});	
-		}
+		}*/
+		scroll_to_top(dv_link);
 		
 		return;
 	});    
 	
-	if(! is_in_viewport(dv_ed_link)){
+	/*if(! is_in_viewport(dv_ed_link)){
 		dv_ed_link.scrollIntoView({
 			behavior: 'auto',
 			block: 'start',
 			inline: 'center'
 		});
-	}
+	}*/
+	scroll_to_top(dv_ed_link);
 }
 
 function set_answer_for_link_cit(dv_citation){
@@ -1560,24 +1595,26 @@ function toggle_exam_name_ed(dv_name, save_fn){
 		dv_name.innerHTML = nm_nm;
 		dv_ed_name.remove();
 		
-		if(! is_in_viewport(dv_name)){
+		/*if(! is_in_viewport(dv_name)){
 			dv_name.scrollIntoView({
 				behavior: 'auto',
 				block: 'start',
 				inline: 'center'
 			});	
-		}
+		}*/
+		scroll_to_top(dv_name);
 		
 		return;
 	});    
 
-	if(! is_in_viewport(dv_ed_name)){
+	/*if(! is_in_viewport(dv_ed_name)){
 		dv_ed_name.scrollIntoView({
 			behavior: 'auto',
 			block: 'start',
 			inline: 'center'
 		});
-	}
+	}*/
+	scroll_to_top(dv_ed_name);
 }
 
 function calc_quest_save_object(dv_quest){
@@ -2202,13 +2239,14 @@ function show_observation(qid, all_to_act){
 	console.log("Updating NEW observation from show_observation qid=" + qid);
 	update_observation(qid, all_to_act);
 
-	if(! is_in_viewport(dv_stm)){
-		dv_stm.scrollIntoView({
+	/*if(! is_in_viewport(dv_quest)){
+		dv_quest.scrollIntoView({
 			behavior: 'auto',
 			block: 'start',
 			inline: 'center'
 		});
-	}
+	}*/
+	scroll_to_top(dv_quest);
 	
 	return dv_quest;
 }
