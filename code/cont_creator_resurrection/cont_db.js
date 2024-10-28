@@ -17,15 +17,16 @@ export function init_exam_database(){
 	db.q1_1__ = { 
 		htm_stm: "q1_1__are_you_reasonable",
 		img_href: "../code/cont_creator_resurrection/img/bible.webp", 
+		img_pos: "grid_item_center",
 		choose_yes: true,
 		//choose_more: true,
 		answers: {
 			q1_1__yes: { htm_answ: "q1_1__yes", 
-				to_right_pos: true,
+				img_pos: "grid_item_right",
 				img_href: "../code/cont_creator_resurrection/img/yes_like.webp", 
 			},
 			q1_1__no: { htm_answ: "q1_1__no", 
-				to_left_pos: true,
+				img_pos: "grid_item_left",
 				img_href: "../code/cont_creator_resurrection/img/no_like.webp", 
 			},
 		},

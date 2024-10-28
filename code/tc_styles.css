@@ -772,6 +772,7 @@ color: white;
 	padding: 0.5em 0.5em 0.5em 0.5em;
 	grid-template-columns: 1fr;
 	grid-template-rows: var(--two_sides) 1fr;
+	background-color: transparent;
 	//border: 0.2vw solid #ffff00;
 }
 
@@ -811,6 +812,7 @@ color: white;
 	border: 0.2vw solid white;
 	padding: 0.5em 0.5em 0.5em 0.5em;
 	border-radius: 1em;
+	background-color: transparent;
 }
 
 .exam.item_can_select:hover {
@@ -820,9 +822,11 @@ color: white;
 .exam.is_answ_img_div {
 	grid-row: auto;
 	grid-column: auto;
+	background-color: transparent;
 }
 
 .exam.is_answ_img {
+	background-color: transparent;
 	width: 100%;
 	//align-content: center center;
 }

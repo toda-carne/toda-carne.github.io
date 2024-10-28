@@ -316,6 +316,24 @@ function load_image(dv_scroll, all_img, id_img, src_img){
 	return htm_img;
 }
 
+function add_simple_choice_item(dv_answers, dv_img, pos_cls, htm_txt){
+	const dv_answ = dv_answers.appendChild(document.createElement("div"));
+	const answ_classes = ["exam", "grid_img_answer", pos_cls];
+	if(htm_txt != null){
+		answ_classes.push("item_can_select");
+	}
+	dv_answ.classList.add(...answ_classes);
+	
+	if(dv_img != null){	dv_answ.append(dv_img);	}
+	const dv_txt = document.createElement("div");
+	dv_txt.classList.add("exam", "grid_item", "to_center");
+	if(htm_txt != null){
+		dv_txt.innerHTML = get_msg(htm_txt);
+	}
+	dv_answ.append(dv_txt);
+	return dv_answ;
+}
+
 function init_answers(qid){
 	//console.log("init_answers of qid = " + qid);
 	const quest = glb_poll_db[qid];
@@ -327,10 +345,15 @@ function init_answers(qid){
 		console.log("COULD NOT FIND qid = " + qid);
 		return;
 	}
-	let htm_quest_img = null;
-	if(quest.img_href != null){
-		htm_quest_img = load_image(dv_quest, dv_quest, id_quest_img, quest.img_href);
+	let dv_quest_img = null;
+	if((quest.img_href != null) && (quest.img_pos != null)){
+		const htm_quest_img = load_image(dv_quest, dv_quest, id_quest_img, quest.img_href);
+		dv_quest_img = document.createElement("div");
+		dv_quest_img.classList.add("exam", "grid_item");
+		dv_quest_img.append(htm_quest_img);
 	}
+	let showed_quest_img = false;
+	const have_quest_img = (quest.choose_yes && (dv_quest_img != null));
 	
 	const id_dv_answers = qid + SUF_ID_ANSWERS;
 	let dv_answers = document.getElementById(id_dv_answers);
@@ -350,6 +373,7 @@ function init_answers(qid){
 		return;
 	}
 	const all_answ = Object.entries(quest.answers);
+	
 	for (const [anid, an_answ] of all_answ) {
 		//console.log("anid=" + anid + " an_answ=" + JSON.stringify(an_answ, null, "  "));
 		if(an_answ == null){
@@ -372,6 +396,15 @@ function init_answers(qid){
 			}
 			continue; // continue with next elem
 		}
+		if(! showed_quest_img && have_quest_img && (an_answ.img_pos != null)){
+			showed_quest_img = true;
+			if(an_answ.is_on && (an_answ.img_pos != null)){
+				quest.img_pos = an_answ.img_pos;
+			}
+			const pos_cls = quest.img_pos;
+			add_simple_choice_item(dv_answers, dv_quest_img, pos_cls, null);
+		}
+		
 		let dv_img = null;
 		if(an_answ.img_href != null){
 			const htm_img = load_image(dv_quest, dv_answers.all_img, anid, an_answ.img_href);
@@ -379,7 +412,6 @@ function init_answers(qid){
 			dv_img.classList.add("exam", "grid_item");
 			dv_img.append(htm_img);
 		}
-		
 		let dv_answ = null;
 		if (an_answ.kind == VRS_CIT_KIND){
 			dv_answ = add_verse_cit(qid, an_answ);
@@ -387,18 +419,9 @@ function init_answers(qid){
 			dv_answ = add_strong_cit(qid, an_answ);
 		} else if (an_answ.kind == LNK_CIT_KIND){
 			dv_answ = add_link_cit(qid, an_answ);
-		} else if (an_answ.to_right_pos || an_answ.to_left_pos){
-			let pos_cls = "grid_item_right";
-			if(an_answ.to_left_pos){ pos_cls = "grid_item_left"; }
-			dv_answ = dv_answers.appendChild(document.createElement("div"));
-			answ_classes = ["exam", "grid_img_answer", "item_can_select", pos_cls];
-			dv_answ.classList.add(...answ_classes);
-			
-			if(dv_img != null){	dv_answ.append(dv_img);	}
-			const dv_txt = document.createElement("div");
-			dv_txt.classList.add("exam", "grid_item", "to_center");
-			dv_txt.innerHTML = get_msg(an_answ.htm_answ);
-			dv_answ.append(dv_txt);
+		} else if (an_answ.img_pos != null){
+			const pos_cls = an_answ.img_pos;
+			dv_answ = add_simple_choice_item(dv_answers, dv_img, pos_cls, an_answ.htm_answ);
 		} else {
 			dv_answ = dv_answers.appendChild(document.createElement("div"));
 			dv_answ.classList.add(...answ_classes);
@@ -411,7 +434,7 @@ function init_answers(qid){
 		
 		dv_answ.tc_answ_obj = an_answ;
 		
-		if(an_answ.is_on){
+		if((an_answ.is_on) && (an_answ.img_pos == null)){
 			dv_answ.classList.add("selected");
 		}
 		
