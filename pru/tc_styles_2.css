@@ -15,7 +15,7 @@
 }
 
 :root {
-	--square_side: min(24vw, 31vh);
+	--square_side: min(24vw, 37vh);
 	--two_sides: calc-size(2 * var(--square_side));
 }
 
@@ -809,13 +809,20 @@ color: white;
 
 .exam.item_can_select {
 	border: 0.2vw solid white;
-	padding: 0.5em 0.5em 0.5em 0.5em;
 	border-radius: 1em;
 }
 
 .exam.item_can_select:hover {
 	border: 0.5vw solid white;
 }
+
+/* ============================================= */
+
+.exam.grid_item_2col {
+	grid-column: 1 / span 2;
+	grid-row: auto;	
+}
+
 
 .exam.is_answ_img_div {
 	grid-row: auto;

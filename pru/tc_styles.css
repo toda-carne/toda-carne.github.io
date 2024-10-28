@@ -15,7 +15,8 @@
 }
 
 :root {
-	--square_side: min(24vw, 31vh);
+	--square_side: min(20vw, 30vh);
+	--four_sides: calc-size(4 * var(--square_side));
 	--two_sides: calc-size(2 * var(--square_side));
 }
 
@@ -734,11 +735,20 @@ color: white;
 	text-align: left;
 }
 
+.exam.two_answers {
+	display: inline-flex;
+	width: var(--four_sides));
+	height: var(--two_sides))
+	border: 0.2vw solid #00ff00;
+	//aspect-ratio: 1.7;
+}
+
 .exam.grid_4col {
 	display: grid;
-	grid-template-columns: repeat(4, var(--square_side)) 1fr;	
+	grid-template-columns: repeat(4, var(--square_side)  );	
+	//grid-template-rows: calc-size(2 * var(--square_side));
 	grid-auto-rows: auto;
-	//border: 0.2vw solid #ff0000;
+	border: 0.2vw solid #ff0000;
 }
 
 .exam.grid_1col {
@@ -747,74 +757,50 @@ color: white;
 	grid-auto-rows: auto;
 }
 
-.exam.to_right {
-	text-align: right;
-}
-
-.exam.to_center {
-	text-align: center;
-}
-
-.exam.to_left {
-	text-align: left;
-}
-
 .exam.grid_item {
 	grid-column: auto;
 	grid-row: auto;	
 	background-color: transparent;
-	//align-items: stretch;
-	text-align: center;
+	align-items: stretch;
+}
+
+.exam.grid_item_2col {
+	grid-column: 1 / span 2;
+	grid-row: auto;	
 }
 
 .exam.grid_img_answer {
 	display: grid;
-	padding: 0.5em 0.5em 0.5em 0.5em;
 	grid-template-columns: 1fr;
-	grid-template-rows: var(--two_sides) 1fr;
+	grid-template-rows: 10fr 1fr;
 	//border: 0.2vw solid #ffff00;
 }
 
 .exam.grid_item_left {
 	grid-column: 1 / span 2;
 	grid-row: 1;	
-	text-align: right;
 	//border: 0.2vw solid #ff0000;
 	background-color: transparent;
-	//aspect-ratio: 1;
+	aspect-ratio: 1;
 }
 
 .exam.grid_item_center {
 	grid-column: 2 / span 2;
 	grid-row: 1;	
-	text-align: center;
 	background-color: transparent;
-	//aspect-ratio: 1;
+	aspect-ratio: 1;
+}
+
+.exam.white_border {
+	border: 0.2vw solid #ffffff;	
 }
 
 .exam.grid_item_right {
 	grid-column: 3 / span 2;
 	grid-row: 1;	
-	text-align: left;
 	//border: 0.2vw solid #00ff00;
 	background-color: transparent;
-	//aspect-ratio: 1;
-}
-
-.exam.grid_item_all_col {
-	grid-column: 1 / -1;
-	grid-row: auto;	
-	text-align: left;
-}
-
-.exam.item_can_select {
-	border: 0.2vw solid white;
-	padding: 0.5em 0.5em 0.5em 0.5em;
-	border-radius: 1em;
-}
-
-.exam.item_can_select:hover {
-	border: 0.5vw solid white;
+	aspect-ratio: 1;
 }
 
 .exam.is_answ_img_div {
@@ -825,6 +811,11 @@ color: white;
 .exam.is_answ_img {
 	width: 100%;
 	//align-content: center center;
+}
+
+.exam.grid_item_all_col {
+	grid-column: 1 / -1;
+	grid-row: auto;	
 }
 
 .exam.can_select {

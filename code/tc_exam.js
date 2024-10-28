@@ -95,7 +95,7 @@ const id_dv_sel_option = "id_dv_sel_option";
 const id_dv_name_ed = "id_dv_name_ed";
 const id_dv_answ_ed = "id_dv_answ_ed";
 const id_support_ed = "id_support_ed";
-
+const id_quest_img = "id_quest_img";
 
 // FOR DAG pending management
 const id_ctx_pend = "ctx_pend";
@@ -294,7 +294,29 @@ function add_question(qid){
 	return dv_quest;
 }
 
-export function init_answers(qid){
+function load_image(dv_scroll, all_img, id_img, src_img){
+	if(all_img == null){ return; }
+	let htm_img = all_img[id_img];
+	if(htm_img == null){
+		htm_img = document.createElement("img");
+		all_img[id_img] = htm_img;
+		htm_img.classList.add("exam", "is_answ_img");
+		htm_img.src = src_img;
+		if (htm_img.complete) {
+			scroll_to_top(dv_scroll);
+		} else {
+			htm_img.addEventListener('load', (ev1) => {
+				scroll_to_top(dv_scroll);
+			});
+			htm_img.addEventListener('error', function() {
+				console.log("Could not run scroll_to_top on load image");
+			})
+		}
+	}
+	return htm_img;
+}
+
+function init_answers(qid){
 	//console.log("init_answers of qid = " + qid);
 	const quest = glb_poll_db[qid];
 	
@@ -305,6 +327,10 @@ export function init_answers(qid){
 		console.log("COULD NOT FIND qid = " + qid);
 		return;
 	}
+	let htm_quest_img = null;
+	if(quest.img_href != null){
+		htm_quest_img = load_image(dv_quest, dv_quest, id_quest_img, quest.img_href);
+	}
 	
 	const id_dv_answers = qid + SUF_ID_ANSWERS;
 	let dv_answers = document.getElementById(id_dv_answers);
@@ -313,9 +339,7 @@ export function init_answers(qid){
 		dv_answers.id = id_dv_answers;
 		dv_answers.classList.add("exam");
 		//dv_answers.classList.add("is_block");
-		dv_answers.classList.add("grid_2cols", "margin_top_bot");
-		dv_answers.answers_divs = {};
-		dv_answers.answers_should = {};
+		dv_answers.classList.add("grid_4col", "margin_top_bot");
 		dv_answers.all_img = {};
 	}
 	
@@ -331,88 +355,54 @@ export function init_answers(qid){
 		if(an_answ == null){
 			continue; // continue with next elem
 		}
-		let dv_answ = dv_answers.answers_divs[anid];
-		let dv_shd_on = dv_answers.answers_should[anid];
 		
-		/*
-		// SHOW THE DIV if already created
-		if(dv_answ != null){
-			if(! is_init_to_answer && ! an_answ.is_on){
-				if(dv_shd_on != null){
-					dv_answers.appendChild(dv_shd_on);
-				}
-				continue;
-			}
-			dv_answers.appendChild(dv_answ);
-			continue;
-		}*/
-				
+		let answ_classes = ["exam", "grid_item_all_col", "item_can_select"];
+		
 		if(! is_init_to_answer && ! an_answ.is_on){
 			if(an_answ.should_on != null){
-				dv_shd_on = document.createElement("div");
-				dv_shd_on.classList.add("exam");
-				//dv_shd_on.classList.add("is_answer");
-				dv_shd_on.classList.add("grid_1col", "can_select");
+				const dv_shd_on = document.createElement("div");
+				dv_shd_on.classList.add(...answ_classes);
 				dv_shd_on.classList.add("is_contradiction");
 				dv_shd_on.innerHTML = get_msg(an_answ.should_on);
 				add_listener_to_add_edit_button(dv_answers, dv_shd_on, qid);
 				dv_shd_on.tc_answ_obj = an_answ;
 				dv_shd_on.tc_is_should = true;
-				add_right_click_listener_for_answer(qid, dv_shd_on);
-				
-				//dv_answers.answers_should[anid] = dv_shd_on;
-			}
-			if(dv_shd_on != null){
+				add_right_click_listener_for_answer(qid, dv_shd_on);				
 				dv_answers.appendChild(dv_shd_on);
 			}
 			continue; // continue with next elem
 		}
+		let dv_img = null;
+		if(an_answ.img_href != null){
+			const htm_img = load_image(dv_quest, dv_answers.all_img, anid, an_answ.img_href);
+			dv_img = document.createElement("div");
+			dv_img.classList.add("exam", "grid_item");
+			dv_img.append(htm_img);
+		}
 		
+		let dv_answ = null;
 		if (an_answ.kind == VRS_CIT_KIND){
 			dv_answ = add_verse_cit(qid, an_answ);
 		} else if (an_answ.kind == STG_CIT_KIND){
 			dv_answ = add_strong_cit(qid, an_answ);
 		} else if (an_answ.kind == LNK_CIT_KIND){
 			dv_answ = add_link_cit(qid, an_answ);
+		} else if (an_answ.to_right_pos || an_answ.to_left_pos){
+			let pos_cls = "grid_item_right";
+			if(an_answ.to_left_pos){ pos_cls = "grid_item_left"; }
+			dv_answ = dv_answers.appendChild(document.createElement("div"));
+			answ_classes = ["exam", "grid_img_answer", "item_can_select", pos_cls];
+			dv_answ.classList.add(...answ_classes);
+			
+			if(dv_img != null){	dv_answ.append(dv_img);	}
+			const dv_txt = document.createElement("div");
+			dv_txt.classList.add("exam", "grid_item", "to_center");
+			dv_txt.innerHTML = get_msg(an_answ.htm_answ);
+			dv_answ.append(dv_txt);
 		} else {
 			dv_answ = dv_answers.appendChild(document.createElement("div"));
-			let arr1 = ["exam", "grid_1col", "can_select"];
-			dv_answ.classList.add(...arr1);
-			
-			let dv_txt = dv_answ;			
-			if(an_answ.img_href != null){
-				// <img id="img_cielo_1" src="../img/heaven_1_1.jpg" title="Hagame click" style="width:100%">
-				const dv_img = document.createElement("div");
-				//dv_img.classList.add("exam", "is_answ_img_div");
-				dv_img.classList.add("exam", "grid_item");
-				dv_answ.append(dv_img);
-				
-				dv_txt = document.createElement("div");				
-				//dv_txt.classList.add("exam", "is_answ_txt_div");
-				dv_txt.classList.add("exam", "grid_item");
-				dv_answ.append(dv_txt);
-				
-				let htm_img = dv_answers.all_img[anid];
-				if(htm_img == null){
-					htm_img = document.createElement("img");
-					dv_answers.all_img[anid] = htm_img;
-					htm_img.classList.add("exam", "is_answ_img");
-					htm_img.src = an_answ.img_href;
-					if (htm_img.complete) {
-						scroll_to_top(dv_quest);
-					} else {
-						htm_img.addEventListener('load', (ev1) => {
-							scroll_to_top(dv_quest);
-						});
-						htm_img.addEventListener('error', function() {
-							console.log("Could not run scroll_to_top on load image");
-						})
-					}
-				}
-				dv_img.append(htm_img);
-			}
-			
-			dv_txt.innerHTML = get_msg(an_answ.htm_answ);			
+			dv_answ.classList.add(...answ_classes);
+			dv_answ.innerHTML = get_msg(an_answ.htm_answ);			
 		}
 		
 		if(an_answ.rclk_href != null){
@@ -430,9 +420,7 @@ export function init_answers(qid){
 			add_click_listener_for_answer(qid, dv_answ);
 		} else {
 			add_listener_to_add_edit_button(dv_answers, dv_answ, qid);
-		}
-		
-		//dv_answers.answers_divs[anid] = dv_answ;
+		}		
 	}
 	
 	const id_dv_end_ans = qid + SUF_ID_END_ANS;
@@ -571,7 +559,7 @@ function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
 			dv_answ_ed.id = id_dv_answ_ed;
 			dv_answ_ed.classList.add("exam");
 			dv_answ_ed.classList.add("is_block");
-			//dv_answ_ed.classList.add("grid_item_2col");
+			//dv_answ_ed.classList.add("grid_item_all_col");
 			dv_answ_ed.classList.add("is_button");
 			dv_answ_ed.innerHTML = glb_curr_lang.msg_edit_ans;
 			dv_answ_ed.addEventListener('click', function() {
@@ -917,7 +905,7 @@ function toggle_verse_ed(dv_citation){
 	}
 	dv_ed_cit.classList.add("exam");
 	dv_ed_cit.classList.add("is_block");
-	dv_ed_cit.classList.add("grid_item_2col");
+	dv_ed_cit.classList.add("grid_item_all_col");
 	
 	const cit_obj = calc_verse_cit_object(dv_citation);	
 
@@ -1133,7 +1121,7 @@ function toggle_select_option(dv_return, all_options_arr, on_click_fn){
 	}
 	dv_options.classList.add("exam");
 	dv_options.classList.add("is_block");
-	dv_options.classList.add("grid_item_2col");
+	dv_options.classList.add("grid_item_all_col");
 	
 	all_options_arr.forEach((value) => {
 		const dv_opt = add_option(dv_options, null, value, null);
@@ -1357,7 +1345,7 @@ function toggle_strong_ed(dv_code){
 	}
 	dv_ed_strong.classList.add("exam");
 	dv_ed_strong.classList.add("is_block");
-	dv_ed_strong.classList.add("grid_item_2col");
+	dv_ed_strong.classList.add("grid_item_all_col");
 
 	const cit_obj = calc_strong_cit_object(dv_code);
 	
@@ -1506,7 +1494,7 @@ function toggle_link_ed(dv_link){
 	}
 	dv_ed_link.classList.add("exam");
 	dv_ed_link.classList.add("is_block");
-	dv_ed_link.classList.add("grid_item_2col");
+	dv_ed_link.classList.add("grid_item_all_col");
 
 	const lnk_cit_obj = calc_link_cit_object(dv_link);
 	var link_name = lnk_cit_obj.name;
@@ -1574,7 +1562,7 @@ function toggle_exam_name_ed(dv_name, save_fn){
 	}
 	dv_ed_name.classList.add("exam");
 	dv_ed_name.classList.add("is_block");
-	//dv_ed_name.classList.add("grid_item_2col");
+	//dv_ed_name.classList.add("grid_item_all_col");
 
 	const exam_name = dv_name.innerHTML;
 
