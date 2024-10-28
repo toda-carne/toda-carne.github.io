@@ -23,11 +23,11 @@ export function init_exam_database(){
 		answers: {
 			q1_1__yes: { htm_answ: "q1_1__yes", 
 				img_pos: "grid_item_right",
-				img_href: "../code/cont_creator_resurrection/img/yes_like.webp", 
+				img_href: "../code/cont_creator_resurrection/img/yes_like.webp",
 			},
 			q1_1__no: { htm_answ: "q1_1__no", 
 				img_pos: "grid_item_left",
-				img_href: "../code/cont_creator_resurrection/img/no_like.webp", 
+				img_href: "../code/cont_creator_resurrection/img/no_like.webp",
 			},
 		},
 	};
@@ -42,9 +42,16 @@ export function init_exam_database(){
 	
 	db.q1_2__ = { 
 		htm_stm: "q1_2__experience_is_evidence",
+		choose_more: true,
 		answers: {
-			q1_2__yes: { htm_answ: "q1_2__yes" },
-			q1_2__no: { htm_answ: "q1_2__no" },
+			q1_2__yes: { htm_answ: "q1_2__yes", 
+				img_pos: "grid_item_right",
+				img_href: "../code/cont_creator_resurrection/img/yes_like.webp",
+			},
+			q1_2__no: { htm_answ: "q1_2__no", 
+				img_pos: "grid_item_left",
+				img_href: "../code/cont_creator_resurrection/img/no_like.webp",
+			},
 		},
 	};
 	

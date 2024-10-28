@@ -319,7 +319,7 @@ function load_image(dv_scroll, all_img, id_img, src_img){
 function add_simple_choice_item(dv_answers, dv_img, pos_cls, htm_txt){
 	const dv_answ = dv_answers.appendChild(document.createElement("div"));
 	const answ_classes = ["exam", "grid_img_answer", pos_cls];
-	if(htm_txt != null){
+	if(pos_cls != "grid_item_center"){
 		answ_classes.push("item_can_select");
 	}
 	dv_answ.classList.add(...answ_classes);
@@ -380,9 +380,11 @@ function init_answers(qid){
 			continue; // continue with next elem
 		}
 		
+		const is_more_answ = (quest.choose_more && (an_answ.img_pos != null));
+		
 		let answ_classes = ["exam", "grid_item_all_col", "item_can_select"];
 		
-		if(! is_init_to_answer && ! an_answ.is_on){
+		if(! is_init_to_answer && ! an_answ.is_on && ! is_more_answ){
 			if(an_answ.should_on != null){
 				const dv_shd_on = document.createElement("div");
 				dv_shd_on.classList.add(...answ_classes);
@@ -406,8 +408,9 @@ function init_answers(qid){
 		}
 		
 		let dv_img = null;
+		let htm_img = null;
 		if(an_answ.img_href != null){
-			const htm_img = load_image(dv_quest, dv_answers.all_img, anid, an_answ.img_href);
+			htm_img = load_image(dv_quest, dv_answers.all_img, anid, an_answ.img_href);
 			dv_img = document.createElement("div");
 			dv_img.classList.add("exam", "grid_item");
 			dv_img.append(htm_img);
@@ -420,6 +423,15 @@ function init_answers(qid){
 		} else if (an_answ.kind == LNK_CIT_KIND){
 			dv_answ = add_link_cit(qid, an_answ);
 		} else if (an_answ.img_pos != null){
+			if(quest.choose_more && (quest.has_answ != null)){
+				if(an_answ.is_on){
+					an_answ.img_pos = "grid_item_right";
+					htm_img.style.width = "100%";
+				} else {
+					an_answ.img_pos = "grid_item_left";
+					htm_img.style.width = "50%";
+				}
+			}
 			const pos_cls = an_answ.img_pos;
 			dv_answ = add_simple_choice_item(dv_answers, dv_img, pos_cls, an_answ.htm_answ);
 		} else {
