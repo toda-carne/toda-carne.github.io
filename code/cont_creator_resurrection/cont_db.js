@@ -13,6 +13,14 @@ export function init_exam_database(){
 	
 	const db = db_nodes_exam;
 	const rf = glb_all_bibrefs;
+	
+	db.img_hrefs = {
+		yes_like: "../img/exam/yes_like.webp",
+		no_like: "../img/exam/no_like.webp",
+		less_than: "../img/exam/less_than.webp",
+		more: "../img/exam/more.webp",
+		less: "../img/exam/less.webp",
+	};
 
 	db.q1_1__ = { 
 		htm_stm: "q1_1__are_you_reasonable",
@@ -23,11 +31,9 @@ export function init_exam_database(){
 		answers: {
 			q1_1__yes: { htm_answ: "q1_1__yes", 
 				img_pos: "grid_item_right",
-				img_href: "../code/cont_creator_resurrection/img/yes_like.webp",
 			},
 			q1_1__no: { htm_answ: "q1_1__no", 
 				img_pos: "grid_item_left",
-				img_href: "../code/cont_creator_resurrection/img/no_like.webp",
 			},
 		},
 	};
@@ -46,11 +52,11 @@ export function init_exam_database(){
 		answers: {
 			q1_2__yes: { htm_answ: "q1_2__yes", 
 				img_pos: "grid_item_right",
-				img_href: "../code/cont_creator_resurrection/img/yes_like.webp",
+				img_href: "../code/cont_creator_resurrection/img/senses.webp",
 			},
 			q1_2__no: { htm_answ: "q1_2__no", 
 				img_pos: "grid_item_left",
-				img_href: "../code/cont_creator_resurrection/img/no_like.webp",
+				img_href: "../code/cont_creator_resurrection/img/evolution.webp",
 			},
 		},
 	};

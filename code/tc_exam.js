@@ -114,6 +114,7 @@ function is_in_viewport(elem) {
 }
 
 function scroll_to_top(dv_elem) {	
+	if(dv_elem == null){ return; }
 	const rect = dv_elem.getBoundingClientRect();
 	const dv_content = document.getElementById("id_exam_content");
 	const rect2 = dv_content.getBoundingClientRect();
@@ -294,23 +295,35 @@ function add_question(qid){
 	return dv_quest;
 }
 
+function get_exam_image(id_img){
+	if(id_img == null){ return; }
+	const hrefs = glb_poll_db.img_hrefs;
+	if(hrefs == null){ return; }
+	const dv_content = document.getElementById("id_exam_content");
+	return dv_content.all_img[id_img];
+}
+
 function load_image(dv_scroll, all_img, id_img, src_img){
-	if(all_img == null){ return; }
+	if(id_img == null){ return null; }
+	if(all_img == null){ return null; }
 	let htm_img = all_img[id_img];
 	if(htm_img == null){
+		if(src_img == null){ return null; }
 		htm_img = document.createElement("img");
 		all_img[id_img] = htm_img;
 		htm_img.classList.add("exam", "is_answ_img");
 		htm_img.src = src_img;
-		if (htm_img.complete) {
-			scroll_to_top(dv_scroll);
-		} else {
-			htm_img.addEventListener('load', (ev1) => {
+		if(dv_scroll != null){ 
+			if (htm_img.complete) {
 				scroll_to_top(dv_scroll);
-			});
-			htm_img.addEventListener('error', function() {
-				console.log("Could not run scroll_to_top on load image");
-			})
+			} else {
+				htm_img.addEventListener('load', (ev1) => {
+					scroll_to_top(dv_scroll);
+				});
+				htm_img.addEventListener('error', function() {
+					console.log("Could not run scroll_to_top on load image");
+				})
+			}
 		}
 	}
 	return htm_img;
@@ -346,14 +359,33 @@ function init_answers(qid){
 		return;
 	}
 	let dv_quest_img = null;
-	if((quest.img_href != null) && (quest.img_pos != null)){
+	let dv_less = null;
+	let dv_more = null;
+	if(quest.choose_yes && (quest.img_href != null) && (quest.img_pos != null)){
 		const htm_quest_img = load_image(dv_quest, dv_quest, id_quest_img, quest.img_href);
 		dv_quest_img = document.createElement("div");
 		dv_quest_img.classList.add("exam", "grid_item");
 		dv_quest_img.append(htm_quest_img);
 	}
+	if(quest.choose_more){
+		let htm_quest_img = null;
+		htm_quest_img = get_exam_image("less");
+		if(htm_quest_img != null){
+			dv_less = document.createElement("div");
+			dv_less.classList.add("exam", "grid_item");
+			dv_less.append(htm_quest_img);
+		}
+		htm_quest_img = get_exam_image("more");
+		if(htm_quest_img != null){
+			dv_more = document.createElement("div");
+			dv_more.classList.add("exam", "grid_item");
+			dv_more.append(htm_quest_img);
+		}
+	}
 	let showed_quest_img = false;
 	const have_quest_img = (quest.choose_yes && (dv_quest_img != null));
+	let showed_left = false;
+	let showed_right = false;
 	
 	const id_dv_answers = qid + SUF_ID_ANSWERS;
 	let dv_answers = document.getElementById(id_dv_answers);
@@ -398,10 +430,13 @@ function init_answers(qid){
 			}
 			continue; // continue with next elem
 		}
-		if(! showed_quest_img && have_quest_img && (an_answ.img_pos != null)){
+		if(quest.choose_yes && ! showed_quest_img && have_quest_img && (an_answ.img_pos != null)){
 			showed_quest_img = true;
 			if(an_answ.is_on && (an_answ.img_pos != null)){
 				quest.img_pos = an_answ.img_pos;
+			}
+			if(is_init_to_answer){
+				quest.img_pos = "grid_item_center";
 			}
 			const pos_cls = quest.img_pos;
 			add_simple_choice_item(dv_answers, dv_quest_img, pos_cls, null);
@@ -409,12 +444,20 @@ function init_answers(qid){
 		
 		let dv_img = null;
 		let htm_img = null;
-		if(an_answ.img_href != null){
+		if(quest.choose_more && (an_answ.img_href != null)){
 			htm_img = load_image(dv_quest, dv_answers.all_img, anid, an_answ.img_href);
+			htm_img.style.width = "100%";
+		}
+		if(quest.choose_yes && (an_answ.img_pos != null)){
+			if(an_answ.img_pos == "grid_item_right"){ htm_img = get_exam_image("yes_like"); }
+			if(an_answ.img_pos == "grid_item_left"){ htm_img = get_exam_image("no_like"); }
+		}
+		if(htm_img != null){
 			dv_img = document.createElement("div");
 			dv_img.classList.add("exam", "grid_item");
 			dv_img.append(htm_img);
 		}
+		//get_exam_image(
 		let dv_answ = null;
 		if (an_answ.kind == VRS_CIT_KIND){
 			dv_answ = add_verse_cit(qid, an_answ);
@@ -423,17 +466,24 @@ function init_answers(qid){
 		} else if (an_answ.kind == LNK_CIT_KIND){
 			dv_answ = add_link_cit(qid, an_answ);
 		} else if (an_answ.img_pos != null){
+			let pos_itm = null;
+			let dv_add = null;
 			if(quest.choose_more && (quest.has_answ != null)){
 				if(an_answ.is_on){
-					an_answ.img_pos = "grid_item_right";
+					pos_itm = "grid_item_right";
+					dv_add = dv_more;
+					an_answ.img_pos = pos_itm;
 					htm_img.style.width = "100%";
 				} else {
-					an_answ.img_pos = "grid_item_left";
+					pos_itm = "grid_item_left";
+					dv_add = dv_less;
+					an_answ.img_pos = pos_itm;
 					htm_img.style.width = "50%";
 				}
 			}
 			const pos_cls = an_answ.img_pos;
 			dv_answ = add_simple_choice_item(dv_answers, dv_img, pos_cls, an_answ.htm_answ);
+			if(quest.choose_more && (pos_itm != null)){ dv_answ = add_simple_choice_item(dv_answers, dv_add, pos_itm, null); }
 		} else {
 			dv_answ = dv_answers.appendChild(document.createElement("div"));
 			dv_answ.classList.add(...answ_classes);
@@ -672,13 +722,6 @@ function remove_curr_support_ed(rm_it){
 			dv_inter.remove();
 		}
 	}
-}
-
-function get_qid_of_support_id(support_id){
-	if(support_id.endsWith(SUF_ID_ANSWERS)){
-		return support_id.slice(0, - SUF_ID_ANSWERS.length);
-	}
-	return null;
 }
 
 function add_all_vrs_to_ops(all_vrs, all_ops){
@@ -1200,12 +1243,32 @@ export function init_page_exam(ini_func){
 	if(INIT_EXAM_DB_FUNC != null){ 
 		INIT_EXAM_DB_FUNC(); 
 	}
+	init_exam_images();
 	init_DAG_func();
 	init_exam_module_vars();
 	init_exam_buttons();
 	
 	ask_next();	
 };
+
+function init_exam_images(){
+	const hrefs = glb_poll_db.img_hrefs;
+	if(hrefs == null){ return; }
+	const dv_content = document.getElementById("id_exam_content");
+	let id_img = null;
+	dv_content.all_img = {};
+	const all_img = dv_content.all_img;
+	id_img = "yes_like";
+	load_image(null, all_img, id_img, hrefs.yes_like);
+	id_img = "no_like";
+	load_image(null, all_img, id_img, hrefs.no_like);
+	id_img = "less_than";
+	load_image(null, all_img, id_img, hrefs.less_than);
+	id_img = "more";
+	load_image(null, all_img, id_img, hrefs.more);
+	id_img = "less";
+	load_image(null, all_img, id_img, hrefs.less);
+}
 
 function init_exam_buttons(){
 	let dv_button = null;
