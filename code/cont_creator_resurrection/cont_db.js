@@ -13,6 +13,8 @@ export function init_exam_database(){
 	
 	const db = db_nodes_exam;
 	const rf = glb_all_bibrefs;
+	const rgt = "grid_item_right";
+	const lft = "grid_item_left";
 	
 	db.img_hrefs = {
 		yes_like: "../img/exam/yes_like.webp",
@@ -25,14 +27,14 @@ export function init_exam_database(){
 	db.q1_1__ = { 
 		htm_stm: "q1_1__are_you_reasonable",
 		img_href: "../code/cont_creator_resurrection/img/bible.webp", 
-		img_pos: "grid_item_center",
+		//img_pos: "grid_item_center",
 		choose_yes: true,
 		//choose_more: true,
 		answers: {
-			q1_1__yes: { htm_answ: "q1_1__yes", 
+			q1_1__yes: { 
 				img_pos: "grid_item_right",
 			},
-			q1_1__no: { htm_answ: "q1_1__no", 
+			q1_1__no: { 
 				img_pos: "grid_item_left",
 			},
 		},
@@ -49,12 +51,13 @@ export function init_exam_database(){
 	db.q1_2__ = { 
 		htm_stm: "q1_2__experience_is_evidence",
 		choose_more: true,
+		context: ["q1_2__yes", "q1_2__no"],
 		answers: {
-			q1_2__yes: { htm_answ: "q1_2__yes", 
+			q1_2__yes: { 
 				img_pos: "grid_item_right",
 				img_href: "../code/cont_creator_resurrection/img/senses.webp",
 			},
-			q1_2__no: { htm_answ: "q1_2__no", 
+			q1_2__no: { 
 				img_pos: "grid_item_left",
 				img_href: "../code/cont_creator_resurrection/img/evolution.webp",
 			},
@@ -73,8 +76,11 @@ export function init_exam_database(){
 		htm_stm: "q1_3__are_humans_intelligent",
 		presentation: "q1_3__creator_section",
 		answers: {
-			q1_3__yes: { htm_answ: "q1_3__yes", should_on: "q1_3__should", },
-			q1_3__no: { htm_answ: "q1_3__no" },
+			q1_3__yes: { 
+			},
+			q1_3__no: { 
+				choose_words: true,
+			},
 		},
 	};
 	

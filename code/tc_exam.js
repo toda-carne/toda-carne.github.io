@@ -11,6 +11,7 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 const INVALID_PAGE_POS = "???";
 
 let INIT_EXAM_DB_FUNC = null;
+let EXAM_IMAGES = null;
 
 let DEBUG_QNUMS = true;
 
@@ -102,6 +103,7 @@ const id_ctx_pend = "ctx_pend";
 
 const firebase_answers_path = "/user_answers";
 
+/*
 function is_in_viewport(elem) {	
 	var rect = elem.getBoundingClientRect();
 	
@@ -111,18 +113,112 @@ function is_in_viewport(elem) {
 		(rect.top >= rect2.top) &&
 		(rect.bottom <= rect2.bottom)
 	);
-}
+}*/
 
-function scroll_to_top(dv_elem) {	
+function scroll_to_top(dv_elem) {
 	if(dv_elem == null){ return; }
 	const rect = dv_elem.getBoundingClientRect();
 	const dv_content = document.getElementById("id_exam_content");
 	const rect2 = dv_content.getBoundingClientRect();
-	dv_content.scrollBy(0, (rect.top - rect2.top));
+	
+	console.log("scroll_to_top:");
+	console.log(dv_elem);
+	const dist = (rect.top - rect2.top);
+	if(dist > 0){
+		dv_content.scrollBy(0, dist);
+	}
 }
 
 
 // CODE_FOR QUESTION DYSPLAY AND USER OPERATION
+
+function add_question(qid){
+	const quest = glb_poll_db[qid];
+	if(quest == null){
+		console.log("Could not find question " + qid + " in questions db.");
+		return null;
+	}
+	const old_dv = document.getElementById(qid);
+	if(old_dv != null){ 
+		console.log("Question " + qid + " ALREADY in page (add_question)");
+		return null;
+	}
+	//console.log("ADDING question " + qid + " to page.");
+	
+	const lst_quest = get_last_quest();
+	let lst_pos = 0;
+	if((lst_quest != null) && (lst_quest.pos_page != null) && (lst_quest.pos_page != INVALID_PAGE_POS)){ lst_pos = lst_quest.pos_page; }
+	
+	const dv_all_quest = document.getElementById("id_exam_all_questions");
+	const dv_quest = dv_all_quest.appendChild(document.createElement("div"));
+	dv_quest.id = qid;
+	dv_quest.classList.add("exam");
+	dv_quest.classList.add("has_border");
+	dv_quest.classList.add("grid_1col");
+	
+	dv_quest.tc_quest = quest;	
+	
+	if(quest.pos_page == null){
+		quest.pos_page = lst_pos + 1;
+	}
+	
+	if(quest.presentation != null){
+		const dv_title = dv_quest.appendChild(document.createElement("div"));
+		dv_title.classList.add("exam");
+		dv_title.classList.add("exam_title");
+		dv_title.innerHTML = get_msg(quest.presentation);
+	}
+	
+	const dv_stm = dv_quest.appendChild(document.createElement("div"));
+	dv_stm.classList.add("exam");
+	dv_stm.classList.add("stm");
+	
+	let the_stm = get_msg(quest.htm_stm);
+	if(quest.has_qrefs){
+		the_stm = replace_all_qrefs(the_stm);
+	}
+	let the_ctx = context_to_html(quest.context);
+	
+	const sp_num = document.createElement("span")
+	sp_num.classList.add("exam");
+	sp_num.classList.add("is_qnum");
+	
+	sp_num.innerHTML = "<b>" + quest.pos_page + ". </b>";
+	
+	if(DEBUG_QNUMS){
+		sp_num.title = quest.htm_stm;
+	}
+	
+	const dv_qstm = dv_stm.appendChild(document.createElement("div"));
+	dv_qstm.id = qid + SUF_ID_QSTM;
+	if(quest.answers != null){
+		dv_qstm.title = glb_curr_lang.msg_help_statement_right_click;
+	}
+	dv_qstm.classList.add("exam");
+	dv_qstm.classList.add("msg");
+	dv_qstm.innerHTML = the_ctx + the_stm;
+	dv_qstm.prepend(sp_num);
+	
+	if(quest.answers != null){
+		/*dv_qstm.addEventListener('contextmenu', (ev1) => {
+			ev1.preventDefault();
+			toggle_support_interaction(qid, SUF_ID_ANSWERS);
+			return false;				
+		});*/
+		sp_num.addEventListener('click', (ev1) => {
+			ev1.preventDefault();
+			toggle_support_interaction(qid, SUF_ID_ANSWERS);
+			return false;				
+		});
+	}
+
+	init_answers(qid);
+
+	scroll_to_first_not_answered();
+	//scroll_to_top(dv_quest);
+	
+	return dv_quest;
+}
 
 function is_observation(quest){
 	if(quest == null){ return false; }
@@ -191,15 +287,6 @@ function get_first_not_answered(){
 	return quest;
 }
 
-function scroll_to_last_quest(){
-	const quest = get_last_quest();
-	if(quest == null){ return; }
-	if(quest.qid == null){ return; }
-	const dv_quest = document.getElementById(quest.qid);
-	if(dv_quest == null){ return; }
-	scroll_to_top(dv_quest);
-}
-
 function scroll_to_first_not_answered(){
 	const quest = get_first_not_answered();
 	if(quest == null){ return; }
@@ -209,98 +296,44 @@ function scroll_to_first_not_answered(){
 	scroll_to_top(dv_quest);
 }
 
-function add_question(qid){
-	const quest = glb_poll_db[qid];
-	if(quest == null){
-		console.log("Could not find question " + qid + " in questions db.");
-		return null;
+function context_to_html(arr_context){
+	let htm_ctx = '';
+	if(arr_context != null){
+		htm_ctx = arr_context.map((itm) => { 
+			const msg = get_msg(itm); 
+			if(msg == itm){ return ''; }
+			return msg;
+		}).join('');
 	}
-	const old_dv = document.getElementById(qid);
-	if(old_dv != null){ 
-		console.log("Question " + qid + " ALREADY in page (add_question)");
-		return null;
-	}
-	//console.log("ADDING question " + qid + " to page.");
-	
-	const lst_quest = get_last_quest();
-	let lst_pos = 0;
-	if((lst_quest != null) && (lst_quest.pos_page != null) && (lst_quest.pos_page != INVALID_PAGE_POS)){ lst_pos = lst_quest.pos_page; }
-	
-	const dv_all_quest = document.getElementById("id_exam_all_questions");
-	const dv_quest = dv_all_quest.appendChild(document.createElement("div"));
-	dv_quest.id = qid;
-	dv_quest.classList.add("exam");
-	dv_quest.classList.add("has_border");
-	dv_quest.classList.add("grid_1col");
-	
-	dv_quest.tc_quest = quest;	
-	
-	if(quest.pos_page == null){
-		quest.pos_page = lst_pos + 1;
-	}
-	
-	if(quest.presentation != null){
-		const dv_title = dv_quest.appendChild(document.createElement("div"));
-		dv_title.classList.add("exam");
-		dv_title.classList.add("exam_title");
-		dv_title.innerHTML = get_msg(quest.presentation);
-	}
-	
-	const dv_stm = dv_quest.appendChild(document.createElement("div"));
-	dv_stm.classList.add("exam");
-	dv_stm.classList.add("stm");
-	
-	let the_stm = get_msg(quest.htm_stm);
-	if(quest.has_qrefs){
-		the_stm = replace_all_qrefs(the_stm);
-	}
-	
-	const sp_num = document.createElement("span")
-	sp_num.classList.add("exam");
-	sp_num.classList.add("is_qnum");
-	
-	sp_num.innerHTML = "<b>" + quest.pos_page + ". </b>";
-	
-	if(DEBUG_QNUMS){
-		sp_num.title = quest.htm_stm;
-	}
-	
-	const dv_qstm = dv_stm.appendChild(document.createElement("div"));
-	dv_qstm.id = qid + SUF_ID_QSTM;
-	if(quest.answers != null){
-		dv_qstm.title = glb_curr_lang.msg_help_statement_right_click;
-	}
-	dv_qstm.classList.add("exam");
-	dv_qstm.classList.add("msg");
-	dv_qstm.innerHTML = "" + the_stm;
-	dv_qstm.prepend(sp_num);
-	
-	if(quest.answers != null){
-		/*dv_qstm.addEventListener('contextmenu', (ev1) => {
-			ev1.preventDefault();
-			toggle_support_interaction(qid, SUF_ID_ANSWERS);
-			return false;				
-		});*/
-		sp_num.addEventListener('click', (ev1) => {
-			ev1.preventDefault();
-			toggle_support_interaction(qid, SUF_ID_ANSWERS);
-			return false;				
-		});
-	}
+	return htm_ctx;
+}
 
-	init_answers(qid);
-
-	scroll_to_top(dv_quest);
-	
-	return dv_quest;
+function init_exam_images(){
+	const hrefs = glb_poll_db.img_hrefs;
+	if(hrefs == null){ return; }
+	let id_img = null;
+	if(EXAM_IMAGES != null){ return; }
+	EXAM_IMAGES = {};
+	id_img = "yes_like";
+	load_image(null, EXAM_IMAGES, id_img, hrefs.yes_like);
+	id_img = "no_like";
+	load_image(null, EXAM_IMAGES, id_img, hrefs.no_like);
+	id_img = "less_than";
+	load_image(null, EXAM_IMAGES, id_img, hrefs.less_than);
+	id_img = "more";
+	load_image(null, EXAM_IMAGES, id_img, hrefs.more);
+	id_img = "less";
+	load_image(null, EXAM_IMAGES, id_img, hrefs.less);
 }
 
 function get_exam_image(id_img){
 	if(id_img == null){ return; }
 	const hrefs = glb_poll_db.img_hrefs;
 	if(hrefs == null){ return; }
-	const dv_content = document.getElementById("id_exam_content");
-	return dv_content.all_img[id_img];
+	if(EXAM_IMAGES == null){
+		init_exam_images();
+	}
+	return EXAM_IMAGES[id_img];
 }
 
 function load_image(dv_scroll, all_img, id_img, src_img){
@@ -313,23 +346,25 @@ function load_image(dv_scroll, all_img, id_img, src_img){
 		all_img[id_img] = htm_img;
 		htm_img.classList.add("exam", "is_answ_img");
 		htm_img.src = src_img;
-		if(dv_scroll != null){ 
-			if (htm_img.complete) {
-				scroll_to_top(dv_scroll);
-			} else {
-				htm_img.addEventListener('load', (ev1) => {
-					scroll_to_top(dv_scroll);
-				});
-				htm_img.addEventListener('error', function() {
-					console.log("Could not run scroll_to_top on load image");
-				})
-			}
+		if (htm_img.complete) {
+			scroll_to_first_not_answered();
+			//scroll_to_top(dv_scroll);
+		} else {
+			htm_img.addEventListener('load', (ev1) => {
+				console.log('ON LOAD of');
+				console.log(htm_img);
+				scroll_to_first_not_answered();
+				//scroll_to_top(dv_scroll);
+			});
+			htm_img.addEventListener('error', function() {
+				console.log("Could not run scroll_to_top on load image");
+			})
 		}
 	}
 	return htm_img;
 }
 
-function add_simple_choice_item(dv_answers, dv_img, pos_cls, htm_txt){
+function add_simple_choice_item(dv_answers, dv_img, pos_cls, htm_answ){
 	const dv_answ = dv_answers.appendChild(document.createElement("div"));
 	const answ_classes = ["exam", "grid_img_answer", pos_cls];
 	if(pos_cls != "grid_item_center"){
@@ -340,8 +375,8 @@ function add_simple_choice_item(dv_answers, dv_img, pos_cls, htm_txt){
 	if(dv_img != null){	dv_answ.append(dv_img);	}
 	const dv_txt = document.createElement("div");
 	dv_txt.classList.add("exam", "grid_item", "to_center");
-	if(htm_txt != null){
-		dv_txt.innerHTML = get_msg(htm_txt);
+	if(htm_answ != null){
+		dv_txt.innerHTML = get_msg(htm_answ);
 	}
 	dv_answ.append(dv_txt);
 	return dv_answ;
@@ -361,11 +396,14 @@ function init_answers(qid){
 	let dv_quest_img = null;
 	let dv_less = null;
 	let dv_more = null;
-	if(quest.choose_yes && (quest.img_href != null) && (quest.img_pos != null)){
+	if(quest.choose_yes && (quest.img_href != null)){
 		const htm_quest_img = load_image(dv_quest, dv_quest, id_quest_img, quest.img_href);
 		dv_quest_img = document.createElement("div");
 		dv_quest_img.classList.add("exam", "grid_item");
 		dv_quest_img.append(htm_quest_img);
+		if(quest.img_pos == null){
+			quest.img_pos = "grid_item_center";
+		}
 	}
 	if(quest.choose_more){
 		let htm_quest_img = null;
@@ -482,12 +520,12 @@ function init_answers(qid){
 				}
 			}
 			const pos_cls = an_answ.img_pos;
-			dv_answ = add_simple_choice_item(dv_answers, dv_img, pos_cls, an_answ.htm_answ);
+			dv_answ = add_simple_choice_item(dv_answers, dv_img, pos_cls, anid);
 			if(quest.choose_more && (pos_itm != null)){ dv_answ = add_simple_choice_item(dv_answers, dv_add, pos_itm, null); }
 		} else {
 			dv_answ = dv_answers.appendChild(document.createElement("div"));
 			dv_answ.classList.add(...answ_classes);
-			dv_answ.innerHTML = get_msg(an_answ.htm_answ);			
+			dv_answ.innerHTML = get_msg(anid);
 		}
 		
 		if(an_answ.rclk_href != null){
@@ -539,7 +577,8 @@ function init_answers(qid){
 	
 	set_anchors_target(dv_quest);
 	
-	scroll_to_top(dv_quest);
+	scroll_to_first_not_answered();
+	//scroll_to_top(dv_quest);
 }
 
 function invert_answers(qid){
@@ -1243,32 +1282,13 @@ export function init_page_exam(ini_func){
 	if(INIT_EXAM_DB_FUNC != null){ 
 		INIT_EXAM_DB_FUNC(); 
 	}
-	init_exam_images();
+	//init_exam_images();
 	init_DAG_func();
 	init_exam_module_vars();
 	init_exam_buttons();
 	
 	ask_next();	
 };
-
-function init_exam_images(){
-	const hrefs = glb_poll_db.img_hrefs;
-	if(hrefs == null){ return; }
-	const dv_content = document.getElementById("id_exam_content");
-	let id_img = null;
-	dv_content.all_img = {};
-	const all_img = dv_content.all_img;
-	id_img = "yes_like";
-	load_image(null, all_img, id_img, hrefs.yes_like);
-	id_img = "no_like";
-	load_image(null, all_img, id_img, hrefs.no_like);
-	id_img = "less_than";
-	load_image(null, all_img, id_img, hrefs.less_than);
-	id_img = "more";
-	load_image(null, all_img, id_img, hrefs.more);
-	id_img = "less";
-	load_image(null, all_img, id_img, hrefs.less);
-}
 
 function init_exam_buttons(){
 	let dv_button = null;
@@ -1284,6 +1304,12 @@ function init_exam_buttons(){
 	
 	dv_button = document.getElementById("id_exam_undo_button"); // this id must be the same to the id in the HTML page.
 	if(dv_button != null){ dv_button.addEventListener('click', undo_button_handler); }
+	
+	/*window.addEventListener('load', (ev1) => {
+		console.log('ON LOAD of WINDOW');
+		scroll_to_first_not_answered();
+	});*/
+	
 }
 
 function save_button_handler(){	
@@ -2314,7 +2340,8 @@ function show_observation(qid, all_to_act){
 	console.log("Updating NEW observation from show_observation qid=" + qid);
 	update_observation(qid, all_to_act);
 
-	scroll_to_top(dv_quest);
+	scroll_to_first_not_answered();
+	//scroll_to_top(dv_quest);
 	
 	return dv_quest;
 }
