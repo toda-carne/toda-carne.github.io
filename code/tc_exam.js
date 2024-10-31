@@ -364,6 +364,52 @@ function load_image(dv_scroll, all_img, id_img, src_img){
 	return htm_img;
 }
 
+function init_choose_words(dv_answ, quest, anid){
+	const msg = get_msg(anid);
+	const words = msg.split(' ');
+	const an_answ = quest.answers[anid];
+	let all_cho = an_answ.chosen_words;
+	if(all_cho == null){ all_cho = an_answ.chosen_words = {}; }
+	
+	const all_sp = words.map((a_wd) => { 
+		const is_cho = all_cho[a_wd];
+			
+		const sp_wd = document.createElement("span");
+		sp_wd.classList.add("exam", "word");
+		sp_wd.innerHTML = a_wd + " ";
+		if(is_cho){ sp_wd.classList.add("selected", "upper"); }
+
+		if(quest.has_answ == null){
+			sp_wd.addEventListener('click', (evt) => { 
+				if(! is_cho){
+					all_cho[a_wd] = true;
+					sp_wd.classList.add("selected", "upper");
+				} else {
+					delete all_cho[a_wd];
+					sp_wd.classList.remove("selected", "upper");
+				}
+				const all_k = Object.keys(all_cho);
+				if(all_k.length == 0){
+					an_answ.is_on = false;
+				} else {
+					an_answ.is_on = true;
+				}
+			});
+		}
+		return sp_wd;
+	});
+	
+	if(! quest.is_multi){
+		quest.is_multi = true;
+	}
+	all_sp.forEach((sp_wd) => {
+		dv_answ.appendChild(sp_wd);
+		dv_answ.appendChild(document.createTextNode(" "));
+	});
+	
+	return;
+}
+
 function add_simple_choice_item(dv_answers, dv_img, pos_cls, htm_answ){
 	const dv_answ = dv_answers.appendChild(document.createElement("div"));
 	const answ_classes = ["exam", "grid_img_answer", pos_cls];
@@ -525,7 +571,11 @@ function init_answers(qid){
 		} else {
 			dv_answ = dv_answers.appendChild(document.createElement("div"));
 			dv_answ.classList.add(...answ_classes);
-			dv_answ.innerHTML = get_msg(anid);
+			if(! an_answ.choose_words){
+				dv_answ.innerHTML = get_msg(anid);
+			} else {
+				init_choose_words(dv_answ, quest, anid);
+			}
 		}
 		
 		if(an_answ.rclk_href != null){
@@ -534,13 +584,15 @@ function init_answers(qid){
 		
 		dv_answ.tc_answ_obj = an_answ;
 		
-		if((an_answ.is_on) && (an_answ.img_pos == null)){
+		if((an_answ.is_on) && (an_answ.img_pos == null) && ! an_answ.choose_words){
 			dv_answ.classList.add("selected");
 		}
 		
 		add_right_click_listener_for_answer(qid, dv_answ);
 		if(is_init_to_answer){
-			add_click_listener_for_answer(qid, dv_answ);
+			if(! an_answ.choose_words){
+				add_click_listener_for_answer(qid, dv_answ);
+			}
 		} else {
 			add_listener_to_add_edit_button(dv_answers, dv_answ, qid);
 		}		
@@ -622,11 +674,6 @@ function add_click_listener_for_answer(qid, dv_answ) {
 	
 	if(dv_answ.tc_answ_obj == null){
 		dv_answ.tc_answ_obj = {};
-	}
-	
-	if(! quest.is_multi || quest.reset_answ){
-		dv_answ.classList.remove("selected");
-		dv_answ.tc_answ_obj.is_on = false;
 	}
 	
 	dv_answ.addEventListener('click', function() {

@@ -615,6 +615,11 @@ color: white;
 	border-radius: 1em;
 }
 
+.exam.word {
+	display: inline-block;
+	//display: inline-flex;
+}
+
 .exam.is_qnum {
 	display: inline-block;
 	margin-right: 1vw;
@@ -869,6 +874,10 @@ color: white;
 
 .exam.selected:hover,.exam.selected:hover>* {
 	background-color: #0c142c;
+}
+
+.exam.upper {
+	text-transform: uppercase;
 }
 
 .exam.is_contradiction {

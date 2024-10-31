@@ -27,16 +27,10 @@ export function init_exam_database(){
 	db.q1_1__ = { 
 		htm_stm: "q1_1__are_you_reasonable",
 		img_href: "../code/cont_creator_resurrection/img/bible.webp", 
-		//img_pos: "grid_item_center",
 		choose_yes: true,
-		//choose_more: true,
 		answers: {
-			q1_1__yes: { 
-				img_pos: "grid_item_right",
-			},
-			q1_1__no: { 
-				img_pos: "grid_item_left",
-			},
+			q1_1__yes: { img_pos: rgt, },
+			q1_1__no: { img_pos: lft, },
 		},
 	};
 	
@@ -54,11 +48,11 @@ export function init_exam_database(){
 		context: ["q1_2__yes", "q1_2__no"],
 		answers: {
 			q1_2__yes: { 
-				img_pos: "grid_item_right",
+				img_pos: rgt,
 				img_href: "../code/cont_creator_resurrection/img/senses.webp",
 			},
 			q1_2__no: { 
-				img_pos: "grid_item_left",
+				img_pos: lft,
 				img_href: "../code/cont_creator_resurrection/img/evolution.webp",
 			},
 		},
