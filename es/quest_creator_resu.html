@@ -3,22 +3,12 @@
 <html>
 <head>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KBJN1N7HKP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-KBJN1N7HKP');
-</script>
-
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>toda-carne.github.io</title>
 <meta name="author" content="Jose Luis Quiroga">
-<link rel="stylesheet" href="../pru/tc_styles_2.css">
+<link rel="stylesheet" href="../code/tc_styles.css">
 </head>
 <body>
 
@@ -47,43 +37,40 @@
 </div>
 
 
-<div id="id_content">
-    
+
+
+<div class="exam_top_menu">
+	<div id="id_exam_save_button" class="exam_menu"><i class='has_icons icon-save'></i>GUARDAR</div>
+	<div id="id_exam_open_button" class="exam_menu"><i class='has_icons icon-open'></i>ABRIR</div>
+	<div id="id_exam_delete_button" class="exam_menu"><i class='has_icons icon-delete'></i>BORRAR</div>
+	<div id="id_exam_undo_button" class="exam_menu"><i class='has_icons icon-undo'></i>DESHACER</div>
+</div>
+
 <div id="id_exam_content" class="exam_content">
-	<div id="id_exam_all_questions">
-		<div id="q1_1__" class="exam has_border center_content">
-			<div class="exam stm in_block">
-				<div id="q1_1___qstm" class="exam left_content">
-					<span class="exam is_qnum"><b>1. </b></span>
-					Estas preguntas son para personas racionales y razonables.
-				</div>
-			</div>
-			<div class="exam grid_4col">
-				<div class="exam grid_img_answer grid_item_center">
-					<div class="exam grid_item "><img src="./img/bible.webp" width="100%"></div>
-					<div class="exam grid_item"></div>
-				</div>
-				<div class="exam grid_img_answer grid_item_right item_can_select">
-					<div class="exam grid_item "><img src="./img/yes_like.webp" width="100%"></div>
-					<div class="exam grid_item to_center">YES.</div>
-				</div>
-				<div class="exam grid_img_answer grid_item_left item_can_select">
-					<div class="exam grid_item"><img src="./img/no_like.webp" width= "100%"></div>
-					<div class="exam grid_item to_center">NO.</div>
-				</div>
-				<div class="exam grid_item_all_col">
-					Estas preguntas son para personas racionales y razonables.
-				</div>
-				<div class="exam grid_item_all_col">
-					Estas preguntas son para personas racionales y razonables.
-				</div>
-			</div>
-		</div>
-	</div>  
+	<div id="id_exam_top_content"></div>
+	<div id="id_exam_name" class="big_title">
+	</div>
+    <h1 class="big_title">Cuestionario</h1>
+    <div id="id_exam_all_questions">
+    </div>  
 	<br><br><br><br><br><br><br><br><br>
+</div>  
+
+
 </div>
-      
-</div>
+
+<script type="module">
+
+import * as es_lang from '../code/tc_lang_es.js';
+import * as en_txt from '../quest/creator_resurrection/es_text.js';
+import * as cont_db from '../quest/creator_resurrection/cont_db.js';
+import * as exm from '../code/tc_exam.js';
+
+es_lang.init_es_module();
+en_txt.init_es_poll_txt();
+exm.init_page_exam(cont_db.init_exam_database);
+
+</script>
 
 
 
@@ -91,4 +78,5 @@
 
 </body>
 </html>
+
 

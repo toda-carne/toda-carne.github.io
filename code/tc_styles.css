@@ -21,7 +21,7 @@
 
 @font-face {
 	font-family: tc_icons_font;
-	src: url(../fonts/tc_icons2.ttf);
+	src: url(../fonts/tc_icons3.ttf);
 }
 
 .has_icons {
@@ -51,65 +51,37 @@ h1, h2, h3, h4, h5, h6 {
 	text-rendering: auto; 
 }
 
-.icon-side-menu::before {
-	content: "\0061"; 
-}
+.icon-side-menu::before { content: "\0061"; }
+.icon-book::before { content: "\0062"; }
+.icon-download::before { content: "\0063"; }
+.icon-media::before { content: "\0064"; }
+.icon-schema::before { content: "\0065"; }
+.icon-info::before { content: "\0066"; }
+.icon-tips::before { content: "\0067"; }
+.icon-menu::before { content: "\0068"; }
+.icon-pin::before { content: "\0069"; }
+.icon-home::before { content: "\006A"; }
+.icon-checked::before { content: "\006B"; }
+.icon-language::before { content: "\006C"; }
+.icon-globe::before { content: "\006D"; }
+.icon-undo-2::before { content: "\006E"; }
+.icon-save::before { content: "\006F"; }
+.icon-open::before { content: "\0070"; }
+.icon-undo::before { content: "\0071"; }
+.icon-bible::before { content: "\0072"; }
+.icon-save-3::before { content: "\0073"; }
+.icon-delete-3::before { content: "\0074"; }
+.icon-delete-2::before { content: "\0075"; }
+.icon-save-2::before { content: "\0076"; }
+.icon-open-2::before { content: "\0077"; }
+.icon-undo-3::before { content: "\0078"; }
+.icon-delete::before { content: "\0079"; }
+.icon-open-3::before { content: "\007A"; }
+.icon-undo-4::before { content: "\007B"; }
+.icon-undo-5::before { content: "\007C"; }
 
-.icon-book::before {
-	content: "\0062"; 
-}
-
-.icon-download::before {
-	content: "\0063"; 
-}
-
-.icon-media::before {
-	content: "\0064"; 
-}
-
-.icon-schema::before {
-	content: "\0065"; 
-}
-
-.icon-info::before {
-	content: "\0066"; 
-}
-
-.icon-tips::before {
-	content: "\0067"; 
-}
-
-.icon-menu::before {
-	content: "\0068"; 
-}
-
-.icon-pin::before {
-	content: "\0069"; 
-}
-
-.icon-home::before {
-	content: "\006A"; 
-}
-
-.icon-checked::before {
-	content: "\006B"; 
-}
-
-.icon-language::before {
-	content: "\006C"; 
-}
-
-.icon-globe::before {
-	content: "\006D"; 
-}
-
-.hebreo:lang(he) {
-	direction: rtl;
-}
-
-.griego:lang(el) {
-	direction: ltr;
-}
+.hebreo:lang(he) { direction: rtl; }
+.griego:lang(el) { direction: ltr; }
 
 body {
 	background-color: #13234c;

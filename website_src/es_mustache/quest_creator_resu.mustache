@@ -1,0 +1,22 @@
+
+{{> top}}
+
+{{> top_quest}}
+
+</div>
+
+<script type="module">
+
+import * as es_lang from '../code/tc_lang_es.js';
+import * as en_txt from '../quest/creator_resurrection/es_text.js';
+import * as cont_db from '../quest/creator_resurrection/cont_db.js';
+import * as exm from '../code/tc_exam.js';
+
+es_lang.init_es_module();
+en_txt.init_es_poll_txt();
+exm.init_page_exam(cont_db.init_exam_database);
+
+</script>
+
+{{> bottom}}
+

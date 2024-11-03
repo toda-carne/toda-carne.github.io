@@ -1,5 +1,5 @@
 
-import { get_verse_reponse_name, get_answer_key, glb_all_bibrefs, init_poll_glb, add_response_observation, } from '../tc_lang_all.js';
+import { get_verse_reponse_name, get_answer_key, glb_all_bibrefs, init_poll_glb, add_response_observation, } from '../../code/tc_lang_all.js';
 
 "use strict";
 
@@ -13,19 +13,24 @@ export function init_exam_database(){
 	
 	const db = db_nodes_exam;
 	const rf = glb_all_bibrefs;
+	const rgt = "grid_item_right";
+	const lft = "grid_item_left";
+	
+	db.img_hrefs = {
+		yes_like: "../img/exam/yes_like.webp",
+		no_like: "../img/exam/no_like.webp",
+		less_than: "../img/exam/less_than.webp",
+		more: "../img/exam/more.webp",
+		less: "../img/exam/less.webp",
+	};
 
 	db.q1_1__ = { 
 		htm_stm: "q1_1__are_you_reasonable",
+		img_href: "../quest/creator_resurrection/img/bible.webp", 
+		choose_yes: true,
 		answers: {
-			q1_1__yes: { htm_answ: "q1_1__yes", 
-				should_on: "q1_1__should_yes",
-				rclk_href: "q1_1__pru_href", // uncomment to debug right_click 
-				//rclk_should_href: "q1_1__pru_should_href", // uncomment to debug right_click of should_href
-				img_href: "../code/cont_creator_resurrection/img/bible_YES.jpg", 
-			},
-			q1_1__no: { htm_answ: "q1_1__no", 
-				img_href: "../code/cont_creator_resurrection/img/bible_NO.jpg", 
-			},
+			q1_1__yes: { img_pos: rgt, },
+			q1_1__no: { img_pos: lft, },
 		},
 	};
 	
@@ -39,9 +44,17 @@ export function init_exam_database(){
 	
 	db.q1_2__ = { 
 		htm_stm: "q1_2__experience_is_evidence",
+		choose_more: true,
+		context: ["q1_2__yes", "q1_2__no"],
 		answers: {
-			q1_2__yes: { htm_answ: "q1_2__yes" },
-			q1_2__no: { htm_answ: "q1_2__no" },
+			q1_2__yes: { 
+				img_pos: rgt,
+				img_href: "../quest/creator_resurrection/img/senses.webp",
+			},
+			q1_2__no: { 
+				img_pos: lft,
+				img_href: "../quest/creator_resurrection/img/evolution.webp",
+			},
 		},
 	};
 	
@@ -57,8 +70,11 @@ export function init_exam_database(){
 		htm_stm: "q1_3__are_humans_intelligent",
 		presentation: "q1_3__creator_section",
 		answers: {
-			q1_3__yes: { htm_answ: "q1_3__yes", should_on: "q1_3__should", },
-			q1_3__no: { htm_answ: "q1_3__no" },
+			q1_3__yes: { 
+			},
+			q1_3__no: { 
+				choose_words: true,
+			},
 		},
 	};
 	
@@ -66,7 +82,15 @@ export function init_exam_database(){
 		htm_stm: "q0_2__contradiction",
 		context: ["act"],
 		activated_if: {
-			c1: { q1_3__: { q1_3__no: "on", }, },
+			c1: { q1_3__: { q1_3__no: "on", 
+					words_chosen: {
+						contains_any: "q1_30__words_any",
+						not_contains_any: "q1_30__not_words_any",
+						contains_all: "q1_30__words_all",
+						not_contains_all: "q1_30__not_words_all",
+					}, 
+				}, 
+			},
 		},
 	};
 	

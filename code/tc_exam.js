@@ -1801,7 +1801,9 @@ function calc_exam_save_object(){
 function update_nodes_exam_with(ld_obj){
 	const db = glb_poll_db;
 	for (const [qid, quest] of Object.entries(ld_obj)) {
+		let act_if = db[qid].activated_if;
 		db[qid] = JSON.parse(JSON.stringify(quest));
+		db[qid].activated_if = act_if;
 	}
 	if(ld_obj.all_pending != null){
 		db.all_pending = JSON.parse(JSON.stringify(ld_obj.all_pending));
@@ -1816,14 +1818,14 @@ function display_exam_load_object(ld_obj){
 	if(INIT_EXAM_DB_FUNC != null){ 
 		INIT_EXAM_DB_FUNC(); 
 	}
-	init_DAG_func();
 	update_nodes_exam_with(ld_obj);
+	init_DAG_func();
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
 	dv_all_quest.innerHTML = "";
 	
 	for (const [qid, quest] of Object.entries(ld_obj)) {
 		if(get_qid_base(qid) == null){
-			continue; // it is not a question
+			continue; // it is not a qid
 		}
 		if(is_observation(quest)){
 			show_observation(qid, null);
@@ -1985,7 +1987,7 @@ function init_DAG_func(){
 
 function init_signals_for(qid){
 	if(get_qid_base(qid) == null){
-		return; // it is not a question
+		return; // it is not a qid
 	}
 	
 	const quest = glb_poll_db[qid];

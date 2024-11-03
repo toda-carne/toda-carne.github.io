@@ -1,0 +1,25 @@
+
+QREF1="q"$1"__"
+QREF2="q"$2"__"
+
+echo "Replacing "$QREF1" with "$QREF2
+
+FOUND=`grep -l $QREF2 ./cont_db.js ./*_text.js`
+
+if [ -z "$FOUND" ]	
+then
+	cp cont_db.js bak/bak_cont_db.js
+	for filename in ./*_text.js; do
+		cp "$filename" bak/bak_$(basename $filename)
+	done
+
+	sed -i "s/$QREF1/$QREF2/g" cont_db.js
+	for filename in ./*_text.js; do
+		sed -i "s/$QREF1/$QREF2/g" "$filename"
+	done
+else
+	echo "Hay ocurrencias de '"$QREF2"'.No se puede remplazar."
+fi
+
+echo "FINISHED replacing "$QREF1" with "$QREF2
+
