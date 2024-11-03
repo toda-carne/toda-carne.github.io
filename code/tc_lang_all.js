@@ -206,6 +206,8 @@ export const refs_ids = {
 
 
 function get_traduced_message(trad_msg, nom_msg){
+	if(trad_msg == null){ return ""; }
+	if(nom_msg == null){ return ""; }
 	const tr_mg = trad_msg[nom_msg];
 	if(tr_mg == null){
 		const en_mg = all_en_poll_txt[nom_msg];

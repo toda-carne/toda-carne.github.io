@@ -11,7 +11,6 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 const INVALID_PAGE_POS = "???";
 
 let INIT_EXAM_DB_FUNC = null;
-let EXAM_IMAGES = null;
 
 let DEBUG_QNUMS = true;
 
@@ -121,12 +120,10 @@ function scroll_to_top(dv_elem) {
 	const dv_content = document.getElementById("id_exam_content");
 	const rect2 = dv_content.getBoundingClientRect();
 	
-	console.log("scroll_to_top:");
-	console.log(dv_elem);
+	//console.log("scroll_to_top:");
+	//console.log(dv_elem);
 	const dist = (rect.top - rect2.top);
-	if(dist > 0){
-		dv_content.scrollBy(0, dist);
-	}
+	dv_content.scrollBy(0, dist);
 }
 
 
@@ -308,32 +305,14 @@ function context_to_html(arr_context){
 	return htm_ctx;
 }
 
-function init_exam_images(){
+function get_exam_image_href(id_img){
 	const hrefs = glb_poll_db.img_hrefs;
-	if(hrefs == null){ return; }
-	let id_img = null;
-	if(EXAM_IMAGES != null){ return; }
-	EXAM_IMAGES = {};
-	id_img = "yes_like";
-	load_image(null, EXAM_IMAGES, id_img, hrefs.yes_like);
-	id_img = "no_like";
-	load_image(null, EXAM_IMAGES, id_img, hrefs.no_like);
-	id_img = "less_than";
-	load_image(null, EXAM_IMAGES, id_img, hrefs.less_than);
-	id_img = "more";
-	load_image(null, EXAM_IMAGES, id_img, hrefs.more);
-	id_img = "less";
-	load_image(null, EXAM_IMAGES, id_img, hrefs.less);
+	if(hrefs == null){ return null; }
+	return hrefs[id_img];
 }
 
-function get_exam_image(id_img){
-	if(id_img == null){ return; }
-	const hrefs = glb_poll_db.img_hrefs;
-	if(hrefs == null){ return; }
-	if(EXAM_IMAGES == null){
-		init_exam_images();
-	}
-	return EXAM_IMAGES[id_img];
+function get_exam_image(all_img, id_img){
+	return load_image(null, all_img, id_img, get_exam_image_href(id_img));
 }
 
 function load_image(dv_scroll, all_img, id_img, src_img){
@@ -351,8 +330,8 @@ function load_image(dv_scroll, all_img, id_img, src_img){
 			//scroll_to_top(dv_scroll);
 		} else {
 			htm_img.addEventListener('load', (ev1) => {
-				console.log('ON LOAD of');
-				console.log(htm_img);
+				//console.log('ON LOAD of');
+				//console.log(htm_img);
 				scroll_to_first_not_answered();
 				//scroll_to_top(dv_scroll);
 			});
@@ -442,6 +421,10 @@ function init_answers(qid){
 	let dv_quest_img = null;
 	let dv_less = null;
 	let dv_more = null;
+	if(quest.choose_yes || quest.choose_more){
+		quest.is_multi = false;
+	}
+	
 	if(quest.choose_yes && (quest.img_href != null)){
 		const htm_quest_img = load_image(dv_quest, dv_quest, id_quest_img, quest.img_href);
 		dv_quest_img = document.createElement("div");
@@ -453,13 +436,13 @@ function init_answers(qid){
 	}
 	if(quest.choose_more){
 		let htm_quest_img = null;
-		htm_quest_img = get_exam_image("less");
+		htm_quest_img = get_exam_image(dv_quest, "less");
 		if(htm_quest_img != null){
 			dv_less = document.createElement("div");
 			dv_less.classList.add("exam", "grid_item");
 			dv_less.append(htm_quest_img);
 		}
-		htm_quest_img = get_exam_image("more");
+		htm_quest_img = get_exam_image(dv_quest, "more");
 		if(htm_quest_img != null){
 			dv_more = document.createElement("div");
 			dv_more.classList.add("exam", "grid_item");
@@ -495,6 +478,11 @@ function init_answers(qid){
 		if(an_answ == null){
 			continue; // continue with next elem
 		}
+		if(! quest.is_multi && is_init_to_answer){
+			an_answ.is_on = false;
+		}
+		
+		//console.log(an_answ);
 		
 		const is_more_answ = (quest.choose_more && (an_answ.img_pos != null));
 		
@@ -514,16 +502,14 @@ function init_answers(qid){
 			}
 			continue; // continue with next elem
 		}
-		if(quest.choose_yes && ! showed_quest_img && have_quest_img && (an_answ.img_pos != null)){
+		if(quest.choose_yes && ! showed_quest_img){
 			showed_quest_img = true;
-			if(an_answ.is_on && (an_answ.img_pos != null)){
+			quest.img_pos = "grid_item_center";
+			if(! is_init_to_answer && an_answ.is_on && (an_answ.img_pos != null)){
+				console.log("setting qid= " + qid + " anid=" + anid +" quest.img_pos = " + an_answ.img_pos);
 				quest.img_pos = an_answ.img_pos;
 			}
-			if(is_init_to_answer){
-				quest.img_pos = "grid_item_center";
-			}
-			const pos_cls = quest.img_pos;
-			add_simple_choice_item(dv_answers, dv_quest_img, pos_cls, null);
+			add_simple_choice_item(dv_answers, dv_quest_img, quest.img_pos, null);
 		}
 		
 		let dv_img = null;
@@ -533,15 +519,14 @@ function init_answers(qid){
 			htm_img.style.width = "100%";
 		}
 		if(quest.choose_yes && (an_answ.img_pos != null)){
-			if(an_answ.img_pos == "grid_item_right"){ htm_img = get_exam_image("yes_like"); }
-			if(an_answ.img_pos == "grid_item_left"){ htm_img = get_exam_image("no_like"); }
+			if(an_answ.img_pos == "grid_item_right"){ htm_img = get_exam_image(dv_quest, "yes_like"); }
+			if(an_answ.img_pos == "grid_item_left"){ htm_img = get_exam_image(dv_quest, "no_like"); }
 		}
 		if(htm_img != null){
 			dv_img = document.createElement("div");
 			dv_img.classList.add("exam", "grid_item");
 			dv_img.append(htm_img);
 		}
-		//get_exam_image(
 		let dv_answ = null;
 		if (an_answ.kind == VRS_CIT_KIND){
 			dv_answ = add_verse_cit(qid, an_answ);
@@ -738,6 +723,9 @@ function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
 				quest.has_answ = null;
 				init_answers(qid);
 				remove_curr_support_ed(true);
+				
+				const dv_quest = document.getElementById(qid);
+				scroll_to_top(dv_quest);
 			});
 			
 			//scroll_to_top(dv_answ_ed);
@@ -1329,7 +1317,6 @@ export function init_page_exam(ini_func){
 	if(INIT_EXAM_DB_FUNC != null){ 
 		INIT_EXAM_DB_FUNC(); 
 	}
-	//init_exam_images();
 	init_DAG_func();
 	init_exam_module_vars();
 	init_exam_buttons();
