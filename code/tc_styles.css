@@ -571,6 +571,7 @@ color: white;
 	background-color: #254795;
 	/*background-color: red;*/
 	color: white;
+	//border: 0.1vw solid red;
 }
 
 .exam,h1 {
@@ -585,6 +586,16 @@ color: white;
 .exam.has_border > div* {
 	border: 0.1vw solid white;
 	border-radius: 1em;
+}
+
+.exam a {
+	background-color: #254795;
+	color: yellow;
+}
+
+.exam a:hover {
+	color: black;
+	background-color: white;
 }
 
 .exam.word {
@@ -951,6 +962,22 @@ a.exam_ref:hover {
 	font-size: 150%;
 	text-align: center;  
 	margin-bottom: 0.5em;
+}
+
+.has_left_padding {
+	padding-left: 1em;
+}
+
+.very_big_font {
+	font-size: 200%;
+}
+
+.big_font {
+	font-size: 150%;
+}
+
+.bold_font {
+	font-weight: bold;
 }
 
 .grid_2c {

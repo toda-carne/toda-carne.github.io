@@ -25,38 +25,18 @@ export function init_en_poll_txt(){
 	//lg.ctx_bible = "<span class='has_left_padding'><b>Bible</b></span>";
 	//lg.ctx_bible = `<span class='has_left_padding'><img src="../quest/creator_resurrection/img/bible.webp"></span>`;
 	//lg.ctx_bible = "Bible?";
-	
-	lg.a_simple_YES = `YES`;
-	lg.a_simple_NO = `NO`;	
-
-	lg.a_simple_harder_to_make = `Harder to make`;
-	lg.a_simple_harder_to_understand = `Harder to understand`;
-	
 	lg.q1_0__bible = `<span class='big_font bold_font'>Bible?</span>`;
 	lg.q1_0__YES_bible = "YES Bible";
 	lg.q1_0__NO_bible = "NO Bible";
 
-	lg.q1_1__creator = `<span class='big_font bold_font'><a href='${hb.href_creator_tit}'>Creator</a>?</span>`;
+	lg.q1_1__creator = `<span class='big_font bold_font'>Creator?</span>`;
 	lg.q1_1__YES_creator = "YES Creator";
 	lg.q1_1__NO_creator = "NO Creator";	
-
-	lg.q1_1_2__six_days = `<span class='big_font bold_font'>Six Days?</span>`;
-	lg.q1_1_2__YES_six_days = "YES six days";
-	lg.q1_1_2__NO_six_days = "NO six days";	
-
-	lg.q1_2__logic = `<span class='big_font bold_font'>Logic?</span>`;
-	lg.q1_2__YES_logic = "YES logic";
-	lg.q1_2__NO_logic = "NO logic";
-		
-	lg.q1_3__evolution = `<span class='big_font bold_font'>Evolution?</span>`;
-	lg.q1_3__YES_evolution = "YES evolution";
-	lg.q1_3__NO_evolution = "NO evolution";
 	
-	lg.q_requires_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_tch_crea}'>creativity</a>?</span>`;
-
-	lg.q_harder_to_make = `<span class='big_font bold_font'>Harder to make?</span>`;
-	lg.a_building = `A building`;
-	lg.a_knife = `A knife`;
+	lg.q1_2__evolution = `<span class='big_font bold_font'>Evolution?</span>`;
+	lg.q1_2__YES_evolution = "YES evolution";
+	lg.q1_2__NO_evolution = "NO evolution";
+	
 	
 }
 

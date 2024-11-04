@@ -159,12 +159,14 @@ function add_question(qid){
 		quest.pos_page = lst_pos + 1;
 	}
 	
+	const dv_ctx = dv_quest.appendChild(document.createElement("div"));
+	dv_ctx.classList.add("exam");
+	let title = "";
 	if(quest.presentation != null){
-		const dv_title = dv_quest.appendChild(document.createElement("div"));
-		dv_title.classList.add("exam");
-		dv_title.classList.add("exam_title");
-		dv_title.innerHTML = get_msg(quest.presentation);
+		title = get_msg(quest.presentation);
 	}
+	const the_ctx = context_to_html(quest.context);
+	dv_ctx.innerHTML = title + the_ctx;
 	
 	const dv_stm = dv_quest.appendChild(document.createElement("div"));
 	dv_stm.classList.add("exam");
@@ -174,7 +176,6 @@ function add_question(qid){
 	if(quest.has_qrefs){
 		the_stm = replace_all_qrefs(the_stm);
 	}
-	let the_ctx = context_to_html(quest.context);
 	
 	const sp_num = document.createElement("span")
 	sp_num.classList.add("exam");
@@ -193,7 +194,7 @@ function add_question(qid){
 	}
 	dv_qstm.classList.add("exam");
 	dv_qstm.classList.add("msg");
-	dv_qstm.innerHTML = the_ctx + the_stm;
+	dv_qstm.innerHTML = the_stm;
 	dv_qstm.prepend(sp_num);
 	
 	if(quest.answers != null){
@@ -1788,9 +1789,7 @@ function calc_exam_save_object(){
 function update_nodes_exam_with(ld_obj){
 	const db = glb_poll_db;
 	for (const [qid, quest] of Object.entries(ld_obj)) {
-		let act_if = db[qid].activated_if;
 		db[qid] = JSON.parse(JSON.stringify(quest));
-		db[qid].activated_if = act_if;
 	}
 	if(ld_obj.all_pending != null){
 		db.all_pending = JSON.parse(JSON.stringify(ld_obj.all_pending));

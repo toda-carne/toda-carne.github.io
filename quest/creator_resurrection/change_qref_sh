@@ -13,8 +13,10 @@ then
 		cp "$filename" bak/bak_$(basename $filename)
 	done
 
+	echo "Changing '"cont_db.js"'..."
 	sed -i "s/$QREF1/$QREF2/g" cont_db.js
 	for filename in ./*_text.js; do
+		echo "Changing '"$filename"'..."
 		sed -i "s/$QREF1/$QREF2/g" "$filename"
 	done
 else
