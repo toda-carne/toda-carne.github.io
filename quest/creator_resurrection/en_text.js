@@ -40,7 +40,7 @@ export function init_en_poll_txt(){
 	lg.q1_1__YES_creator = "YES Creator";
 	lg.q1_1__NO_creator = "NO Creator";	
 
-	lg.q1_1_2__six_days = `<span class='big_font bold_font'>Six Days?</span>`;
+	lg.q1_1_2__six_days = `<span class='big_font bold_font'><a href='${hb.href_creation}'>Six Days</a>?</span>`;
 	lg.q1_1_2__YES_six_days = "YES six days";
 	lg.q1_1_2__NO_six_days = "NO six days";	
 
@@ -48,15 +48,36 @@ export function init_en_poll_txt(){
 	lg.q1_2__YES_logic = "YES logic";
 	lg.q1_2__NO_logic = "NO logic";
 		
-	lg.q1_3__evolution = `<span class='big_font bold_font'>Evolution?</span>`;
+	lg.q_YES_NO_evidence = `<span class='big_font bold_font'><a href='${hb.href_evidence}'>Evidence</a>?</span>`;
+	lg.q_YES_evidence = "YES evidence";
+	lg.q_NO_evidence = "NO evidence";
+		
+	lg.q1_3__evolution = `<span class='big_font bold_font'><a href='${hb.href_factories}'>Evolution</a>?</span>`;
 	lg.q1_3__YES_evolution = "YES evolution";
 	lg.q1_3__NO_evolution = "NO evolution";
 	
 	lg.q_requires_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_tch_crea}'>creativity</a>?</span>`;
 
-	lg.q_harder_to_make = `<span class='big_font bold_font'>Harder to make?</span>`;
+	lg.q_harder_to_make = `<span class='big_font bold_font'>Harder to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
+	
 	lg.a_building = `A building`;
 	lg.a_knife = `A knife`;
+
+	lg.a_car = `A car`;
+	lg.a_lamp = `A lamp`;
+
+	lg.a_clock = `A clock`;
+	lg.a_cellphone = `A cellphone`;
+
+	lg.a_car_wheel = `A car wheel`;
+	lg.a_foot = `A foot`;
+	
+	lg.a_air_purifier = `An air purifier`;
+	lg.a_human_lung = `A human lung`;
+	
+	lg.a_human_body = `A human body`;
+	
+	lg.q_bilology_req_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_creator}'>creativity</a>?</span>`;
 	
 }
 

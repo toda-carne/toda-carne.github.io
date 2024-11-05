@@ -28,6 +28,9 @@ const qref_prefix = "QREF_";
 const stg_prefix = "STRONG";
 const lnk_prefix = "LINK";
 
+const LEFT_POS = "grid_item_left";
+const RIGHT_POS = "grid_item_right";
+
 function init_exam_fb(){
 	const mod_nm = "./tc_firebase.js";
 	import(mod_nm)
@@ -81,6 +84,8 @@ const LNK_HREF_IDX = 1;
 const MIN_DATE = -7000;
 const MAX_DATE = -5000;
 
+const id_dv_undo = "id_dv_undo";
+
 const id_ed_book = "id_ed_book";
 const id_ed_chapter = "id_ed_chapter";
 const id_ed_verse = "id_ed_verse";
@@ -113,6 +118,19 @@ function is_in_viewport(elem) {
 		(rect.bottom <= rect2.bottom)
 	);
 }*/
+
+function is_content_horizontal() {
+	var dv_content = document.getElementById("id_exam_content");
+	var rect2 = dv_content.getBoundingClientRect();
+	
+	const hor_sz = Math.abs(rect2.right - rect2.left);
+	const ver_sz = Math.abs(rect2.bottom - rect2.top);
+	
+	if(hor_sz > ver_sz){
+		return true;
+	}
+	return false;
+}
 
 function scroll_to_top(dv_elem) {
 	if(dv_elem == null){ return; }
@@ -212,7 +230,6 @@ function add_question(qid){
 
 	init_answers(qid);
 
-	scroll_to_first_not_answered();
 	//scroll_to_top(dv_quest);
 	
 	return dv_quest;
@@ -326,10 +343,11 @@ function load_image(dv_scroll, all_img, id_img, src_img){
 		all_img[id_img] = htm_img;
 		htm_img.classList.add("exam", "is_answ_img");
 		htm_img.src = src_img;
-		if (htm_img.complete) {
+		/*if (htm_img.complete) {
 			scroll_to_first_not_answered();
 			//scroll_to_top(dv_scroll);
-		} else {
+		} else {*/
+		if (! htm_img.complete) {
 			htm_img.addEventListener('load', (ev1) => {
 				//console.log('ON LOAD of');
 				//console.log(htm_img);
@@ -426,6 +444,12 @@ function init_answers(qid){
 		quest.is_multi = false;
 	}
 	
+	let is_last_quest = false;
+	if((quest.choose_more || quest.choose_yes) && (quest.has_answ == null)){
+		const lst_quest = get_last_quest();
+		is_last_quest = (quest == lst_quest);
+	}
+	
 	if(quest.choose_yes && (quest.img_href != null)){
 		const htm_quest_img = load_image(dv_quest, dv_quest, id_quest_img, quest.img_href);
 		dv_quest_img = document.createElement("div");
@@ -473,6 +497,8 @@ function init_answers(qid){
 		return;
 	}
 	const all_answ = Object.entries(quest.answers);
+	let did_right = false;
+	let did_left = false;
 	
 	for (const [anid, an_answ] of all_answ) {
 		//console.log("anid=" + anid + " an_answ=" + JSON.stringify(an_answ, null, "  "));
@@ -482,7 +508,10 @@ function init_answers(qid){
 		if(! quest.is_multi && is_init_to_answer){
 			an_answ.is_on = false;
 		}
-		
+		if((quest.choose_more || quest.choose_yes) && (quest.has_answ == null) && (an_answ.img_pos != null)){
+			if(an_answ.img_pos == RIGHT_POS){ did_right = true; }
+			if(an_answ.img_pos == LEFT_POS){ did_left = true; }
+		}		
 		//console.log(an_answ);
 		
 		const is_more_answ = (quest.choose_more && (an_answ.img_pos != null));
@@ -520,8 +549,8 @@ function init_answers(qid){
 			htm_img.style.width = "100%";
 		}
 		if(quest.choose_yes && (an_answ.img_pos != null)){
-			if(an_answ.img_pos == "grid_item_right"){ htm_img = get_exam_image(dv_quest, "yes_like"); }
-			if(an_answ.img_pos == "grid_item_left"){ htm_img = get_exam_image(dv_quest, "no_like"); }
+			if(an_answ.img_pos == RIGHT_POS){ htm_img = get_exam_image(dv_quest, "yes_like"); }
+			if(an_answ.img_pos == LEFT_POS){ htm_img = get_exam_image(dv_quest, "no_like"); }
 		}
 		if(htm_img != null){
 			dv_img = document.createElement("div");
@@ -540,12 +569,12 @@ function init_answers(qid){
 			let dv_add = null;
 			if(quest.choose_more && (quest.has_answ != null)){
 				if(an_answ.is_on){
-					pos_itm = "grid_item_right";
+					pos_itm = RIGHT_POS;
 					dv_add = dv_more;
 					an_answ.img_pos = pos_itm;
 					htm_img.style.width = "100%";
 				} else {
-					pos_itm = "grid_item_left";
+					pos_itm = LEFT_POS;
 					dv_add = dv_less;
 					an_answ.img_pos = pos_itm;
 					htm_img.style.width = "50%";
@@ -572,6 +601,9 @@ function init_answers(qid){
 		
 		if((an_answ.is_on) && (an_answ.img_pos == null) && ! an_answ.choose_words){
 			dv_answ.classList.add("selected");
+		}
+		if(is_last_quest && did_right && did_left){
+			add_undo_button(qid, dv_answers, dv_answ);
 		}
 		
 		add_right_click_listener_for_answer(qid, dv_answ);
@@ -615,7 +647,7 @@ function init_answers(qid){
 	
 	set_anchors_target(dv_quest);
 	
-	scroll_to_first_not_answered();
+	//scroll_to_first_not_answered();
 	//scroll_to_top(dv_quest);
 }
 
@@ -628,6 +660,33 @@ function invert_answers(qid){
 		}
 		an_answ.is_on = ! an_answ.is_on;
 	}	
+}
+
+function add_undo_button(qid, dv_answers, dv_answ){
+	remove_id(id_dv_undo);
+	
+	const quest = glb_poll_db[qid];
+	if(quest == null){ return; }
+	if(quest.pos_page == 1){ return; }
+	
+	const is_hor = is_content_horizontal();
+	
+	let pos_cls = "grid_item_all_col";
+	if(is_hor){ pos_cls = "grid_item_extra"; }
+	
+	const dv_undo = document.createElement("div");
+	dv_undo.id = id_dv_undo;
+	
+	const answ_classes = ["exam", "big_font", pos_cls];
+	answ_classes.push("item_can_select");
+	dv_undo.classList.add(...answ_classes);
+	
+	dv_undo.innerHTML = glb_curr_lang.msg_undo;
+	dv_undo.addEventListener('click', function() {
+		undo_last_quest();
+	});
+	
+	dv_answers.appendChild(dv_undo);	
 }
 
 function add_right_click_listener_for_answer(qid, dv_answ){
@@ -747,9 +806,7 @@ function end_question(qid){
 	
 	const all_to_act = send_all_signals(qid);
 	activate_signals(all_to_act);
-	ask_next();
-	
-	scroll_to_first_not_answered();
+	ask_next();	
 }
 
 // CODE_FOR QUESTION GIVEN SUPPORT ED (add/remove a verse, add/remove a strong code, add/remove a link to the user support)
@@ -1823,6 +1880,8 @@ function display_exam_load_object(ld_obj){
 			console.log("Question " + qid + " could NOT be DISPLAYED in page !!!");
 		}
 	}
+	
+	ask_next();
 }
 
 function read_all_exam_names(){
@@ -2100,17 +2159,38 @@ function check_if_dnf_is_sat(qid){
 	return false;
 }
 
-function get_context(arr_context){
+function get_context(arr_context, as_first){
 	const db = glb_poll_db;
+	let prv_ctx = null;
+	let prv_nm = null;
 	let curr_ctx = db.all_pending;
 	if(arr_context != null){
 		for(const ctx of arr_context){
 			if(ctx == null){ continue; }
+			//curr_nm = ctx;
 			if(ctx == id_ctx_pend){ continue; }
 			if(curr_ctx[ctx] == null){ 
-				curr_ctx[ctx] = {}; 
-				curr_ctx[ctx][id_ctx_pend] = []; 
+				if(! as_first){
+					curr_ctx[ctx] = {}; 
+					curr_ctx[ctx][id_ctx_pend] = []; 
+				} else {
+					// UNDO CASE
+					const undu_ctx = {};
+					undu_ctx[ctx] = {};
+					undu_ctx[ctx][id_ctx_pend] = []; 
+					
+					if(prv_ctx != null){
+						prv_ctx[prv_nm] = Object.assign(undu_ctx, curr_ctx);
+						curr_ctx = prv_ctx[prv_nm];
+					} else {
+						const nw_pend = Object.assign(undu_ctx, db.all_pending);
+						db.all_pending = nw_pend;
+						curr_ctx = db.all_pending;
+					}
+				}
 			}
+			prv_ctx = curr_ctx;
+			prv_nm = ctx;
 			curr_ctx = curr_ctx[ctx];
 		}
 	}
@@ -2137,6 +2217,13 @@ function get_first_context(){
 	return parent[id_ctx_pend];
 }
 
+function get_first_ctx_name(keys){
+	for(const ctx of keys){
+		if(ctx != id_ctx_pend){ return ctx; }
+	}
+	return null;
+}
+
 function get_first_open_context(){
 	const db = glb_poll_db;
 	let parent = db.all_pending;
@@ -2144,8 +2231,11 @@ function get_first_open_context(){
 	let ctx_nam = null;
 	let curr_keys = Object.keys(curr_ctx);
 	while(curr_keys.length > 1){
+		const fst_key = get_first_ctx_name(curr_keys);
+		if(fst_key == null){ break; }
+		
 		parent = curr_ctx;
-		ctx_nam = curr_keys[1];
+		ctx_nam = fst_key;
 		curr_ctx = curr_ctx[ctx_nam];
 		curr_keys = Object.keys(curr_ctx);
 	}
@@ -2155,23 +2245,33 @@ function get_first_open_context(){
 function add_pending(qid){
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return false; }
-	if(is_observation(quest)){ 
-		console.log("Internal error. Trying to add observation as pending qid=" + qid);
-		return false;		
-	}
+	if(! is_question(quest)){ return false; }
+	
 	const dv_qid = document.getElementById(qid);
 	const is_shown = (dv_qid != null);
 	if(is_shown || quest.in_pending){
 		return false;
 	}
-	//const pending = glb_poll_db.all_pending;
+	
 	const pending = get_context(quest.context);
-	/*if(is_base_question(quest)){
-		pending.push(qid); //fifo
-	} else {
-		pending.unshift(qid); //lifo
-	}*/
 	pending.push(qid);
+	quest.in_pending = true;
+	return true;
+}
+
+function undo_pending(qid){
+	const quest = glb_poll_db[qid];
+	if(quest == null){ return false; }
+	if(! is_question(quest)){ return false; }
+	
+	const dv_qid = document.getElementById(qid);
+	const is_shown = (dv_qid != null);
+	if(is_shown || quest.in_pending){
+		return false;
+	}
+	
+	const pending = get_context(quest.context, true);
+	pending.unshift(qid);
 	quest.in_pending = true;
 	return true;
 }
@@ -2257,9 +2357,10 @@ function activate_signals(all_to_act){
 	}
 }
 
-function ask_next(){
+function ask_next(){	
 	let qid = glb_poll_db.last_added_qid;
 	if(qid != null && (glb_poll_db[qid].has_answ == null)){
+		scroll_to_first_not_answered();
 		return false;
 	}
 	qid = get_pending();
@@ -2271,10 +2372,12 @@ function ask_next(){
 		added = add_question(qid);
 		if(added != null){
 			glb_poll_db.last_added_qid = qid;
+			scroll_to_first_not_answered();
 			return true;
 		}
 		console.log("Question " + qid + " could NOT be added to page during ask_next [1] !!!");
 	}
+	scroll_to_first_not_answered();
 	return false;
 }
 
@@ -2283,7 +2386,8 @@ function undo_last_quest(){
 	const all_q = dv_all_quest.childNodes;
 	let curr_idx = all_q.length - 1;
 	let quest = null;
-	let found_last = false;
+	let num_undo = 0;
+
 	while(curr_idx > 0){
 		//console.log("get_curr_pos_page [1] curr_idx=" + curr_idx);
 		const qid = all_q[curr_idx].id;
@@ -2292,27 +2396,24 @@ function undo_last_quest(){
 		quest = glb_poll_db[qid];
 		if(quest == null){ continue; }
 		
-		if((quest.pos_page == 1) && (quest.has_answ == null)){ break; }
+		//if((quest.pos_page == 1) && (quest.has_answ == null)){ break; }
 		
 		quest.has_answ = null;
-	
-		if(is_question(quest)){
-			if(! found_last){ 
-				const pending = get_context(quest.context);
-				pending.unshift(qid);
-				quest.in_pending = true;
-				found_last = true; 
-			} else {
-				glb_poll_db.last_added_qid = qid;
-				init_answers(qid);
-				break;
-			}
-		}
+		quest.pos_page = null;
 		
 		const dv_quest = document.getElementById(qid);
 		if(dv_quest == null){ continue; }
 		dv_quest.remove();
-			
+		
+		const undo_ok = undo_pending(qid);
+		if(undo_ok){ num_undo++; }
+		
+		if(num_undo == 2){
+			glb_poll_db.last_added_qid = null;
+			ask_next();
+			break;
+		}
+	
 		curr_idx--;
 	}
 	//console.log("get_curr_pos_page [2] curr_idx=" + curr_idx);
@@ -2375,7 +2476,7 @@ function show_observation(qid, all_to_act){
 	console.log("Updating NEW observation from show_observation qid=" + qid);
 	update_observation(qid, all_to_act);
 
-	scroll_to_first_not_answered();
+	//scroll_to_first_not_answered();
 	//scroll_to_top(dv_quest);
 	
 	return dv_quest;

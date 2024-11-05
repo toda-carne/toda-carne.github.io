@@ -790,6 +790,16 @@ color: white;
 	//aspect-ratio: 1;
 }
 
+.exam.grid_item_extra {
+	grid-column: 5;
+	grid-row: 1;	
+	text-align: center;
+	align-content: center;
+	//border: 0.2vw solid #00ff00;
+	background-color: transparent;
+	//aspect-ratio: 1;
+}
+
 .exam.grid_item_all_col {
 	grid-column: 1 / -1;
 	grid-row: auto;	

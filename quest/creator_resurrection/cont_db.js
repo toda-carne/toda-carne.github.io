@@ -60,7 +60,7 @@ export function init_exam_database(){
 		},
 	};	
 	
-	db.q1_2__ = { 
+	db.q_logic__ = { 
 		choose_yes: true,
 		context: ["ctx_logic"],
 		htm_stm: "q1_2__logic",
@@ -71,7 +71,18 @@ export function init_exam_database(){
 		},
 	};	
 	
-	db.q1_3__ = { 
+	db.q_evidence__ = { 
+		choose_yes: true,
+		context: ["ctx_evidence"],
+		htm_stm: "q_YES_NO_evidence",
+		img_href: "../quest/creator_resurrection/img/senses.webp", 
+		answers: {
+			q_YES_evidence: { img_pos: rgt, },
+			q_NO_evidence: { img_pos: lft, },
+		},
+	};	
+	
+	db.q_evolution__ = { 
 		choose_yes: true,
 		context: ["ctx_evolution"],
 		htm_stm: "q1_3__evolution",
@@ -104,6 +115,7 @@ export function init_exam_database(){
 		},
 	};
 	
+	/*
 	db.q_phone_req_creativity__ = { 
 		choose_yes: true,
 		context: ["ctx_requires_creativity"],
@@ -113,35 +125,123 @@ export function init_exam_database(){
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
 		},
+	};*/
+	
+	db.q_clock_req_creativity__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity"],
+		htm_stm: "q_requires_creativity",
+		img_href: "../quest/creator_resurrection/img/clock.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
 	};
 	
 	db.q_building_vs_knife_harder_to_make__ = { 
 		choose_more: true,
-		context: ["ctx_requires_creativity"],
+		context: ["ctx_harder_to_make"],
 		htm_stm: "q_harder_to_make",
-		img_href: "../quest/creator_resurrection/img/phone.webp", 
 		answers: {
 			a_knife: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/knife.webp", },
 			a_building: { img_pos: lft, img_href: "../quest/creator_resurrection/img/building.webp", },
 		},
 	};
 	
-	/*
-	db.q1_3__ = { 
+	db.q_car_vs_lamp_harder_to_make__ = { 
 		choose_more: true,
-		context: ["q100_3__yes", "q100_3__no"],
+		context: ["ctx_harder_to_make"],
+		htm_stm: "q_harder_to_make",
 		answers: {
-			q100_3__yes: { 
-				img_pos: rgt,
-				img_href: "../quest/creator_resurrection/img/senses.webp",
-			},
-			q100_3__no: { 
-				img_pos: lft,
-				img_href: "../quest/creator_resurrection/img/evolution.webp",
-			},
+			a_car: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/car.webp", },
+			a_lamp: { img_pos: lft, img_href: "../quest/creator_resurrection/img/lamp.webp", },
 		},
 	};
-		*/
+	
+	/*
+	db.q_clock_vs_cellphone_harder_to_make__ = { 
+		choose_more: true,
+		context: ["ctx_harder_to_make"],
+		htm_stm: "q_harder_to_make",
+		answers: {
+			a_clock: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/clock.webp", },
+			a_cellphone: { img_pos: lft, img_href: "../quest/creator_resurrection/img/phone.webp", },
+		},
+	};*/
+	
+	db.q_clock_vs_air_purifier_harder_to_make__ = { 
+		choose_more: true,
+		context: ["ctx_harder_to_make"],
+		htm_stm: "q_harder_to_make",
+		answers: {
+			a_clock: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/clock.webp", },
+			a_air_purifier: { img_pos: lft, img_href: "../quest/creator_resurrection/img/air_purifier.webp", },
+		},
+	};
+	
+	db.q_foot_vs_car_wheel_harder_to_make__ = { 
+		choose_more: true,
+		context: ["ctx_harder_to_make"],
+		htm_stm: "q_harder_to_make",
+		answers: {
+			a_car_wheel: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/car_wheel.webp", },
+			a_foot: { img_pos: lft, img_href: "../quest/creator_resurrection/img/foot.webp", },
+		},
+	};
+	
+	db.q_lung_vs_air_purifier_harder_to_make__ = { 
+		choose_more: true,
+		context: ["ctx_harder_to_make"],
+		htm_stm: "q_harder_to_make",
+		answers: {
+			a_air_purifier: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/air_purifier.webp", },
+			a_human_lung: { img_pos: lft, img_href: "../quest/creator_resurrection/img/lungs.webp", },
+		},
+	};
+	
+	db.q_human_body_vs_building_harder_to_make__ = { 
+		choose_more: true,
+		context: ["ctx_harder_to_make"],
+		htm_stm: "q_harder_to_make",
+		answers: {
+			a_building: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/building.webp", },
+			a_human_body: { img_pos: lft, img_href: "../quest/creator_resurrection/img/human_body.webp", },
+		},
+	};
+
+	db.q_foot_req_creativity__ = { 
+		choose_yes: true,
+		context: ["ctx_biology_req_creativity"],
+		htm_stm: "q_bilology_req_creativity",
+		img_href: "../quest/creator_resurrection/img/foot.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+	};
+	
+	db.q_lungs_req_creativity__ = { 
+		choose_yes: true,
+		context: ["ctx_biology_req_creativity"],
+		htm_stm: "q_bilology_req_creativity",
+		img_href: "../quest/creator_resurrection/img/lungs.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+	};
+	
+	db.q_human_body_req_creativity__ = { 
+		choose_yes: true,
+		context: ["ctx_biology_req_creativity"],
+		htm_stm: "q_bilology_req_creativity",
+		img_href: "../quest/creator_resurrection/img/human_body.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+	};
+	
 	
 }
 

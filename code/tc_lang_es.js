@@ -98,6 +98,8 @@ function init_es_basic_msg(){
 	obj.msg_end_ans = "TERMINAR RESPUESTA";
 	obj.msg_edit_ans = "CAMBIAR RESPUESTA";
 	
+	obj.msg_undo = "<i class='has_icons icon-undo'></i> Ups!";	
+
 	obj.msg_sel_cit = "ESCOGER DE BD";
 	obj.msg_add_verse = "AGREGAR VERSICULO";
 	obj.msg_add_strong = "AGREGAR CODIGO STRONG";
@@ -390,6 +392,7 @@ function init_es_book_hrefs(){
 	hb.href_the_cloth = "../es/book.html#la-tela_DOT_";
 	hb.href_angels = "../es/book.html#ángeles_DOT_";
 	hb.href_wings = "../es/book.html#alas_DOT_";
+	hb.href_creation = "../es/book.html#creación_DOT_";
 	hb.href_life = "../es/book.html#vida_DOT_";
 	hb.href_death = "../es/book.html#muerte_DOT_";
 	hb.href_liberator = "../es/book.html#libertador_DOT_";

@@ -229,6 +229,8 @@ function init_en_basic_msg(){
 	obj.msg_end_ans = "END ANSWER";
 	obj.msg_edit_ans = "CHANGE ANSWER";
 	
+	obj.msg_undo = "<i class='has_icons icon-undo'></i> Ups!";	
+	
 	obj.msg_sel_cit = "SELECT FROM DB";
 	obj.msg_add_verse = "ADD VERSE";
 	obj.msg_add_strong = "ADD STRONG CODE";
@@ -797,6 +799,7 @@ function init_en_book_hrefs(){
 	hb.href_the_cloth = "../en/book.html#the-cloth_DOT_";
 	hb.href_angels = "../en/book.html#angels_DOT_";
 	hb.href_wings = "../en/book.html#wings_DOT_";
+	hb.href_creation = "../en/book.html#creation_DOT_";
 	hb.href_life = "../en/book.html#life_DOT_";
 	hb.href_death = "../en/book.html#death_DOT_";
 	hb.href_liberator = "../en/book.html#liberator_DOT_";
