@@ -242,6 +242,36 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q_participate_in_contest__ = { 
+		choose_yes: true,
+		presentation: "t_good_job",
+		context: ["ctx_contest"],
+		htm_stm: "q_participate",
+		img_href: "../quest/creator_resurrection/img/trophy.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+	};
+	
+	db.o_save_creator_quest__ = { 
+		calls_write_object: true,
+		is_positive: true,
+		htm_stm: "o_chose_yes_to_participate",
+		htm_stm_saved_ok: "o_congrats_you_have_a_ticket",
+		htm_stm_not_saved: "o_sorry_no_loging_no_participation",
+		activated_if: {
+			c1: { q_participate_in_contest__: { a_simple_YES: "on", }, },
+		},
+	};
+	
+	db.o_no_participation__ = { 
+		htm_stm: "o_chose_no_participation",
+		activated_if: {
+			c1: { q_participate_in_contest__: { a_simple_NO: "on", }, },
+		},
+	};
+	
 	
 }
 

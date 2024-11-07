@@ -4,7 +4,7 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 	glb_poll_user_info, glb_poll_starting_questions, glb_poll_db, get_verse_match, get_answer_key
 } from './tc_lang_all.js';
 
-// import { firebase_write_object, firebase_read_object, firebase_sign_out } from './tc_firebase.js';
+// import { firebase_write_object, firebase_read_object, firebase_sign_out } from './tc_firebase.js'; // done dinamicly in init_exam_fb
 
 "use strict";
 
@@ -1933,7 +1933,7 @@ function delete_exam_object(name){
 	window.localStorage.removeItem(name);
 }
 
-function write_firebase_exam_object(){
+function write_firebase_exam_object(err_fn){
 	if(fb_write_object == null){
 		console.log("CANNOT write_firebase_exam_object. fb_write_object == null");
 		const dv_exam_nm = document.getElementById("id_exam_name");
@@ -1942,7 +1942,7 @@ function write_firebase_exam_object(){
 	}
 	console.log("SAVING in https://todacarne-firebase-default-rtdb.firebaseio.com");
 	const wr_obj = calc_exam_save_object();
-	return fb_write_object(firebase_answers_path, wr_obj);
+	return fb_write_object(firebase_answers_path, wr_obj, err_fn);
 }
 
 function read_firebase_exam_object(){
@@ -2473,8 +2473,19 @@ function show_observation(qid, all_to_act){
 	sp_qrefs_observ.id = qid + SUF_ID_QREFS_OBSERVATION;
 	dv_qstm.append(sp_qrefs_observ);
 	
-	console.log("Updating NEW observation from show_observation qid=" + qid);
+	console.log("Updating NEW observation qid=" + qid);
 	update_observation(qid, all_to_act);
+
+	if(quest.calls_write_object){
+		write_firebase_exam_object((err) => {
+			console.error(err);
+			the_stm = get_msg(quest.htm_stm_not_saved);
+			dv_qstm.innerHTML = "" + the_stm;			
+		}).then((result) => {
+			the_stm = get_msg(quest.htm_stm_saved_ok);
+			dv_qstm.innerHTML = "" + the_stm;
+		});
+	}
 
 	//scroll_to_first_not_answered();
 	//scroll_to_top(dv_quest);
@@ -2494,6 +2505,9 @@ function get_sat_conj_qids(qid){
 }
 
 function update_observation(qid, all_to_act){
+	const quest = glb_poll_db[qid];
+	if(quest == null){ return; }
+	
 	let sp_qrefs_observ = document.getElementById(qid + SUF_ID_QREFS_OBSERVATION);
 	if(sp_qrefs_observ == null){ 
 		//console.log("Internal error. Trying to update observation qid=" + qid + " without qrefs span");
@@ -2507,8 +2521,6 @@ function update_observation(qid, all_to_act){
 			//console.log("REMOVING div for qid=" + qid);
 			dv_quest.remove(); 
 		
-			const quest = glb_poll_db[qid];
-			if(quest == null){ return; }
 			let all_to_signl = quest.signal_if_not_shown;
 			if(all_to_signl != null){
 				/*console.log("AFTER_REMOVE | qid=" + qid + " | all_to_signl=" + JSON.stringify(all_to_signl, null, "  ")
@@ -2521,7 +2533,10 @@ function update_observation(qid, all_to_act){
 		return;
 	}
 	const sufix_qhrefs = get_qhrefs_of(incos_qids, null);
-	sp_qrefs_observ.innerHTML = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs;
+	sp_qrefs_observ.innerHTML = "";
+	if(! quest.is_positive){ 
+		sp_qrefs_observ.innerHTML = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs;
+	}
 	
 	const dv_quest_2 = document.getElementById(qid);
 	set_anchors_target(dv_quest_2);

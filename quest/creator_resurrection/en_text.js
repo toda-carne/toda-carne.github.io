@@ -78,6 +78,28 @@ export function init_en_poll_txt(){
 	lg.a_human_body = `A human body`;
 	
 	lg.q_bilology_req_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_creator}'>creativity</a>?</span>`;
+
+	lg.t_good_job = `<span class='has_left_padding very_big_font bold_font'>Good job !</span>`;
+	lg.q_participate = `<span class='big_font bold_font'>Participate?</span>`;
+	lg.q_win_money = `<span class='big_font bold_font'>Win?</span>`;
+
+	lg.o_chose_yes_to_participate = `<span class='very_big_font bold_font'>
+		Waiting for Google Login. If you don have one get a <a href='gmail.com'>gmail</a> account.</span>`;
+	lg.o_congrats_you_have_a_ticket = `
+		<img class="to_center" src="../quest/creator_resurrection/img/ticket.webp"><br>
+		<span class='very_big_font bold_font'>Congrats ! You have a ticket</span>
+	`;
+	lg.o_sorry_no_loging_no_participation = `
+		<img class="to_center" src="../quest/creator_resurrection/img/woman_shrugging.webp"><br>
+		<span class='very_big_font bold_font'>Sorry. No Google login, no ticket. 
+			If you don have one get a <a href='gmail.com'>gmail</a> account.</span>
+	`;
+	
+	lg.i_woman_shrugging = `<img src="../quest/creator_resurrection/img/woman_shrugging.webp">`;
+	lg.o_chose_no_participation = `
+		<img class="to_center" src="../quest/creator_resurrection/img/woman_shrugging.webp"><br>
+		<span class='very_big_font bold_font'>You chose no ...</span>
+	`;
 	
 }
 

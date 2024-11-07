@@ -807,7 +807,7 @@ color: white;
 	//margin: 1vw;
 }
 
-.exam.item_can_select {
+.item_can_select {
 	//margin: 0.7vw;
 	border: 0.2vw solid white;
 	padding: 0.5em 0.5em 0.5em 0.5em;
@@ -815,7 +815,7 @@ color: white;
 	background-color: transparent;
 }
 
-.exam.item_can_select:hover {
+.item_can_select:hover {
 	border: 0.5vw solid white;
 }
 

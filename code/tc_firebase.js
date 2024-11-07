@@ -36,7 +36,7 @@ let tc_fb_database = null;
  *      firebase console > Athentication > Settings > Authorized Domains
  *      google console > APIs & Services > Credentials > API Keys > Browser Key
  */
-function get_database(){
+function get_database(err_fn){
 	if(tc_fb_database != null){
 		return new Promise((resolve, reject) => {
 			resolve('database != null');
@@ -88,17 +88,20 @@ function get_database(){
 		
 		console.log('errorCode=' + errorCode);
 		console.log('errorMessage=' + errorMessage);
-		console.log('credential=' + credential);          
+		console.log('credential=' + credential);
+		
+		if(err_fn != null){ err_fn(error); }
 	});      
 	
 }
 
-export const firebase_write_object = (sub_ref, obj) => {  //sub_ref MUST start with '/' or be empty
-	return get_database().then((result) => {
+export const firebase_write_object = (sub_ref, obj, err_fn) => {  //sub_ref MUST start with '/' or be empty
+	return get_database(err_fn).then((result) => {
 		const db_ref = ref(tc_fb_database, 'users/' + tc_fb_user_id + sub_ref)
 		console.log("firebase_write_object. db_ref = " + db_ref);
-		set(db_ref, obj).catch((error) => {
-			console.error(error);
+		set(db_ref, obj).catch((error) => { 
+			console.error(error); 
+			if(err_fn != null){ err_fn(error); }
 		});
 	});
 };
