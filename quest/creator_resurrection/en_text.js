@@ -84,20 +84,20 @@ export function init_en_poll_txt(){
 	lg.q_win_money = `<span class='big_font bold_font'>Win?</span>`;
 
 	lg.o_chose_yes_to_participate = `<span class='very_big_font bold_font'>
-		Waiting for Google Login. If you don have one get a <a href='gmail.com'>gmail</a> account.</span>`;
+		Waiting for Google Login. If you don have one get a <a href='http://accounts.google.com'>Google account</a>.</span>`;
 	lg.o_congrats_you_have_a_ticket = `
-		<img class="to_center" src="../quest/creator_resurrection/img/ticket.webp"><br>
+		<img class="img_observ" src="../quest/creator_resurrection/img/ticket.webp"><br>
 		<span class='very_big_font bold_font'>Congrats ! You have a ticket</span>
 	`;
 	lg.o_sorry_no_loging_no_participation = `
-		<img class="to_center" src="../quest/creator_resurrection/img/woman_shrugging.webp"><br>
+		<img class="img_observ" src="../quest/creator_resurrection/img/woman_shrugging.webp"><br>
 		<span class='very_big_font bold_font'>Sorry. No Google login, no ticket. 
-			If you don have one get a <a href='gmail.com'>gmail</a> account.</span>
+			If you don have one get a <a href='http://accounts.google.com'>Google account</a>.</span>
 	`;
 	
 	lg.i_woman_shrugging = `<img src="../quest/creator_resurrection/img/woman_shrugging.webp">`;
 	lg.o_chose_no_participation = `
-		<img class="to_center" src="../quest/creator_resurrection/img/woman_shrugging.webp"><br>
+		<img class="img_observ" src="../quest/creator_resurrection/img/woman_shrugging.webp"><br>
 		<span class='very_big_font bold_font'>You chose no ...</span>
 	`;
 	

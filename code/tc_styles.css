@@ -819,6 +819,19 @@ color: white;
 	border: 0.5vw solid white;
 }
 
+.img_observ {
+	display: block;
+	margin-left: 10vw;
+	margin-right: auto;
+	width: 27vw;
+}
+
+.img_user {
+	background-color: #3871e2;
+	width: 25px;
+	height: 25px;
+}
+
 .exam.is_answ_img_div {
 	grid-row: auto;
 	grid-column: auto;

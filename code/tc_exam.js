@@ -21,6 +21,7 @@ let DEFAULT_LINK_NAME = null;
 let fb_write_object = null;
 let fb_read_object = null;
 let fb_sign_out = null;
+let fb_get_user = null;
 
 const MIN_ANSW_SHOW_INVERT = 3;
 
@@ -38,6 +39,7 @@ function init_exam_fb(){
 		fb_write_object = module.firebase_write_object;
 		fb_read_object = module.firebase_read_object;
 		fb_sign_out = module.firebase_sign_out;
+		fb_get_user = module.firebase_get_user;
 	})
 	.catch((err) => {
 		console.log("Could NOT import '${mod_nm}' err:" + err.message);
@@ -83,6 +85,13 @@ const LNK_HREF_IDX = 1;
 
 const MIN_DATE = -7000;
 const MAX_DATE = -5000;
+
+const SUF_USR_IMG = "_img";
+const SUF_USR_NAM = "_nam";
+
+const id_dv_user = "id_dv_user";
+const id_dv_user_image = "id_dv_user_image";
+const id_dv_user_name = "id_dv_user_name";
 
 const id_dv_undo = "id_dv_undo";
 
@@ -2469,21 +2478,29 @@ function show_observation(qid, all_to_act){
 		dv_qstm.title = qid;
 	}	
 	
-	const sp_qrefs_observ = document.createElement("span");
+	const sp_qrefs_observ = document.createElement("div");
 	sp_qrefs_observ.id = qid + SUF_ID_QREFS_OBSERVATION;
-	dv_qstm.append(sp_qrefs_observ);
+	sp_qrefs_observ.classList.add("exam");
+	//sp_qrefs_observ.classList.add("stm");
+	sp_qrefs_observ.classList.add("observ_color");
+	dv_quest.append(sp_qrefs_observ);
 	
 	console.log("Updating NEW observation qid=" + qid);
 	update_observation(qid, all_to_act);
 
 	if(quest.calls_write_object){
+		const dv_user = create_div_user();
+		dv_quest.append(dv_user);
+
 		write_firebase_exam_object((err) => {
 			console.error(err);
 			the_stm = get_msg(quest.htm_stm_not_saved);
 			dv_qstm.innerHTML = "" + the_stm;			
 		}).then((result) => {
 			the_stm = get_msg(quest.htm_stm_saved_ok);
+			
 			dv_qstm.innerHTML = "" + the_stm;
+			fill_div_user();
 		});
 	}
 
@@ -2491,6 +2508,64 @@ function show_observation(qid, all_to_act){
 	//scroll_to_top(dv_quest);
 	
 	return dv_quest;
+}
+
+function create_div_user(){
+	
+	const dv_user = document.createElement("div");
+	dv_user.id = id_dv_user;
+	dv_user.classList.add("exam");
+
+	//const dv_img = document.createElement("img");
+	const dv_img = document.createElement("div");
+	dv_img.id = id_dv_user_image;
+	//dv_img.classList.add("exam", "img_observ");
+	dv_img.classList.add("exam");
+	dv_user.append(dv_img);
+
+	//dv_img.src = "https://joseluisquiroga.github.io/foto_mia_01.JPG";
+	
+	const dv_nom = document.createElement("div");
+	dv_nom.id = id_dv_user_name;
+	dv_nom.classList.add("exam");
+	dv_user.append(dv_nom);
+	
+	return dv_user;
+}
+
+function fill_div_user(){
+	const the_usr = fb_get_user();
+	if(the_usr == null){ return; }
+	
+	/*
+	//req.onload = (evt) => {
+	const req = new XMLHttpRequest();
+
+	req.addEventListener("load", (evt) => {
+		let dv_img = null;
+		dv_img = document.getElementById(id_dv_user_image);
+		if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
+	});
+	req.open("GET", the_usr.photoURL);
+	
+	let dv_img = null;
+	dv_img = document.getElementById(id_dv_user_image);
+	if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
+	//if(dv_img != null){ dv_img.src = the_usr.photoURL; }
+	//if(dv_img != null){ dv_img.src = "../quest/creator_resurrection/img/brain.webp"; }
+	//if(dv_img != null){ dv_img.src = "https://joseluisquiroga.github.io/foto_mia_01.JPG"; }
+
+	dv_img = document.getElementById("id_user_picture");
+	if(dv_img != null){ dv_img.src = the_usr.photoURL; }	
+	*/
+	let dv_img = document.getElementById(id_dv_user_image);
+	if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
+
+	const dv_img2 = document.getElementById("id_user_picture");
+	if(dv_img2 != null){ dv_img2.src = the_usr.photoURL; }	
+	
+	const dv_nom = document.getElementById(id_dv_user_name);
+	if(dv_nom != null){ dv_nom.innerHTML = the_usr.displayName; }
 }
 
 function get_sat_conj_qids(qid){
@@ -2508,28 +2583,28 @@ function update_observation(qid, all_to_act){
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return; }
 	
-	let sp_qrefs_observ = document.getElementById(qid + SUF_ID_QREFS_OBSERVATION);
+	const sp_qrefs_observ = document.getElementById(qid + SUF_ID_QREFS_OBSERVATION);
 	if(sp_qrefs_observ == null){ 
 		//console.log("Internal error. Trying to update observation qid=" + qid + " without qrefs span");
 		//console.log("Already removed qid=" + qid);
 		return null;
 	}
+	const dv_quest = document.getElementById(qid);
+	if(dv_quest == null){ return; }
+	
 	const incos_qids = get_sat_conj_qids(qid);
 	if(incos_qids == null){
-		let dv_quest = document.getElementById(qid);
-		if(dv_quest != null){ 
-			//console.log("REMOVING div for qid=" + qid);
-			dv_quest.remove(); 
+		console.log("REMOVING ABSERVATION with qid=" + qid);
+		dv_quest.remove(); 
+	
+		const all_to_signl = quest.signal_if_not_shown;
+		if(all_to_signl == null){ return; }
 		
-			let all_to_signl = quest.signal_if_not_shown;
-			if(all_to_signl != null){
-				/*console.log("AFTER_REMOVE | qid=" + qid + " | all_to_signl=" + JSON.stringify(all_to_signl, null, "  ")
-					+ " | all_to_act=" + JSON.stringify(all_to_act, null, "  ")
-				);*/
-				send_signals_to(all_to_signl, all_to_act);
-				//console.log("AFTER_REMOVE [2] | all_to_act=" + JSON.stringify(all_to_act, null, "  "));
-			}
-		}
+		/*console.log("AFTER_REMOVE | qid=" + qid + " | all_to_signl=" + JSON.stringify(all_to_signl, null, "  ")
+			+ " | all_to_act=" + JSON.stringify(all_to_act, null, "  ")
+		);*/
+		send_signals_to(all_to_signl, all_to_act);
+		//console.log("AFTER_REMOVE [2] | all_to_act=" + JSON.stringify(all_to_act, null, "  "));
 		return;
 	}
 	const sufix_qhrefs = get_qhrefs_of(incos_qids, null);
@@ -2538,8 +2613,8 @@ function update_observation(qid, all_to_act){
 		sp_qrefs_observ.innerHTML = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs;
 	}
 	
-	const dv_quest_2 = document.getElementById(qid);
-	set_anchors_target(dv_quest_2);
+	set_anchors_target(dv_quest);
+	console.log("UPDATED ABSERVATION with qid=" + qid);
 }
 
 // CODE_FOR __________________

@@ -124,6 +124,10 @@ export const firebase_sign_out = () => {
 	//tc_fb_database.getInstance().signOut();
 }
 
+export function firebase_get_user(){
+	return tc_fb_user;
+}
+
 
 // firebase apiKey access to Identity Toolkit API
 // Requests to this API identitytoolkit method google.cloud.identitytoolkit.v1.ProjectConfigService.GetProjectConfig are blocked
