@@ -17,13 +17,15 @@ export function init_en_poll_txt(){
 	const hb = glb_all_book_hrefs;
 	const lg = glb_poll_txt;
 	
+	const module_img_dir = "../quest_modules/creator_resurrection/img";
+	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
 	//lg.ctx_bible2 = "<span class='has_left_padding very_big_font bold_font'>Bible?</span>";
 	//lg.ctx_bible = "<span class='big_font bold_font'>Bible?</span>";
 	//lg.ctx_bible = "<span class='h1'><b>Bible?</b></span>";
 	//lg.ctx_bible = "<span class='has_left_padding'><b>Bible</b></span>";
-	//lg.ctx_bible = `<span class='has_left_padding'><img src="../quest/creator_resurrection/img/bible.webp"></span>`;
+	//lg.ctx_bible = `<span class='has_left_padding'><img src="${module_img_dir}/bible.webp"></span>`;
 	//lg.ctx_bible = "Bible?";
 	
 	lg.a_simple_YES = `YES`;
@@ -86,18 +88,18 @@ export function init_en_poll_txt(){
 	lg.o_chose_yes_to_participate = `<span class='very_big_font bold_font'>
 		Waiting for Google Login. If you don have one get a <a href='http://accounts.google.com'>Google account</a>.</span>`;
 	lg.o_congrats_you_have_a_ticket = `
-		<img class="img_observ" src="../quest/creator_resurrection/img/ticket.webp"><br>
+		<img class="img_observ" src="${module_img_dir}/ticket.webp"><br>
 		<span class='very_big_font bold_font'>Congrats ! You have a ticket</span>
 	`;
 	lg.o_sorry_no_loging_no_participation = `
-		<img class="img_observ" src="../quest/creator_resurrection/img/woman_shrugging.webp"><br>
+		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
 		<span class='very_big_font bold_font'>Sorry. No Google login, no ticket. 
 			If you don have one get a <a href='http://accounts.google.com'>Google account</a>.</span>
 	`;
 	
-	lg.i_woman_shrugging = `<img src="../quest/creator_resurrection/img/woman_shrugging.webp">`;
+	lg.i_woman_shrugging = `<img src="${module_img_dir}/woman_shrugging.webp">`;
 	lg.o_chose_no_participation = `
-		<img class="img_observ" src="../quest/creator_resurrection/img/woman_shrugging.webp"><br>
+		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
 		<span class='very_big_font bold_font'>You chose no ...</span>
 	`;
 	
