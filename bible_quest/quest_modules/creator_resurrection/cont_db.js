@@ -10,6 +10,9 @@ let db_nodes_exam = {};
 export function init_exam_database(){
 	db_nodes_exam = {};
 	init_poll_glb(db_user_info, STARTING_QUESTIONS, db_nodes_exam);
+
+	const glb_img_dir = "../img/";
+	const proy_img_dir = "../quest_modules/creator_resurrection/img/";
 	
 	const db = db_nodes_exam;
 	const rf = glb_all_bibrefs;
@@ -17,18 +20,18 @@ export function init_exam_database(){
 	const lft = "grid_item_left";
 	
 	db.img_hrefs = {
-		yes_like: "../img/exam/yes_like.webp",
-		no_like: "../img/exam/no_like.webp",
-		less_than: "../img/exam/less_than.webp",
-		more: "../img/exam/more.webp",
-		less: "../img/exam/less.webp",
+		yes_like: glb_img_dir + "yes_like.webp",
+		no_like: glb_img_dir + "no_like.webp",
+		less_than: glb_img_dir + "less_than.webp",
+		more: glb_img_dir + "more.webp",
+		less: glb_img_dir + "less.webp",
 	};
 
 	db.q1_0__ = { 
 		choose_yes: true,
 		context: ["ctx_bible"],
 		htm_stm: "q1_0__bible",
-		img_href: "../quest/creator_resurrection/img/bible.webp", 
+		img_href: proy_img_dir + "bible.webp", 
 		answers: {
 			q1_0__YES_bible: { img_pos: rgt, },
 			q1_0__NO_bible: { img_pos: lft, },
@@ -39,7 +42,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_creator"],
 		htm_stm: "q1_1__creator",
-		img_href: "../quest/creator_resurrection/img/creator.webp", 
+		img_href: proy_img_dir + "creator.webp", 
 		answers: {
 			q1_1__YES_creator: { img_pos: rgt, },
 			q1_1__NO_creator: { img_pos: lft, },
@@ -50,7 +53,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_creator"],
 		htm_stm: "q1_1_2__six_days",
-		img_href: "../quest/creator_resurrection/img/six_days.webp", 
+		img_href: proy_img_dir + "six_days.webp", 
 		answers: {
 			q1_1_2__YES_six_days: { img_pos: rgt, },
 			q1_1_2__NO_six_days: { img_pos: lft, },
@@ -64,7 +67,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_logic"],
 		htm_stm: "q1_2__logic",
-		img_href: "../quest/creator_resurrection/img/logic.webp", 
+		img_href: proy_img_dir + "logic.webp", 
 		answers: {
 			q1_2__YES_logic: { img_pos: rgt, },
 			q1_2__NO_logic: { img_pos: lft, },
@@ -75,7 +78,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_evidence"],
 		htm_stm: "q_YES_NO_evidence",
-		img_href: "../quest/creator_resurrection/img/senses.webp", 
+		img_href: proy_img_dir + "senses.webp", 
 		answers: {
 			q_YES_evidence: { img_pos: rgt, },
 			q_NO_evidence: { img_pos: lft, },
@@ -86,7 +89,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_evolution"],
 		htm_stm: "q1_3__evolution",
-		img_href: "../quest/creator_resurrection/img/evolution.webp", 
+		img_href: proy_img_dir + "evolution.webp", 
 		answers: {
 			q1_3__YES_evolution: { img_pos: rgt, },
 			q1_3__NO_evolution: { img_pos: lft, },
@@ -97,7 +100,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity"],
 		htm_stm: "q_requires_creativity",
-		img_href: "../quest/creator_resurrection/img/car.webp", 
+		img_href: proy_img_dir + "car.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -108,7 +111,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity"],
 		htm_stm: "q_requires_creativity",
-		img_href: "../quest/creator_resurrection/img/knife.webp", 
+		img_href: proy_img_dir + "knife.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -120,7 +123,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity"],
 		htm_stm: "q_requires_creativity",
-		img_href: "../quest/creator_resurrection/img/phone.webp", 
+		img_href: proy_img_dir + "phone.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -131,7 +134,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity"],
 		htm_stm: "q_requires_creativity",
-		img_href: "../quest/creator_resurrection/img/clock.webp", 
+		img_href: proy_img_dir + "clock.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -143,8 +146,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make"],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_knife: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/knife.webp", },
-			a_building: { img_pos: lft, img_href: "../quest/creator_resurrection/img/building.webp", },
+			a_knife: { img_pos: rgt, img_href: proy_img_dir + "knife.webp", },
+			a_building: { img_pos: lft, img_href: proy_img_dir + "building.webp", },
 		},
 	};
 	
@@ -153,8 +156,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make"],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_car: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/car.webp", },
-			a_lamp: { img_pos: lft, img_href: "../quest/creator_resurrection/img/lamp.webp", },
+			a_car: { img_pos: rgt, img_href: proy_img_dir + "car.webp", },
+			a_lamp: { img_pos: lft, img_href: proy_img_dir + "lamp.webp", },
 		},
 	};
 	
@@ -164,8 +167,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make"],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_clock: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/clock.webp", },
-			a_cellphone: { img_pos: lft, img_href: "../quest/creator_resurrection/img/phone.webp", },
+			a_clock: { img_pos: rgt, img_href: proy_img_dir + "clock.webp", },
+			a_cellphone: { img_pos: lft, img_href: proy_img_dir + "phone.webp", },
 		},
 	};*/
 	
@@ -174,8 +177,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make"],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_clock: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/clock.webp", },
-			a_air_purifier: { img_pos: lft, img_href: "../quest/creator_resurrection/img/air_purifier.webp", },
+			a_clock: { img_pos: rgt, img_href: proy_img_dir + "clock.webp", },
+			a_air_purifier: { img_pos: lft, img_href: proy_img_dir + "air_purifier.webp", },
 		},
 	};
 	
@@ -184,8 +187,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make"],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_car_wheel: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/car_wheel.webp", },
-			a_foot: { img_pos: lft, img_href: "../quest/creator_resurrection/img/foot.webp", },
+			a_car_wheel: { img_pos: rgt, img_href: proy_img_dir + "car_wheel.webp", },
+			a_foot: { img_pos: lft, img_href: proy_img_dir + "foot.webp", },
 		},
 	};
 	
@@ -194,8 +197,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make"],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_air_purifier: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/air_purifier.webp", },
-			a_human_lung: { img_pos: lft, img_href: "../quest/creator_resurrection/img/lungs.webp", },
+			a_air_purifier: { img_pos: rgt, img_href: proy_img_dir + "air_purifier.webp", },
+			a_human_lung: { img_pos: lft, img_href: proy_img_dir + "lungs.webp", },
 		},
 	};
 	
@@ -204,8 +207,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make"],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_building: { img_pos: rgt, img_href: "../quest/creator_resurrection/img/building.webp", },
-			a_human_body: { img_pos: lft, img_href: "../quest/creator_resurrection/img/human_body.webp", },
+			a_building: { img_pos: rgt, img_href: proy_img_dir + "building.webp", },
+			a_human_body: { img_pos: lft, img_href: proy_img_dir + "human_body.webp", },
 		},
 	};
 
@@ -213,7 +216,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_biology_req_creativity"],
 		htm_stm: "q_bilology_req_creativity",
-		img_href: "../quest/creator_resurrection/img/foot.webp", 
+		img_href: proy_img_dir + "foot.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -224,7 +227,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_biology_req_creativity"],
 		htm_stm: "q_bilology_req_creativity",
-		img_href: "../quest/creator_resurrection/img/lungs.webp", 
+		img_href: proy_img_dir + "lungs.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -235,7 +238,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_biology_req_creativity"],
 		htm_stm: "q_bilology_req_creativity",
-		img_href: "../quest/creator_resurrection/img/human_body.webp", 
+		img_href: proy_img_dir + "human_body.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -247,7 +250,7 @@ export function init_exam_database(){
 		presentation: "t_good_job",
 		context: ["ctx_contest"],
 		htm_stm: "q_participate",
-		img_href: "../quest/creator_resurrection/img/trophy.webp", 
+		img_href: proy_img_dir + "trophy.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },

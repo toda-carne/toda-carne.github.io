@@ -1,8 +1,17 @@
-
 <!DOCTYPE html>
 <html>
 <head>
+{{#with_gstats}}
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KBJN1N7HKP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-KBJN1N7HKP');
+</script>
+{{/with_gstats}}
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,53 +44,4 @@
     <i class="has_icons icon-menu"></i>
   </a>
 </div>
-
-
-
-
-<div class="exam_top_menu">
-	<div id="id_exam_save_button" class="exam_menu"><i class='has_icons icon-save'></i>GUARDAR</div>
-	<div id="id_exam_open_button" class="exam_menu"><i class='has_icons icon-open'></i>ABRIR</div>
-	<div id="id_exam_delete_button" class="exam_menu"><i class='has_icons icon-delete'></i>BORRAR</div>
-	<div id="id_exam_undo_button" class="exam_menu"><i class='has_icons icon-undo'></i>DESHACER</div>
-</div>
-
-<div id="id_exam_content" class="exam_content">
-	<div id="id_exam_top_content"></div>
-	<div id="id_exam_name" class="big_title">
-	</div>
-    <h1 class="big_title">Cuestionario</h1>
-    <img id="id_user_picture" class="img_observ" src="../img/user.webp">
-    <div id="id_exam_all_questions">
-    </div>  
-	<br><br><br><br><br><br><br><br><br>
-	<!-- 
-	<div id="id_exam_user_img" class="exam_menu"><img id="id_user_picture" class="img_user" src="../img/user.webp"></div>
-	https://lh3.googleusercontent.com/a/ACg8ocJIg17OyaYwqq_9Mu7V29f9y2vXFssojC1KR0OG7yfxjdU=s96-c
-	-->
-</div>  
-
-
-</div>
-
-<script type="module">
-
-import * as es_lang from '../code/tc_lang_es.js';
-import * as en_txt from '../quest/creator_resurrection/es_text.js';
-import * as cont_db from '../quest/creator_resurrection/cont_db.js';
-import * as exm from '../code/tc_exam.js';
-
-es_lang.init_es_module();
-en_txt.init_es_poll_txt();
-exm.init_page_exam(cont_db.init_exam_database);
-
-</script>
-
-
-
-<script src="../code/tc_script.js"></script>
-
-</body>
-</html>
-
 
