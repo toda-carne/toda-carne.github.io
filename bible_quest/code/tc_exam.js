@@ -276,7 +276,7 @@ function get_last_quest(){
 	const all_q = dv_all_quest.childNodes;
 	let curr_idx = all_q.length - 1;
 	let quest = null;
-	while(curr_idx > 0){
+	while(curr_idx >= 0){
 		//console.log("get_curr_pos_page [1] curr_idx=" + curr_idx);
 		const qid = all_q[curr_idx].id;
 		curr_idx--;
@@ -2369,8 +2369,12 @@ function activate_signals(all_to_act){
 function ask_next(){	
 	let qid = glb_poll_db.last_added_qid;
 	if(qid != null && (glb_poll_db[qid].has_answ == null)){
-		scroll_to_first_not_answered();
-		return false;
+		const dv_quest = document.getElementById(qid);
+		if(dv_quest != null){
+			scroll_to_first_not_answered();
+			return false;
+		}
+		glb_poll_db.last_added_qid = null;
 	}
 	qid = get_pending();
 	while((qid != null) && ! check_if_dnf_is_sat(qid)){
@@ -2397,7 +2401,7 @@ function undo_last_quest(){
 	let quest = null;
 	let num_undo = 0;
 
-	while(curr_idx > 0){
+	while(curr_idx >= 0){
 		//console.log("get_curr_pos_page [1] curr_idx=" + curr_idx);
 		const qid = all_q[curr_idx].id;
 		if(qid == null){ continue; }
@@ -2562,7 +2566,7 @@ function fill_div_user(){
 	if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
 
 	const dv_img2 = document.getElementById("id_user_picture");
-	if(dv_img2 != null){ dv_img2.src = the_usr.photoURL; }	
+	//if(dv_img2 != null){ dv_img2.src = the_usr.photoURL; }	
 	
 	const dv_nom = document.getElementById(id_dv_user_name);
 	if(dv_nom != null){ dv_nom.innerHTML = the_usr.displayName; }
