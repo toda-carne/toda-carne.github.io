@@ -774,39 +774,41 @@ function init_en_bibrefs(){
 }
 
 function init_en_book_hrefs(){
+	const tc_url = "https://toda-carne.github.io";
+	
 	const hb = book_en_hrefs;
-	hb.href_home = "../en/index.html";
-	hb.href_creator_tit = "../en/book.html#creator_DOT_";
-	hb.href_tch_crea = "../en/book.html#technical-creativity_DOT_";
-	hb.href_tch_cplx = "../en/book.html#technical-complexity_DOT_";
-	hb.href_biology = "../en/book.html#biology_DOT_";
-	hb.href_creator = "../en/book.html#creator_DOT_-1";
-	hb.href_evidence = "../en/book.html#evidence_DOT_";
-	hb.href_reproduction_tit = "../en/book.html#reproduction_DOT_";
-	hb.href_reproduction = "../en/book.html#reproduction_DOT_";
-	hb.href_resurrection = "../en/book.html#resurrection_DOT_";
-	hb.href_resurrection_tit = "../en/book.html#resurrection_DOT_";
-	hb.href_physical_resu = "../en/book.html#physical_DOT_";
-	hb.href_still_physical = "../en/book.html#physical_DOT_";
-	hb.href_not_die_resu = "../en/book.html#they-cant-die_DOT_";
-	hb.href_in_heaven_resu = "../en/book.html#in-the-sky_DOT_";
-	hb.href_like_jesus_resu = "../en/book.html#physical_DOT_";
-	hb.href_for_all_resu = "../en/book.html#for-all_DOT_";
-	hb.href_not_yet_resu = "../en/book.html#has-not-happened_DOT_";
-	hb.href_only_few_resu = "../en/book.html#has-not-happened_DOT_";
-	hb.href_new_earth_resu = "../en/book.html#a-new-earth_DOT_";
-	hb.href_asleep = "../en/book.html#asleep_DOT_";
-	hb.href_the_cloth = "../en/book.html#the-cloth_DOT_";
-	hb.href_angels = "../en/book.html#angels_DOT_";
-	hb.href_wings = "../en/book.html#wings_DOT_";
-	hb.href_creation = "../en/book.html#creation_DOT_";
-	hb.href_life = "../en/book.html#life_DOT_";
-	hb.href_death = "../en/book.html#death_DOT_";
-	hb.href_liberator = "../en/book.html#liberator_DOT_";
-	hb.href_sleeping = "../en/book.html#sleeping_DOT_";
-	hb.href_rich_and_laza = "../en/book.html#the-rich-and-the-poor-lazarus_DOT_";
-	hb.href_144000 = "../en/book.html#section";
-	hb.href_eternal_abhorrence = "../en/book.html#eternal-abhorrence_DOT_";
-	hb.href_factories = "../en/book.html#factories_DOT_";
+	hb.href_home = tc_url + "/en/index.html";
+	hb.href_creator_tit = tc_url + "/en/book.html#creator_DOT_";
+	hb.href_tch_crea = tc_url + "/en/book.html#technical-creativity_DOT_";
+	hb.href_tch_cplx = tc_url + "/en/book.html#technical-complexity_DOT_";
+	hb.href_biology = tc_url + "/en/book.html#biology_DOT_";
+	hb.href_creator = tc_url + "/en/book.html#creator_DOT_-1";
+	hb.href_evidence = tc_url + "/en/book.html#evidence_DOT_";
+	hb.href_reproduction_tit = tc_url + "/en/book.html#reproduction_DOT_";
+	hb.href_reproduction = tc_url + "/en/book.html#reproduction_DOT_";
+	hb.href_resurrection = tc_url + "/en/book.html#resurrection_DOT_";
+	hb.href_resurrection_tit = tc_url + "/en/book.html#resurrection_DOT_";
+	hb.href_physical_resu = tc_url + "/en/book.html#physical_DOT_";
+	hb.href_still_physical = tc_url + "/en/book.html#physical_DOT_";
+	hb.href_not_die_resu = tc_url + "/en/book.html#they-cant-die_DOT_";
+	hb.href_in_heaven_resu = tc_url + "/en/book.html#in-the-sky_DOT_";
+	hb.href_like_jesus_resu = tc_url + "/en/book.html#physical_DOT_";
+	hb.href_for_all_resu = tc_url + "/en/book.html#for-all_DOT_";
+	hb.href_not_yet_resu = tc_url + "/en/book.html#has-not-happened_DOT_";
+	hb.href_only_few_resu = tc_url + "/en/book.html#has-not-happened_DOT_";
+	hb.href_new_earth_resu = tc_url + "/en/book.html#a-new-earth_DOT_";
+	hb.href_asleep = tc_url + "/en/book.html#asleep_DOT_";
+	hb.href_the_cloth = tc_url + "/en/book.html#the-cloth_DOT_";
+	hb.href_angels = tc_url + "/en/book.html#angels_DOT_";
+	hb.href_wings = tc_url + "/en/book.html#wings_DOT_";
+	hb.href_creation = tc_url + "/en/book.html#creation_DOT_";
+	hb.href_life = tc_url + "/en/book.html#life_DOT_";
+	hb.href_death = tc_url + "/en/book.html#death_DOT_";
+	hb.href_liberator = tc_url + "/en/book.html#liberator_DOT_";
+	hb.href_sleeping = tc_url + "/en/book.html#sleeping_DOT_";
+	hb.href_rich_and_laza = tc_url + "/en/book.html#the-rich-and-the-poor-lazarus_DOT_";
+	hb.href_144000 = tc_url + "/en/book.html#section";
+	hb.href_eternal_abhorrence = tc_url + "/en/book.html#eternal-abhorrence_DOT_";
+	hb.href_factories = tc_url + "/en/book.html#factories_DOT_";
 }
 

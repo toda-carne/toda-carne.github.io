@@ -18,6 +18,9 @@ export function init_exam_database(){
 	const rf = glb_all_bibrefs;
 	const rgt = "grid_item_right";
 	const lft = "grid_item_left";
+
+	db.glb_img_dir = glb_img_dir;
+	db.proy_img_dir = proy_img_dir;
 	
 	db.img_hrefs = {
 		yes_like: glb_img_dir + "yes_like.webp",

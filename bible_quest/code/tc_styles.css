@@ -19,9 +19,14 @@
 	--two_sides: calc-size(2 * var(--square_side));
 }
 
+.is_hidden {
+	display: none;
+}
+
+
 @font-face {
 	font-family: tc_icons_font;
-	src: url(../fonts/tc_icons3.ttf);
+	src: url(../fonts/bq_icons.ttf);
 }
 
 .has_icons {
@@ -79,6 +84,7 @@ h1, h2, h3, h4, h5, h6 {
 .icon-open-3::before { content: "\007A"; }
 .icon-undo-4::before { content: "\007B"; }
 .icon-undo-5::before { content: "\007C"; }
+.icon-logout::before { content: "\007D"; }
 
 .hebreo:lang(he) { direction: rtl; }
 .griego:lang(el) { direction: ltr; }
@@ -295,6 +301,24 @@ display: table;
 	padding: 1em 1em;
 	text-align: center;
 	text-decoration: none;
+}
+
+.cl_top_nav .cl_top_elem.is_hidden {
+	display: none;
+}
+
+.cl_top_nav .cl_top_elem.no_padding {
+	padding:0px;
+}
+
+.cl_top_nav .cl_top_elem.no_margin {
+	margin:0px;
+}
+
+.img_user {
+	background-color: #ffffff;
+	width: 8vh;
+	height: 8vh;
 }
 
 .cl_top_nav .cl_top_elem:hover {
@@ -828,12 +852,6 @@ color: white;
 	width: 27vw;
 }
 
-.img_user {
-	background-color: #3871e2;
-	width: 25px;
-	height: 25px;
-}
-
 .exam.is_answ_img_div {
 	grid-row: auto;
 	grid-column: auto;
@@ -950,10 +968,6 @@ color: white;
 .exam.is_ed_verse {
 	display: inline-block;
 	margin: 0.5vh;
-}
-
-.exam.is_hidden {
-	display: none;
 }
 
 .is_red {

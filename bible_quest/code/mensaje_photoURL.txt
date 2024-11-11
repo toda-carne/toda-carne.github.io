@@ -1,0 +1,59 @@
+
+
+El recurso en “https://lh3.googleusercontent.com/a/ACg8ocJIg17OyaYwqq_9Mu7V29f9y2vXFssojC1KR0OG7yfxjdU=s96-c” ha sido bloqueado por OpaqueResponseBlocking. Motivo: “nosniff is true and mimeType is an opaque-blocklisted MIME type or its essence is 'text/plain'”.
+
+
+A resource is blocked by OpaqueResponseBlocking, please check browser console for details. ACg8ocJIg17OyaYwqq_9Mu7V29f9y2vXFssojC1KR0OG7yfxjdU=s96-c
+
+async function getData() {
+  const url = "https://example.org/products.json";
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    console.log(json);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+method: "POST",
+
+sendRequest(url, method, body) {
+    const options = {
+        method: method,
+        headers: new Headers({'content-type': 'application/json'}),
+        mode: 'no-cors'
+    };
+
+    options.body = JSON.stringify(body);
+
+    return fetch(url, options);
+}
+
+// CONTENT_TYPE
+
+	image/jpeg
+	
+// HEADERS
+
+const response = await fetch("https://example.org/post", {
+  headers: {
+    "Content-Type": "application/json",
+  },
+  // ...
+});
+
+
+OR
+
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const response = await fetch("https://example.org/post", {
+  headers: myHeaders,
+  // ...
+});

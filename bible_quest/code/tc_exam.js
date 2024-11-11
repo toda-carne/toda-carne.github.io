@@ -22,6 +22,7 @@ let fb_write_object = null;
 let fb_read_object = null;
 let fb_sign_out = null;
 let fb_get_user = null;
+let fb_check_user = null;
 
 const MIN_ANSW_SHOW_INVERT = 3;
 
@@ -40,10 +41,18 @@ function init_exam_fb(){
 		fb_read_object = module.firebase_read_object;
 		fb_sign_out = module.firebase_sign_out;
 		fb_get_user = module.firebase_get_user;
+		fb_check_user = module.firebase_check_user;		
+		
+		if(fb_check_user != null){ 
+			fb_check_user((user) => {
+				fill_div_user();
+			}); 
+		}
 	})
 	.catch((err) => {
 		console.log("Could NOT import '${mod_nm}' err:" + err.message);
 	});
+
 	
 }
 
@@ -807,7 +816,7 @@ function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
 	});
 }
 
-function end_question(qid){
+function end_question(qid){	
 	const quest = glb_poll_db[qid];
 	quest.has_answ = true;
 	init_answers(qid);
@@ -1405,6 +1414,9 @@ function init_exam_buttons(){
 	
 	dv_button = document.getElementById("id_exam_undo_button"); // this id must be the same to the id in the HTML page.
 	if(dv_button != null){ dv_button.addEventListener('click', undo_button_handler); }
+	
+	dv_button = document.getElementById("id_user_logout_anchor"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', user_logout); }
 	
 	/*window.addEventListener('load', (ev1) => {
 		console.log('ON LOAD of WINDOW');
@@ -2537,39 +2549,56 @@ function create_div_user(){
 	return dv_user;
 }
 
-function fill_div_user(){
-	const the_usr = fb_get_user();
-	if(the_usr == null){ return; }
-	
-	/*
-	//req.onload = (evt) => {
-	const req = new XMLHttpRequest();
-
-	req.addEventListener("load", (evt) => {
-		let dv_img = null;
-		dv_img = document.getElementById(id_dv_user_image);
+/*
+async function get_photo_url() {
+	try {
+		const the_usr = fb_get_user();
+		if(the_usr == null){ return; }
+		
+		const options = {
+			//method: 'GET',
+			headers: new Headers({'content-type': 'image/jpeg'}),
+			mode: 'no-cors'
+		};
+		const response = await fetch(the_usr.photoURL, options);
+		if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+		}
+		
+		//const json = await response.json();
+		
+		let dv_img = document.getElementById(id_dv_user_image);
 		if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
-	});
-	req.open("GET", the_usr.photoURL);
+		
+		const dv_img2 = document.getElementById("id_user_picture");
+		//if(dv_img2 != null){ dv_img2.src = the_usr.photoURL; }	
+		
+		//console.log(json);
+	} catch (error) {
+		console.error(error.message);
+	}
+}
+*/
+
+function fill_div_user(){
+	const img_top = document.getElementById("id_user_picture");
+	const ico_logut = document.getElementById("id_user_logout_anchor");
 	
-	let dv_img = null;
-	dv_img = document.getElementById(id_dv_user_image);
+	const the_usr = fb_get_user();
+	if(the_usr == null){ 
+		if(ico_logut != null){ ico_logut.classList.add("is_hidden"); }
+		if(img_top != null){ img_top.src = glb_poll_db.glb_img_dir + "user.jpg"; }
+		return;
+	}
+	
+	const dv_img = document.getElementById(id_dv_user_image);
 	if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
-	//if(dv_img != null){ dv_img.src = the_usr.photoURL; }
-	//if(dv_img != null){ dv_img.src = "../quest/creator_resurrection/img/brain.webp"; }
-	//if(dv_img != null){ dv_img.src = "https://joseluisquiroga.github.io/foto_mia_01.JPG"; }
-
-	dv_img = document.getElementById("id_user_picture");
-	if(dv_img != null){ dv_img.src = the_usr.photoURL; }	
-	*/
-	let dv_img = document.getElementById(id_dv_user_image);
-	if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
-
-	const dv_img2 = document.getElementById("id_user_picture");
-	//if(dv_img2 != null){ dv_img2.src = the_usr.photoURL; }	
+	
+	if(ico_logut != null){ ico_logut.classList.remove("is_hidden");; }
+	if(img_top != null){ img_top.src = the_usr.photoURL; }
 	
 	const dv_nom = document.getElementById(id_dv_user_name);
-	if(dv_nom != null){ dv_nom.innerHTML = the_usr.displayName; }
+	if(dv_nom != null){ dv_nom.innerHTML = the_usr.displayName; } // THIS LINE AVOIDS OpaqueResponseBlocking ERROR !!!
 }
 
 function get_sat_conj_qids(qid){
@@ -2623,4 +2652,10 @@ function update_observation(qid, all_to_act){
 
 // CODE_FOR __________________
 
+function user_logout(){
+	if(fb_sign_out != null){
+		fb_sign_out();
+		fill_div_user();
+	}
+}
 
