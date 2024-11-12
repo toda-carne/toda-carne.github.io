@@ -221,6 +221,9 @@ function get_traduced_message(trad_msg, nom_msg){
 
 function init_en_basic_msg(){
 	const obj = all_en_msg;
+	
+	obj.msg_guest = "Guest";
+	
 	obj.msg_ok = "OK";
 	obj.msg_del = "DEL";
 	obj.msg_range = "RANGE";

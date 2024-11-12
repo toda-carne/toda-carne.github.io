@@ -31,7 +31,7 @@ let tc_fb_user = null;
  *      firebase console > Athentication > Settings > Authorized Domains
  *      google console > APIs & Services > Credentials > API Keys > Browser Key
  */
-function check_login(err_fn){
+export function firebase_check_login(err_fn){
 	if(tc_fb_user != null){
 		return new Promise((resolve, reject) => {
 			resolve('database != null');
@@ -127,7 +127,7 @@ export function firebase_check_user(callbk){
 }
 
 export const firebase_write_object = (sub_ref, obj, err_fn) => {  //sub_ref MUST start with '/' or be empty
-	return check_login(err_fn).then((result) => {
+	return firebase_check_login(err_fn).then((result) => {
 		if(tc_fb_app == null){ console.error("No firebase app in firebase_write_object !!");  return; }
 		const fb_database = getDatabase(tc_fb_app);
 		const db_ref = ref(fb_database, 'users/' + tc_fb_user.uid + sub_ref)
@@ -140,7 +140,7 @@ export const firebase_write_object = (sub_ref, obj, err_fn) => {  //sub_ref MUST
 };
 
 export const firebase_read_object = (sub_ref, callbak_func) => { //sub_ref MUST start with '/' or be empty
-	return check_login().then((result) => {
+	return firebase_check_login().then((result) => {
 		if(tc_fb_app == null){ console.error("No firebase app in firebase_write_object !!");  return; }
 		const fb_database = getDatabase(tc_fb_app);
 		const db_ref = ref(fb_database, 'users/' + tc_fb_user.uid + sub_ref)

@@ -90,6 +90,9 @@ const num2book_es = {
 
 function init_es_basic_msg(){
 	const obj = all_es_msg;
+	
+	obj.msg_guest = "Invitado";
+	
 	obj.msg_ok = "ACEPTAR";
 	obj.msg_del = "BORRAR";
 	obj.msg_range = "RANGO";

@@ -23,6 +23,7 @@ let fb_read_object = null;
 let fb_sign_out = null;
 let fb_get_user = null;
 let fb_check_user = null;
+let fb_check_login = null;
 
 const MIN_ANSW_SHOW_INVERT = 3;
 
@@ -42,6 +43,7 @@ function init_exam_fb(){
 		fb_sign_out = module.firebase_sign_out;
 		fb_get_user = module.firebase_get_user;
 		fb_check_user = module.firebase_check_user;		
+		fb_check_login = module.firebase_check_login;
 		
 		if(fb_check_user != null){ 
 			fb_check_user((user) => {
@@ -1418,6 +1420,12 @@ function init_exam_buttons(){
 	dv_button = document.getElementById("id_user_logout_anchor"); // this id must be the same to the id in the HTML page.
 	if(dv_button != null){ dv_button.addEventListener('click', user_logout); }
 	
+	dv_button = document.getElementById("id_user_name"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', user_login); }
+	
+	dv_button = document.getElementById("id_user_picture"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', user_login); }
+	
 	/*window.addEventListener('load', (ev1) => {
 		console.log('ON LOAD of WINDOW');
 		scroll_to_first_not_answered();
@@ -2581,15 +2589,19 @@ async function get_photo_url() {
 */
 
 function fill_div_user(){
+	const dv_user_nam = document.getElementById("id_user_name");
 	const img_top = document.getElementById("id_user_picture");
 	const ico_logut = document.getElementById("id_user_logout_anchor");
 	
 	const the_usr = fb_get_user();
 	if(the_usr == null){ 
+		if(dv_user_nam != null){ dv_user_nam.innerHTML = glb_curr_lang.msg_guest; }
 		if(ico_logut != null){ ico_logut.classList.add("is_hidden"); }
 		if(img_top != null){ img_top.src = glb_poll_db.glb_img_dir + "user.jpg"; }
 		return;
 	}
+
+	if(dv_user_nam != null){ dv_user_nam.innerHTML = the_usr.displayName; }
 	
 	const dv_img = document.getElementById(id_dv_user_image);
 	if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
@@ -2657,5 +2669,18 @@ function user_logout(){
 		fb_sign_out();
 		fill_div_user();
 	}
+	close_top_menu();
+}
+
+function user_login(){
+	if(fb_check_login != null){
+		fb_check_login();
+	}
+	close_top_menu();
+}
+
+function close_top_menu() {
+	var mm = document.querySelector(".cl_top_nav");
+	if(mm != null){ mm.classList.remove("show_menu"); }		
 }
 
