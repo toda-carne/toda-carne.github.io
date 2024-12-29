@@ -30,9 +30,9 @@ export function init_exam_database(){
 		less: glb_img_dir + "less.webp",
 	};
 
-	db.q1_0__ = { 
+	db.q_bible__ = { 
 		choose_yes: true,
-		context: ["ctx_bible"],
+		context: ["ctx_general", "ctx_bible"],
 		htm_stm: "q1_0__bible",
 		img_href: proy_img_dir + "bible.webp", 
 		answers: {
@@ -41,9 +41,9 @@ export function init_exam_database(){
 		},
 	};
 	
-	db.q1_1__ = { 
+	db.q_creator__ = { 
 		choose_yes: true,
-		context: ["ctx_creator"],
+		context: ["ctx_general", "ctx_creator"],
 		htm_stm: "q1_1__creator",
 		img_href: proy_img_dir + "creator.webp", 
 		answers: {
@@ -52,9 +52,9 @@ export function init_exam_database(){
 		},
 	};	
 	
-	db.q1_1_2__ = { 
+	db.q_six_days__ = { 
 		choose_yes: true,
-		context: ["ctx_creator"],
+		context: ["ctx_general", "ctx_creator"],
 		htm_stm: "q1_1_2__six_days",
 		img_href: proy_img_dir + "six_days.webp", 
 		answers: {
@@ -62,13 +62,13 @@ export function init_exam_database(){
 			q1_1_2__NO_six_days: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q1_1__: { q1_1__YES_creator: "on", }, },
+			c1: { q_creator__: { q1_1__YES_creator: "on", }, },
 		},
 	};	
 	
 	db.q_logic__ = { 
 		choose_yes: true,
-		context: ["ctx_logic"],
+		context: ["ctx_general", "ctx_logic"],
 		htm_stm: "q1_2__logic",
 		img_href: proy_img_dir + "logic.webp", 
 		answers: {
@@ -77,9 +77,51 @@ export function init_exam_database(){
 		},
 	};	
 	
+	db.q_language__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_logic", "ctx_language"],
+		htm_stm: "q_language",
+		img_href: proy_img_dir + "talking.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_logic__: { q1_2__NO_logic: "on", }, },
+		},
+	};	
+	
+	db.q_business__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_logic", "ctx_business"],
+		htm_stm: "q_business",
+		img_href: proy_img_dir + "stock_market.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_logic__: { q1_2__NO_logic: "on", }, },
+		},
+	};	
+	
+	db.q_technology__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_logic", "ctx_technology"],
+		htm_stm: "q_technology",
+		img_href: proy_img_dir + "technology.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_logic__: { q1_2__NO_logic: "on", }, },
+		},
+	};	
+	
 	db.q_evidence__ = { 
 		choose_yes: true,
-		context: ["ctx_evidence"],
+		context: ["ctx_general", "ctx_evidence"],
 		htm_stm: "q_YES_NO_evidence",
 		img_href: proy_img_dir + "senses.webp", 
 		answers: {
@@ -88,9 +130,65 @@ export function init_exam_database(){
 		},
 	};	
 	
+	db.q_law__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_evidence", "ctx_law"],
+		htm_stm: "q_law",
+		img_href: proy_img_dir + "law.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_evidence__: { q_NO_evidence: "on", }, },
+		},
+	};	
+	
+	db.q_justice__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_evidence", "ctx_law", "ctx_justice"],
+		htm_stm: "q_justice",
+		img_href: proy_img_dir + "justice.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_law__: { a_simple_NO: "on", }, },
+		},
+	};	
+	
+	db.q_contracts__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_evidence", "ctx_contracts"],
+		htm_stm: "q_contracts",
+		img_href: proy_img_dir + "signing.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_evidence__: { q_NO_evidence: "on", }, },
+		},
+	};	
+	
+	db.q_technology2__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_evidence", "ctx_technology2"],
+		htm_stm: "q_technology",
+		img_href: proy_img_dir + "technology.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_evidence__: { q_NO_evidence: "on", }, },
+		},
+	};	
+	
 	db.q_evolution__ = { 
 		choose_yes: true,
-		context: ["ctx_evolution"],
+		context: ["ctx_general", "ctx_evolution"],
 		htm_stm: "q1_3__evolution",
 		img_href: proy_img_dir + "evolution.webp", 
 		answers: {

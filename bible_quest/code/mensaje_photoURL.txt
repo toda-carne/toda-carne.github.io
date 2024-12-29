@@ -1,5 +1,53 @@
 
 
+///// CACHE IN LOCLA STORAGE THE IMAGE
+
+
+To whoever also needs this problem solved:
+
+Firstly, I grab my image with getElementByID, and save the image as a Base64. Then I save the Base64 string as my localStorage value.
+
+bannerImage = document.getElementById('bannerImg');
+imgData = getBase64Image(bannerImage);
+localStorage.setItem("imgData", imgData);
+
+Here is the function that converts the image to a Base64 string:
+
+function getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    var dataURL = canvas.toDataURL("image/png");
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
+
+Then, on my next page I created an image with a blank src like so:
+
+<img src="" id="tableBanner" />
+
+And straight when the page loads, I use these next three lines to get the Base64 string from localStorage, and apply it to the image with the blank src I created:
+
+var dataImage = localStorage.getItem('imgData');
+bannerImg = document.getElementById('tableBanner');
+bannerImg.src = "data:image/png;base64," + dataImage;
+
+Tested it in quite a few different browsers and versions, and it seems to work quite well.
+
+
+
+
+
+
+
+
+
+//////////////////////////////////
+
 El recurso en “https://lh3.googleusercontent.com/a/ACg8ocJIg17OyaYwqq_9Mu7V29f9y2vXFssojC1KR0OG7yfxjdU=s96-c” ha sido bloqueado por OpaqueResponseBlocking. Motivo: “nosniff is true and mimeType is an opaque-blocklisted MIME type or its essence is 'text/plain'”.
 
 
@@ -57,3 +105,7 @@ const response = await fetch("https://example.org/post", {
   headers: myHeaders,
   // ...
 });
+
+
+
+

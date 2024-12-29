@@ -592,12 +592,12 @@ function init_answers(qid){
 					pos_itm = RIGHT_POS;
 					dv_add = dv_more;
 					an_answ.img_pos = pos_itm;
-					htm_img.style.width = "100%";
+					if(htm_img != null){ htm_img.style.width = "100%"; }
 				} else {
 					pos_itm = LEFT_POS;
 					dv_add = dv_less;
 					an_answ.img_pos = pos_itm;
-					htm_img.style.width = "50%";
+					if(htm_img != null){ htm_img.style.width = "50%"; }
 				}
 			}
 			const pos_cls = an_answ.img_pos;

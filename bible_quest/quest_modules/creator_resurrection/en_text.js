@@ -49,11 +49,19 @@ export function init_en_poll_txt(){
 	lg.q1_2__logic = `<span class='big_font bold_font'>Logic?</span>`;
 	lg.q1_2__YES_logic = "YES logic";
 	lg.q1_2__NO_logic = "NO logic";
-		
+
+	lg.q_language = `<span class='big_font bold_font'>Language?</span>`;
+	lg.q_business = `<span class='big_font bold_font'>Business?</span>`;
+	lg.q_technology = `<span class='big_font bold_font'>Technology?</span>`;
+	
 	lg.q_YES_NO_evidence = `<span class='big_font bold_font'><a href='${hb.href_evidence}'>Evidence</a>?</span>`;
 	lg.q_YES_evidence = "YES evidence";
 	lg.q_NO_evidence = "NO evidence";
-		
+
+	lg.q_justice = `<span class='big_font bold_font'>Justice?</span>`;
+	lg.q_law = `<span class='big_font bold_font'>Law?</span>`;
+	lg.q_contracts = `<span class='big_font bold_font'>Contracts?</span>`;
+	
 	lg.q1_3__evolution = `<span class='big_font bold_font'><a href='${hb.href_factories}'>Evolution</a>?</span>`;
 	lg.q1_3__YES_evolution = "YES evolution";
 	lg.q1_3__NO_evolution = "NO evolution";
