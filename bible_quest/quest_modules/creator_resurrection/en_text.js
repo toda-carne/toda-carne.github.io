@@ -46,27 +46,49 @@ export function init_en_poll_txt(){
 	lg.q1_1_2__YES_six_days = "YES six days";
 	lg.q1_1_2__NO_six_days = "NO six days";	
 
-	lg.q1_2__logic = `<span class='big_font bold_font'>Logic?</span>`;
-	lg.q1_2__YES_logic = "YES logic";
-	lg.q1_2__NO_logic = "NO logic";
+	lg.q_logic_stm = `<span class='big_font bold_font'>Logic?</span>`;
+	lg.a_YES_logic = "YES logic";
+	lg.a_NO_logic = "NO logic";
+	
+	const logic_needed = ` is needed in every day life. It is part of our systems. The question refers to that fact. You can change your
+	answer by clicking on it or by going back with the 'Ups' button`;
+	
+	lg.o_logic_comm = `Logic ${logic_needed}`;
 
 	lg.q_language = `<span class='big_font bold_font'>Language?</span>`;
+	lg.o_language_comm = `Laguage uses logic. Laguage ${logic_needed}`;
+
 	lg.q_business = `<span class='big_font bold_font'>Business?</span>`;
+	lg.o_business_comm = `Business uses logic. Business ${logic_needed}`;
+	
 	lg.q_technology = `<span class='big_font bold_font'>Technology?</span>`;
+	lg.o_technology_comm = `Technology uses logic. Technology ${logic_needed}`;
 	
 	lg.q_YES_NO_evidence = `<span class='big_font bold_font'><a href='${hb.href_evidence}'>Evidence</a>?</span>`;
 	lg.q_YES_evidence = "YES evidence";
 	lg.q_NO_evidence = "NO evidence";
 
+	const evidence_needed = ` is needed in every day life. It is needed to gain trust. The question refers to that fact. You can change your answer by clicking on it or by going back with the 'Ups' button`;
+
+	lg.o_evidence_comm = `Evidence ${evidence_needed}`;
+	
 	lg.q_justice = `<span class='big_font bold_font'>Justice?</span>`;
+	lg.o_justice_comm = `Justice uses evidence. Justice ${evidence_needed}`;
 	lg.q_law = `<span class='big_font bold_font'>Law?</span>`;
+	lg.o_law_comm = `Law uses evidence. Law ${evidence_needed}`;
 	lg.q_contracts = `<span class='big_font bold_font'>Contracts?</span>`;
+	lg.o_contracts_comm = `A contract uses evidence. A contract ${evidence_needed}`;
+
+	lg.o_technology2_comm = `Technology uses evidence. Technology ${evidence_needed}`;
 	
 	lg.q1_3__evolution = `<span class='big_font bold_font'><a href='${hb.href_factories}'>Evolution</a>?</span>`;
 	lg.q1_3__YES_evolution = "YES evolution";
 	lg.q1_3__NO_evolution = "NO evolution";
 	
 	lg.q_requires_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_tch_crea}'>creativity</a>?</span>`;
+	
+	lg.q_made_by_ape = "<span class='big_font bold_font'>Can an ape make it?</span>";
+	lg.q_evidence_made_by_ape = "<span class='big_font bold_font'>Is there evidence that an ape can make it?</span>";
 
 	lg.q_harder_to_make = `<span class='big_font bold_font'>Harder to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
 	
@@ -110,6 +132,10 @@ export function init_en_poll_txt(){
 		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
 		<span class='very_big_font bold_font'>You chose no ...</span>
 	`;
+
+	lg.a_zero = `Zero`;
+	lg.a_one = `One`;
+	lg.a_more_than_one = `More than one`;
 	
 }
 

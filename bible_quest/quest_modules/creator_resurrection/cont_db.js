@@ -69,13 +69,21 @@ export function init_exam_database(){
 	db.q_logic__ = { 
 		choose_yes: true,
 		context: ["ctx_general", "ctx_logic"],
-		htm_stm: "q1_2__logic",
+		htm_stm: "q_logic_stm",
 		img_href: proy_img_dir + "logic.webp", 
 		answers: {
-			q1_2__YES_logic: { img_pos: rgt, },
-			q1_2__NO_logic: { img_pos: lft, },
+			a_YES_logic: { img_pos: rgt, },
+			a_NO_logic: { img_pos: lft, },
 		},
 	};	
+	
+	db.o_logic_comm__ = { 
+		context: ["ctx_general", "ctx_logic"],
+		htm_stm: "o_logic_comm",
+		activated_if: {
+			c1: { q_logic__: { a_NO_logic: "on", }, },
+		},
+	};
 	
 	db.q_language__ = { 
 		choose_yes: true,
@@ -87,9 +95,17 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_logic__: { q1_2__NO_logic: "on", }, },
+			c1: { q_logic__: { a_NO_logic: "on", }, },
 		},
 	};	
+	
+	db.o_language_comm__ = { 
+		context: ["ctx_general", "ctx_logic", "ctx_language"],
+		htm_stm: "o_language_comm",
+		activated_if: {
+			c1: { q_language__: { a_simple_NO: "on", }, },
+		},
+	};
 	
 	db.q_business__ = { 
 		choose_yes: true,
@@ -101,9 +117,17 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_logic__: { q1_2__NO_logic: "on", }, },
+			c1: { q_logic__: { a_NO_logic: "on", }, },
 		},
 	};	
+	
+	db.o_business_comm__ = { 
+		context: ["ctx_general", "ctx_logic", "ctx_business"],
+		htm_stm: "o_business_comm",
+		activated_if: {
+			c1: { q_business__: { a_simple_NO: "on", }, },
+		},
+	};
 	
 	db.q_technology__ = { 
 		choose_yes: true,
@@ -115,9 +139,17 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_logic__: { q1_2__NO_logic: "on", }, },
+			c1: { q_logic__: { a_NO_logic: "on", }, },
 		},
 	};	
+	
+	db.o_technology_comm__ = { 
+		context: ["ctx_general", "ctx_logic", "ctx_technology"],
+		htm_stm: "o_technology_comm",
+		activated_if: {
+			c1: { q_technology__: { a_simple_NO: "on", }, },
+		},
+	};
 	
 	db.q_evidence__ = { 
 		choose_yes: true,
@@ -129,6 +161,14 @@ export function init_exam_database(){
 			q_NO_evidence: { img_pos: lft, },
 		},
 	};	
+	
+	db.o_evidence_comm__ = { 
+		context: ["ctx_general", "ctx_evidence"],
+		htm_stm: "o_evidence_comm",
+		activated_if: {
+			c1: { q_evidence__: { q_NO_evidence: "on", }, },
+		},
+	};
 	
 	db.q_law__ = { 
 		choose_yes: true,
@@ -144,6 +184,14 @@ export function init_exam_database(){
 		},
 	};	
 	
+	db.o_law_comm__ = { 
+		context: ["ctx_general", "ctx_evidence", "ctx_law"],
+		htm_stm: "o_law_comm",
+		activated_if: {
+			c1: { q_law__: { a_simple_NO: "on", }, },
+		},
+	};
+	
 	db.q_justice__ = { 
 		choose_yes: true,
 		context: ["ctx_general", "ctx_evidence", "ctx_law", "ctx_justice"],
@@ -157,6 +205,14 @@ export function init_exam_database(){
 			c1: { q_law__: { a_simple_NO: "on", }, },
 		},
 	};	
+	
+	db.o_justice_comm__ = { 
+		context: ["ctx_general", "ctx_evidence", "ctx_law", "ctx_justice"],
+		htm_stm: "o_justice_comm",
+		activated_if: {
+			c1: { q_justice__: { a_simple_NO: "on", }, },
+		},
+	};
 	
 	db.q_contracts__ = { 
 		choose_yes: true,
@@ -172,6 +228,14 @@ export function init_exam_database(){
 		},
 	};	
 	
+	db.o_contracts_comm__ = { 
+		context: ["ctx_general", "ctx_evidence", "ctx_contracts"],
+		htm_stm: "o_contract_comm",
+		activated_if: {
+			c1: { q_contracts__: { a_simple_NO: "on", }, },
+		},
+	};
+	
 	db.q_technology2__ = { 
 		choose_yes: true,
 		context: ["ctx_general", "ctx_evidence", "ctx_technology2"],
@@ -186,6 +250,14 @@ export function init_exam_database(){
 		},
 	};	
 	
+	db.o_technology2_comm__ = { 
+		context: ["ctx_general", "ctx_logic", "ctx_technology"],
+		htm_stm: "o_technology2_comm",
+		activated_if: {
+			c1: { q_technology2__: { a_simple_NO: "on", }, },
+		},
+	};
+	
 	db.q_evolution__ = { 
 		choose_yes: true,
 		context: ["ctx_general", "ctx_evolution"],
@@ -199,7 +271,7 @@ export function init_exam_database(){
 	
 	db.q_car_req_creativity__ = { 
 		choose_yes: true,
-		context: ["ctx_requires_creativity"],
+		context: ["ctx_requires_creativity", "ctx_car_req_creativity"],
 		htm_stm: "q_requires_creativity",
 		img_href: proy_img_dir + "car.webp", 
 		answers: {
@@ -208,9 +280,37 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q_car_by_ape__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity", "ctx_car_req_creativity"],
+		htm_stm: "q_made_by_ape",
+		img_href: proy_img_dir + "ape_and_car.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_car_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};
+	
+	db.q_evidence_car_by_ape__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity", "ctx_car_req_creativity"],
+		htm_stm: "q_evidence_made_by_ape",
+		img_href: proy_img_dir + "evidence_ape_car.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_car_by_ape__: { a_simple_YES: "on", }, },
+		},
+	};
+
 	db.q_knife_req_creativity__ = { 
 		choose_yes: true,
-		context: ["ctx_requires_creativity"],
+		context: ["ctx_requires_creativity", "ctx_knife_req_creativity", ],
 		htm_stm: "q_requires_creativity",
 		img_href: proy_img_dir + "knife.webp", 
 		answers: {
@@ -219,21 +319,37 @@ export function init_exam_database(){
 		},
 	};
 	
-	/*
-	db.q_phone_req_creativity__ = { 
+	db.q_knife_by_ape__ = { 
 		choose_yes: true,
-		context: ["ctx_requires_creativity"],
-		htm_stm: "q_requires_creativity",
-		img_href: proy_img_dir + "phone.webp", 
+		context: ["ctx_requires_creativity", "ctx_knife_req_creativity", ],
+		htm_stm: "q_made_by_ape",
+		img_href: proy_img_dir + "ape_and_knife.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
 		},
-	};*/
+		activated_if: {
+			c1: { q_knife_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};
 	
+	db.q_evidence_knife_by_ape__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity", "ctx_knife_req_creativity"],
+		htm_stm: "q_evidence_made_by_ape",
+		img_href: proy_img_dir + "evidence_ape_knife.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_knife_by_ape__: { a_simple_YES: "on", }, },
+		},
+	};
+
 	db.q_clock_req_creativity__ = { 
 		choose_yes: true,
-		context: ["ctx_requires_creativity"],
+		context: ["ctx_requires_creativity", "ctx_clock_req_creativity", ],
 		htm_stm: "q_requires_creativity",
 		img_href: proy_img_dir + "clock.webp", 
 		answers: {
@@ -242,6 +358,122 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q_clock_by_ape__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity", "ctx_clock_req_creativity", ],
+		htm_stm: "q_made_by_ape",
+		img_href: proy_img_dir + "ape_and_clock.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_clock_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};
+	
+	db.q_evidence_clock_by_ape__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity", "ctx_clock_req_creativity"],
+		htm_stm: "q_evidence_made_by_ape",
+		img_href: proy_img_dir + "evidence_ape_clock.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_clock_by_ape__: { a_simple_YES: "on", }, },
+		},
+	};
+
+	db.q_phone_req_creativity__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity", "ctx_phone_req_creativity", ],
+		htm_stm: "q_requires_creativity",
+		img_href: proy_img_dir + "phone.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_car_req_creativity__: { a_simple_NO: "on", }, },
+			c2: { q_knife_req_creativity__: { a_simple_NO: "on", }, },
+			c3: { q_clock_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};
+	
+	db.q_phone_by_ape__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity", "ctx_phone_req_creativity", ],
+		htm_stm: "q_made_by_ape",
+		img_href: proy_img_dir + "ape_and_phone.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_phone_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};
+	
+	db.q_evidence_phone_by_ape__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity", "ctx_phone_req_creativity"],
+		htm_stm: "q_evidence_made_by_ape",
+		img_href: proy_img_dir + "evidence_ape_phone.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_phone_by_ape__: { a_simple_YES: "on", }, },
+		},
+	};
+
+	db.q_laptop_req_creativity__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity", "ctx_laptop_req_creativity", ],
+		htm_stm: "q_requires_creativity",
+		img_href: proy_img_dir + "laptop.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_car_req_creativity__: { a_simple_NO: "on", }, },
+			c2: { q_knife_req_creativity__: { a_simple_NO: "on", }, },
+			c3: { q_clock_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};
+	
+	db.q_laptop_by_ape__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity", "ctx_laptop_req_creativity", ],
+		htm_stm: "q_made_by_ape",
+		img_href: proy_img_dir + "ape_and_laptop.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_laptop_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};
+	
+	db.q_evidence_laptop_by_ape__ = { 
+		choose_yes: true,
+		context: ["ctx_requires_creativity", "ctx_laptop_req_creativity"],
+		htm_stm: "q_evidence_made_by_ape",
+		img_href: proy_img_dir + "evidence_ape_laptop.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_laptop_by_ape__: { a_simple_YES: "on", }, },
+		},
+	};
+
 	db.q_building_vs_knife_harder_to_make__ = { 
 		choose_more: true,
 		context: ["ctx_harder_to_make"],

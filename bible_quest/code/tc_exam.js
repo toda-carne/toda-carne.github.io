@@ -158,8 +158,6 @@ function scroll_to_top(dv_elem) {
 	const dv_content = document.getElementById("id_exam_content");
 	const rect2 = dv_content.getBoundingClientRect();
 	
-	//console.log("scroll_to_top:");
-	//console.log(dv_elem);
 	const dist = (rect.top - rect2.top);
 	dv_content.scrollBy(0, dist);
 }
@@ -250,8 +248,6 @@ function add_question(qid){
 
 	init_answers(qid);
 
-	//scroll_to_top(dv_quest);
-	
 	return dv_quest;
 }
 
@@ -363,19 +359,12 @@ function load_image(dv_scroll, all_img, id_img, src_img){
 		all_img[id_img] = htm_img;
 		htm_img.classList.add("exam", "is_answ_img");
 		htm_img.src = src_img;
-		/*if (htm_img.complete) {
-			scroll_to_first_not_answered();
-			//scroll_to_top(dv_scroll);
-		} else {*/
 		if (! htm_img.complete) {
 			htm_img.addEventListener('load', (ev1) => {
-				//console.log('ON LOAD of');
-				//console.log(htm_img);
 				scroll_to_first_not_answered();
-				//scroll_to_top(dv_scroll);
 			});
 			htm_img.addEventListener('error', function() {
-				console.log("Could not run scroll_to_top on load image");
+				console.log("Could not run scroll_to_first_not_answered on load image");
 			})
 		}
 	}
@@ -667,8 +656,6 @@ function init_answers(qid){
 	
 	set_anchors_target(dv_quest);
 	
-	//scroll_to_first_not_answered();
-	//scroll_to_top(dv_quest);
 }
 
 function invert_answers(qid){
@@ -808,7 +795,6 @@ function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
 				scroll_to_top(dv_quest);
 			});
 			
-			//scroll_to_top(dv_answ_ed);
 			dv_answ_ed.scrollIntoView({
 				behavior: 'auto',
 				block: 'center',
@@ -1425,11 +1411,6 @@ function init_exam_buttons(){
 	
 	dv_button = document.getElementById("id_user_picture"); // this id must be the same to the id in the HTML page.
 	if(dv_button != null){ dv_button.addEventListener('click', user_login); }
-	
-	/*window.addEventListener('load', (ev1) => {
-		console.log('ON LOAD of WINDOW');
-		scroll_to_first_not_answered();
-	});*/
 	
 }
 
@@ -2150,6 +2131,7 @@ function check_if_dnf_is_sat(qid){
 			
 			const qst_to_signl = glb_poll_db[qid_signl];
 			if(qst_to_signl == null){ continue; }
+			
 			const qst_answs = qst_to_signl.answers; 
 			
 			const resps = Object.entries(resps_obj);
@@ -2162,6 +2144,13 @@ function check_if_dnf_is_sat(qid){
 					//console.log(" | qid=" + qid + " | qid_signl=" + qid_signl + " | is_act=" + is_act + " | val=" + val + " | is_shown=" + is_shown);
 				} else {				
 					if(qst_answs == null){ continue; } // if (anid == "shown") of an observation it CAN be null
+					
+					// check if qst_to_signl has_answ
+					if(qst_to_signl.has_answ == null){ 
+						all_act_2 = false;
+						break; 
+					}
+					
 					const an_answ = qst_answs[anid];
 					if(an_answ == null){ continue; }
 					
@@ -2272,6 +2261,8 @@ function get_first_open_context(){
 }
 
 function add_pending(qid){
+	console.log("called add_pending(" + qid + ")"); 
+	
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return false; }
 	if(! is_question(quest)){ return false; }
@@ -2288,7 +2279,7 @@ function add_pending(qid){
 	return true;
 }
 
-function undo_pending(qid){
+function undo_pending(qid){	
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return false; }
 	if(! is_question(quest)){ return false; }
@@ -2298,6 +2289,8 @@ function undo_pending(qid){
 	if(is_shown || quest.in_pending){
 		return false;
 	}
+	
+	console.log("called undo_pending(" + qid + ")"); 
 	
 	const pending = get_context(quest.context, true);
 	pending.unshift(qid);
@@ -2309,11 +2302,14 @@ function get_pending(){
 	//const pending = glb_poll_db.all_pending;
 	const pending = get_first_context();
 	if(pending.length == 0){
+		console.log("get_pending() returned null"); 
 		return null;
 	}
 	const qid = pending.shift();
 	const quest = glb_poll_db[qid];
 	quest.in_pending = false;
+
+	console.log("get_pending() returned qid=" + qid); 
 	return qid;
 }
 
@@ -2528,9 +2524,6 @@ function show_observation(qid, all_to_act){
 		});
 	}
 
-	//scroll_to_first_not_answered();
-	//scroll_to_top(dv_quest);
-	
 	return dv_quest;
 }
 
