@@ -310,7 +310,9 @@ function get_first_not_answered(){
 		if(qid == null){ continue; }
 		quest = glb_poll_db[qid];
 		if(quest == null){ continue; }
-		if(is_question(quest) && (quest.has_answ == null)){
+		const is_not_answd = (is_question(quest) && (quest.has_answ == null));
+		const is_not_watched = (is_observation(quest) && ! quest.watched);
+		if(is_not_answd || is_not_watched){
 			break;
 		}
 	}
@@ -811,7 +813,7 @@ function end_question(qid){
 	remove_curr_support_ed(true);
 	
 	const all_to_act = send_all_signals(qid);
-	activate_signals(all_to_act);
+	activate_signals(qid, all_to_act);
 	ask_next();	
 }
 
@@ -893,11 +895,15 @@ function get_new_dv_under(dv_pop_up, id_dv){
 			return null;
 		}
 	}
+	/*
 	if(dv_pop_up.nextSibling == null){
 		dv_options = dv_parent.appendChild(document.createElement("div"));
 	} else {
 		dv_options = dv_parent.insertBefore(document.createElement("div"), dv_pop_up.nextSibling);
-	}	
+	}*/	
+	dv_options = document.createElement("div");
+	dv_pop_up.after(dv_options);
+	
 	dv_options.id = id_dv;
 	return dv_options;
 }
@@ -1881,7 +1887,7 @@ function display_exam_load_object(ld_obj){
 			continue; // it is not a qid
 		}
 		if(is_observation(quest)){
-			show_observation(qid, null);
+			show_observation(qid, null, null);
 			continue;
 		}
 		
@@ -2369,13 +2375,13 @@ function send_all_signals(qid){
 	return all_to_act;
 }
 
-function activate_signals(all_to_act){
+function activate_signals(qid_cllr, all_to_act){
 	for(const qid of all_to_act.old_observ){
 		console.log("Updating OLD observation qid=" + qid);
 		update_observation(qid, all_to_act);
 	}
 	for(const qid of all_to_act.new_observ){
-		show_observation(qid, all_to_act);
+		show_observation(qid, all_to_act, qid_cllr);
 	}
 	for(const qid of all_to_act.pends){
 		add_pending(qid);
@@ -2451,7 +2457,7 @@ function undo_last_quest(){
 
 // CODE_FOR OBSERVATION DISPLAY
 
-function show_observation(qid, all_to_act){
+function show_observation(qid, all_to_act, qid_cllr){
 	const quest = glb_poll_db[qid];
 	if(quest == null){
 		console.log("Could not find observation " + qid + " in questions db.");
@@ -2470,10 +2476,18 @@ function show_observation(qid, all_to_act){
 	//console.log("ADDING observation " + qid + " to page.");
 	
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
-	dv_quest = dv_all_quest.appendChild(document.createElement("div"));
+	dv_quest = document.createElement("div");
 	dv_quest.id = qid;
 	dv_quest.classList.add("exam");
 	dv_quest.classList.add("is_observ");
+	
+	let dv_cquest = null;
+	if(qid_cllr != null){ dv_cquest = document.getElementById(qid_cllr); }
+	if(dv_cquest != null){
+		dv_cquest.after(dv_quest);
+	} else {
+		dv_all_quest.appendChild(dv_quest);
+	}
 	
 	quest.pos_page = INVALID_PAGE_POS;
 	
@@ -2648,7 +2662,27 @@ function update_observation(qid, all_to_act){
 	const sufix_qhrefs = get_qhrefs_of(incos_qids, null);
 	sp_qrefs_observ.innerHTML = "";
 	if(! quest.is_positive){ 
-		sp_qrefs_observ.innerHTML = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs;
+		quest.watched = false;
+		sp_qrefs_observ.innerHTML = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs + "<br>";
+
+		const dv_understood = sp_qrefs_observ.appendChild(document.createElement("div"));
+		dv_understood.appendChild(document.createElement("br"));
+		
+		const dv_ok = document.createElement("div");
+		dv_ok.classList.add("exam");
+		dv_ok.classList.add("is_block");
+		dv_ok.classList.add("is_button");
+		dv_ok.innerHTML = glb_curr_lang.msg_understood;
+		dv_understood.appendChild(dv_ok);
+		
+		dv_ok.addEventListener('click', function() {
+			quest.watched = true;
+			dv_understood.remove();
+			scroll_to_first_not_answered();
+			return;
+		});		
+		
+		dv_understood.appendChild(document.createElement("br"));
 	}
 	
 	set_anchors_target(dv_quest);

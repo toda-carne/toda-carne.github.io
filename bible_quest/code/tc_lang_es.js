@@ -100,6 +100,7 @@ function init_es_basic_msg(){
 	obj.msg_invert_ans = "INVERTIR RESPUESTA";
 	obj.msg_end_ans = "TERMINAR RESPUESTA";
 	obj.msg_edit_ans = "CAMBIAR RESPUESTA";
+	obj.msg_understood = "ENTENDIDO";
 	
 	obj.msg_undo = "<i class='has_icons icon-undo'></i> Ups!";	
 

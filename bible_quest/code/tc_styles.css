@@ -644,8 +644,20 @@ color: white;
 	color: black;
 }
 
+.exam.has_margin_top {
+	margin-top: 1em;
+}
+
 .exam.has_margin_bot {
 	margin-bottom: 1em;
+}
+
+.exam.space_top {
+	margin-top: 3em;
+}
+
+.exam.space_bot {
+	margin-bottom: 3em;
 }
 
 .exam.is_button {

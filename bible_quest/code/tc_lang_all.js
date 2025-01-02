@@ -231,6 +231,7 @@ function init_en_basic_msg(){
 	obj.msg_invert_ans = "INVERT ANSWER";
 	obj.msg_end_ans = "END ANSWER";
 	obj.msg_edit_ans = "CHANGE ANSWER";
+	obj.msg_understood = "OK";
 	
 	obj.msg_undo = "<i class='has_icons icon-undo'></i> Ups!";	
 	
