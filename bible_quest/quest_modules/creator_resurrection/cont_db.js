@@ -66,6 +66,17 @@ export function init_exam_database(){
 		},
 	};	
 	
+	db.q_evolution__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_evolution"],
+		htm_stm: "q1_3__evolution",
+		img_href: proy_img_dir + "evolution.webp", 
+		answers: {
+			q1_3__YES_evolution: { img_pos: rgt, },
+			q1_3__NO_evolution: { img_pos: lft, },
+		},
+	};
+	
 	db.q_logic__ = { 
 		choose_yes: true,
 		context: ["ctx_general", "ctx_logic"],
@@ -255,17 +266,6 @@ export function init_exam_database(){
 		htm_stm: "o_technology2_comm",
 		activated_if: {
 			c1: { q_technology2__: { a_simple_NO: "on", }, },
-		},
-	};
-	
-	db.q_evolution__ = { 
-		choose_yes: true,
-		context: ["ctx_general", "ctx_evolution"],
-		htm_stm: "q1_3__evolution",
-		img_href: proy_img_dir + "evolution.webp", 
-		answers: {
-			q1_3__YES_evolution: { img_pos: rgt, },
-			q1_3__NO_evolution: { img_pos: lft, },
 		},
 	};
 	
@@ -476,7 +476,7 @@ export function init_exam_database(){
 
 	db.q_building_vs_knife_harder_to_make__ = { 
 		choose_more: true,
-		context: ["ctx_harder_to_make"],
+		context: ["ctx_harder_to_make", "ctx_building_knife", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
 			a_knife: { img_pos: rgt, img_href: proy_img_dir + "knife.webp", },
@@ -484,13 +484,65 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q_building_vs_knife_more_complexity__ = { 
+		choose_more: true,
+		context: ["ctx_harder_to_make", "ctx_building_knife", ],
+		htm_stm: "q_more_complexity",
+		answers: {
+			a_knife: { img_pos: rgt, img_href: proy_img_dir + "knife_complexity.webp", },
+			a_building: { img_pos: lft, img_href: proy_img_dir + "building_complexity.webp", },
+		},
+		activated_if: {
+			c1: { q_building_vs_knife_harder_to_make__: { a_knife: "on", }, },
+		},
+	};
+	
+	db.q_building_vs_knife_more_planning__ = { 
+		choose_more: true,
+		context: ["ctx_harder_to_make", "ctx_building_knife", ],
+		htm_stm: "q_more_planning",
+		answers: {
+			a_knife: { img_pos: rgt, img_href: proy_img_dir + "knife_design.webp", },
+			a_building: { img_pos: lft, img_href: proy_img_dir + "building_design.webp", },
+		},
+		activated_if: {
+			c1: { q_building_vs_knife_harder_to_make__: { a_knife: "on", }, },
+		},
+	};
+	
 	db.q_car_vs_lamp_harder_to_make__ = { 
 		choose_more: true,
-		context: ["ctx_harder_to_make"],
+		context: ["ctx_harder_to_make", "ctx_lamp_car", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
 			a_car: { img_pos: rgt, img_href: proy_img_dir + "car.webp", },
 			a_lamp: { img_pos: lft, img_href: proy_img_dir + "lamp.webp", },
+		},
+	};
+	
+	db.q_lamp_vs_car_more_complexity__ = { 
+		choose_more: true,
+		context: ["ctx_harder_to_make", "ctx_lamp_car", ],
+		htm_stm: "q_more_complexity",
+		answers: {
+			a_car: { img_pos: rgt, img_href: proy_img_dir + "car_complexity.webp", },
+			a_lamp: { img_pos: lft, img_href: proy_img_dir + "lamp_complexity.webp", },
+		},
+		activated_if: {
+			c1: { q_car_vs_lamp_harder_to_make__: { a_lamp: "on", }, },
+		},
+	};
+	
+	db.q_lamp_vs_car_more_planning__ = { 
+		choose_more: true,
+		context: ["ctx_harder_to_make", "ctx_lamp_car", ],
+		htm_stm: "q_more_planning",
+		answers: {
+			a_car: { img_pos: rgt, img_href: proy_img_dir + "car_design.webp", },
+			a_lamp: { img_pos: lft, img_href: proy_img_dir + "lamp_design.webp", },
+		},
+		activated_if: {
+			c1: { q_car_vs_lamp_harder_to_make__: { a_lamp: "on", }, },
 		},
 	};
 	
@@ -512,6 +564,32 @@ export function init_exam_database(){
 		answers: {
 			a_clock: { img_pos: rgt, img_href: proy_img_dir + "clock.webp", },
 			a_air_purifier: { img_pos: lft, img_href: proy_img_dir + "air_purifier.webp", },
+		},
+	};
+	
+	db.q_clock_vs_air_purifier_more_complexity__ = { 
+		choose_more: true,
+		context: ["ctx_harder_to_make", "ctx_clock_air_purifier", ],
+		htm_stm: "q_more_complexity",
+		answers: {
+			a_air_purifier: { img_pos: rgt, img_href: proy_img_dir + "air_purifier_complexity.webp", },
+			a_clock: { img_pos: lft, img_href: proy_img_dir + "clock_complexity.webp", },
+		},
+		activated_if: {
+			c1: { q_clock_vs_air_purifier_harder_to_make__: { a_clock: "on", }, },
+		},
+	};
+	
+	db.q_clock_vs_air_purifier_more_planning__ = { 
+		choose_more: true,
+		context: ["ctx_harder_to_make", "ctx_clock_air_purifier", ],
+		htm_stm: "q_more_planning",
+		answers: {
+			a_air_purifier: { img_pos: rgt, img_href: proy_img_dir + "air_purifier_design.webp", },
+			a_clock: { img_pos: lft, img_href: proy_img_dir + "clock_design.webp", },
+		},
+		activated_if: {
+			c1: { q_clock_vs_air_purifier_harder_to_make__: { a_clock: "on", }, },
 		},
 	};
 	
