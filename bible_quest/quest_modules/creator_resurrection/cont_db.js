@@ -559,7 +559,7 @@ export function init_exam_database(){
 	
 	db.q_clock_vs_air_purifier_harder_to_make__ = { 
 		choose_more: true,
-		context: ["ctx_harder_to_make"],
+		context: ["ctx_harder_to_make", "ctx_clock_air_purifier", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
 			a_clock: { img_pos: rgt, img_href: proy_img_dir + "clock.webp", },
@@ -595,7 +595,7 @@ export function init_exam_database(){
 	
 	db.q_foot_vs_car_wheel_harder_to_make__ = { 
 		choose_more: true,
-		context: ["ctx_harder_to_make"],
+		context: ["ctx_harder_to_make", "ctx_foot_vs_car", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
 			a_car_wheel: { img_pos: rgt, img_href: proy_img_dir + "car_wheel.webp", },
@@ -603,9 +603,37 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q_make_foot__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_foot_vs_car", ],
+		htm_stm: "q_make_foot",
+		img_href: proy_img_dir + "make_foot.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_foot_vs_car_wheel_harder_to_make__: { a_car_wheel: "on", }, },
+		},
+	};
+	
+	db.q_why_amputees__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_foot_vs_car", ],
+		htm_stm: "q_why_amputees",
+		img_href: proy_img_dir + "amputee.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_make_foot__: { a_simple_YES: "on", }, },
+		},
+	};
+	
 	db.q_lung_vs_air_purifier_harder_to_make__ = { 
 		choose_more: true,
-		context: ["ctx_harder_to_make"],
+		context: ["ctx_harder_to_make", "ctx_lung_vs_air_purifier", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
 			a_air_purifier: { img_pos: rgt, img_href: proy_img_dir + "air_purifier.webp", },
@@ -613,9 +641,37 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q_make_lung__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_lung_vs_air_purifier", ],
+		htm_stm: "q_make_lung",
+		img_href: proy_img_dir + "make_lungs.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_lung_vs_air_purifier_harder_to_make__: { a_air_purifier: "on", }, },
+		},
+	};
+	
+	db.q_why_one_lung__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_lung_vs_air_purifier", ],
+		htm_stm: "q_why_one_lung",
+		img_href: proy_img_dir + "one_lung.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_make_lung__: { a_simple_YES: "on", }, },
+		},
+	};
+	
 	db.q_human_body_vs_building_harder_to_make__ = { 
 		choose_more: true,
-		context: ["ctx_harder_to_make"],
+		context: ["ctx_harder_to_make", "ctx_body_vs_building", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
 			a_building: { img_pos: rgt, img_href: proy_img_dir + "building.webp", },
@@ -623,6 +679,34 @@ export function init_exam_database(){
 		},
 	};
 
+	db.q_make_body__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_body_vs_building", ],
+		htm_stm: "q_make_body",
+		img_href: proy_img_dir + "make_body.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_human_body_vs_building_harder_to_make__: { a_building: "on", }, },
+		},
+	};
+	
+	db.q_why_die__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_body_vs_building", ],
+		htm_stm: "q_why_die",
+		img_href: proy_img_dir + "tomb.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_make_body__: { a_simple_YES: "on", }, },
+		},
+	};
+	
 	db.q_foot_req_creativity__ = { 
 		choose_yes: true,
 		context: ["ctx_biology_req_creativity"],

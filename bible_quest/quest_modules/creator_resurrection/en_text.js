@@ -114,6 +114,14 @@ export function init_en_poll_txt(){
 	lg.a_human_lung = `A human lung`;
 	
 	lg.a_human_body = `A human body`;
+
+	lg.q_make_foot = `<span class='big_font bold_font'>Can we <a href='${hb.href_creator_tit}'>make</a> you a foot from your DNA?</span>`;
+	lg.q_make_lung = `<span class='big_font bold_font'>Can we <a href='${hb.href_creator_tit}'>make</a> you a lung from your DNA?</span>`;
+	lg.q_make_body = `<span class='big_font bold_font'>Can we <a href='${hb.href_creator_tit}'>make</a> you a body from your DNA?</span>`;
+
+	lg.q_why_amputees = `<span class='big_font bold_font'>Have you seen an amputee?</span>`;
+	lg.q_why_one_lung = `<span class='big_font bold_font'>Are there people breathing on just one lung?</span>`;
+	lg.q_why_die = `<span class='big_font bold_font'>Are you going to die?</span>`;
 	
 	lg.q_bilology_req_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_creator}'>creativity</a>?</span>`;
 
