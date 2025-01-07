@@ -2437,8 +2437,7 @@ function undo_last_quest(){
 		quest.pos_page = null;
 		
 		const dv_quest = document.getElementById(qid);
-		if(dv_quest == null){ continue; }
-		dv_quest.remove();
+		if(dv_quest != null){ dv_quest.remove(); }
 		
 		const undo_ok = undo_pending(qid);
 		if(undo_ok){ num_undo++; }
@@ -2490,6 +2489,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 	}
 	
 	quest.pos_page = INVALID_PAGE_POS;
+	quest.watched = null;
 	
 	const dv_stm = dv_quest.appendChild(document.createElement("div"));
 	dv_stm.classList.add("exam");
@@ -2645,7 +2645,8 @@ function update_observation(qid, all_to_act){
 	if(dv_quest == null){ return; }
 	
 	const incos_qids = get_sat_conj_qids(qid);
-	if(incos_qids == null){
+	if(incos_qids == null){		
+		quest.watched = null;
 		console.log("REMOVING ABSERVATION with qid=" + qid);
 		dv_quest.remove(); 
 	
@@ -2662,27 +2663,29 @@ function update_observation(qid, all_to_act){
 	const sufix_qhrefs = get_qhrefs_of(incos_qids, null);
 	sp_qrefs_observ.innerHTML = "";
 	if(! quest.is_positive){ 
-		quest.watched = false;
 		sp_qrefs_observ.innerHTML = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs + "<br>";
 
-		const dv_understood = sp_qrefs_observ.appendChild(document.createElement("div"));
-		dv_understood.appendChild(document.createElement("br"));
-		
-		const dv_ok = document.createElement("div");
-		dv_ok.classList.add("exam");
-		dv_ok.classList.add("is_block");
-		dv_ok.classList.add("is_button");
-		dv_ok.innerHTML = glb_curr_lang.msg_understood;
-		dv_understood.appendChild(dv_ok);
-		
-		dv_ok.addEventListener('click', function() {
-			quest.watched = true;
-			dv_understood.remove();
-			scroll_to_first_not_answered();
-			return;
-		});		
-		
-		dv_understood.appendChild(document.createElement("br"));
+		if(quest.watched == null){
+			quest.watched = false;
+			const dv_understood = sp_qrefs_observ.appendChild(document.createElement("div"));
+			dv_understood.appendChild(document.createElement("br"));
+			
+			const dv_ok = document.createElement("div");
+			dv_ok.classList.add("exam");
+			dv_ok.classList.add("is_block");
+			dv_ok.classList.add("is_button");
+			dv_ok.innerHTML = glb_curr_lang.msg_understood;
+			dv_understood.appendChild(dv_ok);
+			
+			dv_ok.addEventListener('click', function() {
+				quest.watched = true;
+				dv_understood.remove();
+				scroll_to_first_not_answered();
+				return;
+			});		
+			
+			dv_understood.appendChild(document.createElement("br"));
+		};
 	}
 	
 	set_anchors_target(dv_quest);

@@ -146,7 +146,7 @@ export function init_en_poll_txt(){
 
 	lg.q_bilology_req_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_creator}'>creativity</a>?</span>`;
 	
-	lg.o_biology_req_creativity_comm = `Logic and evidence show that biological machinery is much harder to make than machinery made by humans. If we are going to call ourselves itelligent designers with technical creatitivy for the machinery we make, we have to recognize that biological machinery also requires a itelligent designer with technical creativiy.`;
+	lg.o_biology_req_creativity_comm = `Logic and evidence show that biological machinery is much harder to make than machinery made by humans. If we are going to call ourselves itelligent designers with technical creatitivy for the machinery we make, we have to recognize that biological machinery also requires an intelligent designer with technical creativiy much greater than ours.`;
 
 	lg.t_good_job = `<span class='has_left_padding very_big_font bold_font'>Good job !</span>`;
 	lg.q_participate = `<span class='big_font bold_font'>Participate?</span>`;
