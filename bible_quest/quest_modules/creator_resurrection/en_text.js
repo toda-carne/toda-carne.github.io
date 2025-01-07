@@ -65,8 +65,8 @@ export function init_en_poll_txt(){
 	lg.o_technology_comm = `Technology uses logic. Technology ${logic_needed}`;
 	
 	lg.q_YES_NO_evidence = `<span class='big_font bold_font'><a href='${hb.href_evidence}'>Evidence</a>?</span>`;
-	lg.q_YES_evidence = "YES evidence";
-	lg.q_NO_evidence = "NO evidence";
+	lg.a_YES_evidence = "YES evidence";
+	lg.a_NO_evidence = "NO evidence";
 
 	const evidence_needed = ` is needed in every day life. It is needed to gain trust. The question refers to that fact. You can change your answer by clicking on it or by going back with the 'Ups' button`;
 
@@ -84,11 +84,22 @@ export function init_en_poll_txt(){
 	lg.q1_3__evolution = `<span class='big_font bold_font'><a href='${hb.href_factories}'>Evolution</a>?</span>`;
 	lg.q1_3__YES_evolution = "YES evolution";
 	lg.q1_3__NO_evolution = "NO evolution";
+
+	lg.q_millions_of_years = `<span class='big_font bold_font'>Millions of <a href='${hb.href_factories}'>years</a>?</span>`;
 	
 	lg.q_requires_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_tch_crea}'>creativity</a>?</span>`;
 	
 	lg.q_made_by_ape = "<span class='big_font bold_font'>Can an ape make it?</span>";
 	lg.q_evidence_made_by_ape = "<span class='big_font bold_font'>Is there evidence that an ape can make it?</span>";
+	
+	const creativity_comm = `Logic and evidence show that one reason humans call themselves itelligent, designers and creators is the technology they make.` 
+
+	lg.o_car_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a car.</span>`;
+	lg.o_knife_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a knife.</span>`;
+	lg.o_clock_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a clock.</span>`;
+	lg.o_phone_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a phone.</span>`;
+	lg.o_laptop_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a laptop.</span>`;
+	lg.o_laptop_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a laptop.</span>`;
 
 	lg.q_harder_to_make = `<span class='big_font bold_font'>Harder to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
 
@@ -122,8 +133,20 @@ export function init_en_poll_txt(){
 	lg.q_why_amputees = `<span class='big_font bold_font'>Have you seen an amputee?</span>`;
 	lg.q_why_one_lung = `<span class='big_font bold_font'>Are there people breathing on just one lung?</span>`;
 	lg.q_why_die = `<span class='big_font bold_font'>Are you going to die?</span>`;
+
+	lg.o_biology_is_harder_comm = `Logic and evidence show that biological machinery is much harder to make than machinery made by humans. That is why we cannot reprodce biological machinery at will.`;
+
+	lg.q_phone_mitosis = `<span class='big_font bold_font'>Can we make phones that split in two identical ones?</span>`;
+	lg.q_truck_baby = `<span class='big_font bold_font'>Can we make trucks that have baby trucks?</span>`;
+	lg.q_red_cell = `<span class='big_font bold_font'>Can we make a red cell?</span>`;
+	lg.q_human_egg = `<span class='big_font bold_font'>Can we make a human egg?</span>`;
+	lg.q_liver = `<span class='big_font bold_font'>Can we make a human liver?</span>`;
 	
+	lg.o_we_cannot_simulate_biology_comm = `Logic and evidence show that machinery made by humans cannot simulate biological machinery behaviour because it is much harder to make.`;
+
 	lg.q_bilology_req_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_creator}'>creativity</a>?</span>`;
+	
+	lg.o_biology_req_creativity_comm = `Logic and evidence show that biological machinery is much harder to make than machinery made by humans. If we are going to call ourselves itelligent designers with technical creatitivy for the machinery we make, we have to recognize that biological machinery also requires a itelligent designer with technical creativiy.`;
 
 	lg.t_good_job = `<span class='has_left_padding very_big_font bold_font'>Good job !</span>`;
 	lg.q_participate = `<span class='big_font bold_font'>Participate?</span>`;

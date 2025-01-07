@@ -76,7 +76,21 @@ export function init_exam_database(){
 			q1_3__NO_evolution: { img_pos: lft, },
 		},
 	};
-	
+
+	db.q_millions_of_years__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_evolution"],
+		htm_stm: "q_millions_of_years",
+		img_href: proy_img_dir + "solar_cycle.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_evolution__: { q1_3__YES_evolution: "on", }, },
+		},
+	};
+
 	db.q_logic__ = { 
 		choose_yes: true,
 		context: ["ctx_general", "ctx_logic"],
@@ -168,8 +182,8 @@ export function init_exam_database(){
 		htm_stm: "q_YES_NO_evidence",
 		img_href: proy_img_dir + "senses.webp", 
 		answers: {
-			q_YES_evidence: { img_pos: rgt, },
-			q_NO_evidence: { img_pos: lft, },
+			a_YES_evidence: { img_pos: rgt, },
+			a_NO_evidence: { img_pos: lft, },
 		},
 	};	
 	
@@ -177,7 +191,7 @@ export function init_exam_database(){
 		context: ["ctx_general", "ctx_evidence"],
 		htm_stm: "o_evidence_comm",
 		activated_if: {
-			c1: { q_evidence__: { q_NO_evidence: "on", }, },
+			c1: { q_evidence__: { a_NO_evidence: "on", }, },
 		},
 	};
 	
@@ -191,7 +205,7 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_evidence__: { q_NO_evidence: "on", }, },
+			c1: { q_evidence__: { a_NO_evidence: "on", }, },
 		},
 	};	
 	
@@ -235,7 +249,7 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_evidence__: { q_NO_evidence: "on", }, },
+			c1: { q_evidence__: { a_NO_evidence: "on", }, },
 		},
 	};	
 	
@@ -257,7 +271,7 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_evidence__: { q_NO_evidence: "on", }, },
+			c1: { q_evidence__: { a_NO_evidence: "on", }, },
 		},
 	};	
 	
@@ -308,6 +322,14 @@ export function init_exam_database(){
 		},
 	};
 
+	db.o_car_req_creativity_comm__ = { 
+		context: ["ctx_general", "ctx_car_req_creativity"],
+		htm_stm: "o_car_req_creativity_comm",
+		activated_if: {
+			c1: { q_car_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};
+	
 	db.q_knife_req_creativity__ = { 
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_knife_req_creativity", ],
@@ -347,6 +369,14 @@ export function init_exam_database(){
 		},
 	};
 
+	db.o_knife_req_creativity_comm__ = { 
+		context: ["ctx_general", "ctx_knife_req_creativity"],
+		htm_stm: "o_knife_req_creativity_comm",
+		activated_if: {
+			c1: { q_knife_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};
+	
 	db.q_clock_req_creativity__ = { 
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_clock_req_creativity", ],
@@ -386,6 +416,14 @@ export function init_exam_database(){
 		},
 	};
 
+	db.o_clock_req_creativity_comm__ = { 
+		context: ["ctx_general", "ctx_clock_req_creativity"],
+		htm_stm: "o_clock_req_creativity_comm",
+		activated_if: {
+			c1: { q_clock_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};
+	
 	db.q_phone_req_creativity__ = { 
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_phone_req_creativity", ],
@@ -430,6 +468,14 @@ export function init_exam_database(){
 		},
 	};
 
+	/*db.o_phone_req_creativity_comm__ = { 
+		context: ["ctx_general", "ctx_phone_req_creativity"],
+		htm_stm: "o_phone_req_creativity_comm",
+		activated_if: {
+			c1: { q_phone_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};*/
+	
 	db.q_laptop_req_creativity__ = { 
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_laptop_req_creativity", ],
@@ -474,6 +520,14 @@ export function init_exam_database(){
 		},
 	};
 
+	/*db.o_laptop_req_creativity_comm__ = { 
+		context: ["ctx_general", "ctx_laptop_req_creativity"],
+		htm_stm: "o_laptop_req_creativity_comm",
+		activated_if: {
+			c1: { q_laptop_req_creativity__: { a_simple_NO: "on", }, },
+		},
+	};*/
+	
 	db.q_building_vs_knife_harder_to_make__ = { 
 		choose_more: true,
 		context: ["ctx_harder_to_make", "ctx_building_knife", ],
@@ -707,6 +761,99 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.o_biology_is_harder_comm__ = { 
+		context: ["ctx_harder_to_make", ],
+		htm_stm: "o_biology_is_harder_comm",
+		activated_if: {
+			c1: { q_foot_vs_car_wheel_harder_to_make__: { a_car_wheel: "on", }, },
+			c2: { q_lung_vs_air_purifier_harder_to_make__: { a_air_purifier: "on", }, },
+			c3: { q_human_body_vs_building_harder_to_make__: { a_building: "on", }, },
+		},
+	};
+	
+	const any_biology = {
+			c1: { q_foot_vs_car_wheel_harder_to_make__: { a_car_wheel: "on", }, },
+			c2: { q_make_foot__: { a_simple_YES: "on", }, },
+			c3: { q_lung_vs_air_purifier_harder_to_make__: { a_air_purifier: "on", }, },
+			c4: { q_make_lung__: { a_simple_YES: "on", }, },
+			c5: { q_human_body_vs_building_harder_to_make__: { a_building: "on", }, },
+			c6: { q_make_body__: { a_simple_YES: "on", }, },
+	};
+			
+	db.q_phone_mitosis__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_phone_mitosis", ],
+		htm_stm: "q_phone_mitosis",
+		img_href: proy_img_dir + "phone_mitosis.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: any_biology,
+	};
+	
+	db.q_truck_baby__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_truck_baby", ],
+		htm_stm: "q_truck_baby",
+		img_href: proy_img_dir + "truck_baby.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: any_biology,
+	};
+	
+	db.q_red_cell__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_red_cell", ],
+		htm_stm: "q_red_cell",
+		img_href: proy_img_dir + "red_cell.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: any_biology,
+	};
+	
+	db.q_human_egg__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_human_egg", ],
+		htm_stm: "q_human_egg",
+		img_href: proy_img_dir + "human_egg.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: any_biology,
+	};
+	
+	db.q_liver__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_liver", ],
+		htm_stm: "q_liver",
+		img_href: proy_img_dir + "liver.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: any_biology,
+	};
+
+
+	db.o_we_cannot_simulate_biology_comm__ = { 
+		context: ["ctx_harder_to_make", ],
+		htm_stm: "o_we_cannot_simulate_biology_comm",
+		activated_if: {
+			c1: { q_phone_mitosis__: { a_simple_YES: "on", }, },
+			c2: { q_truck_baby__: { a_simple_YES: "on", }, },
+			c3: { q_red_cell__: { a_simple_YES: "on", }, },
+			c4: { q_human_egg__: { a_simple_YES: "on", }, },
+			c5: { q_liver__: { a_simple_YES: "on", }, },
+		},
+	};
+	
+
 	db.q_foot_req_creativity__ = { 
 		choose_yes: true,
 		context: ["ctx_biology_req_creativity"],
@@ -737,6 +884,16 @@ export function init_exam_database(){
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
+		},
+	};
+	
+	db.o_biology_req_creativity_comm__ = { 
+		context: ["ctx_general", "ctx_human_body_req_creativity"],
+		htm_stm: "o_biology_req_creativity_comm",
+		activated_if: {
+			c1: { q_foot_req_creativity__: { a_simple_NO: "on", }, },
+			c2: { q_lungs_req_creativity__: { a_simple_NO: "on", }, },
+			c3: { q_human_body_req_creativity__: { a_simple_NO: "on", }, },
 		},
 	};
 	
