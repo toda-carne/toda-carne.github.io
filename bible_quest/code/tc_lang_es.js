@@ -128,8 +128,9 @@ function init_es_basic_msg(){
 	obj.msg_todacarne_no_internet = "Sin conexion a internet.";
 
 	obj.msg_change_answer = "Para adicionar respuestas click en la respuesta actual y click en CAMBIAR RESPUESTA";
-	obj.msg_change_one_answer = "Para deshacerse de esta observación tiene que cambiar una de estas respuestas: ";
-	obj.msg_get_rid_of_these_observations = "Para deshacerse de esta observación tiene que deshacerse de estas otras observaciones:";
+	obj.msg_caused_by_answers = "Esta observación se muestra por sus respuestas en las siguientes preguntas: ";
+	obj.msg_caused_by_observations = "Esta observación se muestra por causa de estas otras observaciones:";
+	obj.msg_to_get_rid = "Para desaherse de esta observacion cambie una o mas respuestas que esten causando esta observación.";
 
 	obj.msg_dispute_rclick = "Dispute con clik derecho";
 	obj.msg_dispute_hold_click = "Dispute manteniendo clik";

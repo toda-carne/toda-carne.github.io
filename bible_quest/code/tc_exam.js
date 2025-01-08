@@ -166,6 +166,10 @@ function scroll_to_top(dv_elem) {
 // CODE_FOR QUESTION DYSPLAY AND USER OPERATION
 
 function add_question(qid){
+	if(get_qid_base(qid) == null){
+		console.log("Trying to add_question with invalid qid=" + qid);
+		return null;
+	}
 	const quest = glb_poll_db[qid];
 	if(quest == null){
 		console.log("Could not find question " + qid + " in questions db.");
@@ -298,10 +302,11 @@ function get_last_quest(){
 	return quest;
 }
 
-function get_first_not_answered(){
+function get_first_not_answered(only_quest){
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
 	const all_q = dv_all_quest.childNodes;
 	let curr_idx = 0;
+	let qid_no_answ = null;
 	let quest = null;
 	while(curr_idx < all_q.length){
 		//console.log("get_curr_pos_page [1] curr_idx=" + curr_idx);
@@ -312,19 +317,20 @@ function get_first_not_answered(){
 		if(quest == null){ continue; }
 		const is_not_answd = (is_question(quest) && (quest.has_answ == null));
 		const is_not_watched = (is_observation(quest) && ! quest.watched);
-		if(is_not_answd || is_not_watched){
+		let cond = (is_not_answd || is_not_watched);
+		if(only_quest != null){ cond = is_not_answd; }
+		if(cond){
+			qid_no_answ = qid;
 			break;
 		}
 	}
 	//console.log("get_curr_pos_page [2] curr_idx=" + curr_idx);
-	return quest;
+	return qid_no_answ;
 }
 
-function scroll_to_first_not_answered(){
-	const quest = get_first_not_answered();
-	if(quest == null){ return; }
-	if(quest.qid == null){ return; }
-	const dv_quest = document.getElementById(quest.qid);
+function scroll_to_qid(qid){
+	if(qid == null){ return; }
+	const dv_quest = document.getElementById(qid);
 	if(dv_quest == null){ return; }
 	scroll_to_top(dv_quest);
 }
@@ -363,7 +369,7 @@ function load_image(dv_scroll, all_img, id_img, src_img){
 		htm_img.src = src_img;
 		if (! htm_img.complete) {
 			htm_img.addEventListener('load', (ev1) => {
-				scroll_to_first_not_answered();
+				scroll_to_qid(get_first_not_answered());
 			});
 			htm_img.addEventListener('error', function() {
 				console.log("Could not run scroll_to_first_not_answered on load image");
@@ -1852,9 +1858,6 @@ function calc_exam_save_object(){
 	if(db.all_pending != null){
 		sv_obj.all_pending = JSON.parse(JSON.stringify(db.all_pending));
 	}
-	if(db.last_added_qid != null){
-		sv_obj.last_added_qid = db.last_added_qid;
-	}
 	//console.log("FULL_OBJECT_SAVE = " + JSON.stringify(sv_obj, null, "  "));
 	return sv_obj;
 }
@@ -1866,9 +1869,6 @@ function update_nodes_exam_with(ld_obj){
 	}
 	if(ld_obj.all_pending != null){
 		db.all_pending = JSON.parse(JSON.stringify(ld_obj.all_pending));
-	}
-	if(ld_obj.last_added_qid != null){
-		db.last_added_qid = ld_obj.last_added_qid;
 	}
 }
 
@@ -2100,8 +2100,8 @@ function init_signals_for(qid){
 			const qst_to_signl = glb_poll_db[qid_signl]; 
 			if(qst_to_signl == null){ continue; }
 
-			if(qst_to_signl.signal_if_shown == null){ qst_to_signl.signal_if_shown = []; }
-			if(qst_to_signl.signal_if_not_shown == null){ qst_to_signl.signal_if_not_shown = []; }
+			if(qst_to_signl.signal_if_shown == null){ qst_to_signl.signal_if_shown = {}; }
+			if(qst_to_signl.signal_if_not_shown == null){ qst_to_signl.signal_if_not_shown = {}; }
 			
 			if(qst_to_signl.signals_to_fire == null){ qst_to_signl.signals_to_fire = {}; }  // added_for_signals
 			const all_to_fire = qst_to_signl.signals_to_fire; 
@@ -2111,10 +2111,10 @@ function init_signals_for(qid){
 			for (const [anid, val] of resps) {
 				if(anid == "shown"){
 					if(val == "on"){ 
-						qst_to_signl.signal_if_shown.push(qid); 
+						qst_to_signl.signal_if_shown[qid] = true; 
 					}
 					if(val == "off"){ 
-						qst_to_signl.signal_if_not_shown.push(qid); 
+						qst_to_signl.signal_if_not_shown[qid] = true; 
 					}
 					continue;
 				}
@@ -2158,10 +2158,10 @@ function check_if_dnf_is_sat(qid){
 		
 		//console.log(" | qid=" + qid + " | conj_id=" + conj_id + " conj_obj=" + JSON.stringify(conj_obj, null, "  "));
 		for (const [qid_signl, resps_obj] of conj) {
-			if(resps_obj == null){ continue; }
+			if(resps_obj == null){ conj_act = false; break; }
 			
 			const qst_to_signl = glb_poll_db[qid_signl];
-			if(qst_to_signl == null){ continue; }
+			if(qst_to_signl == null){ conj_act = false; break; }
 			
 			const qst_answs = qst_to_signl.answers; 
 			
@@ -2172,18 +2172,12 @@ function check_if_dnf_is_sat(qid){
 				if(anid == "shown"){
 					const is_shown = (document.getElementById(qid_signl) != null);
 					is_act = (((val == "on") && is_shown) || ((val == "off") && ! is_shown));
-					//console.log(" | qid=" + qid + " | qid_signl=" + qid_signl + " | is_act=" + is_act + " | val=" + val + " | is_shown=" + is_shown);
 				} else {				
-					if(qst_answs == null){ continue; } // if (anid == "shown") of an observation it CAN be null
-					
-					// check if qst_to_signl has_answ
-					if(qst_to_signl.has_answ == null){ 
-						all_act_2 = false;
-						break; 
-					}
+					if(qst_answs == null){ all_act_2 = false; break; } // if (anid == "shown") of an observation it CAN be null					
+					if(qst_to_signl.has_answ == null){ all_act_2 = false; break; }
 					
 					const an_answ = qst_answs[anid];
-					if(an_answ == null){ continue; }
+					if(an_answ == null){ all_act_2 = false; break; }
 					
 					is_act = (((val == "on") && an_answ.is_on) || ((val == "off") && ! an_answ.is_on));
 				}
@@ -2371,8 +2365,10 @@ function send_all_signals(qid){
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return all_to_act; }
 	
-	let all_to_signl = quest.signal_if_shown;
-	if(all_to_signl != null){
+	let all_to_signl = null;
+	let if_sho = quest.signal_if_shown;
+	if(if_sho != null){
+		all_to_signl = Object.keys(if_sho);
 		send_signals_to(all_to_signl, all_to_act);
 	}
 	if(quest.debug){ 
@@ -2415,32 +2411,29 @@ function activate_signals(qid_cllr, all_to_act){
 	}
 }
 
-function ask_next(){	
-	let qid = glb_poll_db.last_added_qid;
-	if(qid != null && (glb_poll_db[qid].has_answ == null)){
-		const dv_quest = document.getElementById(qid);
-		if(dv_quest != null){
-			scroll_to_first_not_answered();
-			return false;
-		}
-		glb_poll_db.last_added_qid = null;
+function ask_next(){
+	let stop_qid = glb_poll_db.stopping_observation_qid;
+	if(stop_qid != null){
+		scroll_to_qid(stop_qid);
+		return stop_qid;
 	}
-	qid = get_pending();
+	let not_answ_qid = get_first_not_answered(true);
+	if(not_answ_qid != null){
+		scroll_to_qid(not_answ_qid);
+		return not_answ_qid;
+	}
+	let qid = get_pending();
 	while((qid != null) && ! check_if_dnf_is_sat(qid)){
 		qid = get_pending();
 	}
-	let added = null;
-	if(qid != null){
-		added = add_question(qid);
-		if(added != null){
-			glb_poll_db.last_added_qid = qid;
-			scroll_to_first_not_answered();
-			return true;
-		}
+	if(qid == null){ return null; }
+	const added = add_question(qid);
+	if(added == null){
 		console.log("Question " + qid + " could NOT be added to page during ask_next [1] !!!");
+		return null;
 	}
-	scroll_to_first_not_answered();
-	return false;
+	scroll_to_qid(qid);
+	return qid;
 }
 
 function undo_last_quest(){
@@ -2471,7 +2464,6 @@ function undo_last_quest(){
 		else if(undo_ok){ num_undo++; }
 		
 		if(num_undo == 2){
-			glb_poll_db.last_added_qid = null;
 			ask_next();
 			break;
 		}
@@ -2485,6 +2477,10 @@ function undo_last_quest(){
 // CODE_FOR OBSERVATION DISPLAY
 
 function show_observation(qid, all_to_act, qid_cllr){
+	if(get_qid_base(qid) == null){
+		console.log("Trying to show_observation with invalid qid=" + qid);
+		return null;
+	}
 	const quest = glb_poll_db[qid];
 	if(quest == null){
 		console.log("Could not find observation " + qid + " in questions db.");
@@ -2658,6 +2654,21 @@ function get_sat_conj_qids(qid){
 	return the_conj;
 }
 
+function update_observation_signals(quest, all_to_act){
+	let all_to_signl = null;
+	let if_sho = null;
+	if_sho = quest.signal_if_shown;
+	if(if_sho != null){
+		all_to_signl = Object.keys(if_sho);
+		send_signals_to(all_to_signl, all_to_act);
+	}
+	if_sho = quest.signal_if_not_shown;
+	if(if_sho != null){
+		all_to_signl = Object.keys(if_sho);
+		send_signals_to(all_to_signl, all_to_act);
+	}		
+}
+
 function update_observation(qid, all_to_act){
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return; }
@@ -2674,15 +2685,13 @@ function update_observation(qid, all_to_act){
 	const the_conj_sat = get_sat_conj_qids(qid);
 	if(the_conj_sat == null){		
 		quest.watched = null;
+		if(glb_poll_db.stopping_observation_qid == qid){
+			glb_poll_db.stopping_observation_qid = null;
+		}
 		console.log("REMOVING ABSERVATION with qid=" + qid);
 		dv_quest.remove(); 
 	
-		let all_to_signl = null;
-		all_to_signl = quest.signal_if_not_shown;
-		if(all_to_signl != null){ send_signals_to(all_to_signl, all_to_act); }
-		all_to_signl = quest.signal_if_shown;
-		if(all_to_signl != null){ send_signals_to(all_to_signl, all_to_act); }
-		
+		update_observation_signals(quest, all_to_act);
 		/*console.log("AFTER_REMOVE | qid=" + qid + " | all_to_signl=" + JSON.stringify(all_to_signl, null, "  ")
 			+ " | all_to_act=" + JSON.stringify(all_to_act, null, "  ")
 		);*/
@@ -2690,17 +2699,24 @@ function update_observation(qid, all_to_act){
 		//console.log("AFTER_REMOVE [2] | all_to_act=" + JSON.stringify(all_to_act, null, "  "));
 		return;
 	}
+	if(quest.stops_until_not_shown){
+		glb_poll_db.stopping_observation_qid = qid;
+	}	
+	
+	update_observation_signals(quest, all_to_act);
+	
 	sp_qrefs_observ.innerHTML = "";
 	if(! quest.is_positive){ 
 		let full_htm = "";
 		const sufix_qhrefs = get_quest_hrefs_of(the_conj_sat, null);
 		if(sufix_qhrefs.length > 0){
-			full_htm = " <br>" + glb_curr_lang.msg_change_one_answer + sufix_qhrefs + "<br>";
+			full_htm = " <br>" + glb_curr_lang.msg_caused_by_answers + sufix_qhrefs + "<br>";
 		}
 		const sufix_ohrefs = get_comment_hrefs_of(the_conj_sat, null);
 		if(sufix_ohrefs.length > 0){
-			full_htm = full_htm + " <br>" + glb_curr_lang.msg_get_rid_of_these_observations + sufix_ohrefs + "<br>";
+			full_htm = full_htm + " <br>" + glb_curr_lang.msg_caused_by_observations + sufix_ohrefs + "<br>";
 		}
+		full_htm = full_htm + " <br>" + glb_curr_lang.msg_to_get_rid + "<br>";
 		
 		sp_qrefs_observ.innerHTML = full_htm;
 
@@ -2719,7 +2735,7 @@ function update_observation(qid, all_to_act){
 			dv_ok.addEventListener('click', function() {
 				quest.watched = true;
 				dv_understood.remove();
-				scroll_to_first_not_answered();
+				scroll_to_qid(get_first_not_answered());
 				return;
 			});		
 			

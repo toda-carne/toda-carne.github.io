@@ -46,6 +46,12 @@ export function init_en_poll_txt(){
 	lg.q1_1_2__YES_six_days = "YES six days";
 	lg.q1_1_2__NO_six_days = "NO six days";	
 
+	lg.q1_3__evolution = `<span class='big_font bold_font'><a href='${hb.href_factories}'>Evolution</a>?</span>`;
+	lg.q1_3__YES_evolution = "YES evolution";
+	lg.q1_3__NO_evolution = "NO evolution";
+
+	lg.q_millions_of_years = `<span class='big_font bold_font'>Millions of <a href='${hb.href_factories}'>years</a>?</span>`;
+	
 	lg.q_logic_stm = `<span class='big_font bold_font'>Logic?</span>`;
 	lg.a_YES_logic = "YES logic";
 	lg.a_NO_logic = "NO logic";
@@ -64,6 +70,8 @@ export function init_en_poll_txt(){
 	lg.q_technology = `<span class='big_font bold_font'>Technology?</span>`;
 	lg.o_technology_comm = `Technology uses logic. Technology ${logic_needed}`;
 	
+	lg.o_logic_incons_comm = `It seems you have some inconsistent answers if yo admit the necesity of logic.`;
+	
 	lg.q_YES_NO_evidence = `<span class='big_font bold_font'><a href='${hb.href_evidence}'>Evidence</a>?</span>`;
 	lg.a_YES_evidence = "YES evidence";
 	lg.a_NO_evidence = "NO evidence";
@@ -80,12 +88,8 @@ export function init_en_poll_txt(){
 	lg.o_contracts_comm = `A contract uses evidence. A contract ${evidence_needed}`;
 
 	lg.o_technology2_comm = `Technology uses evidence. Technology ${evidence_needed}`;
-	
-	lg.q1_3__evolution = `<span class='big_font bold_font'><a href='${hb.href_factories}'>Evolution</a>?</span>`;
-	lg.q1_3__YES_evolution = "YES evolution";
-	lg.q1_3__NO_evolution = "NO evolution";
 
-	lg.q_millions_of_years = `<span class='big_font bold_font'>Millions of <a href='${hb.href_factories}'>years</a>?</span>`;
+	lg.o_evidece_incons_comm = `It seems you have some inconsistent answers if yo admit the necesity of evidence.`;
 	
 	lg.q_requires_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_tch_crea}'>creativity</a>?</span>`;
 	
@@ -152,7 +156,7 @@ export function init_en_poll_txt(){
 	
 	lg.o_change_creator_comm = `You had chosen NO to creator. It seems you have changed your mind. Please change get rid of this comment to continue.`;
 
-	lg.o_faulty_logic_comm = `You logic based on evidence seems faulty. Please change get rid of this comment to continue.`;
+	lg.o_faulty_logic_comm = `To continue with these questions you need get rid of this observation because your logic based on evidence seems faulty.`;
 
 	lg.t_good_job = `<span class='has_left_padding very_big_font bold_font'>Good job !</span>`;
 	lg.q_participate = `<span class='big_font bold_font'>Participate?</span>`;
