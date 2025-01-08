@@ -129,6 +129,7 @@ function init_es_basic_msg(){
 
 	obj.msg_change_answer = "Para adicionar respuestas click en la respuesta actual y click en CAMBIAR RESPUESTA";
 	obj.msg_change_one_answer = "Para deshacerse de esta observación tiene que cambiar una de estas respuestas: ";
+	obj.msg_get_rid_of_these_observations = "Para deshacerse de esta observación tiene que deshacerse de estas otras observaciones:";
 
 	obj.msg_dispute_rclick = "Dispute con clik derecho";
 	obj.msg_dispute_hold_click = "Dispute manteniendo clik";
@@ -144,6 +145,7 @@ function init_es_basic_msg(){
 	obj.msg_help_cit_ed_any_bib_right_click = "Click derecho para mostrar o no la seleccion de cualquier version de biblia";
 	
 	obj.msg_qref_question_num = "pregunta número";
+	obj.msg_qref_observation_num = "observación número";
 }
 
 const all_es_bibrefs = {};

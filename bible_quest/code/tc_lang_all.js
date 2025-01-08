@@ -260,6 +260,7 @@ function init_en_basic_msg(){
 
 	obj.msg_change_answer = "To add answers click on the current answer and click on CHANGE ANSWER";
 	obj.msg_change_one_answer = "To get rid of this observation you must change one of these answers: ";
+	obj.msg_get_rid_of_these_observations = "To get rid of this observation you must get rid of these other observations: ";
 
 	obj.msg_dispute_rclick = "To dispute right click";
 	obj.msg_dispute_hold_click = "To dispute hold click";
@@ -275,6 +276,7 @@ function init_en_basic_msg(){
 	obj.msg_help_cit_ed_any_bib_right_click = "Right click to toggle any bible version selection";
 
 	obj.msg_qref_question_num = "question number";
+	obj.msg_qref_observation_num = "observation number";
 	
 }
 

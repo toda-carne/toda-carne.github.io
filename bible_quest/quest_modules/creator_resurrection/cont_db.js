@@ -696,6 +696,25 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.o_complexity_with_design_is_harder_comm__ = { 
+		context: ["ctx_harder_to_make", ],
+		htm_stm: "o_complexity_with_design_is_harder_comm",
+		activated_if: {
+			c1: { 
+				q_building_vs_knife_more_planning__: { shown: "on", }, 
+				q_building_vs_knife_harder_to_make__: { a_knife: "on", },
+			},
+			c2: { 
+				q_lamp_vs_car_more_planning__: { shown: "on", }, 
+				q_car_vs_lamp_harder_to_make__: { a_lamp: "on", },
+			},
+			c3: { 
+				q_clock_vs_air_purifier_more_planning__: { shown: "on", }, 
+				q_clock_vs_air_purifier_harder_to_make__: { a_clock: "on", },
+			},
+		},
+	};
+	
 	db.q_foot_vs_car_wheel_harder_to_make__ = { 
 		choose_more: true,
 		context: ["ctx_harder_to_make", "ctx_foot_vs_car", ],
@@ -946,6 +965,23 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.o_o_faulty_logic_comm__ = { 
+		context: ["ctx_general", "ctx_human_body_req_creativity"],
+		htm_stm: "o_faulty_logic_comm",
+		activated_if: {
+			c1: { 	q_human_body_req_creativity__	: { shown: "on", }, q_creator__: { q1_1__NO_creator: "on", }, },
+			c2: { 	q_human_body_req_creativity__	: { shown: "on", }, o_logic_comm__: { shown: "on", }, },
+			c3: { 	q_human_body_req_creativity__	: { shown: "on", }, o_evidence_comm__: { shown: "on", }, },
+			c4: { 	q_human_body_req_creativity__	: { shown: "on", }, o_car_req_creativity_comm__: { shown: "on", }, },
+			c5: { 	q_human_body_req_creativity__	: { shown: "on", }, o_knife_req_creativity_comm__: { shown: "on", }, },
+			c6: { 	q_human_body_req_creativity__	: { shown: "on", }, o_clock_req_creativity_comm__: { shown: "on", }, },
+			c7: { 	q_human_body_req_creativity__	: { shown: "on", }, o_complexity_with_design_is_harder_comm__: { shown: "on", }, },			
+			c8: { 	q_human_body_req_creativity__	: { shown: "on", }, o_biology_is_harder_comm__: { shown: "on", }, },
+			c9: { 	q_human_body_req_creativity__	: { shown: "on", }, o_we_cannot_simulate_biology_comm__: { shown: "on", }, },
+			c10: { 	q_human_body_req_creativity__	: { shown: "on", }, o_biology_req_creativity_comm__: { shown: "on", }, },
+		},
+	};
+	
 	db.q_participate_in_contest__ = { 
 		choose_yes: true,
 		presentation: "t_good_job",
@@ -978,3 +1014,4 @@ export function init_exam_database(){
 		
 }
 
+// 	c1: { q1_7__: { shown: "on", }, q1_91__: { shown: "on", }, q1_70__: { shown: "off", }, q1_91_0__: { shown: "off", }, },

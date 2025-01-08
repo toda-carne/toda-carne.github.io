@@ -100,6 +100,8 @@ export function init_en_poll_txt(){
 	lg.o_phone_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a phone.</span>`;
 	lg.o_laptop_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a laptop.</span>`;
 	lg.o_laptop_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a laptop.</span>`;
+	
+	lg.o_complexity_with_design_is_harder_comm = `<span class='big_font bold_font'>More complexity and more design makes it harder to <a href='${hb.href_creator_tit}'>make</a></span>`;
 
 	lg.q_harder_to_make = `<span class='big_font bold_font'>Harder to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
 
@@ -147,6 +149,10 @@ export function init_en_poll_txt(){
 	lg.q_bilology_req_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_creator}'>creativity</a>?</span>`;
 	
 	lg.o_biology_req_creativity_comm = `Logic and evidence show that biological machinery is much harder to make than machinery made by humans. If we are going to call ourselves itelligent designers with technical creatitivy for the machinery we make, we have to recognize that biological machinery also requires an intelligent designer with technical creativiy much greater than ours.`;
+	
+	lg.o_change_creator_comm = `You had chosen NO to creator. It seems you have changed your mind. Please change get rid of this comment to continue.`;
+
+	lg.o_faulty_logic_comm = `You logic based on evidence seems faulty. Please change get rid of this comment to continue.`;
 
 	lg.t_good_job = `<span class='has_left_padding very_big_font bold_font'>Good job !</span>`;
 	lg.q_participate = `<span class='big_font bold_font'>Participate?</span>`;
