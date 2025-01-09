@@ -164,6 +164,12 @@ function scroll_to_top(dv_elem) {
 
 
 // CODE_FOR QUESTION DYSPLAY AND USER OPERATION
+function has_pos_page(quest){
+	if(quest == null){ return false; }
+	if(quest.pos_page == null){ return false; }
+	if(quest.pos_page == INVALID_PAGE_POS){ return false; }
+	return true;
+}
 
 function add_question(qid){
 	if(get_qid_base(qid) == null){
@@ -184,7 +190,7 @@ function add_question(qid){
 	
 	const lst_quest = get_last_quest();
 	let lst_pos = 0;
-	if((lst_quest != null) && (lst_quest.pos_page != null) && (lst_quest.pos_page != INVALID_PAGE_POS)){ lst_pos = lst_quest.pos_page; }
+	if(has_pos_page(lst_quest)){ lst_pos = lst_quest.pos_page; }
 	
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
 	const dv_quest = dv_all_quest.appendChild(document.createElement("div"));
@@ -2138,12 +2144,33 @@ function init_signals_for(qid){
 	}
 }
 
+function is_shown_after(quest, last_qst){
+	if(has_pos_page(quest) && has_pos_page(last_qst)){
+		return (quest.pos_page > last_qst.pos_page);
+	}
+	if((quest.qid == null) || (last_qst.qid == null)){
+		return false;
+	}
+	const dv_q = document.getElementById(quest.qid);
+	const dv_l = document.getElementById(last_qst.qid);
+	if((dv_q == null) || (dv_l == null)){
+		return false;
+	}
+	const r1 = dv_q.getBoundingClientRect();
+	const r2 = dv_l.getBoundingClientRect();
+	
+	return (r1.top > r2.top);
+}
+
 function check_if_dnf_is_sat(qid){
 	if(qid == null){ return false; }
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return false; }
 	if(quest.debug){ console.log("DEBUGING qid=" + qid + " called check_if_dnf_is_sat"); }
 	//if
+	quest.last_sat_conj = null;
+	quest.last_conj_qst = null;
+	
 	if(quest.activated_if == null){ 
 		if(is_base_question(quest)){
 			return true;
@@ -2156,12 +2183,16 @@ function check_if_dnf_is_sat(qid){
 		const conj = Object.entries(conj_obj);
 		let conj_act = true;
 		
+		let last_qst = null;
 		//console.log(" | qid=" + qid + " | conj_id=" + conj_id + " conj_obj=" + JSON.stringify(conj_obj, null, "  "));
 		for (const [qid_signl, resps_obj] of conj) {
 			if(resps_obj == null){ conj_act = false; break; }
 			
 			const qst_to_signl = glb_poll_db[qid_signl];
 			if(qst_to_signl == null){ conj_act = false; break; }
+			
+			if(last_qst == null){ last_qst = qst_to_signl; }
+			if(is_shown_after(qst_to_signl, last_qst)){ last_qst = qst_to_signl; }
 			
 			const qst_answs = qst_to_signl.answers; 
 			
@@ -2194,11 +2225,13 @@ function check_if_dnf_is_sat(qid){
 		if(conj_act){
 			if(quest.debug){ console.log("DEBUGING qid=" + qid + " check_if_dnf_is_sat IS_SAT"); }
 			quest.last_sat_conj = conj_id;
+			quest.last_conj_qst = last_qst;
 			return true;
 		}
 	}
 	if(quest.debug){ console.log("DEBUGING qid=" + qid + " check_if_dnf_is_sat NOT_sat"); }
 	quest.last_sat_conj = null;
+	quest.last_conj_qst = null;
 	return false;
 }
 
@@ -2476,6 +2509,14 @@ function undo_last_quest(){
 
 // CODE_FOR OBSERVATION DISPLAY
 
+function get_sat_conj_last_elem(quest){
+	if(quest == null){ return null; }
+	if(quest.last_conj_qst == null){ return null; }
+	if(quest.last_conj_qst.qid == null){ return null; }
+	const dv_l = document.getElementById(quest.last_conj_qst.qid);
+	return dv_l;
+}
+
 function show_observation(qid, all_to_act, qid_cllr){
 	if(get_qid_base(qid) == null){
 		console.log("Trying to show_observation with invalid qid=" + qid);
@@ -2504,9 +2545,12 @@ function show_observation(qid, all_to_act, qid_cllr){
 	dv_quest.classList.add("exam");
 	dv_quest.classList.add("is_observ");
 	
+	let dv_lquest = get_sat_conj_last_elem(quest);
 	let dv_cquest = null;
 	if(qid_cllr != null){ dv_cquest = document.getElementById(qid_cllr); }
-	if(dv_cquest != null){
+	if(dv_lquest != null){
+		dv_lquest.after(dv_quest);
+	} else if(dv_cquest != null){
 		dv_cquest.after(dv_quest);
 	} else {
 		dv_all_quest.appendChild(dv_quest);
@@ -2769,3 +2813,9 @@ function close_top_menu() {
 	if(mm != null){ mm.classList.remove("show_menu"); }		
 }
 
+/*
+ * var child = document.getElementById('my_element');
+var parent = child.parentNode;
+// The equivalent of parent.children.indexOf(child)
+var index = Array.prototype.indexOf.call(parent.children, child);
+*/
