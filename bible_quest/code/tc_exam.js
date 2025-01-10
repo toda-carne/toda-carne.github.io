@@ -2612,7 +2612,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 	update_observation(qid, all_to_act);
 
 	if(quest.calls_write_object){
-		const dv_user = create_div_user();
+		const dv_user = create_div_user(quest);
 		dv_quest.append(dv_user);
 
 		write_firebase_exam_object((err) => {
@@ -2630,7 +2630,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 	return dv_quest;
 }
 
-function create_div_user(){
+function create_div_user(quest){
 	
 	const dv_user = document.createElement("div");
 	dv_user.id = id_dv_user;
@@ -2644,7 +2644,7 @@ function create_div_user(){
 	
 	const the_qr_maker = new QRCode(dv_qrcod, {
 		width : 300,
-		height : 300
+		height : 300,
 	});
 	
 	dv_qrcod.qr_maker = the_qr_maker;
@@ -2652,7 +2652,6 @@ function create_div_user(){
 	//const dv_img = document.createElement("img");
 	const dv_img = document.createElement("div");
 	dv_img.id = id_dv_user_image;
-	//dv_img.classList.add("exam", "img_observ");
 	dv_img.classList.add("exam");
 	dv_user.append(dv_img);
 
@@ -2661,41 +2660,13 @@ function create_div_user(){
 	const dv_nom = document.createElement("div");
 	dv_nom.id = id_dv_user_name;
 	dv_nom.classList.add("exam");
+	dv_nom.classList.add("user_data");
 	dv_user.append(dv_nom);
+	
+	add_observation_ok(quest, dv_user);
 	
 	return dv_user;
 }
-
-/*
-async function get_photo_url() {
-	try {
-		const the_usr = fb_get_user();
-		if(the_usr == null){ return; }
-		
-		const options = {
-			//method: 'GET',
-			headers: new Headers({'content-type': 'image/jpeg'}),
-			mode: 'no-cors'
-		};
-		const response = await fetch(the_usr.photoURL, options);
-		if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
-		}
-		
-		//const json = await response.json();
-		
-		let dv_img = document.getElementById(id_dv_user_image);
-		if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
-		
-		const dv_img2 = document.getElementById("id_user_picture");
-		//if(dv_img2 != null){ dv_img2.src = the_usr.photoURL; }	
-		
-		//console.log(json);
-	} catch (error) {
-		console.error(error.message);
-	}
-}
-*/
 
 function get_user_href(the_usr){
 	const qr_href = window.location.href + "?" + GET_var_referrer + "=" + the_usr.uid;
@@ -2757,6 +2728,33 @@ function update_observation_signals(quest, all_to_act){
 	}		
 }
 
+function add_observation_ok(quest, dv_after){
+	if(quest == null){ return; }
+	if(! is_observation(quest)){ return; }
+	
+	if(quest.watched == null){
+		quest.watched = false;
+		const dv_understood = dv_after.appendChild(document.createElement("div"));
+		dv_understood.appendChild(document.createElement("br"));
+		
+		const dv_ok = document.createElement("div");
+		dv_ok.classList.add("exam");
+		dv_ok.classList.add("is_block");
+		dv_ok.classList.add("is_button");
+		dv_ok.innerHTML = glb_curr_lang.msg_understood;
+		dv_understood.appendChild(dv_ok);
+		
+		dv_ok.addEventListener('click', function() {
+			quest.watched = true;
+			dv_understood.remove();
+			scroll_to_qid(get_first_not_answered());
+			return;
+		});		
+		
+		dv_understood.appendChild(document.createElement("br"));
+	};
+}
+
 function update_observation(qid, all_to_act){
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return; }
@@ -2808,27 +2806,7 @@ function update_observation(qid, all_to_act){
 		
 		sp_qrefs_observ.innerHTML = full_htm;
 
-		if(quest.watched == null){
-			quest.watched = false;
-			const dv_understood = sp_qrefs_observ.appendChild(document.createElement("div"));
-			dv_understood.appendChild(document.createElement("br"));
-			
-			const dv_ok = document.createElement("div");
-			dv_ok.classList.add("exam");
-			dv_ok.classList.add("is_block");
-			dv_ok.classList.add("is_button");
-			dv_ok.innerHTML = glb_curr_lang.msg_understood;
-			dv_understood.appendChild(dv_ok);
-			
-			dv_ok.addEventListener('click', function() {
-				quest.watched = true;
-				dv_understood.remove();
-				scroll_to_qid(get_first_not_answered());
-				return;
-			});		
-			
-			dv_understood.appendChild(document.createElement("br"));
-		};
+		add_observation_ok(quest, sp_qrefs_observ);
 	}
 	
 	set_anchors_target(dv_quest);
@@ -2863,3 +2841,34 @@ var parent = child.parentNode;
 // The equivalent of parent.children.indexOf(child)
 var index = Array.prototype.indexOf.call(parent.children, child);
 */
+/*
+async function get_photo_url() {
+	try {
+		const the_usr = fb_get_user();
+		if(the_usr == null){ return; }
+		
+		const options = {
+			//method: 'GET',
+			headers: new Headers({'content-type': 'image/jpeg'}),
+			mode: 'no-cors'
+		};
+		const response = await fetch(the_usr.photoURL, options);
+		if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+		}
+		
+		//const json = await response.json();
+		
+		let dv_img = document.getElementById(id_dv_user_image);
+		if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
+		
+		const dv_img2 = document.getElementById("id_user_picture");
+		//if(dv_img2 != null){ dv_img2.src = the_usr.photoURL; }	
+		
+		//console.log(json);
+	} catch (error) {
+		console.error(error.message);
+	}
+}
+*/
+

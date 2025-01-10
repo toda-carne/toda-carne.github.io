@@ -857,8 +857,17 @@ color: white;
 	border: 0.5vw solid white;
 }
 
+.user_data {
+	display: block;
+	margin-top: 2vw;
+	margin-left: 10vw;
+	margin-right: auto;
+	margin-bottom: 2vw;
+}
+
 .img_observ {
 	display: block;
+	margin-top: 2vw;
 	margin-left: 10vw;
 	margin-right: auto;
 	width: 27vw;
@@ -985,7 +994,8 @@ color: white;
 .qr_code_img {
 	width:300px; 
 	height:300px; 
-	margin:0.5vh;
+	margin-top:2vw;
+	margin-left:10vw;
 }
 
 .is_red {
