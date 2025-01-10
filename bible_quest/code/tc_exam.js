@@ -2715,11 +2715,8 @@ function fill_div_user(){
 		return;
 	}
 	
-	// the_usr.uid to generate QR code
-	//http://example.com/page.html?returnurl=%2Fadmin
-	//window.location.href
 	const dv_user_qr = document.getElementById(id_dv_user_qrcod);
-	if(dv_user_qr.qr_maker != null){
+	if((dv_user_qr != null) && (dv_user_qr.qr_maker != null)){
 		dv_user_qr.qr_maker.makeCode(get_user_href(the_usr));
 	}
 
