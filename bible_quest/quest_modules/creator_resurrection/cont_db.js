@@ -946,8 +946,32 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.o_get_qrcode__ = { 
+		calls_write_object: true,
+		context: ["ctx_get_qrcode"],
+		is_positive: true,
+		htm_stm: "o_get_qrcode",
+		htm_stm_saved_ok: "o_congrats_you_have_a_qrcode",
+		htm_stm_not_saved: "o_sorry_no_loging_no_qrcode",
+		activated_if: {
+			c1: { 	q_human_body_req_creativity__	: { shown: "on", }, },
+		},
+	};
+	
+	db.q_resurrection__ = { 
+		choose_yes: true,
+		context: ["ctx_resurrection", ],
+		htm_stm: "q_resurrection",
+		img_href: proy_img_dir + "tomb_garden.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+	};	
+	
+	/*
 	db.o_o_faulty_logic_comm__ = { 
-		stops_until_not_shown: true,
+		//stops_until_not_shown: true,
 		context: ["ctx_ending_creator", ],
 		htm_stm: "o_faulty_logic_comm",
 		activated_if: {
@@ -965,18 +989,6 @@ export function init_exam_database(){
 			c10: { 	q_human_body_req_creativity__	: { shown: "on", }, o_biology_req_creativity_comm__: { shown: "on", }, },
 		},
 	};
-
-	
-	db.q_resurrection__ = { 
-		choose_yes: true,
-		context: ["ctx_resurrection", ],
-		htm_stm: "q_resurrection",
-		img_href: proy_img_dir + "tomb_garden.webp", 
-		answers: {
-			a_simple_YES: { img_pos: rgt, },
-			a_simple_NO: { img_pos: lft, },
-		},
-	};	
 	
 	db.q_participate_in_contest__ = { 
 		choose_yes: true,
@@ -995,8 +1007,8 @@ export function init_exam_database(){
 		context: ["ctx_saving"],
 		is_positive: true,
 		htm_stm: "o_chose_yes_to_participate",
-		htm_stm_saved_ok: "o_congrats_you_have_a_ticket",
-		htm_stm_not_saved: "o_sorry_no_loging_no_participation",
+		htm_stm_saved_ok: "o_congrats_you_have_qrcode",
+		htm_stm_not_saved: "o_sorry_no_loging_no_qrcode",
 		activated_if: {
 			c1: { q_participate_in_contest__: { a_simple_YES: "on", }, },
 		},
@@ -1009,6 +1021,7 @@ export function init_exam_database(){
 			c1: { q_participate_in_contest__: { a_simple_NO: "on", }, },
 		},
 	};
+	*/
 
 }
 

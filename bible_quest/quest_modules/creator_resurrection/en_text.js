@@ -158,6 +158,17 @@ export function init_en_poll_txt(){
 
 	lg.o_faulty_logic_comm = `To continue with these questions you need get rid of this observation because your logic based on evidence seems faulty.`;
 
+	lg.o_get_qrcode = `<span class='has_left_padding very_big_font bold_font'>You need to login to get your QR code and start spreading the Good News and winning some while doing so. Please login.</span>`;
+	
+	lg.o_congrats_you_have_a_qrcode = `
+		<span class='big_font bold_font'>Congrats ! Anyone using your QR code to access this page will be registered as a refered person by you. The more you spread the Good News using your QR code the more you will win, even if you or they do not donate.
+		This is your QR code: </span>
+	`;
+	lg.o_sorry_no_loging_no_qrcode = `
+		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
+		<span class='big_font bold_font'>Sorry. No Google login, no QR code. If you don have a <a href='http://accounts.google.com'>Google account</a> please get one by clicking the <a href='http://accounts.google.com'>link</a>. You can login at any time by clicking the person in the top menu bar.</span>
+	`;
+	
 	lg.t_good_job = `<span class='has_left_padding very_big_font bold_font'>Good job !</span>`;
 	lg.q_participate = `<span class='big_font bold_font'>Participate?</span>`;
 	lg.q_win_money = `<span class='big_font bold_font'>Win?</span>`;
