@@ -16,6 +16,8 @@ const INVALID_PAGE_POS = "???";
 let INIT_EXAM_DB_FUNC = null;
 
 let DEBUG_QNUMS = true;
+let DEBUG_REFERRER = true;
+let DEBUG_PENDING = false;
 
 let DEFAULT_BOOK = null;
 let DEFAULT_STRONG = null;
@@ -31,6 +33,7 @@ let fb_check_login = null;
 const MIN_ANSW_SHOW_INVERT = 3;
 
 const GET_var_referrer = "referrer";
+const GET_var_delete_referrer = "DELETE_REFERRER";
 
 const qref_prefix = "QREF_";
 const stg_prefix = "STRONG";
@@ -72,6 +75,7 @@ function init_exam_module_vars(){
 }
 
 const ALL_SAVED_OBJ_NAMES = "all_saved_object_names";
+const FIRST_REFERRER = "first_referref";
 
 const SUF_ID_QSTM = "_qstm";
 const SUF_ID_QREFS_OBSERVATION = "_qrefs_observation";
@@ -127,6 +131,7 @@ const id_dv_name_ed = "id_dv_name_ed";
 const id_dv_answ_ed = "id_dv_answ_ed";
 const id_support_ed = "id_support_ed";
 const id_quest_img = "id_quest_img";
+const id_ed_user_info = "id_ed_user_info";
 
 // FOR DAG pending management
 const id_ctx_pend = "ctx_pend";
@@ -913,12 +918,6 @@ function get_new_dv_under(dv_pop_up, id_dv){
 			return null;
 		}
 	}
-	/*
-	if(dv_pop_up.nextSibling == null){
-		dv_options = dv_parent.appendChild(document.createElement("div"));
-	} else {
-		dv_options = dv_parent.insertBefore(document.createElement("div"), dv_pop_up.nextSibling);
-	}*/	
 	dv_options = document.createElement("div");
 	dv_pop_up.after(dv_options);
 	
@@ -1409,10 +1408,36 @@ export function init_page_exam(ini_func){
 	init_exam_module_vars();
 	init_exam_buttons();
 	
+	init_referref();
+	
 	ask_next();	
 	
-	find_GET_parameter(GET_var_referrer);
 };
+
+function init_referref(){
+	glb_poll_db.referrer_GET_parm = find_GET_parameter(GET_var_referrer);
+	
+	if(DEBUG_REFERRER){
+		console.log("REFERRER_GET_PM=" + glb_poll_db.referrer_GET_parm);
+		
+		const delete_referrer = find_GET_parameter(GET_var_delete_referrer);
+		if(delete_referrer == "true"){
+			console.log("DELETING_FIRST_REFERRER");
+			window.localStorage.setItem(FIRST_REFERRER, null);
+		}
+	}
+	
+	let local_fst_referrer = window.localStorage.getItem(FIRST_REFERRER);
+	if((local_fst_referrer == "null") && (glb_poll_db.referrer_GET_parm != null)){  // CAREFUL TRICKY FIRST CONDITION. IT IS A STRING !!!
+		local_fst_referrer = glb_poll_db.referrer_GET_parm;
+		
+		if(DEBUG_REFERRER){ console.log("SETTING_FIRST_REFERRER=" + local_fst_referrer); }
+		window.localStorage.setItem(FIRST_REFERRER, local_fst_referrer);
+	}
+	
+	glb_poll_db.referrer_local_storage_first = local_fst_referrer;
+	if(DEBUG_REFERRER){ console.log("SAVED_FIRST_REFERRER=" + local_fst_referrer); }
+}
 
 function init_exam_buttons(){
 	let dv_button = null;
@@ -2340,7 +2365,7 @@ function get_first_open_context(){
 }
 
 function add_pending(qid){
-	console.log("called add_pending(" + qid + ")"); 
+	if(DEBUG_PENDING){ console.log("called add_pending(" + qid + ")"); }
 	
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return false; }
@@ -2369,7 +2394,7 @@ function undo_pending(qid){
 		return false;
 	}
 	
-	console.log("called undo_pending(" + qid + ")"); 
+	if(DEBUG_PENDING){ console.log("called undo_pending(" + qid + ")"); }
 	
 	const pending = get_context(quest.context, true);
 	pending.unshift(qid);
@@ -2383,14 +2408,14 @@ function get_pending(){
 	//const pending = glb_poll_db.all_pending;
 	const pending = get_first_context();
 	if(pending.length == 0){
-		console.log("get_pending() returned null"); 
+		if(DEBUG_PENDING){ console.log("get_pending() returned null"); }
 		return null;
 	}
 	const qid = pending.shift();
 	const quest = glb_poll_db[qid];
 	quest.in_pending = false;
 
-	console.log("get_pending() returned qid=" + qid); 
+	if(DEBUG_PENDING){ console.log("get_pending() returned qid=" + qid); }
 	return qid;
 }
 
@@ -2834,6 +2859,49 @@ function close_top_menu() {
 	var mm = document.querySelector(".cl_top_nav");
 	if(mm != null){ mm.classList.remove("show_menu"); }		
 }
+
+function init_user_info(user_info){
+	user_info.wallet_phone_num = "";
+}
+
+function toggle_user_info(){
+	const dv_exam_top = document.getElementById("id_exam_top_content");
+
+	let dv_ed_usr = get_new_dv_under(dv_exam_top, id_ed_user_info);
+	if(dv_ed_usr == null){
+		return;
+	}
+	dv_ed_usr.classList.add("exam");
+	dv_ed_usr.classList.add("is_block");
+	
+	let user_info = glb_poll_db.user_info;
+	if(user_info == null){
+		glb_poll_db.user_info = {};
+		init_user_info(glb_poll_db.user_info);
+		user_info = glb_poll_db.user_info;
+	}
+
+	const inp_wallet = dv_ed_usr.appendChild(document.createElement("input"));
+	inp_wallet.id = id_ed_chapter;
+	inp_wallet.value = user_info.wallet_phone_num;
+	inp_wallet.type = "number";
+	inp_wallet.size = 3;
+	inp_wallet.classList.add("exam");
+	inp_wallet.classList.add("is_ed_verse");
+	
+	const dv_ok = dv_ed_usr.appendChild(document.createElement("div"));
+	dv_ok.classList.add("exam");
+	dv_ok.classList.add("is_block");
+	dv_ok.classList.add("is_button");
+	dv_ok.innerHTML = glb_curr_lang.msg_end_edit;
+	dv_ok.addEventListener('click', function() {
+		dv_ed_usr.remove();
+		
+		return;
+	});    
+	
+}
+
 
 /*
  * var child = document.getElementById('my_element');
