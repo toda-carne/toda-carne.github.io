@@ -188,6 +188,205 @@ export const num2book_en = {
 	"66":"revelation",
 };
 
+const countries_en = {
+	"1":"Afghanistan",
+	"2":"Albania",
+	"3":"Algeria",
+	"4":"Andorra",
+	"5":"Angola",
+	"6":"Antigua and Barbuda",
+	"7":"Argentina",
+	"8":"Armenia",
+	"9":"Australia",
+	"10":"Austria",
+	"11":"Azerbaijan",
+	"12":"Bahrain",
+	"13":"Bangladesh",
+	"14":"Barbados",
+	"15":"Belarus",
+	"16":"Belgium",
+	"17":"Belize",
+	"18":"Benin",
+	"19":"Bhutan",
+	"20":"Bolivia",
+	"21":"Bosnia and Herzegovina",
+	"22":"Botswana",
+	"23":"Brazil",
+	"24":"Brunei",
+	"25":"Bulgaria",
+	"26":"Burkina Faso",
+	"27":"Burundi",
+	"28":"Cabo Verde",
+	"29":"Cambodia",
+	"30":"Cameroon",
+	"31":"Canada",
+	"32":"Central African Republic",
+	"33":"Chad",
+	"34":"Chile",
+	"35":"China",
+	"36":"Colombia",
+	"37":"Comoros",
+	"38":"Congo, Democratic Republic of the",
+	"39":"Congo, Republic of the",
+	"40":"Costa Rica",
+	"41":"Côte d’Ivoire",
+	"42":"Croatia",
+	"43":"Cuba",
+	"44":"Cyprus",
+	"45":"Czech Republic",
+	"46":"Denmark",
+	"47":"Djibouti",
+	"48":"Dominica",
+	"49":"Dominican Republic",
+	"50":"East Timor (Timor-Leste)",
+	"51":"Ecuador",
+	"52":"Egypt",
+	"53":"El Salvador",
+	"54":"Equatorial Guinea",
+	"55":"Eritrea",
+	"56":"Estonia",
+	"57":"Eswatini",
+	"58":"Ethiopia",
+	"59":"Fiji",
+	"60":"Finland",
+	"61":"France",
+	"62":"Gabon",
+	"63":"Georgia",
+	"64":"Germany",
+	"65":"Ghana",
+	"66":"Greece",
+	"67":"Grenada",
+	"68":"Guatemala",
+	"69":"Guinea",
+	"70":"Guinea-Bissau",
+	"71":"Guyana",
+	"72":"Haiti",
+	"73":"Honduras",
+	"74":"Hungary",
+	"75":"Iceland",
+	"76":"India",
+	"77":"Indonesia",
+	"78":"Iran",
+	"79":"Iraq",
+	"80":"Ireland",
+	"81":"Israel",
+	"82":"Italy",
+	"83":"Jamaica",
+	"84":"Japan",
+	"85":"Jordan",
+	"86":"Kazakhstan",
+	"87":"Kenya",
+	"88":"Kiribati",
+	"89":"Korea, North",
+	"90":"Korea, South",
+	"91":"Kosovo",
+	"92":"Kuwait",
+	"93":"Kyrgyzstan",
+	"94":"Laos",
+	"95":"Latvia",
+	"96":"Lebanon",
+	"97":"Lesotho",
+	"98":"Liberia",
+	"99":"Libya",
+	"100":"Liechtenstein",
+	"101":"Lithuania",
+	"102":"Luxembourg",
+	"103":"Madagascar",
+	"104":"Malawi",
+	"105":"Malaysia",
+	"106":"Maldives",
+	"107":"Mali",
+	"108":"Malta",
+	"109":"Marshall Islands",
+	"110":"Mauritania",
+	"111":"Mauritius",
+	"112":"Mexico",
+	"113":"Micronesia, Federated States of",
+	"114":"Moldova",
+	"115":"Monaco",
+	"116":"Mongolia",
+	"117":"Montenegro",
+	"118":"Morocco",
+	"119":"Mozambique",
+	"120":"Myanmar (Burma)",
+	"121":"Namibia",
+	"122":"Nauru",
+	"123":"Nepal",
+	"124":"Netherlands",
+	"125":"New Zealand",
+	"126":"Nicaragua",
+	"127":"Niger",
+	"128":"Nigeria",
+	"129":"North Macedonia",
+	"130":"Norway",
+	"131":"Oman",
+	"132":"Pakistan",
+	"133":"Palau",
+	"134":"Panama",
+	"135":"Papua New Guinea",
+	"136":"Paraguay",
+	"137":"Peru",
+	"138":"Philippines",
+	"139":"Poland",
+	"140":"Portugal",
+	"141":"Qatar",
+	"142":"Romania",
+	"143":"Russia",
+	"144":"Rwanda",
+	"145":"Saint Kitts and Nevis",
+	"146":"Saint Lucia",
+	"147":"Saint Vincent and the Grenadines",
+	"148":"Samoa",
+	"149":"San Marino",
+	"150":"Sao Tome and Principe",
+	"151":"Saudi Arabia",
+	"152":"Senegal",
+	"153":"Serbia",
+	"154":"Seychelles",
+	"155":"Sierra Leone",
+	"156":"Singapore",
+	"157":"Slovakia",
+	"158":"Slovenia",
+	"159":"Solomon Islands",
+	"160":"Somalia",
+	"161":"South Africa",
+	"162":"Spain",
+	"163":"Sri Lanka",
+	"164":"Sudan",
+	"165":"Sudan, South",
+	"166":"Suriname",
+	"167":"Sweden",
+	"168":"Switzerland",
+	"169":"Syria",
+	"170":"Taiwan",
+	"171":"Tajikistan",
+	"172":"Tanzania",
+	"173":"Thailand",
+	"174":"The Bahamas",
+	"175":"The Gambia",
+	"176":"Togo",
+	"177":"Tonga",
+	"178":"Trinidad and Tobago",
+	"179":"Tunisia",
+	"180":"Turkey",
+	"181":"Turkmenistan",
+	"182":"Tuvalu",
+	"183":"Uganda",
+	"184":"Ukraine",
+	"185":"United Arab Emirates",
+	"186":"United Kingdom",
+	"187":"United States",
+	"188":"Uruguay",
+	"189":"Uzbekistan",
+	"190":"Vanuatu",
+	"191":"Vatican City",
+	"192":"Venezuela",
+	"193":"Vietnam",
+	"194":"Yemen",
+	"195":"Zambia",
+	"196":"Zimbabwe",
+};
+
 const bibles_en = {
 	biblegateway: [ "KJV", "WEB", "YLT", "NASB", "WLC", "HHH", "WHNU", "TR1550", ],
 	biblehub: [ "text", "kjv", "web", "ylt", "nasb77", "bsb", "sepd", "wlco", ],
@@ -205,6 +404,7 @@ export const refs_ids = {
 };
 
 
+    
 function get_traduced_message(trad_msg, nom_msg){
 	if(trad_msg == null){ return ""; }
 	if(nom_msg == null){ return ""; }
@@ -309,14 +509,28 @@ export function init_all_glb(lang, books, bibles, nums, curr, bibrefs, bookhrefs
 	glb_poll_txt = polltxt;
 }
 
-export let glb_poll_user_info = {};
-export let glb_poll_starting_questions = {};
 export let glb_poll_db = {};
 
-export function init_poll_glb(usrinfo, startquest, polldb){
-	glb_poll_user_info = usrinfo;
-	glb_poll_starting_questions = startquest;
+export function init_poll_glb(polldb){
 	glb_poll_db = polldb;
+}
+
+export function get_new_dv_under(dv_pop_up, id_dv){
+	var dv_parent = dv_pop_up.parentNode;
+	var dv_options = document.getElementById(id_dv);
+	if(dv_options != null){
+		var was_mine = (dv_pop_up.nextSibling == dv_options);
+		dv_options.remove();
+		if(was_mine){
+			//console.log("get_new_dv_under RETURNS NOTHING !!!!!");
+			return null;
+		}
+	}
+	dv_options = document.createElement("div");
+	dv_pop_up.after(dv_options);
+	
+	dv_options.id = id_dv;
+	return dv_options;
 }
 
 export function fill_all_strongrefs_href(){

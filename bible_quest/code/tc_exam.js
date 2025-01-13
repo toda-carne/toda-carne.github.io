@@ -1,9 +1,10 @@
 
-import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, is_mobile_browser,
-	glb_exam_language, glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang, glb_all_bibrefs, get_qid_base, 
-	glb_poll_user_info, glb_poll_starting_questions, glb_poll_db, get_verse_match, get_answer_key
+import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, 
+	glb_all_books, glb_all_bibles, glb_books_nums, glb_curr_lang, get_qid_base, glb_poll_db, get_verse_match, get_answer_key,
+	get_new_dv_under,
 } from './tc_lang_all.js';
 
+import { toggle_user_info, } from './tc_user_info.js';
 
 //import "./qrcode.js";
 //import { QRCode, makeCode } from './qrcode.js';
@@ -13,22 +14,9 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 
 const INVALID_PAGE_POS = "???";
 
-let INIT_EXAM_DB_FUNC = null;
-
-let DEBUG_QNUMS = true;
-let DEBUG_REFERRER = true;
-let DEBUG_PENDING = false;
-
-let DEFAULT_BOOK = null;
-let DEFAULT_STRONG = null;
-let DEFAULT_LINK_NAME = null;
-
-let fb_write_object = null;
-let fb_read_object = null;
-let fb_sign_out = null;
-let fb_get_user = null;
-let fb_check_user = null;
-let fb_check_login = null;
+const DEBUG_QNUMS = true;
+const DEBUG_REFERRER = true;
+const DEBUG_PENDING = false;
 
 const MIN_ANSW_SHOW_INVERT = 3;
 
@@ -41,38 +29,6 @@ const lnk_prefix = "LINK";
 
 const LEFT_POS = "grid_item_left";
 const RIGHT_POS = "grid_item_right";
-
-function init_exam_fb(){
-	const mod_nm = "./tc_firebase.js";
-	import(mod_nm)
-	.then((module) => {
-		fb_write_object = module.firebase_write_object;
-		fb_read_object = module.firebase_read_object;
-		fb_sign_out = module.firebase_sign_out;
-		fb_get_user = module.firebase_get_user;
-		fb_check_user = module.firebase_check_user;		
-		fb_check_login = module.firebase_check_login;
-		
-		if(fb_check_user != null){ 
-			fb_check_user((user) => {
-				fill_div_user();
-			}); 
-		}
-	})
-	.catch((err) => {
-		console.log("Could NOT import '${mod_nm}' err:" + err.message);
-	});
-
-	
-}
-
-function init_exam_module_vars(){
-	console.log("Calling init_exam_module_vars");
-
-	DEFAULT_BOOK = glb_curr_lang.msg_def_book;
-	DEFAULT_STRONG = glb_curr_lang.msg_def_strong;
-	DEFAULT_LINK_NAME = glb_curr_lang.msg_def_link_name;
-}
 
 const ALL_SAVED_OBJ_NAMES = "all_saved_object_names";
 const FIRST_REFERRER = "first_referref";
@@ -131,12 +87,57 @@ const id_dv_name_ed = "id_dv_name_ed";
 const id_dv_answ_ed = "id_dv_answ_ed";
 const id_support_ed = "id_support_ed";
 const id_quest_img = "id_quest_img";
-const id_ed_user_info = "id_ed_user_info";
 
 // FOR DAG pending management
 const id_ctx_pend = "ctx_pend";
 
 const firebase_answers_path = "/user_answers";
+
+
+let INIT_EXAM_DB_FUNC = null;
+
+let DEFAULT_BOOK = null;
+let DEFAULT_STRONG = null;
+let DEFAULT_LINK_NAME = null;
+
+let fb_write_object = null;
+let fb_read_object = null;
+let fb_sign_out = null;
+let fb_get_user = null;
+let fb_check_user = null;
+let fb_check_login = null;
+
+function init_exam_fb(){
+	const mod_nm = "./tc_firebase.js";
+	import(mod_nm)
+	.then((module) => {
+		fb_write_object = module.firebase_write_object;
+		fb_read_object = module.firebase_read_object;
+		fb_sign_out = module.firebase_sign_out;
+		fb_get_user = module.firebase_get_user;
+		fb_check_user = module.firebase_check_user;		
+		fb_check_login = module.firebase_check_login;
+		
+		if(fb_check_user != null){ 
+			fb_check_user((user) => {
+				fill_div_user();
+			}); 
+		}
+	})
+	.catch((err) => {
+		console.log("Could NOT import '${mod_nm}' err:" + err.message);
+	});
+
+	
+}
+
+function init_exam_module_vars(){
+	console.log("Calling init_exam_module_vars");
+
+	DEFAULT_BOOK = glb_curr_lang.msg_def_book;
+	DEFAULT_STRONG = glb_curr_lang.msg_def_strong;
+	DEFAULT_LINK_NAME = glb_curr_lang.msg_def_link_name;
+}
 
 /*
 function is_in_viewport(elem) {	
@@ -163,7 +164,7 @@ function is_content_horizontal() {
 	return false;
 }
 
-function scroll_to_top(dv_elem) {
+export function scroll_to_top(dv_elem) {
 	if(dv_elem == null){ return; }
 	const rect = dv_elem.getBoundingClientRect();
 	const dv_content = document.getElementById("id_exam_content");
@@ -317,6 +318,10 @@ function get_last_quest(){
 	}
 	//console.log("get_curr_pos_page [2] curr_idx=" + curr_idx);
 	return quest;
+}
+
+export function scroll_to_first_not_answered(){
+	scroll_to_qid(get_first_not_answered());
 }
 
 function get_first_not_answered(only_quest){
@@ -907,24 +912,6 @@ function get_all_response_ops(quest){
 	return all_ops;
 }
 
-function get_new_dv_under(dv_pop_up, id_dv){
-	var dv_parent = dv_pop_up.parentNode;
-	var dv_options = document.getElementById(id_dv);
-	if(dv_options != null){
-		var was_mine = (dv_pop_up.nextSibling == dv_options);
-		dv_options.remove();
-		if(was_mine){
-			//console.log("get_new_dv_under RETURNS NOTHING !!!!!");
-			return null;
-		}
-	}
-	dv_options = document.createElement("div");
-	dv_pop_up.after(dv_options);
-	
-	dv_options.id = id_dv;
-	return dv_options;
-}
-
 function toggle_support_interaction(qid){
 	const quest = glb_poll_db[qid];
 	if(quest == null){ return; }
@@ -1458,10 +1445,10 @@ function init_exam_buttons(){
 	if(dv_button != null){ dv_button.addEventListener('click', user_logout); }
 	
 	dv_button = document.getElementById("id_user_name"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', user_login); }
+	if(dv_button != null){ dv_button.addEventListener('click', user_name_button_handler); } //user_name_button_handler or user_login
 	
 	dv_button = document.getElementById("id_user_picture"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', user_login); }
+	if(dv_button != null){ dv_button.addEventListener('click', user_name_button_handler); } //user_name_button_handler or user_login
 	
 }
 
@@ -1546,6 +1533,17 @@ function undo_button_handler(){
 	undo_last_quest();
 }
 
+function user_name_button_handler(){
+	close_top_menu();
+	if(fb_get_user == null){ return; }
+	const fb_usr = fb_get_user();
+	if(fb_usr == null){
+		user_login();
+		return;
+	}
+	toggle_user_info();
+}
+		
 function find_GET_parameter(prm_nm) {
 	let result = null,
 	tmp = [];
@@ -2711,6 +2709,9 @@ function fill_div_user(){
 		return;
 	}
 	
+	glb_poll_db.fb_user_info = JSON.parse(JSON.stringify(the_usr));
+	//glb_poll_db.user_info = 
+	
 	const dv_user_qr = document.getElementById(id_dv_user_qrcod);
 	if((dv_user_qr != null) && (dv_user_qr.qr_maker != null)){
 		dv_user_qr.qr_maker.makeCode(get_user_href(the_usr));
@@ -2859,84 +2860,4 @@ function close_top_menu() {
 	var mm = document.querySelector(".cl_top_nav");
 	if(mm != null){ mm.classList.remove("show_menu"); }		
 }
-
-function init_user_info(user_info){
-	user_info.wallet_phone_num = "";
-}
-
-function toggle_user_info(){
-	const dv_exam_top = document.getElementById("id_exam_top_content");
-
-	let dv_ed_usr = get_new_dv_under(dv_exam_top, id_ed_user_info);
-	if(dv_ed_usr == null){
-		return;
-	}
-	dv_ed_usr.classList.add("exam");
-	dv_ed_usr.classList.add("is_block");
-	
-	let user_info = glb_poll_db.user_info;
-	if(user_info == null){
-		glb_poll_db.user_info = {};
-		init_user_info(glb_poll_db.user_info);
-		user_info = glb_poll_db.user_info;
-	}
-
-	const inp_wallet = dv_ed_usr.appendChild(document.createElement("input"));
-	inp_wallet.id = id_ed_chapter;
-	inp_wallet.value = user_info.wallet_phone_num;
-	inp_wallet.type = "number";
-	inp_wallet.size = 3;
-	inp_wallet.classList.add("exam");
-	inp_wallet.classList.add("is_ed_verse");
-	
-	const dv_ok = dv_ed_usr.appendChild(document.createElement("div"));
-	dv_ok.classList.add("exam");
-	dv_ok.classList.add("is_block");
-	dv_ok.classList.add("is_button");
-	dv_ok.innerHTML = glb_curr_lang.msg_end_edit;
-	dv_ok.addEventListener('click', function() {
-		dv_ed_usr.remove();
-		
-		return;
-	});    
-	
-}
-
-
-/*
- * var child = document.getElementById('my_element');
-var parent = child.parentNode;
-// The equivalent of parent.children.indexOf(child)
-var index = Array.prototype.indexOf.call(parent.children, child);
-*/
-/*
-async function get_photo_url() {
-	try {
-		const the_usr = fb_get_user();
-		if(the_usr == null){ return; }
-		
-		const options = {
-			//method: 'GET',
-			headers: new Headers({'content-type': 'image/jpeg'}),
-			mode: 'no-cors'
-		};
-		const response = await fetch(the_usr.photoURL, options);
-		if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
-		}
-		
-		//const json = await response.json();
-		
-		let dv_img = document.getElementById(id_dv_user_image);
-		if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
-		
-		const dv_img2 = document.getElementById("id_user_picture");
-		//if(dv_img2 != null){ dv_img2.src = the_usr.photoURL; }	
-		
-		//console.log(json);
-	} catch (error) {
-		console.error(error.message);
-	}
-}
-*/
 

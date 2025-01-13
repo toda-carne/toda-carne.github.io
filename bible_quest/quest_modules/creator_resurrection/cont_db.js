@@ -3,13 +3,11 @@ import { get_verse_reponse_name, get_answer_key, glb_all_bibrefs, init_poll_glb,
 
 "use strict";
 
-const db_user_info = {};
-const STARTING_QUESTIONS = [];
 let db_nodes_exam = {};
 
 export function init_exam_database(){
 	db_nodes_exam = {};
-	init_poll_glb(db_user_info, STARTING_QUESTIONS, db_nodes_exam);
+	init_poll_glb(db_nodes_exam);
 
 	const glb_img_dir = "../img/";
 	const proy_img_dir = "../quest_modules/creator_resurrection/img/";
