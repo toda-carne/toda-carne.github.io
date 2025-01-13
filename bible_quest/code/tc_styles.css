@@ -1070,7 +1070,7 @@ a.exam_ref:hover {
 
 .grid_user_info {
 	display: grid;
-	grid-template-columns: repeat(10, 1fr);
+	grid-template-columns: max-content repeat(10, 10fr) 0.1fr;
 	grid-auto-rows: auto;
 	border: 1px solid white;
 	gap: 1vh;

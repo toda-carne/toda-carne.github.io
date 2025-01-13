@@ -30,7 +30,27 @@ function new_user_info(){
 	return user_info;
 }
 
-function add_user_info_field(id, tp, sz, mx_ln, val){ // type "number" or "text"
+function add_user_info_label(htm_txt, snum){ 
+	//const cls = "grid_item_auto_span_" + snum;
+	const cls = "grid_item_auto_auto";
+	
+	const inp_fld = document.createElement("div");
+	inp_fld.innerHTML = htm_txt;
+	inp_fld.classList.add("exam");
+	inp_fld.classList.add(cls);
+	return inp_fld;
+}
+
+function add_user_info_end_line(){ 
+	const inp_fld = document.createElement("div");
+	inp_fld.classList.add("exam");
+	inp_fld.classList.add("grid_item_auto_rest");
+	return inp_fld;
+}
+
+function add_user_info_field(id, tp, sz, mx_ln, val, snum){ // type "number" or "text"
+	const cls = "grid_item_auto_span_" + snum;
+	
 	const inp_fld = document.createElement("input");
 	inp_fld.id = id;
 	inp_fld.type = tp;
@@ -38,6 +58,7 @@ function add_user_info_field(id, tp, sz, mx_ln, val){ // type "number" or "text"
 	inp_fld.maxlength = mx_ln;
 	inp_fld.value = val;
 	inp_fld.classList.add("exam");
+	inp_fld.classList.add(cls);
 	return inp_fld;
 }
 
@@ -48,10 +69,11 @@ export function toggle_user_info(){
 	let dv_ed_usr = get_new_dv_under(dv_exam_top, id_ed_user_info);
 	if(dv_ed_usr == null){
 		if(DEBUG_USER_INFO){ console.log("toggle_user_info OFF"); }
+		scroll_to_first_not_answered();
 		return;
 	}
 	dv_ed_usr.classList.add("exam");
-	dv_ed_usr.classList.add("is_block");
+	dv_ed_usr.classList.add("grid_user_info");
 	
 	/*
 	let user_info = glb_poll_db.user_info;
@@ -60,17 +82,25 @@ export function toggle_user_info(){
 		user_info = glb_poll_db.user_info;
 	}*/
 
-	const inp_wallet = dv_ed_usr.appendChild(document.createElement("input"));
-	inp_wallet.id = id_wallet_number;
-	inp_wallet.value = "123";
-	inp_wallet.type = "number";
-	inp_wallet.size = 3;
-	inp_wallet.classList.add("exam");
-	inp_wallet.classList.add("is_ed_verse");
+	let lbl = null;
+	let fld = null;
+	
+	lbl = add_user_info_label("NEQUI", 1);
+	dv_ed_usr.appendChild(lbl);
+
+	fld = add_user_info_field(id_wallet_number, "number", 3, 5, 123, 2);
+	dv_ed_usr.appendChild(fld);
+	
+	fld = add_user_info_end_line();
+	dv_ed_usr.appendChild(fld);
+
+	lbl = add_user_info_label("AHSDFIUY ISUDYF", 1);
+	dv_ed_usr.appendChild(lbl);
+
 	
 	const dv_ok = dv_ed_usr.appendChild(document.createElement("div"));
 	dv_ok.classList.add("exam");
-	dv_ok.classList.add("is_block");
+	dv_ok.classList.add("grid_item_auto_span_3");
 	dv_ok.classList.add("is_button");
 	dv_ok.innerHTML = glb_curr_lang.msg_end_edit;
 	dv_ok.addEventListener('click', function() {
