@@ -287,6 +287,15 @@ const countries_es = {
 	"196":"Zimbabue",
 };
 
+const marital_es = {
+	"1":"Nunca casado",
+	"2":"Soltero",
+	"3":"Casado",
+	"4":"Divorciado",
+	"5":"Separado",
+	"6":"Viudo",
+};
+
 function init_es_basic_msg(){
 	const obj = all_es_msg;
 	
@@ -346,6 +355,24 @@ function init_es_basic_msg(){
 	
 	obj.msg_qref_question_num = "pregunta número";
 	obj.msg_qref_observation_num = "observación número";
+	
+	obj.msg_usr_nequi = "Nequi";
+	obj.msg_usr_paypal = "Paypal email";
+	obj.msg_usr_transfiya = "Transfiya";
+	obj.msg_usr_url_photo = "URL a su foto";
+	obj.msg_usr_country = "Pais";
+	obj.msg_usr_country_id = "Cedula";
+	obj.msg_usr_name = "Nombre";
+	obj.msg_usr_sex = "Sexo";
+	obj.msg_usr_birth_date = "Fecha nacimiento";
+	obj.msg_usr_marital_status = "Estado civil";
+	obj.msg_usr_divorce_num = "Num divorcios";
+	obj.msg_usr_children_num = "Num hijos";
+	obj.msg_usr_website = "Website";
+	obj.msg_usr_facebook = "Facebook";
+	obj.msg_usr_instagram = "Instagram";
+	obj.msg_usr_youtube = "Youtube";
+	
 }
 
 const all_es_bibrefs = {};
@@ -366,7 +393,8 @@ export function init_es_module(){
 	fill_bibrefs_href(all_es_bibrefs);
 	fill_all_strongrefs_href();
 
-	init_all_glb("es", num2book_es, bibles_es, book2num_es, all_es_msg, all_es_bibrefs, book_es_hrefs, all_es_poll_txt);
+	init_all_glb("es", countries_es, marital_es, "41", "1", num2book_es, bibles_es, book2num_es, all_es_msg, 
+				 all_es_bibrefs, book_es_hrefs, all_es_poll_txt);
 	
 	//init_es_exam_msg();	
 }

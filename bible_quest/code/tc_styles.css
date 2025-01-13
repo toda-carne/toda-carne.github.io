@@ -1083,32 +1083,7 @@ a.exam_ref:hover {
 	border: 1px solid white;
 }
 
-.grid_item_auto_span_1 {
-	grid-column: auto / span 1;
-	grid-row: auto;	
-	border: 1px solid white;
-}
-
-.grid_item_auto_span_2 {
-	grid-column: auto / span 2;
-	grid-row: auto;	
-	border: 1px solid white;
-}
-
-.grid_item_auto_span_3 {
-	grid-column: auto / span 3;
-	grid-row: auto;	
-	border: 1px solid white;
-}
-
-.grid_item_auto_span_4 {
-	grid-column: auto / span 4;
-	grid-row: auto;	
-	border: 1px solid white;
-}
-
-.grid_item_auto_span_5 {
-	grid-column: auto / span 5;
+.grid_item_user {
 	grid-row: auto;	
 	border: 1px solid white;
 }

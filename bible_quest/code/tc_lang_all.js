@@ -387,6 +387,15 @@ const countries_en = {
 	"196":"Zimbabwe",
 };
 
+const marital_en = {
+	"1":"Never married",
+	"2":"Single",
+	"3":"Married",
+	"4":"Divorced",
+	"5":"Separated",
+	"6":"Widowed",
+};
+
 const bibles_en = {
 	biblegateway: [ "KJV", "WEB", "YLT", "NASB", "WLC", "HHH", "WHNU", "TR1550", ],
 	biblehub: [ "text", "kjv", "web", "ylt", "nasb77", "bsb", "sepd", "wlco", ],
@@ -478,6 +487,23 @@ function init_en_basic_msg(){
 
 	obj.msg_qref_question_num = "question number";
 	obj.msg_qref_observation_num = "observation number";
+
+	obj.msg_usr_nequi = "Nequi";
+	obj.msg_usr_paypal = "Paypal email";
+	obj.msg_usr_transfiya = "Transfiya";
+	obj.msg_usr_url_photo = "Photo URL";
+	obj.msg_usr_country = "Country";
+	obj.msg_usr_country_id = "Id";
+	obj.msg_usr_name = "Name";
+	obj.msg_usr_sex = "Sex";
+	obj.msg_usr_birth_date = "Birth date";
+	obj.msg_usr_marital_status = "Marital Status";
+	obj.msg_usr_divorce_num = "Num divorces";
+	obj.msg_usr_children_num = "Num children";
+	obj.msg_usr_website = "Website";
+	obj.msg_usr_facebook = "Facebook";
+	obj.msg_usr_instagram = "Instagram";
+	obj.msg_usr_youtube = "Youtube";
 	
 }
 
@@ -490,6 +516,10 @@ export function init_get_msg(lang_msgs){
 }
 
 export let glb_exam_language = "en";
+export let glb_all_countries = countries_en;
+export let glb_all_marital = marital_en;
+export let glb_def_country = "187";
+export let glb_def_marital = "1";
 export let glb_all_books = num2book_en;
 export let glb_all_bibles = bibles_en;
 export let glb_books_nums = book2num_en;
@@ -498,8 +528,12 @@ export let glb_all_bibrefs = all_en_bibrefs;
 export let glb_all_book_hrefs = book_en_hrefs;
 export let glb_poll_txt = all_en_poll_txt;
 
-export function init_all_glb(lang, books, bibles, nums, curr, bibrefs, bookhrefs, polltxt){
+export function init_all_glb(lang, countries, marital, def_country, def_marital, books, bibles, nums, curr, bibrefs, bookhrefs, polltxt){
 	glb_exam_language = lang;
+	glb_all_countries = countries;
+	glb_all_marital = marital;
+	glb_def_country = def_country;
+	glb_def_marital = def_marital;
 	glb_all_books = books;
 	glb_all_bibles = bibles;
 	glb_books_nums = nums;

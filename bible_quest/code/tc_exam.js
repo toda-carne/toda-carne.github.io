@@ -1445,10 +1445,16 @@ function init_exam_buttons(){
 	if(dv_button != null){ dv_button.addEventListener('click', user_logout); }
 	
 	dv_button = document.getElementById("id_user_name"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', user_name_button_handler); } //user_name_button_handler or user_login
+	if(dv_button != null){ dv_button.addEventListener('click', user_name_button_handler); }
+	if(dv_button != null){ dv_button.addEventListener('contextmenu', (ev1) => {
+			ev1.preventDefault();
+			toggle_user_info();
+			return false;
+		}); 		
+	} 
 	
 	dv_button = document.getElementById("id_user_picture"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', user_name_button_handler); } //user_name_button_handler or user_login
+	if(dv_button != null){ dv_button.addEventListener('click', user_name_button_handler); }
 	
 }
 
