@@ -362,6 +362,12 @@ function init_es_basic_msg(){
 	obj.msg_qref_question_num = "pregunta número";
 	obj.msg_qref_observation_num = "observación número";
 	
+	obj.msg_google_name = "Nombre Google";
+	obj.msg_google_photo = "Foto Google";
+	obj.msg_google_email = "Email Google ";
+	obj.msg_sibiblia_qr = "Su QR";
+	obj.msg_sibiblia_id = "Su ID";
+	obj.msg_sibiblia_photo = "Su foto";
 	obj.msg_usr_nequi = "Nequi";
 	obj.msg_usr_paypal = "Paypal email";
 	obj.msg_usr_transfiya = "Transfiya";

@@ -1,5 +1,8 @@
 
-import { get_verse_reponse_name, get_answer_key, glb_all_bibrefs, init_poll_glb, add_response_observation, } from '../../code/tc_lang_all.js';
+import { get_verse_reponse_name, get_answer_key, init_poll_glb, add_response_observation, 
+	glb_vars as gvar,
+	//glb_all_bibrefs, 
+} from '../../code/tc_lang_all.js';
 
 "use strict";
 
@@ -10,7 +13,7 @@ export function init_exam_database(){
 	init_poll_glb(db_nodes_exam);
 	
 	const db = db_nodes_exam;
-	const rf = glb_all_bibrefs;
+	const rf = gvar.glb_all_bibrefs;
 
 	db.q1_1__ = { 
 		htm_stm: "q1_1__are_you_reasonable",

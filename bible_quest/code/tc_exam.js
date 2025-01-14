@@ -101,12 +101,12 @@ let DEFAULT_BOOK = null;
 let DEFAULT_STRONG = null;
 let DEFAULT_LINK_NAME = null;
 
-let fb_write_object = null;
-let fb_read_object = null;
-let fb_sign_out = null;
-let fb_get_user = null;
-let fb_check_user = null;
-let fb_check_login = null;
+export let fb_write_object = null;
+export let fb_read_object = null;
+export let fb_sign_out = null;
+export let fb_get_user = null;
+export let fb_check_user = null;
+export let fb_check_login = null;
 
 function init_exam_fb(){
 	const mod_nm = "./tc_firebase.js";

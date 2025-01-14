@@ -1,14 +1,26 @@
 
 import { get_msg, is_mobile_browser, get_new_dv_under, 
 	glb_vars as gvar, glb_poll_db, 
-//	gvar.glb_curr_lang, glb_poll_db, gvar.glb_all_countries, gvar.glb_all_marital, gvar.glb_all_id_names, 
-//	gvar.glb_def_country, gvar.glb_def_marital, 
 } from './tc_lang_all.js';
 
-import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, } from './tc_exam.js';
+import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, 
+	fb_write_object, fb_read_object, fb_sign_out, fb_get_user, fb_check_user, fb_check_login, 
+} from './tc_exam.js';
 
 const DEBUG_USER_INFO = true;
+
+const firebase_user_info_path = "/user_info";
+
 const id_ed_user_info = "id_ed_user_info";
+const id_comm_info = "id_ed_user_comm_info";
+
+const id_goo_name = "id_ed_user_goo_name";
+const id_goo_photo = "id_ed_user_goo_photo";
+const id_goo_email = "id_ed_user_goo_email";
+const id_sibiblia_qr = "id_ed_sibiblia_qr";
+const id_sibiblia_id = "id_ed_sibiblia_id";
+const id_sibiblia_photo = "id_ed_sibiblia_photo";
+
 const id_nequi_number = "id_ed_user_nequi_number";
 const id_paypal_email = "id_ed_user_paypal_email";
 const id_transfiya_number = "id_ed_user_transfiya_number";
@@ -98,6 +110,25 @@ function add_user_info_simple_line(dv_ed_usr, label, id, tp, sz, mx_ln, val){
 	dv_ed_usr.appendChild(fld);
 }
 
+function add_user_info_simple_html_line(dv_ed_usr, label, id, htm_str){
+	let lbl = null;
+	let fld = null;
+	
+	lbl = add_user_info_label(label);
+	dv_ed_usr.appendChild(lbl);
+
+	fld = dv_ed_usr.appendChild(document.createElement("div"));
+	fld.id = id;
+	fld.classList.add("exam");
+	fld.classList.add("grid_item_user");
+	fld.style.gridColumn = "auto / span 10";
+	fld.innerHTML = htm_str;
+	dv_ed_usr.appendChild(fld);
+	
+	fld = add_user_info_end_line();
+	dv_ed_usr.appendChild(fld);
+}
+
 function add_user_info_select_line(dv_ed_usr, label, id, val, arr_ops){ 
 	let lbl = null;
 	let fld = null;
@@ -134,15 +165,24 @@ export function toggle_user_info(){
 	
 	const dv_exam_top = document.getElementById("id_exam_top_content");
 
-	let dv_ed_usr = get_new_dv_under(dv_exam_top, id_ed_user_info);
-	if(dv_ed_usr == null){
+	let dv_edit_user = null;
+	dv_edit_user = get_new_dv_under(dv_exam_top, id_ed_user_info);
+	if(dv_edit_user == null){
 		if(DEBUG_USER_INFO){ console.log("toggle_user_info OFF"); }
 		scroll_to_first_not_answered();
 		return;
 	}
+	dv_edit_user.classList.add("exam");
+
+	fld = document.createElement("div");
+	fld.id = id_comm_info;
+	fld.classList.add("exam");
+	dv_edit_user.appendChild(fld);
+	
+	const dv_ed_usr = document.createElement("div");
 	dv_ed_usr.classList.add("exam");
 	dv_ed_usr.classList.add("grid_user_info");
-	
+	dv_edit_user.appendChild(dv_ed_usr);
 	/*
 	let user_info = glb_poll_db.user_info;
 	if(user_info == null){
@@ -151,6 +191,14 @@ export function toggle_user_info(){
 	}
 	obj.msg_usr_birth_date = "Fecha nacimiento";
 	*/
+	
+	let htm_str = "NADA";
+	add_user_info_simple_html_line(dv_ed_usr, gvar.glb_curr_lang.msg_google_name, id_goo_name, htm_str);
+	add_user_info_simple_html_line(dv_ed_usr, gvar.glb_curr_lang.msg_google_photo, id_goo_photo, htm_str);
+	add_user_info_simple_html_line(dv_ed_usr, gvar.glb_curr_lang.msg_google_email, id_goo_email, htm_str);
+	add_user_info_simple_html_line(dv_ed_usr, gvar.glb_curr_lang.msg_sibiblia_qr, id_sibiblia_qr, htm_str);
+	add_user_info_simple_html_line(dv_ed_usr, gvar.glb_curr_lang.msg_sibiblia_id, id_sibiblia_id, htm_str);
+	add_user_info_simple_html_line(dv_ed_usr, gvar.glb_curr_lang.msg_sibiblia_photo, id_sibiblia_photo, htm_str);
 	
 	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_nequi, id_nequi_number, "number", 10, 10, 0);
 	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_paypal, id_paypal_email, "text", 150, 150, "");
@@ -203,32 +251,50 @@ export function toggle_user_info(){
 	//gvar.glb_all_countries[gvar.glb_def_country]
 	//gvar.glb_all_countries[gvar.glb_def_country]
 
-	const dv_ok = dv_ed_usr.appendChild(document.createElement("div"));
+	const dv_ok = dv_edit_user.appendChild(document.createElement("div"));
 	dv_ok.classList.add("exam");
 	dv_ok.classList.add("grid_item_auto_span_4");
 	dv_ok.classList.add("is_button");
 	dv_ok.innerHTML = gvar.glb_curr_lang.msg_end_edit;
 	dv_ok.addEventListener('click', function() {
-		dv_ed_usr.remove();
+		dv_edit_user.remove();
 		scroll_to_first_not_answered();
 		return;
 	});    
 
-	scroll_to_top(dv_ed_usr);
+	scroll_to_top(dv_edit_user);
 }
 
+function write_firebase_user_object(err_fn){
+	if(gvar.current_user_info == null){
+		return;
+	}
+	if(fb_write_object == null){
+		console.log("CANNOT write_firebase_user_object. fb_write_object == null");
+		const dv_comm_info = document.getElementById(id_comm_info);
+		dv_comm_info.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
+		return;
+	}
+	console.log("SAVING in https://todacarne-firebase-default-rtdb.firebaseio.com");
+	const wr_obj = JSON.parse(JSON.stringify(gvar.current_user_info));
+	return fb_write_object(firebase_user_info_path, wr_obj, err_fn);
+}
 
-
-/*
-		<div class="grid_item_auto_span_5">NEQUI IUY IUY IUY IUY IUYASDIFH IHYFGI UYSGIU</div>
-		<div class="grid_item_auto_span_4"><input type="text" id="name" name="name" required minlength="4" maxlength="8" size="10" /></div>
-		<div class="grid_item_auto_span_1">3121234567</div>
-		<div class="grid_item_auto_rest"></div>
-		<div class="grid_item_auto_auto">SECOND</div>
-		<div class="grid_item_auto_auto">Transfiya</div>
-		<div class="grid_item_auto_rest"></div>
-		<div class="grid_item_auto_auto">THIRD</div>
-		<div class="grid_item_auto_auto">Otra vez</div>
-		<div class="grid_item_auto_rest"></div>
-*/
+function read_firebase_user_object(){
+	if(fb_read_object == null){
+		console.log("CANNOT read_firebase_user_object. fb_read_object == null");
+		const dv_comm_info = document.getElementById(id_comm_info);
+		dv_comm_info.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
+		return;
+	}
+	console.log("LOADING from https://todacarne-firebase-default-rtdb.firebaseio.com");
+	return fb_read_object(firebase_user_info_path, (snapshot) => {
+		if (snapshot.exists()) {
+			const rd_obj = snapshot.val();
+			gvar.current_user_info = JSON.parse(JSON.stringify(rd_obj));
+		} else {
+			console.log("No data available");
+		}
+	});	
+}
 
