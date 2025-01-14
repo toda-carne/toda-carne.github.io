@@ -1340,7 +1340,7 @@ function set_answer_for_verse_cit(dv_citation){
 
 // CODE_FOR SELECT FROM ARRAY OF OPTIONS (for example several verses)
 
-function toggle_select_option(dv_return, all_options_arr, on_click_fn){
+export function toggle_select_option(dv_return, all_options_arr, on_click_fn){
 	var dv_options = get_new_dv_under(dv_return, id_dv_sel_option);
 	if(dv_options == null){
 		return;

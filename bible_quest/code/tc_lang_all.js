@@ -387,6 +387,11 @@ const countries_en = {
 	"196":"Zimbabwe",
 };
 
+const country_id_names_en = {
+	"36":"Cedula", // Colombia
+	"187":"Id", // United States
+};
+
 const marital_en = {
 	"1":"Never married",
 	"2":"Single",
@@ -411,8 +416,6 @@ export const refs_ids = {
 	link_kind: "lnk_kind",
 	qid_kind: "qid_kind",
 };
-
-
     
 function get_traduced_message(trad_msg, nom_msg){
 	if(trad_msg == null){ return ""; }
@@ -515,11 +518,36 @@ export function init_get_msg(lang_msgs){
 	};
 }
 
+export let glb_vars = {};
+
+export function init_glb_vars(all_vars){
+	glb_vars = all_vars;
+}
+
+const glb_en_vars = {};
+
+function ini_glb_vars_en(gvars){
+	gvars.glb_exam_language = "en";
+	gvars.glb_all_countries = countries_en;
+	gvars.glb_all_marital = marital_en;
+	gvars.glb_all_id_names = country_id_names_en;
+	gvars.glb_def_country = "187";
+	gvars.glb_def_marital = "6";
+	gvars.glb_all_books = num2book_en;
+	gvars.glb_all_bibles = bibles_en;
+	gvars.glb_books_nums = book2num_en;
+	gvars.glb_curr_lang = all_en_msg;
+	gvars.glb_all_bibrefs = all_en_bibrefs;
+	gvars.glb_all_book_hrefs = book_en_hrefs;
+	gvars.glb_poll_txt = all_en_poll_txt;
+}
+
 export let glb_exam_language = "en";
 export let glb_all_countries = countries_en;
 export let glb_all_marital = marital_en;
+export let glb_all_id_names = country_id_names_en;
 export let glb_def_country = "187";
-export let glb_def_marital = "1";
+export let glb_def_marital = "6";
 export let glb_all_books = num2book_en;
 export let glb_all_bibles = bibles_en;
 export let glb_books_nums = book2num_en;
@@ -528,10 +556,13 @@ export let glb_all_bibrefs = all_en_bibrefs;
 export let glb_all_book_hrefs = book_en_hrefs;
 export let glb_poll_txt = all_en_poll_txt;
 
-export function init_all_glb(lang, countries, marital, def_country, def_marital, books, bibles, nums, curr, bibrefs, bookhrefs, polltxt){
+export function init_all_glb(lang, countries, marital, id_nams, def_country, def_marital, books, bibles, nums, curr, bibrefs, 
+							 bookhrefs, polltxt)
+{
 	glb_exam_language = lang;
 	glb_all_countries = countries;
 	glb_all_marital = marital;
+	glb_all_id_names = id_nams;
 	glb_def_country = def_country;
 	glb_def_marital = def_marital;
 	glb_all_books = books;
@@ -610,6 +641,8 @@ export function init_en_module(){
 	fill_bibrefs_href(all_en_bibrefs);
 	fill_all_strongrefs_href();
 
+	ini_glb_vars_en(glb_en_vars);
+	init_glb_vars(glb_en_vars);	
 	//init_en_exam_msg();
 }
 

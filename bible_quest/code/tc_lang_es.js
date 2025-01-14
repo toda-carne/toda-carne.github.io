@@ -1,6 +1,7 @@
 
-import { init_get_msg, init_all_glb, fill_reversed_object, init_en_module, bib_defaults, fill_bibrefs_href, fill_all_strongrefs_href, 
-	get_verse_cit_key, } from '../code/tc_lang_all.js';
+import { init_glb_vars, init_get_msg, init_all_glb, fill_reversed_object, init_en_module, bib_defaults, fill_bibrefs_href, 
+	fill_all_strongrefs_href, get_verse_cit_key, 
+} from '../code/tc_lang_all.js';
 
 "use strict";
 
@@ -287,6 +288,11 @@ const countries_es = {
 	"196":"Zimbabue",
 };
 
+const country_id_names_es = {
+	"41":"Cedula", // Colombia
+	"60":"Id", // United States
+};
+
 const marital_es = {
 	"1":"Nunca casado",
 	"2":"Soltero",
@@ -377,6 +383,24 @@ function init_es_basic_msg(){
 
 const all_es_bibrefs = {};
 
+const glb_es_vars = {};
+
+function ini_glb_vars_es(gvars){
+	gvars.glb_exam_language = "en";
+	gvars.glb_all_countries = countries_es;
+	gvars.glb_all_marital = marital_es;
+	gvars.glb_all_id_names = country_id_names_es;
+	gvars.glb_def_country = "41";
+	gvars.glb_def_marital = "6";
+	gvars.glb_all_books = num2book_es;
+	gvars.glb_all_bibles = bibles_es;
+	gvars.glb_books_nums = book2num_es;
+	gvars.glb_curr_lang = all_es_msg;
+	gvars.glb_all_bibrefs = all_es_bibrefs;
+	gvars.glb_all_book_hrefs = book_es_hrefs;
+	gvars.glb_poll_txt = all_es_poll_txt;
+}
+
 export function init_es_module(){
 	init_en_module();
 	init_es_basic_msg();
@@ -393,7 +417,9 @@ export function init_es_module(){
 	fill_bibrefs_href(all_es_bibrefs);
 	fill_all_strongrefs_href();
 
-	init_all_glb("es", countries_es, marital_es, "41", "1", num2book_es, bibles_es, book2num_es, all_es_msg, 
+	ini_glb_vars_es(glb_es_vars);
+	init_glb_vars(glb_es_vars);
+	init_all_glb("es", countries_es, marital_es, country_id_names_es, "41", "6", num2book_es, bibles_es, book2num_es, all_es_msg, 
 				 all_es_bibrefs, book_es_hrefs, all_es_poll_txt);
 	
 	//init_es_exam_msg();	
