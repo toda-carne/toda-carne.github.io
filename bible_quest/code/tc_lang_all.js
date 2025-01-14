@@ -542,6 +542,7 @@ function ini_glb_vars_en(gvars){
 	gvars.glb_poll_txt = all_en_poll_txt;
 }
 
+/*
 export let glb_exam_language = "en";
 export let glb_all_countries = countries_en;
 export let glb_all_marital = marital_en;
@@ -555,10 +556,12 @@ export let glb_curr_lang = all_en_msg;
 export let glb_all_bibrefs = all_en_bibrefs;
 export let glb_all_book_hrefs = book_en_hrefs;
 export let glb_poll_txt = all_en_poll_txt;
+*/
 
 export function init_all_glb(lang, countries, marital, id_nams, def_country, def_marital, books, bibles, nums, curr, bibrefs, 
 							 bookhrefs, polltxt)
 {
+	/*
 	glb_exam_language = lang;
 	glb_all_countries = countries;
 	glb_all_marital = marital;
@@ -572,6 +575,7 @@ export function init_all_glb(lang, countries, marital, id_nams, def_country, def
 	glb_all_bibrefs = bibrefs;
 	glb_all_book_hrefs = bookhrefs;
 	glb_poll_txt = polltxt;
+	*/
 }
 
 export let glb_poll_db = {};

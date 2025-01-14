@@ -419,8 +419,8 @@ export function init_es_module(){
 
 	ini_glb_vars_es(glb_es_vars);
 	init_glb_vars(glb_es_vars);
-	init_all_glb("es", countries_es, marital_es, country_id_names_es, "41", "6", num2book_es, bibles_es, book2num_es, all_es_msg, 
-				 all_es_bibrefs, book_es_hrefs, all_es_poll_txt);
+	//init_all_glb("es", countries_es, marital_es, country_id_names_es, "41", "6", num2book_es, bibles_es, book2num_es, all_es_msg, 
+	//			 all_es_bibrefs, book_es_hrefs, all_es_poll_txt);
 	
 	//init_es_exam_msg();	
 }

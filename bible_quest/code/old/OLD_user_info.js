@@ -1,8 +1,6 @@
 
-import { get_msg, is_mobile_browser, get_new_dv_under, 
-	glb_vars as gvar, glb_poll_db, 
-//	gvar.glb_curr_lang, glb_poll_db, gvar.glb_all_countries, gvar.glb_all_marital, gvar.glb_all_id_names, 
-//	gvar.glb_def_country, gvar.glb_def_marital, 
+import { get_msg, is_mobile_browser, get_new_dv_under, glb_curr_lang, glb_poll_db, glb_all_countries, glb_all_marital, glb_all_id_names, 
+	glb_def_country, glb_def_marital, 
 } from './tc_lang_all.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, } from './tc_exam.js';
@@ -35,13 +33,13 @@ function new_user_info(){
 	user_info.paypal_id = "";
 	user_info.transfiya_num = "";
 	user_info.url_photo = "";
-	user_info.country = gvar.glb_all_countries[gvar.glb_def_country];
+	user_info.country = glb_all_countries[glb_def_country];
 	user_info.citizen_id = 0;
 	user_info.birth_year = 2024;
 	user_info.birth_month = 12;
 	user_info.birth_day = 31;
 	user_info.sex = "";
-	user_info.marital_status = gvar.glb_all_marital[gvar.glb_def_marital];
+	user_info.marital_status = glb_all_marital[glb_def_marital];
 	user_info.name = "";
 	user_info.divorce_number = -1;
 	user_info.children_number = -1;
@@ -152,16 +150,16 @@ export function toggle_user_info(){
 	obj.msg_usr_birth_date = "Fecha nacimiento";
 	*/
 	
-	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_nequi, id_nequi_number, "number", 10, 10, 0);
-	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_paypal, id_paypal_email, "text", 150, 150, "");
-	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_transfiya, id_transfiya_number, "number", 10, 10, 0);
-	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_url_photo, id_url_photo, "text", 150, 150, "");
+	add_user_info_simple_line(dv_ed_usr, glb_curr_lang.msg_usr_nequi, id_nequi_number, "number", 10, 10, 0);
+	add_user_info_simple_line(dv_ed_usr, glb_curr_lang.msg_usr_paypal, id_paypal_email, "text", 150, 150, "");
+	add_user_info_simple_line(dv_ed_usr, glb_curr_lang.msg_usr_transfiya, id_transfiya_number, "number", 10, 10, 0);
+	add_user_info_simple_line(dv_ed_usr, glb_curr_lang.msg_usr_url_photo, id_url_photo, "text", 150, 150, "");
 	
-	add_user_info_select_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_country, id_country, gvar.glb_all_countries[gvar.glb_def_country], gvar.glb_all_countries);
+	add_user_info_select_line(dv_ed_usr, glb_curr_lang.msg_usr_country, id_country, glb_all_countries[glb_def_country], glb_all_countries);
 	
 	lbl = document.createElement("div");
 	lbl.id = id_citizen_id_lbl;
-	lbl.innerHTML = gvar.glb_all_id_names[gvar.glb_def_country];
+	lbl.innerHTML = glb_all_id_names[glb_def_country];
 	lbl.classList.add("exam", "big_font", "bold_font");
 	lbl.classList.add("grid_item_auto_auto");
 	//lbl.classList.add("grid_item_user");
@@ -174,7 +172,7 @@ export function toggle_user_info(){
 	fld = add_user_info_end_line();
 	dv_ed_usr.appendChild(fld);	
 
-	lbl = add_user_info_label(gvar.glb_curr_lang.msg_usr_birth_date);
+	lbl = add_user_info_label(glb_curr_lang.msg_usr_birth_date);
 	dv_ed_usr.appendChild(lbl);
 
 	fld = add_user_info_field(id_birth_year, "number", 4, 4, 2024, 4);
@@ -189,25 +187,25 @@ export function toggle_user_info(){
 	fld = add_user_info_end_line();
 	dv_ed_usr.appendChild(fld);	
 	
-	add_user_info_select_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_marital_status, id_marital_status, 
-							  gvar.glb_all_marital[gvar.glb_def_marital], gvar.glb_all_marital);
+	add_user_info_select_line(dv_ed_usr, glb_curr_lang.msg_usr_marital_status, id_marital_status, 
+							  glb_all_marital[glb_def_marital], glb_all_marital);
 	
-	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_name, id_name, "text", 150, 150, "");
-	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_divorce_num, id_divorce_number, "number", 1, 1, 0);
-	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_children_num, id_children_number, "number", 2, 2, 0);
-	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_website, id_website, "text", 150, 150, "");
-	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_facebook, id_facebook, "text", 150, 150, "");
-	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_instagram, id_instagram, "text", 150, 150, "");
-	add_user_info_simple_line(dv_ed_usr, gvar.glb_curr_lang.msg_usr_youtube, id_youtube, "text", 150, 150, "");
+	add_user_info_simple_line(dv_ed_usr, glb_curr_lang.msg_usr_name, id_name, "text", 150, 150, "");
+	add_user_info_simple_line(dv_ed_usr, glb_curr_lang.msg_usr_divorce_num, id_divorce_number, "number", 1, 1, 0);
+	add_user_info_simple_line(dv_ed_usr, glb_curr_lang.msg_usr_children_num, id_children_number, "number", 2, 2, 0);
+	add_user_info_simple_line(dv_ed_usr, glb_curr_lang.msg_usr_website, id_website, "text", 150, 150, "");
+	add_user_info_simple_line(dv_ed_usr, glb_curr_lang.msg_usr_facebook, id_facebook, "text", 150, 150, "");
+	add_user_info_simple_line(dv_ed_usr, glb_curr_lang.msg_usr_instagram, id_instagram, "text", 150, 150, "");
+	add_user_info_simple_line(dv_ed_usr, glb_curr_lang.msg_usr_youtube, id_youtube, "text", 150, 150, "");
 	
-	//gvar.glb_all_countries[gvar.glb_def_country]
-	//gvar.glb_all_countries[gvar.glb_def_country]
+	//glb_all_countries[glb_def_country]
+	//glb_all_countries[glb_def_country]
 
 	const dv_ok = dv_ed_usr.appendChild(document.createElement("div"));
 	dv_ok.classList.add("exam");
 	dv_ok.classList.add("grid_item_auto_span_4");
 	dv_ok.classList.add("is_button");
-	dv_ok.innerHTML = gvar.glb_curr_lang.msg_end_edit;
+	dv_ok.innerHTML = glb_curr_lang.msg_end_edit;
 	dv_ok.addEventListener('click', function() {
 		dv_ed_usr.remove();
 		scroll_to_first_not_answered();
