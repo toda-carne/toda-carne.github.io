@@ -21,22 +21,22 @@ export function init_exam_database(){
 	const lft = "grid_item_left";
 
 	db.glb_img_dir = glb_img_dir;
-	db.proy_img_dir = proy_img_dir;
+	db.proy_img_dir = proy_img_dir;  //CAREFUL!! Used as the path for every img_href
 	db.score_it = {};
 	
-	db.img_hrefs = {
-		yes_like: glb_img_dir + "yes_like.webp",
-		no_like: glb_img_dir + "no_like.webp",
-		less_than: glb_img_dir + "less_than.webp",
-		more: glb_img_dir + "more.webp",
-		less: glb_img_dir + "less.webp",
+	db.img_hrefs = {  // CAREFUL!! it uses db.glb_img_dir to find them 
+		yes_like: "yes_like.webp",
+		no_like: "no_like.webp",
+		less_than: "less_than.webp",
+		more: "more.webp",
+		less: "less.webp",
 	};
 
 	db.q_bible__ = { 
 		choose_yes: true,
 		context: ["ctx_general", "ctx_bible"],
 		htm_stm: "q1_0__bible",
-		img_href: proy_img_dir + "bible.webp", 
+		img_href: "bible.webp", 
 		answers: {
 			q1_0__YES_bible: { img_pos: rgt, },
 			q1_0__NO_bible: { img_pos: lft, },
@@ -48,7 +48,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_creator"],
 		htm_stm: "q1_1__creator",
-		img_href: proy_img_dir + "creator.webp", 
+		img_href: "creator.webp", 
 		answers: {
 			q1_1__YES_creator: { img_pos: rgt, },
 			q1_1__NO_creator: { img_pos: lft, },
@@ -59,7 +59,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_creator"],
 		htm_stm: "q1_1_2__six_days",
-		img_href: proy_img_dir + "six_days.webp", 
+		img_href: "six_days.webp", 
 		answers: {
 			q1_1_2__YES_six_days: { img_pos: rgt, },
 			q1_1_2__NO_six_days: { img_pos: lft, },
@@ -73,7 +73,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_evolution"],
 		htm_stm: "q1_3__evolution",
-		img_href: proy_img_dir + "evolution.webp", 
+		img_href: "evolution.webp", 
 		answers: {
 			q1_3__YES_evolution: { img_pos: rgt, },
 			q1_3__NO_evolution: { img_pos: lft, },
@@ -84,7 +84,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_evolution"],
 		htm_stm: "q_millions_of_years",
-		img_href: proy_img_dir + "solar_cycle.webp", 
+		img_href: "solar_cycle.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -98,7 +98,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_logic"],
 		htm_stm: "q_logic_stm",
-		img_href: proy_img_dir + "logic.webp", 
+		img_href: "logic.webp", 
 		answers: {
 			a_YES_logic: { img_pos: rgt, },
 			a_NO_logic: { img_pos: lft, },
@@ -117,7 +117,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_logic", "ctx_language"],
 		htm_stm: "q_language",
-		img_href: proy_img_dir + "talking.webp", 
+		img_href: "talking.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -139,7 +139,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_logic", "ctx_business"],
 		htm_stm: "q_business",
-		img_href: proy_img_dir + "stock_market.webp", 
+		img_href: "stock_market.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -161,7 +161,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_logic", "ctx_technology"],
 		htm_stm: "q_technology",
-		img_href: proy_img_dir + "technology.webp", 
+		img_href: "technology.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -200,7 +200,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_evidence"],
 		htm_stm: "q_YES_NO_evidence",
-		img_href: proy_img_dir + "senses.webp", 
+		img_href: "senses.webp", 
 		answers: {
 			a_YES_evidence: { img_pos: rgt, },
 			a_NO_evidence: { img_pos: lft, },
@@ -219,7 +219,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_evidence", "ctx_law"],
 		htm_stm: "q_law",
-		img_href: proy_img_dir + "law.webp", 
+		img_href: "law.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -241,7 +241,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_evidence", "ctx_law", "ctx_justice"],
 		htm_stm: "q_justice",
-		img_href: proy_img_dir + "justice.webp", 
+		img_href: "justice.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -263,7 +263,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_evidence", "ctx_contracts"],
 		htm_stm: "q_contracts",
-		img_href: proy_img_dir + "signing.webp", 
+		img_href: "signing.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -285,7 +285,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_general", "ctx_evidence", "ctx_technology2"],
 		htm_stm: "q_technology",
-		img_href: proy_img_dir + "technology.webp", 
+		img_href: "technology.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -318,7 +318,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_car_req_creativity"],
 		htm_stm: "q_requires_creativity",
-		img_href: proy_img_dir + "car.webp", 
+		img_href: "car.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -329,7 +329,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_car_req_creativity"],
 		htm_stm: "q_made_by_ape",
-		img_href: proy_img_dir + "ape_and_car.webp", 
+		img_href: "ape_and_car.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -343,7 +343,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_car_req_creativity"],
 		htm_stm: "q_evidence_made_by_ape",
-		img_href: proy_img_dir + "evidence_ape_car.webp", 
+		img_href: "evidence_ape_car.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -365,7 +365,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_knife_req_creativity", ],
 		htm_stm: "q_requires_creativity",
-		img_href: proy_img_dir + "knife.webp", 
+		img_href: "knife.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -376,7 +376,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_knife_req_creativity", ],
 		htm_stm: "q_made_by_ape",
-		img_href: proy_img_dir + "ape_and_knife.webp", 
+		img_href: "ape_and_knife.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -390,7 +390,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_knife_req_creativity"],
 		htm_stm: "q_evidence_made_by_ape",
-		img_href: proy_img_dir + "evidence_ape_knife.webp", 
+		img_href: "evidence_ape_knife.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -412,7 +412,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_clock_req_creativity", ],
 		htm_stm: "q_requires_creativity",
-		img_href: proy_img_dir + "clock.webp", 
+		img_href: "clock.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -423,7 +423,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_clock_req_creativity", ],
 		htm_stm: "q_made_by_ape",
-		img_href: proy_img_dir + "ape_and_clock.webp", 
+		img_href: "ape_and_clock.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -437,7 +437,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_clock_req_creativity"],
 		htm_stm: "q_evidence_made_by_ape",
-		img_href: proy_img_dir + "evidence_ape_clock.webp", 
+		img_href: "evidence_ape_clock.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -459,7 +459,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_phone_req_creativity", ],
 		htm_stm: "q_requires_creativity",
-		img_href: proy_img_dir + "phone.webp", 
+		img_href: "phone.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -475,7 +475,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_phone_req_creativity", ],
 		htm_stm: "q_made_by_ape",
-		img_href: proy_img_dir + "ape_and_phone.webp", 
+		img_href: "ape_and_phone.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -489,7 +489,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_phone_req_creativity"],
 		htm_stm: "q_evidence_made_by_ape",
-		img_href: proy_img_dir + "evidence_ape_phone.webp", 
+		img_href: "evidence_ape_phone.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -511,7 +511,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_laptop_req_creativity", ],
 		htm_stm: "q_requires_creativity",
-		img_href: proy_img_dir + "laptop.webp", 
+		img_href: "laptop.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -527,7 +527,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_laptop_req_creativity", ],
 		htm_stm: "q_made_by_ape",
-		img_href: proy_img_dir + "ape_and_laptop.webp", 
+		img_href: "ape_and_laptop.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -541,7 +541,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_laptop_req_creativity"],
 		htm_stm: "q_evidence_made_by_ape",
-		img_href: proy_img_dir + "evidence_ape_laptop.webp", 
+		img_href: "evidence_ape_laptop.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -564,8 +564,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_building_knife", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_knife: { img_pos: rgt, img_href: proy_img_dir + "knife.webp", },
-			a_building: { img_pos: lft, img_href: proy_img_dir + "building.webp", },
+			a_knife: { img_pos: rgt, img_href: "knife.webp", },
+			a_building: { img_pos: lft, img_href: "building.webp", },
 		},
 	};
 	
@@ -574,8 +574,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_building_knife", ],
 		htm_stm: "q_more_complexity",
 		answers: {
-			a_knife: { img_pos: rgt, img_href: proy_img_dir + "knife_complexity.webp", },
-			a_building: { img_pos: lft, img_href: proy_img_dir + "building_complexity.webp", },
+			a_knife: { img_pos: rgt, img_href: "knife_complexity.webp", },
+			a_building: { img_pos: lft, img_href: "building_complexity.webp", },
 		},
 		activated_if: {
 			c1: { q_building_vs_knife_harder_to_make__: { a_knife: "on", }, },
@@ -587,8 +587,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_building_knife", ],
 		htm_stm: "q_more_planning",
 		answers: {
-			a_knife: { img_pos: rgt, img_href: proy_img_dir + "knife_design.webp", },
-			a_building: { img_pos: lft, img_href: proy_img_dir + "building_design.webp", },
+			a_knife: { img_pos: rgt, img_href: "knife_design.webp", },
+			a_building: { img_pos: lft, img_href: "building_design.webp", },
 		},
 		activated_if: {
 			c1: { q_building_vs_knife_harder_to_make__: { a_knife: "on", }, },
@@ -600,8 +600,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_lamp_car", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_car: { img_pos: rgt, img_href: proy_img_dir + "car.webp", },
-			a_lamp: { img_pos: lft, img_href: proy_img_dir + "lamp.webp", },
+			a_car: { img_pos: rgt, img_href: "car.webp", },
+			a_lamp: { img_pos: lft, img_href: "lamp.webp", },
 		},
 	};
 	
@@ -610,8 +610,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_lamp_car", ],
 		htm_stm: "q_more_complexity",
 		answers: {
-			a_car: { img_pos: rgt, img_href: proy_img_dir + "car_complexity.webp", },
-			a_lamp: { img_pos: lft, img_href: proy_img_dir + "lamp_complexity.webp", },
+			a_car: { img_pos: rgt, img_href: "car_complexity.webp", },
+			a_lamp: { img_pos: lft, img_href: "lamp_complexity.webp", },
 		},
 		activated_if: {
 			c1: { q_car_vs_lamp_harder_to_make__: { a_lamp: "on", }, },
@@ -623,8 +623,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_lamp_car", ],
 		htm_stm: "q_more_planning",
 		answers: {
-			a_car: { img_pos: rgt, img_href: proy_img_dir + "car_design.webp", },
-			a_lamp: { img_pos: lft, img_href: proy_img_dir + "lamp_design.webp", },
+			a_car: { img_pos: rgt, img_href: "car_design.webp", },
+			a_lamp: { img_pos: lft, img_href: "lamp_design.webp", },
 		},
 		activated_if: {
 			c1: { q_car_vs_lamp_harder_to_make__: { a_lamp: "on", }, },
@@ -637,8 +637,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make"],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_clock: { img_pos: rgt, img_href: proy_img_dir + "clock.webp", },
-			a_cellphone: { img_pos: lft, img_href: proy_img_dir + "phone.webp", },
+			a_clock: { img_pos: rgt, img_href: "clock.webp", },
+			a_cellphone: { img_pos: lft, img_href: "phone.webp", },
 		},
 	};*/
 	
@@ -647,8 +647,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_clock_air_purifier", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_clock: { img_pos: rgt, img_href: proy_img_dir + "clock.webp", },
-			a_air_purifier: { img_pos: lft, img_href: proy_img_dir + "air_purifier.webp", },
+			a_clock: { img_pos: rgt, img_href: "clock.webp", },
+			a_air_purifier: { img_pos: lft, img_href: "air_purifier.webp", },
 		},
 	};
 	
@@ -657,8 +657,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_clock_air_purifier", ],
 		htm_stm: "q_more_complexity",
 		answers: {
-			a_air_purifier: { img_pos: rgt, img_href: proy_img_dir + "air_purifier_complexity.webp", },
-			a_clock: { img_pos: lft, img_href: proy_img_dir + "clock_complexity.webp", },
+			a_air_purifier: { img_pos: rgt, img_href: "air_purifier_complexity.webp", },
+			a_clock: { img_pos: lft, img_href: "clock_complexity.webp", },
 		},
 		activated_if: {
 			c1: { q_clock_vs_air_purifier_harder_to_make__: { a_clock: "on", }, },
@@ -670,8 +670,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_clock_air_purifier", ],
 		htm_stm: "q_more_planning",
 		answers: {
-			a_air_purifier: { img_pos: rgt, img_href: proy_img_dir + "air_purifier_design.webp", },
-			a_clock: { img_pos: lft, img_href: proy_img_dir + "clock_design.webp", },
+			a_air_purifier: { img_pos: rgt, img_href: "air_purifier_design.webp", },
+			a_clock: { img_pos: lft, img_href: "clock_design.webp", },
 		},
 		activated_if: {
 			c1: { q_clock_vs_air_purifier_harder_to_make__: { a_clock: "on", }, },
@@ -702,8 +702,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_foot_vs_car", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_car_wheel: { img_pos: rgt, img_href: proy_img_dir + "car_wheel.webp", },
-			a_foot: { img_pos: lft, img_href: proy_img_dir + "foot.webp", },
+			a_car_wheel: { img_pos: rgt, img_href: "car_wheel.webp", },
+			a_foot: { img_pos: lft, img_href: "foot.webp", },
 		},
 	};
 	
@@ -711,7 +711,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_foot_vs_car", ],
 		htm_stm: "q_make_foot",
-		img_href: proy_img_dir + "make_foot.webp", 
+		img_href: "make_foot.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -725,7 +725,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_foot_vs_car", ],
 		htm_stm: "q_why_amputees",
-		img_href: proy_img_dir + "amputee.webp", 
+		img_href: "amputee.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -740,8 +740,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_lung_vs_air_purifier", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_air_purifier: { img_pos: rgt, img_href: proy_img_dir + "air_purifier.webp", },
-			a_human_lung: { img_pos: lft, img_href: proy_img_dir + "lungs.webp", },
+			a_air_purifier: { img_pos: rgt, img_href: "air_purifier.webp", },
+			a_human_lung: { img_pos: lft, img_href: "lungs.webp", },
 		},
 	};
 	
@@ -749,7 +749,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_lung_vs_air_purifier", ],
 		htm_stm: "q_make_lung",
-		img_href: proy_img_dir + "make_lungs.webp", 
+		img_href: "make_lungs.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -763,7 +763,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_lung_vs_air_purifier", ],
 		htm_stm: "q_why_one_lung",
-		img_href: proy_img_dir + "one_lung.webp", 
+		img_href: "one_lung.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -778,8 +778,8 @@ export function init_exam_database(){
 		context: ["ctx_harder_to_make", "ctx_body_vs_building", ],
 		htm_stm: "q_harder_to_make",
 		answers: {
-			a_building: { img_pos: rgt, img_href: proy_img_dir + "building.webp", },
-			a_human_body: { img_pos: lft, img_href: proy_img_dir + "human_body.webp", },
+			a_building: { img_pos: rgt, img_href: "building.webp", },
+			a_human_body: { img_pos: lft, img_href: "human_body.webp", },
 		},
 	};
 
@@ -787,7 +787,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_body_vs_building", ],
 		htm_stm: "q_make_body",
-		img_href: proy_img_dir + "make_body.webp", 
+		img_href: "make_body.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -801,7 +801,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_body_vs_building", ],
 		htm_stm: "q_why_die",
-		img_href: proy_img_dir + "tomb.webp", 
+		img_href: "tomb.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -834,7 +834,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_phone_mitosis", ],
 		htm_stm: "q_phone_mitosis",
-		img_href: proy_img_dir + "phone_mitosis.webp", 
+		img_href: "phone_mitosis.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -846,7 +846,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_truck_baby", ],
 		htm_stm: "q_truck_baby",
-		img_href: proy_img_dir + "truck_baby.webp", 
+		img_href: "truck_baby.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -858,7 +858,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_red_cell", ],
 		htm_stm: "q_red_cell",
-		img_href: proy_img_dir + "red_cell.webp", 
+		img_href: "red_cell.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -870,7 +870,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_human_egg", ],
 		htm_stm: "q_human_egg",
-		img_href: proy_img_dir + "human_egg.webp", 
+		img_href: "human_egg.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -882,7 +882,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_liver", ],
 		htm_stm: "q_liver",
-		img_href: proy_img_dir + "liver.webp", 
+		img_href: "liver.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -908,7 +908,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_biology_req_creativity"],
 		htm_stm: "q_bilology_req_creativity",
-		img_href: proy_img_dir + "foot.webp", 
+		img_href: "foot.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -919,7 +919,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_biology_req_creativity"],
 		htm_stm: "q_bilology_req_creativity",
-		img_href: proy_img_dir + "lungs.webp", 
+		img_href: "lungs.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -930,7 +930,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_biology_req_creativity"],
 		htm_stm: "q_bilology_req_creativity",
-		img_href: proy_img_dir + "human_body.webp", 
+		img_href: "human_body.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -963,7 +963,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_resurrection", ],
 		htm_stm: "q_resurrection",
-		img_href: proy_img_dir + "tomb_garden.webp", 
+		img_href: "tomb_garden.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -996,7 +996,7 @@ export function init_exam_database(){
 		presentation: "t_good_job",
 		context: ["ctx_participate"],
 		htm_stm: "q_participate",
-		img_href: proy_img_dir + "trophy.webp", 
+		img_href: "trophy.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },

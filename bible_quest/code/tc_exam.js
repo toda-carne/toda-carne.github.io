@@ -373,7 +373,26 @@ function context_to_html(arr_context){
 function get_exam_image_href(id_img){
 	const hrefs = glb_poll_db.img_hrefs;
 	if(hrefs == null){ return null; }
-	return hrefs[id_img];
+	const dir_hrefs = glb_poll_db.glb_img_dir;
+	if(dir_hrefs == null){ return null; }
+	const full_href = dir_hrefs + hrefs[id_img];
+	return full_href;
+}
+
+function has_image_href(base){
+	const dir_hrefs = glb_poll_db.proy_img_dir;
+	if(dir_hrefs == null){ return false; }
+	if(base == null){ return false; }
+	if(base.img_href == null){ return false; }
+	return true;
+}
+
+function get_image_href(base){
+	if(base == null){ return null; }
+	const dir_hrefs = glb_poll_db.proy_img_dir;
+	if(dir_hrefs == null){ return null; }
+	const full_href = dir_hrefs + base.img_href;
+	return full_href;
 }
 
 function get_exam_image(all_img, id_img){
@@ -490,8 +509,8 @@ function init_answers(qid){
 		is_last_quest = (quest == lst_quest);
 	}
 	
-	if(quest.choose_yes && (quest.img_href != null)){
-		const htm_quest_img = load_image(dv_quest, dv_quest, id_quest_img, quest.img_href);
+	if(quest.choose_yes && has_image_href(quest)){
+		const htm_quest_img = load_image(dv_quest, dv_quest, id_quest_img, get_image_href(quest));
 		dv_quest_img = document.createElement("div");
 		dv_quest_img.classList.add("exam", "grid_item");
 		dv_quest_img.append(htm_quest_img);
@@ -584,8 +603,8 @@ function init_answers(qid){
 		
 		let dv_img = null;
 		let htm_img = null;
-		if(quest.choose_more && (an_answ.img_href != null)){
-			htm_img = load_image(dv_quest, dv_answers.all_img, anid, an_answ.img_href);
+		if(quest.choose_more && has_image_href(an_answ)){
+			htm_img = load_image(dv_quest, dv_answers.all_img, anid, get_image_href(an_answ));
 			htm_img.style.width = "100%";
 		}
 		if(quest.choose_yes && (an_answ.img_pos != null)){
