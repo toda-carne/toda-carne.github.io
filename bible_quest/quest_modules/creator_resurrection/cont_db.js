@@ -20,6 +20,8 @@ export function init_exam_database(){
 	const rgt = "grid_item_right";
 	const lft = "grid_item_left";
 
+	db.THIS_MODULE_NAME = "CREATOR_RESURRECTION_MODULE";  // CAREFUL. This name is the name this module takes in firebase
+	
 	db.glb_img_dir = glb_img_dir;
 	db.proy_img_dir = proy_img_dir;  //CAREFUL!! Used as the path for every img_href
 	db.score_it = {};

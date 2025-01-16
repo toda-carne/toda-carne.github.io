@@ -92,7 +92,7 @@ const id_quest_img = "id_quest_img";
 // FOR DAG pending management
 const id_ctx_pend = "ctx_pend";
 
-const firebase_answers_path = "/user_answers";
+//const firebase_answers_path = "/user_answers";
 
 
 let INIT_EXAM_DB_FUNC = null;
@@ -2026,6 +2026,11 @@ function delete_exam_object(name){
 }
 
 function write_firebase_exam_object(err_fn){
+	if(glb_poll_db.THIS_MODULE_NAME == null){
+		console.log("CANNOT write_firebase_exam_object. glb_poll_db.THIS_MODULE_NAME == null");
+		return;
+	}
+	const firebase_answers_path = "/" + glb_poll_db.THIS_MODULE_NAME;
 	if(fb_write_object == null){
 		console.log("CANNOT write_firebase_exam_object. fb_write_object == null");
 		const dv_exam_nm = document.getElementById("id_exam_name");
@@ -2038,6 +2043,11 @@ function write_firebase_exam_object(err_fn){
 }
 
 function read_firebase_exam_object(){
+	if(glb_poll_db.THIS_MODULE_NAME == null){
+		console.log("CANNOT read_firebase_exam_object. glb_poll_db.THIS_MODULE_NAME == null");
+		return;
+	}
+	const firebase_answers_path = "/" + glb_poll_db.THIS_MODULE_NAME;
 	if(fb_read_object == null){
 		console.log("CANNOT read_firebase_exam_object. fb_read_object == null");
 		const dv_exam_nm = document.getElementById("id_exam_name");

@@ -287,25 +287,9 @@ When should I upgrade?
 
 Query expressions are new feature that can be used in parallel with your existing rules. If you find that query expressions can improve your security or simplify your structures you can upgrade to them incrementally.
 
+NOTAS:
 
-
-
-
-
-CURRENT RULES
-{
-  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
-  "rules": {
-    "users": {
-      "$uid": {
-        ".read": "$uid === auth.uid",
-        ".write": "$uid === auth.uid"
-      }
-    },      
-    ".read": false,
-    ".write": false
-  }
-}
+Es posible que se aplique más de una regla a un nodo. En el caso de que varias expresiones de reglas identifiquen un nodo, el método de acceso se deniega si alguna de las condiciones es false :
 
 
 EXAMPLE 1
@@ -370,6 +354,92 @@ EXAMPLE 4
  }
  }
  }
+}
+
+EXAMPLE 5
+
+{
+  "rules": {
+    "rooms": {
+      // this rule applies to any child of /rooms/, the key for each room id
+      // is stored inside $room_id variable for reference
+      "$room_id": {
+        "topic": {
+          // the room's topic can be changed if the room id has "public" in it
+          ".write": "$room_id.contains('public')"
+        }
+      }
+    }
+  }
+}
+
+
+EXAMPLE 6
+
+{
+  "rules": {
+    "widget": {
+      // a widget can have a title or color attribute
+      "title": { ".validate": true },
+      "color": { ".validate": true },
+
+      // but no other child paths are allowed
+      // in this case, $other means any key excluding "title" and "color"
+      "$other": { ".validate": false }
+    }
+  }
+}
+
+EXAMPLE 7
+
+{
+  "rules": {
+     "foo": {
+        // allows read to /foo/*
+        ".read": "data.child('baz').val() === true",
+        "bar": {
+          /* ignored, since read was allowed already */
+          ".read": false
+        }
+     }
+  }
+}
+
+EXAMPLE 8
+
+".write": "root.child('allow_writes').val() === true &&
+          !data.parent().child('readOnly').exists() &&
+          newData.child('foo').exists()"
+
+EXAMPLE 9
+
+".validate": "newData.isString() &&
+              newData.val().matches(/^(19|20)[0-9][0-9][-\\/. ](0[1-9]|1[012])[-\\/. ](0[1-9]|[12][0-9]|3[01])$/)"
+
+Las reglas .validate son el único tipo de regla de seguridad que no se aplica en cascada. 
+
+
+
+CURRENT RULES
+{
+	"rules": {
+		"users": {
+			"list": {
+				"$uid": {
+					"last_check": { ".validate": true },
+					"$other": { ".validate": false },
+					".read": "$uid === auth.uid",
+					".write": "$uid === auth.uid"
+				}
+			},
+			"$uid": {
+				".read": "$uid === auth.uid",
+				".write": "$uid === auth.uid"
+			}
+		},      
+		".read": false,
+		".write": false
+	}
 }
 
 
