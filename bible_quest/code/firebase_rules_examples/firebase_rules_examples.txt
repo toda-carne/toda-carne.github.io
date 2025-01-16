@@ -419,7 +419,15 @@ EXAMPLE 9
 Las reglas .validate son el único tipo de regla de seguridad que no se aplica en cascada. 
 
 
+EXAMPLE 10
 
+        "color": {
+          // the value of "color" must exist as a key in our mythical
+          // /valid_colors/ index
+          ".validate": "root.child('valid_colors/' + newData.val()).exists()"
+        }
+
+        
 CURRENT RULES
 {
 	"rules": {

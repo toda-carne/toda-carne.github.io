@@ -373,7 +373,7 @@ function context_to_html(arr_context){
 function get_exam_image_href(id_img){
 	const hrefs = glb_poll_db.img_hrefs;
 	if(hrefs == null){ return null; }
-	const dir_hrefs = glb_poll_db.glb_img_dir;
+	const dir_hrefs = glb_poll_db.exam_img_dir;
 	if(dir_hrefs == null){ return null; }
 	const full_href = dir_hrefs + hrefs[id_img];
 	return full_href;
@@ -1468,7 +1468,7 @@ function init_exam_buttons(){
 	if(dv_button != null){ dv_button.addEventListener('click', user_name_button_handler); }
 	if(dv_button != null){ dv_button.addEventListener('contextmenu', (ev1) => {
 			ev1.preventDefault();
-			toggle_user_info();
+			toggle_user_info(null);
 			return false;
 		}); 		
 	} 
@@ -1567,7 +1567,7 @@ function user_name_button_handler(){
 		user_login();
 		return;
 	}
-	toggle_user_info();
+	toggle_user_info(fb_usr);
 }
 		
 function find_GET_parameter(prm_nm) {
@@ -2741,7 +2741,7 @@ function fill_div_user(){
 	if(the_usr == null){ 
 		if(dv_user_nam != null){ dv_user_nam.innerHTML = gvar.glb_curr_lang.msg_guest; }
 		if(ico_logut != null){ ico_logut.classList.add("is_hidden"); }
-		if(img_top != null){ img_top.src = glb_poll_db.gvar.glb_img_dir + "user.jpg"; }
+		if(img_top != null){ img_top.src = glb_poll_db.exam_img_dir + "user.jpg"; }
 		return;
 	}
 	

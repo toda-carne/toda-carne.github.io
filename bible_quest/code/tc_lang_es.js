@@ -1,5 +1,5 @@
 
-import { init_glb_vars, init_get_msg, init_all_glb, fill_reversed_object, init_en_module, bib_defaults, fill_bibrefs_href, 
+import { init_glb_vars, init_get_msg, fill_reversed_object, init_en_module, bib_defaults, fill_bibrefs_href, 
 	fill_all_strongrefs_href, get_verse_cit_key, 
 } from '../code/tc_lang_all.js';
 
@@ -302,6 +302,11 @@ const marital_es = {
 	"6":"Viudo",
 };
 
+const sex_es = {
+	"1":"Hombre",
+	"2":"Mujer",
+};
+
 function init_es_basic_msg(){
 	const obj = all_es_msg;
 	
@@ -323,6 +328,7 @@ function init_es_basic_msg(){
 	obj.msg_add_strong = "AGREGAR CODIGO STRONG";
 	obj.msg_add_link = "AGREGAR ENLACE WEB";
 	obj.msg_end_edit = "TERMINAR EDICION";
+	obj.msg_save = "GUARDAR";
 	
 	obj.msg_def_book = DEFAULT_BOOK_NAME;
 	obj.msg_def_strong = "CODIGO STRONG";
@@ -395,6 +401,7 @@ function ini_glb_vars_es(gvars){
 	gvars.glb_exam_language = "en";
 	gvars.glb_all_countries = countries_es;
 	gvars.glb_all_marital = marital_es;
+	gvars.glb_all_sex = sex_es;
 	gvars.glb_all_id_names = country_id_names_es;
 	gvars.glb_def_country = "41";
 	gvars.glb_def_marital = "6";
@@ -424,11 +431,7 @@ export function init_es_module(){
 	fill_all_strongrefs_href();
 
 	ini_glb_vars_es(glb_es_vars);
-	init_glb_vars(glb_es_vars);
-	//init_all_glb("es", countries_es, marital_es, country_id_names_es, "41", "6", num2book_es, bibles_es, book2num_es, all_es_msg, 
-	//			 all_es_bibrefs, book_es_hrefs, all_es_poll_txt);
-	
-	//init_es_exam_msg();	
+	init_glb_vars(glb_es_vars);	
 }
 
 //init_es_module();

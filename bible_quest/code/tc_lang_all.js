@@ -401,6 +401,11 @@ const marital_en = {
 	"6":"Widowed",
 };
 
+const sex_en = {
+	"1":"Man",
+	"2":"Woman",
+};
+
 const bibles_en = {
 	biblegateway: [ "KJV", "WEB", "YLT", "NASB", "WLC", "HHH", "WHNU", "TR1550", ],
 	biblehub: [ "text", "kjv", "web", "ylt", "nasb77", "bsb", "sepd", "wlco", ],
@@ -452,6 +457,7 @@ function init_en_basic_msg(){
 	obj.msg_add_strong = "ADD STRONG CODE";
 	obj.msg_add_link = "ADD WEB LINK";
 	obj.msg_end_edit = "END EDIT";
+	obj.msg_save = "SAVE";
 	
 	obj.msg_def_book = DEFAULT_BOOK_NAME;
 	obj.msg_def_strong = "STRONG_CODE";
@@ -536,6 +542,7 @@ function ini_glb_vars_en(gvars){
 	gvars.glb_exam_language = "en";
 	gvars.glb_all_countries = countries_en;
 	gvars.glb_all_marital = marital_en;
+	gvars.glb_all_sex = sex_en;
 	gvars.glb_all_id_names = country_id_names_en;
 	gvars.glb_def_country = "187";
 	gvars.glb_def_marital = "6";
@@ -546,42 +553,6 @@ function ini_glb_vars_en(gvars){
 	gvars.glb_all_bibrefs = all_en_bibrefs;
 	gvars.glb_all_book_hrefs = book_en_hrefs;
 	gvars.glb_poll_txt = all_en_poll_txt;
-}
-
-/*
-export let glb_exam_language = "en";
-export let glb_all_countries = countries_en;
-export let glb_all_marital = marital_en;
-export let glb_all_id_names = country_id_names_en;
-export let glb_def_country = "187";
-export let glb_def_marital = "6";
-export let glb_all_books = num2book_en;
-export let glb_all_bibles = bibles_en;
-export let glb_books_nums = book2num_en;
-export let glb_curr_lang = all_en_msg;
-export let glb_all_bibrefs = all_en_bibrefs;
-export let glb_all_book_hrefs = book_en_hrefs;
-export let glb_poll_txt = all_en_poll_txt;
-*/
-
-export function init_all_glb(lang, countries, marital, id_nams, def_country, def_marital, books, bibles, nums, curr, bibrefs, 
-							 bookhrefs, polltxt)
-{
-	/*
-	glb_exam_language = lang;
-	glb_all_countries = countries;
-	glb_all_marital = marital;
-	glb_all_id_names = id_nams;
-	glb_def_country = def_country;
-	glb_def_marital = def_marital;
-	glb_all_books = books;
-	glb_all_bibles = bibles;
-	glb_books_nums = nums;
-	glb_curr_lang = curr;
-	glb_all_bibrefs = bibrefs;
-	glb_all_book_hrefs = bookhrefs;
-	glb_poll_txt = polltxt;
-	*/
 }
 
 export let glb_poll_db = {};
