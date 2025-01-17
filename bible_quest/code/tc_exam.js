@@ -728,8 +728,9 @@ function add_undo_button(qid, dv_answers, dv_answ){
 	
 	const is_hor = is_content_horizontal();
 	
-	let pos_cls = "grid_item_all_col";
-	if(is_hor){ pos_cls = "grid_item_extra"; }
+	//let pos_cls = "grid_item_all_col";
+	//if(is_hor){ pos_cls = "grid_item_extra"; }
+	let pos_cls = "grid_item_extra";
 	
 	const dv_undo = document.createElement("div");
 	dv_undo.id = id_dv_undo;
@@ -2683,14 +2684,7 @@ function create_div_user(quest){
 	dv_qrcod.classList.add("qr_code_img");
 	dv_qrcod.classList.add("exam");
 	dv_user.append(dv_qrcod);
-	
-	const the_qr_maker = new QRCode(dv_qrcod, {
-		width : 300,
-		height : 300,
-	});
-	
-	dv_qrcod.qr_maker = the_qr_maker;
-	
+		
 	//const dv_img = document.createElement("img");
 	const dv_img = document.createElement("div");
 	dv_img.id = id_dv_user_image;
@@ -2710,7 +2704,7 @@ function create_div_user(quest){
 	return dv_user;
 }
 
-function get_user_href(the_usr){
+export function get_user_href(the_usr){
 	const qr_href = window.location.href + "?" + GET_var_referrer + "=" + the_usr.uid;
 	return qr_href;
 }
@@ -2732,8 +2726,12 @@ function fill_div_user(){
 	//glb_poll_db.user_info = 
 	
 	const dv_user_qr = document.getElementById(id_dv_user_qrcod);
-	if((dv_user_qr != null) && (dv_user_qr.qr_maker != null)){
-		dv_user_qr.qr_maker.makeCode(get_user_href(the_usr));
+	if(dv_user_qr != null){
+		const the_qr_maker = new QRCode(dv_user_qr, {
+			width : 300,
+			height : 300,
+		});		
+		the_qr_maker.makeCode(get_user_href(the_usr));
 	}
 
 	if(dv_user_nam != null){ dv_user_nam.innerHTML = the_usr.displayName; }

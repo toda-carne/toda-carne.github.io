@@ -501,6 +501,7 @@ function init_en_basic_msg(){
 	obj.msg_google_photo = "Google photo";
 	obj.msg_google_email = "Google email";
 	obj.msg_sibiblia_qr = "Your QR";
+	obj.msg_sibiblia_link = "Your Link";
 	obj.msg_sibiblia_id = "Your ID";
 	obj.msg_sibiblia_photo = "Your Photo";
 	obj.msg_usr_nequi = "Nequi";

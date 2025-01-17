@@ -2,7 +2,7 @@
 import { get_msg, is_mobile_browser, get_new_dv_under, gvar, glb_poll_db, 
 } from './tc_lang_all.js';
 
-import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, 
+import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, get_user_href, 
 	fb_write_object, fb_read_object, fb_sign_out, fb_get_user, fb_check_user, fb_check_login, 
 } from './tc_exam.js';
 
@@ -81,8 +81,7 @@ function add_user_info_end_line(){
 }
 
 function add_user_info_field(id, tp, sz, mx_ln, val, snum){ // type "number" or "text"
-	//const cls = "grid_item_auto_span_" + snum;
-	const g_col = "auto / span " + snum;
+	const g_col = "span " + snum;
 	
 	const inp_fld = document.createElement("input");
 	inp_fld.id = id;
@@ -91,9 +90,8 @@ function add_user_info_field(id, tp, sz, mx_ln, val, snum){ // type "number" or 
 	inp_fld.maxlength = mx_ln;
 	inp_fld.value = val;
 	inp_fld.classList.add("exam");
-	//inp_fld.classList.add(cls);
 	inp_fld.classList.add("grid_item_user");
-	inp_fld.style.gridColumn = g_col;
+	inp_fld.style.gridColumnEnd = g_col;
 	return inp_fld;
 }
 
@@ -122,12 +120,16 @@ function add_user_info_simple_html_line(dv_ed_usr, label, id, htm_str){
 	fld.id = id;
 	fld.classList.add("exam");
 	fld.classList.add("grid_item_user");
-	fld.style.gridColumn = "auto / span 10";
+	fld.style.gridColumnEnd = "span 10";
 	fld.innerHTML = htm_str;
 	dv_ed_usr.appendChild(fld);
+
+	const dv_info = fld;
 	
 	fld = add_user_info_end_line();
 	dv_ed_usr.appendChild(fld);
+	
+	return dv_info;
 }
 
 function add_user_info_select_line(dv_ed_usr, label, id, val, arr_ops){ 
@@ -141,7 +143,7 @@ function add_user_info_select_line(dv_ed_usr, label, id, val, arr_ops){
 	fld.id = id;
 	fld.classList.add("exam");
 	fld.classList.add("grid_item_user");
-	fld.style.gridColumn = "auto / span 10";
+	fld.style.gridColumnEnd = "span 10";
 	fld.classList.add("is_button");
 	fld.innerHTML = val;
 	
@@ -198,8 +200,22 @@ export function toggle_user_info(fb_usr){
 	if(fb_usr != null){ htm_str = fb_usr.email; }	
 	add_user_info_simple_html_line(dv_ed_usr, gvar.glb_curr_lang.msg_google_email, id_goo_email, htm_str);
 	htm_str = "";
-	add_user_info_simple_html_line(dv_ed_usr, gvar.glb_curr_lang.msg_sibiblia_qr, id_sibiblia_qr, htm_str);
+	const dv_qrcod = add_user_info_simple_html_line(dv_ed_usr, gvar.glb_curr_lang.msg_sibiblia_qr, id_sibiblia_qr, htm_str);
+	dv_qrcod.classList.add("qr_code_img");
+	let the_link = "";
+	if(fb_usr != null){ 
+		const the_qr_maker = new QRCode(dv_qrcod, {
+			width : 300,
+			height : 300,
+		});
+		the_link = get_user_href(fb_usr);
+		//console.log("LINK for QR code = " + the_link);
+		the_qr_maker.makeCode(the_link);
+	}
+
+	if(fb_usr != null){ htm_str = the_link; }	
 	add_user_info_simple_html_line(dv_ed_usr, gvar.glb_curr_lang.msg_sibiblia_link, id_sibiblia_link, htm_str);
+	htm_str = "";
 	if(fb_usr != null){ htm_str = fb_usr.uid; }	
 	add_user_info_simple_html_line(dv_ed_usr, gvar.glb_curr_lang.msg_sibiblia_id, id_sibiblia_id, htm_str);
 	htm_str = "";
@@ -219,8 +235,6 @@ export function toggle_user_info(fb_usr){
 	lbl.innerHTML = gvar.glb_all_id_names[gvar.glb_def_country];
 	lbl.classList.add("exam", "big_font", "bold_font");
 	lbl.classList.add("grid_item_auto_auto");
-	//lbl.classList.add("grid_item_user");
-	//lbl.style.gridColumn = "auto / span 2";
 	dv_ed_usr.appendChild(lbl);
 
 	fld = add_user_info_field(id_citizen_id, "number", 15, 15, 0, 10);
@@ -350,8 +364,8 @@ function fill_user_info(obj){
 	if(obj == null){
 		return;
 	}
-	set_user_field(obj, id_sibiblia_link, true);
-	set_user_field(obj, id_sibiblia_id, true);
+	//set_user_field(obj, id_sibiblia_link, true);
+	//set_user_field(obj, id_sibiblia_id, true);
 	set_user_field(obj, id_nequi_number);
 	set_user_field(obj, id_paypal_email);
 	set_user_field(obj, id_transfiya_number);
