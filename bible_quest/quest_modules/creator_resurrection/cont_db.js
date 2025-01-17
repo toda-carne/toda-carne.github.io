@@ -1,7 +1,5 @@
 
-import { get_verse_reponse_name, get_answer_key, init_poll_glb, add_response_observation, 
-	glb_vars as gvar,
-	//glb_all_bibrefs, 
+import { get_verse_reponse_name, get_answer_key, init_poll_glb, add_response_observation, gvar,
 } from '../../code/tc_lang_all.js';
 
 "use strict";

@@ -1,6 +1,6 @@
 
 import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, 
-	glb_vars as gvar, glb_poll_db, 
+	gvar, glb_poll_db, 
 	//gvar.glb_all_books, gvar.glb_all_bibles, gvar.glb_books_nums, gvar.glb_curr_lang, 
 	get_qid_base, get_verse_match, get_answer_key, get_new_dv_under,
 } from './tc_lang_all.js';
@@ -65,6 +65,8 @@ const MAX_DATE = -5000;
 
 const SUF_USR_IMG = "_img";
 const SUF_USR_NAM = "_nam";
+
+const base_answ_classes = ["exam", "grid_item_all_col", "item_can_select"];
 
 const id_dv_user = "id_dv_user";
 const id_dv_user_qrcod = "id_dv_user_qrcod";
@@ -469,11 +471,11 @@ function init_choose_words(dv_answ, quest, anid){
 
 function add_simple_choice_item(dv_answers, dv_img, pos_cls, htm_answ){
 	const dv_answ = dv_answers.appendChild(document.createElement("div"));
-	const answ_classes = ["exam", "grid_img_answer", pos_cls];
+	const cho_classes = ["exam", "grid_img_answer", pos_cls];
 	if(pos_cls != "grid_item_center"){
-		answ_classes.push("item_can_select");
+		cho_classes.push("item_can_select");
 	}
-	dv_answ.classList.add(...answ_classes);
+	dv_answ.classList.add(...cho_classes);
 	
 	if(dv_img != null){	dv_answ.append(dv_img);	}
 	const dv_txt = document.createElement("div");
@@ -575,12 +577,10 @@ function init_answers(qid){
 		
 		const is_more_answ = (quest.choose_more && (an_answ.img_pos != null));
 		
-		let answ_classes = ["exam", "grid_item_all_col", "item_can_select"];
-		
 		if(! is_init_to_answer && ! an_answ.is_on && ! is_more_answ){
 			if(an_answ.should_on != null){
 				const dv_shd_on = document.createElement("div");
-				dv_shd_on.classList.add(...answ_classes);
+				dv_shd_on.classList.add(...base_answ_classes);
 				dv_shd_on.classList.add("is_contradiction");
 				dv_shd_on.innerHTML = get_msg(an_answ.should_on);
 				add_listener_to_add_edit_button(dv_answers, dv_shd_on, qid);
@@ -644,7 +644,7 @@ function init_answers(qid){
 			if(quest.choose_more && (pos_itm != null)){ dv_answ = add_simple_choice_item(dv_answers, dv_add, pos_itm, null); }
 		} else {
 			dv_answ = dv_answers.appendChild(document.createElement("div"));
-			dv_answ.classList.add(...answ_classes);
+			dv_answ.classList.add(...base_answ_classes);
 			if(! an_answ.choose_words){
 				dv_answ.innerHTML = get_msg(anid);
 			} else {
@@ -734,9 +734,7 @@ function add_undo_button(qid, dv_answers, dv_answ){
 	const dv_undo = document.createElement("div");
 	dv_undo.id = id_dv_undo;
 	
-	const answ_classes = ["exam", "big_font", pos_cls];
-	answ_classes.push("item_can_select");
-	dv_undo.classList.add(...answ_classes);
+	dv_undo.classList.add("exam", "big_font", "item_can_select", pos_cls);
 	
 	dv_undo.innerHTML = gvar.glb_curr_lang.msg_undo;
 	dv_undo.addEventListener('click', function() {
@@ -1089,6 +1087,8 @@ function update_dv_verse(dv_citation){
 	verse_obj.rclk_href = make_bible_ref(verse_obj);
 	verse_obj.txtref = bib_obj_to_txt(verse_obj);
 	verse_obj.cit_txt = get_verse_cit_txt(verse_obj);
+	
+	console.log("update_dv_verse. txtref=" + verse_obj.txtref);
 	if(verse_obj.cit_txt == null){
 		dv_citation.innerHTML = verse_obj.txtref;
 	} else {
@@ -1096,10 +1096,19 @@ function update_dv_verse(dv_citation){
 	}
 }
 
-function add_verse_cit(qid, verse_obj){
-	const id_dv_support = qid + SUF_ID_ANSWERS;
-	const dv_support = document.getElementById(id_dv_support);
+function add_answer(qid, id_nw_ans){
+	const id_dv_all_answ = qid + SUF_ID_ANSWERS;
+	const dv_all_answ = document.getElementById(id_dv_all_answ);
+	const dv_answ = dv_all_answ.appendChild(document.createElement("div"));
+	dv_answ.id = id_nw_ans;
+	dv_answ.answ_idx = dv_all_answ.childNodes.length - 1;
+	dv_answ.owner_qid = qid;
+	dv_answ.classList.add(...base_answ_classes);
+	dv_answ.title = gvar.glb_curr_lang.msg_help_answer_right_click;
+	return dv_answ;
+}
 
+function add_verse_cit(qid, verse_obj){
 	const id_dv_last_cit = qid + SUF_ID_LAST_ADDED_CITATION;
 	if(! is_last_added_verse_cit_ok(qid)){
 		return null;
@@ -1120,13 +1129,7 @@ function add_verse_cit(qid, verse_obj){
 		if(bibs.length > 0){ verse_obj.bib_ver = bibs[0]; }
 	}
 	
-	const dv_citation = dv_support.appendChild(document.createElement("div"));
-	dv_citation.id = id_dv_last_cit;
-	dv_citation.answ_idx = dv_support.childNodes.length - 1;
-	dv_citation.owner_qid = qid;
-	dv_citation.classList.add("exam");
-	dv_citation.classList.add("is_answer");
-	dv_citation.title = gvar.glb_curr_lang.msg_help_answer_right_click;
+	const dv_citation = add_answer(qid, id_dv_last_cit);
 	dv_citation.tc_cit_obj = JSON.parse(JSON.stringify(verse_obj));
 
 	update_dv_verse(dv_citation);
@@ -1601,27 +1604,14 @@ function is_last_added_strong_ok(qid){
 	return false;
 }
 
-function set_cit_params(dv_cit){
-	dv_cit.classList.add("exam");
-	dv_cit.classList.add("is_answer");
-	dv_cit.title = gvar.glb_curr_lang.msg_help_answer_right_click;
-}
-
 function add_strong_cit(qid, stg_obj){
 	//console.log("ENTRA a add_strong");
-	const id_dv_support = qid + SUF_ID_ANSWERS;
-	const dv_support = document.getElementById(id_dv_support);
-
 	const id_dv_last_strong = qid + SUF_ID_LAST_ADDED_STRONG;
 	if(! is_last_added_strong_ok(qid)){
 		return null;
 	}
 	
-	const dv_citation = dv_support.appendChild(document.createElement("div"));
-	dv_citation.id = id_dv_last_strong;
-	dv_citation.answ_idx = dv_support.childNodes.length - 1;
-	dv_citation.owner_qid = qid;
-	set_cit_params(dv_citation);
+	const dv_citation = add_answer(qid, id_dv_last_strong);
 	
 	if(stg_obj == null){
 		dv_citation.innerHTML = DEFAULT_STRONG;
@@ -1747,19 +1737,12 @@ function is_last_added_link_ok(qid){
 
 function add_link_cit(qid, link_obj){
 	//console.log("ENTRA a add_link");
-	const id_dv_support = qid + SUF_ID_ANSWERS;
-	const dv_support = document.getElementById(id_dv_support);
-
 	const id_dv_last_link = qid + SUF_ID_LAST_ADDED_LINK;
 	if(! is_last_added_link_ok(qid)){
 		return null;
 	}
 	
-	const dv_citation = dv_support.appendChild(document.createElement("div"));
-	dv_citation.id = id_dv_last_link;
-	dv_citation.answ_idx = dv_support.childNodes.length - 1;
-	dv_citation.owner_qid = qid;
-	set_cit_params(dv_citation);
+	const dv_citation = add_answer(qid, id_dv_last_link);
 	
 	const dv_name = dv_citation.appendChild(document.createElement("div"));
 	dv_name.classList.add("exam");

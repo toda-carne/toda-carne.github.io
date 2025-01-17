@@ -397,21 +397,21 @@ const all_es_bibrefs = {};
 
 const glb_es_vars = {};
 
-function ini_glb_vars_es(gvars){
-	gvars.glb_exam_language = "en";
-	gvars.glb_all_countries = countries_es;
-	gvars.glb_all_marital = marital_es;
-	gvars.glb_all_sex = sex_es;
-	gvars.glb_all_id_names = country_id_names_es;
-	gvars.glb_def_country = "41";
-	gvars.glb_def_marital = "6";
-	gvars.glb_all_books = num2book_es;
-	gvars.glb_all_bibles = bibles_es;
-	gvars.glb_books_nums = book2num_es;
-	gvars.glb_curr_lang = all_es_msg;
-	gvars.glb_all_bibrefs = all_es_bibrefs;
-	gvars.glb_all_book_hrefs = book_es_hrefs;
-	gvars.glb_poll_txt = all_es_poll_txt;
+function ini_glb_vars_es(all_vars){
+	all_vars.glb_exam_language = "en";
+	all_vars.glb_all_countries = countries_es;
+	all_vars.glb_all_marital = marital_es;
+	all_vars.glb_all_sex = sex_es;
+	all_vars.glb_all_id_names = country_id_names_es;
+	all_vars.glb_def_country = "41";
+	all_vars.glb_def_marital = "6";
+	all_vars.glb_all_books = num2book_es;
+	all_vars.glb_all_bibles = bibles_es;
+	all_vars.glb_books_nums = book2num_es;
+	all_vars.glb_curr_lang = all_es_msg;
+	all_vars.glb_all_bibrefs = all_es_bibrefs;
+	all_vars.glb_all_book_hrefs = book_es_hrefs;
+	all_vars.glb_poll_txt = all_es_poll_txt;
 }
 
 export function init_es_module(){

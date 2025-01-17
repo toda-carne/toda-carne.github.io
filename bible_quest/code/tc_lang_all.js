@@ -530,29 +530,29 @@ export function init_get_msg(lang_msgs){
 	};
 }
 
-export let glb_vars = {};
+export let gvar = {};
 
 export function init_glb_vars(all_vars){
-	glb_vars = all_vars;
+	gvar = all_vars;
 }
 
 const glb_en_vars = {};
 
-function ini_glb_vars_en(gvars){
-	gvars.glb_exam_language = "en";
-	gvars.glb_all_countries = countries_en;
-	gvars.glb_all_marital = marital_en;
-	gvars.glb_all_sex = sex_en;
-	gvars.glb_all_id_names = country_id_names_en;
-	gvars.glb_def_country = "187";
-	gvars.glb_def_marital = "6";
-	gvars.glb_all_books = num2book_en;
-	gvars.glb_all_bibles = bibles_en;
-	gvars.glb_books_nums = book2num_en;
-	gvars.glb_curr_lang = all_en_msg;
-	gvars.glb_all_bibrefs = all_en_bibrefs;
-	gvars.glb_all_book_hrefs = book_en_hrefs;
-	gvars.glb_poll_txt = all_en_poll_txt;
+function ini_glb_vars_en(all_vars){
+	all_vars.glb_exam_language = "en";
+	all_vars.glb_all_countries = countries_en;
+	all_vars.glb_all_marital = marital_en;
+	all_vars.glb_all_sex = sex_en;
+	all_vars.glb_all_id_names = country_id_names_en;
+	all_vars.glb_def_country = "187";
+	all_vars.glb_def_marital = "6";
+	all_vars.glb_all_books = num2book_en;
+	all_vars.glb_all_bibles = bibles_en;
+	all_vars.glb_books_nums = book2num_en;
+	all_vars.glb_curr_lang = all_en_msg;
+	all_vars.glb_all_bibrefs = all_en_bibrefs;
+	all_vars.glb_all_book_hrefs = book_en_hrefs;
+	all_vars.glb_poll_txt = all_en_poll_txt;
 }
 
 export let glb_poll_db = {};
@@ -660,7 +660,7 @@ function get_loc_book_nam(book){
 	} else { // normal references
 		num = Number(book);
 	}
-	let book_nam =  glb_all_books[num];  
+	let book_nam =  gvar.glb_all_books[num];  
 	return book_nam;
 }
 
@@ -687,7 +687,7 @@ export function get_verse_cit_key(cit_obj){
 
 export function get_verse_cit_txt(cit_obj){
 	const kk = get_verse_cit_key(cit_obj) + "_str";
-	return glb_all_bibrefs[kk];
+	return gvar.glb_all_bibrefs[kk];
 }
 
 export function make_bible_ref(cit_obj){

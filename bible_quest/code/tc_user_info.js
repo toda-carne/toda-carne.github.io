@@ -1,6 +1,5 @@
 
-import { get_msg, is_mobile_browser, get_new_dv_under, 
-	glb_vars as gvar, glb_poll_db, 
+import { get_msg, is_mobile_browser, get_new_dv_under, gvar, glb_poll_db, 
 } from './tc_lang_all.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, 
