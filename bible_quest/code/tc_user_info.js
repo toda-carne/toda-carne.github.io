@@ -324,8 +324,8 @@ function get_user_field(obj, id_fld, get_htm){
 
 function get_user_info_object(){
 	const obj = {};
-	get_user_field(obj, id_sibiblia_link, true);
-	get_user_field(obj, id_sibiblia_id, true);
+	//get_user_field(obj, id_sibiblia_link, true);
+	//get_user_field(obj, id_sibiblia_id, true);
 	get_user_field(obj, id_nequi_number);
 	get_user_field(obj, id_paypal_email);
 	get_user_field(obj, id_transfiya_number);
