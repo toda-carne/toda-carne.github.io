@@ -1119,6 +1119,48 @@ a.exam_ref:hover {
 	border: 1px solid white;
 }
 
+.adapt_menu_bar {
+	display: grid;
+	grid-template-columns: 1fr 6vh;
+	grid-template-rows: 1fr;
+}
+
+.adapt_menu {
+	height: 6vh;
+	border: 1px solid white;
+	overflow: hidden;
+	
+	grid-column: 1;
+	grid-row: 1;	
+}
+
+.adapt_item {
+	display: flex;
+	//display: inline-block;
+	height: 6vh;
+	float: left;
+	//padding: 1em 1em;
+	align-items: center;  
+	align-content: center;
+	padding: 0em 1em 0em 1em;
+	font-size: 3vh;
+}
+
+.adapt_menu_pop {
+	height: 6vh;
+	border: 1px solid white;
+	align-items: center;  
+	align-content: center;
+	padding: 0em 1em 0em 1em;
+	font-size: 3vh;
+
+	grid-column: 2;
+	grid-row: 1;	
+}
+
+.end_of_content {
+	height: 100vh;
+}
 
 /*
 .jlq_grid3 img {
