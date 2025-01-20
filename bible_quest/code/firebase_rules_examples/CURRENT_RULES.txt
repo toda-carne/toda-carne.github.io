@@ -1,0 +1,116 @@
+{
+	"rules": {
+		".read": false,
+		".write": false,
+		"modules": {
+			".read": "root.child('admins').child(auth.uid).exists()",
+			".write": "root.child('admins').child(auth.uid).exists()",
+			"${module_name}": {
+				".validate": "newData.isString() && newData.val().length < 100",
+				"${observation_qid}": {
+					".validate": "newData.isNumber() && (newData.val() === 1)",
+				},
+			},
+		},
+		"stats": { 
+			".read": "root.child('admins').child(auth.uid).exists()",
+			".write": "root.child('admins').child(auth.uid).exists()",
+			"last_update": { 
+				".validate": "newData.isString() && (newData.val().length < 25)",
+			},
+			"$module_name": {
+				".validate": "root.child('modules').child(newData.val()).exists()",
+				"num_checks": { 
+					".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 99999999999999999999)",
+				},
+				"${observation_qid}": {
+					".validate": "root.child('modules').child($module_name).child(newData.val()).exists()",
+					"${tot_obs_ok}": {
+						".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 99999999999999999999)",
+					},
+				},
+			},
+		},
+		"users": {
+			"list": {
+				"$uid": {
+					".read": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())",
+					".write": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())",
+					"last_check": { 
+						".validate": "newData.isString() && (newData.val().length < 25)",
+					},
+					"num_checks": { 
+						".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
+					},
+					"$other": { ".validate": false },
+				},
+			},
+			"$uid": {
+				".read": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())
+							&& !(root.child('doing_stats').child(auth.uid).exists())",
+				".write": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())
+							&& !(root.child('doing_stats').child(auth.uid).exists())",
+				"stats": { 
+					"last_check": { 
+						".validate": "newData.isString() && (newData.val().length < 25)",
+					},
+					"num_checks": { 
+						".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
+					},
+					"$module_name": {
+						".validate": "root.child('modules').child(newData.val()).exists()",						
+						"last_check": { 
+							".validate": "newData.isString() && (newData.val().length < 25)",
+						},
+						"num_checks": { 
+							".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
+						},
+						"${observation_qid}": {
+							".validate": "root.child('modules').child($module_name).child(newData.val()).exists()",
+							"${tot_obs_ok}": {
+								".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
+							},
+						},
+					},
+					"in_stats": {
+						"$module_name": {
+							".validate": "root.child('modules').child(newData.val()).exists()",						
+							"num_checks": { 
+								".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
+							},
+							"${observation_qid}": {
+								".validate": "root.child('modules').child($module_name).child(newData.val()).exists()",
+								"${tot_obs_ok}": {
+									".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
+								},
+							},
+						},
+					},
+				},
+				"$module_name": {
+					".validate": "root.child('modules').child(newData.val()).exists()",
+					"${observation_qid}": {
+						".validate": "root.child('modules').child($module_name).child(newData.val()).exists()",
+						"${obs_ok}": {
+							".validate": "newData.isNumber() && (newData.val() === 1)",
+						},
+					},
+				},
+			},
+		},      
+		"blocked": {
+			".read": "root.child('admins').child(auth.uid).exists()",
+			".write": "root.child('admins').child(auth.uid).exists()",
+			"$user_id": {
+				".validate": "newData.isString() && newData.val().length < 100",
+			},
+		},
+		"doing_stats": {
+			".read": "root.child('admins').child(auth.uid).exists()",
+			".write": "root.child('admins').child(auth.uid).exists()",
+			"$user_id": {
+				".validate": "newData.isString() && newData.val().length < 100",
+			},
+		},
+	},
+}

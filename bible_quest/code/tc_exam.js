@@ -276,7 +276,7 @@ function add_question(qid){
 	return dv_quest;
 }
 
-function is_observation(quest){
+export function is_observation(quest){
 	if(quest == null){ return false; }
 	const has_answers = (quest.answers != null);
 	const has_activate = (quest.activated_if != null);
