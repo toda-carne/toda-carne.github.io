@@ -18,6 +18,7 @@ const INVALID_PAGE_POS = "???";
 const DEBUG_QNUMS = true;
 const DEBUG_REFERRER = true;
 const DEBUG_PENDING = false;
+const DEBUG_POP_MENU = true;
 
 const MIN_ANSW_SHOW_INVERT = 3;
 
@@ -93,6 +94,8 @@ const id_quest_img = "id_quest_img";
 
 // FOR DAG pending management
 const id_ctx_pend = "ctx_pend";
+
+const id_pop_menu_options = "id_pop_menu_options";
 
 //const firebase_answers_path = "/user_answers";
 
@@ -974,7 +977,7 @@ function toggle_support_interaction(qid){
 		dv_sel_cit.innerHTML = gvar.glb_curr_lang.msg_sel_cit;
 		dv_sel_cit.addEventListener('click', function() {
 			const all_ops = get_all_response_ops(quest);
-			toggle_select_option(dv_sel_cit, all_ops.all_txt, function(dv_ret, dv_ops, val_sel){
+			toggle_select_option(dv_sel_cit, all_ops.all_txt, function(dv_ret, dv_ops, val_sel, idx_sel){
 				if (val_sel.startsWith(stg_prefix)){
 				} else if (val_sel.startsWith(lnk_prefix)){
 				} else {
@@ -1236,7 +1239,7 @@ function toggle_verse_ed(dv_citation){
 	
 	inp_site.addEventListener('click', function() {
 		const all_sites_arr = Object.keys(gvar.glb_all_bibles);
-		toggle_select_option(inp_site, all_sites_arr, function(dv_ret, dv_ops, val_sel){
+		toggle_select_option(inp_site, all_sites_arr, function(dv_ret, dv_ops, val_sel, idx_sel){
 			const bibs = gvar.glb_all_bibles[val_sel];
 			if(bibs.length > 0){ inp_bib_ver_sel.innerHTML = bibs[0]; }
 			dv_ret.innerHTML = val_sel;
@@ -1373,13 +1376,17 @@ export function toggle_select_option(dv_return, all_options_arr, on_click_fn){
 	dv_options.classList.add("is_block");
 	dv_options.classList.add("grid_item_all_col");
 	
+	let consec = 0;
 	all_options_arr.forEach((value) => {
+		const opt_idx = consec;
+		consec++;
 		const dv_opt = add_option(dv_options, null, value, null);
 		dv_opt.addEventListener('click', function() {
 			if(on_click_fn != null){
-				on_click_fn(dv_return, dv_options, value);
+				on_click_fn(dv_return, dv_options, value, opt_idx);
 			} else {
 				dv_return.innerHTML = value;
+				dv_return.selected_id = opt_idx;
 				dv_options.remove();
 			}
 		});
@@ -1453,6 +1460,18 @@ function init_referref(){
 function init_exam_buttons(){
 	let dv_button = null;
 	
+	dv_button = document.getElementById("id_user_picture"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', user_name_button_handler); }
+	
+	dv_button = document.getElementById("id_user_name"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', user_name_button_handler); }
+	if(dv_button != null){ dv_button.addEventListener('contextmenu', (ev1) => {
+			ev1.preventDefault();
+			toggle_user_info(null);
+			return false;
+		}); 		
+	} 
+	
 	dv_button = document.getElementById("id_exam_save_button"); // this id must be the same to the id in the HTML page.
 	if(dv_button != null){ dv_button.addEventListener('click', save_button_handler); }
 	
@@ -1466,19 +1485,10 @@ function init_exam_buttons(){
 	if(dv_button != null){ dv_button.addEventListener('click', undo_button_handler); }
 	
 	dv_button = document.getElementById("id_user_logout_anchor"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', user_logout); }
+	if(dv_button != null){ dv_button.addEventListener('click', user_logout); }	
 	
-	dv_button = document.getElementById("id_user_name"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', user_name_button_handler); }
-	if(dv_button != null){ dv_button.addEventListener('contextmenu', (ev1) => {
-			ev1.preventDefault();
-			toggle_user_info(null);
-			return false;
-		}); 		
-	} 
-	
-	dv_button = document.getElementById("id_user_picture"); // this id must be the same to the id in the HTML page.
-	if(dv_button != null){ dv_button.addEventListener('click', user_name_button_handler); }
+	dv_button = document.getElementById("id_pop_menu"); // this id must be the same to the id in the HTML page.
+	if(dv_button != null){ dv_button.addEventListener('click', pop_menu_handler); }	
 	
 }
 
@@ -1489,7 +1499,7 @@ function save_button_handler(){
 	const mg_browser = gvar.glb_curr_lang.msg_save_in_browser;
 	const mg_cloud = gvar.glb_curr_lang.msg_save_in_cloud;
 	const where_arr = [mg_browser, mg_cloud];
-	toggle_select_option(dv_exam_top, where_arr, function(dv_ret_w, dv_ops_w, val_sel_w){
+	toggle_select_option(dv_exam_top, where_arr, function(dv_ret_w, dv_ops_w, val_sel_w, idx_sel_w){
 		dv_ops_w.remove();
 		if(val_sel_w == mg_browser){
 			const nw_nm = gvar.glb_curr_lang.msg_new_answers_name;
@@ -1500,7 +1510,7 @@ function save_button_handler(){
 			} else {
 				all_disp_nams = all_sv_nams.concat([nw_nm]);
 			}
-			toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm){
+			toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 				dv_ops_n.remove();
 				if(exam_nm == nw_nm){
 					toggle_exam_name_ed(dv_exam_nm, write_exam_object);
@@ -1527,11 +1537,11 @@ function open_button_handler(){
 	const mg_browser = gvar.glb_curr_lang.msg_open_from_browser;
 	const mg_cloud = gvar.glb_curr_lang.msg_open_from_cloud;
 	const where_arr = [mg_browser, mg_cloud];
-	toggle_select_option(dv_exam_top, where_arr, function(dv_ret_w, dv_ops_w, val_sel_w){
+	toggle_select_option(dv_exam_top, where_arr, function(dv_ret_w, dv_ops_w, val_sel_w, idx_sel_w){
 		dv_ops_w.remove();
 		if(val_sel_w == mg_browser){
 			let all_disp_nams = read_all_exam_names();
-			toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm){
+			toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 				dv_ops_n.remove();
 				read_exam_object(exam_nm);
 				dv_exam_nm.innerHTML = exam_nm;
@@ -1552,7 +1562,7 @@ function delete_button_handler(){
 	const where_arr = [mg_browser, mg_cloud];
 	
 	let all_disp_nams = read_all_exam_names();
-	toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm){
+	toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
 		delete_exam_object(exam_nm);
 		dv_exam_nm.innerHTML = "";
@@ -1573,7 +1583,45 @@ function user_name_button_handler(){
 	}
 	toggle_user_info(fb_usr);
 }
-		
+
+function pop_menu_handler(){
+	const dv_exam_top_cont = document.getElementById("id_exam_top_content");
+
+	let dv_pop_men = null;
+	dv_pop_men = get_new_dv_under(dv_exam_top_cont, id_pop_menu_options);
+	if(dv_pop_men == null){
+		if(DEBUG_POP_MENU){ console.log("toggle_pop_menu OFF"); }
+		scroll_to_first_not_answered();
+		return;
+	}
+	
+	const dv_exam_top = document.getElementById("id_top_menu");
+	const all_ops = dv_exam_top.childNodes;
+	let ii = 0;
+	for(ii = 0; ii < all_ops.length; ii++){
+		const nd = all_ops[ii];
+		const op = nd.cloneNode(true);
+		op.id = null;
+		if(op.classList != null){
+			op.classList.remove("adapt_item");
+			op.classList.add("exam");
+			op.classList.add("is_block");
+		}
+		//remove_all_classes(op);
+		dv_pop_men.appendChild(op);
+	}
+	
+	scroll_to_top(dv_pop_men);
+}
+
+function remove_all_classes(dv_elem) {
+	const all_cl = dv_elem.classList.values();
+
+	for (const value of all_cl) {
+		dv_elem.classList.remove(value);
+	}
+}
+
 function find_GET_parameter(prm_nm) {
 	let result = null,
 	tmp = [];
