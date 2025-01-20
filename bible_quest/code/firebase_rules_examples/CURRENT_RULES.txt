@@ -2,6 +2,9 @@
 	"rules": {
 		".read": false,
 		".write": false,
+		"ck_admin": {
+			".read": "root.child('admins').child(auth.uid).exists()",
+		},
 		"modules": {
 			".read": "root.child('admins').child(auth.uid).exists()",
 			".write": "root.child('admins').child(auth.uid).exists()",
@@ -36,13 +39,7 @@
 				"$uid": {
 					".read": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())",
 					".write": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())",
-					"last_check": { 
-						".validate": "newData.isString() && (newData.val().length < 25)",
-					},
-					"num_checks": { 
-						".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
-					},
-					"$other": { ".validate": false },
+					".validate": "newData.isNumber() && (newData.val() === 1)",
 				},
 			},
 			"$uid": {

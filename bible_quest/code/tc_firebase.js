@@ -32,12 +32,14 @@ export const firebaseConfig = {
 };
 
 const firebase_users_path = 'users/';
-const firebase_all_users_path = firebase_users_path + 'list/';
+const firebase_users_list_path = firebase_users_path + 'list/';
+const firebase_ck_admin_path = 'ck_admin/';
 
 let tc_fb_app = null;
 //let analytics = getAnalytics(tc_fb_app);
 let tc_fb_auth = null;
 let tc_fb_user = null;
+let tc_fb_is_admin = false;
 
 /*
  *      In order to work from toda-carne.github.io
@@ -146,6 +148,10 @@ export function firebase_check_user(callbk){
 	}
 }
 
+export function firebase_user_is_admin(){
+	return tc_fb_is_admin;
+}
+
 function get_date_and_time(){ 
 	const currentdate = new Date(); 
 	const datetime = currentdate.getFullYear() + "/"
@@ -157,30 +163,72 @@ function get_date_and_time(){
 	return datetime;
 }
 
-function firebase_inc_user_checks(){ 
-	if(tc_fb_app == null){ console.log("firebase_write_user_id. tc_fb_app is NULL!!"); return; }
-	if(tc_fb_user == null){ console.log("firebase_write_user_id. tc_fb_user is NULL!!"); return; }
+function firebase_user_ck_is_admin(){ 
+	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
+	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
 	const fb_database = getDatabase(tc_fb_app);
 
-	const path_cntr = firebase_all_users_path + tc_fb_user.uid + "/num_checks";
-	//const path_cntr = firebase_all_users_path + tc_fb_user.uid;
+	const path_cntr = firebase_ck_admin_path;
+	const db_ref = ref(fb_database, path_cntr);
+	
+	tc_fb_is_admin = false;
+	get(db_ref).then((snapshot) => {
+		if (snapshot.exists()) {
+			const num = snapshot.val();
+			if(num == 1){
+				tc_fb_is_admin = true;
+			}
+		}
+		if(tc_fb_is_admin){
+			console.log("IT IS ADMIN");
+		} else {
+			console.log("NOT ADMIN");
+		}
+	}).catch((error) => {
+		tc_fb_is_admin = false;
+		console.error(error);
+		console.log("NOT ADMIN");
+	});
+}
+
+function firebase_inc_user_num_checks(){ 
+	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
+	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
+	const fb_database = getDatabase(tc_fb_app);
+
+	const path_cntr = firebase_users_path + tc_fb_user.uid + "/stats/num_checks";
 	const db_ref = ref(fb_database, path_cntr);
 
 	set(db_ref, increment(1)).catch((error) => { console.error(error); });	
 }
 
+function firebase_write_user_id_in_list(){ 
+	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
+	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
+	const fb_database = getDatabase(tc_fb_app);
+
+	const db_ref = ref(fb_database, firebase_users_list_path + tc_fb_user.uid);
+	console.log("firebase_write_user_id. db_ref = " + db_ref);
+	set(db_ref, 1).catch((error) => { 
+		console.error(error); 
+	});
+}
+
 function firebase_write_user_id(){ 
+	firebase_user_ck_is_admin();
+	firebase_write_user_id_in_list();
+	
 	if(tc_fb_app == null){ console.log("firebase_write_user_id. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_write_user_id. tc_fb_user is NULL!!"); return; }
 	const fb_database = getDatabase(tc_fb_app);
-	const db_ref = ref(fb_database, firebase_all_users_path + tc_fb_user.uid + "/last_check"); // THIS obj MUST FIT firebase rules
+	const db_ref = ref(fb_database, firebase_users_path + tc_fb_user.uid + "/stats/last_check"); // THIS obj MUST FIT firebase rules
 	console.log("firebase_write_user_id. db_ref = " + db_ref);
 	const dt = get_date_and_time();  
 	set(db_ref, dt).catch((error) => { 
 		console.error(error); 
 	});
 	
-	firebase_inc_user_checks();
+	firebase_inc_user_num_checks();
 }
 
 export const firebase_write_object = (sub_ref, obj, err_fn) => {  //sub_ref MUST start with '/' or be empty
