@@ -554,17 +554,15 @@ function ini_glb_vars_en(all_vars){
 	all_vars.glb_all_bibrefs = all_en_bibrefs;
 	all_vars.glb_all_book_hrefs = book_en_hrefs;
 	all_vars.glb_poll_txt = all_en_poll_txt;
+	all_vars.glb_poll_db = {};
 }
 
-export let glb_poll_db = {};
-
 export function init_poll_glb(polldb){
-	glb_poll_db = polldb;
+	gvar.glb_poll_db = polldb;
 }
 
 export function get_new_dv_under(dv_pop_up, id_dv){
-	var dv_parent = dv_pop_up.parentNode;
-	var dv_options = document.getElementById(id_dv);
+	let dv_options = document.getElementById(id_dv);
 	if(dv_options != null){
 		var was_mine = (dv_pop_up.nextSibling == dv_options);
 		dv_options.remove();

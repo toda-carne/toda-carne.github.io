@@ -1,5 +1,5 @@
 
-import { get_msg, is_mobile_browser, get_new_dv_under, gvar, glb_poll_db, 
+import { get_msg, is_mobile_browser, get_new_dv_under, gvar, 
 } from './tc_lang_all.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, get_user_href, 
