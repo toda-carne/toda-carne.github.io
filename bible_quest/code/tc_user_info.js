@@ -1,5 +1,5 @@
 
-import { get_msg, is_mobile_browser, get_new_dv_under, gvar, 
+import { get_new_dv_under, gvar, 
 } from './tc_lang_all.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, get_user_href, 
@@ -309,16 +309,16 @@ export function toggle_user_info(fb_usr){
 function get_user_field(obj, id_fld, get_htm){
 	const dv_fld = document.getElementById(id_fld);
 	if(dv_fld == null){
-		console.log("get_user_field. No field with id = " + id_fld);
+		console.log("GET_user_field. No field with id = " + id_fld);
 		return;
-	}
-	if(DEBUG_USER_INFO){ 
-		console.log("get_user_field. id = " + id_fld + " = " + dv_fld.innerHTML);
 	}
 	if(get_htm){
 		obj[id_fld] = dv_fld.innerHTML;
 	} else {
 		obj[id_fld] = dv_fld.value;
+	}
+	if(DEBUG_USER_INFO){ 
+		console.log("GET_user_field. id = " + id_fld + " = " + obj[id_fld]);
 	}
 }
 
@@ -350,7 +350,7 @@ function get_user_info_object(){
 function set_user_field(obj, id_fld, set_htm){
 	const dv_fld = document.getElementById(id_fld);
 	if(dv_fld == null){
-		console.log("get_user_field. No field with id = " + id_fld);
+		console.log("SET_user_field. No field with id = " + id_fld);
 		return;
 	}
 	if(set_htm){
@@ -397,7 +397,7 @@ function write_firebase_user_object(err_fn){
 		dv_comm_info.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
 		return;
 	}
-	console.log("SAVING in https://todacarne-firebase-default-rtdb.firebaseio.com");
+	if(DEBUG_USER_INFO){ console.log("SAVING in https://todacarne-firebase-default-rtdb.firebaseio.com"); }
 	const wr_obj = JSON.parse(JSON.stringify(gvar.current_user_info));
 	return fb_write_object(firebase_user_info_path, wr_obj, err_fn);
 }
@@ -409,7 +409,7 @@ function read_firebase_user_object(){
 		dv_comm_info.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
 		return;
 	}
-	console.log("LOADING from https://todacarne-firebase-default-rtdb.firebaseio.com");
+	if(DEBUG_USER_INFO){ console.log("LOADING from https://todacarne-firebase-default-rtdb.firebaseio.com"); }
 	return fb_read_object(firebase_user_info_path, (snapshot) => {
 		if (snapshot.exists()) {
 			const rd_obj = snapshot.val();
@@ -425,3 +425,36 @@ function read_firebase_user_object(){
 	});	
 }
 
+/*
+				"user_info": {
+					"$user_field": {
+						".validate": "root.child('user_fields').child(newData.val()).exists() && (
+							(newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)) ||
+							(newData.isString() && newData.val().length < 200)
+						)",
+					},
+				},
+
+​
+					id_ed_user_nequi_number: "7651234"
+					id_ed_user_paypal_email: ""
+					id_ed_user_transfiya_number: "0"
+					id_ed_user_url_photo: ""
+					id_ed_user_country: "Colombia"
+					id_ed_user_citizen_id: "79523732"
+					id_ed_user_birth_year: "2024"
+					id_ed_user_birth_month: "12"
+					id_ed_user_birth_day: "31"
+					id_ed_user_sex: "Hombre"
+					id_ed_user_marital_status: "Nunca casado"
+					id_ed_user_name: "Jose Luis Quiroga Beltran"
+
+					id_ed_user_divorce_number: "0"
+					id_ed_user_children_number: "0"
+
+					id_ed_user_website: ""
+					id_ed_user_facebook: ""
+					id_ed_user_instagram: ""
+					id_ed_user_youtube: ""
+​
+*/

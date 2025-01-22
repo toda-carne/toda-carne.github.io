@@ -88,13 +88,27 @@
 					".validate": "root.child('modules').child(newData.val()).exists()",
 					"${observation_qid}": {
 						".validate": "root.child('modules').child($module_name).child(newData.val()).exists()",
-						"${obs_ok}": {
-							".validate": "newData.isNumber() && (newData.val() === 1)",
-						},
+					},
+				},
+				"user_info": {
+					"$user_field": {
+						".validate": "true",
 					},
 				},
 			},
 		},      
+		"to_update": {
+			".read": "root.child('admins').child(auth.uid).exists()",
+			".write": "root.child('admins').child(auth.uid).exists()",
+			"$module_name": {
+				".validate": "root.child('modules').child(newData.val()).exists()",
+				"$uid": {
+					".read": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())",
+					".write": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())",
+					".validate": "newData.isNumber() && (newData.val() === 1)",
+				},
+			},
+		},
 		"blocked": {
 			".read": "root.child('admins').child(auth.uid).exists()",
 			".write": "root.child('admins').child(auth.uid).exists()",

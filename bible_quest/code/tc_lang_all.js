@@ -537,8 +537,6 @@ export function init_glb_vars(all_vars){
 	gvar = all_vars;
 }
 
-const glb_en_vars = {};
-
 function ini_glb_vars_en(all_vars){
 	all_vars.glb_exam_language = "en";
 	all_vars.glb_all_countries = countries_en;
@@ -621,8 +619,9 @@ export function init_en_module(){
 	fill_bibrefs_href(all_en_bibrefs);
 	fill_all_strongrefs_href();
 
-	ini_glb_vars_en(glb_en_vars);
-	init_glb_vars(glb_en_vars);	
+	const all_vars = {};
+	ini_glb_vars_en(all_vars);
+	init_glb_vars(all_vars);	
 	//init_en_exam_msg();
 }
 
@@ -808,21 +807,6 @@ export function get_qid_base(qid){
 }
 
 export function get_answer_key(qid, cit_obj){
-	/*
-	if(cit_obj == null){
-		console.log("Internal error. get_answer_key");
-		return "invalid_response_qid";
-	}
-	let kk = get_verse_cit_key(cit_obj);
-	if (cit_obj.kind == refs_ids.verse_kind){
-		kk = get_verse_cit_key(cit_obj);
-	} else if (cit_obj.kind == refs_ids.strong_kind){
-		//kk = get_verse_cit_key(cit_obj);
-	} else if (cit_obj.kind == refs_ids.link_kind){
-		//kk = get_verse_cit_key(cit_obj);
-	}
-	const rqid = bb + "_" + kk + SUF_QID;
-	*/
 	const kk = get_verse_key(cit_obj, false);
 	const bb = get_qid_base(qid);
 	const rqid = bb + "_answ_" + kk;

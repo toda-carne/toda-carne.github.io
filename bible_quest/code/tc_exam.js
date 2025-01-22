@@ -128,8 +128,6 @@ function init_exam_fb(){
 	.catch((err) => {
 		console.log("Could NOT import '${mod_nm}' err:" + err.message);
 	});
-
-	
 }
 
 function is_content_horizontal() {

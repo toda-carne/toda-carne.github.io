@@ -3,24 +3,70 @@
 
 // CDN COntent D Network (gstatic)
 /*
-import { initializeApp } 
-	from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } 
-	from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-import { getDatabase, ref, set, onValue } 
-	from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+const fb_app_js = "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+const fb_auth_js = "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+const fb_database_js = "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 */
 
-import { initializeApp } 
-	from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } 
-	from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import { getDatabase, ref, get, set, onValue, increment, update, runTransaction, } 
-	from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import * as MOD_APP from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+import * as MOD_AUTH from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+import * as MOD_DB from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+
+//import { initializeApp } 
+//	from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+//import { MOD_AUTH.getAuth, MOD_AUTH.signInWithPopup, MOD_AUTH.GoogleAuthProvider, MOD_AUTH.signOut, MOD_AUTH.onAuthStateChanged } 
+//	from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+//import { MOD_DB.getDatabase, MOD_DB.ref, MOD_DB.get, MOD_DB.set, MOD_DB.onValue, MOD_DB.increment, MOD_DB.update, MOD_DB.runTransaction, } 
+//	from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+	
+/*
+const fb_app_js = "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+const fb_auth_js = "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+const fb_database_js = "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+
+export let MOD_APP = null;
+export let MOD_AUTH = null;
+export let MOD_DB = null;
+
+//init_FB_MODS();
+
+async function init_FB_MODS(){
+	try {
+		MOD_APP = await import(fb_app_js);
+		MOD_AUTH = await import(fb_auth_js);
+		MOD_DB = await import(fb_database_js);
+	} catch {
+		console.log("init_FB_MODS FAILED !!!");
+	}
+	
+	if(MOD_APP == null){
+		await import(fb_app_js).then((module) => { MOD_APP = module; }).catch((err) => {
+			console.log("Could NOT import " + fb_app_js + " err:" + err.message);
+		});
+	}
+	if(MOD_AUTH == null){
+		await import(fb_auth_js).then((module) => { MOD_AUTH = module; }).catch((err) => {
+			console.log("Could NOT import " + fb_auth_js + " err:" + err.message);
+		});
+	}
+	if(MOD_DB == null){
+		await import(fb_database_js).then((module) => { MOD_DB = module; }).catch((err) => {
+			console.log("Could NOT import " + fb_database_js + " err:" + err.message);
+		});
+	}
+}
+
+function all_MODS_ok(){
+	if(MOD_APP == null){ return false; }
+	if(MOD_AUTH == null){ return false; }
+	if(MOD_DB == null){ return false; }
+	return true;
+}
+*/
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-export const firebaseConfig = {
+const firebase_config = {
 	apiKey: "AIzaSyCc0og3bSe6mKvsBIFsoxYOCEmONmEF4P0",
 	authDomain: "todacarne-firebase.firebaseapp.com",
 	databaseURL: "https://todacarne-firebase-default-rtdb.firebaseio.com",
@@ -50,26 +96,27 @@ let tc_fb_is_admin = false;
  *      google console > APIs & Services > Credentials > API Keys > Browser Key
  */
 export function firebase_check_login(err_fn){
+	//if(! all_MODS_ok()){ return; }
 	if(tc_fb_user != null){
 		return new Promise((resolve, reject) => {
 			resolve('database != null');
 		});
 	}
 	// Initialize Firebase
-	if(tc_fb_app == null){ tc_fb_app = initializeApp(firebaseConfig); }
+	if(tc_fb_app == null){ tc_fb_app = MOD_APP.initializeApp(firebase_config); }
 	//const analytics = getAnalytics(tc_fb_app);
 	
-	const fb_provider = new GoogleAuthProvider();
+	const fb_provider = new MOD_AUTH.GoogleAuthProvider();
 	
 	fb_provider.setCustomParameters({
 		prompt: "select_account"
 	});
 	
-	if(tc_fb_auth == null){ tc_fb_auth = getAuth(); }
+	if(tc_fb_auth == null){ tc_fb_auth = MOD_AUTH.getAuth(); }
 	
-	return signInWithPopup(tc_fb_auth, fb_provider).then((result) => {
+	return MOD_AUTH.signInWithPopup(tc_fb_auth, fb_provider).then((result) => {
 		// This gives you a Google Access Token. You can use it to access the Google API.
-		const fb_credential = GoogleAuthProvider.credentialFromResult(result);
+		const fb_credential = MOD_AUTH.GoogleAuthProvider.credentialFromResult(result);
 		const fb_token = fb_credential.accessToken;
 		// The signed-in user info.
 		tc_fb_user = result.user;
@@ -93,7 +140,7 @@ export function firebase_check_login(err_fn){
 		// The email of the user's account used.
 		const email = error.customData.email;
 		// The AuthCredential type that was used.
-		const credential = GoogleAuthProvider.credentialFromError(error);
+		const credential = MOD_AUTH.GoogleAuthProvider.credentialFromError(error);
 		
 		console.log('errorCode=' + errorCode);
 		console.log('errorMessage=' + errorMessage);
@@ -105,21 +152,22 @@ export function firebase_check_login(err_fn){
 }
 
 export function firebase_check_user(callbk){
+	//if(! all_MODS_ok()){ return; }
 	try {
-		if(tc_fb_app == null){ tc_fb_app = initializeApp(firebaseConfig); }
-		if(tc_fb_auth == null){ tc_fb_auth = getAuth(); }
-		const db = getDatabase(tc_fb_app);
+		if(tc_fb_app == null){ tc_fb_app = MOD_APP.initializeApp(firebase_config); }
+		if(tc_fb_auth == null){ tc_fb_auth = MOD_AUTH.getAuth(); }
+		const db = MOD_DB.getDatabase(tc_fb_app);
 		if(db == null){ return; }
-		const cn_ref = ref(db, ".info/connected");
+		const cn_ref = MOD_DB.ref(db, ".info/connected");
 		if(cn_ref == null){ return; }
-		onValue(cn_ref, (snap) => {
+		MOD_DB.onValue(cn_ref, (snap) => {
 			if (snap.val() === true) {
 				console.log("WAS CONNECTED TO FIREBASE !!!");				
 			} else {
 				console.log("WAS NOT connected to firebase !!!");
 			}
 		});
-		onAuthStateChanged(tc_fb_auth, (user) => {
+		MOD_AUTH.onAuthStateChanged(tc_fb_auth, (user) => {
 			if (user) {
 				tc_fb_user = user;
 				// User is signed in, see docs for a list of available properties
@@ -164,15 +212,16 @@ function get_date_and_time(){
 }
 
 function firebase_user_ck_is_admin(){ 
+	//if(! all_MODS_ok()){ return; }
 	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
-	const fb_database = getDatabase(tc_fb_app);
+	const fb_database = MOD_DB.getDatabase(tc_fb_app);
 
 	const path_cntr = firebase_ck_admin_path;
-	const db_ref = ref(fb_database, path_cntr);
+	const db_ref = MOD_DB.ref(fb_database, path_cntr);
 	
 	tc_fb_is_admin = false;
-	get(db_ref).then((snapshot) => {
+	MOD_DB.get(db_ref).then((snapshot) => {
 		if (snapshot.exists()) {
 			const num = snapshot.val();
 			if(num == 1){
@@ -192,39 +241,42 @@ function firebase_user_ck_is_admin(){
 }
 
 function firebase_inc_user_num_checks(){ 
+	//if(! all_MODS_ok()){ return; }
 	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
-	const fb_database = getDatabase(tc_fb_app);
+	const fb_database = MOD_DB.getDatabase(tc_fb_app);
 
 	const path_cntr = firebase_users_path + tc_fb_user.uid + "/stats/num_checks";
-	const db_ref = ref(fb_database, path_cntr);
+	const db_ref = MOD_DB.ref(fb_database, path_cntr);
 
-	set(db_ref, increment(1)).catch((error) => { console.error(error); });	
+	MOD_DB.set(db_ref, MOD_DB.increment(1)).catch((error) => { console.error(error); });	
 }
 
 function firebase_write_user_id_in_list(){ 
+	//if(! all_MODS_ok()){ return; }
 	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
-	const fb_database = getDatabase(tc_fb_app);
+	const fb_database = MOD_DB.getDatabase(tc_fb_app);
 
-	const db_ref = ref(fb_database, firebase_users_list_path + tc_fb_user.uid);
+	const db_ref = MOD_DB.ref(fb_database, firebase_users_list_path + tc_fb_user.uid);
 	console.log("firebase_write_user_id. db_ref = " + db_ref);
-	set(db_ref, 1).catch((error) => { 
+	MOD_DB.set(db_ref, 1).catch((error) => { 
 		console.error(error); 
 	});
 }
 
 function firebase_write_user_id(){ 
+	//if(! all_MODS_ok()){ return; }
 	firebase_user_ck_is_admin();
 	firebase_write_user_id_in_list();
 	
 	if(tc_fb_app == null){ console.log("firebase_write_user_id. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_write_user_id. tc_fb_user is NULL!!"); return; }
-	const fb_database = getDatabase(tc_fb_app);
-	const db_ref = ref(fb_database, firebase_users_path + tc_fb_user.uid + "/stats/last_check"); // THIS obj MUST FIT firebase rules
+	const fb_database = MOD_DB.getDatabase(tc_fb_app);
+	const db_ref = MOD_DB.ref(fb_database, firebase_users_path + tc_fb_user.uid + "/stats/last_check"); // THIS obj MUST FIT firebase rules
 	console.log("firebase_write_user_id. db_ref = " + db_ref);
 	const dt = get_date_and_time();  
-	set(db_ref, dt).catch((error) => { 
+	MOD_DB.set(db_ref, dt).catch((error) => { 
 		console.error(error); 
 	});
 	
@@ -232,12 +284,13 @@ function firebase_write_user_id(){
 }
 
 export const firebase_write_object = (sub_ref, obj, err_fn) => {  //sub_ref MUST start with '/' or be empty
+	//if(! all_MODS_ok()){ return; }
 	return firebase_check_login(err_fn).then((result) => {
 		if(tc_fb_app == null){ console.error("No firebase app in firebase_write_object !!");  return; }
-		const fb_database = getDatabase(tc_fb_app);
-		const db_ref = ref(fb_database, firebase_users_path + tc_fb_user.uid + sub_ref)
+		const fb_database = MOD_DB.getDatabase(tc_fb_app);
+		const db_ref = MOD_DB.ref(fb_database, firebase_users_path + tc_fb_user.uid + sub_ref)
 		console.log("firebase_write_object. db_ref = " + db_ref);
-		set(db_ref, obj).catch((error) => { 
+		MOD_DB.set(db_ref, obj).catch((error) => { 
 			console.error(error); 
 			if(err_fn != null){ err_fn(error); }
 		});
@@ -245,25 +298,27 @@ export const firebase_write_object = (sub_ref, obj, err_fn) => {  //sub_ref MUST
 };
 
 export const firebase_read_object = (sub_ref, callbak_func) => { //sub_ref MUST start with '/' or be empty
+	//if(! all_MODS_ok()){ return; }
 	return firebase_check_login().then((result) => {
 		if(tc_fb_app == null){ console.error("No firebase app in firebase_write_object !!");  return; }
-		const fb_database = getDatabase(tc_fb_app);
-		const db_ref = ref(fb_database, firebase_users_path + tc_fb_user.uid + sub_ref)
+		const fb_database = MOD_DB.getDatabase(tc_fb_app);
+		const db_ref = MOD_DB.ref(fb_database, firebase_users_path + tc_fb_user.uid + sub_ref)
 		console.log("firebase_read_object. db_ref = " + db_ref);
-		onValue(db_ref, callbak_func).catch((error) => {
+		MOD_DB.onValue(db_ref, callbak_func).catch((error) => {
 			console.error(error);
 		});
 	});
 }
 
 export const firebase_sign_out = () => {
+	//if(! all_MODS_ok()){ return; }
 	if(tc_fb_user == null){ return; }
-	if(tc_fb_app == null){ tc_fb_app = initializeApp(firebaseConfig); }
-	if(tc_fb_auth == null){ tc_fb_auth = getAuth(); }
+	if(tc_fb_app == null){ tc_fb_app = MOD_APP.initializeApp(firebase_config); }
+	if(tc_fb_auth == null){ tc_fb_auth = MOD_AUTH.getAuth(); }
 	
 	tc_fb_user = null;
-	//const tc_fb_auth = getAuth();
-	signOut(tc_fb_auth);
+	//const tc_fb_auth = MOD_AUTH.getAuth();
+	MOD_AUTH.signOut(tc_fb_auth);
 	console.log('signed out');
 }
 
@@ -274,65 +329,65 @@ export function firebase_get_user(){
 
 // firebase apiKey access to Identity Toolkit API
 // Requests to this API identitytoolkit method google.cloud.identitytoolkit.v1.ProjectConfigService.GetProjectConfig are blocked
-// FirebaseAuth.getInstance().signOut();
+// FirebaseAuth.getInstance().MOD_AUTH.signOut();
 
 /*
 
-    ref.transaction(function(value) {
+    MOD_DB.ref.transaction(function(value) {
       return (value || 0) + 1;
     });
 
 -----------------------------------------------------------
-    ref.set(admin.database.ServerValue.increment(1));
+    MOD_DB.ref.MOD_DB.set(admin.database.ServerValue.MOD_DB.increment(1));
 
 */
 
 		/*firebase.database()
-			.ref('users')
+			.MOD_DB.ref('users')
 			.child(user_uid)
 			.child('searches')
-			.set(firebase.database.ServerValue.increment(1))*/
+			.MOD_DB.set(firebase.database.ServerValue.MOD_DB.increment(1))*/
 		
 		/*db_ref.transaction(function(value) {
 			return (value || 0) + 1;
 		});*/
 		
-	/*const db_ref_cntr = ref(fb_database, firebase_all_users_path + tc_fb_user.uid + "/num_checks")
-	db_ref_cntr.set(admin.database.ServerValue.increment(1)).catch((error) => { 
+	/*const db_ref_cntr = MOD_DB.ref(fb_database, firebase_all_users_path + tc_fb_user.uid + "/num_checks")
+	db_ref_cntr.MOD_DB.set(admin.database.ServerValue.MOD_DB.increment(1)).catch((error) => { 
 		console.error(error); 
 	});
-		db_ref.set(firebase.database.ServerValue.increment(1)).catch((error) => { 
+		db_ref.MOD_DB.set(firebase.database.ServerValue.MOD_DB.increment(1)).catch((error) => { 
 			console.error(error); 
 		}
 	*/
 	/*
 	try {
 		const path_cntr = firebase_all_users_path + tc_fb_user.uid + "/num_checks";
-		//fb_database.child(path_cntr).set(ServerValue.increment(1));
+		//fb_database.child(path_cntr).MOD_DB.set(ServerValue.MOD_DB.increment(1));
 		
-		const db_ref = ref(fb_database, path_cntr);
+		const db_ref = MOD_DB.ref(fb_database, path_cntr);
 		
 		//db_ref.push({startedAt: firebase.database.ServerValue.TIMESTAMP});
 		
-		//db_ref.set(fb_database.ServerValue.increment(1));
-		//db_ref.set(firebase.database.ServerValue.increment(1));
-		//db_ref.set(database.ServerValue.increment(1));
-		//db_ref.set(ServerValue.increment(1));
-		set(db_ref, increment(1));
+		//db_ref.MOD_DB.set(fb_database.ServerValue.MOD_DB.increment(1));
+		//db_ref.MOD_DB.set(firebase.database.ServerValue.MOD_DB.increment(1));
+		//db_ref.MOD_DB.set(database.ServerValue.MOD_DB.increment(1));
+		//db_ref.MOD_DB.set(ServerValue.MOD_DB.increment(1));
+		MOD_DB.set(db_ref, MOD_DB.increment(1));
 		
 	} catch (error) {
 		console.error(error); 
 	}  
 	*/
 /*
- function runTransaction(e, t, n) {
+ function MOD_DB.runTransaction(e, t, n) {
  
  
  try {
-    await db.runTransaction(async (t) => {
-      const doc = await t.get(studentRef);
+    await db.MOD_DB.runTransaction(async (t) => {
+      const doc = await t.MOD_DB.get(studentRef);
       const isPresent = doc.data().present;
-      t.update(studentRef, {population: true});
+      t.MOD_DB.update(studentRef, {population: true});
     });
 
     console.log('Transaction success!');
@@ -340,52 +395,52 @@ export function firebase_get_user(){
     console.log('Transaction failure:', e);
   }
  
-runTransaction(
+MOD_DB.runTransaction(
 	
 function addStar(uid, key) {
-  import { getDatabase, increment, ref, update } from "firebase/database";
-  const dbRef = ref(getDatabase());
+  import { MOD_DB.getDatabase, MOD_DB.increment, MOD_DB.ref, MOD_DB.update } from "firebase/database";
+  const dbRef = MOD_DB.ref(MOD_DB.getDatabase());
 
   const updates = {};
   updates[`posts/${key}/stars/${uid}`] = true;
-  updates[`posts/${key}/starCount`] = increment(1);
+  updates[`posts/${key}/starCount`] = MOD_DB.increment(1);
   updates[`user-posts/${key}/stars/${uid}`] = true;
-  updates[`user-posts/${key}/starCount`] = increment(1);
-  update(dbRef, updates);
+  updates[`user-posts/${key}/starCount`] = MOD_DB.increment(1);
+  MOD_DB.update(dbRef, updates);
 }	
 	
  **/		
 	/*
 	 * 
-	// THIS IS RECURSIVE BECAUSE onValue get called every time the value changes and set changes the value
-	onValue(db_ref, (snapshot) => {
+	// THIS IS RECURSIVE BECAUSE MOD_DB.onValue MOD_DB.get called every time the value changes and MOD_DB.set changes the value
+	MOD_DB.onValue(db_ref, (snapshot) => {
 		if (snapshot.exists()) {
 			const num = snapshot.val();
 			const ii = num + 1;
-			set(db_ref, ii).catch((error) => { console.error(error); });
+			MOD_DB.set(db_ref, ii).catch((error) => { console.error(error); });
 		} else {
-			set(db_ref, 0).catch((error) => { console.error(error); });
+			MOD_DB.set(db_ref, 0).catch((error) => { console.error(error); });
 			console.log("First time. No data before.");
 		}
 	}).catch((error) => {
 		console.error(error);
 	});
 	
-	const db_ref = ref(fb_database, path_cntr);
-	set(db_ref, increment(1)).catch((error) => { 
+	const db_ref = MOD_DB.ref(fb_database, path_cntr);
+	MOD_DB.set(db_ref, MOD_DB.increment(1)).catch((error) => { 
 		console.error(error); 
 	});
 	*/
 	
 	/*
 
-import { getDatabase, ref, runTransaction } from "firebase/database";
+import { MOD_DB.getDatabase, MOD_DB.ref, MOD_DB.runTransaction } from "firebase/database";
 
 function toggleStar(uid) {
-  const db = getDatabase();
-  const postRef = ref(db, '/posts/foo-bar-123');
+  const db = MOD_DB.getDatabase();
+  const postRef = MOD_DB.ref(db, '/posts/foo-bar-123');
 
-  runTransaction(postRef, (post) => {
+  MOD_DB.runTransaction(postRef, (post) => {
     if (post) {
       if (post.stars && post.stars[uid]) {
         post.starCount--;
@@ -402,10 +457,10 @@ function toggleStar(uid) {
   });
 }	
 
-import { getDatabase, ref, child, get } from "firebase/database";
+import { MOD_DB.getDatabase, MOD_DB.ref, child, MOD_DB.get } from "firebase/database";
 
-const dbRef = ref(getDatabase());
-get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+const dbRef = MOD_DB.ref(MOD_DB.getDatabase());
+MOD_DB.get(child(dbRef, `users/${userId}`)).then((snapshot) => {
   if (snapshot.exists()) {
     console.log(snapshot.val());
   } else {
@@ -416,13 +471,13 @@ get(child(dbRef, `users/${userId}`)).then((snapshot) => {
 });
 
 
-	onValue(db_ref, (snapshot) => {
+	MOD_DB.onValue(db_ref, (snapshot) => {
 		if (snapshot.exists()) {
 			const num = snapshot.val();
 			const ii = num + 1;
-			set(db_ref, ii).catch((error) => { console.error(error); });
+			MOD_DB.set(db_ref, ii).catch((error) => { console.error(error); });
 		} else {
-			set(db_ref, 0).catch((error) => { console.error(error); });
+			MOD_DB.set(db_ref, 0).catch((error) => { console.error(error); });
 			console.log("First time. No data before.");
 		}
 	}, { onlyOnce: true} ).catch((error) => {
@@ -430,14 +485,14 @@ get(child(dbRef, `users/${userId}`)).then((snapshot) => {
 	});
 	
 
-import { getDatabase, ref, onValue } from "firebase/database";
-import { getAuth } from "firebase/auth";
+import { MOD_DB.getDatabase, MOD_DB.ref, MOD_DB.onValue } from "firebase/database";
+import { MOD_AUTH.getAuth } from "firebase/auth";
 
-const db = getDatabase();
-const auth = getAuth();
+const db = MOD_DB.getDatabase();
+const auth = MOD_AUTH.getAuth();
 
 const userId = auth.currentUser.uid;
-return onValue(ref(db, '/users/' + userId), (snapshot) => {
+return MOD_DB.onValue(MOD_DB.ref(db, '/users/' + userId), (snapshot) => {
   const username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
   // ...
 }, {
@@ -447,17 +502,17 @@ return onValue(ref(db, '/users/' + userId), (snapshot) => {
 	
 		/*  
 	let inc_once = false;
-	onValue(db_ref, (snapshot) => {
+	MOD_DB.onValue(db_ref, (snapshot) => {
 		if (snapshot.exists()) {
 			const num = snapshot.val();
 			console.log("First time. No data before.");
 			const ii = num + 1;
 			if(! inc_once){
 				inc_once = true;
-				set(db_ref, ii).catch((error) => { console.error(error); });
+				MOD_DB.set(db_ref, ii).catch((error) => { console.error(error); });
 			}
 		} else {
-			set(db_ref, 1).catch((error) => { console.error(error); });
+			MOD_DB.set(db_ref, 1).catch((error) => { console.error(error); });
 			console.log("First time. No data before.");
 		}
 	});
@@ -468,14 +523,14 @@ return onValue(ref(db, '/users/' + userId), (snapshot) => {
 	})
 	
 	//RUNS BUT ALWAYS IS FIRST TIME
-	get(db_ref).then((snapshot) => {
+	MOD_DB.get(db_ref).then((snapshot) => {
 		if (snapshot.exists()) {
 			const num = snapshot.val();
 			console.log(path_cntr + " WAS " + num);
 			const ii = num + 1;
-			set(db_ref, ii).catch((error) => { console.error(error); });
+			MOD_DB.set(db_ref, ii).catch((error) => { console.error(error); });
 		} else {
-			set(db_ref, 1).catch((error) => { console.error(error); });
+			MOD_DB.set(db_ref, 1).catch((error) => { console.error(error); });
 			console.log("First time. No data before.");
 		}
 	}).catch((error) => {
@@ -483,7 +538,7 @@ return onValue(ref(db, '/users/' + userId), (snapshot) => {
 	});
 	
 	//RUNS BUT ALWAYS NAN
-	runTransaction(db_ref, (post) => {
+	MOD_DB.runTransaction(db_ref, (post) => {
 		if (post) {
 			console.log(path_cntr + "=");
 			console.log(post);
@@ -501,24 +556,24 @@ return onValue(ref(db, '/users/' + userId), (snapshot) => {
 	
 	//RUNS BUT IT DOES NOT DO ANYTHING
 	
-	const db_ref = ref(fb_database);
+	const db_ref = MOD_DB.ref(fb_database);
 	const path_cntr = firebase_all_users_path + tc_fb_user.uid + "/num_checks";
 	//const path_cntr = firebase_all_users_path + "${uid}/num_checks";
 	
 	const updates = {};
-	updates[path_cntr] = increment(1);
-	update(db_ref, updates);
+	updates[path_cntr] = MOD_DB.increment(1);
+	MOD_DB.update(db_ref, updates);
 	*/
 	
 	/*
-	get(db_ref).then((snapshot) => {
+	MOD_DB.get(db_ref).then((snapshot) => {
 		if (snapshot.exists()) {
 			const num = snapshot.val();
 			console.log(path_cntr + " WAS " + num);
 			const ii = num + 1;
-			set(db_ref, ii).catch((error) => { console.error(error); });
+			MOD_DB.set(db_ref, ii).catch((error) => { console.error(error); });
 		} else {
-			set(db_ref, 1).catch((error) => { console.error(error); });
+			MOD_DB.set(db_ref, 1).catch((error) => { console.error(error); });
 			console.log("First time. No data before.");
 		}
 	}).catch((error) => {
