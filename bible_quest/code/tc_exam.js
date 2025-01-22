@@ -85,7 +85,7 @@ const id_ed_bib_ver_sel = "id_ed_bib_ver_sel";
 const id_dv_citation_ed = "id_citation_ed";
 const id_dv_code_ed = "id_dv_code_ed";
 const id_dv_link_ed = "id_dv_link_ed";
-const id_dv_sel_option = "id_dv_sel_option";
+//const id_dv_sel_option = "id_dv_sel_option";
 const id_dv_name_ed = "id_dv_name_ed";
 const id_dv_answ_ed = "id_dv_answ_ed";
 const id_support_ed = "id_support_ed";
@@ -94,22 +94,12 @@ const id_quest_img = "id_quest_img";
 // FOR DAG pending management
 const id_ctx_pend = "ctx_pend";
 
-const id_pop_menu_options = "id_pop_menu_options";
-
-//const firebase_answers_path = "/user_answers";
-
-
 let INIT_EXAM_DB_FUNC = null;
+
+export const id_dv_working_popup = "id_dv_working_popup";
 
 export let fb_mod = null;
 
-function init_mods_fb(module){
-	md_app = module.md_app;
-	md_auth = module.md_auth;
-	md_db = module.md_db;
-	
-	firebase_config = module.firebase_config;
-}
 
 function init_exam_fb(){
 	const mod_nm = "./tc_firebase.js";
@@ -868,7 +858,7 @@ function remove_all_ed(qid){
 	remove_id(id_dv_citation_ed);
 	remove_id(id_dv_code_ed);
 	remove_id(id_dv_link_ed);
-	remove_id(id_dv_sel_option);
+	remove_id(id_dv_working_popup);  // old id_dv_sel_option
 }
 
 function remove_curr_support_ed(rm_it){
@@ -1339,7 +1329,7 @@ function set_answer_for_verse_cit(dv_citation){
 // CODE_FOR SELECT FROM ARRAY OF OPTIONS (for example several verses)
 
 export function toggle_select_option(dv_return, all_options_arr, on_click_fn){
-	var dv_options = get_new_dv_under(dv_return, id_dv_sel_option);
+	var dv_options = get_new_dv_under(dv_return, id_dv_working_popup); // old id_dv_sel_option
 	if(dv_options == null){
 		return;
 	}
@@ -1489,21 +1479,25 @@ function save_button_handler(){
 			} else {
 				all_disp_nams = all_sv_nams.concat([nw_nm]);
 			}
-			toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
+			toggle_select_option(dv_exam_top, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 				dv_ops_n.remove();
 				if(exam_nm == nw_nm){
-					toggle_exam_name_ed(dv_exam_nm, write_exam_object);
+					//toggle_exam_name_ed(dv_exam_nm, write_exam_object);
+					toggle_exam_name_ed(dv_exam_top, (the_nw_nam) => {
+						dv_exam_nm.innerHTML = the_nw_nam;
+						write_exam_object(the_nw_nam);
+						scroll_to_first_not_answered();
+					});
 				} else {
 					dv_exam_nm.innerHTML = exam_nm;
 					write_exam_object(exam_nm);
+					scroll_to_first_not_answered();
 				}
 			});
 		} else {
 			dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_todacarne_answers_writing;
-			//dv_exam_nm.classList.add("is_red");
 			write_firebase_exam_object().then((result) => {
 				dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_todacarne_answers_name;
-				//dv_exam_nm.classList.remove("is_red");
 			});
 		}
 	});
@@ -1543,7 +1537,7 @@ function delete_button_handler(){
 	const where_arr = [mg_browser, mg_cloud];
 	
 	let all_disp_nams = read_all_exam_names();
-	toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
+	toggle_select_option(dv_exam_top, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
 		delete_exam_object(exam_nm);
 		dv_exam_nm.innerHTML = "";
@@ -1567,10 +1561,10 @@ function user_name_button_handler(){
 }
 
 function pop_menu_handler(){
-	const dv_exam_top_cont = document.getElementById("id_exam_top_content");
+	const dv_pop_sec = document.getElementById("id_pop_opt_sec");
 
 	let dv_pop_men = null;
-	dv_pop_men = get_new_dv_under(dv_exam_top_cont, id_pop_menu_options);
+	dv_pop_men = get_new_dv_under(dv_pop_sec, id_dv_working_popup);
 	if(dv_pop_men == null){
 		if(DEBUG_POP_MENU){ console.log("toggle_pop_menu OFF"); }
 		scroll_to_first_not_answered();
@@ -1895,10 +1889,8 @@ function toggle_exam_name_ed(dv_name, save_fn){
 	dv_ed_name.classList.add("is_block");
 	//dv_ed_name.classList.add("grid_item_all_col");
 
-	const exam_name = dv_name.innerHTML;
-
 	const inp_name = dv_ed_name.appendChild(document.createElement("input"));
-	inp_name.value = exam_name;
+	inp_name.value = "";
 	inp_name.type = "text";
 	inp_name.size = 30;
 	inp_name.classList.add("exam");
@@ -1910,15 +1902,11 @@ function toggle_exam_name_ed(dv_name, save_fn){
 	dv_ok.classList.add("is_ed_verse");
 	dv_ok.innerHTML = gvar.glb_curr_lang.msg_ok;
 	dv_ok.addEventListener('click', function() {
-		let nm_nm = inp_name.value;
+		const the_nw_nm = inp_name.value;
 		if(save_fn != null){
-			save_fn(nm_nm); 
+			save_fn(the_nw_nm); 
 		}
-		dv_name.innerHTML = nm_nm;
 		dv_ed_name.remove();
-		
-		scroll_to_top(dv_name);
-		
 		return;
 	});    
 
@@ -2907,7 +2895,9 @@ function user_login(){
 }
 
 function close_pop_menu() {
-	let dv_pop_men = document.getElementById(id_pop_menu_options);
+	/*
+	let dv_pop_men = document.getElementById(id_dv_working_popup);
 	if(dv_pop_men != null){ dv_pop_men.remove(); }
+	*/
 }
 

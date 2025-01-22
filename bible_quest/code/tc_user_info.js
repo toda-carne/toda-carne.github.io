@@ -3,14 +3,14 @@ import { get_new_dv_under, gvar,
 } from './tc_lang_all.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, get_user_href, 
-	fb_mod, 
+	fb_mod, id_dv_working_popup, 
 } from './tc_exam.js';
 
 const DEBUG_USER_INFO = true;
 
 const firebase_user_info_path = "/user_info";
 
-const id_ed_user_info = "id_ed_user_info";
+//const id_ed_user_info = "id_ed_user_info";
 const id_comm_info = "id_ed_user_comm_info";
 
 const id_goo_name = "id_ed_user_goo_name";
@@ -166,10 +166,10 @@ export function toggle_user_info(fb_usr){
 	let lbl = null;
 	let fld = null;
 	
-	const dv_exam_top = document.getElementById("id_exam_top_content");
+	const dv_user_sec = document.getElementById("id_user_info_sec");
 
 	let dv_edit_user = null;
-	dv_edit_user = get_new_dv_under(dv_exam_top, id_ed_user_info);
+	dv_edit_user = get_new_dv_under(dv_user_sec, id_dv_working_popup);
 	if(dv_edit_user == null){
 		if(DEBUG_USER_INFO){ console.log("toggle_user_info OFF"); }
 		scroll_to_first_not_answered();
@@ -405,10 +405,10 @@ function write_firebase_user_object(err_fn){
 }
 
 function read_firebase_user_object(){
-	if(fb_mod != null){
+	/*if(fb_mod != null){  // this was a test
 		const the_app = fb_mod.md_app.initializeApp(fb_mod.firebase_config);
 		const the_auth = fb_mod.md_auth.getAuth();
-	}
+	}*/
 	if(fb_mod == null){
 		console.log("CANNOT read_firebase_user_object. fb_mod == null");
 		const dv_comm_info = document.getElementById(id_comm_info);
