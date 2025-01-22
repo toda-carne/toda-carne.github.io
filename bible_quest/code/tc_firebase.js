@@ -34,10 +34,9 @@ const firebase_users_list_path = firebase_users_path + 'list/';
 const firebase_ck_admin_path = 'ck_admin/';
 
 //let analytics = getAnalytics(tc_fb_app);
-let tc_fb_app = null;
-let tc_fb_auth = null;
-let tc_fb_user = null;
-
+export let tc_fb_app = null;
+export let tc_fb_auth = null;
+export let tc_fb_user = null;
 export let tc_fb_is_admin = false;
 
 function init_mod_vars(){

@@ -2904,10 +2904,8 @@ function user_login(){
 	}
 }
 
-function close_pop_menu() {
-	/*
+export function close_pop_menu() {
 	let dv_pop_men = document.getElementById(id_dv_working_popup);
 	if(dv_pop_men != null){ dv_pop_men.remove(); }
-	*/
 }
 

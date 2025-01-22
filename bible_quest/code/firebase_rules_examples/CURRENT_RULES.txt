@@ -9,9 +9,10 @@
 			".read": "root.child('admins').child(auth.uid).exists()",
 			".write": "root.child('admins').child(auth.uid).exists()",
 			"$module_name": {
-				".validate": "newData.isString() && newData.val().length < 100",
 				"$observation_qid": {
-					".validate": "newData.isNumber() && (newData.val() === 1)",
+					"$val": {
+						".validate": "newData.isNumber() && (newData.val() === 1)",
+					},
 				},
 			},
 		},
