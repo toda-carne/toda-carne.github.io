@@ -3,7 +3,7 @@ import { get_new_dv_under, gvar,
 } from './tc_lang_all.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, get_user_href, 
-	fb_write_object, fb_read_object, fb_sign_out, fb_get_user, fb_check_user, fb_check_login, 
+	fb_mod, 
 } from './tc_exam.js';
 
 const DEBUG_USER_INFO = true;
@@ -283,6 +283,7 @@ export function toggle_user_info(fb_usr){
 	dv_ok.innerHTML = gvar.glb_curr_lang.msg_save;
 	dv_ok.addEventListener('click', function() {
 		gvar.current_user_info = get_user_info_object();
+		//gvar.current_user_info = id_nequi_number;
 		write_firebase_user_object((err) => {
 			console.error(err);
 		}).then((result)  => {
@@ -344,6 +345,7 @@ function get_user_info_object(){
 	get_user_field(obj, id_facebook);
 	get_user_field(obj, id_instagram);
 	get_user_field(obj, id_youtube);
+	
 	return obj;
 }
 
@@ -391,26 +393,30 @@ function write_firebase_user_object(err_fn){
 	if(gvar.current_user_info == null){
 		return;
 	}
-	if(fb_write_object == null){
-		console.log("CANNOT write_firebase_user_object. fb_write_object == null");
+	if(fb_mod == null){
+		console.log("CANNOT write_firebase_user_object. fb_mod == null");
 		const dv_comm_info = document.getElementById(id_comm_info);
 		dv_comm_info.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
 		return;
 	}
 	if(DEBUG_USER_INFO){ console.log("SAVING in https://todacarne-firebase-default-rtdb.firebaseio.com"); }
 	const wr_obj = JSON.parse(JSON.stringify(gvar.current_user_info));
-	return fb_write_object(firebase_user_info_path, wr_obj, err_fn);
+	return fb_mod.firebase_write_object(firebase_user_info_path, wr_obj, err_fn);
 }
 
 function read_firebase_user_object(){
-	if(fb_read_object == null){
-		console.log("CANNOT read_firebase_user_object. fb_read_object == null");
+	if(fb_mod != null){
+		const the_app = fb_mod.md_app.initializeApp(fb_mod.firebase_config);
+		const the_auth = fb_mod.md_auth.getAuth();
+	}
+	if(fb_mod == null){
+		console.log("CANNOT read_firebase_user_object. fb_mod == null");
 		const dv_comm_info = document.getElementById(id_comm_info);
 		dv_comm_info.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
 		return;
 	}
 	if(DEBUG_USER_INFO){ console.log("LOADING from https://todacarne-firebase-default-rtdb.firebaseio.com"); }
-	return fb_read_object(firebase_user_info_path, (snapshot) => {
+	return fb_mod.firebase_read_object(firebase_user_info_path, (snapshot) => {
 		if (snapshot.exists()) {
 			const rd_obj = snapshot.val();
 			gvar.current_user_info = JSON.parse(JSON.stringify(rd_obj));
@@ -425,36 +431,27 @@ function read_firebase_user_object(){
 	});	
 }
 
-/*
-				"user_info": {
-					"$user_field": {
-						".validate": "root.child('user_fields').child(newData.val()).exists() && (
-							(newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)) ||
-							(newData.isString() && newData.val().length < 200)
-						)",
-					},
-				},
-
-​
-					id_ed_user_nequi_number: "7651234"
-					id_ed_user_paypal_email: ""
-					id_ed_user_transfiya_number: "0"
-					id_ed_user_url_photo: ""
-					id_ed_user_country: "Colombia"
-					id_ed_user_citizen_id: "79523732"
-					id_ed_user_birth_year: "2024"
-					id_ed_user_birth_month: "12"
-					id_ed_user_birth_day: "31"
-					id_ed_user_sex: "Hombre"
-					id_ed_user_marital_status: "Nunca casado"
-					id_ed_user_name: "Jose Luis Quiroga Beltran"
-
-					id_ed_user_divorce_number: "0"
-					id_ed_user_children_number: "0"
-
-					id_ed_user_website: ""
-					id_ed_user_facebook: ""
-					id_ed_user_instagram: ""
-					id_ed_user_youtube: ""
+/* 
+{
+"id_ed_user_nequi_number":1,
+"id_ed_user_paypal_email":1,
+"id_ed_user_transfiya_number":1,
+"id_ed_user_url_photo":1,
+"id_ed_user_country":1,
+"id_ed_user_citizen_id":1,
+"id_ed_user_birth_year":1,
+"id_ed_user_birth_month":1,
+"id_ed_user_birth_day":1,
+"id_ed_user_sex":1,
+"id_ed_user_marital_status":1,
+"id_ed_user_name":1,
+"id_ed_user_divorce_number":1,
+"id_ed_user_children_number":1,
+"id_ed_user_website":1,
+"id_ed_user_facebook":1,
+"id_ed_user_instagram":1,
+"id_ed_user_youtube":1
+}
 ​
 */
+

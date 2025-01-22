@@ -8,9 +8,9 @@
 		"modules": {
 			".read": "root.child('admins').child(auth.uid).exists()",
 			".write": "root.child('admins').child(auth.uid).exists()",
-			"${module_name}": {
+			"$module_name": {
 				".validate": "newData.isString() && newData.val().length < 100",
-				"${observation_qid}": {
+				"$observation_qid": {
 					".validate": "newData.isNumber() && (newData.val() === 1)",
 				},
 			},
@@ -22,13 +22,13 @@
 				".validate": "newData.isString() && (newData.val().length < 25)",
 			},
 			"$module_name": {
-				".validate": "root.child('modules').child(newData.val()).exists()",
+				".validate": "root.child('modules').child($module_name).exists()",
 				"num_checks": { 
 					".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 99999999999999999999)",
 				},
-				"${observation_qid}": {
-					".validate": "root.child('modules').child($module_name).child(newData.val()).exists()",
-					"${tot_obs_ok}": {
+				"$observation_qid": {
+					".validate": "root.child('modules').child($module_name).child($observation_qid).exists()",
+					"$tot_obs_ok": {
 						".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 99999999999999999999)",
 					},
 				},
@@ -55,29 +55,29 @@
 						".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
 					},
 					"$module_name": {
-						".validate": "root.child('modules').child(newData.val()).exists()",						
+						".validate": "root.child('modules').child($module_name).exists()",
 						"last_check": { 
 							".validate": "newData.isString() && (newData.val().length < 25)",
 						},
 						"num_checks": { 
 							".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
 						},
-						"${observation_qid}": {
-							".validate": "root.child('modules').child($module_name).child(newData.val()).exists()",
-							"${tot_obs_ok}": {
+						"$observation_qid": {
+							".validate": "root.child('modules').child($module_name).child($observation_qid).exists()",
+							"$tot_obs_ok": {
 								".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
 							},
 						},
 					},
 					"in_stats": {
 						"$module_name": {
-							".validate": "root.child('modules').child(newData.val()).exists()",						
+							".validate": "root.child('modules').child($module_name).exists()",
 							"num_checks": { 
 								".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
 							},
-							"${observation_qid}": {
-								".validate": "root.child('modules').child($module_name).child(newData.val()).exists()",
-								"${tot_obs_ok}": {
+							"$observation_qid": {
+								".validate": "root.child('modules').child($module_name).child($observation_qid).exists()",
+								"$tot_obs_ok": {
 									".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
 								},
 							},
@@ -85,14 +85,23 @@
 					},
 				},
 				"$module_name": {
-					".validate": "root.child('modules').child(newData.val()).exists()",
-					"${observation_qid}": {
-						".validate": "root.child('modules').child($module_name).child(newData.val()).exists()",
+					".validate": "root.child('modules').child($module_name).exists()",
+					"$observation_qid": {
+						".validate": "root.child('modules').child($module_name).child($observation_qid).exists()",
+						"$val": {
+							".validate": "newData.isNumber() && (newData.val() === 1)",
+						},
 					},
 				},
 				"user_info": {
 					"$user_field": {
-						".validate": "true",
+						".validate": "root.child('user_fields').child($user_field).exists()",
+						"$val": {
+							".validate": "
+								(newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)) ||
+								(newData.isString() && newData.val().length < 200)
+							",
+						},
 					},
 				},
 			},
@@ -101,11 +110,13 @@
 			".read": "root.child('admins').child(auth.uid).exists()",
 			".write": "root.child('admins').child(auth.uid).exists()",
 			"$module_name": {
-				".validate": "root.child('modules').child(newData.val()).exists()",
+				".validate": "root.child('modules').child($module_name).exists()",
 				"$uid": {
 					".read": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())",
 					".write": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())",
-					".validate": "newData.isNumber() && (newData.val() === 1)",
+					"$val": {
+						".validate": "newData.isNumber() && (newData.val() === 1)",
+					},
 				},
 			},
 		},

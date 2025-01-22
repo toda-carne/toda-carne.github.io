@@ -101,26 +101,24 @@ const id_pop_menu_options = "id_pop_menu_options";
 
 let INIT_EXAM_DB_FUNC = null;
 
-export let fb_write_object = null;
-export let fb_read_object = null;
-export let fb_sign_out = null;
-export let fb_get_user = null;
-export let fb_check_user = null;
-export let fb_check_login = null;
+export let fb_mod = null;
+
+function init_mods_fb(module){
+	md_app = module.md_app;
+	md_auth = module.md_auth;
+	md_db = module.md_db;
+	
+	firebase_config = module.firebase_config;
+}
 
 function init_exam_fb(){
 	const mod_nm = "./tc_firebase.js";
 	import(mod_nm)
 	.then((module) => {
-		fb_write_object = module.firebase_write_object;
-		fb_read_object = module.firebase_read_object;
-		fb_sign_out = module.firebase_sign_out;
-		fb_get_user = module.firebase_get_user;
-		fb_check_user = module.firebase_check_user;		
-		fb_check_login = module.firebase_check_login;
+		if(module != null) { fb_mod = module; }
 		
-		if(fb_check_user != null){ 
-			fb_check_user((user) => {
+		if(fb_mod != null){ 
+			fb_mod.firebase_check_user((user) => {
 				fill_div_user();
 			}); 
 		}
@@ -1559,8 +1557,8 @@ function undo_button_handler(){
 
 function user_name_button_handler(){
 	close_pop_menu();
-	if(fb_get_user == null){ return; }
-	const fb_usr = fb_get_user();
+	if(fb_mod == null){ return; }
+	const fb_usr = fb_mod.firebase_get_user();
 	if(fb_usr == null){
 		user_login();
 		return;
@@ -2050,15 +2048,15 @@ function write_firebase_exam_object(err_fn){
 		return;
 	}
 	const firebase_answers_path = "/" + gvar.glb_poll_db.THIS_MODULE_NAME;
-	if(fb_write_object == null){
-		console.log("CANNOT write_firebase_exam_object. fb_write_object == null");
+	if(fb_mod == null){
+		console.log("CANNOT write_firebase_exam_object. fb_mod == null");
 		const dv_exam_nm = document.getElementById("id_exam_name");
 		dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
 		return;
 	}
 	console.log("SAVING in https://todacarne-firebase-default-rtdb.firebaseio.com");
 	const wr_obj = calc_exam_save_object();
-	return fb_write_object(firebase_answers_path, wr_obj, err_fn);
+	return fb_mod.firebase_write_object(firebase_answers_path, wr_obj, err_fn);
 }
 
 function read_firebase_exam_object(){
@@ -2067,14 +2065,14 @@ function read_firebase_exam_object(){
 		return;
 	}
 	const firebase_answers_path = "/" + gvar.glb_poll_db.THIS_MODULE_NAME;
-	if(fb_read_object == null){
-		console.log("CANNOT read_firebase_exam_object. fb_read_object == null");
+	if(fb_mod == null){
+		console.log("CANNOT read_firebase_exam_object. fb_mod == null");
 		const dv_exam_nm = document.getElementById("id_exam_name");
 		dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
 		return;
 	}
 	console.log("LOADING from https://todacarne-firebase-default-rtdb.firebaseio.com");
-	return fb_read_object(firebase_answers_path, (snapshot) => {
+	return fb_mod.firebase_read_object(firebase_answers_path, (snapshot) => {
 		if (snapshot.exists()) {
 			const rd_obj = snapshot.val();
 			display_exam_load_object(rd_obj);
@@ -2749,7 +2747,7 @@ function fill_div_user(){
 	const img_top = document.getElementById("id_user_picture");
 	const ico_logut = document.getElementById("id_user_logout_anchor");
 	
-	const the_usr = fb_get_user();
+	const the_usr = fb_mod.firebase_get_user();
 	if(the_usr == null){ 
 		if(dv_user_nam != null){ dv_user_nam.innerHTML = gvar.glb_curr_lang.msg_guest; }
 		if(ico_logut != null){ ico_logut.classList.add("is_hidden"); }
@@ -2895,16 +2893,16 @@ function update_observation(qid, all_to_act){
 
 function user_logout(){
 	close_pop_menu();
-	if(fb_sign_out != null){
-		fb_sign_out();
+	if(fb_mod != null){
+		fb_mod.firebase_sign_out();
 		fill_div_user();
 	}
 }
 
 function user_login(){
 	close_pop_menu();
-	if(fb_check_login != null){
-		fb_check_login();
+	if(fb_mod != null){
+		fb_mod.firebase_check_login();
 	}
 }
 

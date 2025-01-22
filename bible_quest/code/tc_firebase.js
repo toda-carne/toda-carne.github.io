@@ -12,61 +12,13 @@ import * as MOD_APP from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app
 import * as MOD_AUTH from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 import * as MOD_DB from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
-//import { initializeApp } 
-//	from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-//import { MOD_AUTH.getAuth, MOD_AUTH.signInWithPopup, MOD_AUTH.GoogleAuthProvider, MOD_AUTH.signOut, MOD_AUTH.onAuthStateChanged } 
-//	from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-//import { MOD_DB.getDatabase, MOD_DB.ref, MOD_DB.get, MOD_DB.set, MOD_DB.onValue, MOD_DB.increment, MOD_DB.update, MOD_DB.runTransaction, } 
-//	from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
-	
-/*
-const fb_app_js = "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-const fb_auth_js = "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-const fb_database_js = "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
-
-export let MOD_APP = null;
-export let MOD_AUTH = null;
-export let MOD_DB = null;
-
-//init_FB_MODS();
-
-async function init_FB_MODS(){
-	try {
-		MOD_APP = await import(fb_app_js);
-		MOD_AUTH = await import(fb_auth_js);
-		MOD_DB = await import(fb_database_js);
-	} catch {
-		console.log("init_FB_MODS FAILED !!!");
-	}
-	
-	if(MOD_APP == null){
-		await import(fb_app_js).then((module) => { MOD_APP = module; }).catch((err) => {
-			console.log("Could NOT import " + fb_app_js + " err:" + err.message);
-		});
-	}
-	if(MOD_AUTH == null){
-		await import(fb_auth_js).then((module) => { MOD_AUTH = module; }).catch((err) => {
-			console.log("Could NOT import " + fb_auth_js + " err:" + err.message);
-		});
-	}
-	if(MOD_DB == null){
-		await import(fb_database_js).then((module) => { MOD_DB = module; }).catch((err) => {
-			console.log("Could NOT import " + fb_database_js + " err:" + err.message);
-		});
-	}
-}
-
-function all_MODS_ok(){
-	if(MOD_APP == null){ return false; }
-	if(MOD_AUTH == null){ return false; }
-	if(MOD_DB == null){ return false; }
-	return true;
-}
-*/
+export let md_app = null;
+export let md_auth = null;
+export let md_db = null;
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebase_config = {
+export const firebase_config = {
 	apiKey: "AIzaSyCc0og3bSe6mKvsBIFsoxYOCEmONmEF4P0",
 	authDomain: "todacarne-firebase.firebaseapp.com",
 	databaseURL: "https://todacarne-firebase-default-rtdb.firebaseio.com",
@@ -81,11 +33,18 @@ const firebase_users_path = 'users/';
 const firebase_users_list_path = firebase_users_path + 'list/';
 const firebase_ck_admin_path = 'ck_admin/';
 
-let tc_fb_app = null;
 //let analytics = getAnalytics(tc_fb_app);
+let tc_fb_app = null;
 let tc_fb_auth = null;
 let tc_fb_user = null;
 let tc_fb_is_admin = false;
+
+function init_mod_vars(){
+	if(md_app != null){ return; }
+	md_app = MOD_APP;
+	md_auth = MOD_AUTH;
+	md_db = MOD_DB;
+}
 
 /*
  *      In order to work from toda-carne.github.io
@@ -96,7 +55,7 @@ let tc_fb_is_admin = false;
  *      google console > APIs & Services > Credentials > API Keys > Browser Key
  */
 export function firebase_check_login(err_fn){
-	//if(! all_MODS_ok()){ return; }
+	init_mod_vars();
 	if(tc_fb_user != null){
 		return new Promise((resolve, reject) => {
 			resolve('database != null');
@@ -152,7 +111,7 @@ export function firebase_check_login(err_fn){
 }
 
 export function firebase_check_user(callbk){
-	//if(! all_MODS_ok()){ return; }
+	init_mod_vars();
 	try {
 		if(tc_fb_app == null){ tc_fb_app = MOD_APP.initializeApp(firebase_config); }
 		if(tc_fb_auth == null){ tc_fb_auth = MOD_AUTH.getAuth(); }
@@ -212,7 +171,7 @@ function get_date_and_time(){
 }
 
 function firebase_user_ck_is_admin(){ 
-	//if(! all_MODS_ok()){ return; }
+	init_mod_vars();
 	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
 	const fb_database = MOD_DB.getDatabase(tc_fb_app);
@@ -241,7 +200,7 @@ function firebase_user_ck_is_admin(){
 }
 
 function firebase_inc_user_num_checks(){ 
-	//if(! all_MODS_ok()){ return; }
+	init_mod_vars();
 	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
 	const fb_database = MOD_DB.getDatabase(tc_fb_app);
@@ -253,7 +212,7 @@ function firebase_inc_user_num_checks(){
 }
 
 function firebase_write_user_id_in_list(){ 
-	//if(! all_MODS_ok()){ return; }
+	init_mod_vars();
 	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
 	const fb_database = MOD_DB.getDatabase(tc_fb_app);
@@ -266,7 +225,7 @@ function firebase_write_user_id_in_list(){
 }
 
 function firebase_write_user_id(){ 
-	//if(! all_MODS_ok()){ return; }
+	init_mod_vars();
 	firebase_user_ck_is_admin();
 	firebase_write_user_id_in_list();
 	
@@ -284,7 +243,7 @@ function firebase_write_user_id(){
 }
 
 export const firebase_write_object = (sub_ref, obj, err_fn) => {  //sub_ref MUST start with '/' or be empty
-	//if(! all_MODS_ok()){ return; }
+	init_mod_vars();
 	return firebase_check_login(err_fn).then((result) => {
 		if(tc_fb_app == null){ console.error("No firebase app in firebase_write_object !!");  return; }
 		const fb_database = MOD_DB.getDatabase(tc_fb_app);
@@ -298,7 +257,7 @@ export const firebase_write_object = (sub_ref, obj, err_fn) => {  //sub_ref MUST
 };
 
 export const firebase_read_object = (sub_ref, callbak_func) => { //sub_ref MUST start with '/' or be empty
-	//if(! all_MODS_ok()){ return; }
+	init_mod_vars();
 	return firebase_check_login().then((result) => {
 		if(tc_fb_app == null){ console.error("No firebase app in firebase_write_object !!");  return; }
 		const fb_database = MOD_DB.getDatabase(tc_fb_app);
@@ -311,7 +270,7 @@ export const firebase_read_object = (sub_ref, callbak_func) => { //sub_ref MUST 
 }
 
 export const firebase_sign_out = () => {
-	//if(! all_MODS_ok()){ return; }
+	init_mod_vars();
 	if(tc_fb_user == null){ return; }
 	if(tc_fb_app == null){ tc_fb_app = MOD_APP.initializeApp(firebase_config); }
 	if(tc_fb_auth == null){ tc_fb_auth = MOD_AUTH.getAuth(); }
