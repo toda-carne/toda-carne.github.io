@@ -150,8 +150,8 @@ function add_user_info_select_line(dv_ed_usr, label, id, val, arr_ops){
 	const all_ops = arr_ops;
 	const inp = fld;
 	inp.addEventListener('click', function() {
-		const countries_arr = Object.values(all_ops);
-		toggle_select_option(inp, countries_arr, null);
+		const all_vals = Object.values(all_ops);
+		toggle_select_option(inp, all_vals, null);
 		scroll_to_top(inp);
 		return;
 	});

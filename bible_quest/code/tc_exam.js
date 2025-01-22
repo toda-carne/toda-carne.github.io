@@ -5,6 +5,7 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 } from './tc_lang_all.js';
 
 import { toggle_user_info, } from './tc_user_info.js';
+import { toggle_admin_opers, } from './bq_admin.js';
 
 //import "./qrcode.js";
 //import { QRCode, makeCode } from './qrcode.js';
@@ -1587,6 +1588,15 @@ function pop_menu_handler(){
 			op.addEventListener('click', nd.click_handler);
 		}
 		//remove_all_classes(op);
+		dv_pop_men.appendChild(op);
+	}
+	
+	if((fb_mod != null) && (fb_mod.tc_fb_is_admin)){
+		const op = document.createElement("div");
+		op.classList.add("exam");
+		op.classList.add("is_block");
+		op.innerHTML = "ADMIN";
+		op.addEventListener('click', toggle_admin_opers);
 		dv_pop_men.appendChild(op);
 	}
 	

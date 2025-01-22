@@ -37,7 +37,8 @@ const firebase_ck_admin_path = 'ck_admin/';
 let tc_fb_app = null;
 let tc_fb_auth = null;
 let tc_fb_user = null;
-let tc_fb_is_admin = false;
+
+export let tc_fb_is_admin = false;
 
 function init_mod_vars(){
 	if(md_app != null){ return; }
@@ -153,10 +154,6 @@ export function firebase_check_user(callbk){
 	} catch(error){
 		console.error(error);
 	}
-}
-
-export function firebase_user_is_admin(){
-	return tc_fb_is_admin;
 }
 
 function get_date_and_time(){ 
