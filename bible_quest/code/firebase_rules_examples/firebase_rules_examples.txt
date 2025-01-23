@@ -427,6 +427,13 @@ EXAMPLE 10
           ".validate": "root.child('valid_colors/' + newData.val()).exists()"
         }
 
+EXAMPLE 11
+        
+"timestamp": {
+     ".validate": "newData.isNumber() && newData.val() <= now"
+}
+
+
         
 CURRENT RULES
 {

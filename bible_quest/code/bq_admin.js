@@ -3,7 +3,7 @@ import { get_new_dv_under, gvar, get_qid_base,
 } from './tc_lang_all.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_observation, 
-	fb_mod, id_dv_working_popup, close_pop_menu, 
+	fb_mod, id_dv_working_popup, close_pop_menu, get_user_stats_module_path, 
 } from './tc_exam.js';
 
 const DEBUG_ADMIN_OPS = true;
@@ -11,6 +11,7 @@ const DEBUG_ADMIN_OPS = true;
 const admin_ops = {
 	op1:"Update module observations",
 	op2:"Update module stats",
+	op2:"Update all to update stats",
 	op3:"Show user list",
 	op4:"Block user",
 	op5:"Unblock user",
@@ -53,6 +54,11 @@ function get_module_observations_obj(){
 }
 
 function update_module_observations(){
+	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){
+		console.log("CANNOT update_module_observations. gvar.glb_poll_db.THIS_MODULE_NAME == null");
+		return;
+	}
+	
 	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
 	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
 	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
@@ -69,30 +75,75 @@ function update_module_observations(){
 	close_pop_menu();
 }
 
+//get_user_stats_in_stats_module_path()
+
+function update_user_module_stats(fb_database, the_uid){
+	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
+	
+	let path = null;
+	let db_ref = null;
+	let obj = null;
+	
+	const lock_pth = "doing_stats/" + fb_mod.tc_fb_user.uid;
+	const lok_ref = fb_mod.md_db.ref(fb_database, lock_pth);
+	fb_mod.md_db.set(lok_ref, 1).catch((error) => { console.error(error); });	
+	
+	path = get_user_stats_module_path();
+	db_ref = fb_mod.md_db.ref(fb_database, path);
+	fb_mod.md_db.get(db_ref).then((snapshot) => {
+		if (snapshot.exists()) {
+			const all_obs = snapshot.val();
+		} else {
+			console.log("No user list !!! in update_module_stats");
+		}
+	}).catch((error) => {
+		console.error(error);
+	});
+	
+	/*
+	const ref_path = "modules/" + gvar.glb_poll_db.THIS_MODULE_NAME;
+	obj = get_module_observations_obj();
+	
+	const db_ref = fb_mod.md_db.ref(fb_database, ref_path);
+	console.log("update_user_module_stats. db_ref = " + db_ref);
+	fb_mod.md_db.set(db_ref, obj).catch((error) => { 
+		console.error(error); 
+	});
+	*/	
+	fb_mod.md_db.remove(lok_ref);	
+}
+
+function update_module_stats(){	
+	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){
+		console.log("CANNOT update_module_stats. gvar.glb_poll_db.THIS_MODULE_NAME == null");
+		return;
+	}
+	
+	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
+	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+
+	//const ref_path = "users/list";
+	const ref_path = "to_update/" + gvar.glb_poll_db.THIS_MODULE_NAME;
+	const db_ref = fb_mod.md_db.ref(fb_database, ref_path);
+	
+	fb_mod.md_db.get(db_ref).then((snapshot) => {
+		if (snapshot.exists()) {
+			const all_usr = snapshot.val();
+		} else {
+			console.log("No user list !!! in update_module_stats");
+		}
+	}).catch((error) => {
+		console.error(error);
+	});
+	
+	close_pop_menu();
+}
+
 
 /*
 	<div id="id_pop_opt_sec"></div>
 	<div id="id_user_info_sec"></div>
 	<div id="id_admin_ops_sec"></div>
 	
-		"modules": {
-			".read": "root.child('admins').child(auth.uid).exists()",
-			".write": "root.child('admins').child(auth.uid).exists()",
-			"$module_name": {
-				".validate": "newData.isString() && newData.val().length < 100",
-				"$observation_qid": {
-					".validate": "newData.isString() && newData.val().length < 400",
-					"$val": {
-						".validate": "newData.isNumber() && (newData.val() === 1)",
-					},
-				},
-			},
-		},
-	
-		"modules": {
-			".read": "root.child('admins').child(auth.uid).exists()",
-			".write": "root.child('admins').child(auth.uid).exists()",
-			".validate": "true",
-		},
-
 */

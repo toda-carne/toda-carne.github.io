@@ -71,6 +71,7 @@
 						},
 					},
 					"in_stats": {
+						".write": "root.child('admins').child(auth.uid).exists()",
 						"$module_name": {
 							".validate": "root.child('modules').child($module_name).exists()",
 							"num_checks": { 
@@ -114,7 +115,8 @@
 				".validate": "root.child('modules').child($module_name).exists()",
 				"$uid": {
 					".read": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())",
-					".write": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())",
+					".write": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())
+								&& !(root.child('doing_stats').child(auth.uid).exists())",
 					"$val": {
 						".validate": "newData.isNumber() && (newData.val() === 1)",
 					},

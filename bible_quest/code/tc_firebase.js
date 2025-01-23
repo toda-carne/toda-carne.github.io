@@ -534,4 +534,21 @@ return MOD_DB.onValue(MOD_DB.ref(db, '/users/' + userId), (snapshot) => {
 	}).catch((error) => {
 		console.error(error);
 	});
+	
+	
+
+
+In Firebase v9+, you need to use serverTimestamp():
+
+import { getDatabase, ref, push, set, onValue, query, orderByChild, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+
+set(newMessageRef, {
+    'name': name.value,
+    'message': message.value,
+    'createdAt': serverTimestamp()
+});
+
+	
+	
 	*/

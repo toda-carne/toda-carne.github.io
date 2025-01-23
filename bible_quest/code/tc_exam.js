@@ -2070,6 +2070,28 @@ function calc_exam_results_object(){
 	return all_obs;
 }
 
+export function get_user_stats_module_path(){
+	if(fb_mod == null){ return ""; }
+	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){ return ""; }
+	const path = fb_mod.firebase_users_path + fb_mod.tc_fb_user.uid + '/stats/' + gvar.glb_poll_db.THIS_MODULE_NAME + "/";
+	return path;
+}
+
+export function get_user_stats_in_stats_module_path(){
+	if(fb_mod == null){ return ""; }
+	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){ return ""; }
+	const path = fb_mod.firebase_users_path + fb_mod.tc_fb_user.uid + '/stats/in_stats/' + gvar.glb_poll_db.THIS_MODULE_NAME + "/";
+	return path;
+}
+
+export function get_to_update_module_user_path(){
+	if(fb_mod == null){ return ""; }
+	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){ return ""; }
+	const path = "to_update/" + gvar.glb_poll_db.THIS_MODULE_NAME + "/" + fb_mod.tc_fb_user.uid;
+	return path;
+}
+
+
 function write_user_module_results(err_fn){
 	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){
 		console.log("CANNOT write_user_module_results. gvar.glb_poll_db.THIS_MODULE_NAME == null");
@@ -2089,7 +2111,7 @@ function write_user_module_results(err_fn){
 		if(err_fn != null){ err_fn(error); }
 	});	
 	
-	const path_stats = fb_mod.firebase_users_path + fb_mod.tc_fb_user.uid + '/stats/' + gvar.glb_poll_db.THIS_MODULE_NAME + "/";
+	const path_stats = get_user_stats_module_path();
 	const all_qids = Object.keys(obj);
 	for(const an_obs of all_qids){
 		const path_obs = path_stats + an_obs;
@@ -2106,6 +2128,10 @@ function write_user_module_results(err_fn){
 	const path_num_ck = path_stats + 'num_checks';
 	db_ref = fb_mod.md_db.ref(fb_database, path_num_ck);
 	fb_mod.md_db.set(db_ref, fb_mod.md_db.increment(1)).catch((error) => { console.error(error); });	
+
+	const path_flag = get_to_update_module_user_path();
+	db_ref = fb_mod.md_db.ref(fb_database, path_flag);
+	fb_mod.md_db.set(db_ref, 1).catch((error) => { console.error(error); });	
 	
 }
 
