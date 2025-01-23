@@ -64,7 +64,6 @@ function update_module_observations(){
 	console.log("update_module_observations. db_ref = " + db_ref);
 	fb_mod.md_db.set(db_ref, obj).catch((error) => { 
 		console.error(error); 
-		if(err_fn != null){ err_fn(error); }
 	});
 	
 	close_pop_menu();

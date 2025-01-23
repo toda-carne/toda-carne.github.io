@@ -29,9 +29,9 @@ export const firebase_config = {
 	measurementId: "G-GL4NXH7Q2R"
 };
 
-const firebase_users_path = 'users/';
-const firebase_users_list_path = firebase_users_path + 'list/';
-const firebase_ck_admin_path = 'ck_admin/';
+export const firebase_users_path = 'users/';
+export const firebase_users_list_path = firebase_users_path + 'list/';
+export const firebase_ck_admin_path = 'ck_admin/';
 
 //let analytics = getAnalytics(tc_fb_app);
 export let tc_fb_app = null;
@@ -155,7 +155,7 @@ export function firebase_check_user(callbk){
 	}
 }
 
-function get_date_and_time(){ 
+export function get_date_and_time(){ 
 	const currentdate = new Date(); 
 	const datetime = currentdate.getFullYear() + "/"
 					+ (currentdate.getMonth()+1)  + "/"

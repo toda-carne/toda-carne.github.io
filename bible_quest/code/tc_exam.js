@@ -1497,7 +1497,7 @@ function save_button_handler(){
 			});
 		} else {
 			dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_todacarne_answers_writing;
-			write_firebase_exam_object().then((result) => {
+			write_firebase_exam_results().then((result) => {
 				dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_todacarne_answers_name;
 			});
 		}
@@ -1508,7 +1508,15 @@ function open_button_handler(){
 	close_pop_menu();
 	const dv_exam_top = document.getElementById("id_exam_top_content");
 	const dv_exam_nm = document.getElementById("id_exam_name");
+
+	let all_disp_nams = read_all_exam_names();
+	toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
+		dv_ops_n.remove();
+		read_exam_object(exam_nm);
+		dv_exam_nm.innerHTML = exam_nm;
+	});
 	
+	/*
 	const mg_browser = gvar.glb_curr_lang.msg_open_from_browser;
 	const mg_cloud = gvar.glb_curr_lang.msg_open_from_cloud;
 	const where_arr = [mg_browser, mg_cloud];
@@ -1526,6 +1534,7 @@ function open_button_handler(){
 			read_firebase_exam_object();
 		}
 	});
+	*/
 }
 
 function delete_button_handler(){
@@ -2040,6 +2049,80 @@ function delete_exam_object(name){
 	window.localStorage.removeItem(name);
 }
 
+function is_result_observ(qid){
+	if(get_qid_base(qid) == null){ return false; }
+	const quest = gvar.glb_poll_db[qid];
+	if(! is_observation(quest)){ return false; }
+	if(quest.calls_write_object){ return false; }
+	if(quest.skip_in_results){ return false; }
+	return true;
+}
+
+function calc_exam_results_object(){
+	const dv_all_quest = document.getElementById("id_exam_all_questions");
+	const all_obs = {};
+	for (const dv_quest of dv_all_quest.children) {
+		const qid = dv_quest.id;
+		if(qid == null){ continue; }
+		if(! is_result_observ(qid)){ continue; }
+		all_obs[qid] = 1;
+	}
+	return all_obs;
+}
+
+function write_user_module_results(err_fn){
+	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){
+		console.log("CANNOT write_user_module_results. gvar.glb_poll_db.THIS_MODULE_NAME == null");
+		return;
+	}
+	
+	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in write_user_module_results");  return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+	
+	const ref_path = fb_mod.firebase_users_path + fb_mod.tc_fb_user.uid + '/' + gvar.glb_poll_db.THIS_MODULE_NAME;
+	let obj = calc_exam_results_object();
+	
+	let db_ref = fb_mod.md_db.ref(fb_database, ref_path);
+	console.log("write_user_module_results. db_ref = " + db_ref);
+	fb_mod.md_db.set(db_ref, obj).catch((error) => { 
+		console.error(error); 
+		if(err_fn != null){ err_fn(error); }
+	});	
+	
+	const path_stats = fb_mod.firebase_users_path + fb_mod.tc_fb_user.uid + '/stats/' + gvar.glb_poll_db.THIS_MODULE_NAME + "/";
+	const all_qids = Object.keys(obj);
+	for(const an_obs of all_qids){
+		const path_obs = path_stats + an_obs;
+		db_ref = fb_mod.md_db.ref(fb_database, path_obs);
+
+		fb_mod.md_db.set(db_ref, fb_mod.md_db.increment(1)).catch((error) => { console.error(error); });	
+	}
+	
+	const dt = fb_mod.get_date_and_time();
+	const path_lst_ck = path_stats + 'last_check';
+	db_ref = fb_mod.md_db.ref(fb_database, path_lst_ck);
+	fb_mod.md_db.set(db_ref, dt).catch((error) => { console.error(error); });	
+	
+	const path_num_ck = path_stats + 'num_checks';
+	db_ref = fb_mod.md_db.ref(fb_database, path_num_ck);
+	fb_mod.md_db.set(db_ref, fb_mod.md_db.increment(1)).catch((error) => { console.error(error); });	
+	
+}
+
+function write_firebase_exam_results(err_fn){
+	close_pop_menu();	
+	if(fb_mod == null){ 
+		const msg = "(fb_mod == null) in write_firebase_exam_results";
+		console.log(msg); if(err_fn != null){ err_fn(msg); }; 
+		return; 
+	}
+	const prom1 =  fb_mod.firebase_check_login(err_fn).then((result) => {
+		write_user_module_results(err_fn);
+	});
+	return prom1;
+}
+
+/*
 function write_firebase_exam_object(err_fn){
 	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){
 		console.log("CANNOT write_firebase_exam_object. gvar.glb_poll_db.THIS_MODULE_NAME == null");
@@ -2081,6 +2164,7 @@ function read_firebase_exam_object(){
 		}
 	});	
 }
+*/
 
 // CODE_FOR QID, QREF AND HREF CONVERSION AND DISPLAY
 
@@ -2689,7 +2773,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 		const dv_user = create_div_user(quest);
 		dv_quest.append(dv_user);
 
-		write_firebase_exam_object((err) => {
+		write_firebase_exam_results((err) => {
 			console.error(err);
 			the_stm = get_msg(quest.htm_stm_not_saved);
 			dv_qstm.innerHTML = "" + the_stm;			
