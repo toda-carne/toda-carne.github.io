@@ -142,6 +142,7 @@ function update_user_module_stats(fb_database, the_uid){
 			console.log("update_user_module_stats, No path_found. PATH=" + path);
 		}
 	}).catch((error) => {
+		console.log("get failed. path = " + path);
 		console.error(error);
 	});
 	

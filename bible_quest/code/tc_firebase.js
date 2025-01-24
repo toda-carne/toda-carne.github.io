@@ -12,6 +12,9 @@ import * as MOD_APP from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app
 import * as MOD_AUTH from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 import * as MOD_DB from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
+const DEBUG_FB_LOGIN = false;
+const DEBUG_FB_ADMIN = true;
+
 export let md_app = null;
 export let md_auth = null;
 export let md_db = null;
@@ -81,14 +84,16 @@ export function firebase_check_login(err_fn){
 		tc_fb_user = result.user;
 		// IdP data available using getAdditionalUserInfo(result)
 		
-		console.log('token=' + fb_token);
-		console.log('user=' + JSON.stringify(tc_fb_user));
-		console.log('User_id=' + tc_fb_user.uid);
-		console.log('User_name=' + tc_fb_user.displayName);
-		console.log("User_email=" + tc_fb_user.email);
-		console.log("User_emailVerified=" + tc_fb_user.emailVerified);
-		console.log("User_photoURL=" + tc_fb_user.photoURL);
-		console.log('finished_login');
+		if(DEBUG_FB_LOGIN){
+			console.log('token=' + fb_token);
+			console.log('user=' + JSON.stringify(tc_fb_user));
+			console.log('User_id=' + tc_fb_user.uid);
+			console.log('User_name=' + tc_fb_user.displayName);
+			console.log("User_email=" + tc_fb_user.email);
+			console.log("User_emailVerified=" + tc_fb_user.emailVerified);
+			console.log("User_photoURL=" + tc_fb_user.photoURL);
+			console.log('finished_login');
+		}
 		
 		firebase_write_user_id();
 		
@@ -119,23 +124,29 @@ export function firebase_check_user(callbk){
 		if(db == null){ return; }
 		const cn_ref = MOD_DB.ref(db, ".info/connected");
 		if(cn_ref == null){ return; }
-		MOD_DB.onValue(cn_ref, (snap) => {
-			if (snap.val() === true) {
-				console.log("WAS CONNECTED TO FIREBASE !!!");				
-			} else {
-				console.log("WAS NOT connected to firebase !!!");
-			}
-		});
+		
+		if(DEBUG_FB_LOGIN){
+			MOD_DB.onValue(cn_ref, (snap) => {
+				if (snap.val() === true) {
+					console.log("WAS CONNECTED TO FIREBASE !!!");				
+				} else {
+					console.log("WAS NOT connected to firebase !!!");
+				}
+			});
+		}
+		
 		MOD_AUTH.onAuthStateChanged(tc_fb_auth, (user) => {
 			if (user) {
 				tc_fb_user = user;
 				// User is signed in, see docs for a list of available properties
 				// https://firebase.google.com/docs/reference/js/auth.user
-				console.log('User_id=' + tc_fb_user.uid);
-				console.log('User_name=' + tc_fb_user.displayName);
-				console.log("User_email=" + tc_fb_user.email);
-				console.log("User_emailVerified=" + tc_fb_user.emailVerified);
-				console.log("User_photoURL=" + tc_fb_user.photoURL);
+				if(DEBUG_FB_LOGIN){
+					console.log('User_id=' + tc_fb_user.uid);
+					console.log('User_name=' + tc_fb_user.displayName);
+					console.log("User_email=" + tc_fb_user.email);
+					console.log("User_emailVerified=" + tc_fb_user.emailVerified);
+					console.log("User_photoURL=" + tc_fb_user.photoURL);
+				}
 				
 				firebase_write_user_id();
 				
@@ -144,7 +155,7 @@ export function firebase_check_user(callbk){
 			} else {
 				tc_fb_user = null;
 				
-				console.log("User is signed out");
+				if(DEBUG_FB_LOGIN){ console.log("User is signed out"); }
 				// User is signed out
 				// ...
 				if(callbk != null){ callbk(tc_fb_user); }
@@ -184,14 +195,14 @@ function firebase_user_ck_is_admin(){
 			}
 		}
 		if(tc_fb_is_admin){
-			console.log("IT IS ADMIN");
+			if(DEBUG_FB_ADMIN){ console.log("IT IS ADMIN"); }
 		} else {
-			console.log("NOT ADMIN");
+			if(DEBUG_FB_ADMIN){ console.log("NOT ADMIN"); }
 		}
 	}).catch((error) => {
 		tc_fb_is_admin = false;
 		console.error(error);
-		console.log("NOT ADMIN");
+		if(DEBUG_FB_ADMIN){ console.log("NOT ADMIN"); }
 	});
 }
 

@@ -20,6 +20,8 @@ const DEBUG_REFERRER = true;
 const DEBUG_PENDING = false;
 const DEBUG_POP_MENU = true;
 const DEBUG_WRITE = false;
+const DEBUG_INIT_ANSW = false;
+const DEBUG_UPDATE_OBSERV = false;
 
 const MIN_ANSW_SHOW_INVERT = 3;
 
@@ -561,7 +563,7 @@ function init_answers(qid){
 			showed_quest_img = true;
 			quest.img_pos = "grid_item_center";
 			if(! is_init_to_answer && an_answ.is_on && (an_answ.img_pos != null)){
-				console.log("setting qid= " + qid + " anid=" + anid +" quest.img_pos = " + an_answ.img_pos);
+				if(DEBUG_INIT_ANSW){ console.log("quest.img_pos = " + an_answ.img_pos + " for qid= " + qid + " anid=" + anid); }
 				quest.img_pos = an_answ.img_pos;
 			}
 			add_simple_choice_item(dv_answers, dv_quest_img, quest.img_pos, null);
@@ -1463,7 +1465,6 @@ export function init_exam_buttons(){
 }
 
 function save_button_handler(){	
-	close_pop_menu();
 	const dv_exam_top = document.getElementById("id_exam_top_content");
 	const dv_exam_nm = document.getElementById("id_exam_name");
 	
@@ -1489,11 +1490,13 @@ function save_button_handler(){
 						dv_exam_nm.innerHTML = the_nw_nam;
 						write_exam_object(the_nw_nam);
 						scroll_to_first_not_answered();
+						close_pop_menu();
 					});
 				} else {
 					dv_exam_nm.innerHTML = exam_nm;
 					write_exam_object(exam_nm);
 					scroll_to_first_not_answered();
+					close_pop_menu();
 				}
 			});
 		} else {
@@ -1501,12 +1504,12 @@ function save_button_handler(){
 			write_firebase_exam_results().then((result) => {
 				dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_todacarne_answers_name;
 			});
+			close_pop_menu();
 		}
 	});
 }
 
 function open_button_handler(){
-	close_pop_menu();
 	const dv_exam_top = document.getElementById("id_exam_top_content");
 	const dv_exam_nm = document.getElementById("id_exam_name");
 
@@ -1515,6 +1518,7 @@ function open_button_handler(){
 		dv_ops_n.remove();
 		read_exam_object(exam_nm);
 		dv_exam_nm.innerHTML = exam_nm;
+		close_pop_menu();
 	});
 	
 	/*
@@ -1539,7 +1543,6 @@ function open_button_handler(){
 }
 
 function delete_button_handler(){
-	close_pop_menu();
 	const dv_exam_top = document.getElementById("id_exam_top_content");
 	const dv_exam_nm = document.getElementById("id_exam_name");
 	
@@ -1552,20 +1555,21 @@ function delete_button_handler(){
 		dv_ops_n.remove();
 		delete_exam_object(exam_nm);
 		dv_exam_nm.innerHTML = "";
+		close_pop_menu();
 	});	
 }
 
 function undo_button_handler(){
-	close_pop_menu();
 	undo_last_quest();
+	close_pop_menu();
 }
 
 function user_name_button_handler(){
-	close_pop_menu();
 	if(fb_mod == null){ return; }
 	const fb_usr = fb_mod.firebase_get_user();
 	if(fb_usr == null){
 		user_login();
+		close_pop_menu();
 		return;
 	}
 	toggle_user_info(fb_usr);
@@ -2641,7 +2645,7 @@ function send_all_signals(qid){
 
 function activate_signals(qid_cllr, all_to_act){
 	for(const qid of all_to_act.old_observ){
-		console.log("Updating OLD observation qid=" + qid);
+		if(DEBUG_UPDATE_OBSERV){ console.log("Updating OLD observation qid=" + qid); }
 		update_observation(qid, all_to_act);
 	}
 	for(const qid of all_to_act.new_observ){
@@ -2795,7 +2799,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 	sp_qrefs_observ.classList.add("observ_color");
 	dv_quest.append(sp_qrefs_observ);
 	
-	console.log("Updating NEW observation qid=" + qid);
+	if(DEBUG_UPDATE_OBSERV){ console.log("Updating NEW observation qid=" + qid); }
 	update_observation(qid, all_to_act);
 
 	if(quest.calls_write_object){
@@ -2948,7 +2952,7 @@ function update_observation(qid, all_to_act){
 	
 	const sp_qrefs_observ = document.getElementById(qid + SUF_ID_QREFS_OBSERVATION);
 	if(sp_qrefs_observ == null){ 
-		//console.log("Internal error. Trying to update observation qid=" + qid + " without qrefs span");
+		if(DEBUG_UPDATE_OBSERV){ console.log("Internal error. Trying to update observation qid=" + qid + " without qrefs span"); }
 		//console.log("Already removed qid=" + qid);
 		return null;
 	}
@@ -2961,15 +2965,18 @@ function update_observation(qid, all_to_act){
 		if(gvar.glb_poll_db.stopping_observation_qid == qid){
 			gvar.glb_poll_db.stopping_observation_qid = null;
 		}
-		console.log("REMOVING ABSERVATION with qid=" + qid);
+		if(DEBUG_UPDATE_OBSERV){ console.log("REMOVING ABSERVATION with qid=" + qid); }
 		dv_quest.remove(); 
 	
 		update_observation_signals(quest, all_to_act);
-		/*console.log("AFTER_REMOVE | qid=" + qid + " | all_to_signl=" + JSON.stringify(all_to_signl, null, "  ")
-			+ " | all_to_act=" + JSON.stringify(all_to_act, null, "  ")
-		);*/
 		
-		//console.log("AFTER_REMOVE [2] | all_to_act=" + JSON.stringify(all_to_act, null, "  "));
+		if(DEBUG_UPDATE_OBSERV){ 
+			console.log("AFTER_REMOVE | qid=" + qid + " | all_to_signl=" + JSON.stringify(all_to_signl, null, "  ")
+				+ " | all_to_act=" + JSON.stringify(all_to_act, null, "  ")
+			);
+		
+			console.log("AFTER_REMOVE [2] | all_to_act=" + JSON.stringify(all_to_act, null, "  "));
+		}
 		return;
 	}
 	if(quest.stops_until_not_shown){
@@ -2997,7 +3004,7 @@ function update_observation(qid, all_to_act){
 	}
 	
 	set_anchors_target(dv_quest);
-	console.log("UPDATED ABSERVATION with qid=" + qid);
+	if(DEBUG_UPDATE_OBSERV){ console.log("UPDATED ABSERVATION with qid=" + qid); }
 }
 
 // CODE_FOR __________________

@@ -39,6 +39,8 @@
 			},
 		},
 		"users": {
+			".read": "root.child('admins').child(auth.uid).exists()",
+			".write": "root.child('admins').child(auth.uid).exists()",
 			"list": {
 				"$uid": {
 					".read": "($uid === auth.uid) && !(root.child('blocked').child(auth.uid).exists())",
