@@ -275,7 +275,7 @@ export function init_exam_database(){
 	
 	db.o_contracts_comm__ = { 
 		context: ["ctx_general", "ctx_evidence", "ctx_contracts"],
-		htm_stm: "o_contract_comm",
+		htm_stm: "o_contracts_comm",
 		activated_if: {
 			c1: { q_contracts__: { a_simple_NO: "on", }, },
 		},

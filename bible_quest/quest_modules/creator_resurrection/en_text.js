@@ -90,7 +90,7 @@ export function init_en_poll_txt(){
 
 	lg.o_technology2_comm = `Technology uses evidence. Technology ${evidence_needed}`;
 
-	lg.o_evidece_incons_comm = `It seems you have some inconsistent answers if yo admit the necesity of evidence.`;
+	lg.o_evidence_incons_comm = `It seems you have some inconsistent answers if yo admit the necesity of evidence.`;
 	
 	lg.q_requires_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_tch_crea}'>creativity</a>?</span>`;
 	
