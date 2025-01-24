@@ -2085,20 +2085,6 @@ function calc_exam_stats_object(obj){
 	return all_obs;
 }
 
-export function get_user_stats_module_path(){
-	if(fb_mod == null){ return ""; }
-	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){ return ""; }
-	const path = fb_mod.firebase_users_path + fb_mod.tc_fb_user.uid + '/stats/' + gvar.glb_poll_db.THIS_MODULE_NAME + "/";
-	return path;
-}
-
-export function get_user_stats_in_stats_module_path(){
-	if(fb_mod == null){ return ""; }
-	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){ return ""; }
-	const path = fb_mod.firebase_users_path + fb_mod.tc_fb_user.uid + '/stats/in_stats/' + gvar.glb_poll_db.THIS_MODULE_NAME + "/";
-	return path;
-}
-
 export function get_to_update_module_user_path(){
 	if(fb_mod == null){ return ""; }
 	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){ return ""; }
@@ -2106,10 +2092,10 @@ export function get_to_update_module_user_path(){
 	return path;
 }
 
-export function get_user_path(){
+export function get_user_path(the_uid){
 	if(fb_mod == null){ return ""; }
 	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){ return ""; }
-	const path = fb_mod.firebase_users_path + fb_mod.tc_fb_user.uid;
+	const path = fb_mod.firebase_users_path + the_uid;
 	return path;
 }
 
@@ -2138,7 +2124,7 @@ function write_user_module_results(err_fn){
 	
 	if(DEBUG_WRITE){ console.log("write_user_module_results. full_data=" + JSON.stringify(wr_data, null, "  ")); }
 	
-	const usr_path = get_user_path();	
+	const usr_path = get_user_path(fb_mod.tc_fb_user.uid);	
 	db_ref = fb_mod.md_db.ref(fb_database, usr_path);
 	fb_mod.md_db.update(db_ref, wr_data).catch((error) => { console.error(error); });	
 

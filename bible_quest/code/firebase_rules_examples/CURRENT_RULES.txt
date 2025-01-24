@@ -19,11 +19,14 @@
 		"stats": { 
 			".read": "root.child('admins').child(auth.uid).exists()",
 			".write": "root.child('admins').child(auth.uid).exists()",
-			"last_update": { 
+			"last_check": { 
 				".validate": "newData.isString() && (newData.val().length < 25)",
 			},
 			"$module_name": {
 				".validate": "root.child('modules').child($module_name).exists()",
+				"last_check": { 
+					".validate": "newData.isString() && (newData.val().length < 25)",
+				},
 				"num_checks": { 
 					".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 99999999999999999999)",
 				},
@@ -74,6 +77,9 @@
 						".write": "root.child('admins').child(auth.uid).exists()",
 						"$module_name": {
 							".validate": "root.child('modules').child($module_name).exists()",
+							"last_check": { 
+								".validate": "newData.isString() && (newData.val().length < 25)",
+							},
 							"num_checks": { 
 								".validate": "newData.isNumber() && (newData.val() >= 0) && (newData.val() < 9999999999)",
 							},
@@ -134,7 +140,7 @@
 			".read": "root.child('admins').child(auth.uid).exists()",
 			".write": "root.child('admins').child(auth.uid).exists()",
 			"$user_id": {
-				".validate": "newData.isString() && newData.val().length < 100",
+				".validate": "newData.isNumber() && (newData.val() === 1)",
 			},
 		},
 	},
