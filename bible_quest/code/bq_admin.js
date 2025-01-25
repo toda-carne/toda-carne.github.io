@@ -3,7 +3,7 @@ import { get_new_dv_under, gvar, get_qid_base,
 } from './tc_lang_all.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_observation, 
-	fb_mod, id_dv_working_popup, close_pop_menu, get_user_path, 
+	fb_mod, close_pop_menu, get_user_path, id_pop_menu_sele, 
 } from './tc_exam.js';
 
 const DEBUG_ADMIN_OPS = true;
@@ -26,7 +26,7 @@ export function toggle_admin_opers(fb_usr){
 	
 	const dv_upper = document.getElementById("id_admin_ops_sec");
 	const all_vals = Object.values(admin_ops);
-	toggle_select_option(dv_upper, all_vals, function(dv_ret_w, dv_ops_w, val_sel_w, idx_sel_w){
+	toggle_select_option(dv_upper, id_pop_menu_sele, all_vals, function(dv_ret_w, dv_ops_w, val_sel_w, idx_sel_w){
 		if(val_sel_w == admin_ops.op1){
 			update_module_observations();
 		}

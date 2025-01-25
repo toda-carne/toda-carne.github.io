@@ -3,7 +3,7 @@ import { get_new_dv_under, gvar,
 } from './tc_lang_all.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, get_user_href, 
-	fb_mod, id_dv_working_popup, 
+	fb_mod, id_pop_menu_sele, 
 } from './tc_exam.js';
 
 const DEBUG_USER_INFO = true;
@@ -40,6 +40,8 @@ const id_website = "id_ed_user_website";
 const id_facebook = "id_ed_user_facebook";
 const id_instagram = "id_ed_user_instagram";
 const id_youtube = "id_ed_user_youtube";
+
+const id_user_sele = "id_user_sele";
 
 /*
 function new_user_info(){
@@ -151,7 +153,7 @@ function add_user_info_select_line(dv_ed_usr, label, id, val, arr_ops){
 	const inp = fld;
 	inp.addEventListener('click', function() {
 		const all_vals = Object.values(all_ops);
-		toggle_select_option(inp, all_vals, null);
+		toggle_select_option(inp, id_user_sele, all_vals, null);
 		scroll_to_top(inp);
 		return;
 	});
@@ -169,7 +171,7 @@ export function toggle_user_info(fb_usr){
 	const dv_user_sec = document.getElementById("id_user_info_sec");
 
 	let dv_edit_user = null;
-	dv_edit_user = get_new_dv_under(dv_user_sec, id_dv_working_popup);
+	dv_edit_user = get_new_dv_under(dv_user_sec, id_pop_menu_sele);
 	if(dv_edit_user == null){
 		if(DEBUG_USER_INFO){ console.log("toggle_user_info OFF"); }
 		scroll_to_first_not_answered();

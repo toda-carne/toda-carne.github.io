@@ -95,12 +95,13 @@ const id_dv_answ_ed = "id_dv_answ_ed";
 const id_support_ed = "id_support_ed";
 const id_quest_img = "id_quest_img";
 
+const id_support_sele = "id_support_sele";
+export const id_pop_menu_sele = "id_pop_menu_sele";
+
 // FOR DAG pending management
 const id_ctx_pend = "ctx_pend";
 
 let INIT_EXAM_DB_FUNC = null;
-
-export const id_dv_working_popup = "id_dv_working_popup";
 
 export let fb_mod = null;
 
@@ -862,7 +863,7 @@ function remove_all_ed(qid){
 	remove_id(id_dv_citation_ed);
 	remove_id(id_dv_code_ed);
 	remove_id(id_dv_link_ed);
-	remove_id(id_dv_working_popup);  // old id_dv_sel_option
+	remove_id(id_support_sele);  // old id_dv_sel_option
 }
 
 function remove_curr_support_ed(rm_it){
@@ -942,7 +943,7 @@ function toggle_support_interaction(qid){
 		dv_sel_cit.innerHTML = gvar.glb_curr_lang.msg_sel_cit;
 		dv_sel_cit.addEventListener('click', function() {
 			const all_ops = get_all_response_ops(quest);
-			toggle_select_option(dv_sel_cit, all_ops.all_txt, function(dv_ret, dv_ops, val_sel, idx_sel){
+			toggle_select_option(dv_sel_cit, id_support_sele, all_ops.all_txt, function(dv_ret, dv_ops, val_sel, idx_sel){
 				if (val_sel.startsWith(stg_prefix)){
 				} else if (val_sel.startsWith(lnk_prefix)){
 				} else {
@@ -1135,7 +1136,7 @@ function toggle_verse_ed(dv_citation){
 	inp_book.innerHTML = gvar.glb_all_books[cit_obj.book];
 	inp_book.addEventListener('click', function() {
 		const books_arr = Object.values(gvar.glb_all_books);
-		toggle_select_option(inp_book, books_arr, null);
+		toggle_select_option(inp_book, id_support_sele, books_arr, null);
 		return;
 	});
 	
@@ -1204,7 +1205,7 @@ function toggle_verse_ed(dv_citation){
 	
 	inp_site.addEventListener('click', function() {
 		const all_sites_arr = Object.keys(gvar.glb_all_bibles);
-		toggle_select_option(inp_site, all_sites_arr, function(dv_ret, dv_ops, val_sel, idx_sel){
+		toggle_select_option(inp_site, id_support_sele, all_sites_arr, function(dv_ret, dv_ops, val_sel, idx_sel){
 			const bibs = gvar.glb_all_bibles[val_sel];
 			if(bibs.length > 0){ inp_bib_ver_sel.innerHTML = bibs[0]; }
 			dv_ret.innerHTML = val_sel;
@@ -1215,7 +1216,7 @@ function toggle_verse_ed(dv_citation){
 	
 	inp_bib_ver_sel.addEventListener('click', function() {
 		const all_bibs_arr = gvar.glb_all_bibles[inp_site.innerHTML];
-		toggle_select_option(inp_bib_ver_sel, all_bibs_arr, null);
+		toggle_select_option(inp_bib_ver_sel, id_support_sele, all_bibs_arr, null);
 		return;
 	});
 	
@@ -1332,8 +1333,8 @@ function set_answer_for_verse_cit(dv_citation){
 
 // CODE_FOR SELECT FROM ARRAY OF OPTIONS (for example several verses)
 
-export function toggle_select_option(dv_return, all_options_arr, on_click_fn){
-	var dv_options = get_new_dv_under(dv_return, id_dv_working_popup); // old id_dv_sel_option
+export function toggle_select_option(dv_return, id_selec_men, all_options_arr, on_click_fn){
+	var dv_options = get_new_dv_under(dv_return, id_selec_men); // old id_dv_sel_option
 	if(dv_options == null){
 		return;
 	}
@@ -1471,7 +1472,7 @@ function save_button_handler(){
 	const mg_browser = gvar.glb_curr_lang.msg_save_in_browser;
 	const mg_cloud = gvar.glb_curr_lang.msg_save_in_cloud;
 	const where_arr = [mg_browser, mg_cloud];
-	toggle_select_option(dv_exam_top, where_arr, function(dv_ret_w, dv_ops_w, val_sel_w, idx_sel_w){
+	toggle_select_option(dv_exam_top, id_pop_menu_sele, where_arr, function(dv_ret_w, dv_ops_w, val_sel_w, idx_sel_w){
 		dv_ops_w.remove();
 		if(val_sel_w == mg_browser){
 			const nw_nm = gvar.glb_curr_lang.msg_new_answers_name;
@@ -1482,7 +1483,7 @@ function save_button_handler(){
 			} else {
 				all_disp_nams = all_sv_nams.concat([nw_nm]);
 			}
-			toggle_select_option(dv_exam_top, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
+			toggle_select_option(dv_exam_top, id_pop_menu_sele, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 				dv_ops_n.remove();
 				if(exam_nm == nw_nm){
 					//toggle_exam_name_ed(dv_exam_nm, write_exam_object);
@@ -1514,7 +1515,7 @@ function open_button_handler(){
 	const dv_exam_nm = document.getElementById("id_exam_name");
 
 	let all_disp_nams = read_all_exam_names();
-	toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
+	toggle_select_option(dv_exam_nm, id_pop_menu_sele, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
 		read_exam_object(exam_nm);
 		dv_exam_nm.innerHTML = exam_nm;
@@ -1525,11 +1526,11 @@ function open_button_handler(){
 	const mg_browser = gvar.glb_curr_lang.msg_open_from_browser;
 	const mg_cloud = gvar.glb_curr_lang.msg_open_from_cloud;
 	const where_arr = [mg_browser, mg_cloud];
-	toggle_select_option(dv_exam_top, where_arr, function(dv_ret_w, dv_ops_w, val_sel_w, idx_sel_w){
+	toggle_select_option(dv_exam_top, id_pop_menu_sele, where_arr, function(dv_ret_w, dv_ops_w, val_sel_w, idx_sel_w){
 		dv_ops_w.remove();
 		if(val_sel_w == mg_browser){
 			let all_disp_nams = read_all_exam_names();
-			toggle_select_option(dv_exam_nm, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
+			toggle_select_option(dv_exam_nm, id_pop_menu_sele, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 				dv_ops_n.remove();
 				read_exam_object(exam_nm);
 				dv_exam_nm.innerHTML = exam_nm;
@@ -1551,7 +1552,7 @@ function delete_button_handler(){
 	const where_arr = [mg_browser, mg_cloud];
 	
 	let all_disp_nams = read_all_exam_names();
-	toggle_select_option(dv_exam_top, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
+	toggle_select_option(dv_exam_top, id_pop_menu_sele, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
 		delete_exam_object(exam_nm);
 		dv_exam_nm.innerHTML = "";
@@ -1579,7 +1580,7 @@ function pop_menu_handler(){
 	const dv_pop_sec = document.getElementById("id_pop_opt_sec");
 
 	let dv_pop_men = null;
-	dv_pop_men = get_new_dv_under(dv_pop_sec, id_dv_working_popup);
+	dv_pop_men = get_new_dv_under(dv_pop_sec, id_pop_menu_sele);
 	if(dv_pop_men == null){
 		if(DEBUG_POP_MENU){ console.log("toggle_pop_menu OFF"); }
 		scroll_to_first_not_answered();
@@ -1720,7 +1721,7 @@ function toggle_strong_ed(dv_code){
 	inp_slang.innerHTML = strong_lang;
 	inp_slang.addEventListener('click', function() {
 		const lang_arr = ["H", "G"];
-		toggle_select_option(inp_slang, lang_arr, null);
+		toggle_select_option(inp_slang, id_support_sele, lang_arr, null);
 		return;
 	});
 	
@@ -3025,7 +3026,7 @@ function user_login(){
 }
 
 export function close_pop_menu() {
-	let dv_pop_men = document.getElementById(id_dv_working_popup);
+	let dv_pop_men = document.getElementById(id_pop_menu_sele);
 	if(dv_pop_men != null){ dv_pop_men.remove(); }
 }
 
