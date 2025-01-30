@@ -1,7 +1,10 @@
 {
 	"rules": {
-		".read": false,
-		".write": false,
+		".read": "root.child('admins').child(auth.uid).exists()",
+		".write": "root.child('admins').child(auth.uid).exists()",
+		"test_read": {
+			".read": true,
+		},
 		"ck_admin": {
 			".read": "root.child('admins').child(auth.uid).exists()",
 		},

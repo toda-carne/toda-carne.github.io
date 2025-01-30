@@ -1,0 +1,60 @@
+(set-logic ALL)
+
+(set-option :produce-models true)
+(set-option :incremental true)
+(set-option :finite-model-find true)
+(set-option :sets-ext true)
+
+(declare-sort Machine 0)
+
+(declare-fun fc (Machine) Real)
+(declare-fun ridctr (Machine) Real)
+(declare-const maxh Real)
+
+(declare-const all_perceptual_experience Bool)
+
+(assert (forall ((m1 Machine) (m2 Machine)) 
+        (=> all_perceptual_experience 
+                (=> (> (fc m2) (fc m1)) 
+					(> (ridctr m2) (ridctr m1)))
+        )
+        )
+)
+
+(assert (forall (m1 Machine) 
+        (=> (and all_perceptual_experience (< (fc m1) maxh))
+                (=> (> (fc m2) (fc m1)) 
+					(> (ridctr m2) (ridctr m1)))
+        )
+        )
+)
+
+
+
+(echo "fc = functional_complexity")
+(echo "maxh = max human made machines fc value")
+(echo "ridctr = required_intelligence_design_and_tecnichal_creativity_to_reproduce")
+(echo "ASSERTIONS BEFORE")
+(get-assertions)
+(check-sat)
+
+(push 1)
+
+(assert (not 
+		(forall ((m1 Machine) (m2 Machine)) 
+        (=> all_perceptual_experience 
+                (=> (> (fc m2) (fc m1)) 
+					(> (ridctr m2) (ridctr m1)))
+        ))
+ )
+)
+
+(echo "ASSERTIONS AFTER")
+(get-assertions)
+; (get-assignment)
+
+(check-sat)
+; (get-model)
+
+(pop 1)
+
