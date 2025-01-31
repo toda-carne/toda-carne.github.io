@@ -2093,7 +2093,7 @@ function calc_exam_stats_object(obj){
 export function get_to_update_module_user_path(){
 	if(fb_mod == null){ return ""; }
 	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){ return ""; }
-	const path = "to_update/" + gvar.glb_poll_db.THIS_MODULE_NAME + "/" + fb_mod.tc_fb_user.uid;
+	const path = fb_mod.firebase_bib_quest_path + "to_update/" + gvar.glb_poll_db.THIS_MODULE_NAME + "/" + fb_mod.tc_fb_user.uid;
 	return path;
 }
 

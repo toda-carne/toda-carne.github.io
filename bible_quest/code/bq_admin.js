@@ -73,7 +73,7 @@ function update_module_observations(){
 	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
 	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
 	
-	const ref_path = "modules/" + gvar.glb_poll_db.THIS_MODULE_NAME;
+	const ref_path = fb_mod.firebase_bib_quest_path + "modules/" + gvar.glb_poll_db.THIS_MODULE_NAME;
 	const obj = get_module_observations_obj();
 	
 	const db_ref = fb_mod.md_db.ref(fb_database, ref_path);
@@ -91,8 +91,8 @@ function update_user_module_in_stats(fb_database, the_uid, all_obs){
 	const usr_path = get_user_path(the_uid);
 	const old_stat_pth = usr_path + '/stats/' + gvar.glb_poll_db.THIS_MODULE_NAME;
 	const in_stat_pth = usr_path + '/stats/in_stats/' + gvar.glb_poll_db.THIS_MODULE_NAME;
-	const glb_stat_pth = 'stats/' + gvar.glb_poll_db.THIS_MODULE_NAME;	
-	const to_upd_pth = 'to_update/' + gvar.glb_poll_db.THIS_MODULE_NAME + '/' + the_uid;
+	const glb_stat_pth = fb_mod.firebase_bib_quest_path + 'stats/' + gvar.glb_poll_db.THIS_MODULE_NAME;	
+	const to_upd_pth = fb_mod.firebase_bib_quest_path + 'to_update/' + gvar.glb_poll_db.THIS_MODULE_NAME + '/' + the_uid;
 	const old_last_ck = all_obs.last_check;
 	const old_num_ck = all_obs.num_checks;
 	
@@ -135,7 +135,7 @@ function update_user_module_stats(fb_database, the_uid){
 	let db_ref = null;
 	let obj = null;
 	
-	const lock_pth = "doing_stats/" + the_uid;
+	const lock_pth = fb_mod.firebase_bib_quest_path + "doing_stats/" + the_uid;
 	const lok_ref = fb_mod.md_db.ref(fb_database, lock_pth);
 	fb_mod.md_db.set(lok_ref, 1).catch((error) => { console.error(error); });	
 	
@@ -167,7 +167,7 @@ function update_module_stats(){
 	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
 	
 	//const ref_path = "users/list";
-	const ref_path = "to_update/" + gvar.glb_poll_db.THIS_MODULE_NAME;
+	const ref_path = fb_mod.firebase_bib_quest_path + "to_update/" + gvar.glb_poll_db.THIS_MODULE_NAME;
 	const db_ref = fb_mod.md_db.ref(fb_database, ref_path);
 	
 	fb_mod.md_db.get(db_ref).then((snapshot) => {
