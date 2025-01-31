@@ -152,5 +152,13 @@
 				},
 			},
 		},
+		"bib_codes": {
+			".read": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
+			".write": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
+		},
+		"bib_trans": {
+			".read": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
+			".write": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
+		},
 	},
 }

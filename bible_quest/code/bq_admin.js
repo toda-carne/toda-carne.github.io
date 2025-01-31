@@ -16,6 +16,7 @@ const admin_ops = {
 	op4:"Block user",
 	op5:"Unblock user",
 	op6:"Download Database",
+	op10:"Get totals of indexes in console",
 };
 
 const id_admin_ops = "id_admin_ops";
@@ -39,6 +40,24 @@ export function toggle_admin_opers(fb_usr){
 			//sim_download('test_sim_download_jlq.txt', 'HOLA JOSE FUNCIONO!');
 			//generate_and_download();
 			download_database();
+		}
+		if(val_sel_w == admin_ops.op7){
+			upload_index("W");
+		}
+		if(val_sel_w == admin_ops.op8){
+			upload_index("S");
+		}
+		if(val_sel_w == admin_ops.op9){
+			upload_index("A");
+		}
+		if(val_sel_w == admin_ops.op10){
+			print_totals();
+		}
+		if(val_sel_w == admin_ops.op11){
+			print_file_totals();
+		}
+		if(val_sel_w == admin_ops.op12){
+			init_ascii_totals();
 		}
 	});
 	
@@ -261,7 +280,7 @@ function download_database(){
 	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
 	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
 	
-	const db_ref = fb_mod.md_db.ref(fb_database);
+	const db_ref = fb_mod.md_db.ref(fb_database, fb_mod.firebase_bib_quest_path);
 	
 	fb_mod.md_db.get(db_ref).then((snapshot) => {
 		if (snapshot.exists()) {
@@ -287,3 +306,230 @@ function save_file(nam, obj){
 	window.open(url);
 	URL.revokeObjectURL(url); // This seems to work here.
 }
+
+function upload_index(kk){
+	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
+	
+	let code_kind = "code";
+	if(kk == "S"){
+		code_kind = "strong_code";
+	} else if(kk == "W"){
+		code_kind = "word_code";
+	} else if(kk == "A"){
+		code_kind = "ascii_code";
+	}
+	const mod_nm = "../bib_code_indexes/" + code_kind + ".js";
+	import(mod_nm)
+	.then((module) => {
+		let obj = {};
+		if(module != null){ 
+			if(kk == "S"){
+				obj = module.strong_code;
+			} else if(kk == "W"){
+				obj = module.word_code;
+			} else if(kk == "A"){
+				obj = module.ascii_code;
+			}
+			
+			const pth = "bib_codes/" + code_kind;
+			update_index_in_chunks(pth, obj).then((resp) => {
+				console.log(`FINISHED UPLOAD OF ${mod_nm} OK`);
+			});
+		}
+	})
+	.catch((err) => {
+		console.log(`Could NOT import ${mod_nm} err:` + err.message);
+	});
+	
+	close_pop_menu();	
+}
+
+async function update_index(pth, obj){
+	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
+	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+
+	const db_ref = fb_mod.md_db.ref(fb_database, pth);
+
+	const ctr_pth = pth + "/total";
+	const db_cnter = fb_mod.md_db.ref(fb_database, ctr_pth);	
+	await fb_mod.md_db.set(db_cnter, 0).catch((error) => { 
+		console.error(error); 
+	});
+	
+	const codes = Object.keys(obj);
+	for(const cod of codes){
+		const wr_data = {};
+		wr_data.total = fb_mod.md_db.increment(1);
+		wr_data[cod] = obj[cod];
+		await fb_mod.md_db.update(db_ref, wr_data).catch((error) => { console.error(error); });	
+	}
+}
+
+function print_totals(){
+	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
+	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+
+	const pth1 = "bib_codes/strong_code/total";
+	const db_ref1 = fb_mod.md_db.ref(fb_database, pth1);
+	fb_mod.md_db.get(db_ref1).then((snapshot) => {
+		if (snapshot.exists()) {
+			const tot = snapshot.val();
+			console.log(pth1 + " = " + tot);
+		} else {
+			console.log("firebase get " + pth1 + " failed. No data.");
+		}
+	}).catch((error) => {
+		console.log("firebase get " + pth1 + " failed. Cannot get.");
+		console.error(error);
+	});
+
+	const pth2 = "bib_codes/word_code/total";
+	const db_ref2 = fb_mod.md_db.ref(fb_database, pth2);
+	fb_mod.md_db.get(db_ref2).then((snapshot) => {
+		if (snapshot.exists()) {
+			const tot = snapshot.val();
+			console.log(pth2 + " = " + tot);
+		} else {
+			console.log("firebase get " + pth2 + " failed. No data.");
+		}
+	}).catch((error) => {
+		console.log("firebase get " + pth2 + " failed. Cannot get.");
+		console.error(error);
+	});
+
+	const pth3 = "bib_codes/ascii_code/total";
+	const db_ref3 = fb_mod.md_db.ref(fb_database, pth3);
+	fb_mod.md_db.get(db_ref3).then((snapshot) => {
+		if (snapshot.exists()) {
+			const tot = snapshot.val();
+			console.log(pth3 + " = " + tot);
+		} else {
+			console.log("firebase get " + pth3 + " failed. No data.");
+		}
+	}).catch((error) => {
+		console.log("firebase get " + pth3 + " failed. Cannot get.");
+		console.error(error);
+	});
+	
+	close_pop_menu();
+}
+
+function init_strong_totals(){
+	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
+	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+
+	const pth1 = "bib_codes/strong_code/total";
+	const db_ref1 = fb_mod.md_db.ref(fb_database, pth1);
+	fb_mod.md_db.set(db_ref1, 0).catch((error) => { 
+		console.error(error); 
+	});
+
+	close_pop_menu();
+}
+
+function init_word_totals(){
+	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
+	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+
+	const pth2 = "bib_codes/word_code/total";
+	const db_ref2 = fb_mod.md_db.ref(fb_database, pth2);
+	fb_mod.md_db.set(db_ref2, 0).catch((error) => { 
+		console.error(error); 
+	});
+
+	close_pop_menu();
+}
+
+function init_ascii_totals(){
+	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
+	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+
+	const pth3 = "bib_codes/ascii_code/total";
+	const db_ref3 = fb_mod.md_db.ref(fb_database, pth3);
+	fb_mod.md_db.set(db_ref3, 0).catch((error) => { 
+		console.error(error); 
+	});
+	
+	close_pop_menu();
+}
+
+function get_file_total(kk){
+	let code_kind = "code";
+	if(kk == "S"){
+		code_kind = "strong_code";
+	} else if(kk == "W"){
+		code_kind = "word_code";
+	} else if(kk == "A"){
+		code_kind = "ascii_code";
+	}
+	const mod_nm = "../bib_code_indexes/" + code_kind + ".js";
+	import(mod_nm)
+	.then((module) => {
+		let obj = {};
+		if(module != null){ 
+			if(kk == "S"){
+				obj = module.strong_code;
+			} else if(kk == "W"){
+				obj = module.word_code;
+			} else if(kk == "A"){
+				obj = module.ascii_code;
+			}
+			
+			const all_keys = Object.keys(obj);
+			console.log(`TOTAL KEYS IN ${mod_nm} =` + all_keys.length);
+		}
+	})
+	.catch((err) => {
+		console.log(`Could NOT import ${mod_nm} err:` + err.message);
+	});
+	
+	close_pop_menu();	
+}
+
+function print_file_totals(){
+	get_file_total("W");
+	get_file_total("S");
+	get_file_total("A");
+}
+
+async function update_index_in_chunks(pth, obj){
+	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
+	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+
+	const db_ref = fb_mod.md_db.ref(fb_database, pth);
+
+	const ctr_pth = pth + "/total";
+	const db_cnter = fb_mod.md_db.ref(fb_database, ctr_pth);	
+	await fb_mod.md_db.set(db_cnter, 0).catch((error) => { 
+		console.error(error); 
+	});
+	
+	const min_sz = 5000;
+	
+	const codes = Object.keys(obj);
+	let wr_data = {};
+	let chunk_sz = 0;
+	for(const cod of codes){
+		if(chunk_sz == min_sz){
+			wr_data.total = fb_mod.md_db.increment(chunk_sz);
+			await fb_mod.md_db.update(db_ref, wr_data).catch((error) => { console.error(error); });	
+			console.log("UPDATED " + pth); 
+			wr_data = {};
+			chunk_sz = 0;
+		}
+		wr_data[cod] = obj[cod];
+		chunk_sz++;
+	}
+	if(chunk_sz > 0){
+		wr_data.total = fb_mod.md_db.increment(chunk_sz);
+		await fb_mod.md_db.update(db_ref, wr_data).catch((error) => { console.error(error); });	
+		console.log("UPDATED " + pth); 
+	}
+}
+
