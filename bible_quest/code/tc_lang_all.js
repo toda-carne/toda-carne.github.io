@@ -476,10 +476,10 @@ function init_en_basic_msg(){
 	obj.msg_todacarne_answers_reading = "Opening...";
 	obj.msg_todacarne_no_internet = "No internet conection.";
 
-	obj.msg_change_answer = "To add answers click on the current answer and click on CHANGE ANSWER";
+	obj.msg_change_answer = `To add answers click on the current answer and click on "${obj.msg_edit_ans}"`;
 	obj.msg_caused_by_answers = "This observation is shown due to your answer in these questions: ";
 	obj.msg_caused_by_observations = "This observation is shown due these other observations: ";
-	obj.msg_to_get_rid = "To get rid of this observation change one o more answers that are causing this observation.";
+	obj.msg_to_get_rid = `To get rid of this observation change one o more answers that are causing this observation by clicking the answer and then clicking on "${obj.msg_edit_ans}" or by clicking on "${obj.msg_undo}" until you get to the desired answer`;
 
 	obj.msg_dispute_rclick = "To dispute right click";
 	obj.msg_dispute_hold_click = "To dispute hold click";

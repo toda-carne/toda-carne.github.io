@@ -80,6 +80,14 @@ export function init_exam_database(){
 		},
 	};
 
+	db.o_evolution_comm__ = { 
+		context: ["ctx_general", "ctx_evolution"],
+		htm_stm: "o_evolution_comm",
+		activated_if: {
+			c1: { q_six_days__: { q1_1_2__YES_six_days: "on", }, q_evolution__: { q1_3__YES_evolution: "on", }, },
+		},
+	};
+	
 	db.q_millions_of_years__ = { 
 		choose_yes: true,
 		context: ["ctx_general", "ctx_evolution"],

@@ -50,6 +50,9 @@ export function init_en_poll_txt(){
 	lg.q1_3__evolution = `<span class='big_font bold_font'><a href='${hb.href_factories}'>Evolution</a>?</span>`;
 	lg.q1_3__YES_evolution = "YES evolution";
 	lg.q1_3__NO_evolution = "NO evolution";
+	
+	lg.o_evolution_comm = `The question about six days refers to six rotations of the planet on its axis. Six literal days so
+	there is no time for evolution.`;
 
 	lg.q_millions_of_years = `<span class='big_font bold_font'>Millions of <a href='${hb.href_factories}'>years</a>?</span>`;
 	
