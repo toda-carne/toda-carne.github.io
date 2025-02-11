@@ -800,6 +800,7 @@ function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
 		if(dv_answ_ed != null){
 			dv_answ_ed.remove();
 		} else {
+			remove_curr_support_ed(true);
 			//dv_answ_ed = dv_answers.appendChild(document.createElement("div"));
 			dv_answ_ed = get_new_dv_under(dv_answers, id_dv_answ_ed);
 			dv_answ_ed.id = id_dv_answ_ed;
@@ -812,7 +813,6 @@ function add_listener_to_add_edit_button(dv_answers, dv_answ, qid){
 				dv_answ_ed.remove();
 				quest.has_answ = null;
 				init_answers(qid);
-				remove_curr_support_ed(true);
 				
 				const dv_quest = document.getElementById(qid);
 				scroll_to_top(dv_quest);

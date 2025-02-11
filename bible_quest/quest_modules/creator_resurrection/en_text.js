@@ -55,6 +55,9 @@ export function init_en_poll_txt(){
 	there is no time for evolution.`;
 
 	lg.q_millions_of_years = `<span class='big_font bold_font'>Millions of <a href='${hb.href_factories}'>years</a>?</span>`;
+
+	lg.q_intelligent_design = `<span class='big_font bold_font'>Intelligent design?</span>`;
+	lg.q_about_7_thousand_years = `<span class='big_font bold_font'>One couple about 7 thousand year ago?</span>`;
 	
 	lg.q_logic_stm = `<span class='big_font bold_font'>Logic?</span>`;
 	lg.a_YES_logic = "YES logic";

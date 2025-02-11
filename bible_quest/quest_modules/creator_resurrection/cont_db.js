@@ -71,7 +71,7 @@ export function init_exam_database(){
 	
 	db.q_evolution__ = { 
 		choose_yes: true,
-		context: ["ctx_general", "ctx_evolution"],
+		context: ["ctx_general", "ctx_intelligent_design"],
 		htm_stm: "q1_3__evolution",
 		img_href: "evolution.webp", 
 		answers: {
@@ -81,7 +81,7 @@ export function init_exam_database(){
 	};
 
 	db.o_evolution_comm__ = { 
-		context: ["ctx_general", "ctx_evolution"],
+		context: ["ctx_general", "ctx_intelligent_design"],
 		htm_stm: "o_evolution_comm",
 		activated_if: {
 			c1: { q_six_days__: { q1_1_2__YES_six_days: "on", }, q_evolution__: { q1_3__YES_evolution: "on", }, },
@@ -90,7 +90,7 @@ export function init_exam_database(){
 	
 	db.q_millions_of_years__ = { 
 		choose_yes: true,
-		context: ["ctx_general", "ctx_evolution"],
+		context: ["ctx_general", "ctx_intelligent_design"],
 		htm_stm: "q_millions_of_years",
 		img_href: "solar_cycle.webp", 
 		answers: {
@@ -99,6 +99,38 @@ export function init_exam_database(){
 		},
 		activated_if: {
 			c1: { q_evolution__: { q1_3__YES_evolution: "on", }, },
+		},
+	};
+
+	db.q_intelligent_design__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_intelligent_design"],
+		htm_stm: "q_intelligent_design",
+		img_href: "intelligent_design.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_bible__: { q1_0__YES_bible: "on", }, 
+				q_creator__: { q1_1__YES_creator: "on", }, 
+				q_six_days__: { q1_1_2__YES_six_days: "on", }, 
+				q_evolution__: { q1_3__NO_evolution: "on", }, 
+			},
+		},
+	};
+
+	db.q_about_7_thousand_years__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_intelligent_design"],
+		htm_stm: "q_about_7_thousand_years",
+		img_href: "adam_and_eve.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_intelligent_design__: { a_simple_YES: "on", }, },
 		},
 	};
 
