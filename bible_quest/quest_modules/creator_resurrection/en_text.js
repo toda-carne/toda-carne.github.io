@@ -98,6 +98,9 @@ export function init_en_poll_txt(){
 
 	lg.o_evidence_incons_comm = `It seems you have some inconsistent answers if yo admit the necesity of evidence.`;
 	
+	lg.q_noah = `<span class='big_font bold_font'>Is Noah and the flood history?</span>`;
+	lg.q_genesis = `<span class='big_font bold_font'>Is the book of Genesis history?</span>`;
+	
 	lg.q_requires_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_tch_crea}'>creativity</a>?</span>`;
 	
 	lg.q_made_by_ape = "<span class='big_font bold_font'>Can an ape make it?</span>";

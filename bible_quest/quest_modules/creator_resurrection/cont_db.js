@@ -354,6 +354,39 @@ export function init_exam_database(){
 		},
 	};
 	
+	db.q_noah__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_noah", ],
+		htm_stm: "q_noah",
+		img_href: "noah_flood.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_about_7_thousand_years__: { a_simple_YES: "on", }, 
+				q_logic__: { a_YES_logic: "on", }, 
+				q_evidence__: { a_YES_evidence: "on", }, 
+				q_language__: { shown: "off", }, 
+				q_law__: { shown: "off", }, 
+			},			
+		},
+	};	
+	
+	db.q_genesis__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_genesis", ],
+		htm_stm: "q_genesis",
+		img_href: "red_sea.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_noah__: { a_simple_YES: "on", }, },
+		},
+	};	
+	
 	db.q_car_req_creativity__ = { 
 		choose_yes: true,
 		context: ["ctx_requires_creativity", "ctx_car_req_creativity"],
