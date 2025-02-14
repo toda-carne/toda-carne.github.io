@@ -1,0 +1,833 @@
+ALL_PENDING={
+  "qids": [],
+  "tot": 0,
+  "sub_ctx": {
+    "ctx_general": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {
+        "ctx_bible": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_creator": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_intelligent_design": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_logic": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {
+            "ctx_language": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_business": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_technology": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            }
+          }
+        },
+        "ctx_evidence": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {
+            "ctx_law": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {
+                "ctx_justice": {
+                  "qids": [],
+                  "tot": 0,
+                  "sub_ctx": {}
+                }
+              }
+            },
+            "ctx_contracts": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_technology2": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            }
+          }
+        }
+      }
+    },
+    "ctx_requires_creativity": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {
+        "ctx_car_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_knife_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_clock_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_phone_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_laptop_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_harder_to_make": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {
+        "ctx_building_knife": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_lamp_car": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_clock_air_purifier": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_foot_vs_car": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_lung_vs_air_purifier": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_body_vs_building": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_phone_mitosis": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_truck_baby": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_red_cell": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_human_egg": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_liver": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_biology_req_creativity": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {
+        "ctx_human_body_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_get_qrcode": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {}
+    },
+    "ctx_resurrection": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {}
+    }
+  }
+}
+ALL_PENDING={
+  "qids": [],
+  "tot": 18,
+  "sub_ctx": {
+    "ctx_general": {
+      "qids": [],
+      "tot": 5,
+      "sub_ctx": {
+        "ctx_bible": {
+          "qids": [
+            "q_bible__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_creator": {
+          "qids": [
+            "q_creator__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_intelligent_design": {
+          "qids": [
+            "q_evolution__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_logic": {
+          "qids": [
+            "q_logic__"
+          ],
+          "tot": 1,
+          "sub_ctx": {
+            "ctx_language": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_business": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_technology": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            }
+          }
+        },
+        "ctx_evidence": {
+          "qids": [
+            "q_evidence__"
+          ],
+          "tot": 1,
+          "sub_ctx": {
+            "ctx_law": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {
+                "ctx_justice": {
+                  "qids": [],
+                  "tot": 0,
+                  "sub_ctx": {}
+                }
+              }
+            },
+            "ctx_contracts": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_technology2": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            }
+          }
+        }
+      }
+    },
+    "ctx_requires_creativity": {
+      "qids": [],
+      "tot": 3,
+      "sub_ctx": {
+        "ctx_car_req_creativity": {
+          "qids": [
+            "q_car_req_creativity__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_knife_req_creativity": {
+          "qids": [
+            "q_knife_req_creativity__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_clock_req_creativity": {
+          "qids": [
+            "q_clock_req_creativity__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_phone_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_laptop_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_harder_to_make": {
+      "qids": [],
+      "tot": 6,
+      "sub_ctx": {
+        "ctx_building_knife": {
+          "qids": [
+            "q_building_vs_knife_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_lamp_car": {
+          "qids": [
+            "q_car_vs_lamp_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_clock_air_purifier": {
+          "qids": [
+            "q_clock_vs_air_purifier_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_foot_vs_car": {
+          "qids": [
+            "q_foot_vs_car_wheel_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_lung_vs_air_purifier": {
+          "qids": [
+            "q_lung_vs_air_purifier_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_body_vs_building": {
+          "qids": [
+            "q_human_body_vs_building_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_phone_mitosis": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_truck_baby": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_red_cell": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_human_egg": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_liver": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_biology_req_creativity": {
+      "qids": [
+        "q_foot_req_creativity__",
+        "q_lungs_req_creativity__",
+        "q_human_body_req_creativity__"
+      ],
+      "tot": 3,
+      "sub_ctx": {
+        "ctx_human_body_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_get_qrcode": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {}
+    },
+    "ctx_resurrection": {
+      "qids": [
+        "q_resurrection__"
+      ],
+      "tot": 1,
+      "sub_ctx": {}
+    }
+  }
+}
+get_pending_qid. qid = q_bible__
+get_pending_qid. qid = q_creator__
+get_pending_qid. qid = q_evolution__
+ALL_PENDING={
+  "qids": [],
+  "tot": 15,
+  "sub_ctx": {
+    "ctx_general": {
+      "qids": [],
+      "tot": 2,
+      "sub_ctx": {
+        "ctx_bible": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_creator": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_intelligent_design": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_logic": {
+          "qids": [
+            "q_logic__"
+          ],
+          "tot": 1,
+          "sub_ctx": {
+            "ctx_language": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_business": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_technology": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            }
+          }
+        },
+        "ctx_evidence": {
+          "qids": [
+            "q_evidence__"
+          ],
+          "tot": 1,
+          "sub_ctx": {
+            "ctx_law": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {
+                "ctx_justice": {
+                  "qids": [],
+                  "tot": 0,
+                  "sub_ctx": {}
+                }
+              }
+            },
+            "ctx_contracts": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_technology2": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            }
+          }
+        }
+      }
+    },
+    "ctx_requires_creativity": {
+      "qids": [],
+      "tot": 3,
+      "sub_ctx": {
+        "ctx_car_req_creativity": {
+          "qids": [
+            "q_car_req_creativity__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_knife_req_creativity": {
+          "qids": [
+            "q_knife_req_creativity__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_clock_req_creativity": {
+          "qids": [
+            "q_clock_req_creativity__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_phone_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_laptop_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_harder_to_make": {
+      "qids": [],
+      "tot": 6,
+      "sub_ctx": {
+        "ctx_building_knife": {
+          "qids": [
+            "q_building_vs_knife_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_lamp_car": {
+          "qids": [
+            "q_car_vs_lamp_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_clock_air_purifier": {
+          "qids": [
+            "q_clock_vs_air_purifier_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_foot_vs_car": {
+          "qids": [
+            "q_foot_vs_car_wheel_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_lung_vs_air_purifier": {
+          "qids": [
+            "q_lung_vs_air_purifier_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_body_vs_building": {
+          "qids": [
+            "q_human_body_vs_building_harder_to_make__"
+          ],
+          "tot": 1,
+          "sub_ctx": {}
+        },
+        "ctx_phone_mitosis": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_truck_baby": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_red_cell": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_human_egg": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_liver": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_biology_req_creativity": {
+      "qids": [
+        "q_foot_req_creativity__",
+        "q_lungs_req_creativity__",
+        "q_human_body_req_creativity__"
+      ],
+      "tot": 3,
+      "sub_ctx": {
+        "ctx_human_body_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_get_qrcode": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {}
+    },
+    "ctx_resurrection": {
+      "qids": [
+        "q_resurrection__"
+      ],
+      "tot": 1,
+      "sub_ctx": {}
+    }
+  }
+}
+get_pending_qid. qid = q_logic__
+get_pending_qid. qid = q_evidence__
+get_pending_qid. qid = q_car_req_creativity__
+get_pending_qid. qid = q_knife_req_creativity__
+get_pending_qid. qid = q_clock_req_creativity__
+get_pending_qid. qid = q_building_vs_knife_harder_to_make__
+get_pending_qid. qid = q_car_vs_lamp_harder_to_make__
+get_pending_qid. qid = q_clock_vs_air_purifier_harder_to_make__
+get_pending_qid. qid = q_foot_vs_car_wheel_harder_to_make__
+get_pending_qid. qid = q_lung_vs_air_purifier_harder_to_make__
+get_pending_qid. qid = q_human_body_vs_building_harder_to_make__
+get_pending_qid. qid = q_foot_req_creativity__
+get_pending_qid. qid = q_lungs_req_creativity__
+get_pending_qid. qid = q_human_body_req_creativity__
+get_pending_qid. qid = q_resurrection__
+get_pending_qid. qid = null
+ALL_PENDING={
+  "qids": [],
+  "tot": 0,
+  "sub_ctx": {
+    "ctx_general": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {
+        "ctx_bible": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_creator": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_intelligent_design": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_logic": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {
+            "ctx_language": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_business": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_technology": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            }
+          }
+        },
+        "ctx_evidence": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {
+            "ctx_law": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {
+                "ctx_justice": {
+                  "qids": [],
+                  "tot": 0,
+                  "sub_ctx": {}
+                }
+              }
+            },
+            "ctx_contracts": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            },
+            "ctx_technology2": {
+              "qids": [],
+              "tot": 0,
+              "sub_ctx": {}
+            }
+          }
+        }
+      }
+    },
+    "ctx_requires_creativity": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {
+        "ctx_car_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_knife_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_clock_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_phone_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_laptop_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_harder_to_make": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {
+        "ctx_building_knife": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_lamp_car": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_clock_air_purifier": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_foot_vs_car": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_lung_vs_air_purifier": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_body_vs_building": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_phone_mitosis": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_truck_baby": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_red_cell": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_human_egg": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        },
+        "ctx_liver": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_biology_req_creativity": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {
+        "ctx_human_body_req_creativity": {
+          "qids": [],
+          "tot": 0,
+          "sub_ctx": {}
+        }
+      }
+    },
+    "ctx_get_qrcode": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {}
+    },
+    "ctx_resurrection": {
+      "qids": [],
+      "tot": 0,
+      "sub_ctx": {}
+    }
+  }
+}

@@ -4,6 +4,7 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 	get_qid_base, get_verse_match, get_answer_key, get_new_dv_under,
 } from './tc_lang_all.js';
 
+import { add_to_pending, get_pending_qid, init_all_context, } from './bq_contexts.js';
 import { toggle_user_info, } from './tc_user_info.js';
 import { toggle_admin_opers, } from './bq_admin.js';
 
@@ -1966,8 +1967,8 @@ function calc_exam_save_object(){
 		}
 	}
 	const db = gvar.glb_poll_db;
-	if(db.all_pending != null){
-		sv_obj.all_pending = JSON.parse(JSON.stringify(db.all_pending));
+	if(db.module_state != null){
+		sv_obj.module_state = JSON.parse(JSON.stringify(db.module_state));
 	}
 	//console.log("FULL_OBJECT_SAVE = " + JSON.stringify(sv_obj, null, "  "));
 	return sv_obj;
@@ -1978,8 +1979,8 @@ function update_nodes_exam_with(ld_obj){
 	for (const [qid, quest] of Object.entries(ld_obj)) {
 		db[qid] = JSON.parse(JSON.stringify(quest));
 	}
-	if(ld_obj.all_pending != null){
-		db.all_pending = JSON.parse(JSON.stringify(ld_obj.all_pending));
+	if(ld_obj.module_state != null){
+		db.module_state = JSON.parse(JSON.stringify(ld_obj.module_state));
 	}
 }
 
@@ -2283,11 +2284,20 @@ function set_anchors_target(the_div){
 
 // CODE_FOR DAG HANDLING
 
-function init_DAG_func(){
-	if(gvar.glb_poll_db.all_pending == null){
-		gvar.glb_poll_db.all_pending = {};
-		get_context();
+/*
+function init_all_pending(){ 
+	const db = gvar.glb_poll_db;
+	let stt = db.module_state;
+	if(stt == null){ db.module_state = {}; stt = db.module_state; }
+	if(stt.all_pending == null){ 
+		stt.all_pending = {};
+		get_context();		
 	}
+}*/
+
+function init_DAG_func(){
+	//init_all_pending();
+	init_all_context();
 	
 	const all_qids = Object.keys(gvar.glb_poll_db);
 	for(const qid of all_qids){
@@ -2309,7 +2319,7 @@ function init_signals_for(qid){
 	quest.qid = qid;  // very convinient self ref
 
 	if(quest.activated_if == null){ 
-		add_pending(qid);
+		//add_pending(qid);  // needed for all_pending
 		return;
 	}
 	
@@ -2453,11 +2463,12 @@ function check_if_dnf_is_sat(qid){
 	return false;
 }
 
+/*
 function get_context(arr_context, as_first){
 	const db = gvar.glb_poll_db;
 	let prv_ctx = null;
 	let prv_nm = null;
-	let curr_ctx = db.all_pending;
+	let curr_ctx = db.module_state.all_pending;
 	if(arr_context != null){
 		for(const ctx of arr_context){
 			if(ctx == null){ continue; }
@@ -2477,9 +2488,9 @@ function get_context(arr_context, as_first){
 						prv_ctx[prv_nm] = Object.assign(undu_ctx, curr_ctx);
 						curr_ctx = prv_ctx[prv_nm];
 					} else {
-						const nw_pend = Object.assign(undu_ctx, db.all_pending);
-						db.all_pending = nw_pend;
-						curr_ctx = db.all_pending;
+						const nw_pend = Object.assign(undu_ctx, db.module_state.all_pending);
+						db.module_state.all_pending = nw_pend;
+						curr_ctx = db.module_state.all_pending;
 					}
 				}
 			}
@@ -2520,8 +2531,8 @@ function get_first_ctx_name(keys){
 
 function get_first_open_context(){
 	const db = gvar.glb_poll_db;
-	let parent = db.all_pending;
-	let curr_ctx = db.all_pending;
+	let parent = db.module_state.all_pending;
+	let curr_ctx = db.module_state.all_pending;
 	let ctx_nam = null;
 	let curr_keys = Object.keys(curr_ctx);
 	while(curr_keys.length > 1){
@@ -2535,6 +2546,7 @@ function get_first_open_context(){
 	}
 	return [parent, ctx_nam];
 }
+*/
 
 function add_pending(qid){
 	if(DEBUG_PENDING){ console.log("called add_pending(" + qid + ")"); }
@@ -2549,8 +2561,10 @@ function add_pending(qid){
 		return false;
 	}
 	
-	const pending = get_context(quest.context);
-	pending.push(qid);
+	//const pending = get_context(quest.context); // for all_pending
+	//pending.push(qid); // for all_pending
+	add_to_pending(qid, false);
+	
 	quest.in_pending = true;
 	return true;
 }
@@ -2568,22 +2582,26 @@ function undo_pending(qid){
 	
 	if(DEBUG_PENDING){ console.log("called undo_pending(" + qid + ")"); }
 	
-	const pending = get_context(quest.context, true);
-	pending.unshift(qid);
-	quest.in_pending = true;
+	//const pending = get_context(quest.context, true); // for all_pending
+	//pending.unshift(qid); // for all_pending
+	add_to_pending(qid, true);	
 	
-	const is_sat = check_if_dnf_is_sat(qid);
-	return is_sat;
+	quest.in_pending = true;
+	return true;
 }
 
 function get_pending(){
-	//const pending = gvar.glb_poll_db.all_pending;
+	/*  // for all_pending
 	const pending = get_first_context();
 	if(pending.length == 0){
 		if(DEBUG_PENDING){ console.log("get_pending() returned null"); }
 		return null;
 	}
 	const qid = pending.shift();
+	*/
+	const qid = get_pending_qid();
+	if(qid == null){ return null; }
+	
 	const quest = gvar.glb_poll_db[qid];
 	quest.in_pending = false;
 
@@ -2710,7 +2728,8 @@ function undo_last_quest(){
 		const dv_quest = document.getElementById(qid);
 		if(dv_quest != null){ dv_quest.remove(); }
 		
-		const undo_ok = undo_pending(qid);
+		let undo_ok = undo_pending(qid);
+		if(undo_ok){ undo_ok = check_if_dnf_is_sat(qid); }
 		if(num_undo == 0){ num_undo++; }
 		else if(undo_ok){ num_undo++; }
 		
