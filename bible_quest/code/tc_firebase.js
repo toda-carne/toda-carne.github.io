@@ -289,7 +289,3 @@ export const firebase_sign_out = () => {
 	console.log('signed out');
 }
 
-export function firebase_get_user(){
-	return tc_fb_user;
-}
-

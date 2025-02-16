@@ -18,7 +18,7 @@ export function init_exam_database(){
 	const rgt = "grid_item_right";
 	const lft = "grid_item_left";
 
-	db.THIS_MODULE_NAME = "CREATOR_RESURRECTION_MODULE";  // CAREFUL. This name is the name this module takes in firebase
+	db.THIS_MODULE_NAME = "CREATOR_RESURRECTION_MODULE";  // CAREFUL. Name of this module in firebase. OBLIGATORY FIELD.
 	
 	db.exam_img_dir = exam_img_dir;
 	db.proy_img_dir = proy_img_dir;  //CAREFUL!! Used as the path for every img_href
@@ -1021,6 +1021,7 @@ export function init_exam_database(){
 	};
 	
 	db.o_get_qrcode__ = { 
+		// skip_in_results: true,
 		calls_write_object: true,
 		context: ["ctx_get_qrcode"],
 		is_positive: true,
@@ -1062,39 +1063,7 @@ export function init_exam_database(){
 			c9: { 	q_human_body_req_creativity__	: { shown: "on", }, o_we_cannot_simulate_biology_comm__: { shown: "on", }, },
 			c10: { 	q_human_body_req_creativity__	: { shown: "on", }, o_biology_req_creativity_comm__: { shown: "on", }, },
 		},
-	};
-	
-	db.q_participate_in_contest__ = { 
-		choose_yes: true,
-		presentation: "t_good_job",
-		context: ["ctx_participate"],
-		htm_stm: "q_participate",
-		img_href: "trophy.webp", 
-		answers: {
-			a_simple_YES: { img_pos: rgt, },
-			a_simple_NO: { img_pos: lft, },
-		},
-	};
-	
-	db.o_save_creator_quest__ = { 
-		calls_write_object: true,
-		context: ["ctx_saving"],
-		is_positive: true,
-		htm_stm: "o_chose_yes_to_participate",
-		htm_stm_saved_ok: "o_congrats_you_have_qrcode",
-		htm_stm_not_saved: "o_sorry_no_loging_no_qrcode",
-		activated_if: {
-			c1: { q_participate_in_contest__: { a_simple_YES: "on", }, },
-		},
-	};
-	
-	db.o_no_participation__ = { 
-		context: ["ctx_saving"],
-		htm_stm: "o_chose_no_participation",
-		activated_if: {
-			c1: { q_participate_in_contest__: { a_simple_NO: "on", }, },
-		},
-	};
+	};	
 	*/
 
 }

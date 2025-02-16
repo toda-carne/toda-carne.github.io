@@ -25,7 +25,7 @@ async function get_photo_url() {
 		let dv_img = document.getElementById(id_dv_user_image);
 		if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
 		
-		const dv_img2 = document.getElementById("id_user_picture");
+		const dv_img2 = document.getElementById("id_top_user_picture");
 		//if(dv_img2 != null){ dv_img2.src = the_usr.photoURL; }	
 		
 		//console.log(json);
