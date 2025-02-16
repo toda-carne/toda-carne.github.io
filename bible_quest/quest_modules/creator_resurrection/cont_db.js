@@ -1023,8 +1023,8 @@ export function init_exam_database(){
 	db.o_get_qrcode__ = { 
 		// skip_in_results: true,
 		calls_write_object: true,
-		context: ["ctx_get_qrcode"],
 		is_positive: true,
+		context: ["ctx_get_qrcode"],
 		htm_stm: "o_get_qrcode",
 		htm_stm_saved_ok: "o_congrats_you_have_a_qrcode",
 		htm_stm_not_saved: "o_sorry_no_loging_no_qrcode",

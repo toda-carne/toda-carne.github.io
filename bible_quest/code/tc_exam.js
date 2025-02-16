@@ -111,8 +111,15 @@ let INIT_EXAM_DB_FUNC = null;
 
 export let fb_mod = null;
 
+async function init_exam_fb(){
+	fb_mod = await import("./tc_firebase.js");
+	fb_mod.firebase_check_user((user) => {
+		fill_div_user();
+	}); 
+}
 
-function init_exam_fb(){
+/*
+function init_exam_fb(){ // OLD CODE
 	const mod_nm = "./tc_firebase.js";
 	import(mod_nm)
 	.then((module) => {
@@ -128,6 +135,7 @@ function init_exam_fb(){
 		console.log("Could NOT import '${mod_nm}' err:" + err.message);
 	});
 }
+*/
 
 function is_content_horizontal() {
 	var dv_content = document.getElementById("id_exam_content");
@@ -2928,7 +2936,7 @@ export function get_user_href(the_usr){
 	return qr_href;
 }
 
-function fill_div_user(){
+export function fill_div_user(){
 	const dv_user_nam = document.getElementById(id_top_user_name);
 	const img_top = document.getElementById(id_top_user_picture);
 	const ico_logut = document.getElementById("id_user_logout_anchor");

@@ -1,7 +1,7 @@
 
 import { gvar, get_qid_base, } from './tc_lang_all.js';
 
-const DEBUG_PENDING = true;
+const DEBUG_PENDING = false;
 
 function get_new_context(){ 
 	const ctx = {

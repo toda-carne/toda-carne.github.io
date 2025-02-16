@@ -344,6 +344,7 @@ function upload_index(kk){
 	close_pop_menu();	
 }
 
+/*
 async function update_index(pth, obj){
 	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
 	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
@@ -365,6 +366,7 @@ async function update_index(pth, obj){
 		await fb_mod.md_db.update(db_ref, wr_data).catch((error) => { console.error(error); });	
 	}
 }
+*/
 
 function print_totals(){
 	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
