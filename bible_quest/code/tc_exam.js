@@ -2132,6 +2132,9 @@ function write_module_results(err_fn){
 	
 	const obj = calc_exam_results_object();
 	wr_data[gvar.glb_poll_db.THIS_MODULE_NAME] = obj;
+
+	const finished_module_pth = 'finished/' + gvar.glb_poll_db.THIS_MODULE_NAME;
+	wr_data[finished_module_pth] = 1;
 	
 	const module_pth = 'stats/' + gvar.glb_poll_db.THIS_MODULE_NAME;
 	

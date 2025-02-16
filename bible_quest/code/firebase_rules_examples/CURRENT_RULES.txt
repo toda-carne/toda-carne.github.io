@@ -109,6 +109,14 @@
 							},
 						},
 					},
+					"finished": { 
+						"$module_name": {
+							".validate": "root.child('bib_quest').child('modules').child($module_name).exists()",
+							"$val": {
+								".validate": "newData.isNumber() && (newData.val() === 1)",
+							},
+						},
+					},
 					"user_info": {
 						"$user_field": {
 							".validate": "root.child('bib_quest').child('user_fields').child($user_field).exists()",
