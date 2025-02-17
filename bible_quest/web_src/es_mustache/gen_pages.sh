@@ -13,6 +13,7 @@ CONF_DIR=../all_mustache/
 CONF_FILE=$CONF_DIR/config_exam.json
 
 mustach $CONF_FILE $SRC_DIR/language.mustache > $DEST_DIR/language.html
+mustach $CONF_FILE $SRC_DIR/module_questions.mustache > $DEST_DIR/module_questions.html
 mustach $CONF_FILE $SRC_DIR/module_creator_resu.mustache > $DEST_DIR/module_creator_resu.html
 
 cd $CURR_DIR

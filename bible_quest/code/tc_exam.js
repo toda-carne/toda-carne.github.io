@@ -111,15 +111,19 @@ let INIT_EXAM_DB_FUNC = null;
 
 export let fb_mod = null;
 
-async function init_exam_fb(){
+
+export async function init_exam_fb(call_bk){ // NEW CODE
+	if(fb_mod != null){ return; }
 	fb_mod = await import("./tc_firebase.js");
 	fb_mod.firebase_check_user((user) => {
-		fill_div_user();
+		if(call_bk != null){ call_bk(); }
+		else { fill_div_user(); }
 	}); 
 }
 
 /*
-function init_exam_fb(){ // OLD CODE
+export function init_exam_fb(call_bk){ // OLD CODE
+	if(fb_mod != null){ return; }
 	const mod_nm = "./tc_firebase.js";
 	import(mod_nm)
 	.then((module) => {
@@ -127,7 +131,8 @@ function init_exam_fb(){ // OLD CODE
 		
 		if(fb_mod != null){ 
 			fb_mod.firebase_check_user((user) => {
-				fill_div_user();
+				if(call_bk != null){ call_bk(); }
+				else { fill_div_user(); }
 			}); 
 		}
 	})
@@ -2117,7 +2122,6 @@ export function get_to_update_module_user_path(){
 
 export function get_user_path(the_uid){
 	if(fb_mod == null){ return ""; }
-	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){ return ""; }
 	const path = fb_mod.firebase_users_path + the_uid;
 	return path;
 }

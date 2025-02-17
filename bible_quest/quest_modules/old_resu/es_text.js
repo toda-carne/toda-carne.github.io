@@ -6,6 +6,10 @@ import { bib_defaults, uppercase_words_in_string, all_strongrefs, get_verse_repo
 
 "use strict";
 
+export function init_module_text(){
+	init_es_poll_txt();
+}
+
 export function init_es_poll_txt(){
 	let cit_obj = null;
 	let cit_kk = null;

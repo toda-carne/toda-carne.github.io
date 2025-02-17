@@ -1,100 +1,104 @@
 
 import { gvar, get_qid_base, } from './tc_lang_all.js';
-import { fill_div_user, scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_observation, 
-	fb_mod, close_pop_menu, get_user_path, id_pop_menu_sele, 
+import { init_exam_fb, fb_mod, fill_div_user, scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_observation, 
+	close_pop_menu, get_user_path, id_pop_menu_sele, init_page_exam, 
 } from './tc_exam.js';
 
 const DEBUG_LOADER = true;
 
-let md_fb = null;
+let module_lang = "en";
+let module_name = "creator_resurrection";
+let user_finished_modules = {};
+
+function calc_nxt_module(all_finished){
+	const names = Object.keys(all_finished);
+	if(names.length > 0){
+		return "old_resu";
+	}
+	return "creator_resurrection";
+}
+
+async function get_finished(){
+	if(fb_mod.tc_fb_app == null){ console.error("get_finished. (fb_mod.tc_fb_app == null)");  return null; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+	
+	const usr_path = get_user_path(fb_mod.tc_fb_user.uid);
+	const finished_path = usr_path + "/finished";
+	const db_ref = fb_mod.md_db.ref(fb_database, finished_path);
+	
+	const snapshot = await fb_mod.md_db.get(db_ref);
+	if(! snapshot.exists()) {
+		console.log("get_finished. No path_found. PATH=" + finished_path);
+		return null;
+	}
+	user_finished_modules = snapshot.val();
+}
+
 let md_lang = null;
 let md_txt = null;
 let md_cont_db = null;
 
-async function load_md_fb(){
-	md_fb = await import("./tc_firebase.js");
-	md_fb.firebase_check_user((user) => {
-		fill_div_user();
-	}); 
+async function import_file(mod_nm){
+	const resp = import(mod_nm);
+	return resp;
 }
 
-async function load_module(curr_lang, module_nm){	
-	const md_nm_lang = "./tc_lang_" + curr_lang + ".js";
-	const md_nm_txt = "../quest_modules/" + module_nm + "/" + curr_lang + "_text.js";
-	const md_nm_cont_db = "../quest_modules/" + module_nm + "/cont_db.js";	
+async function import_mod_files(){	
+	const results = await Promise.all([
+		import_file("./tc_lang_" + module_lang + ".js"),
+		import_file("../quest_modules/" + module_name + "/" + module_lang + "_text.js"),
+		import_file("../quest_modules/" + module_name + "/cont_db.js"),
+	]);
 	
-	md_lang = await import(md_nm_lang);
-	md_txt = await import(md_nm_txt);
-	md_cont_db = await import(md_nm_cont_db);
-
-	md_lang.init_es_module();
-	md_txt.init_es_poll_txt();
-	exm.init_page_exam(md_cont_db.init_exam_database);	
-}
-
-function load_current_module(curr_lang){	
+	md_lang = results[0];
+	md_txt = results[1];
+	md_cont_db = results[2];
 }
 
 /*
+async function import_mod_files_2(){
+	md_lang = await import_file("./tc_lang_" + module_lang + ".js");
+	md_txt = await import_file("../quest_modules/" + module_name + "/" + module_lang + "_text.js");
+	md_cont_db = await import_file("../quest_modules/" + module_name + "/cont_db.js");
+}
+*/
 
-import * as es_lang from '../code/tc_lang_es.js';
-import * as en_txt from '../quest_modules/creator_resurrection/es_text.js';
-import * as cont_db from '../quest_modules/creator_resurrection/cont_db.js';
-import * as exm from '../code/tc_exam.js';
+async function load_module(module_nm){	
+	module_name = module_nm;
+	await import_mod_files();
 
-es_lang.init_es_module();
-en_txt.init_es_poll_txt();
-exm.init_page_exam(cont_db.init_exam_database);
-
-import * as en_lang from '../code/tc_lang_en.js';
-import * as en_txt from '../quest_modules/old_resu/en_text.js';
-import * as cont_db from '../quest_modules/old_resu/cont_db.js';
-import * as exm from '../code/tc_exam.js';
-
-en_lang.init_en_module();
-en_txt.init_en_poll_txt();
-exm.init_page_exam(cont_db.init_exam_database);
-
-update_index_in_chunks(pth, obj).then((resp) => {
-	console.log(`FINISHED UPLOAD OF ${mod_nm} OK`);
-});
-
-async function update_index_in_chunks(pth, obj){
-	if(fb_mod == null){ console.log("(fb_mod == null) in update_module_observations"); return; }
-	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
-	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
-
-	const db_ref = fb_mod.md_db.ref(fb_database, pth);
-
-	const ctr_pth = pth + "/total";
-	const db_cnter = fb_mod.md_db.ref(fb_database, ctr_pth);	
-	await fb_mod.md_db.set(db_cnter, 0).catch((error) => { 
-		console.error(error); 
-	});
+	md_lang.init_lang_module();
+	md_txt.init_module_text();
+	init_page_exam(md_cont_db.init_exam_database);	
 	
-	const min_sz = 5000;
-	
-	const codes = Object.keys(obj);
-	let wr_data = {};
-	let chunk_sz = 0;
-	for(const cod of codes){
-		if(chunk_sz == min_sz){
-			wr_data.total = fb_mod.md_db.increment(chunk_sz);
-			await fb_mod.md_db.update(db_ref, wr_data).catch((error) => { console.error(error); });	
-			console.log("UPDATED " + pth); 
-			wr_data = {};
-			chunk_sz = 0;
-		}
-		wr_data[cod] = obj[cod];
-		chunk_sz++;
-	}
-	if(chunk_sz > 0){
-		wr_data.total = fb_mod.md_db.increment(chunk_sz);
-		await fb_mod.md_db.update(db_ref, wr_data).catch((error) => { console.error(error); });	
-		console.log("UPDATED " + pth); 
-	}
+	fill_div_user();	
 }
 
+function load_next_module(){
+	if((fb_mod == null) || (fb_mod.tc_fb_user == null)){
+		const usr_mods = [];
+		const nxt_mod1 = calc_nxt_module(usr_mods);
+		load_module(nxt_mod1);
+		return;
+	}
+	get_finished().then(() => {
+		const nxt_mod2 = calc_nxt_module(user_finished_modules);
+		load_module(nxt_mod2);
+	});
+}
 
+function load_fb_mod(){
+	init_exam_fb(() => {
+		load_next_module();		
+	})
+	.catch((err) => {
+		console.log("init_exam_fb err:" + err.message);
+		load_next_module();
+	});
+}
 
-*/
+export function load_current_module(curr_lang){	
+	module_lang = curr_lang;
+	load_fb_mod();
+}
+

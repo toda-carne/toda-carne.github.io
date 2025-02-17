@@ -4,18 +4,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SI Biblia Homepage</title>
+<title>SIbiblia Homepage</title>
 <meta name="author" content="Jose Luis Quiroga">
 <link rel="stylesheet" href="code/tc_styles.css">
 </head>
 <body>
 <div class="exam_content">
 
-<h1 class="big_title">SI Biblia</h1>    
+<h1 class="big_title">SIbiblia</h1>    
 
 <h1 class="in_center">
-<a href="en/module_creator_resu.html">English</a><br>
-<a href="es/module_creator_resu.html">Español</a><br>
+<a href="en/module_questions.html">English</a><br>
+<a href="es/module_questions.html">Español</a><br>
 </h1>
 
 </div>
@@ -24,9 +24,9 @@
 window.onload=function(){
   let lng = navigator.language;
   if(lng.startsWith("es")){
-    window.location.replace("es/module_creator_resu.html");
+    window.location.replace("es/module_questions.html");
   } else {
-    window.location.replace("en/module_creator_resu.html");
+    window.location.replace("en/module_questions.html");
   }
 }
 </script>

@@ -7,6 +7,10 @@ import { init_en_poll_txt, } from '../../quest_modules/creator_resurrection/en_t
 
 "use strict";
 
+export function init_module_text(){
+	init_es_poll_txt();
+}
+
 export function init_es_poll_txt(){
 	init_en_poll_txt();
 	

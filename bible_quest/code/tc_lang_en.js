@@ -10,3 +10,7 @@ export function init_en_module(){
 	def_lang.init_en_module();
 }
 
+export function init_lang_module(){
+	def_lang.init_en_module();
+}
+

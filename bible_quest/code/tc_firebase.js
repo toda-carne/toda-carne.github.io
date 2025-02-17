@@ -152,18 +152,16 @@ export function firebase_check_user(callbk){
 				firebase_write_user_id();
 				
 				if(callbk != null){ callbk(tc_fb_user); }
-				// ...
 			} else {
 				tc_fb_user = null;
-				
 				if(DEBUG_FB_LOGIN){ console.log("User is signed out"); }
-				// User is signed out
-				// ...
 				if(callbk != null){ callbk(tc_fb_user); }
 			}
 		});			
 	} catch(error){
 		console.error(error);
+		tc_fb_user = null;
+		if(callbk != null){ callbk(tc_fb_user); }
 	}
 }
 

@@ -435,7 +435,9 @@ export function init_es_module(){
 	init_glb_vars(glb_es_vars);	
 }
 
-//init_es_module();
+export function init_lang_module(){
+	init_es_module();
+}
 
 export const all_es_strongrefs = {
 	H1004_cod: "H1004",
