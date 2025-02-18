@@ -1,5 +1,5 @@
 
-import { is_observation, } from '../code/tc_exam.js';
+import { is_observation, } from '../code/bq_quest_mgr.js';
 import { get_qid_base, glb_poll_db, } from '../code/bq_tools.js';
 
 if (process.argv.length < 3) {

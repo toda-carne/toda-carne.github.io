@@ -5,12 +5,12 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 } from './bq_tools.js';
 
 import { add_to_pending, get_pending_qid, init_all_context, } from './bq_contexts.js';
-import { toggle_user_info, } from './tc_user_info.js';
+import { toggle_user_info, } from './bq_user_info.js';
 import { toggle_admin_opers, } from './bq_admin.js';
 
 //import "./qrcode.js";
 //import { QRCode, makeCode } from './qrcode.js';
-// import { firebase_write_object, firebase_read_object, firebase_sign_out } from './tc_firebase.js'; // done dinamicly in init_exam_fb
+// import { firebase_write_object, firebase_read_object, firebase_sign_out } from './bq_firebase_mgr.js'; // done dinamicly in init_exam_fb
 
 "use strict";
 
@@ -112,9 +112,9 @@ let INIT_EXAM_DB_FUNC = null;
 export let fb_mod = null;
 
 
-export async function init_exam_fb(call_bk){ // NEW CODE
+export async function init_firebase_mgr(call_bk){ // NEW CODE
 	if(fb_mod != null){ return; }
-	fb_mod = await import("./tc_firebase.js");
+	fb_mod = await import("./bq_firebase_mgr.js");
 	fb_mod.firebase_check_user((user) => {
 		if(call_bk != null){ call_bk(); }
 		else { fill_div_user(); }
@@ -122,9 +122,9 @@ export async function init_exam_fb(call_bk){ // NEW CODE
 }
 
 /*
-export function init_exam_fb(call_bk){ // OLD CODE
+export function init_firebase_mgr(call_bk){ // OLD CODE
 	if(fb_mod != null){ return; }
-	const mod_nm = "./tc_firebase.js";
+	const mod_nm = "./bq_firebase_mgr.js";
 	import(mod_nm)
 	.then((module) => {
 		if(module != null) { fb_mod = module; }
@@ -1408,7 +1408,7 @@ export function init_page_exam(ini_func){
 	//sd_menu.classList.toggle("has_side_nav");
 	INIT_EXAM_DB_FUNC = ini_func;
 	
-	init_exam_fb();
+	init_firebase_mgr();
 	if(INIT_EXAM_DB_FUNC != null){ 
 		INIT_EXAM_DB_FUNC(); 
 	}

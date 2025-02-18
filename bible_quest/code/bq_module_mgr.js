@@ -1,8 +1,8 @@
 
 import { gvar, get_qid_base, } from './bq_tools.js';
-import { init_exam_fb, fb_mod, fill_div_user, scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_observation, 
+import { init_firebase_mgr, fb_mod, fill_div_user, scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_observation, 
 	close_pop_menu, get_user_path, id_pop_menu_sele, init_page_exam, 
-} from './tc_exam.js';
+} from './bq_quest_mgr.js';
 
 const DEBUG_LOADER = true;
 
@@ -45,7 +45,7 @@ async function import_file(mod_nm){
 
 async function import_mod_files(){	
 	const results = await Promise.all([
-		import_file("./tc_lang_" + module_lang + ".js"),
+		import_file("../quest_lang/bq_lang_" + module_lang + ".js"),
 		import_file("../quest_modules/" + module_name + "/" + module_lang + "_text.js"),
 		import_file("../quest_modules/" + module_name + "/cont_db.js"),
 	]);
@@ -57,7 +57,7 @@ async function import_mod_files(){
 
 /*
 async function import_mod_files_2(){
-	md_lang = await import_file("./tc_lang_" + module_lang + ".js");
+	md_lang = await import_file("../quest_lang/bq_lang_" + module_lang + ".js");
 	md_txt = await import_file("../quest_modules/" + module_name + "/" + module_lang + "_text.js");
 	md_cont_db = await import_file("../quest_modules/" + module_name + "/cont_db.js");
 }
@@ -88,11 +88,11 @@ function load_next_module(){
 }
 
 function load_fb_mod(){
-	init_exam_fb(() => {
+	init_firebase_mgr(() => {
 		load_next_module();		
 	})
 	.catch((err) => {
-		console.log("init_exam_fb err:" + err.message);
+		console.log("load_fb_mod err:" + err.message);
 		load_next_module();
 	});
 }

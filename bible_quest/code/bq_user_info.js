@@ -4,7 +4,7 @@ import { get_new_dv_under, gvar,
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, get_user_href, 
 	fb_mod, id_pop_menu_sele, 
-} from './tc_exam.js';
+} from './bq_quest_mgr.js';
 
 const DEBUG_USER_INFO = true;
 

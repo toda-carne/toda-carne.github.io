@@ -1,5 +1,5 @@
 
-import { book2num_en, all_en_poll_txt, num2book_en, DEFAULT_BOOK_NAME, init_en_module, } from '../code/tc_lang_en.js';
+import { book2num_en, all_en_poll_txt, num2book_en, DEFAULT_BOOK_NAME, init_en_module, } from '../quest_lang/bq_lang_en.js';
 
 "use strict";
 
