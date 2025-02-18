@@ -1,7 +1,7 @@
 
 
 import { init_exam_database, } from './cont_db.js';
-import { gvar, get_qid_base, } from '../../code/tc_lang_all.js';
+import { gvar, get_qid_base, } from '../../code/bq_tools.js';
 import { add_to_pending, get_pending_qid, init_all_context, } from '../../code/bq_contexts.js';
 
 function pru_temas(){

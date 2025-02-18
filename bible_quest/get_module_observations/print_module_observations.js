@@ -1,6 +1,6 @@
 
 import { is_observation, } from '../code/tc_exam.js';
-import { get_qid_base, glb_poll_db, } from '../code/tc_lang_all.js';
+import { get_qid_base, glb_poll_db, } from '../code/bq_tools.js';
 
 if (process.argv.length < 3) {
   console.log('Usage: node ' + process.argv[1] + ' <MODULE_FILENAME>');

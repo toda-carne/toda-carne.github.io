@@ -1,14 +1,18 @@
 
-import { init_glb_vars, init_get_msg, fill_reversed_object, init_en_module, bib_defaults, fill_bibrefs_href, 
-	fill_all_strongrefs_href, get_verse_cit_key, 
-} from '../code/tc_lang_all.js';
+import { init_glb_vars, init_get_msg, fill_reversed_object, bib_defaults, fill_bibrefs_href, 
+	fill_all_strongrefs_href, get_verse_cit_key, init_default_lang, 
+} from '../code/bq_tools.js';
 
 "use strict";
 
-const book2num_es = {};
+// ===============================
+
 const all_es_msg = {};
-const all_es_poll_txt = {};
 const book_es_hrefs = {};
+const all_es_bibrefs = {};
+
+const book2num_es = {};
+const all_es_poll_txt = {};
 
 const bibles_es = {
 	biblegateway: [ "RVA", "RVR1960", "DHH", "NTV", "WLC", "HHH", "WHNU", "TR1550", ],
@@ -394,10 +398,6 @@ function init_es_basic_msg(){
 	
 }
 
-const all_es_bibrefs = {};
-
-const glb_es_vars = {};
-
 function ini_glb_vars_es(all_vars){
 	all_vars.glb_exam_language = "en";
 	all_vars.glb_all_countries = countries_es;
@@ -416,7 +416,7 @@ function ini_glb_vars_es(all_vars){
 }
 
 export function init_es_module(){
-	init_en_module();
+	init_default_lang();
 	init_es_basic_msg();
 	
 	console.log("Called init_es_module");
@@ -431,17 +431,13 @@ export function init_es_module(){
 	fill_bibrefs_href(all_es_bibrefs);
 	fill_all_strongrefs_href();
 
+	const glb_es_vars = {};
 	ini_glb_vars_es(glb_es_vars);
 	init_glb_vars(glb_es_vars);	
 }
 
 export function init_lang_module(){
 	init_es_module();
-}
-
-export const all_es_strongrefs = {
-	H1004_cod: "H1004",
-	H5782_cod: "H5782",
 }
 
 function init_es_bibrefs(){

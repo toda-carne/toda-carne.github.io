@@ -2,7 +2,7 @@
 import { get_verse_reponse_name, get_answer_key, init_poll_glb, add_response_observation, 
 	gvar,
 	//glb_all_bibrefs, 
-} from '../../code/tc_lang_all.js';
+} from '../../code/bq_tools.js';
 
 "use strict";
 

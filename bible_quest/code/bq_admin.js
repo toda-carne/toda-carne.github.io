@@ -1,6 +1,6 @@
 
 import { get_new_dv_under, gvar, get_qid_base, 
-} from './tc_lang_all.js';
+} from './bq_tools.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_observation, 
 	fb_mod, close_pop_menu, get_user_path, id_pop_menu_sele, 

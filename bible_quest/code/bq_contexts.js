@@ -1,5 +1,5 @@
 
-import { gvar, get_qid_base, } from './tc_lang_all.js';
+import { gvar, get_qid_base, } from './bq_tools.js';
 
 const DEBUG_PENDING = false;
 

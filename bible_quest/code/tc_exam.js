@@ -2,7 +2,7 @@
 import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, 
 	gvar, 
 	get_qid_base, get_verse_match, get_answer_key, get_new_dv_under,
-} from './tc_lang_all.js';
+} from './bq_tools.js';
 
 import { add_to_pending, get_pending_qid, init_all_context, } from './bq_contexts.js';
 import { toggle_user_info, } from './tc_user_info.js';

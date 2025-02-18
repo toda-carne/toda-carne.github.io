@@ -1,5 +1,5 @@
 
-import { gvar, get_qid_base, } from './tc_lang_all.js';
+import { gvar, get_qid_base, } from './bq_tools.js';
 import { init_exam_fb, fb_mod, fill_div_user, scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_observation, 
 	close_pop_menu, get_user_path, id_pop_menu_sele, init_page_exam, 
 } from './tc_exam.js';
