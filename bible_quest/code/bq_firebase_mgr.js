@@ -287,3 +287,4 @@ export const firebase_sign_out = () => {
 	console.log('signed out');
 }
 
+// TO GET KEYS USE: "//" as an ending of the path

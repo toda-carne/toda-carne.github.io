@@ -45,7 +45,7 @@ async function import_file(mod_nm){
 
 async function import_mod_files(){	
 	const results = await Promise.all([
-		import_file("../quest_lang/bq_lang_" + module_lang + ".js"),
+		import_file("../quest_conf/bq_lang_" + module_lang + ".js"),
 		import_file("../quest_modules/" + module_name + "/" + module_lang + "_text.js"),
 		import_file("../quest_modules/" + module_name + "/cont_db.js"),
 	]);
@@ -57,7 +57,7 @@ async function import_mod_files(){
 
 /*
 async function import_mod_files_2(){
-	md_lang = await import_file("../quest_lang/bq_lang_" + module_lang + ".js");
+	md_lang = await import_file("../quest_conf/bq_lang_" + module_lang + ".js");
 	md_txt = await import_file("../quest_modules/" + module_name + "/" + module_lang + "_text.js");
 	md_cont_db = await import_file("../quest_modules/" + module_name + "/cont_db.js");
 }

@@ -2135,12 +2135,13 @@ function write_module_results(err_fn){
 	const wr_data = {};
 	
 	const obj = calc_exam_results_object();
-	wr_data[gvar.glb_poll_db.THIS_MODULE_NAME] = obj;
+	const results_module_pth = 'results/' + gvar.glb_poll_db.THIS_MODULE_NAME;
+	wr_data[results_module_pth] = obj;
 
 	const finished_module_pth = 'finished/' + gvar.glb_poll_db.THIS_MODULE_NAME;
 	wr_data[finished_module_pth] = 1;
 	
-	const module_pth = 'stats/' + gvar.glb_poll_db.THIS_MODULE_NAME;
+	const module_pth = 'stats/to_add/' + gvar.glb_poll_db.THIS_MODULE_NAME;
 	
 	const all_qids = Object.keys(obj);
 	for(const qid of all_qids){

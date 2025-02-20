@@ -18,7 +18,7 @@ export function init_exam_database(){
 	const rgt = "grid_item_right";
 	const lft = "grid_item_left";
 
-	db.THIS_MODULE_NAME = "CREATOR_RESURRECTION_MODULE";  // CAREFUL. Name of this module in firebase. OBLIGATORY FIELD.
+	db.THIS_MODULE_NAME = "creator";  // CAREFUL. Name of this module in firebase. OBLIGATORY FIELD.
 	
 	db.exam_img_dir = exam_img_dir;
 	db.proy_img_dir = proy_img_dir;  //CAREFUL!! Used as the path for every img_href
