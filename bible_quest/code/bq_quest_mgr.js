@@ -462,7 +462,7 @@ function init_choose_words(dv_answ, quest, anid){
 	return;
 }
 
-function add_simple_choice_item(dv_answers, dv_img, pos_cls, htm_answ){
+function add_simple_choice_item(dv_answers, dv_img, pos_cls, anid){
 	const dv_answ = dv_answers.appendChild(document.createElement("div"));
 	const cho_classes = ["exam", "grid_img_answer", pos_cls];
 	if(pos_cls != "grid_item_center"){
@@ -473,8 +473,8 @@ function add_simple_choice_item(dv_answers, dv_img, pos_cls, htm_answ){
 	if(dv_img != null){	dv_answ.append(dv_img);	}
 	const dv_txt = document.createElement("div");
 	dv_txt.classList.add("exam", "grid_item", "to_center");
-	if(htm_answ != null){
-		dv_txt.innerHTML = get_msg(htm_answ);
+	if(anid != null){
+		dv_txt.innerHTML = get_msg(anid);
 	}
 	dv_answ.append(dv_txt);
 	return dv_answ;
