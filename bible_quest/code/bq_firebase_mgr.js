@@ -42,6 +42,7 @@ export let tc_fb_app = null;
 export let tc_fb_auth = null;
 export let tc_fb_user = null;
 export let tc_fb_is_admin = false;
+export let bq_fb_user_finished_qmodules = null;
 
 function init_mod_vars(){
 	if(md_app != null){ return; }
@@ -116,6 +117,31 @@ export function firebase_check_login(err_fn){
 	
 }
 
+export function firebase_get_user_path(){
+	if(tc_fb_user == null){ return "INVALID_USER_PATH";}
+	const path = firebase_users_path + tc_fb_user.uid;
+	return path;
+}
+
+async function firebase_get_user_finished_qmodules(){
+	init_mod_vars();
+	if(bq_fb_user_finished_qmodules != null){ return; }
+	if(tc_fb_app == null){ console.error("firebase_get_user_finished_qmodules. (tc_fb_app == null)");  return; }
+	const db = md_db.getDatabase(tc_fb_app);
+	
+	const usr_path = firebase_get_user_path();
+	const finished_path = usr_path + "/finished";
+	const db_ref = md_db.ref(db, finished_path);
+	
+	const snapshot = await md_db.get(db_ref);
+	if(! snapshot.exists()) {
+		console.log("firebase_get_user_finished_qmodules. No path_found. PATH=" + finished_path);
+		bq_fb_user_finished_qmodules = null;
+		return;
+	}
+	bq_fb_user_finished_qmodules = snapshot.val();
+}
+
 export function firebase_check_user(callbk){
 	init_mod_vars();
 	try {
@@ -123,10 +149,10 @@ export function firebase_check_user(callbk){
 		if(tc_fb_auth == null){ tc_fb_auth = MOD_AUTH.getAuth(); }
 		const db = MOD_DB.getDatabase(tc_fb_app);
 		if(db == null){ return; }
-		const cn_ref = MOD_DB.ref(db, ".info/connected");
-		if(cn_ref == null){ return; }
 		
 		if(DEBUG_FB_LOGIN){
+			const cn_ref = MOD_DB.ref(db, ".info/connected");
+			if(cn_ref == null){ return; }
 			MOD_DB.onValue(cn_ref, (snap) => {
 				if (snap.val() === true) {
 					console.log("WAS CONNECTED TO FIREBASE !!!");				
@@ -151,7 +177,9 @@ export function firebase_check_user(callbk){
 				
 				firebase_write_user_id();
 				
-				if(callbk != null){ callbk(tc_fb_user); }
+				firebase_get_user_finished_qmodules().then((result) => {
+					if(callbk != null){ callbk(tc_fb_user); }
+				});
 			} else {
 				tc_fb_user = null;
 				if(DEBUG_FB_LOGIN){ console.log("User is signed out"); }
@@ -159,6 +187,7 @@ export function firebase_check_user(callbk){
 			}
 		});			
 	} catch(error){
+		console.error("ERROR in firebase_check_user.");
 		console.error(error);
 		tc_fb_user = null;
 		if(callbk != null){ callbk(tc_fb_user); }

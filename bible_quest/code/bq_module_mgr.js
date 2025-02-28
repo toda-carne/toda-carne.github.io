@@ -10,7 +10,6 @@ const INVALID_MONAM = "INVALID_MONAM";
 
 let module_lang = "en";
 let module_name = "creator_resurrection";
-let user_finished_modules = null;
 
 function get_first_module(){
 	if(gvar.modules_info == null){ return INVALID_MONAM; }
@@ -21,31 +20,19 @@ function get_first_module(){
 	return INVALID_MONAM;
 }
 
+function get_fini_mods(){
+	let fini_md = {};
+	if((fb_mod != null) && (fb_mod.bq_fb_user_finished_qmodules != null)){ fini_md = fb_mod.bq_fb_user_finished_qmodules; }
+	return fini_md;
+}
+
 function calc_nxt_module(){
-	if(user_finished_modules == null){ 
-		return "creator_resurrection";
-	}
-	const names = Object.keys(user_finished_modules);
+	const fini_md = get_fini_mods();
+	const names = Object.keys(fini_md);
 	if(names.length > 0){
 		return "old_resu";
 	}
 	return "creator_resurrection";
-}
-
-async function get_finished(){
-	if(fb_mod.tc_fb_app == null){ console.error("get_finished. (fb_mod.tc_fb_app == null)");  return null; }
-	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
-	
-	const usr_path = get_user_path(fb_mod.tc_fb_user.uid);
-	const finished_path = usr_path + "/finished";
-	const db_ref = fb_mod.md_db.ref(fb_database, finished_path);
-	
-	const snapshot = await fb_mod.md_db.get(db_ref);
-	if(! snapshot.exists()) {
-		console.log("get_finished. No path_found. PATH=" + finished_path);
-		return null;
-	}
-	user_finished_modules = snapshot.val();
 }
 
 let md_lang = null;
@@ -89,16 +76,8 @@ async function load_module(module_nm){
 }
 
 function load_next_module(){
-	if(user_finished_modules == null){ user_finished_modules = {}; }
-	if((fb_mod == null) || (fb_mod.tc_fb_user == null)){
-		const nxt_mod1 = calc_nxt_module();
-		load_module(nxt_mod1);
-		return;
-	}
-	get_finished().then(() => {
-		const nxt_mod2 = calc_nxt_module();
-		load_module(nxt_mod2);
-	});
+	const nxt_mod2 = calc_nxt_module();
+	load_module(nxt_mod2);
 }
 
 function load_fb_mod(){
@@ -145,6 +124,7 @@ function init_modu_signals_for(monam){
 }
 
 function check_if_modu_dnf_is_sat(monam){
+	const fini_md = get_fini_mods();
 	if(monam == null){ return false; }
 	const qmodu = gvar.modules_info[monam];
 	if(qmodu == null){ return false; }
@@ -167,7 +147,7 @@ function check_if_modu_dnf_is_sat(monam){
 		//console.log(" | monam=" + monam + " | conj_id=" + conj_id + " conj_obj=" + JSON.stringify(conj_obj, null, "  "));
 		for (const [monam_signl, resps_obj] of conj) {
 			if(resps_obj == null){ conj_act = false; break; }
-			if(user_finished_modules[monam_signl] == null){ conj_act = false; break; }			
+			if(fini_md[monam_signl] == null){ conj_act = false; break; }			
 		}
 		if(conj_act){
 			if(qmodu.debug){ console.log("DEBUGING monam=" + monam + " check_if_modu_dnf_is_sat IS_SAT"); }
