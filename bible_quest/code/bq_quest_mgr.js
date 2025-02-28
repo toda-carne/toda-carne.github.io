@@ -2949,13 +2949,13 @@ export function fill_div_user(){
 	const img_top = document.getElementById(id_top_user_picture);
 	const ico_logut = document.getElementById("id_user_logout_anchor");
 	
-	const the_usr = fb_mod.tc_fb_user;
-	if(the_usr == null){ 
+	if((fb_mod == null) || (fb_mod.tc_fb_user == null)){
 		if(dv_user_nam != null){ dv_user_nam.innerHTML = gvar.glb_curr_lang.msg_guest; }
 		if(ico_logut != null){ ico_logut.classList.add("is_hidden"); }
 		if(img_top != null){ img_top.src = gvar.glb_poll_db.exam_img_dir + "user.jpg"; }
 		return;
 	}
+	const the_usr = fb_mod.tc_fb_user;
 	
 	gvar.glb_poll_db.fb_user_info = JSON.parse(JSON.stringify(the_usr));
 	//gvar.glb_poll_db.user_info = 

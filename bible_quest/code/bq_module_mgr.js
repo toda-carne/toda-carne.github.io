@@ -78,8 +78,6 @@ async function load_qmodu(qmonam){
 	md_lang.init_lang_module();
 	md_txt.init_module_text();
 	init_page_exam(md_cont_db.init_exam_database);	
-	
-	fill_div_user();	
 }
 
 async function load_next_qmodu(){
@@ -87,13 +85,18 @@ async function load_next_qmodu(){
 	await load_qmodu(nxt_mod2);
 }
 
+async function init_current_qmodu(){
+	await load_next_qmodu();
+	fill_div_user();
+}
+
 function load_fb_mod(){
 	init_firebase_mgr(() => {
-		load_next_qmodu();		
+		init_current_qmodu();
 	})
 	.catch((err) => {
-		console.log("load_fb_mod err:" + err.message);
-		load_next_qmodu();
+		console.log("load_fb_mod. Cannot load firebase manager module. Loading next LOCAL qmodu. " + err.message);
+		init_current_qmodu();
 	});
 }
 
