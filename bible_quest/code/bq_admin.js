@@ -83,8 +83,8 @@ function get_module_observations_obj(){
 }
 
 function update_module_observations(){
-	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){
-		console.log("CANNOT update_module_observations. gvar.glb_poll_db.THIS_MODULE_NAME == null");
+	if(gvar.current_qmonam == null){
+		console.log("CANNOT update_module_observations. gvar.current_qmonam == null");
 		return;
 	}
 	
@@ -92,7 +92,7 @@ function update_module_observations(){
 	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in update_module_observations");  return; }
 	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
 	
-	const ref_path = fb_mod.firebase_bib_quest_path + "modules/" + gvar.glb_poll_db.THIS_MODULE_NAME;
+	const ref_path = fb_mod.firebase_bib_quest_path + "modules/" + gvar.current_qmonam;
 	const obj = get_module_observations_obj();
 	
 	const db_ref = fb_mod.md_db.ref(fb_database, ref_path);
@@ -108,10 +108,10 @@ function update_user_module_in_stats(fb_database, the_uid, all_obs){
 	const wr_data = {};
 	
 	const usr_path = get_user_path(the_uid);
-	const old_stat_pth = usr_path + '/stats/' + gvar.glb_poll_db.THIS_MODULE_NAME;
-	const in_stat_pth = usr_path + '/stats/in_stats/' + gvar.glb_poll_db.THIS_MODULE_NAME;
-	const glb_stat_pth = fb_mod.firebase_bib_quest_path + 'stats/' + gvar.glb_poll_db.THIS_MODULE_NAME;	
-	const to_upd_pth = fb_mod.firebase_bib_quest_path + 'to_update/' + gvar.glb_poll_db.THIS_MODULE_NAME + '/' + the_uid;
+	const old_stat_pth = usr_path + '/stats/' + gvar.current_qmonam;
+	const in_stat_pth = usr_path + '/stats/in_stats/' + gvar.current_qmonam;
+	const glb_stat_pth = fb_mod.firebase_bib_quest_path + 'stats/' + gvar.current_qmonam;	
+	const to_upd_pth = fb_mod.firebase_bib_quest_path + 'to_update/' + gvar.current_qmonam + '/' + the_uid;
 	const old_last_ck = all_obs.last_check;
 	const old_num_ck = all_obs.num_checks;
 	
@@ -142,8 +142,8 @@ function update_user_module_in_stats(fb_database, the_uid, all_obs){
 
 function get_user_stats_module_path(the_uid){
 	if(fb_mod == null){ return ""; }
-	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){ return ""; }
-	const path = fb_mod.firebase_users_path + the_uid + '/stats/' + gvar.glb_poll_db.THIS_MODULE_NAME + "/";
+	if(gvar.current_qmonam == null){ return ""; }
+	const path = fb_mod.firebase_users_path + the_uid + '/stats/' + gvar.current_qmonam + "/";
 	return path;
 }
 
@@ -176,8 +176,8 @@ function update_user_module_stats(fb_database, the_uid){
 }
 
 function update_module_stats(){	
-	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){
-		console.log("CANNOT update_module_stats. gvar.glb_poll_db.THIS_MODULE_NAME == null");
+	if(gvar.current_qmonam == null){
+		console.log("CANNOT update_module_stats. gvar.current_qmonam == null");
 		return;
 	}
 	
@@ -186,7 +186,7 @@ function update_module_stats(){
 	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
 	
 	//const ref_path = "users/list";
-	const ref_path = fb_mod.firebase_bib_quest_path + "to_update/" + gvar.glb_poll_db.THIS_MODULE_NAME;
+	const ref_path = fb_mod.firebase_bib_quest_path + "to_update/" + gvar.current_qmonam;
 	const db_ref = fb_mod.md_db.ref(fb_database, ref_path);
 	
 	fb_mod.md_db.get(db_ref).then((snapshot) => {

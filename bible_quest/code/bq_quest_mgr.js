@@ -107,8 +107,6 @@ export const id_pop_menu_sele = "id_pop_menu_sele";
 // FOR DAG pending management
 const id_ctx_pend = "ctx_pend";
 
-let INIT_EXAM_DB_FUNC = null;
-
 export let fb_mod = null;
 
 
@@ -1401,16 +1399,15 @@ function add_option(dv_parent, id_option, label, handler){
 
 // CODE_FOR GLOBAL BUTTONS HANDLERS
 
-export function init_page_exam(ini_func){
+export function init_page_exam(){
 	console.log("Called init_page_exam");
 
 	//let sd_menu = document.getElementById("id_side_menu");
 	//sd_menu.classList.toggle("has_side_nav");
-	INIT_EXAM_DB_FUNC = ini_func;
 	
 	init_firebase_mgr();
-	if(INIT_EXAM_DB_FUNC != null){ 
-		INIT_EXAM_DB_FUNC(); 
+	if(gvar.init_qmodu_db != null){ 
+		gvar.init_qmodu_db(); 
 	}
 	init_DAG_func();
 	
@@ -2004,8 +2001,8 @@ function update_nodes_exam_with(ld_obj){
 
 function display_exam_load_object(ld_obj){
 	//console.log("FULL_OBJECT_READ = " + JSON.stringify(ld_obj, null, "  "));
-	if(INIT_EXAM_DB_FUNC != null){ 
-		INIT_EXAM_DB_FUNC(); 
+	if(gvar.init_qmodu_db != null){ 
+		gvar.init_qmodu_db(); 
 	}
 	update_nodes_exam_with(ld_obj);
 	init_DAG_func();
@@ -2113,10 +2110,14 @@ function calc_exam_stats_object(obj){
 	return all_obs;
 }
 
+function get_qmonam(){
+	if(gvar.conf_qmodus == null){ return null; }
+}
+
 export function get_to_update_module_user_path(){
 	if(fb_mod == null){ return ""; }
-	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){ return ""; }
-	const path = fb_mod.firebase_bib_quest_path + "to_update/" + gvar.glb_poll_db.THIS_MODULE_NAME + "/" + fb_mod.tc_fb_user.uid;
+	if(gvar.current_qmonam == null){ return ""; }
+	const path = fb_mod.firebase_bib_quest_path + "to_update/" + gvar.current_qmonam + "/" + fb_mod.tc_fb_user.uid;
 	return path;
 }
 
@@ -2135,13 +2136,13 @@ function write_module_results(err_fn){
 	const wr_data = {};
 	
 	const obj = calc_exam_results_object();
-	const results_module_pth = 'results/' + gvar.glb_poll_db.THIS_MODULE_NAME;
+	const results_module_pth = 'results/' + gvar.current_qmonam;
 	wr_data[results_module_pth] = obj;
 
-	const finished_module_pth = 'finished/' + gvar.glb_poll_db.THIS_MODULE_NAME;
+	const finished_module_pth = 'finished/' + gvar.current_qmonam;
 	wr_data[finished_module_pth] = 1;
 	
-	const module_pth = 'stats/to_add/' + gvar.glb_poll_db.THIS_MODULE_NAME;
+	const module_pth = 'stats/to_add/' + gvar.current_qmonam;
 	
 	const all_qids = Object.keys(obj);
 	for(const qid of all_qids){
@@ -2183,8 +2184,8 @@ function write_firebase_module_results(err_fn){
 		console.log("CANNOT write_firebase_module_results. can_write_module_results returned FALSE.");
 		return;
 	}
-	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){
-		console.log("CANNOT write_firebase_module_results. gvar.glb_poll_db.THIS_MODULE_NAME == null");
+	if(gvar.current_qmonam == null){
+		console.log("CANNOT write_firebase_module_results. gvar.current_qmonam == null");
 		return;
 	}
 	if(fb_mod == null){ 
@@ -2197,50 +2198,6 @@ function write_firebase_module_results(err_fn){
 	});
 	return prom1;
 }
-
-/*
-function write_firebase_exam_object(err_fn){
-	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){
-		console.log("CANNOT write_firebase_exam_object. gvar.glb_poll_db.THIS_MODULE_NAME == null");
-		return;
-	}
-	const firebase_answers_path = "/" + gvar.glb_poll_db.THIS_MODULE_NAME;
-	if(fb_mod == null){
-		console.log("CANNOT write_firebase_exam_object. fb_mod == null");
-		const dv_exam_nm = document.getElementById("id_exam_name");
-		dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
-		return;
-	}
-	console.log("SAVING in https://todacarne-firebase-default-rtdb.firebaseio.com");
-	const wr_obj = calc_exam_save_object();
-	return fb_mod.firebase_write_object(firebase_answers_path, wr_obj, err_fn);
-}
-
-function read_firebase_exam_object(){
-	if(gvar.glb_poll_db.THIS_MODULE_NAME == null){
-		console.log("CANNOT read_firebase_exam_object. gvar.glb_poll_db.THIS_MODULE_NAME == null");
-		return;
-	}
-	const firebase_answers_path = "/" + gvar.glb_poll_db.THIS_MODULE_NAME;
-	if(fb_mod == null){
-		console.log("CANNOT read_firebase_exam_object. fb_mod == null");
-		const dv_exam_nm = document.getElementById("id_exam_name");
-		dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
-		return;
-	}
-	console.log("LOADING from https://todacarne-firebase-default-rtdb.firebaseio.com");
-	return fb_mod.firebase_read_object(firebase_answers_path, (snapshot) => {
-		if (snapshot.exists()) {
-			const rd_obj = snapshot.val();
-			display_exam_load_object(rd_obj);
-			const dv_exam_nm = document.getElementById("id_exam_name");
-			dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_todacarne_answers_name;
-		} else {
-			console.log("No data available");
-		}
-	});	
-}
-*/
 
 // CODE_FOR QID, QREF AND HREF CONVERSION AND DISPLAY
 
@@ -2319,17 +2276,6 @@ function set_anchors_target(the_div){
 }
 
 // CODE_FOR DAG HANDLING
-
-/*
-function init_all_pending(){ 
-	const db = gvar.glb_poll_db;
-	let stt = db.module_state;
-	if(stt == null){ db.module_state = {}; stt = db.module_state; }
-	if(stt.all_pending == null){ 
-		stt.all_pending = {};
-		get_context();		
-	}
-}*/
 
 function init_DAG_func(){
 	//init_all_pending();
@@ -2506,91 +2452,6 @@ function check_if_dnf_is_sat(qid){
 	quest.last_conj_qst = null;
 	return false;
 }
-
-/*
-function get_context(arr_context, as_first){
-	const db = gvar.glb_poll_db;
-	let prv_ctx = null;
-	let prv_nm = null;
-	let curr_ctx = db.module_state.all_pending;
-	if(arr_context != null){
-		for(const ctx of arr_context){
-			if(ctx == null){ continue; }
-			//curr_nm = ctx;
-			if(ctx == id_ctx_pend){ continue; }
-			if(curr_ctx[ctx] == null){ 
-				if(! as_first){
-					curr_ctx[ctx] = {}; 
-					curr_ctx[ctx][id_ctx_pend] = []; 
-				} else {
-					// UNDO CASE
-					const undu_ctx = {};
-					undu_ctx[ctx] = {};
-					undu_ctx[ctx][id_ctx_pend] = []; 
-					
-					if(prv_ctx != null){
-						prv_ctx[prv_nm] = Object.assign(undu_ctx, curr_ctx);
-						curr_ctx = prv_ctx[prv_nm];
-					} else {
-						const nw_pend = Object.assign(undu_ctx, db.module_state.all_pending);
-						db.module_state.all_pending = nw_pend;
-						curr_ctx = db.module_state.all_pending;
-					}
-				}
-			}
-			prv_ctx = curr_ctx;
-			prv_nm = ctx;
-			curr_ctx = curr_ctx[ctx];
-		}
-	}
-	if(curr_ctx[id_ctx_pend] == null){ curr_ctx[id_ctx_pend] = []; }
-	return curr_ctx[id_ctx_pend];
-}
-
-function get_first_context(){
-	let ctx_pair = get_first_open_context();
-	let parent = ctx_pair[0];
-	let ctx_nam = ctx_pair[1];
-	let curr_ctx = parent[ctx_nam];
-	while((ctx_nam != null) && (curr_ctx[id_ctx_pend].length == 0)){
-		delete parent[ctx_nam];
-		
-		ctx_pair = get_first_open_context();
-		parent = ctx_pair[0];
-		ctx_nam = ctx_pair[1];
-		curr_ctx = parent[ctx_nam];
-	}
-	if(ctx_nam != null){
-		return curr_ctx[id_ctx_pend];
-	}
-	return parent[id_ctx_pend];
-}
-
-function get_first_ctx_name(keys){
-	for(const ctx of keys){
-		if(ctx != id_ctx_pend){ return ctx; }
-	}
-	return null;
-}
-
-function get_first_open_context(){
-	const db = gvar.glb_poll_db;
-	let parent = db.module_state.all_pending;
-	let curr_ctx = db.module_state.all_pending;
-	let ctx_nam = null;
-	let curr_keys = Object.keys(curr_ctx);
-	while(curr_keys.length > 1){
-		const fst_key = get_first_ctx_name(curr_keys);
-		if(fst_key == null){ break; }
-		
-		parent = curr_ctx;
-		ctx_nam = fst_key;
-		curr_ctx = curr_ctx[ctx_nam];
-		curr_keys = Object.keys(curr_ctx);
-	}
-	return [parent, ctx_nam];
-}
-*/
 
 function add_pending(qid){
 	if(DEBUG_PENDING){ console.log("called add_pending(" + qid + ")"); }

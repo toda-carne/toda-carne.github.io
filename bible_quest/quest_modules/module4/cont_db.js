@@ -15,8 +15,6 @@ export function init_exam_database(){
 	const db = db_nodes_exam;
 	const rf = gvar.glb_all_bibrefs;
 
-	db.THIS_MODULE_NAME = "module4";  // CAREFUL. Name of this module in firebase. OBLIGATORY FIELD.
-
 	db.q_first_quest_mod_4__ = { 
 		htm_stm: "q_first_quest_mod_4",
 		answers: {

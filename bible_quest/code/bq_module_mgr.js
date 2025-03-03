@@ -11,7 +11,6 @@ const DEBUG_LOADER = true;
 const INVALID_MONAM = "INVALID_MONAM";
 
 let qmodule_lang = "en";
-let qmodule_name = "creator_resurrection";
 
 function get_fini_qmodus(){
 	let fini_md = {};
@@ -63,21 +62,19 @@ async function import_qmodu_files(qmonam){
 	md_cont_db = results[2];
 }
 
-/*
-async function import_mod_files_2(){
-	md_lang = await import_file("../quest_conf/bq_lang_" + qmodule_lang + ".js");
-	md_txt = await import_file("../quest_modules/" + qmodule_name + "/" + qmodule_lang + "_text.js");
-	md_cont_db = await import_file("../quest_modules/" + qmodule_name + "/cont_db.js");
-}
-*/
-
-async function load_qmodu(qmonam){	
-	qmodule_name = qmonam;
+async function load_qmodu(qmonam){
 	await import_qmodu_files(qmonam);
-
+	
 	md_lang.init_lang_module();
 	md_txt.init_module_text();
-	init_page_exam(md_cont_db.init_exam_database);	
+
+	gvar.current_qmonam = qmonam;
+	console.log("CURRENT MODULE NAME:" + gvar.current_qmonam);	
+	if(md_cont_db != null){
+		gvar.init_qmodu_db = md_cont_db.init_exam_database;
+	}
+	
+	init_page_exam();
 }
 
 async function load_next_qmodu(){
