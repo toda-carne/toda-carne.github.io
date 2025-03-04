@@ -7,7 +7,7 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 import { add_to_pending, get_pending_qid, init_all_context, } from './bq_contexts.js';
 import { toggle_user_info, } from './bq_user_info.js';
 import { toggle_admin_opers, } from './bq_admin.js';
-import { load_qmodu, } from './bq_module_mgr.js';
+import { load_qmodu, get_fini_qmodus, load_next_qmodu, } from './bq_module_mgr.js';
 
 //import "./qrcode.js";
 //import { QRCode, makeCode } from './qrcode.js';
@@ -1400,9 +1400,27 @@ function add_option(dv_parent, id_option, label, handler){
 
 // CODE_FOR GLOBAL BUTTONS HANDLERS
 
+function reset_page(){
+	let dv_reset = null;
+	dv_reset = document.getElementById("id_exam_top_content");
+	if(dv_reset != null){ dv_reset.innerHTML = ""; }
+	dv_reset = document.getElementById("id_pop_opt_sec");
+	if(dv_reset != null){ dv_reset.innerHTML = ""; }
+	dv_reset = document.getElementById("id_user_info_sec");
+	if(dv_reset != null){ dv_reset.innerHTML = ""; }
+	dv_reset = document.getElementById("id_admin_ops_sec");
+	if(dv_reset != null){ dv_reset.innerHTML = ""; }
+	dv_reset = document.getElementById("id_exam_name");
+	if(dv_reset != null){ dv_reset.innerHTML = ""; }
+    dv_reset = document.getElementById("id_exam_all_questions");
+	if(dv_reset != null){ dv_reset.innerHTML = ""; }	
+}
+
 export function init_page_exam(){
 	console.log("Called init_page_exam");
 
+	reset_page();
+	
 	//let sd_menu = document.getElementById("id_side_menu");
 	//sd_menu.classList.toggle("has_side_nav");
 	
@@ -2024,6 +2042,7 @@ async function display_exam_load_object(ld_obj){
 	gvar.init_qmodu_db(); 
 	update_nodes_exam_with(ld_obj);
 	init_DAG_func();
+	
 	const dv_all_quest = document.getElementById("id_exam_all_questions");
 	dv_all_quest.innerHTML = "";
 	
@@ -2146,7 +2165,7 @@ export function get_user_path(the_uid){
 }
 
 function write_module_results(err_fn){
-	if(fb_mod.tc_fb_app == null){ console.error("(fb_mod.tc_fb_app == null) in write_module_results");  return; }
+	if(fb_mod.tc_fb_app == null){ console.error("write_module_results. fb_mod.tc_fb_app == null. ");  return; }
 	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
 	
 	let db_ref = null;
@@ -2204,19 +2223,29 @@ function write_firebase_module_results(err_fn){
 		if(err_fn != null){ err_fn(msg); }; 
 		const dv_exam_nm = document.getElementById("id_exam_name");
 		dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_fb_not_finished;
-		return;
+		return new Promise((resolve, reject) => {
+			resolve(msg);
+		});
 	}
 	if(gvar.current_qmonam == null){
 		const msg = "write_firebase_module_results. gvar.current_qmonam == null.";
 		console.error(msg);
 		if(err_fn != null){ err_fn(msg); }; 
-		return;
+		return new Promise((resolve, reject) => {
+			resolve(msg);
+		});
 	}
+	
+	const fini_md = get_fini_qmodus();
+	fini_md[gvar.current_qmonam] = 1;
+	
 	if(fb_mod == null){ 
 		const msg = "write_firebase_module_results. fb_mod == null.";
 		console.error(msg);
 		if(err_fn != null){ err_fn(msg); }; 
-		return; 
+		return new Promise((resolve, reject) => {
+			resolve(msg);
+		});
 	}
 	const prom1 =  fb_mod.firebase_check_login(err_fn).then((result) => {
 		write_module_results(err_fn);
@@ -2790,6 +2819,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 			if(the_usr == null){
 				fill_div_user();
 			}
+			load_next_qmodu();
 		});
 	}
 

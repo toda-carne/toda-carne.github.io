@@ -11,11 +11,11 @@ const DEBUG_LOADER = true;
 const INVALID_MONAM = "INVALID_MONAM";
 
 let qmodule_lang = "en";
+let local_fini_qmudus = {};
 
-function get_fini_qmodus(){
-	let fini_md = {};
-	if((fb_mod != null) && (fb_mod.bq_fb_user_finished_qmodules != null)){ fini_md = fb_mod.bq_fb_user_finished_qmodules; }
-	return fini_md;
+export function get_fini_qmodus(){
+	if((fb_mod != null) && (fb_mod.bq_fb_user_finished_qmodules != null)){ local_fini_qmudus = fb_mod.bq_fb_user_finished_qmodules; }
+	return local_fini_qmudus;
 }
 
 function get_nxt_qmonam(){
@@ -73,7 +73,7 @@ async function import_qmodu_files(qmonam){
 
 export async function load_qmodu(qmonam){
 	await import_qmodu_files(qmonam);
-	
+
 	md_lang.init_lang_module();
 	md_txt.init_module_text();
 
@@ -84,9 +84,10 @@ export async function load_qmodu(qmonam){
 	}
 }
 
-async function load_next_qmodu(){
+export async function load_next_qmodu(){
 	const nxt_mod2 = get_nxt_qmonam();
 	await load_qmodu(nxt_mod2);
+
 	init_page_exam();
 }
 
