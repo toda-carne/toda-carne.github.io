@@ -12,16 +12,26 @@ const INVALID_MONAM = "INVALID_MONAM";
 
 let qmodule_lang = "en";
 let local_fini_qmudus = {};
+let local_conf_qmodus = null;
 
 export function get_fini_qmodus(){
 	if((fb_mod != null) && (fb_mod.bq_fb_user_finished_qmodules != null)){ local_fini_qmudus = fb_mod.bq_fb_user_finished_qmodules; }
 	return local_fini_qmudus;
 }
 
-function get_nxt_qmonam(){
-	if(gvar.conf_qmodus == null){ 
-		init_qmodu_info(gvar);
+function init_conf_qmodus(){
+	if(local_conf_qmodus == null){ 
+		const loc_vars = {};
+		init_qmodu_info(loc_vars);
+		local_conf_qmodus = loc_vars.conf_qmodus;
 	}
+	if(gvar.conf_qmodus == null){ 
+		gvar.conf_qmodus = local_conf_qmodus;
+	}
+}
+
+function get_nxt_qmonam(){
+	if(gvar.conf_qmodus == null){ console.error("get_nxt_qmonam. gvar.conf_qmodus == null."); return INVALID_MONAM; }
 	if(gvar.conf_qmodus.all_qmodus == null){ console.error("get_nxt_qmonam. gvar.conf_qmodus.all_qmodus == null."); return INVALID_MONAM; }
 	const fini_md = get_fini_qmodus();
 	const all_qmonams = Object.keys(gvar.conf_qmodus.all_qmodus);
@@ -49,9 +59,7 @@ async function import_file(mod_nm){
 }
 
 async function import_qmodu_files(qmonam){
-	if(gvar.conf_qmodus == null){ 
-		init_qmodu_info(gvar);
-	}
+	if(gvar.conf_qmodus == null){ console.error("import_qmodu_files. gvar.conf_qmodus == null."); return; }
 	
 	md_lang = null;
 	md_txt = null;
@@ -77,6 +85,7 @@ export async function load_qmodu(qmonam){
 	md_lang.init_lang_module();
 	md_txt.init_module_text();
 
+	init_conf_qmodus();
 	gvar.current_qmonam = qmonam;
 	console.log("CURRENT MODULE NAME:" + gvar.current_qmonam);	
 	if(md_cont_db != null){
@@ -108,7 +117,7 @@ function load_fb_mod(){
 
 export function load_current_module(curr_lang){	
 	qmodule_lang = curr_lang;
-	init_qmodu_info(gvar);
+	init_conf_qmodus();
 	load_fb_mod();
 }
 

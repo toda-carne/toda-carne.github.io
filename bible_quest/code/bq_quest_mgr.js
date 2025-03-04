@@ -2654,7 +2654,14 @@ function ask_next(){
 	while((qid != null) && ! check_if_dnf_is_sat(qid)){
 		qid = get_pending();
 	}
-	if(qid == null){ return null; }
+	if(qid == null){ 
+		write_firebase_module_results((err) => {
+			console.error(err);
+		}).then((result) => {
+			load_next_qmodu();
+		});
+		return null; 
+	}
 	const added = add_question(qid);
 	if(added == null){
 		console.log("Question " + qid + " could NOT be added to page during ask_next [1] !!!");
