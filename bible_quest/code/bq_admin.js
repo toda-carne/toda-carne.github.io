@@ -6,7 +6,7 @@ import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_o
 	fb_mod, close_pop_menu, get_user_path, id_pop_menu_sele, 
 } from './bq_quest_mgr.js';
 
-import { load_qmodu, } from './bq_module_mgr.js';
+import { load_qmodu, load_next_qmodu, } from './bq_module_mgr.js';
 
 const DEBUG_ADMIN_OPS = true;
 
@@ -85,7 +85,7 @@ function is_valid_observ(qid){
 function get_module_observations_obj(){
 	const all_obs = {};
 	const all_qids = Object.keys(gvar.glb_poll_db);
-	const added = false;
+	let added = false;
 	for(const qid of all_qids){
 		if(is_valid_observ(qid)){
 			all_obs[qid] = 1;
