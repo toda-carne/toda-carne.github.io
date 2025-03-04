@@ -298,9 +298,10 @@ export const firebase_read_object = (sub_ref, callbak_func) => { //sub_ref MUST 
 		const fb_database = MOD_DB.getDatabase(tc_fb_app);
 		const db_ref = MOD_DB.ref(fb_database, firebase_users_path + tc_fb_user.uid + sub_ref)
 		console.log("firebase_read_object. db_ref = " + db_ref);
-		MOD_DB.onValue(db_ref, callbak_func).catch((error) => {
+		MOD_DB.onValue(db_ref, callbak_func);
+		/*.catch((error) => {
 			console.error(error);
-		});
+		});*/
 	});
 }
 

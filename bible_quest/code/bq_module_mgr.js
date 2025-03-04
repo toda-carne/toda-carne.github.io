@@ -19,7 +19,9 @@ function get_fini_qmodus(){
 }
 
 function get_nxt_qmonam(){
-	if(gvar.conf_qmodus == null){ console.error("get_nxt_qmonam. gvar.conf_qmodus == null."); return INVALID_MONAM; }
+	if(gvar.conf_qmodus == null){ 
+		init_qmodu_info(gvar);
+	}
 	if(gvar.conf_qmodus.all_qmodus == null){ console.error("get_nxt_qmonam. gvar.conf_qmodus.all_qmodus == null."); return INVALID_MONAM; }
 	const fini_md = get_fini_qmodus();
 	const all_qmonams = Object.keys(gvar.conf_qmodus.all_qmodus);
@@ -47,7 +49,14 @@ async function import_file(mod_nm){
 }
 
 async function import_qmodu_files(qmonam){
-	if(gvar.conf_qmodus == null){ console.error("import_qmodu_files. gvar.conf_qmodus == null."); return; }
+	if(gvar.conf_qmodus == null){ 
+		init_qmodu_info(gvar);
+	}
+	
+	md_lang = null;
+	md_txt = null;
+	md_cont_db = null;
+	
 	const db_fn = "../" + gvar.conf_qmodus.all_qmodus[qmonam].quest_file;
 	const txt_fnams = gvar.conf_qmodus.all_qmodus[qmonam].text_lang;
 	const txt_fn = "../" + txt_fnams[qmodule_lang];
@@ -62,7 +71,7 @@ async function import_qmodu_files(qmonam){
 	md_cont_db = results[2];
 }
 
-async function load_qmodu(qmonam){
+export async function load_qmodu(qmonam){
 	await import_qmodu_files(qmonam);
 	
 	md_lang.init_lang_module();
@@ -73,13 +82,12 @@ async function load_qmodu(qmonam){
 	if(md_cont_db != null){
 		gvar.init_qmodu_db = md_cont_db.init_exam_database;
 	}
-	
-	init_page_exam();
 }
 
 async function load_next_qmodu(){
 	const nxt_mod2 = get_nxt_qmonam();
 	await load_qmodu(nxt_mod2);
+	init_page_exam();
 }
 
 async function init_current_qmodu(){
@@ -102,36 +110,6 @@ export function load_current_module(curr_lang){
 	init_qmodu_info(gvar);
 	load_fb_mod();
 }
-
-/*
-function init_qmodu_signals_for(monam){
-	const qmodu = gvar.conf_qmodus.all_qmodus[monam];
-	if(qmodu == null){ return; }
-
-	if(qmodu.signals_inited){ return; }
-	qmodu.signals_inited = true;
-	
-	qmodu.name = monam;  // very convinient self ref
-
-	if(qmodu.pre_req == null){ return; }
-	
-	const act_if = Object.entries(qmodu.pre_req);
-	for (const [conj_id, conj_obj] of act_if) {
-		if(conj_obj == null){ continue; }
-		const conj = Object.entries(conj_obj);
-		
-		for (const [mod_req, resps_obj] of conj) {
-			if(resps_obj == null){ continue; }
-			
-			const mdu_to_signl = gvar.conf_qmodus.all_qmodus[mod_req]; 
-			if(mdu_to_signl == null){ continue; }
-
-			if(mdu_to_signl.signals_to_fire == null){ mdu_to_signl.signals_to_fire = {}; }  // added_for_signals
-			mdu_to_signl.signals_to_fire.push(monam);			
-		}
-	}
-}
-*/
 
 function is_qmodu_dnf_sat(monam){
 	const fini_md = get_fini_qmodus();
@@ -172,41 +150,3 @@ function is_qmodu_dnf_sat(monam){
 	return false;
 }
 
-/*
-function send_qmodu_signals_to(all_to_signl, all_to_act){
-	for(const monam_signl of all_to_signl){
-		const msignl = gvar.conf_qmodus.all_qmodus[monam_signl];
-		if(msignl == null){ continue; }
-		
-		const csat = is_qmodu_dnf_sat(monam_signl);
-		if(csat){ all_to_act.push(monam_signl); }		
-	}
-}
-
-function send_all_qmodu_signals(monam){
-	const all_to_act = [];
-	const qmodu = gvar.conf_qmodus.all_qmodus[monam];
-	if(qmodu == null){ return all_to_act; }
-	
-	const if_fini = qmodu.signals_to_fire;
-	if(if_fini != null){
-		const all_to_signl = Object.keys(if_fini);
-		send_qmodu_signals_to(all_to_signl, all_to_act);
-	}
-	if(qmodu.debug){ 
-		console.log("DEBUGING monam=" + monam + " send_all_qmodu_signals | all_to_signl=" + JSON.stringify(all_to_signl, null, "  ")); 
-		console.log("DEBUGING monam=" + monam + " send_all_qmodu_signals | signals_to_fire=" + JSON.stringify(qmodu.signals_to_fire, null, "  ")); 		
-	}
-	
-	return all_to_act;
-}
-
-function end_qmodu(monam){
-	const qmodu = gvar.conf_qmodus.all_qmodus[monam];
-	qmodu.is_fini = true;
-	
-	const all_to_act = send_all_qmodu_signals(monam);
-	activate_signals(monam, all_to_act);
-	load_next_qmodu();		
-}
-*/

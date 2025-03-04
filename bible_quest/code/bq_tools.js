@@ -154,7 +154,9 @@ export function init_glb_vars(all_vars){
 export function init_poll_glb(polldb){
 	if(polldb == null){ console.error("init_poll_glb FAILED!!!"); return; }
 	gvar.glb_poll_db = polldb;
-	gvar.glb_poll_db.qmonam = gvar.current_qmonam;
+	const db = gvar.glb_poll_db;
+	if(db.qmodu_state == null){ db.qmodu_state = {}; }
+	db.qmodu_state.qmonam = gvar.current_qmonam;
 	console.log("Called init_poll_glb");
 }
 

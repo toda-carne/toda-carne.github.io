@@ -14,15 +14,15 @@ function get_new_context(){
 
 function init_pending_qids(){ 
 	const db = gvar.glb_poll_db;
-	let stt = db.module_state;
-	if(stt == null){ db.module_state = {}; stt = db.module_state; }
+	let stt = db.qmodu_state;
+	if(stt == null){ db.qmodu_state = {}; stt = db.qmodu_state; }
 	let curr_ctx = stt.pending_qids;
 	if(curr_ctx == null){ stt.pending_qids = get_new_context(); curr_ctx = stt.pending_qids; }
 }
 
 function init_context(qid){ 
 	const db = gvar.glb_poll_db;
-	let curr_ctx = db.module_state.pending_qids;
+	let curr_ctx = db.qmodu_state.pending_qids;
 	
 	if(get_qid_base(qid) == null){ return; }
 	
@@ -50,7 +50,7 @@ function get_qid_contexts(qid){
 	const quest = db[qid];
 	if(quest == null){ return all_ctx; }
 
-	let curr_ctx = db.module_state.pending_qids;
+	let curr_ctx = db.qmodu_state.pending_qids;
 	all_ctx.push(curr_ctx);
 	
 	const arr_context = quest.context;
@@ -129,7 +129,7 @@ export function add_to_pending(qid, is_undo){
 }
 
 export function get_pending_qid(){ 
-	const curr_ctx = gvar.glb_poll_db.module_state.pending_qids;
+	const curr_ctx = gvar.glb_poll_db.qmodu_state.pending_qids;
 	const all_pnt = [];
 	const qid = shift_first_pending(curr_ctx, all_pnt);
 	if(DEBUG_PENDING){ console.log("get_pending_qid. qid = " + qid); };
@@ -145,7 +145,7 @@ export function init_all_context(){
 		init_context(qid);
 	}
 
-	if(DEBUG_PENDING){ console.log("pending_qids=" + JSON.stringify(db.module_state.pending_qids, null, "  ")); }
+	if(DEBUG_PENDING){ console.log("pending_qids=" + JSON.stringify(db.qmodu_state.pending_qids, null, "  ")); }
 	
 	for(const qid of all_qids){		
 		init_pending(qid);

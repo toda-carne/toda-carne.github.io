@@ -398,7 +398,7 @@ function write_firebase_user_object(err_fn){
 	if(fb_mod == null){
 		console.log("CANNOT write_firebase_user_object. fb_mod == null");
 		const dv_comm_info = document.getElementById(id_comm_info);
-		dv_comm_info.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
+		dv_comm_info.innerHTML = gvar.glb_curr_lang.msg_fb_no_internet;
 		return;
 	}
 	if(DEBUG_USER_INFO){ console.log("SAVING in https://todacarne-firebase-default-rtdb.firebaseio.com"); }
@@ -414,7 +414,7 @@ function read_firebase_user_object(){
 	if(fb_mod == null){
 		console.log("CANNOT read_firebase_user_object. fb_mod == null");
 		const dv_comm_info = document.getElementById(id_comm_info);
-		dv_comm_info.innerHTML = gvar.glb_curr_lang.msg_todacarne_no_internet;
+		dv_comm_info.innerHTML = gvar.glb_curr_lang.msg_fb_no_internet;
 		return;
 	}
 	if(DEBUG_USER_INFO){ console.log("LOADING from https://todacarne-firebase-default-rtdb.firebaseio.com"); }

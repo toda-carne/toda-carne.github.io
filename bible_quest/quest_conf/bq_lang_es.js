@@ -339,17 +339,18 @@ function init_es_basic_msg(){
 	obj.msg_def_link_name = "ENLACE WEB";
 	
 	obj.msg_save_in_browser = "EN NAVEGADOR";
-	obj.msg_save_in_cloud = "EN TodaCarne.com";
+	obj.msg_save_in_cloud = "EN SiBiblia.com";
 	
 	obj.msg_open_from_browser = "DEL NAVEGADOR";
-	obj.msg_open_from_cloud = "DE TodaCarne.com";
+	obj.msg_open_from_cloud = "DE SiBiblia.com";
 	
 	obj.msg_new_answers_name = "NUEVO";
 
-	obj.msg_todacarne_answers_name = "EN TodaCarne.com";
-	obj.msg_todacarne_answers_writing = "Guardando...";
-	obj.msg_todacarne_answers_reading = "Abriendo...";
-	obj.msg_todacarne_no_internet = "Sin conexion a internet.";
+	obj.msg_fb_answers_name = "Resultados guardados en SiBiblia.com";
+	obj.msg_fb_answers_writing = "Guardando...";
+	obj.msg_fb_answers_reading = "Abriendo...";
+	obj.msg_fb_no_internet = "Sin conexion a internet.";
+	obj.msg_fb_not_finished = "Por favor complete el cuestionario para guardar los resultados";
 
 	obj.msg_change_answer = `Para adicionar respuestas click en la respuesta actual y click en "${obj.msg_edit_ans}"`;
 	obj.msg_caused_by_answers = "Esta observación se muestra por sus respuestas en las siguientes preguntas: ";
@@ -431,9 +432,9 @@ export function init_es_module(){
 	fill_bibrefs_href(all_es_bibrefs);
 	fill_all_strongrefs_href();
 
-	const glb_es_vars = {};
-	ini_glb_vars_es(glb_es_vars);
-	init_glb_vars(glb_es_vars);	
+	const all_vars = {};
+	ini_glb_vars_es(all_vars);
+	init_glb_vars(all_vars);	
 }
 
 export function init_lang_module(){

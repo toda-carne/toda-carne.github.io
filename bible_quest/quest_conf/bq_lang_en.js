@@ -336,18 +336,19 @@ function init_en_basic_msg(){
 	obj.msg_def_link_name = "WEB LINK";
 	
 	obj.msg_save_in_browser = "IN BROWSER";
-	obj.msg_save_in_cloud = "IN TodaCarne.com";
+	obj.msg_save_in_cloud = "IN SiBiblia.com";
 	
 	obj.msg_open_from_browser = "FROM BROWSER";
-	obj.msg_open_from_cloud = "FROM TodaCarne.com";
+	obj.msg_open_from_cloud = "FROM SiBiblia.com";
 	
 	obj.msg_new_answers_name = "NEW";
 	
-	obj.msg_todacarne_answers_name = "IN TodaCarne.com";
-	obj.msg_todacarne_answers_writing = "Saving...";
-	obj.msg_todacarne_answers_reading = "Opening...";
-	obj.msg_todacarne_no_internet = "No internet conection.";
-
+	obj.msg_fb_answers_name = "Results saved in SiBiblia.com";
+	obj.msg_fb_answers_writing = "Saving...";
+	obj.msg_fb_answers_reading = "Opening...";
+	obj.msg_fb_no_internet = "No internet conection.";
+	obj.msg_fb_not_finished = "Please complete the questionary to save results";
+	
 	obj.msg_change_answer = `To add answers click on the current answer and click on "${obj.msg_edit_ans}"`;
 	obj.msg_caused_by_answers = "This observation is shown due to your answer in these questions: ";
 	obj.msg_caused_by_observations = "This observation is shown due these other observations: ";
