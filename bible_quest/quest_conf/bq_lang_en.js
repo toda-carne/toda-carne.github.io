@@ -370,6 +370,7 @@ function init_en_basic_msg(){
 	obj.msg_qref_question_num = "question number";
 	obj.msg_qref_observation_num = "observation number";
 
+	obj.msg_logout = `<i class="has_icons icon-logout"></i> USER LOGOUT`;
 	obj.msg_google_name = "Google name";
 	obj.msg_google_photo = "Google photo";
 	obj.msg_google_email = "Google email";

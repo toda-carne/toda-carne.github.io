@@ -3,7 +3,7 @@ import { get_new_dv_under, gvar,
 } from './bq_tools.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, get_user_href, 
-	fb_mod, id_pop_menu_sele, 
+	fb_mod, id_pop_menu_sele, user_logout, 
 } from './bq_quest_mgr.js';
 
 const DEBUG_USER_INFO = true;
@@ -183,6 +183,18 @@ export function toggle_user_info(fb_usr){
 	fld.id = id_comm_info;
 	fld.classList.add("exam");
 	dv_edit_user.appendChild(fld);
+	
+	const dv_logout = dv_edit_user.appendChild(document.createElement("div"));
+	dv_logout.classList.add("exam");
+	dv_logout.classList.add("grid_item_auto_span_4");
+	dv_logout.classList.add("is_button");
+	dv_logout.innerHTML = gvar.msg_logout;
+	dv_logout.addEventListener('click', function() {		
+		dv_edit_user.remove();
+		user_logout();
+		scroll_to_first_not_answered();
+		return;
+	});
 	
 	const dv_ed_usr = document.createElement("div");
 	dv_ed_usr.classList.add("exam");

@@ -1495,8 +1495,8 @@ export function init_exam_buttons(){
 	clk_hdlr = undo_button_handler;
 	if(dv_button != null){ dv_button.click_handler = clk_hdlr; dv_button.addEventListener('click', clk_hdlr); }
 	
-	dv_button = document.getElementById("id_user_logout_anchor"); // this id must be the same to the id in the HTML page.
-	clk_hdlr = user_logout;
+	dv_button = document.getElementById("id_exam_qmodus_button"); // this id must be the same to the id in the HTML page.
+	clk_hdlr = choose_qmodu_button_handler;
 	if(dv_button != null){ dv_button.click_handler = clk_hdlr; dv_button.addEventListener('click', clk_hdlr); }
 	
 	dv_button = document.getElementById("id_pop_menu"); // this id must be the same to the id in the HTML page.
@@ -2870,11 +2870,9 @@ export function get_user_href(the_usr){
 export function fill_div_user(){
 	const dv_user_nam = document.getElementById(id_top_user_name);
 	const img_top = document.getElementById(id_top_user_picture);
-	const ico_logut = document.getElementById("id_user_logout_anchor");
 	
 	if((fb_mod == null) || (fb_mod.tc_fb_user == null)){
 		if(dv_user_nam != null){ dv_user_nam.innerHTML = gvar.glb_curr_lang.msg_guest; }
-		if(ico_logut != null){ ico_logut.classList.add("is_hidden"); }
 		if(img_top != null){ img_top.src = gvar.glb_poll_db.exam_img_dir + "user.jpg"; }
 		return;
 	}
@@ -3020,7 +3018,7 @@ function update_observation(qid, all_to_act){
 
 // CODE_FOR __________________
 
-function user_logout(){
+export function user_logout(){
 	close_pop_menu();
 	if(fb_mod != null){
 		fb_mod.firebase_sign_out();
@@ -3040,3 +3038,15 @@ export function close_pop_menu() {
 	if(dv_pop_men != null){ dv_pop_men.remove(); }
 }
 
+function choose_qmodu_button_handler(){
+	if(gvar.conf_qmodus == null){ console.error("choose_qmodu_button_handler. gvar.conf_qmodus == null."); return; }
+	
+	const dv_exam_top = document.getElementById("id_exam_top_content");
+
+	let all_qmonams = Object.keys(gvar.conf_qmodus.all_qmodus);
+	toggle_select_option(dv_exam_top, id_pop_menu_sele, all_qmonams, function(dv_ret_n, dv_ops_n, qmonam, idx_qmonam){
+		dv_ops_n.remove();
+		load_qmodu(qmonam, true);
+		close_pop_menu();
+	});	
+}

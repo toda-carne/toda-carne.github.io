@@ -44,7 +44,7 @@ export function toggle_admin_opers(fb_usr){
 			update_module_observations();
 		}
 		if(val_sel_w == admin_ops.op2){
-			update_module_stats();
+			update_module_stats(gvar.current_qmonam);
 		}
 		if(val_sel_w == admin_ops.op6){
 			//test_php();
@@ -191,9 +191,9 @@ function update_user_module_stats(fb_database, the_uid){
 	fb_mod.md_db.remove(lok_ref);	
 }
 
-function update_module_stats(){	
-	if(gvar.current_qmonam == null){
-		console.error("CANNOT update_module_stats. gvar.current_qmonam == null");
+function update_module_stats(qmonam){	
+	if(qmonam == null){
+		console.error("CANNOT update_module_stats. qmonam == null");
 		return;
 	}
 	
@@ -202,7 +202,7 @@ function update_module_stats(){
 	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
 	
 	//const ref_path = "users/list";
-	const ref_path = fb_mod.firebase_bib_quest_path + "to_update/" + gvar.current_qmonam;
+	const ref_path = fb_mod.firebase_bib_quest_path + "to_update/" + qmonam;
 	const db_ref = fb_mod.md_db.ref(fb_database, ref_path);
 	
 	fb_mod.md_db.get(db_ref).then((snapshot) => {
@@ -566,4 +566,9 @@ async function update_ALL_modules(){
 }
 
 function update_ALL_stats(){
+	if(gvar.conf_qmodus == null){ console.error("update_ALL_stats. gvar.conf_qmodus == null."); return; }
+	const all_qmonams = Object.keys(gvar.conf_qmodus.all_qmodus);
+	for(const qmonam of all_qmonams){
+		update_module_stats(qmonam);
+	}
 }

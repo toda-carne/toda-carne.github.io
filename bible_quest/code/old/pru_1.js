@@ -47,5 +47,17 @@ function uppercase_words_in_string(the_str, to_up_arr){
 	return nwstr;
 }
 
-console.log(uppercase_words_in_string("and the Living one. I was dead, and behold, I am alive forever and ever. Amen. I have the keys of Death and of Hades", ["forever", "ever."]));
+//console.log(uppercase_words_in_string("and the Living one. I was dead, and behold, I am alive forever and ever. Amen. ", ["forever", "ever."]));
+
+function test_01(val){
+	if(val){
+		console.log("TRUE");
+	} else {
+		console.log("FALSE");
+	}
+}
+
+test_01();
+
+
 

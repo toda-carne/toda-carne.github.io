@@ -373,6 +373,7 @@ function init_es_basic_msg(){
 	obj.msg_qref_question_num = "pregunta número";
 	obj.msg_qref_observation_num = "observación número";
 	
+	obj.msg_logout = `<i class="has_icons icon-logout"></i> USUARIO SALIR`;
 	obj.msg_google_name = "Nombre Google";
 	obj.msg_google_photo = "Foto Google";
 	obj.msg_google_email = "Email Google ";

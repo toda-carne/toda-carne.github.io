@@ -79,7 +79,7 @@ async function import_qmodu_files(qmonam){
 	md_cont_db = results[2];
 }
 
-export async function load_qmodu(qmonam){
+export async function load_qmodu(qmonam, init_pag){
 	await import_qmodu_files(qmonam);
 
 	md_lang.init_lang_module();
@@ -91,13 +91,20 @@ export async function load_qmodu(qmonam){
 	if(md_cont_db != null){
 		gvar.init_qmodu_db = md_cont_db.init_exam_database;
 	}
+	
+	const dv_exam_nm = document.getElementById("id_exam_name");
+	const d_nam = gvar.conf_qmodus.all_qmodus[qmonam].display_name;
+	dv_exam_nm.innerHTML = qmonam;
+	if(d_nam != null){ dv_exam_nm.innerHTML = d_nam; }
+	
+	if(init_pag){
+		init_page_exam();
+	}
 }
 
 export async function load_next_qmodu(){
 	const nxt_mod2 = get_nxt_qmonam();
-	await load_qmodu(nxt_mod2);
-
-	init_page_exam();
+	await load_qmodu(nxt_mod2, true);
 }
 
 async function init_current_qmodu(){
