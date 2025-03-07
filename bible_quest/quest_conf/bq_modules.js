@@ -11,6 +11,8 @@ export function init_qmodu_info(gvar){
 	const conf_dir = "quest_conf";
 	const mod_dir = "quest_modules";
 
+	qmodu_info.image_dir = `img`;
+	
 	qmodu_info.conf_lang = {};
 	qmodu_info.conf_lang.en = `${conf_dir}/bq_lang_en.js`;
 	qmodu_info.conf_lang.es = `${conf_dir}/bq_lang_es.js`;
@@ -21,7 +23,8 @@ export function init_qmodu_info(gvar){
 	const creator_dir = `${mod_dir}/creator_resurrection`;
 	
 	mm.creator = {};
-	mm.creator.module_name = `creator`;
+	mm.creator.display_name = `Biological Creator?`;
+	mm.creator.image_dir = `${creator_dir}/img`;
 	mm.creator.quest_file = `${creator_dir}/cont_db.js`;
 	mm.creator.text_lang = {};
 	mm.creator.text_lang.en = `${creator_dir}/en_text.js`;
@@ -30,7 +33,6 @@ export function init_qmodu_info(gvar){
 	const old_resu_dir = `${mod_dir}/old_resu`;
 	
 	mm.old_resu = {};
-	mm.old_resu.module_name = `old_resu`;
 	mm.old_resu.quest_file = `${old_resu_dir}/cont_db.js`;
 	mm.old_resu.text_lang = {};
 	mm.old_resu.text_lang.en = `${old_resu_dir}/en_text.js`;
@@ -62,7 +64,6 @@ export function init_qmodu_info(gvar){
 function get_test_module(nam){
 	const mm_dir = `quest_modules/${nam}`;
 	const mm_dat = {};
-	mm_dat.module_name = `${nam}`;
 	mm_dat.quest_file = `${mm_dir}/cont_db.js`;
 	mm_dat.text_lang = {};
 	mm_dat.text_lang.en = `${mm_dir}/en_text.js`;

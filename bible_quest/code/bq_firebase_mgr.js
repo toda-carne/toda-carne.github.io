@@ -13,6 +13,7 @@ import * as MOD_AUTH from "https://www.gstatic.com/firebasejs/11.1.0/firebase-au
 import * as MOD_DB from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
 const DEBUG_FB_LOGIN = false;
+const DEBUG_FB_CHECK = false;
 const DEBUG_FB_ADMIN = true;
 
 export let md_app = null;
@@ -60,6 +61,9 @@ function init_mod_vars(){
  *      google console > APIs & Services > Credentials > API Keys > Browser Key
  */
 export function firebase_check_login(err_fn){
+	if(DEBUG_FB_LOGIN){ 
+		console.log("firebase_check_login. CALLED. "); 
+	}
 	init_mod_vars();
 	if(tc_fb_user != null){
 		return new Promise((resolve, reject) => {
@@ -150,7 +154,7 @@ export function firebase_check_user(callbk){
 		const db = MOD_DB.getDatabase(tc_fb_app);
 		if(db == null){ return; }
 		
-		if(DEBUG_FB_LOGIN){
+		if(DEBUG_FB_CHECK){
 			const cn_ref = MOD_DB.ref(db, ".info/connected");
 			if(cn_ref == null){ return; }
 			MOD_DB.onValue(cn_ref, (snap) => {
@@ -167,7 +171,7 @@ export function firebase_check_user(callbk){
 				tc_fb_user = user;
 				// User is signed in, see docs for a list of available properties
 				// https://firebase.google.com/docs/reference/js/auth.user
-				if(DEBUG_FB_LOGIN){
+				if(DEBUG_FB_CHECK){
 					console.log('User_id=' + tc_fb_user.uid);
 					console.log('User_name=' + tc_fb_user.displayName);
 					console.log("User_email=" + tc_fb_user.email);
@@ -182,7 +186,7 @@ export function firebase_check_user(callbk){
 				});
 			} else {
 				tc_fb_user = null;
-				if(DEBUG_FB_LOGIN){ console.log("User is signed out"); }
+				if(DEBUG_FB_CHECK){ console.log("User is signed out"); }
 				if(callbk != null){ callbk(tc_fb_user); }
 			}
 		});			

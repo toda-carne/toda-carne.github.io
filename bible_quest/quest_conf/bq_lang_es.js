@@ -1,5 +1,5 @@
 
-import { init_glb_vars, init_get_msg, fill_reversed_object, bib_defaults, fill_bibrefs_href, 
+import { init_get_msg, fill_reversed_object, bib_defaults, fill_bibrefs_href, 
 	fill_all_strongrefs_href, get_verse_cit_key, init_default_lang, 
 } from '../code/bq_tools.js';
 
@@ -415,10 +415,11 @@ function ini_glb_vars_es(all_vars){
 	all_vars.glb_all_bibrefs = all_es_bibrefs;
 	all_vars.glb_all_book_hrefs = book_es_hrefs;
 	all_vars.glb_poll_txt = all_es_poll_txt;
+	all_vars.glb_poll_db = {};
 }
 
-export function init_es_module(){
-	init_default_lang();
+function init_es_module(all_vars){
+	init_default_lang(all_vars);
 	init_es_basic_msg();
 	
 	console.log("Called init_es_module");
@@ -433,13 +434,12 @@ export function init_es_module(){
 	fill_bibrefs_href(all_es_bibrefs);
 	fill_all_strongrefs_href();
 
-	const all_vars = {};
+	//const all_vars = {};
 	ini_glb_vars_es(all_vars);
-	init_glb_vars(all_vars);	
 }
 
-export function init_lang_module(){
-	init_es_module();
+export function init_lang_module(all_vars){
+	init_es_module(all_vars);
 }
 
 function init_es_bibrefs(){

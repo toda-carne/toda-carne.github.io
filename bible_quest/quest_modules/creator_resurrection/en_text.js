@@ -1,8 +1,6 @@
 
 
-import { bib_defaults, uppercase_words_in_string, all_strongrefs, get_verse_reponse_name, make_bible_ref, get_verse_cit_key, bib_obj_to_txt, 
-	gvar,
-} from '../../code/bq_tools.js';
+import { gvar, } from '../../code/bq_tools.js';
 
 "use strict";
 
@@ -22,7 +20,8 @@ export function init_en_poll_txt(){
 	const hb = gvar.glb_all_book_hrefs;
 	const lg = gvar.glb_poll_txt;
 	
-	const module_img_dir = "../quest_modules/creator_resurrection/img";
+	//const module_img_dir = "../quest_modules/creator_resurrection/img";
+	const module_img_dir = gvar.qmodu_img_dir;
 	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	

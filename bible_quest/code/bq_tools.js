@@ -4,7 +4,7 @@ import { book2num_en, all_en_poll_txt, num2book_en, DEFAULT_BOOK_NAME, init_en_m
 "use strict";
 
 // ENGLISH IS THE DEFAULT LANGUAGE.
-// SO THIS FILE MUST BE INCLUDED FOR ANY OTHER LANGUAGE
+// SO THIS FILE WORKS TOGETHER WITH '../quest_conf/bq_lang_en.js';
 
 const SUF_QID = "__";
 
@@ -410,7 +410,8 @@ export const all_strongrefs = {
 	H5782_cod: "H5782",
 }
 
-export function init_default_lang(){
+export function init_default_lang(all_vars){
 	fill_reversed_object(num2abbr, abbr2num);
-	init_en_module();
+	init_en_module(all_vars);
 }
+

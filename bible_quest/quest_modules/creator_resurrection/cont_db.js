@@ -1,6 +1,5 @@
 
-import { get_verse_reponse_name, get_answer_key, init_poll_glb, add_response_observation, gvar,
-} from '../../code/bq_tools.js';
+import { init_poll_glb, gvar, } from '../../code/bq_tools.js';
 
 "use strict";
 
@@ -10,19 +9,21 @@ export function init_exam_database(){
 	db_nodes_exam = {};
 	init_poll_glb(db_nodes_exam);
 
-	const exam_img_dir = "../img/";
-	const proy_img_dir = "../quest_modules/creator_resurrection/img/";
+	//const exam_img_dir = "../img/";
+	//const proy_img_dir = "../quest_modules/creator_resurrection/img/";
 	
 	const db = db_nodes_exam;
 	const rf = gvar.glb_all_bibrefs;
 	const rgt = "grid_item_right";
 	const lft = "grid_item_left";
 
-	db.exam_img_dir = exam_img_dir;
-	db.proy_img_dir = proy_img_dir;  //CAREFUL!! Used as the path for every img_href
+	//db.exam_img_dir = exam_img_dir;
+	//db.proy_img_dir = proy_img_dir;  //CAREFUL!! Used as the path for every img_href
 	db.score_it = {};
 	
-	db.img_hrefs = {  // CAREFUL!! it uses db.exam_img_dir to find them 
+	// ALL QMODU IMAGES MUST BE IN THE DIRECTORY image_dir CONFIGURED IN bq_modules.js for THIS QMODU
+	
+	db.img_hrefs = {  // ALL GLOBAL IMAGES MUST BE IN THE DIRECTORY gvar.conf_qmodus.image_dir CONFIGURED IN bq_modules.js
 		yes_like: "yes_like.webp",
 		no_like: "no_like.webp",
 		less_than: "less_than.webp",

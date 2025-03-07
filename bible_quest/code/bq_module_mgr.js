@@ -1,5 +1,5 @@
 
-import { gvar, get_qid_base, } from './bq_tools.js';
+import { gvar, init_glb_vars, get_qid_base, } from './bq_tools.js';
 import { init_firebase_mgr, fb_mod, fill_div_user, scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_observation, 
 	close_pop_menu, get_user_path, id_pop_menu_sele, init_page_exam, 
 } from './bq_quest_mgr.js';
@@ -81,11 +81,22 @@ async function import_qmodu_files(qmonam){
 
 export async function load_qmodu(qmonam, init_pag){
 	await import_qmodu_files(qmonam);
+	
+	const all_vars = {};
+	init_glb_vars(all_vars);
+	init_conf_qmodus();
 
-	md_lang.init_lang_module();
+	const cf_qmodu = gvar.conf_qmodus.all_qmodus[qmonam];
+	
+	gvar.site_img_dir = "../img/";
+	gvar.qmodu_img_dir = "../img/"
+	
+	if(gvar.conf_qmodus.image_dir != null){ gvar.site_img_dir = "../" + gvar.conf_qmodus.image_dir + "/"; }
+	if(cf_qmodu.image_dir != null){ gvar.qmodu_img_dir = "../" + cf_qmodu.image_dir + "/"; }
+	
+	md_lang.init_lang_module(all_vars);
 	md_txt.init_module_text();
 
-	init_conf_qmodus();
 	gvar.current_qmonam = qmonam;
 	console.log("CURRENT MODULE NAME:" + gvar.current_qmonam);	
 	if(md_cont_db != null){
@@ -93,7 +104,7 @@ export async function load_qmodu(qmonam, init_pag){
 	}
 	
 	const dv_exam_nm = document.getElementById("id_exam_name");
-	const d_nam = gvar.conf_qmodus.all_qmodus[qmonam].display_name;
+	const d_nam = cf_qmodu.display_name;
 	dv_exam_nm.innerHTML = qmonam;
 	if(d_nam != null){ dv_exam_nm.innerHTML = d_nam; }
 	

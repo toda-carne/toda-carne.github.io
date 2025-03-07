@@ -24,6 +24,7 @@ const DEBUG_POP_MENU = true;
 const DEBUG_WRITE = false;
 const DEBUG_INIT_ANSW = false;
 const DEBUG_UPDATE_OBSERV = false;
+const DEBUG_WRITE_RESULTS = false;
 
 const MIN_ANSW_SHOW_INVERT = 3;
 
@@ -367,14 +368,14 @@ function context_to_html(arr_context){
 function get_exam_image_href(id_img){
 	const hrefs = gvar.glb_poll_db.img_hrefs;
 	if(hrefs == null){ return null; }
-	const dir_hrefs = gvar.glb_poll_db.exam_img_dir;
+	const dir_hrefs = gvar.site_img_dir;
 	if(dir_hrefs == null){ return null; }
 	const full_href = dir_hrefs + hrefs[id_img];
 	return full_href;
 }
 
 function has_image_href(base){
-	const dir_hrefs = gvar.glb_poll_db.proy_img_dir;
+	const dir_hrefs = gvar.qmodu_img_dir;
 	if(dir_hrefs == null){ return false; }
 	if(base == null){ return false; }
 	if(base.img_href == null){ return false; }
@@ -383,7 +384,7 @@ function has_image_href(base){
 
 function get_image_href(base){
 	if(base == null){ return null; }
-	const dir_hrefs = gvar.glb_poll_db.proy_img_dir;
+	const dir_hrefs = gvar.qmodu_img_dir;
 	if(dir_hrefs == null){ return null; }
 	const full_href = dir_hrefs + base.img_href;
 	return full_href;
@@ -1569,7 +1570,7 @@ function save_button_handler(){
 			});
 		} else {
 			dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_fb_answers_writing;
-			write_firebase_module_results().then((result) => {
+			write_firebase_qmodu_results().then((result) => {
 				dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_fb_answers_name;
 			});
 			close_pop_menu();
@@ -2164,8 +2165,9 @@ export function get_user_path(the_uid){
 	return path;
 }
 
-function write_module_results(err_fn){
-	if(fb_mod.tc_fb_app == null){ console.error("write_module_results. fb_mod.tc_fb_app == null. ");  return; }
+function write_qmodu_results(err_fn){
+	if(DEBUG_WRITE_RESULTS){ console.log("write_qmodu_results. CALLED. "); }
+	if(fb_mod.tc_fb_app == null){ console.error("write_qmodu_results. fb_mod.tc_fb_app == null. "); return; }
 	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
 	
 	let db_ref = null;
@@ -2191,7 +2193,7 @@ function write_module_results(err_fn){
 	wr_data[module_pth + '/' + 'last_check'] = dt;
 	wr_data[module_pth + '/' + 'num_checks'] = fb_mod.md_db.increment(1);
 	
-	if(DEBUG_WRITE){ console.log("write_module_results. full_data=" + JSON.stringify(wr_data, null, "  ")); }
+	if(DEBUG_WRITE){ console.log("write_qmodu_results. full_data=" + JSON.stringify(wr_data, null, "  ")); }
 	
 	const usr_path = get_user_path(fb_mod.tc_fb_user.uid);	
 	db_ref = fb_mod.md_db.ref(fb_database, usr_path);
@@ -2203,7 +2205,7 @@ function write_module_results(err_fn){
 	
 }
 
-function can_write_module_results(){
+function can_write_qmodu_results(){
 	const db = gvar.glb_poll_db;
 	const all_qids = db.all_qids_that_write;
 	for(const qid of all_qids){
@@ -2215,10 +2217,19 @@ function can_write_module_results(){
 	return false;
 }
 
-function write_firebase_module_results(err_fn){
+function write_firebase_qmodu_results(err_fn){
+	if(DEBUG_WRITE_RESULTS){ console.log("write_firebase_qmodu_results. CALLED. "); }
+	
+	const fini_md = get_fini_qmodus();
+	if(fini_md[gvar.current_qmonam] == 1){
+		return new Promise((resolve, reject) => {
+			resolve(msg);
+		});
+	}
+	
 	close_pop_menu();
-	if(! can_write_module_results()){
-		const msg = "write_firebase_module_results. can_write_module_results == false.";
+	if(! can_write_qmodu_results()){
+		const msg = "write_firebase_qmodu_results. can_write_qmodu_results == false.";
 		console.error(msg);
 		if(err_fn != null){ err_fn(msg); }; 
 		const dv_exam_nm = document.getElementById("id_exam_name");
@@ -2228,7 +2239,7 @@ function write_firebase_module_results(err_fn){
 		});
 	}
 	if(gvar.current_qmonam == null){
-		const msg = "write_firebase_module_results. gvar.current_qmonam == null.";
+		const msg = "write_firebase_qmodu_results. gvar.current_qmonam == null.";
 		console.error(msg);
 		if(err_fn != null){ err_fn(msg); }; 
 		return new Promise((resolve, reject) => {
@@ -2236,11 +2247,10 @@ function write_firebase_module_results(err_fn){
 		});
 	}
 	
-	const fini_md = get_fini_qmodus();
 	fini_md[gvar.current_qmonam] = 1;
 	
 	if(fb_mod == null){ 
-		const msg = "write_firebase_module_results. fb_mod == null.";
+		const msg = "write_firebase_qmodu_results. fb_mod == null.";
 		console.error(msg);
 		if(err_fn != null){ err_fn(msg); }; 
 		return new Promise((resolve, reject) => {
@@ -2248,7 +2258,7 @@ function write_firebase_module_results(err_fn){
 		});
 	}
 	const prom1 =  fb_mod.firebase_check_login(err_fn).then((result) => {
-		write_module_results(err_fn);
+		write_qmodu_results(err_fn);
 	});
 	return prom1;
 }
@@ -2655,7 +2665,7 @@ function ask_next(){
 		qid = get_pending();
 	}
 	if(qid == null){ 
-		write_firebase_module_results((err) => {
+		write_firebase_qmodu_results((err) => {
 			console.error(err);
 		}).then((result) => {
 			load_next_qmodu();
@@ -2815,7 +2825,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 			dv_user_observ.append(dv_user);
 		}
 
-		write_firebase_module_results((err) => {
+		write_firebase_qmodu_results((err) => {
 			console.error(err);
 			the_stm = get_msg(quest.htm_stm_not_saved);
 			dv_qstm.innerHTML = "" + the_stm;			
@@ -2873,7 +2883,7 @@ export function fill_div_user(){
 	
 	if((fb_mod == null) || (fb_mod.tc_fb_user == null)){
 		if(dv_user_nam != null){ dv_user_nam.innerHTML = gvar.glb_curr_lang.msg_guest; }
-		if(img_top != null){ img_top.src = gvar.glb_poll_db.exam_img_dir + "user.jpg"; }
+		if(img_top != null){ img_top.src = gvar.site_img_dir + "user.jpg"; }
 		return;
 	}
 	const the_usr = fb_mod.tc_fb_user;
@@ -2895,7 +2905,6 @@ export function fill_div_user(){
 	const dv_img = document.getElementById(id_dv_user_image);
 	if(dv_img != null){ dv_img.innerHTML = `<img class="img_observ" src="${the_usr.photoURL}">`; }
 	
-	if(ico_logut != null){ ico_logut.classList.remove("is_hidden");; }
 	if(img_top != null){ img_top.src = the_usr.photoURL; }
 	
 	const dv_nom = document.getElementById(id_dv_user_name);
