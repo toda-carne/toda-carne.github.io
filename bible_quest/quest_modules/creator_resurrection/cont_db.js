@@ -9,21 +9,12 @@ export function init_exam_database(){
 	db_nodes_exam = {};
 	init_poll_glb(db_nodes_exam);
 
-	//const exam_img_dir = "../img/";
-	//const proy_img_dir = "../quest_modules/creator_resurrection/img/";
-	
 	const db = db_nodes_exam;
 	const rf = gvar.glb_all_bibrefs;
 	const rgt = "grid_item_right";
 	const lft = "grid_item_left";
-
-	//db.exam_img_dir = exam_img_dir;
-	//db.proy_img_dir = proy_img_dir;  //CAREFUL!! Used as the path for every img_href
-	db.score_it = {};
 	
-	// ALL QMODU IMAGES MUST BE IN THE DIRECTORY image_dir CONFIGURED IN bq_modules.js for THIS QMODU
-	
-	db.img_hrefs = {  // ALL GLOBAL IMAGES MUST BE IN THE DIRECTORY gvar.conf_qmodus.image_dir CONFIGURED IN bq_modules.js
+	db.img_hrefs = {  // ALL GLOBAL IMAGES MUST BE IN THE DIRECTORY 'all_vars.conf_qmodus.image_dir' CONFIGURED IN bq_modules.js
 		yes_like: "yes_like.webp",
 		no_like: "no_like.webp",
 		less_than: "less_than.webp",
@@ -31,6 +22,8 @@ export function init_exam_database(){
 		less: "less.webp",
 	};
 
+	// ALL IMAGES (img_href) MUST BE IN THE DIRECTORY 'all_vars.conf_qmodus.all_qmodus[this_qmonam].image_dir' CONFIGURED IN bq_modules.js
+	
 	db.q_bible__ = { 
 		choose_yes: true,
 		context: ["ctx_general", "ctx_bible"],
@@ -227,13 +220,6 @@ export function init_exam_database(){
 			c3: { q_logic__: { a_YES_logic: "on", }, o_technology_comm__: { shown: "on", }, },
 		},
 	};
-	
-	/*db.score_it.logic_1 = { 
-		score_if: {
-			c1: { q_language__: { a_simple_YES: "on", }, q_business__: { a_simple_YES: "on", }, q_technology__: { a_simple_YES: "on", }, },
-		},
-		score: { con: 1.2, },
-	}*/
 	
 	db.q_evidence__ = { 
 		choose_yes: true,

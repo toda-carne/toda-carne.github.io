@@ -3,10 +3,10 @@
 
 let qmodu_info = {};
 
-export function init_qmodu_info(gvar){
-	if(gvar.conf_qmodus != null){ return; }
+export function init_qmodu_info(all_vars){
+	if(all_vars.conf_qmodus != null){ return; }
 	qmodu_info = {};
-	gvar.conf_qmodus = qmodu_info;
+	all_vars.conf_qmodus = qmodu_info;
 	
 	const conf_dir = "quest_conf";
 	const mod_dir = "quest_modules";
