@@ -171,6 +171,11 @@ export function init_en_poll_txt(){
 	lg.o_change_creator_comm = `You had chosen NO to creator. It seems you have changed your mind. Please change get rid of this comment to continue.`;
 
 	lg.o_faulty_logic_comm = `To continue with these questions you need get rid of this observation because your logic based on evidence seems faulty.`;
+	
+	lg.q_you_can_make_a_car_again = `If you made it once, you can make it again.`;
+	lg.o_humans_can_re_create_their_creations = `If humans know how to make a car it is evident they can make more.`;
+	lg.q_he_can_make_a_body_again = `If He made it once, He can make it again.`;
+	lg.o_the_creator_can_re_create_his_creation = `The creator of the human body can make it again just as we humans can do it with our creations.`;
 
 	lg.o_get_qrcode = `<span class='has_left_padding very_big_font bold_font'>You need to login to get your QR code and start spreading the Good News and winning some while doing so. Please login.</span>`;
 	
