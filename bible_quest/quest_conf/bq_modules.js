@@ -20,7 +20,7 @@ export function init_qmodu_info(all_vars){
 	qmodu_info.all_qmodus = {};
 	const mm = qmodu_info.all_qmodus;
 	
-	const creator_dir = `${mod_dir}/creator_resurrection`;
+	const creator_dir = `${mod_dir}/creator`;
 	
 	mm.creator = {};
 	mm.creator.display_name = `Biological Creator?`;

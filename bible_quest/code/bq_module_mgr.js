@@ -102,12 +102,7 @@ export async function load_qmodu(qmonam, init_pag){
 	if(md_cont_db != null){
 		gvar.init_qmodu_db = md_cont_db.init_exam_database;
 	}
-	
-	const dv_exam_nm = document.getElementById("id_exam_name");
-	const d_nam = cf_qmodu.display_name;
-	dv_exam_nm.innerHTML = qmonam;
-	if(d_nam != null){ dv_exam_nm.innerHTML = d_nam; }
-	
+		
 	if(init_pag){
 		init_page_exam();
 	}
