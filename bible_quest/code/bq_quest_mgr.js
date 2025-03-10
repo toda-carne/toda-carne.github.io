@@ -19,7 +19,7 @@ const INVALID_PAGE_POS = "???";
 
 const DEBUG_QNUMS = true;
 const DEBUG_REFERRER = true;
-const DEBUG_PENDING = true;
+const DEBUG_PENDING = false;
 const DEBUG_POP_MENU = true;
 const DEBUG_WRITE = false;
 const DEBUG_INIT_ANSW = false;

@@ -1,6 +1,6 @@
 
 
-import { gvar, } from '../../code/bq_tools.js';
+import { gvar, uppercase_words_in_string, } from '../../code/bq_tools.js';
 
 "use strict";
 
@@ -34,183 +34,151 @@ export function init_en_poll_txt(){
 	lg.a_simple_YES = `YES`;
 	lg.a_simple_NO = `NO`;	
 
-	lg.a_simple_harder_to_make = `Harder to make`;
-	lg.a_simple_harder_to_understand = `Harder to understand`;
+	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${hb.href_physical_resu}'>Physical</a>`;
+	lg.q_jesus_physical = `Select all verses that support a physical <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of Jesus Christ`;
+	lg.q4_1__verse1_str = uppercase_words_in_string(rf.luk_24_39_str, ["Touch", "flesh", "bones,"]);
+	lg.q4_1__verse1_href = rf.luk_24_39_href;
+	lg.q4_1__verse1_should = "FLESH and BONES are PHYSICAL.";
+	lg.q4_1__verse2_str = uppercase_words_in_string(rf.jhn_20_27_str, ["hand,", "put", "side."]);
+	lg.q4_1__verse2_href = rf.jhn_20_27_href;
+	lg.q4_1__verse2_should = "Putting a hand into FLESH is something PHYSICAL.";
+	lg.q4_1__verse3_str = uppercase_words_in_string(rf.act_10_41_str, ["ate", "drank"]);
+	lg.q4_1__verse3_href = rf.act_10_41_href;
+	lg.q4_1__verse3_should = "EATING and DRINKING is something PHYSICAL.";
+	lg.q4_1__verse4_str = uppercase_words_in_string(rf.mat_28_9_str, ["took", "hold", "feet,"]);
+	lg.q4_1__verse4_href = rf.mat_28_9_href;
+	lg.q4_1__verse4_should = "TAKING hold of somebody's feet is something PHYSICAL.";
+	lg.q4_1__verse5_str = uppercase_words_in_string(rf.luk_24_30_str, ["took", "bread"]);
+	lg.q4_1__verse5_href = rf.luk_24_30_href;
+	lg.q4_1__verse5_should = "BREAKING bread is something PHYSICAL.";
+	lg.q4_1__verse6_str = uppercase_words_in_string(rf.jhn_2_19_str, ["temple,", "raise"]);
+	lg.q4_1__verse6_href = rf.jhn_2_19_href;
+	lg.q4_1__verse6_should = "REBUILDING a body is something PHYSICAL.";
+	lg.q4_1__verse7_str = uppercase_words_in_string(rf.luk_24_43_str, ["took", "ate"]);
+	lg.q4_1__verse7_href = rf.luk_24_43_href;
+	lg.q4_1__verse7_should = "EATING is something PHYSICAL.";
 	
-	lg.q1_0__bible = `<span class='big_font bold_font'>Bible?</span>`;
-	lg.q1_0__YES_bible = "YES Bible";
-	lg.q1_0__NO_bible = "NO Bible";
-
-	lg.q1_1__creator = `<span class='big_font bold_font'><a href='${hb.href_creator_tit}'>Creator</a>?</span>`;
-	lg.q1_1__YES_creator = "YES Creator";
-	lg.q1_1__NO_creator = "NO Creator";	
-
-	lg.q1_1_2__six_days = `<span class='big_font bold_font'><a href='${hb.href_creation}'>Six Days</a>?</span>`;
-	lg.q1_1_2__YES_six_days = "YES six days";
-	lg.q1_1_2__NO_six_days = "NO six days";	
-
-	lg.q1_3__evolution = `<span class='big_font bold_font'><a href='${hb.href_factories}'>Evolution</a>?</span>`;
-	lg.q1_3__YES_evolution = "YES evolution";
-	lg.q1_3__NO_evolution = "NO evolution";
+	lg.q5_1__not_die_sec = `<a class='exam_ref exam_title' href='${hb.href_not_die_resu}'>To NOT die again</a>`;
+	lg.q_jesus_not_die = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of Jesus Christ to NOT die again`;
+	lg.q5_1__verse1_str = uppercase_words_in_string(rf.rom_6_9_str, ["dies", "no", "more."]);
+	lg.q5_1__verse1_href = rf.rom_6_9_href;
+	lg.q5_1__verse1_should = "DIES NO MORE.";
+	lg.q5_1__verse2_str = uppercase_words_in_string(rf.heb_7_16_str, ["endless", "life;"]);
+	lg.q5_1__verse2_href = rf.heb_7_16_href;
+	lg.q5_1__verse2_should = "ENDLESS LIFE.";
+	lg.q5_1__verse3_str = uppercase_words_in_string(rf.rev_1_18_str, ["alive", "forever", "ever."]);
+	lg.q5_1__verse3_href = rf.rev_1_18_href;
+	lg.q5_1__verse3_should = "ALIVE FOREVER and EVER.";
+	lg.q5_1__verse4_str = uppercase_words_in_string(rf.heb_7_25_str, ["lives", "forever", ]);
+	lg.q5_1__verse4_href = rf.heb_7_25_href;
+	lg.q5_1__verse4_should = "LIVES FOREVER.";
 	
-	lg.o_evolution_comm = `The question about six days refers to six rotations of the planet on its axis. Six literal days so
-	there is no time for evolution.`;
-
-	lg.q_millions_of_years = `<span class='big_font bold_font'>Millions of <a href='${hb.href_factories}'>years</a>?</span>`;
-
-	lg.q_intelligent_design = `<span class='big_font bold_font'>Intelligent design?</span>`;
-	lg.q_about_7_thousand_years = `<span class='big_font bold_font'>One couple about 7 thousand year ago?</span>`;
+	lg.q6_1__in_heaven_sec = `<a class='exam_ref exam_title' href='${hb.href_in_heaven_resu}'>In Heaven</a>`;
+	lg.q6_1__in_heaven = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>RESURRECTED</a> Jesus Christ that is in heaven in BODY and spirit.`;
+	lg.q6_1__verse1_str = uppercase_words_in_string(rf.act_1_11_str, ["going", "into", "sky."]);
+	lg.q6_1__verse1_href = rf.act_1_11_href;
+	lg.q6_1__verse1_should = "GOING INTO the SKY. He went physically into the heavens";
+	lg.q6_1__verse2_str = uppercase_words_in_string(rf.mat_26_64_str, ["sitting", "clouds", "sky"]);
+	lg.q6_1__verse2_href = rf.mat_26_64_href;
+	lg.q6_1__verse2_should = "He is SITTING and coming on the CLOUDS";
+	lg.q6_1__verse3_str = uppercase_words_in_string(rf.jhn_14_2_str, ["house", "mansions;", "place"]);
+	lg.q6_1__verse3_href = rf.jhn_14_2_href;
+	lg.q6_1__verse3_should = "He makes in a PLACE for his disciples";
+	lg.q6_1__verse4_str = uppercase_words_in_string(rf.heb_9_12_str, ["entered", "Place,", "heaven"]);
+	lg.q6_1__verse4_href = rf.heb_9_12_href;
+	lg.q6_1__verse4_should = "He ENTERED the Holy PLACE in the heavens";
+	lg.q6_1__verse5_str = uppercase_words_in_string(rf.heb_10_12_str, ["sat", "down"]);
+	lg.q6_1__verse5_href = rf.heb_10_12_href;
+	lg.q6_1__verse5_should = "He SAT DOWN in the heavens";
+	lg.q6_1__verse6_str = uppercase_words_in_string(rf.heb_13_8_str, ["is", "same", "forever."]);
+	lg.q6_1__verse6_href = rf.heb_13_8_href;
+	lg.q6_1__verse6_should = "He is ALWAYS the same. So if He resurrected in BODY and spirit, He MUST be in BODY and spirit in the heavens.";
+	lg.q6_1__verse7_str = uppercase_words_in_string(rf.col_1_15_str, ["image", "invisible"]);
+	lg.q6_1__verse7_href = rf.col_1_15_href;
+	lg.q6_1__verse7_should = "He is the IMAGE of the INVISIBLE God. So if He was visible when He resurrected, He must STILL be visible in the heavens.";
 	
-	lg.q_logic_stm = `<span class='big_font bold_font'>Logic?</span>`;
-	lg.a_YES_logic = "YES logic";
-	lg.a_NO_logic = "NO logic";
-	
-	const logic_needed = ` is needed in every day life. It is part of our systems. The question refers to that fact. You can change your
-	answer by clicking on it or by going back with the 'Ups' button`;
-	
-	lg.o_logic_comm = `Logic ${logic_needed}`;
 
-	lg.q_language = `<span class='big_font bold_font'>Language?</span>`;
-	lg.o_language_comm = `Laguage uses logic. Laguage ${logic_needed}`;
-
-	lg.q_business = `<span class='big_font bold_font'>Business?</span>`;
-	lg.o_business_comm = `Business uses logic. Business ${logic_needed}`;
+	lg.q7_1__like_jesus_sec = `<a class='exam_ref exam_title' href='${hb.href_like_jesus_resu}'>Like Jesus</a>`;
+	lg.q7_1__like_jesus = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead that is like Jesus <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a>`;
+	lg.q7_1__verse1_str = uppercase_words_in_string(rf.phl_3_21_str, ["conformed", "body", ]);
+	lg.q7_1__verse1_href = rf.phl_3_21_href;
+	lg.q7_1__verse1_should = "Just LIKE the BODY of Jesus";
+	lg.q7_1__verse2_str = uppercase_words_in_string(rf._1jo_3_2_str, ["like", "him;", ]);
+	lg.q7_1__verse2_href = rf._1jo_3_2_href;
+	lg.q7_1__verse2_should = "We will be LIKE HIM";
+	lg.q7_1__verse3_str = uppercase_words_in_string(rf.luk_20_36_str, ["can’t", "die", ]);
+	lg.q7_1__verse3_href = rf.luk_20_36_href;
+	lg.q7_1__verse3_should = "Those bodies CAN'T DIE";
+	lg.q7_1__verse4_str = uppercase_words_in_string(rf.heb_9_27_str, ["die", "once,", ]);
+	lg.q7_1__verse4_href = rf.heb_9_27_href;
+	lg.q7_1__verse4_should = "We are destined to DIE ONCE. No more.";
+	lg.q7_1__verse5_str = uppercase_words_in_string(rf._1co_15_49_str, ["bear", "image", "heavenly.", ]);
+	lg.q7_1__verse5_href = rf._1co_15_49_href;
+	lg.q7_1__verse5_should = "We BARE the image of the HEAVENLY";
+	lg.q7_1__verse6_str = uppercase_words_in_string(rf._1co_15_42_str, ["body", "raised", "imperishable."]);
+	lg.q7_1__verse6_href = rf._1co_15_42_href;
+	lg.q7_1__verse6_should = "The raised body is IMPERISHABLE";
 	
-	lg.q_technology = `<span class='big_font bold_font'>Technology?</span>`;
-	lg.o_technology_comm = `Technology uses logic. Technology ${logic_needed}`;
+	lg.q8_1__for_all_sec = `<a class='exam_ref exam_title' href='${hb.href_for_all_resu}'>For All</a>`;
+	lg.q8_1__for_all = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead that is for ALL people`;
+	lg.q8_1__verse1_str = uppercase_words_in_string(rf.jhn_5_28_str, ["all", "tombs", ]);
+	lg.q8_1__verse1_href = rf.jhn_5_28_href;
+	lg.q8_1__verse1_should = "ALL is ALL";
+	lg.q8_1__verse2_str = uppercase_words_in_string(rf.jhn_5_29_str, ["good,", "evil,", ]);
+	lg.q8_1__verse2_href = rf.jhn_5_29_href;
+	lg.q8_1__verse2_should = "GOOD and EVIL";
+	lg.q8_1__verse3_str = uppercase_words_in_string(rf.act_24_15_str, ["both", "just", "unjust.", ]);
+	lg.q8_1__verse3_href = rf.act_24_15_href;
+	lg.q8_1__verse3_should = "BOTH JUST and UNJUST";
+	lg.q8_1__verse4_str = uppercase_words_in_string(rf.jhn_6_39_str, ["all", "lose", "nothing,", ]);
+	lg.q8_1__verse4_href = rf.jhn_6_39_href;
+	lg.q8_1__verse4_should = "ALL and LOSE NOTHING";
+	lg.q8_1__verse5_str = uppercase_words_in_string(rf.jhn_17_2_str, ["all", "flesh", "eternal", "life", ]);
+	lg.q8_1__verse5_href = rf.jhn_17_2_href;
+	lg.q8_1__verse5_should = "ALL FLESH ETERNAL LIFE";
+	lg.q8_1__verse6_str = uppercase_words_in_string(rf._1co_15_22_str, ["all", "alive.", ]);
+	lg.q8_1__verse6_href = rf._1co_15_22_href;
+	lg.q8_1__verse6_should = "ALL is ALL";
 	
-	lg.o_logic_incons_comm = `It seems you have some inconsistent answers if yo admit the necesity of logic.`;
+	lg.q9_1__not_yet_sec = `<a class='exam_ref exam_title' href='${hb.href_not_yet_resu}'>Has NOT happend</a>`;
+	lg.q9_1__not_yet = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead that has NOT happend for almost ANYBODY`;
+	lg.q9_1__verse1_str = uppercase_words_in_string(rf.jhn_6_39_str, ["last", "day.", ]);
+	lg.q9_1__verse1_href = rf.jhn_6_39_href;
+	lg.q9_1__verse1_should = "It is on the LAST DAY";
+	lg.q9_1__verse2_str = uppercase_words_in_string(rf._2ti_2_18_str, ["erred", "already", "past,"]);
+	lg.q9_1__verse2_href = rf._2ti_2_18_href;
+	lg.q9_1__verse2_should = "It is NOT already past";
+	lg.q9_1__verse3_str = uppercase_words_in_string(rf.jhn_6_40_str, ["last", "day.", ]);
+	lg.q9_1__verse3_href = rf.jhn_6_40_href;
+	lg.q9_1__verse3_should = "It is on the LAST DAY";
+	lg.q9_1__verse4_str = uppercase_words_in_string(rf.jhn_6_44_str, ["last", "day.", ]);
+	lg.q9_1__verse4_href = rf.jhn_6_44_href;
+	lg.q9_1__verse4_should = "It is on the LAST DAY";
+	lg.q9_1__verse5_str = uppercase_words_in_string(rf.jhn_6_54_str, ["last", "day.", ]);
+	lg.q9_1__verse5_href = rf.jhn_6_54_href;
+	lg.q9_1__verse5_should = "It is on the LAST DAY";
+	lg.q9_1__verse6_str = uppercase_words_in_string(rf.jhn_11_24_str, ["last", 'day."', ]);
+	lg.q9_1__verse6_href = rf.jhn_11_24_href;
+	lg.q9_1__verse6_should = "It is on the LAST DAY";
+	lg.q9_1__verse7_str = uppercase_words_in_string(rf.rev_20_13_str, ["gave", "dead"]);
+	lg.q9_1__verse7_href = rf.rev_20_13_href;
+	lg.q9_1__verse7_should = "It is AFTER this earth and these heavens get destroyed";
 	
-	lg.q_YES_NO_evidence = `<span class='big_font bold_font'><a href='${hb.href_evidence}'>Evidence</a>?</span>`;
-	lg.a_YES_evidence = "YES evidence";
-	lg.a_NO_evidence = "NO evidence";
-
-	const evidence_needed = ` is needed in every day life. It is needed to gain trust. The question refers to that fact. You can change your answer by clicking on it or by going back with the 'Ups' button`;
-
-	lg.o_evidence_comm = `Evidence ${evidence_needed}`;
+	lg.q11_1__new_earth_sec = `<a class='exam_ref exam_title' href='${hb.href_new_earth_resu}'>New Earth</a>`;
+	lg.q11_1__new_earth = `Select all verses that support a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead to live in a NEW EARTH with a new heavens`;
+	lg.q11_1__verse1_str = uppercase_words_in_string(rf.rev_21_1_str, ["new", "earth:", ]);
+	lg.q11_1__verse1_href = rf.rev_21_1_href;
+	lg.q11_1__verse1_should = "It is on a NEW EARTH with a new heavens";
+	lg.q11_1__verse2_str = uppercase_words_in_string(rf._2pe_3_13_str, ["new", "earth,", ]);
+	lg.q11_1__verse2_href = rf._2pe_3_13_href;
+	lg.q11_1__verse2_should = "It is on a NEW EARTH with a new heavens";
+	lg.q11_1__verse3_str = uppercase_words_in_string(rf.isa_65_17_str, ["new", "earth;", ]);
+	lg.q11_1__verse3_href = rf.isa_65_17_href;
+	lg.q11_1__verse3_should = "It is on a NEW EARTH with a new heavens";
+	lg.q11_1__verse4_str = uppercase_words_in_string(rf.isa_66_22_str, ["new", "earth,", ]);
+	lg.q11_1__verse4_href = rf.isa_66_22_href;
+	lg.q11_1__verse4_should = "It is on a NEW EARTH with a new heavens";
 	
-	lg.q_justice = `<span class='big_font bold_font'>Justice?</span>`;
-	lg.o_justice_comm = `Justice uses evidence. Justice ${evidence_needed}`;
-	lg.q_law = `<span class='big_font bold_font'>Law?</span>`;
-	lg.o_law_comm = `Law uses evidence. Law ${evidence_needed}`;
-	lg.q_contracts = `<span class='big_font bold_font'>Contracts?</span>`;
-	lg.o_contracts_comm = `A contract uses evidence. A contract ${evidence_needed}`;
-
-	lg.o_technology2_comm = `Technology uses evidence. Technology ${evidence_needed}`;
-
-	lg.o_evidence_incons_comm = `It seems you have some inconsistent answers if yo admit the necesity of evidence.`;
-	
-	lg.q_noah = `<span class='big_font bold_font'>Is Noah and the flood history?</span>`;
-	lg.q_genesis = `<span class='big_font bold_font'>Is the book of Genesis history?</span>`;
-	
-	lg.q_requires_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_tch_crea}'>creativity</a>?</span>`;
-	
-	lg.q_made_by_ape = "<span class='big_font bold_font'>Can an ape make it?</span>";
-	lg.q_evidence_made_by_ape = "<span class='big_font bold_font'>Is there evidence that an ape can make it?</span>";
-	
-	const creativity_comm = `Logic and evidence show that one reason humans call themselves itelligent, designers and creators is the technology they make.` 
-
-	lg.o_car_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a car.</span>`;
-	lg.o_knife_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a knife.</span>`;
-	lg.o_clock_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a clock.</span>`;
-	lg.o_phone_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a phone.</span>`;
-	lg.o_laptop_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a laptop.</span>`;
-	lg.o_laptop_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a laptop.</span>`;
-	
-	lg.o_complexity_with_design_is_harder_comm = `<span class='big_font bold_font'>More complexity and more design makes it harder to <a href='${hb.href_creator_tit}'>make</a></span>`;
-
-	lg.q_harder_to_make = `<span class='big_font bold_font'>Harder to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
-
-	lg.q_more_time = `<span class='big_font bold_font'>What takes more time to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
-	lg.q_more_people = `<span class='big_font bold_font'>What takes more people to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
-	lg.q_more_planning = `<span class='big_font bold_font'>What takes more planning to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
-	lg.q_more_steps = `<span class='big_font bold_font'>What takes more steps to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
-	lg.q_more_complexity = `<span class='big_font bold_font'>What has more complexity to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
-	
-	lg.a_building = `A building`;
-	lg.a_knife = `A knife`;
-
-	lg.a_car = `A car`;
-	lg.a_lamp = `A lamp`;
-
-	lg.a_clock = `A clock`;
-	lg.a_cellphone = `A cellphone`;
-
-	lg.a_car_wheel = `A car wheel`;
-	lg.a_foot = `A foot`;
-	
-	lg.a_air_purifier = `An air purifier`;
-	lg.a_human_lung = `A human lung`;
-	
-	lg.a_human_body = `A human body`;
-
-	lg.q_make_foot = `<span class='big_font bold_font'>Can we <a href='${hb.href_creator_tit}'>make</a> you a foot from your DNA?</span>`;
-	lg.q_make_lung = `<span class='big_font bold_font'>Can we <a href='${hb.href_creator_tit}'>make</a> you a lung from your DNA?</span>`;
-	lg.q_make_body = `<span class='big_font bold_font'>Can we <a href='${hb.href_creator_tit}'>make</a> you a body from your DNA?</span>`;
-
-	lg.q_why_amputees = `<span class='big_font bold_font'>Have you seen an amputee?</span>`;
-	lg.q_why_one_lung = `<span class='big_font bold_font'>Are there people breathing on just one lung?</span>`;
-	lg.q_why_die = `<span class='big_font bold_font'>Are you going to die?</span>`;
-
-	lg.o_biology_is_harder_comm = `Logic and evidence show that biological machinery is much harder to make than machinery made by humans. That is why we cannot reprodce biological machinery at will.`;
-
-	lg.q_phone_mitosis = `<span class='big_font bold_font'>Can we make phones that split in two identical ones?</span>`;
-	lg.q_truck_baby = `<span class='big_font bold_font'>Can we make trucks that have baby trucks?</span>`;
-	lg.q_red_cell = `<span class='big_font bold_font'>Can we make a red cell?</span>`;
-	lg.q_human_egg = `<span class='big_font bold_font'>Can we make a human egg?</span>`;
-	lg.q_liver = `<span class='big_font bold_font'>Can we make a human liver?</span>`;
-	
-	lg.o_we_cannot_simulate_biology_comm = `Logic and evidence show that machinery made by humans cannot simulate biological machinery behaviour because it is much harder to make.`;
-
-	lg.q_bilology_req_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_creator}'>creativity</a>?</span>`;
-	
-	lg.o_biology_req_creativity_comm = `Logic and evidence show that biological machinery is much harder to make than machinery made by humans. If we are going to call ourselves itelligent designers with technical creatitivy for the machinery we make, we have to recognize that biological machinery also requires an intelligent designer with technical creativiy much greater than ours.`;
-	
-	lg.o_change_creator_comm = `You had chosen NO to creator. It seems you have changed your mind. Please change get rid of this comment to continue.`;
-
-	lg.o_faulty_logic_comm = `To continue with these questions you need get rid of this observation because your logic based on evidence seems faulty.`;
-	
-	lg.q_you_can_make_a_car_again = `If you made it once, you can make it again.`;
-	lg.o_humans_can_re_create_their_creations = `If humans know how to make a car it is evident they can make more.`;
-	lg.q_he_can_make_a_body_again = `If He made it once, He can make it again.`;
-	lg.o_the_creator_can_re_create_his_creation = `The creator of the human body can make it again just as we humans can do it with our creations.`;
-
-	lg.o_get_qrcode = `<span class='has_left_padding very_big_font bold_font'>You need to login to get your QR code and start spreading the Good News and winning some while doing so. Please login.</span>`;
-	
-	lg.o_congrats_you_have_a_qrcode = `
-		Congrats ! You can now spread the Good News using your QR code. Anyone using your QR code to access this page will be registered as a refered person by you. The more people use your QR code the more you will win, even if you or they do not donate.
-	`;
-	
-	lg.o_sorry_no_loging_no_qrcode = `
-		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
-		<span class='big_font bold_font'>Sorry. No Google login, no QR code. If you don have a <a href='http://accounts.google.com'>Google account</a> please get one by clicking the <a href='http://accounts.google.com'>link</a>. You can login at any time by clicking the person in the top menu bar.</span>
-	`;
-	
-	lg.t_good_job = `<span class='has_left_padding very_big_font bold_font'>Good job !</span>`;
-	lg.q_participate = `<span class='big_font bold_font'>Participate?</span>`;
-	lg.q_win_money = `<span class='big_font bold_font'>Win?</span>`;
-
-	lg.o_chose_yes_to_participate = `<span class='very_big_font bold_font'>
-		Waiting for Google Login. If you don have one get a <a href='http://accounts.google.com'>Google account</a>.</span>`;
-	lg.o_congrats_you_have_a_ticket = `
-		<img class="img_observ" src="${module_img_dir}/ticket.webp"><br>
-		<span class='very_big_font bold_font'>Congrats ! You have a ticket</span>
-	`;
-	lg.o_sorry_no_loging_no_participation = `
-		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
-		<span class='very_big_font bold_font'>Sorry. No Google login, no ticket. 
-			If you don have one get a <a href='http://accounts.google.com'>Google account</a>.</span>
-	`;
-	
-	lg.i_woman_shrugging = `<img src="${module_img_dir}/woman_shrugging.webp">`;
-	lg.o_chose_no_participation = `
-		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
-		<span class='very_big_font bold_font'>You chose no ...</span>
-	`;
-
-	lg.a_zero = `Zero`;
-	lg.a_one = `One`;
-	lg.a_more_than_one = `More than one`;
 	
 }
 
