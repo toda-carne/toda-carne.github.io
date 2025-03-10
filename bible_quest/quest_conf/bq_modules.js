@@ -20,10 +20,10 @@ export function init_qmodu_info(all_vars){
 	qmodu_info.all_qmodus = {};
 	const mm = qmodu_info.all_qmodus;
 	
-	const creator_dir = `${mod_dir}/creator`;
+	const creator_dir = `${mod_dir}/01_creator`;
 	
 	mm.creator = {};
-	mm.creator.display_name = `Biological Creator?`;
+	mm.creator.display_name = `Creator of Biomachines?`;
 	mm.creator.image_dir = `${creator_dir}/img`;
 	mm.creator.quest_file = `${creator_dir}/cont_db.js`;
 	mm.creator.text_lang = {};
@@ -37,6 +37,16 @@ export function init_qmodu_info(all_vars){
 	mm.old_resu.text_lang = {};
 	mm.old_resu.text_lang.en = `${old_resu_dir}/en_text.js`;
 	mm.old_resu.text_lang.es = `${old_resu_dir}/es_text.js`;
+
+	const resurrection_dir = `${mod_dir}/02_resurrection`;
+	
+	mm.resurrection = {};
+	mm.resurrection.display_name = `Biblical Resurrection?`;
+	mm.resurrection.image_dir = `${resurrection_dir}/img`;
+	mm.resurrection.quest_file = `${resurrection_dir}/cont_db.js`;
+	mm.resurrection.text_lang = {};
+	mm.resurrection.text_lang.en = `${resurrection_dir}/en_text.js`;
+	mm.resurrection.text_lang.es = `${resurrection_dir}/es_text.js`;
 
 	mm.module1 = get_test_module("module1");
 	mm.module1.pre_req = {

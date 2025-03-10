@@ -589,6 +589,7 @@ export function init_exam_database(){
 	db.q14_1__ = { 
 		htm_stm: "q14_1__the_cloth",
 		presentation: "q14_1__the_cloth_sec",
+		context: ["act"],
 		answers: {
 			q14_1__go: { htm_answ: "q14_1__go" },
 			q14_1__stay: { htm_answ: "q14_1__stay" },
@@ -601,6 +602,7 @@ export function init_exam_database(){
 		htm_stm: "o_end_observ",
 		htm_stm_saved_ok: "o_congrats_you_have_a_qrcode",
 		htm_stm_not_saved: "o_sorry_no_loging_no_qrcode",
+		context: ["act"],
 		activated_if: {
 			c1: { q14_1__ : { shown: "on", }, },
 		},

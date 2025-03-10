@@ -19,7 +19,7 @@ const INVALID_PAGE_POS = "???";
 
 const DEBUG_QNUMS = true;
 const DEBUG_REFERRER = true;
-const DEBUG_PENDING = false;
+const DEBUG_PENDING = true;
 const DEBUG_POP_MENU = true;
 const DEBUG_WRITE = false;
 const DEBUG_INIT_ANSW = false;
@@ -2673,6 +2673,7 @@ function ask_next(){
 		scroll_to_qid(not_answ_qid);
 		return not_answ_qid;
 	}
+	if(DEBUG_PENDING){ console.log("ask_next. ALL_PENDING=\n" + JSON.stringify(gvar.glb_poll_db.qmodu_state.pending_qids, null, "  ")); }
 	let qid = get_pending();
 	while((qid != null) && ! check_if_dnf_is_sat(qid)){
 		qid = get_pending();
