@@ -1519,7 +1519,7 @@ function update_qmodu_title(saved_nm){
 	const dv_exam_nm = document.getElementById("id_exam_name");
 	const d_nam = cf_qmodu.display_name;
 	let title = gvar.current_qmonam;
-	if(d_nam != null){ title = d_nam; }
+	if(d_nam != null){ title = get_msg(d_nam); }
 	if(saved_nm != null){ title = title + "(" + saved_nm + ")"; }
 	
 	dv_exam_nm.innerHTML = title;

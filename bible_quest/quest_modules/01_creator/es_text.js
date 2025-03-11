@@ -24,6 +24,7 @@ export function init_es_poll_txt(){
 	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
+	lg.qmodu_title = `Creador de Bio-maquinas?`;  
 	
 	lg.q1_0__bible = `<span class='big_font bold_font'>Biblia?</span>`;
 	lg.q1_0__YES_bible = "SI Biblia";

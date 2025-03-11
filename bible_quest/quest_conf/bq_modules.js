@@ -23,7 +23,7 @@ export function init_qmodu_info(all_vars){
 	const creator_dir = `${mod_dir}/01_creator`;
 	
 	mm.creator = {};
-	mm.creator.display_name = `Creator of Biomachines?`;
+	mm.creator.display_name = `qmodu_title`;  
 	mm.creator.image_dir = `${creator_dir}/img`;
 	mm.creator.quest_file = `${creator_dir}/cont_db.js`;
 	mm.creator.text_lang = {};
@@ -41,7 +41,7 @@ export function init_qmodu_info(all_vars){
 	const resurrection_dir = `${mod_dir}/02_resurrection`;
 	
 	mm.resurrection = {};
-	mm.resurrection.display_name = `Biblical Resurrection?`;
+	mm.resurrection.display_name = `qmodu_title`;
 	mm.resurrection.image_dir = `${resurrection_dir}/img`;
 	mm.resurrection.quest_file = `${resurrection_dir}/cont_db.js`;
 	mm.resurrection.text_lang = {};

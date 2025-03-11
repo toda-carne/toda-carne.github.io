@@ -30,9 +30,29 @@ export function init_en_poll_txt(){
 	//lg.ctx_bible = "<span class='has_left_padding'><b>Bible</b></span>";
 	//lg.ctx_bible = `<span class='has_left_padding'><img src="${module_img_dir}/bible.webp"></span>`;
 	//lg.ctx_bible = "Bible?";
+
+	lg.qmodu_title = `Biblical Resurrection?`;  
 	
 	lg.a_simple_YES = `YES`;
-	lg.a_simple_NO = `NO`;	
+	lg.a_simple_NO = `NO`;
+	
+	const cl_jesus = `The bible claims that Jesus <br>`;
+	const bf = `<span class='big_font'>`;
+	const ef = `</span>`;
+
+	const cl_ours = `The bible claims that our resurrection will be <br>`;
+	
+	lg.q_physical_resu = `${cl_jesus}${bf}resurrected in a physical body.${ef}`;
+	lg.q_die_again = `${cl_jesus}${bf}will NOT die again.${ef}`;
+	lg.q_alive_in_body_and_spirit = `${cl_jesus}${bf}is alive in his resurrected body in a celestial city.${ef}`;
+	
+	lg.q_like_jesus_body = `${cl_ours}${bf}in a physical body and spirit just like Jesus.${ef}`;
+	lg.q_for_all = `${cl_ours}${bf}for ALL people good and bad.${ef}`;
+	lg.q_not_yet = `${cl_ours}${bf}on the FINAL day. Not yet.${ef}`;
+	lg.q_new_earth = `${cl_ours}${bf}in a NEW earth with a new heavens.${ef}`;
+
+	const cl_until = `The bible claims that AFTER death and UNTIL our resurrection <br>`;
+	lg.q_sleep = `${cl_until}${bf}the spirit is ASLEEP and there is NO consciousness.${ef}`;
 
 	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${hb.href_physical_resu}'>Physical</a>`;
 	lg.q_jesus_physical = `Select all verses that support a physical <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of Jesus Christ`;

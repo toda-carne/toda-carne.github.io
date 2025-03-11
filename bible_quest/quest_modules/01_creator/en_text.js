@@ -25,11 +25,8 @@ export function init_en_poll_txt(){
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
 	//lg.ctx_bible2 = "<span class='has_left_padding very_big_font bold_font'>Bible?</span>";
-	//lg.ctx_bible = "<span class='big_font bold_font'>Bible?</span>";
-	//lg.ctx_bible = "<span class='h1'><b>Bible?</b></span>";
-	//lg.ctx_bible = "<span class='has_left_padding'><b>Bible</b></span>";
-	//lg.ctx_bible = `<span class='has_left_padding'><img src="${module_img_dir}/bible.webp"></span>`;
-	//lg.ctx_bible = "Bible?";
+	
+	lg.qmodu_title = `Creator of Biomachines?`;  
 	
 	lg.a_simple_YES = `YES`;
 	lg.a_simple_NO = `NO`;	
