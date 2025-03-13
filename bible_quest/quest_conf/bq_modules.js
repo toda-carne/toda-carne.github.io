@@ -30,14 +30,6 @@ export function init_qmodu_info(all_vars){
 	mm.creator.text_lang.en = `${creator_dir}/en_text.js`;
 	mm.creator.text_lang.es = `${creator_dir}/es_text.js`;
 
-	const old_resu_dir = `${mod_dir}/old_resu`;
-	
-	mm.old_resu = {};
-	mm.old_resu.quest_file = `${old_resu_dir}/cont_db.js`;
-	mm.old_resu.text_lang = {};
-	mm.old_resu.text_lang.en = `${old_resu_dir}/en_text.js`;
-	mm.old_resu.text_lang.es = `${old_resu_dir}/es_text.js`;
-
 	const resurrection_dir = `${mod_dir}/02_resurrection`;
 	
 	mm.resurrection = {};
@@ -48,27 +40,30 @@ export function init_qmodu_info(all_vars){
 	mm.resurrection.text_lang.en = `${resurrection_dir}/en_text.js`;
 	mm.resurrection.text_lang.es = `${resurrection_dir}/es_text.js`;
 
+	const sleep_dir = `${mod_dir}/03_sleep`;
+	
+	mm.sleep = {};
+	mm.sleep.display_name = `qmodu_title`;
+	mm.sleep.image_dir = `${sleep_dir}/img`;
+	mm.sleep.quest_file = `${sleep_dir}/cont_db.js`;
+	mm.sleep.text_lang = {};
+	mm.sleep.text_lang.en = `${sleep_dir}/en_text.js`;
+	mm.sleep.text_lang.es = `${sleep_dir}/es_text.js`;
+
 	mm.module1 = get_test_module("module1");
 	mm.module1.pre_req = {
 		c1: { creator: 1, },
 	};
-	mm.module2 = get_test_module("module2");
-	mm.module2.pre_req = {
-		c1: { module1: 1, },
-	};
-	mm.module3 = get_test_module("module3");
-	mm.module3.pre_req = {
-		c1: { creator: 1, },
-	};
-	mm.module4 = get_test_module("module4");
-	mm.module4.pre_req = {
-		c1: { module2: 1, module3: 1, },
-	};
-	mm.module5 = get_test_module("module5");
-	mm.module5.pre_req = {
-		c1: { module2: 1, module3: 1, },
-	};
 	
+	/*
+	const old_resu_dir = `${mod_dir}/old_resu`;
+	
+	mm.old_resu = {};
+	mm.old_resu.quest_file = `${old_resu_dir}/cont_db.js`;
+	mm.old_resu.text_lang = {};
+	mm.old_resu.text_lang.en = `${old_resu_dir}/en_text.js`;
+	mm.old_resu.text_lang.es = `${old_resu_dir}/es_text.js`;
+	*/
 }
 
 function get_test_module(nam){

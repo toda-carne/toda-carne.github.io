@@ -415,3 +415,11 @@ export function init_default_lang(all_vars){
 	init_en_module(all_vars);
 }
 
+export function get_resp_for(qid, cit_obj){
+	const resp = {};
+	resp.rnam = get_verse_reponse_name(qid, cit_obj);
+	resp.cit_kk = get_verse_cit_key(cit_obj);
+	resp.cit_ref = bib_obj_to_txt(cit_obj);
+	return resp;
+}
+
