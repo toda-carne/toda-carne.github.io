@@ -102,17 +102,6 @@ export function init_exam_database(){
 		},
 	};	
 
-	db.q_sleep__ = { 
-		choose_yes: true,
-		context: ["ctx_people", "ctx_sleep", ],
-		htm_stm: "q_sleep",
-		img_href: "sleep2.webp", 
-		answers: {
-			a_simple_YES: { img_pos: rgt, },
-			a_simple_NO: { img_pos: lft, },
-		},
-	};	
-
 	db.q_jesus_physical__ = { 
 		htm_stm: "q_jesus_physical",
 		context: ["ctx_jesus_physical", ],

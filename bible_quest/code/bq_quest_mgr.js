@@ -54,12 +54,6 @@ const SUF_ID_LAST_ADDED_CITATION = "_last_added_citation";
 const SUF_ID_LAST_ADDED_STRONG = "_last_added_strong";
 const SUF_ID_LAST_ADDED_LINK = "_last_added_link";
 
-const DEFAULT_CHAPTER = bib_defaults.CHAPTER;
-const DEFAULT_VERSE = bib_defaults.VERSE;
-const DEFAULT_LAST_VERSE = bib_defaults.LAST_VERSE;
-const DEFAULT_BIBLES_SITE = bib_defaults.BIBLES_SITE;
-const DEFAULT_BIB_VER = bib_defaults.BIB_VER;
-
 const DEFAULT_LINK_HREF = "https://www.biblehub.com";
 
 const VRS_CIT_KIND = refs_ids.verse_kind;
@@ -1141,7 +1135,7 @@ function calc_verse_cit_object(dv_citation){
 	return cit_obj;
 }
 
-function toggle_verse_ed(dv_citation){
+export function toggle_verse_ed(dv_citation){
 	let dv_ed_cit = get_new_dv_under(dv_citation, id_dv_citation_ed);
 	if(dv_ed_cit == null){
 		return;
@@ -1199,7 +1193,7 @@ function toggle_verse_ed(dv_citation){
 	inp_last_verse.classList.add("exam");
 	inp_last_verse.classList.add("is_ed_verse");
 	
-	if(cit_obj.last_verse == DEFAULT_LAST_VERSE){
+	if(cit_obj.last_verse == bib_defaults.LAST_VERSE){
 		sep2.classList.add("is_hidden");
 		inp_last_verse.classList.add("is_hidden");
 	}

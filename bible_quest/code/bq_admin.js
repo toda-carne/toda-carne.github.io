@@ -1,12 +1,14 @@
 
-import { get_new_dv_under, gvar, get_qid_base, 
+import { get_new_dv_under, gvar, get_qid_base, bib_defaults, 
 } from './bq_tools.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_observation, 
-	fb_mod, close_pop_menu, get_user_path, id_pop_menu_sele, 
+	fb_mod, close_pop_menu, get_user_path, id_pop_menu_sele, toggle_verse_ed, 
 } from './bq_quest_mgr.js';
 
 import { load_qmodu, load_next_qmodu, } from './bq_module_mgr.js';
+
+import { get_bib_verse, } from './bq_bible_mgr.js';
 
 const DEBUG_ADMIN_OPS = true;
 
@@ -21,7 +23,13 @@ const admin_ops = {
 	op4:"Block user",
 	op5:"Unblock user",
 	op6:"Download Database",
-	op10:"Get totals of indexes in console",
+	//op7:`upload_index("W")`,
+	//op8:`upload_index("S")`,
+	//op9:`upload_index("A")`,
+	//op10:`print_totals()`,
+	//op11:"print_file_totals()",
+	//op12:"init_ascii_totals()",
+	get_verse:"get bible verse",
 };
 
 const id_admin_ops = "id_admin_ops";
@@ -51,6 +59,9 @@ export function toggle_admin_opers(fb_usr){
 			//sim_download('test_sim_download_jlq.txt', 'HOLA JOSE FUNCIONO!');
 			//generate_and_download();
 			download_database();
+		}
+		if(val_sel_w == admin_ops.get_verse){
+			test_get_verse();
 		}
 		if(val_sel_w == admin_ops.op7){
 			upload_index("W");
@@ -571,4 +582,23 @@ function update_ALL_stats(){
 	for(const qmonam of all_qmonams){
 		update_module_stats(qmonam);
 	}
+}
+
+function test_get_verse(){
+	const dv_ops = document.getElementById("id_pop_opt_sec");
+	/*
+	if(dv_ops.tc_cit_obj == null){
+		dv_ops.tc_cit_obj = {};
+		const verse_obj = dv_ops.tc_cit_obj;
+		verse_obj.book = bib_defaults.BOOK;
+		verse_obj.chapter = bib_defaults.CHAPTER;
+		verse_obj.verse = bib_defaults.VERSE;
+	}
+	
+	toggle_verse_ed(dv_ops);
+	*/
+	
+	get_bib_verse("SBLM", "revelation", 22, 20).then((resp) => {
+		dv_ops.innerHTML = resp;
+	});
 }
