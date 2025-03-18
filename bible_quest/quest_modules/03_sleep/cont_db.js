@@ -28,10 +28,68 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_people", "ctx_sleep", ],
 		htm_stm: "q_sleep",
-		img_href: "sleep2.webp", 
+		img_href: "candle_smoking.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
+		},
+	};	
+	
+	db.q_jesus_died__ = { 
+		choose_yes: true,
+		context: ["ctx_people", "ctx_sleep", ],
+		htm_stm: "q_jesus_died",
+		img_href: "jesus_on_the_cross.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_sleep__: { a_simple_NO: "on", }, },
+		},
+	};	
+	
+	db.q_jesus_eternal__ = { 
+		choose_yes: true,
+		context: ["ctx_people", "ctx_sleep", ],
+		htm_stm: "q_jesus_eternal",
+		img_href: "jesus_tomb.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_sleep__: { a_simple_NO: "on", }, },
+		},
+	};	
+	
+	db.q_eternal_life__ = { 
+		choose_yes: true,
+		context: ["ctx_people", "ctx_sleep", ],
+		htm_stm: "q_eternal_life",
+		img_href: "jesus_and_diciples.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_sleep__: { a_simple_NO: "on", }, },
+		},
+	};	
+	
+	db.q_no_knowledge_in_death__ = { 
+		choose_yes: true,
+		context: ["ctx_people", "ctx_sleep", ],
+		htm_stm: "q_no_knowledge_in_death",
+		img_href: "jesus_no_knowledge.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { 	q_jesus_died__: { a_simple_YES: "on", }, 
+					q_jesus_eternal__: { a_simple_YES: "on", }, 
+					q_eternal_life__: { a_simple_YES: "on", }, },
 		},
 	};	
 	
@@ -127,12 +185,47 @@ export function init_exam_database(){
 			q13_1__verse7_str: { rclk_href: "q13_1__verse7_href", should_on: "q13_1__verse7_should", },
 			q13_1__verse8_str: { rclk_href: "q13_1__verse8_href", should_on: "q13_1__verse8_should", },
 		},
-		activated_if: {
-			c1: { q_sleep__: { a_simple_NO: "on", }, },
-		},
 	};
 	
 
 }
 
 // 	c1: { q1_7__: { shown: "on", }, q1_91__: { shown: "on", }, q1_70__: { shown: "off", }, q1_91_0__: { shown: "off", }, },
+
+
+// Is sheol the same place as hades? YES david went to hades.
+// Can you know things in Sheol. NO but deniers will say yes.
+// what is the ETARNAL LIFE: TO KNOW THE FATHER AND THE SON.
+// Jesus refers to physically alive people as DEAD if they do not know him.
+// Paul says that we were DEAD before starting to know Jesus.
+// The consequense of SIN is DEATH both spiritual and physical.
+// I am the LIFE said Jesus.
+/*
+THe argument:
+If Jesus had to die spiritually to to pay for our sins and if he could, while he was physically dead, KNOW things like the father and himself, which is etarnal life, THEN he did not die spiritually and we are still in our sins
+
+1. The consequense of SIN is death.
+2. Death, both spiritual and physical, enter the world since Adam's sin.
+3. Jesus died for our sins, so that we could have Eternal Life.
+4. Spiritual life is at least equally important, if not much more important, than physical life.
+5. Eternal life is Spiritual life in Jesus Chist.
+6. God is Spirit.
+
+4. If we do not know Jesus we are still spiritually dead.
+5. Jesus did not loose his knowledge while he was physically dead.
+
+1. Jesus had to die not only physically but also spiritually.
+2. Eternal life is to know the father and know Jesus.
+3. Jesus could know things while he was dead.
+_____________________________________________
+Jesus did not die spiritually.
+
+
+1. Jesus did not loose his memory nor his knowledge while he was physically dead.
+2. Jesus could know himself.
+3. Jesus could know God.
+4. Jesus had spiritual life.
+
+
+*/
+

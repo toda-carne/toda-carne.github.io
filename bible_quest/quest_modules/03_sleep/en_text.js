@@ -36,9 +36,16 @@ export function init_en_poll_txt(){
 	const ef = `</span>`;
 
 
+	const cl_bible = `The bible claims that <br>`;
+	const cl_jesus = `According to the bible, Jesus Christ claims that <br>`;
 	const cl_until = `The bible claims that AFTER death and UNTIL our resurrection <br>`;
 	lg.q_sleep = `${cl_until}${bf}the spirit is ASLEEP and there is NO consciousness.${ef}`;
 
+	lg.q_jesus_died = `${cl_bible}${bf}Jesus Christ died on the cross.${ef}`;
+	lg.q_jesus_eternal = `${cl_bible}${bf}His ETERNAL LIFE was interrupted for three nights and three days.${ef}`;
+	lg.q_eternal_life = `${cl_jesus}${bf}ETERNAL LIFE is to know the True God and His son Jesus Christ.${ef}`;
+	lg.q_no_knowledge_in_death = `Therefore ${bf}His KNOWLEDGE of God and of Himself${ef}, Jesus Christ, <br>was interrupted three nights and three days.`;
+	
 	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${hb.href_sleeping}'>Sleep</a>`;
 	lg.q12_1__sleep = `Select a GOOD verse that supports that physically dead people DO HAVE CONSCIOUSNESS before <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a>.`;
 	lg.q12_1__no_consciousness = "According to TodaCarne.com none of these is a good verse";
