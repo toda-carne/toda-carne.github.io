@@ -24,6 +24,9 @@ export function init_en_poll_txt(){
 	const hb = gvar.glb_all_book_hrefs;
 	const lg = gvar.glb_poll_txt;
 	
+	if(gvar.has_qrefs == null){ gvar.has_qrefs = {}; } 
+	const qrf = gvar.has_qrefs;
+	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
 	lg.q0_1__end_of_test = "These questions are not for you. This is the end of the questions for you, unless you did not really mean it and change your answer. Click on your answer to change it.";
@@ -109,10 +112,12 @@ export function init_en_poll_txt(){
 	lg.q1_92__liver = "a LIVER is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged liver, make a custom liver for him, and install it, just like we do with a distribution and logistics warehouse of a FACTORY.";
 	lg.q1_92__lung = "a LUNG is so complex that if we understood how they are made we could take a drop of blood of the person with a damaged lung, make a custom lung for him, and install it, just like we do with the air filtering equipment of a VENTILATION system.";
 	
+	qrf.q1_93__biological_requires_creativity = true;
 	lg.q1_93__biological_requires_creativity = `Given your answers in QREF_q1_91__ and QREF_q1_7__ you MUST conclude that the statement: "biological machines require more <a class='exam_ref' href='${hb.href_tch_crea}'>technical creativity</a> than human made machines"`;
 	lg.q1_93__yes = "It is true.";
 	lg.q1_93__no = "It is false.";
 	
+	qrf.q1_94__if_human_then_creator = true;
 	lg.q1_94__if_human_then_creator = `Given your answer in QREF_q1_93__ you MUST conclude that the statement: "IF the human being is going to call himself intelligent, designer and <a class='exam_ref' href='${hb.href_creator}'>creator</a>, due to all the <a class='exam_ref' href='${hb.href_evidence}'>EVIDENCE</a> in the tecnology that he has made, THEN, he has to admit that there EXISTS an intelligent, designer and creator of all <a class='exam_ref' href='${hb.href_biology}'>biological machines</a> that we observe"`;
 	lg.q1_94__yes = "It is true.";
 	lg.q1_94__no = "It is false.";
@@ -123,6 +128,7 @@ export function init_en_poll_txt(){
 	lg.q2_1__yes = "he can BUILD the destroyed house again.";
 	lg.q2_1__no = "he CANNOT build the destroyed house again";
 	
+	qrf.q2_2__future_resurrection = true;
 	lg.q2_2__future_resurrection = `Given your answer in QREF_q2_1__ you must accept that it is REASONABLE to visualize a future, maybe distant, when we understand enough about the human body, in which humans will be able to <a class='exam_ref' href='${hb.href_reproduction}'>reproduce</a> the human body and simulate a <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a>`;
 	lg.q2_2__yes = "Yes. I DO";
 	lg.q2_2__no = "No. I do NOT";

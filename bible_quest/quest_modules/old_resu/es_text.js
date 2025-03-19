@@ -21,6 +21,9 @@ export function init_es_poll_txt(){
 	const hb = gvar.glb_all_book_hrefs;
 	const lg = gvar.glb_poll_txt;
 	
+	if(gvar.has_qrefs == null){ gvar.has_qrefs = {}; } 
+	const qrf = gvar.has_qrefs;
+	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
 	lg.q0_1__end_of_test = "Este cuestionario no es para usted. Aqui termina el examen para usted, a menos que no fuera la respuesta que queria decir. Hagale clik a su respuesta para cambiarla.";
@@ -102,10 +105,12 @@ export function init_es_poll_txt(){
 	lg.q1_92__liver = "un HIGADO es tan complejo que si entendieramos como estan hechos podriamos tomar una gota de sangre de la persona que lo tiene dañado, hacer un hígado personalizado para dicha persona, e instalarselo, tal cual como hacemos con una bodega de distribución y logística de una FABRICA.";
 	lg.q1_92__lung = "un PULMON es tan complejo que si entendieramos como estan hechos podriamos tomar una gota de sangre de la persona que lo tiene dañado, hacer un pulmón personalizado para dicha persona, e instalarselo, tal cual como hacemos con un equipo de filtrado de aire en un sistema de VENTILACION.";
 	
+	qrf.q1_93__biological_requires_creativity = true;
 	lg.q1_93__biological_requires_creativity = `Dadas sus respuestas en la QREF_q1_91__ y la QREF_q1_7__ usted TIENE que concluir que la afirmación: "las máquinas biológicas requieren mayor <a class='exam_ref' href='${hb.href_tch_crea}'>creatividad técnica</a> que las máquinas hechas por humanos"`;
 	lg.q1_93__yes = "Es verdadera.";
 	lg.q1_93__no = "Es falsa.";
 	
+	qrf.q1_94__if_human_then_creator = true;
 	lg.q1_94__if_human_then_creator = `Dada su respuesta en la QREF_q1_93__ usted TIENE que concluir que la afirmación: "SI el ser humano se va a llamar a si mismo inteligente, diseñador y <a class='exam_ref' href='${hb.href_creator}'>creador</a>, debido a toda la <a class='exam_ref' href='${hb.href_evidence}'>EVIDENCIA</a> en la tecnología que ha creado, ENTONCES, tiene que admitir que EXISTE un creador inteligente y diseñador de toda la <a class='exam_ref' href='${hb.href_biology}'>maquinaria biológica</a> que observamos"`;
 	lg.q1_94__yes = "Es verdadera.";
 	lg.q1_94__no = "Es falsa.";
@@ -116,6 +121,7 @@ export function init_es_poll_txt(){
 	lg.q2_1__yes = "el puede CONSTRUIR la casa destruida de nuevo.";
 	lg.q2_1__no = "el NO PUEDE construir la casa destruida de nuevo.";
 	
+	qrf.q2_2__future_resurrection = true;
 	lg.q2_2__future_resurrection = `Dada su respuesta en la QREF_q2_1__ usted tiene que aceptar que es RAZONABLE visualizar un futuro, tal vez distante, cuando entendamos lo suficiente sobre el cuerpo humano, en el cual los humanos podrán <a class='exam_ref' href='${hb.href_reproduction}'>reproducir</a> el cuerpo humano y simular una <a class='exam_ref' href='${hb.href_resurrection}'>resurrección</a>`;
 	lg.q2_2__yes = "Si. Tengo que aceptarlo como RAZONABLE";
 	lg.q2_2__no = "No. NO tengo porque aceptarlo como razonable";

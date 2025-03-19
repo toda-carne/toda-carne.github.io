@@ -1,6 +1,6 @@
 
 import { gvar, init_glb_vars, get_qid_base, } from './bq_tools.js';
-import { init_firebase_mgr, fb_mod, fill_div_user, scroll_to_first_not_answered, scroll_to_top, toggle_select_option, is_observation, 
+import { init_firebase_mgr, fb_mod, fill_div_user, scroll_to_first_not_answered, scroll_to_top, toggle_select_option, 
 	close_pop_menu, get_user_path, id_pop_menu_sele, init_page_exam, 
 } from './bq_quest_mgr.js';
 

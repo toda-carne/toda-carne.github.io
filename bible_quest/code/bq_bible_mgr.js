@@ -2,6 +2,8 @@
 import { gvar, } from './bq_tools.js';
 import * as MOD_BIB_WEB from "../bibles/WEB/index_of_WEB.js";
 import * as MOD_BIB_SBLM from "../bibles/SBLM/index_of_SBLM.js";
+import * as MOD_BIB_RVA from "../bibles/RVA/index_of_RVA.js";
+import * as MOD_BIB_KJV from "../bibles/KJV/index_of_KJV.js";
 
 function init_all_bibles(){
 	gvar.all_bibles = {}; 
@@ -14,6 +16,15 @@ function init_all_bibles(){
 	all_bib.SBLM = {};
 	all_bib.SBLM.bib_index = MOD_BIB_SBLM.bib_index;
 	all_bib.SBLM.bib_parts = {};
+
+	all_bib.RVA = {};
+	all_bib.RVA.bib_index = MOD_BIB_RVA.bib_index;
+	all_bib.RVA.bib_parts = {};
+	
+	all_bib.KJV = {};
+	all_bib.KJV.bib_index = MOD_BIB_KJV.bib_index;
+	all_bib.KJV.bib_parts = {};
+	
 }
 
 const bibles_dir = "../bibles/";

@@ -57,7 +57,50 @@ function test_01(val){
 	}
 }
 
-test_01();
+// Example. BIBREF_Gen_1:3-5
+
+const bibref_prefix = "BIBREF_";
+const book_lng = 4;
+
+function bibref_to_bibcit(brf){
+	return brf.slice(bibref_prefix.length);
+}
+
+function bibcit_to_bibobj(bcit){
+	const re = /([A-Za-z]*)_(\d*):(\d*)-*(\d*)/;
+	const vcit = bcit.split(re);
+	const obj = {};
+	obj.book = vcit[1];
+	obj.chapter = vcit[2];
+	obj.verse = vcit[3];
+	obj.last_verse = vcit[4];
+	return obj;
+}
+
+function bibcit_to_bibtxt(bcit){
+	const bibobj = bibcit_to_bibobj(bcit);
+	console.log(bibobj);
+	return bibobj.book + "/" + bibobj.chapter + "/" + bibobj.verse + "/" + bibobj.last_verse;
+}
+
+function replace_all_bibrefs(str){
+	const words = str.split(' ');
+	words.forEach((wrd, idx, arr) => {
+		if(wrd.startsWith(bibref_prefix)){
+			arr[idx] = bibcit_to_bibtxt(bibref_to_bibcit(wrd)); 
+		}
+	});
+	
+	const nwstr = words.join(' ');
+	return nwstr;
+}
+
+function test_02(){
+	const t1 = replace_all_bibrefs("Esta es una prueba con BIBREF_Gen_1:35 para ver que pasa y con este  BIBREF_Rev_1:35  otro");
+	console.log(t1);
+}
+
+test_02();
 
 
 

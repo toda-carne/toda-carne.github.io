@@ -50,12 +50,13 @@ export function init_qmodu_info(all_vars){
 	mm.sleep.text_lang.en = `${sleep_dir}/en_text.js`;
 	mm.sleep.text_lang.es = `${sleep_dir}/es_text.js`;
 
+	/*
 	mm.module1 = get_test_module("module1");
 	mm.module1.pre_req = {
 		c1: { creator: 1, },
 	};
+	*/
 	
-	/*
 	const old_resu_dir = `${mod_dir}/old_resu`;
 	
 	mm.old_resu = {};
@@ -63,6 +64,7 @@ export function init_qmodu_info(all_vars){
 	mm.old_resu.text_lang = {};
 	mm.old_resu.text_lang.en = `${old_resu_dir}/en_text.js`;
 	mm.old_resu.text_lang.es = `${old_resu_dir}/es_text.js`;
+	/*
 	*/
 }
 

@@ -49,6 +49,14 @@ export function init_exam_database(){
 		},
 	};	
 	
+	db.o_jesus_died_comm__ = { 
+		context: ["ctx_people", "ctx_sleep", ],
+		htm_stm: "o_jesus_died_comm",
+		activated_if: {
+			c1: { q_jesus_died__: { a_simple_NO: "on", }, },
+		},
+	};
+	
 	db.q_jesus_eternal__ = { 
 		choose_yes: true,
 		context: ["ctx_people", "ctx_sleep", ],

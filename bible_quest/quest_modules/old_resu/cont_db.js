@@ -258,7 +258,6 @@ export function init_exam_database(){
 	db.q1_93__ = { 
 		htm_stm: "q1_93__biological_requires_creativity",
 		context: ["requires"],
-		has_qrefs: true,
 		answers: {
 			q1_93__yes: { },
 			q1_93__no: { },
@@ -279,7 +278,6 @@ export function init_exam_database(){
 	db.q1_94__ = { 
 		htm_stm: "q1_94__if_human_then_creator",
 		context: ["if_human"],
-		has_qrefs: true,
 		answers: {
 			q1_94__yes: { },
 			q1_94__no: { },
@@ -318,7 +316,6 @@ export function init_exam_database(){
 	db.q2_2__ = { 
 		htm_stm: "q2_2__future_resurrection",
 		context: ["future_resurrection"],
-		has_qrefs: true,
 		answers: {
 			q2_2__yes: { },
 			q2_2__no: { },

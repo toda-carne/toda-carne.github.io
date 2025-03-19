@@ -2,6 +2,7 @@
 import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, 
 	gvar, 
 	get_qid_base, get_verse_match, get_answer_key, get_new_dv_under,
+	is_observation, replace_all_qrefs, qid_to_qhref, 
 } from './bq_tools.js';
 
 import { add_to_pending, get_pending_qid, init_all_context, } from './bq_contexts.js';
@@ -31,7 +32,6 @@ const MIN_ANSW_SHOW_INVERT = 3;
 const GET_var_referrer = "referrer";
 const GET_var_delete_referrer = "DELETE_REFERRER";
 
-const qref_prefix = "QREF_";
 const stg_prefix = "STRONG";
 const lnk_prefix = "LINK";
 
@@ -221,9 +221,9 @@ function add_question(qid){
 	dv_stm.classList.add("stm");
 	
 	let the_stm = get_msg(quest.htm_stm);
-	if(quest.has_qrefs){
-		the_stm = replace_all_qrefs(the_stm);
-	}
+	//if(quest.has_qrefs){
+	//	the_stm = replace_all_qrefs(the_stm);
+	//}
 	
 	const sp_num = document.createElement("span")
 	sp_num.classList.add("exam");
@@ -261,13 +261,6 @@ function add_question(qid){
 	init_answers(qid);
 
 	return dv_quest;
-}
-
-export function is_observation(quest){
-	if(quest == null){ return false; }
-	const has_answers = (quest.answers != null);
-	const has_activate = (quest.activated_if != null);
-	return (! has_answers && has_activate);
 }
 
 function is_base_question(quest){
@@ -2272,37 +2265,6 @@ function write_firebase_qmodu_results(err_fn){
 
 // CODE_FOR QID, QREF AND HREF CONVERSION AND DISPLAY
 
-function qref_to_qid(qrf){
-	return qrf.slice(qref_prefix.length);
-}
-
-function qid_to_qhref(qid, consec){
-	const quest = gvar.glb_poll_db[qid];
-	if(quest == null){
-		const bad_qhrf = "<a class='exam_ref' href='#" + qid + "'>invalid question " + qid + "</a>";
-		return bad_qhrf;
-	}
-	let num_quest = gvar.glb_curr_lang.msg_qref_question_num + " " + quest.pos_page;
-	if(is_observation(quest)){
-		if(consec == null){ consec = "???"; }
-		num_quest = gvar.glb_curr_lang.msg_qref_observation_num + " " + consec;
-	}
-	const qhrf = "<a class='exam_ref' href='#" + qid + "'>" + num_quest + "</a>";
-	return qhrf;
-}
-
-function replace_all_qrefs(str){
-	const words = str.split(' ');
-	words.forEach((wrd, idx, arr) => {
-		if(wrd.startsWith(qref_prefix)){
-			arr[idx] = qid_to_qhref(qref_to_qid(wrd)); 
-		}
-	});
-	
-	const nwstr = words.join(' ');
-	return nwstr;
-}
-
 function get_quest_hrefs_of(the_conj_sat, skip_qid){
 	const all_qids = Object.keys(the_conj_sat);
 	let all_qhrefs = "";
@@ -2787,9 +2749,9 @@ function show_observation(qid, all_to_act, qid_cllr){
 	dv_stm.classList.add("observ_color");
 	
 	let the_stm = get_msg(quest.htm_stm);
-	if(quest.has_qrefs){
-		the_stm = replace_all_qrefs(the_stm);
-	}
+	//if(quest.has_qrefs){
+	//	the_stm = replace_all_qrefs(the_stm);
+	//}
 	
 	const dv_qstm = dv_stm.appendChild(document.createElement("div"));
 	dv_qstm.id = qid + SUF_ID_QSTM;

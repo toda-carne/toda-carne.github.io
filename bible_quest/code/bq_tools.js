@@ -6,7 +6,10 @@ import { book2num_en, all_en_poll_txt, num2book_en, DEFAULT_BOOK_NAME, init_en_m
 // ENGLISH IS THE DEFAULT LANGUAGE.
 // SO THIS FILE WORKS TOGETHER WITH '../quest_conf/bq_lang_en.js';
 
+const INVALID_MESSAGE = "INVALID_MESSAGE";
 const SUF_QID = "__";
+
+export let gvar = {};
 
 export const abbr2num = {};
 
@@ -122,18 +125,99 @@ export const refs_ids = {
 	link_kind: "lnk_kind",
 	qid_kind: "qid_kind",
 };
-    
-function get_traduced_message(trad_msg, nom_msg){
-	if(trad_msg == null){ return ""; }
-	if(nom_msg == null){ return ""; }
-	const tr_mg = trad_msg[nom_msg];
-	if(tr_mg == null){
-		const en_mg = all_en_poll_txt[nom_msg];
-		if(en_mg == null){
-			return nom_msg;
-		}
-		return en_mg;
+
+// QREF HANDLING
+
+export function is_observation(quest){
+	if(quest == null){ return false; }
+	const has_answers = (quest.answers != null);
+	const has_activate = (quest.activated_if != null);
+	return (! has_answers && has_activate);
+}
+
+const qref_prefix = "QREF_";
+
+function qref_to_qid(qrf){
+	return qrf.slice(qref_prefix.length);
+}
+
+export function qid_to_qhref(qid, consec){
+	const quest = gvar.glb_poll_db[qid];
+	if(quest == null){
+		const bad_qhrf = "<a class='exam_ref' href='#" + qid + "'>invalid question " + qid + "</a>";
+		return bad_qhrf;
 	}
+	let num_quest = gvar.glb_curr_lang.msg_qref_question_num + " " + quest.pos_page;
+	if(is_observation(quest)){
+		if(consec == null){ consec = "???"; }
+		num_quest = gvar.glb_curr_lang.msg_qref_observation_num + " " + consec;
+	}
+	const qhrf = "<a class='exam_ref' href='#" + qid + "'>" + num_quest + "</a>";
+	return qhrf;
+}
+
+export function replace_all_qrefs(str){
+	const words = str.split(' ');
+	words.forEach((wrd, idx, arr) => {
+		if(wrd.startsWith(qref_prefix)){
+			arr[idx] = qid_to_qhref(qref_to_qid(wrd)); 
+		}
+	});
+	
+	const nwstr = words.join(' ');
+	return nwstr;
+}
+
+// BIBREF HANDLING
+
+// Example. BIBREF_Gen_1:3-5
+
+const bibref_prefix = "BIBREF_";
+
+function bibref_to_bibcit(brf){
+	return brf.slice(bibref_prefix.length);
+}
+
+function bibcit_to_bibobj(bcit){
+	const re = /([A-Za-z]*)_(\d*):(\d*)-*(\d*)/;
+	const vcit = bcit.split(re);
+	const obj = {};
+	obj.book = vcit[1];
+	obj.chapter = vcit[2];
+	obj.verse = vcit[3];
+	obj.last_verse = vcit[4];
+	return obj;
+}
+
+function bibcit_to_bibtxt(bcit){
+	const bibobj = bibcit_to_bibobj(bcit);
+	console.log(bibobj);
+	return bibobj.book + "/" + bibobj.chapter + "/" + bibobj.verse + "/" + bibobj.last_verse;
+}
+
+function replace_all_bibrefs(str){
+	const words = str.split(' ');
+	words.forEach((wrd, idx, arr) => {
+		if(wrd.startsWith(bibref_prefix)){
+			arr[idx] = bibcit_to_bibtxt(bibref_to_bibcit(wrd)); 
+		}
+	});
+	
+	const nwstr = words.join(' ');
+	return nwstr;
+}
+
+// TRADUCTION HANDLING
+
+function get_traduced_message(trad_msg, nom_msg){
+	if(trad_msg == null){ return INVALID_MESSAGE; }
+	if(nom_msg == null){ return INVALID_MESSAGE; }
+	let tr_mg = trad_msg[nom_msg];
+	if(tr_mg == null){ tr_mg = all_en_poll_txt[nom_msg]; }
+	if(tr_mg == null){ tr_mg = nom_msg; }
+	if((gvar.has_qrefs != null) && gvar.has_qrefs[nom_msg]){ tr_mg = replace_all_qrefs(tr_mg); }
+	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[nom_msg]){ tr_mg = replace_all_bibrefs(tr_mg); }
+	
 	return tr_mg;
 }
 
@@ -144,8 +228,6 @@ export function init_get_msg(lang_msgs){
 		return get_traduced_message(lang_msgs, nom_msg);
 	};
 }
-
-export let gvar = {};
 
 export function init_glb_vars(all_vars){
 	gvar = all_vars;
