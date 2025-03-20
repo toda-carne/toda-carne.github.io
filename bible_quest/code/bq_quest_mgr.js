@@ -2,7 +2,7 @@
 import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, 
 	gvar, 
 	get_qid_base, get_verse_match, get_answer_key, get_new_dv_under,
-	is_observation, replace_all_qrefs, qid_to_qhref, 
+	is_observation, replace_all_qrefs, qid_to_qhref, set_bibrefs, 
 } from './bq_tools.js';
 
 import { add_to_pending, get_pending_qid, init_all_context, } from './bq_contexts.js';
@@ -244,6 +244,10 @@ function add_question(qid){
 	dv_qstm.classList.add("msg");
 	dv_qstm.innerHTML = the_stm;
 	dv_qstm.prepend(sp_num);
+
+	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[quest.htm_stm]){ 
+		set_bibrefs(dv_qstm);
+	}
 	
 	if(quest.answers != null){
 		/*dv_qstm.addEventListener('contextmenu', (ev1) => {

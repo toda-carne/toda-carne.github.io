@@ -70,10 +70,10 @@ function bibcit_to_bibobj(bcit){
 	const re = /([A-Za-z]*)_(\d*):(\d*)-*(\d*)/;
 	const vcit = bcit.split(re);
 	const obj = {};
-	obj.book = vcit[1];
-	obj.chapter = vcit[2];
-	obj.verse = vcit[3];
-	obj.last_verse = vcit[4];
+	if(vcit.length > 1){ obj.book = vcit[1]; }
+	if(vcit.length > 2){ obj.chapter = vcit[2]; }
+	if(vcit.length > 3){ obj.verse = vcit[3]; }
+	if(vcit.length > 4){ obj.last_verse = vcit[4]; }
 	return obj;
 }
 
@@ -96,7 +96,7 @@ function replace_all_bibrefs(str){
 }
 
 function test_02(){
-	const t1 = replace_all_bibrefs("Esta es una prueba con BIBREF_Gen_1:35 para ver que pasa y con este  BIBREF_Rev_1:35  otro");
+	const t1 = replace_all_bibrefs("Esta es una prueba con BIBREF_Gen_1:35 para ver que pasa y con este  BIBREF_Rev_1 otro");
 	console.log(t1);
 }
 

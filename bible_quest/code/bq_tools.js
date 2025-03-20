@@ -1,5 +1,6 @@
 
 import { book2num_en, all_en_poll_txt, num2book_en, DEFAULT_BOOK_NAME, init_en_module, } from '../quest_conf/bq_lang_en.js';
+import { get_bib_verse, } from './bq_bible_mgr.js';
 
 "use strict";
 
@@ -178,33 +179,66 @@ function bibref_to_bibcit(brf){
 	return brf.slice(bibref_prefix.length);
 }
 
+function abbr2book_name(abbr){
+	let resp = abbr;
+	const num = gvar.abbr2num[resp];
+	if(num == null){ return resp; }
+	resp = get_book_nam(num);
+	return resp;
+}
+
+function get_bible_working_version(){
+	if(gvar.working_bible == null){
+		gvar.working_bible = "WEB";
+		if(gvar.glb_exam_language == "es"){
+			gvar.working_bible = "SBLM";
+		} 
+	}
+	return gvar.working_bible;
+}
+
 function bibcit_to_bibobj(bcit){
 	const re = /([A-Za-z]*)_(\d*):(\d*)-*(\d*)/;
 	const vcit = bcit.split(re);
 	const obj = {};
-	obj.book = vcit[1];
-	obj.chapter = vcit[2];
-	obj.verse = vcit[3];
-	obj.last_verse = vcit[4];
+	obj.bible = get_bible_working_version();
+	if(vcit.length > 1){ obj.book = abbr2book_name(vcit[1]); }
+	if(vcit.length > 2){ obj.chapter = vcit[2]; }
+	if(vcit.length > 3){ obj.verse = vcit[3]; }
+	if(vcit.length > 4){ obj.last_verse = vcit[4]; }
 	return obj;
 }
 
-function bibcit_to_bibtxt(bcit){
+async function bibcit_to_bibtxt(bcit){
 	const bibobj = bibcit_to_bibobj(bcit);
-	console.log(bibobj);
-	return bibobj.book + "/" + bibobj.chapter + "/" + bibobj.verse + "/" + bibobj.last_verse;
+	let vcit = bcit;
+	let vtxt = null;
+	if((bibobj.book != null) && (bibobj.chapter != null) && (bibobj.verse != null)){ 
+		vcit = bibobj.book + "_" + bibobj.chapter + ":" + bibobj.verse;
+		vtxt = await get_bib_verse(bibobj.bible, bibobj.book, bibobj.chapter, bibobj.verse);
+	}
+	if(bibobj.last_verse != null){ vcit = vcit + "-" + bibobj.last_verse; }
+	return vcit + " " + vtxt;
 }
 
-function replace_all_bibrefs(str){
+async function replace_all_bibrefs(str){
 	const words = str.split(' ');
-	words.forEach((wrd, idx, arr) => {
+	let ii = 0;
+	for(ii = 0; ii < words.length; ii++){
+		const wrd = words[ii];
 		if(wrd.startsWith(bibref_prefix)){
-			arr[idx] = bibcit_to_bibtxt(bibref_to_bibcit(wrd)); 
+			words[ii] = await bibcit_to_bibtxt(bibref_to_bibcit(wrd));
 		}
-	});
+	}
 	
 	const nwstr = words.join(' ');
 	return nwstr;
+}
+
+export function set_bibrefs(dv_txt){
+	replace_all_bibrefs(dv_txt.innerHTML).then((resp) => {
+		dv_txt.innerHTML = resp;
+	});
 }
 
 // TRADUCTION HANDLING
@@ -216,7 +250,7 @@ function get_traduced_message(trad_msg, nom_msg){
 	if(tr_mg == null){ tr_mg = all_en_poll_txt[nom_msg]; }
 	if(tr_mg == null){ tr_mg = nom_msg; }
 	if((gvar.has_qrefs != null) && gvar.has_qrefs[nom_msg]){ tr_mg = replace_all_qrefs(tr_mg); }
-	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[nom_msg]){ tr_mg = replace_all_bibrefs(tr_mg); }
+	//if((gvar.has_bibrefs != null) && gvar.has_bibrefs[nom_msg]){ tr_mg = await replace_all_bibrefs(tr_mg); }
 	
 	return tr_mg;
 }
@@ -495,6 +529,8 @@ export const all_strongrefs = {
 export function init_default_lang(all_vars){
 	fill_reversed_object(num2abbr, abbr2num);
 	init_en_module(all_vars);
+	all_vars.num2abbr = num2abbr;
+	all_vars.abbr2num = abbr2num;
 }
 
 export function get_resp_for(qid, cit_obj){

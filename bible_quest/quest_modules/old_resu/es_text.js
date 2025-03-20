@@ -24,6 +24,9 @@ export function init_es_poll_txt(){
 	if(gvar.has_qrefs == null){ gvar.has_qrefs = {}; } 
 	const qrf = gvar.has_qrefs;
 	
+	if(gvar.has_bibrefs == null){ gvar.has_bibrefs = {}; } 
+	const brf = gvar.has_bibrefs;
+	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
 	lg.q0_1__end_of_test = "Este cuestionario no es para usted. Aqui termina el examen para usted, a menos que no fuera la respuesta que queria decir. Hagale clik a su respuesta para cambiarla.";
@@ -105,8 +108,11 @@ export function init_es_poll_txt(){
 	lg.q1_92__liver = "un HIGADO es tan complejo que si entendieramos como estan hechos podriamos tomar una gota de sangre de la persona que lo tiene dañado, hacer un hígado personalizado para dicha persona, e instalarselo, tal cual como hacemos con una bodega de distribución y logística de una FABRICA.";
 	lg.q1_92__lung = "un PULMON es tan complejo que si entendieramos como estan hechos podriamos tomar una gota de sangre de la persona que lo tiene dañado, hacer un pulmón personalizado para dicha persona, e instalarselo, tal cual como hacemos con un equipo de filtrado de aire en un sistema de VENTILACION.";
 	
+	brf.q1_93__biological_requires_creativity = true;
+	const test_verse = `<br> BIBREF_Gen_3:1 <br>`;
+	
 	qrf.q1_93__biological_requires_creativity = true;
-	lg.q1_93__biological_requires_creativity = `Dadas sus respuestas en la QREF_q1_91__ y la QREF_q1_7__ usted TIENE que concluir que la afirmación: "las máquinas biológicas requieren mayor <a class='exam_ref' href='${hb.href_tch_crea}'>creatividad técnica</a> que las máquinas hechas por humanos"`;
+	lg.q1_93__biological_requires_creativity = `${test_verse}Dadas sus respuestas en la QREF_q1_91__ y la QREF_q1_7__ usted TIENE que concluir que la afirmación: "las máquinas biológicas requieren mayor <a class='exam_ref' href='${hb.href_tch_crea}'>creatividad técnica</a> que las máquinas hechas por humanos"`;
 	lg.q1_93__yes = "Es verdadera.";
 	lg.q1_93__no = "Es falsa.";
 	

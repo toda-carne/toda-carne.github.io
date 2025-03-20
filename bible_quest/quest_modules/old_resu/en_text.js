@@ -26,6 +26,9 @@ export function init_en_poll_txt(){
 	
 	if(gvar.has_qrefs == null){ gvar.has_qrefs = {}; } 
 	const qrf = gvar.has_qrefs;
+
+	if(gvar.has_bibrefs == null){ gvar.has_bibrefs = {}; } 
+	const brf = gvar.has_bibrefs;
 	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	

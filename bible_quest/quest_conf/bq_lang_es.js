@@ -401,7 +401,7 @@ function init_es_basic_msg(){
 }
 
 function ini_glb_vars_es(all_vars){
-	all_vars.glb_exam_language = "en";
+	all_vars.glb_exam_language = "es";
 	all_vars.glb_all_countries = countries_es;
 	all_vars.glb_all_marital = marital_es;
 	all_vars.glb_all_sex = sex_es;
