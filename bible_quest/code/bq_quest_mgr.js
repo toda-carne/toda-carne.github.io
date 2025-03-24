@@ -248,6 +248,7 @@ function add_question(qid){
 	dv_qstm.prepend(sp_num);
 
 	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[quest.htm_stm]){ 
+		dv_qstm.stm_id = quest.htm_stm;
 		set_bibrefs(dv_qstm);
 	}
 	
@@ -532,6 +533,7 @@ function init_answers(qid){
 			quest.answers.CHOSEN_BIBREF = gvar.INVALID_BIBREF;
 		}
 		const dv_bibref = add_answer(qid);
+		//dv_bibref.stm_id = null;
 		if(quest.answers.CHOSEN_BIBREF != gvar.INVALID_BIBREF){
 			dv_bibref.innerHTML = quest.answers.CHOSEN_BIBREF;
 			set_bibrefs(dv_bibref);
@@ -643,6 +645,7 @@ function init_answers(qid){
 			if(! an_answ.choose_words){
 				dv_answ.innerHTML = get_msg(anid);
 				if((gvar.has_bibrefs != null) && gvar.has_bibrefs[anid]){ 
+					dv_answ.stm_id = anid;
 					set_bibrefs(dv_answ);
 				}
 				
@@ -2847,6 +2850,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 	dv_qstm.innerHTML = "" + the_stm;
 
 	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[stm_id]){ 
+		dv_qstm.stm_id = stm_id;
 		set_bibrefs(dv_qstm);
 	}
 	

@@ -226,7 +226,7 @@ export function bibcit_to_citxt(bcit){
 	return vcit;
 }
 
-async function bibcit_to_bibtxt(bcit){
+async function bibcit_to_bibtxt(bcit, stm_id){
 	const bibobj = bibcit_to_bibobj(bcit);
 	
 	const cit_obj = JSON.parse(JSON.stringify(bibobj));
@@ -235,23 +235,28 @@ async function bibcit_to_bibtxt(bcit){
 	const vhref = make_bible_ref(cit_obj);
 	
 	let vcit = bcit;
-	let vtxt = null;
+	let vtxt = "INVALID_BIBLE_TEXT";
 	if((bibobj.book != null) && (bibobj.chapter != null) && (bibobj.verse != null)){ 
 		vcit = get_loc_book_nam(bibobj.book) + " " + bibobj.chapter + ":" + bibobj.verse;
 		vtxt = await get_bib_verse(bibobj.bible, num2book_en[bibobj.book], bibobj.chapter, bibobj.verse);
+
+		if((stm_id != null) && (gvar.bibrefs_upper != null) && (gvar.bibrefs_upper[stm_id] != null)){ 
+			const wds = gvar.bibrefs_upper[stm_id][bcit];
+			if(wds != null){ vtxt = uppercase_words_in_string(vtxt, wds); }
+		} 
 	}
 	if((bibobj.last_verse != null) && (bibobj.last_verse != "")){ vcit = vcit + "-" + bibobj.last_verse; }
 	const btxt = `<a class='exam_ref' href="${vhref}"> ${vcit} </a><br><b> ${vtxt} </b>`;
 	return btxt;
 }
 
-async function replace_all_bibrefs(str){
+async function replace_all_bibrefs(str, stm_id){
 	const words = str.split(' ');
 	let ii = 0;
 	for(ii = 0; ii < words.length; ii++){
 		const wrd = words[ii];
 		if(wrd.startsWith(bibref_prefix)){
-			words[ii] = await bibcit_to_bibtxt(bibref_to_bibcit(wrd));
+			words[ii] = await bibcit_to_bibtxt(bibref_to_bibcit(wrd), stm_id);
 		}
 	}
 	
@@ -271,7 +276,7 @@ export function set_anchors_target(the_div){
 }
 
 export function set_bibrefs(dv_txt){
-	replace_all_bibrefs(dv_txt.innerHTML).then((resp) => {
+	replace_all_bibrefs(dv_txt.innerHTML, dv_txt.stm_id).then((resp) => {
 		dv_txt.innerHTML = resp;
 		set_anchors_target(dv_txt);
 	});
@@ -286,7 +291,6 @@ function get_traduced_message(trad_msg, nom_msg){
 	if(tr_mg == null){ tr_mg = all_en_poll_txt[nom_msg]; }
 	if(tr_mg == null){ tr_mg = nom_msg; }
 	if((gvar.has_qrefs != null) && gvar.has_qrefs[nom_msg]){ tr_mg = replace_all_qrefs(tr_mg); }
-	//if((gvar.has_bibrefs != null) && gvar.has_bibrefs[nom_msg]){ tr_mg = await replace_all_bibrefs(tr_mg); }
 	
 	return tr_mg;
 }

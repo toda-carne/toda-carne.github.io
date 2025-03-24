@@ -135,6 +135,7 @@ export function init_exam_database(){
 	db.o_verse_for_knowledge_in_death__ = get_bibcit_obs("q_verse_for_knowledge_in_death__");
 	
 	// q3_3__
+	/*
 
 	db.q12_1__ = { 
 		htm_stm: "q12_1__sleep",
@@ -211,6 +212,7 @@ export function init_exam_database(){
 	db.q12_resp14__ = add_response_observation("q12_1__", rf._1ti_5_6_obj);
 	db.q12_resp15__ = add_response_observation("q12_1__", rf.heb_1_14_obj);
 	db.q12_resp16__ = add_response_observation("q12_1__", rf._1pe_3_19_obj);
+	*/
 	
 	db.q13_1__ = { 
 		htm_stm: "q13_1__sleep",

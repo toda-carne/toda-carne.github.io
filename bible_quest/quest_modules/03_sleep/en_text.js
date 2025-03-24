@@ -112,21 +112,79 @@ export function init_en_poll_txt(){
 		Only ALIVE people, which requires having a physycal body, can have knowledge. </p>`;
 	
 	let resp_bcit = null;
+	let stm_id = null;
 
 	resp_bcit = `BIBREF_Isa_14_10 ${dead_know_response_INTRO}
 	<p> Just as the Passover was a type of the Meshiakh. This passage is a type of future time. The king of Babilon represents The Satan, that is why <p> BIBREF_Isa_14_12 <p> is commonly cited to refer to The Satan. </p>
 	<p>Note that:</p> 
 	<p><li> BIBREF_Isa_14_8 <p> It has not nappened yet because BIBREF_Isa_14_7 <br> has NOT happened yet. There is no peace on earth yet.
-	<p><li> BIBREF_Isa_14_9 <p> shows that the dead have RISEN or AWAKEN (word <a class='exam_ref' href=${all_strongrefs.H5782_href}>H5782</a>) which has NOT happend because the resurrection of the dead has not happend. 
+	<p><li> BIBREF_Isa_14_9 <p> shows that the dead have RAISED, actually AWAKEN (word <a class='exam_ref' href=${all_strongrefs.H5782_href}>H5782</a>), which has NOT happend because the <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead, since they are awakening from Sheol, <a class='exam_ref' href='${hb.href_not_yet_resu}'>has not happend</a>. 
 	<p><li> BIBREF_Isa_14_18 <p> tell us that each king is in his own HOUSE (word <a class='exam_ref' href=${all_strongrefs.H1004_href}>H1004</a>). Which means that they HAVE been RESURRECTED. 
 	${dead_know_response_END}`;
 	
-	const stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Isa_14_10");
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Isa_14_10");
+	lg[stm_id] = resp_bcit;
+	
 	brf[stm_id] = true;
 	brfup[stm_id] = {};
+	brfup[stm_id].Isa_14_7 = ["rest,", "quiet.", ];
 	brfup[stm_id].Isa_14_10 = ["answer", "ask", "you,", ];
-	lg[stm_id] = resp_bcit;
+	brfup[stm_id].Isa_14_9 = ["raised", ];
+	brfup[stm_id].Isa_14_18 = ["house.", ];
 
+	resp_bcit = `BIBREF_Mat_17_3 ${dead_know_response_INTRO}
+	<p>It important to note that the general <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead <a class='exam_ref' href='${hb.href_not_yet_resu}'>has not happend yet</a>. However tamporal resurrections happen in several places in the bible. So, the most important thing to note about this verse is that they were physically present, they all have BODIES, that is why they can TALK, and that is why Peter, in 
+	<p> BIBREF_Mat_17_4 
+	<p>offers to build three tents. Two tents for Moses and Elijah and one for Our Lord. They are physically ALIVE. They where in the Jewish festival of Sukkot. The feast of Tabernacles. Very appropiate signal to show that these "tabernacles" are going to be replaced by permanent "houses". </p>
+	${dead_know_response_END}
+	`;
+	
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Mat_17_3");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	brfup[stm_id] = {};
+	brfup[stm_id].Mat_17_3 = ["talking", "him.", ];
+	brfup[stm_id].Mat_17_4 = ["make", "three", "tents", ];
+	
+	const dead_know_response_144000 = `<p>This verse refers to the <a class='exam_ref' href='${hb.href_144000}'>144.000</a> saints of Revelation also mentioned in Daniel in the <a class='exam_ref' href='${hb.href_eternal_abhorrence}'>Eternal Abhorrence</a> (click on the links).</p>
+	<p> The most important thing to note about this verse is that it refers to people that have been resurrected. The Saints. The Great ones. The first fruits. The firstborn. The ones God brings with Jesus Christ. They are a FEW: 144.000 male genetic descendants of Israel when completed. They all have BODIES, and that is why they can actually CRY, SPEAK, GATHER and ASSEMBLY.</p>`;
+	
+	
+	resp_bcit = `BIBREF_Rev_6_10 ${dead_know_response_INTRO}
+	${dead_know_response_144000}
+	${dead_know_response_END}`;
+	
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Rev_6_10");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	brfup[stm_id] = {};
+	brfup[stm_id].Rev_6_10 = ["cried", "loud", "voice,", "saying,", ];
+	
+	resp_bcit = `BIBREF_Heb_12_23 ${dead_know_response_INTRO}
+	${dead_know_response_144000}
+	${dead_know_response_END}`;
+	
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Heb_12_23");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	brfup[stm_id] = {};
+	brfup[stm_id].Heb_12_23 = ["festal", "gathering", "assembly", ];
+	
+
+	resp_bcit = `BIBREF_Luk_16_24 ${dead_know_response_INTRO}
+	<p>This verse is part of the famous PARABLE in Luke 16 about <a class='exam_ref' href='${hb.href_rich_and_laza}'>The rich and the poor Lazarus.</a>. Click the link to understand the meaning of the parable.</p>
+	${dead_know_response_END}
+	`;
+		
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Luk_16_24");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	brfup[stm_id] = {};
+	brfup[stm_id].Luk_16_24 = ["cried", "said,", ];
 	
 	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${hb.href_sleeping}'>Sleep</a>`;
 	lg.q12_1__sleep = `Select a GOOD verse that supports that physically dead people DO HAVE CONSCIOUSNESS before <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a>.`;
