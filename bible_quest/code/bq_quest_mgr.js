@@ -2,7 +2,7 @@
 import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, 
 	gvar, 
 	get_qid_base, get_verse_match, get_answer_key, get_new_dv_under,
-	is_observation, replace_all_qrefs, qid_to_qhref, set_bibrefs, 
+	is_observation, replace_all_qrefs, qid_to_qhref, set_bibrefs, make_bibref, 
 } from './bq_tools.js';
 
 import { add_to_pending, get_pending_qid, init_all_context, } from './bq_contexts.js';
@@ -17,6 +17,8 @@ import { load_qmodu, get_fini_qmodus, load_next_qmodu, } from './bq_module_mgr.j
 "use strict";
 
 const INVALID_PAGE_POS = "???";
+
+const INVALID_BIBREF = "INVALID_BIBREF";
 
 const DEBUG_QNUMS = true;
 const DEBUG_REFERRER = true;
@@ -207,6 +209,7 @@ function add_question(qid){
 		quest.pos_page = lst_pos + 1;
 	}
 	
+	/*
 	const dv_ctx = dv_quest.appendChild(document.createElement("div"));
 	dv_ctx.classList.add("exam");
 	let title = "";
@@ -215,6 +218,7 @@ function add_question(qid){
 	}
 	const the_ctx = context_to_html(quest.context);
 	dv_ctx.innerHTML = title + the_ctx;
+	*/
 	
 	const dv_stm = dv_quest.appendChild(document.createElement("div"));
 	dv_stm.classList.add("exam");
@@ -261,24 +265,10 @@ function add_question(qid){
 			return false;				
 		});
 	}
-
+	
 	init_answers(qid);
 
 	return dv_quest;
-}
-
-function is_base_question(quest){
-	if(quest == null){ return false; }
-	const has_answers = (quest.answers != null);
-	const has_activate = (quest.activated_if != null);
-	return (has_answers && ! has_activate);
-}
-
-function is_activated_question(quest){
-	if(quest == null){ return false; }
-	const has_answers = (quest.answers != null);
-	const has_activate = (quest.activated_if != null);
-	return (has_answers && has_activate);
 }
 
 function is_question(quest){
@@ -344,6 +334,7 @@ function scroll_to_qid(qid){
 	scroll_to_top(dv_quest);
 }
 
+/*
 function context_to_html(arr_context){
 	let htm_ctx = '';
 	if(arr_context != null){
@@ -355,6 +346,7 @@ function context_to_html(arr_context){
 	}
 	return htm_ctx;
 }
+*/
 
 function get_exam_image_href(id_img){
 	const hrefs = gvar.glb_poll_db.img_hrefs;
@@ -537,6 +529,27 @@ function init_answers(qid){
 	
 	dv_answers.innerHTML = "";
 	
+	if(quest.is_choose_verse_question){
+		if(quest.has_answ == null){
+			quest.answers.CHOSEN_BIBREF = INVALID_BIBREF;
+		}
+		const dv_bibref = add_answer(qid);
+		if(quest.answers.CHOSEN_BIBREF != INVALID_BIBREF){
+			dv_bibref.innerHTML = quest.answers.CHOSEN_BIBREF;
+			set_bibrefs(dv_bibref);
+		} else {
+			get_bibref_in(dv_bibref, (dv_ed_cit, bibref) => {
+				dv_ed_cit.remove();
+				quest.answers.CHOSEN_BIBREF = bibref;
+				dv_bibref.innerHTML = bibref;
+				set_bibrefs(dv_bibref);
+				end_question(qid);
+			});
+		}
+		set_anchors_target(dv_quest);
+		return;
+	}
+	
 	if(quest.answers == null){
 		set_anchors_target(dv_quest);
 		return;
@@ -631,6 +644,10 @@ function init_answers(qid){
 			dv_answ.classList.add(...base_answ_classes);
 			if(! an_answ.choose_words){
 				dv_answ.innerHTML = get_msg(anid);
+				if((gvar.has_bibrefs != null) && gvar.has_bibrefs[anid]){ 
+					set_bibrefs(dv_answ);
+				}
+				
 			} else {
 				init_choose_words(dv_answ, quest, anid);
 			}
@@ -1085,12 +1102,27 @@ function add_answer(qid, id_nw_ans){
 	const id_dv_all_answ = qid + SUF_ID_ANSWERS;
 	const dv_all_answ = document.getElementById(id_dv_all_answ);
 	const dv_answ = dv_all_answ.appendChild(document.createElement("div"));
-	dv_answ.id = id_nw_ans;
+	if(id_nw_ans != null){ dv_answ.id = id_nw_ans; }
 	dv_answ.answ_idx = dv_all_answ.childNodes.length - 1;
 	dv_answ.owner_qid = qid;
 	dv_answ.classList.add(...base_answ_classes);
 	dv_answ.title = gvar.glb_curr_lang.msg_help_answer_right_click;
 	return dv_answ;
+}
+
+export function get_default_verse_obj(){
+	const verse_obj = {};
+	verse_obj.kind = VRS_CIT_KIND;
+	verse_obj.book = bib_defaults.BOOK;
+	verse_obj.chapter = bib_defaults.CHAPTER;
+	verse_obj.verse = bib_defaults.VERSE;
+	verse_obj.last_verse = bib_defaults.LAST_VERSE;
+	verse_obj.site = bib_defaults.BIBLES_SITE;
+	verse_obj.bib_ver = bib_defaults.BIB_VER;
+	
+	const bibs = gvar.glb_all_bibles[verse_obj.site];
+	if(bibs.length > 0){ verse_obj.bib_ver = bibs[0]; }
+	return verse_obj;
 }
 
 function add_verse_cit(qid, verse_obj){
@@ -1101,6 +1133,8 @@ function add_verse_cit(qid, verse_obj){
 	
 	let obj_was_null = (verse_obj == null);
 	if(obj_was_null){
+		verse_obj = get_default_verse_obj();
+		/*
 		verse_obj = {};
 		verse_obj.kind = VRS_CIT_KIND;
 		verse_obj.book = bib_defaults.BOOK;
@@ -1112,6 +1146,7 @@ function add_verse_cit(qid, verse_obj){
 		
 		const bibs = gvar.glb_all_bibles[verse_obj.site];
 		if(bibs.length > 0){ verse_obj.bib_ver = bibs[0]; }
+		*/
 	}
 	
 	const dv_citation = add_answer(qid, id_dv_last_cit);
@@ -1132,8 +1167,8 @@ function calc_verse_cit_object(dv_citation){
 	return cit_obj;
 }
 
-export function toggle_verse_ed(dv_citation){
-	let dv_ed_cit = get_new_dv_under(dv_citation, id_dv_citation_ed);
+export function get_bibref_in(dv_bibref, callbk){
+	let dv_ed_cit = get_new_dv_under(dv_bibref, id_dv_citation_ed);
 	if(dv_ed_cit == null){
 		return;
 	}
@@ -1141,8 +1176,37 @@ export function toggle_verse_ed(dv_citation){
 	dv_ed_cit.classList.add("is_block");
 	dv_ed_cit.classList.add("grid_item_all_col");
 	
-	const cit_obj = calc_verse_cit_object(dv_citation);	
+	const cit_obj = get_default_verse_obj();	
+	
+	const dvs_bibref = add_simple_cit_choosers(dv_ed_cit, cit_obj);
+	
+	const dv_ok = dv_ed_cit.appendChild(document.createElement("div"));
+	dv_ok.classList.add("exam");
+	dv_ok.classList.add("is_button");
+	dv_ok.classList.add("is_ed_verse");
+	dv_ok.innerHTML = gvar.glb_curr_lang.msg_ok;
+	dv_ok.addEventListener('click', function() {
+		const book_num = gvar.glb_books_nums[dvs_bibref.inp_book.innerHTML];
+		const chap_num = dvs_bibref.inp_chapter.value;
+		const vers_num = dvs_bibref.inp_verse.value;
+		const bibref = make_bibref(book_num, chap_num, vers_num);
+		
+		if(callbk != null){ 
+			callbk(dv_ed_cit, bibref); 
+			return;
+		}
+		
+		dv_bibref.bibref = bibref;
+		dv_bibref.innerHTML = bibref;
+		set_bibrefs(dv_bibref);
+		dv_ed_cit.remove();
+		
+		return;
+	});
+	
+}
 
+function add_simple_cit_choosers(dv_ed_cit, cit_obj){
 	const inp_book = dv_ed_cit.appendChild(document.createElement("div"));
 	inp_book.id = id_ed_book;
 	inp_book.classList.add("exam");
@@ -1176,6 +1240,34 @@ export function toggle_verse_ed(dv_citation){
 	inp_verse.size = 3;
 	inp_verse.classList.add("exam");
 	inp_verse.classList.add("is_ed_verse");
+	
+	inp_verse.addEventListener('contextmenu', (ev1) => {
+		ev1.preventDefault();
+		sep2.classList.toggle("is_hidden");
+		inp_last_verse.classList.toggle("is_hidden");
+		return false;
+	});
+	
+	const dvs_bibref = {};
+	dvs_bibref.inp_book = inp_book;
+	dvs_bibref.inp_chapter = inp_chapter;
+	dvs_bibref.inp_verse = inp_verse;
+
+	return dvs_bibref;
+}
+
+export function toggle_verse_ed(dv_citation){
+	let dv_ed_cit = get_new_dv_under(dv_citation, id_dv_citation_ed);
+	if(dv_ed_cit == null){
+		return;
+	}
+	dv_ed_cit.classList.add("exam");
+	dv_ed_cit.classList.add("is_block");
+	dv_ed_cit.classList.add("grid_item_all_col");
+	
+	const cit_obj = calc_verse_cit_object(dv_citation);	
+	
+	const dvs_bibref = add_simple_cit_choosers(dv_ed_cit, cit_obj);
 
 	const sep2 = dv_ed_cit.appendChild(document.createElement("div"));
 	sep2.classList.add("exam");
@@ -1195,13 +1287,6 @@ export function toggle_verse_ed(dv_citation){
 		inp_last_verse.classList.add("is_hidden");
 	}
 
-	inp_verse.addEventListener('contextmenu', (ev1) => {
-		ev1.preventDefault();
-		sep2.classList.toggle("is_hidden");
-		inp_last_verse.classList.toggle("is_hidden");
-		return false;
-	});
-	
 	const inp_site = dv_ed_cit.appendChild(document.createElement("div"));
 	inp_site.id = id_ed_site;
 	inp_site.classList.add("exam");
@@ -1284,9 +1369,9 @@ export function toggle_verse_ed(dv_citation){
 	dv_ok.addEventListener('click', function() {
 
 		const cit_adding = dv_citation.tc_cit_obj;
-		cit_adding.book = gvar.glb_books_nums[inp_book.innerHTML];
-		cit_adding.chapter = inp_chapter.value;
-		cit_adding.verse = inp_verse.value;
+		cit_adding.book = gvar.glb_books_nums[dvs_bibref.inp_book.innerHTML];
+		cit_adding.chapter = dvs_bibref.inp_chapter.value;
+		cit_adding.verse = dvs_bibref.inp_verse.value;
 
 		cit_adding.last_verse = inp_last_verse.value;
 		cit_adding.site = inp_site.innerHTML;
@@ -2338,7 +2423,12 @@ function init_signals_for(qid){
 	if(quest.calls_write_object){
 		const db = gvar.glb_poll_db;
 		db.all_qids_that_write.push(qid);
-	}	
+	}
+	
+	if(quest.is_choose_verse_question){
+		quest.answers = {};
+		quest.answers.CHOSEN_BIBREF = INVALID_BIBREF;
+	}
 	
 	if(quest.signals_inited){ return; }
 	quest.signals_inited = true;
@@ -2427,7 +2517,7 @@ function check_if_dnf_is_sat(qid){
 	quest.last_conj_qst = null;
 	
 	if(quest.activated_if == null){ 
-		if(is_base_question(quest)){
+		if(is_question(quest)){
 			return true;
 		}
 		return false; 
@@ -2465,7 +2555,11 @@ function check_if_dnf_is_sat(qid){
 					const an_answ = qst_answs[anid];
 					if(an_answ == null){ all_act_2 = false; break; }
 					
-					is_act = (((val == "on") && an_answ.is_on) || ((val == "off") && ! an_answ.is_on));
+					if(anid == "CHOSEN_BIBREF"){
+						is_act = (an_answ == val);
+					} else {
+						is_act = (((val == "on") && an_answ.is_on) || ((val == "off") && ! an_answ.is_on));
+					}
 				}
 				all_act_2 = all_act_2 && is_act;
 				if(! all_act_2){
@@ -2764,6 +2858,10 @@ function show_observation(qid, all_to_act, qid_cllr){
 	dv_qstm.classList.add("observ_color");
 	dv_qstm.innerHTML = "" + the_stm;
 
+	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[quest.htm_stm]){ 
+		set_bibrefs(dv_qstm);
+	}
+	
 	if(DEBUG_QNUMS){
 		dv_qstm.title = qid;
 	}	

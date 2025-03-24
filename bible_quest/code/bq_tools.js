@@ -198,15 +198,30 @@ function get_bible_working_version(){
 }
 
 function bibcit_to_bibobj(bcit){
-	const re = /([A-Za-z]*)_(\d*):(\d*)-*(\d*)/;
+	const re = /(\d*[A-Za-z]*)_(\d*):(\d*)-*(\d*)/;
 	const vcit = bcit.split(re);
 	const obj = {};
 	obj.bible = get_bible_working_version();
-	if(vcit.length > 1){ obj.book = abbr2book_name(vcit[1]); }
+	if(vcit.length > 1){ obj.book = abbr2num[vcit[1]]; }
 	if(vcit.length > 2){ obj.chapter = vcit[2]; }
 	if(vcit.length > 3){ obj.verse = vcit[3]; }
 	if(vcit.length > 4){ obj.last_verse = vcit[4]; }
 	return obj;
+}
+
+export function make_bibref(book_num, chap_num, vers_num){
+	const bibref = bibref_prefix + num2abbr[book_num] + "_" + chap_num + ":" + vers_num;
+	return bibref
+}
+
+export function bibcit_to_citxt(bcit){
+	const bibobj = bibcit_to_bibobj(bcit);
+	let vcit = bcit;
+	if((bibobj.book != null) && (bibobj.chapter != null) && (bibobj.verse != null)){ 
+		vcit = get_loc_book_nam(bibobj.book) + " " + bibobj.chapter + ":" + bibobj.verse;
+	}
+	if((bibobj.last_verse != null) && (bibobj.last_verse != "")){ vcit = vcit + "-" + bibobj.last_verse; }
+	return vcit;
 }
 
 async function bibcit_to_bibtxt(bcit){
@@ -214,11 +229,11 @@ async function bibcit_to_bibtxt(bcit){
 	let vcit = bcit;
 	let vtxt = null;
 	if((bibobj.book != null) && (bibobj.chapter != null) && (bibobj.verse != null)){ 
-		vcit = bibobj.book + "_" + bibobj.chapter + ":" + bibobj.verse;
-		vtxt = await get_bib_verse(bibobj.bible, bibobj.book, bibobj.chapter, bibobj.verse);
+		vcit = get_loc_book_nam(bibobj.book) + " " + bibobj.chapter + ":" + bibobj.verse;
+		vtxt = await get_bib_verse(bibobj.bible, num2book_en[bibobj.book], bibobj.chapter, bibobj.verse);
 	}
-	if(bibobj.last_verse != null){ vcit = vcit + "-" + bibobj.last_verse; }
-	return vcit + " " + vtxt;
+	if((bibobj.last_verse != null) && (bibobj.last_verse != "")){ vcit = vcit + "-" + bibobj.last_verse; }
+	return vcit + " <br>" + vtxt;
 }
 
 async function replace_all_bibrefs(str){
@@ -264,7 +279,13 @@ export function init_get_msg(lang_msgs){
 }
 
 export function init_glb_vars(all_vars){
-	gvar = all_vars;
+	all_vars.qref_prefix = qref_prefix;
+	all_vars.bibref_prefix = bibref_prefix;
+	all_vars.qid_sufix = SUF_QID;
+	if(all_vars.has_qrefs == null){ all_vars.has_qrefs = {}; } 
+	if(all_vars.has_bibrefs == null){ all_vars.has_bibrefs = {}; } 
+	
+	gvar = all_vars;	
 }
 
 export function init_poll_glb(polldb){
@@ -519,6 +540,26 @@ export function add_response_observation(qid, cit_obj){
 	conj1[qid][ans_key] = "on";
 	
 	return obj_resp;
+}
+
+export function get_bibcit_obs(qid, bcit){
+	const rnam = get_bibcit_obs_stm_id(qid, bcit);
+	const obj_resp = { 
+		htm_stm: rnam, 
+		activated_if: {	c1: {}, },
+	};
+	const conj1 = obj_resp.activated_if.c1;
+	conj1[qid] = {};
+	conj1[qid].CHOSEN_BIBREF = bibref_prefix + bcit;
+	
+	return obj_resp;
+}
+
+export function get_bibcit_obs_stm_id(qid, bcit){
+	const bibobj = bibcit_to_bibobj(bcit);
+	const kk = get_verse_key(bibobj, false);
+	const r_nam = qid + "reponse_" + kk;
+	return r_nam;
 }
 
 export const all_strongrefs = {

@@ -1,5 +1,5 @@
 
-import { init_poll_glb, gvar, add_response_observation, } from '../../code/bq_tools.js';
+import { init_poll_glb, gvar, add_response_observation, get_bibcit_obs, } from '../../code/bq_tools.js';
 
 "use strict";
 
@@ -37,7 +37,7 @@ export function init_exam_database(){
 	
 	db.q_jesus_died__ = { 
 		choose_yes: true,
-		context: ["ctx_people", "ctx_sleep", ],
+		context: ["ctx_people", "ctx_sleep", "ctx_died", ],
 		htm_stm: "q_jesus_died",
 		img_href: "jesus_on_the_cross.webp", 
 		answers: {
@@ -50,7 +50,7 @@ export function init_exam_database(){
 	};	
 	
 	db.o_jesus_died_comm__ = { 
-		context: ["ctx_people", "ctx_sleep", ],
+		context: ["ctx_people", "ctx_sleep", "ctx_died", ],
 		htm_stm: "o_jesus_died_comm",
 		activated_if: {
 			c1: { q_jesus_died__: { a_simple_NO: "on", }, },
@@ -59,7 +59,7 @@ export function init_exam_database(){
 	
 	db.q_jesus_eternal__ = { 
 		choose_yes: true,
-		context: ["ctx_people", "ctx_sleep", ],
+		context: ["ctx_people", "ctx_sleep", "ctx_three_days", ],
 		htm_stm: "q_jesus_eternal",
 		img_href: "jesus_tomb.webp", 
 		answers: {
@@ -71,9 +71,17 @@ export function init_exam_database(){
 		},
 	};	
 	
+	db.o_jesus_eternal_comm__ = { 
+		context: ["ctx_people", "ctx_sleep", "ctx_three_days", ],
+		htm_stm: "o_jesus_eternal_comm",
+		activated_if: {
+			c1: { q_jesus_eternal__: { a_simple_NO: "on", }, },
+		},
+	};
+	
 	db.q_eternal_life__ = { 
 		choose_yes: true,
-		context: ["ctx_people", "ctx_sleep", ],
+		context: ["ctx_people", "ctx_sleep", "ctx_eternal", ],
 		htm_stm: "q_eternal_life",
 		img_href: "jesus_and_diciples.webp", 
 		answers: {
@@ -85,9 +93,17 @@ export function init_exam_database(){
 		},
 	};	
 	
+	db.o_eternal_life_comm__ = { 
+		context: ["ctx_people", "ctx_sleep", "ctx_eternal", ],
+		htm_stm: "o_eternal_life_comm",
+		activated_if: {
+			c1: { q_eternal_life__: { a_simple_NO: "on", }, },
+		},
+	};
+	
 	db.q_no_knowledge_in_death__ = { 
 		choose_yes: true,
-		context: ["ctx_people", "ctx_sleep", ],
+		context: ["ctx_people", "ctx_sleep", "ctx_no_knowledge", ],
 		htm_stm: "q_no_knowledge_in_death",
 		img_href: "jesus_no_knowledge.webp", 
 		answers: {
@@ -95,11 +111,28 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { 	q_jesus_died__: { a_simple_YES: "on", }, 
-					q_jesus_eternal__: { a_simple_YES: "on", }, 
-					q_eternal_life__: { a_simple_YES: "on", }, },
+			c1: { q_sleep__: { a_simple_NO: "on", }, },
 		},
 	};	
+	
+	db.o_no_knowledge_comm__ = { 
+		context: ["ctx_people", "ctx_sleep", "ctx_no_knowledge", ],
+		htm_stm: "o_no_knowledge_comm",
+		activated_if: {
+			c1: { q_no_knowledge_in_death__: { a_simple_NO: "on", }, },
+		},
+	};
+
+	db.q_verse_for_knowledge_in_death__ = { 
+		is_choose_verse_question: true,
+		context: ["ctx_people", "ctx_sleep", "ctx_verse_knowledge", ],
+		htm_stm: "q_verse_for_knowledge_in_death",
+		activated_if: {
+			c1: { q_no_knowledge_in_death__: { a_simple_NO: "on", }, },
+		},
+	};
+	
+	db.q_verse_for_knowledge_in_death_R1__ = get_bibcit_obs("q_verse_for_knowledge_in_death__", "Gen_1:1");
 	
 	// q3_3__
 

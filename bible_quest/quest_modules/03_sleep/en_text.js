@@ -1,6 +1,8 @@
 
 
-import { gvar, uppercase_words_in_string, make_bible_ref, get_resp_for, all_strongrefs, bib_defaults, } from '../../code/bq_tools.js';
+import { gvar, uppercase_words_in_string, make_bible_ref, get_resp_for, all_strongrefs, bib_defaults, 
+	get_bibcit_obs_stm_id, 
+} from '../../code/bq_tools.js';
 
 "use strict";
 
@@ -17,6 +19,12 @@ export function init_en_poll_txt(){
 	const lg = gvar.glb_poll_txt;
 	
 	const module_img_dir = gvar.qmodu_img_dir;
+	
+	if(gvar.has_qrefs == null){ gvar.has_qrefs = {}; } 
+	const qrf = gvar.has_qrefs;
+	
+	if(gvar.has_bibrefs == null){ gvar.has_bibrefs = {}; } 
+	const brf = gvar.has_bibrefs;
 	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
@@ -39,12 +47,62 @@ export function init_en_poll_txt(){
 	const cl_bible = `The bible claims that <br>`;
 	const cl_jesus = `According to the bible, Jesus Christ claims that <br>`;
 	const cl_until = `The bible claims that AFTER death and UNTIL our resurrection <br>`;
+	const the_gospel = `${bf}To deny this is to deny the Good News, the Gospel.${ef}`;
+	
+	
 	lg.q_sleep = `${cl_until}${bf}the spirit is ASLEEP and there is NO consciousness.${ef}`;
 
 	lg.q_jesus_died = `${cl_bible}${bf}Jesus Christ died on the cross.${ef}`;
+	
+	brf.o_jesus_died_comm = true;
+	lg.o_jesus_died_comm = `The following verses are just some of the verses claiming that <br> ${bf}Jesus Christ died on the cross.${ef} <br> 
+	<li> BIBREF_Luk_23:46 
+	<li> BIBREF_Rom_5:8 
+	<li> BIBREF_1Co_15:3 
+	<br>	
+	${the_gospel}
+	`;
+
 	lg.q_jesus_eternal = `${cl_bible}${bf}His ETERNAL LIFE was interrupted for three nights and three days.${ef}`;
+
+	brf.o_jesus_eternal_comm = true;
+	lg.o_jesus_eternal_comm = `The following verses are just some of the verses claiming that <br> 
+	${bf}Jesus Christ ETERNAL LIFE was interrupted for three nights and three days.${ef} <br> 
+	<li> BIBREF_Mat_12:40 
+	<li> BIBREF_1Co_15:4 
+	<li> BIBREF_Act_10:40 
+	<br>
+	${the_gospel}
+	`;
+	
 	lg.q_eternal_life = `${cl_jesus}${bf}ETERNAL LIFE is to know the True God and His son Jesus Christ.${ef}`;
-	lg.q_no_knowledge_in_death = `Therefore ${bf}His KNOWLEDGE of God and of Himself${ef}, Jesus Christ, <br>was interrupted three nights and three days.`;
+
+	brf.o_eternal_life_comm = true;
+	lg.o_eternal_life_comm = `In the following verse teaches PRECISELY that <br> 
+	${bf} BIBREF_Jhn_17:3 ${ef}
+	`;
+
+	lg.q_no_knowledge_in_death = `We can conclude that according to the bible <br> 
+	${bf}Jesus Christ KNOWLEDGE of God and of Himself${ef} <br> 
+	was interrupted three nights and three days.
+	`;
+
+	brf.o_no_knowledge_comm = true;
+	lg.o_no_knowledge_comm = `It seems you like to deny the evident. The argument is very simple, yet very strong: <br> 
+	${lg.q_jesus_died} <br> 
+	${lg.q_jesus_eternal} <br> 
+	${lg.q_eternal_life} <br> 
+	${lg.q_no_knowledge_in_death} <br> 
+	${the_gospel}
+	`;
+
+	lg.q_verse_for_knowledge_in_death = `Choose ONE verse that supports the claim that according to the bible <br>
+	${bf} the NOT resurrected and physically dead people HAVE KNOWLEDGE${ef}
+	`;
+	
+	const stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Gen_1:1");
+	brf[stm_id] = true;
+	lg[stm_id] = `RESPONSE TO BIBREF_Gen_1:1 `;
 	
 	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${hb.href_sleeping}'>Sleep</a>`;
 	lg.q12_1__sleep = `Select a GOOD verse that supports that physically dead people DO HAVE CONSCIOUSNESS before <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a>.`;

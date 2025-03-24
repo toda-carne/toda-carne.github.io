@@ -3,7 +3,7 @@ import { get_new_dv_under, gvar, get_qid_base, bib_defaults, is_observation,
 } from './bq_tools.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, 
-	fb_mod, close_pop_menu, get_user_path, id_pop_menu_sele, toggle_verse_ed, 
+	fb_mod, close_pop_menu, get_user_path, id_pop_menu_sele, toggle_verse_ed, get_default_verse_obj, get_bibref_in, 
 } from './bq_quest_mgr.js';
 
 import { load_qmodu, load_next_qmodu, } from './bq_module_mgr.js';
@@ -588,17 +588,16 @@ function test_get_verse(){
 	const dv_ops = document.getElementById("id_pop_opt_sec");
 	/*
 	if(dv_ops.tc_cit_obj == null){
-		dv_ops.tc_cit_obj = {};
-		const verse_obj = dv_ops.tc_cit_obj;
-		verse_obj.book = bib_defaults.BOOK;
-		verse_obj.chapter = bib_defaults.CHAPTER;
-		verse_obj.verse = bib_defaults.VERSE;
+		dv_ops.tc_cit_obj = get_default_verse_obj();
 	}
 	
 	toggle_verse_ed(dv_ops);
 	*/
 	
+	get_bibref_in(dv_ops);
+	
+	/*
 	get_bib_verse("SBLM", "revelation", 22, 20).then((resp) => {
 		dv_ops.innerHTML = resp;
-	});
+	});*/
 }
