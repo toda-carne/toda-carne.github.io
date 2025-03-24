@@ -9,6 +9,7 @@ import { get_bib_verse, } from './bq_bible_mgr.js';
 
 const INVALID_MESSAGE = "INVALID_MESSAGE";
 const SUF_QID = "__";
+const INVALID_BIBREF = "INVALID_BIBREF";
 
 export let gvar = {};
 
@@ -171,11 +172,11 @@ export function replace_all_qrefs(str){
 
 // BIBREF HANDLING
 
-// Example. BIBREF_Gen_1:3-5
+// Example. BIBREF_Gen_1_3_5 == Gen_1:3-5
 
 const bibref_prefix = "BIBREF_";
 
-function bibref_to_bibcit(brf){
+export function bibref_to_bibcit(brf){
 	return brf.slice(bibref_prefix.length);
 }
 
@@ -198,10 +199,11 @@ function get_bible_working_version(){
 }
 
 function bibcit_to_bibobj(bcit){
-	const re = /(\d*[A-Za-z]*)_(\d*):(\d*)-*(\d*)/;
+	const re = /(\d*[A-Za-z]*)_(\d*)_(\d*)_*(\d*)/;
 	const vcit = bcit.split(re);
 	const obj = {};
 	obj.bible = get_bible_working_version();
+	if(abbr2num == {}){ console.error("bibcit_to_bibobj. (abbr2num == {})."); }
 	if(vcit.length > 1){ obj.book = abbr2num[vcit[1]]; }
 	if(vcit.length > 2){ obj.chapter = vcit[2]; }
 	if(vcit.length > 3){ obj.verse = vcit[3]; }
@@ -210,7 +212,7 @@ function bibcit_to_bibobj(bcit){
 }
 
 export function make_bibref(book_num, chap_num, vers_num){
-	const bibref = bibref_prefix + num2abbr[book_num] + "_" + chap_num + ":" + vers_num;
+	const bibref = bibref_prefix + num2abbr[book_num] + "_" + chap_num + "_" + vers_num;
 	return bibref
 }
 
@@ -226,6 +228,12 @@ export function bibcit_to_citxt(bcit){
 
 async function bibcit_to_bibtxt(bcit){
 	const bibobj = bibcit_to_bibobj(bcit);
+	
+	const cit_obj = JSON.parse(JSON.stringify(bibobj));
+	cit_obj.bib_ver = "text";
+	cit_obj.site = "biblehub";
+	const vhref = make_bible_ref(cit_obj);
+	
 	let vcit = bcit;
 	let vtxt = null;
 	if((bibobj.book != null) && (bibobj.chapter != null) && (bibobj.verse != null)){ 
@@ -233,7 +241,8 @@ async function bibcit_to_bibtxt(bcit){
 		vtxt = await get_bib_verse(bibobj.bible, num2book_en[bibobj.book], bibobj.chapter, bibobj.verse);
 	}
 	if((bibobj.last_verse != null) && (bibobj.last_verse != "")){ vcit = vcit + "-" + bibobj.last_verse; }
-	return vcit + " <br>" + vtxt;
+	const btxt = `<a class='exam_ref' href="${vhref}"> ${vcit} </a><br><b> ${vtxt} </b>`;
+	return btxt;
 }
 
 async function replace_all_bibrefs(str){
@@ -250,9 +259,21 @@ async function replace_all_bibrefs(str){
 	return nwstr;
 }
 
+export function set_anchors_target(the_div){
+	const all_anchor = the_div.querySelectorAll("a");
+
+	all_anchor.forEach((aa) => {
+		const is_local_ref = aa.getAttribute("href").startsWith("#");
+		if(! is_local_ref){
+			aa.setAttribute('target', '_blank');
+		}
+	});
+}
+
 export function set_bibrefs(dv_txt){
 	replace_all_bibrefs(dv_txt.innerHTML).then((resp) => {
 		dv_txt.innerHTML = resp;
+		set_anchors_target(dv_txt);
 	});
 }
 
@@ -282,6 +303,7 @@ export function init_glb_vars(all_vars){
 	all_vars.qref_prefix = qref_prefix;
 	all_vars.bibref_prefix = bibref_prefix;
 	all_vars.qid_sufix = SUF_QID;
+	all_vars.INVALID_BIBREF = INVALID_BIBREF;
 	if(all_vars.has_qrefs == null){ all_vars.has_qrefs = {}; } 
 	if(all_vars.has_bibrefs == null){ all_vars.has_bibrefs = {}; } 
 	
@@ -379,7 +401,7 @@ function get_loc_book_nam(book){
 
 function get_verse_key(cit_obj, with_lang){
 	if(cit_obj.book == null){
-		console.log("Internal error. get_verse_cit_key. cit_obj= " + JSON.stringify(cit_obj, null, "  "));
+		console.log("Internal error. get_verse_key. (cit_obj.book == null). cit_obj= " + JSON.stringify(cit_obj, null, "  "));
 		return "invalid_verse_cit_key";
 	}
 	const book_nam =  get_book_nam(cit_obj.book);
@@ -542,16 +564,14 @@ export function add_response_observation(qid, cit_obj){
 	return obj_resp;
 }
 
-export function get_bibcit_obs(qid, bcit){
-	const rnam = get_bibcit_obs_stm_id(qid, bcit);
+export function get_bibcit_obs(qid){
 	const obj_resp = { 
-		htm_stm: rnam, 
+		is_bibcit_observation: true,
 		activated_if: {	c1: {}, },
 	};
 	const conj1 = obj_resp.activated_if.c1;
 	conj1[qid] = {};
-	conj1[qid].CHOSEN_BIBREF = bibref_prefix + bcit;
-	
+	conj1[qid].shown = "on";
 	return obj_resp;
 }
 

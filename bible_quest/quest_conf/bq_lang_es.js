@@ -1,6 +1,6 @@
 
 import { init_get_msg, fill_reversed_object, bib_defaults, fill_bibrefs_href, 
-	fill_all_strongrefs_href, get_verse_cit_key, init_default_lang, 
+	fill_all_strongrefs_href, get_verse_cit_key, 
 } from '../code/bq_tools.js';
 
 "use strict";
@@ -419,7 +419,6 @@ function ini_glb_vars_es(all_vars){
 }
 
 function init_es_module(all_vars){
-	init_default_lang(all_vars);
 	init_es_basic_msg();
 	
 	console.log("Called init_es_module");

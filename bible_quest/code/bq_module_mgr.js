@@ -1,5 +1,5 @@
 
-import { gvar, init_glb_vars, get_qid_base, } from './bq_tools.js';
+import { gvar, init_glb_vars, get_qid_base, init_default_lang, } from './bq_tools.js';
 import { init_firebase_mgr, fb_mod, fill_div_user, scroll_to_first_not_answered, scroll_to_top, toggle_select_option, 
 	close_pop_menu, get_user_path, id_pop_menu_sele, init_page_exam, 
 } from './bq_quest_mgr.js';
@@ -94,6 +94,7 @@ export async function load_qmodu(qmonam, init_pag){
 	if(gvar.conf_qmodus.image_dir != null){ gvar.site_img_dir = "../" + gvar.conf_qmodus.image_dir + "/"; }
 	if(cf_qmodu.image_dir != null){ gvar.qmodu_img_dir = "../" + cf_qmodu.image_dir + "/"; }
 	
+	init_default_lang(all_vars);
 	md_lang.init_lang_module(all_vars);
 	md_txt.init_module_text();
 

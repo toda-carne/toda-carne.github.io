@@ -21,21 +21,19 @@ export function init_es_poll_txt(){
 	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
-	lg.qmodu_title = `Biblicamente, el espíritu duerme?`;
+	lg.qmodu_title = `Los muertos no saben nada?`;
 	
-	lg.a_simple_YES = `YES`;
+	lg.a_simple_YES = `SI`;
 	lg.a_simple_NO = `NO`;	
 
+	lg.a_is_TRUE = `VERDADERO`;
+	lg.a_is_FALSE = `FALSO`;	
 
-	lg.a_simple_YES = `YES`;
-	lg.a_simple_NO = `NO`;
-	
 	const bf = `<span class='big_font'>`;
 	const ef = `</span>`;
 
-
-	const cl_until = `La biblia afirma que DESPUES de la muerte y HASTA nuestra resurección <br>`;
-	lg.q_sleep = `${cl_until}${bf}el espíritu esta DORMIDO y NO hay conciencia.${ef}`;
+	const cl_until = `La biblia afirma que DESPUES de la muerte física y HASTA nuestra resurección <br>`;
+	lg.q_sleep = `${cl_until}${bf}el espíritu esta DORMIDO y NO hay CONOCIMIENTO.${ef}`;
 
 	
 	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${hb.href_sleeping}'>Dormiditos</a>`;

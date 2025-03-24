@@ -30,8 +30,8 @@ export function init_exam_database(){
 		htm_stm: "q_sleep",
 		img_href: "candle_smoking.webp", 
 		answers: {
-			a_simple_YES: { img_pos: rgt, },
-			a_simple_NO: { img_pos: lft, },
+			a_is_TRUE: { img_pos: rgt, },
+			a_is_FALSE: { img_pos: lft, },
 		},
 	};	
 	
@@ -45,7 +45,7 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_sleep__: { a_simple_NO: "on", }, },
+			c1: { q_sleep__: { a_is_FALSE: "on", }, },
 		},
 	};	
 	
@@ -67,7 +67,7 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_sleep__: { a_simple_NO: "on", }, },
+			c1: { q_sleep__: { a_is_FALSE: "on", }, },
 		},
 	};	
 	
@@ -89,7 +89,7 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_sleep__: { a_simple_NO: "on", }, },
+			c1: { q_sleep__: { a_is_FALSE: "on", }, },
 		},
 	};	
 	
@@ -111,7 +111,7 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_sleep__: { a_simple_NO: "on", }, },
+			c1: { q_sleep__: { a_is_FALSE: "on", }, },
 		},
 	};	
 	
@@ -132,7 +132,7 @@ export function init_exam_database(){
 		},
 	};
 	
-	db.q_verse_for_knowledge_in_death_R1__ = get_bibcit_obs("q_verse_for_knowledge_in_death__", "Gen_1:1");
+	db.o_verse_for_knowledge_in_death__ = get_bibcit_obs("q_verse_for_knowledge_in_death__");
 	
 	// q3_3__
 
@@ -149,7 +149,7 @@ export function init_exam_database(){
 			q12_1__verse5_str: { rclk_href: "q12_1__verse5_href", },
 		},
 		activated_if: {
-			c1: { q_sleep__: { a_simple_NO: "on", }, },
+			c1: { q_sleep__: { a_is_FALSE: "on", }, },
 		},
 	};
 	

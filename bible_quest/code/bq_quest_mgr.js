@@ -1,8 +1,8 @@
 
 import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, 
 	gvar, 
-	get_qid_base, get_verse_match, get_answer_key, get_new_dv_under,
-	is_observation, replace_all_qrefs, qid_to_qhref, set_bibrefs, make_bibref, 
+	get_qid_base, get_verse_match, get_answer_key, get_new_dv_under, set_anchors_target, 
+	is_observation, replace_all_qrefs, qid_to_qhref, set_bibrefs, make_bibref, bibref_to_bibcit, get_bibcit_obs_stm_id, 
 } from './bq_tools.js';
 
 import { add_to_pending, get_pending_qid, init_all_context, } from './bq_contexts.js';
@@ -17,8 +17,6 @@ import { load_qmodu, get_fini_qmodus, load_next_qmodu, } from './bq_module_mgr.j
 "use strict";
 
 const INVALID_PAGE_POS = "???";
-
-const INVALID_BIBREF = "INVALID_BIBREF";
 
 const DEBUG_QNUMS = true;
 const DEBUG_REFERRER = true;
@@ -531,10 +529,10 @@ function init_answers(qid){
 	
 	if(quest.is_choose_verse_question){
 		if(quest.has_answ == null){
-			quest.answers.CHOSEN_BIBREF = INVALID_BIBREF;
+			quest.answers.CHOSEN_BIBREF = gvar.INVALID_BIBREF;
 		}
 		const dv_bibref = add_answer(qid);
-		if(quest.answers.CHOSEN_BIBREF != INVALID_BIBREF){
+		if(quest.answers.CHOSEN_BIBREF != gvar.INVALID_BIBREF){
 			dv_bibref.innerHTML = quest.answers.CHOSEN_BIBREF;
 			set_bibrefs(dv_bibref);
 		} else {
@@ -2386,17 +2384,6 @@ function get_comment_hrefs_of(the_conj_sat, skip_qid){
 	return all_qhrefs;
 }
 
-function set_anchors_target(the_div){
-	const all_anchor = the_div.querySelectorAll("a");
-
-	all_anchor.forEach((aa) => {
-		const is_local_ref = aa.getAttribute("href").startsWith("#");
-		if(! is_local_ref){
-			aa.setAttribute('target', '_blank');
-		}
-	});
-}
-
 // CODE_FOR DAG HANDLING
 
 function init_DAG_func(){
@@ -2427,7 +2414,7 @@ function init_signals_for(qid){
 	
 	if(quest.is_choose_verse_question){
 		quest.answers = {};
-		quest.answers.CHOSEN_BIBREF = INVALID_BIBREF;
+		quest.answers.CHOSEN_BIBREF = gvar.INVALID_BIBREF;
 	}
 	
 	if(quest.signals_inited){ return; }
@@ -2555,11 +2542,7 @@ function check_if_dnf_is_sat(qid){
 					const an_answ = qst_answs[anid];
 					if(an_answ == null){ all_act_2 = false; break; }
 					
-					if(anid == "CHOSEN_BIBREF"){
-						is_act = (an_answ == val);
-					} else {
-						is_act = (((val == "on") && an_answ.is_on) || ((val == "off") && ! an_answ.is_on));
-					}
+					is_act = (((val == "on") && an_answ.is_on) || ((val == "off") && ! an_answ.is_on));
 				}
 				all_act_2 = all_act_2 && is_act;
 				if(! all_act_2){
@@ -2846,10 +2829,15 @@ function show_observation(qid, all_to_act, qid_cllr){
 	dv_stm.classList.add("stm");
 	dv_stm.classList.add("observ_color");
 	
-	let the_stm = get_msg(quest.htm_stm);
-	//if(quest.has_qrefs){
-	//	the_stm = replace_all_qrefs(the_stm);
-	//}
+	let stm_id = null;
+	if(quest.is_bibcit_observation){
+		const qid_bcit = Object.keys(quest.activated_if.c1)[0];
+		const quest_bcit = gvar.glb_poll_db[qid_bcit];
+		stm_id = get_bibcit_obs_stm_id(qid_bcit, bibref_to_bibcit(quest_bcit.answers.CHOSEN_BIBREF));
+	} else {
+		stm_id = quest.htm_stm;
+	}
+	let the_stm = get_msg(stm_id);
 	
 	const dv_qstm = dv_stm.appendChild(document.createElement("div"));
 	dv_qstm.id = qid + SUF_ID_QSTM;
@@ -2858,7 +2846,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 	dv_qstm.classList.add("observ_color");
 	dv_qstm.innerHTML = "" + the_stm;
 
-	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[quest.htm_stm]){ 
+	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[stm_id]){ 
 		set_bibrefs(dv_qstm);
 	}
 	
