@@ -114,6 +114,8 @@ export function init_en_poll_txt(){
 	let resp_bcit = null;
 	let stm_id = null;
 
+	// -----------
+	
 	resp_bcit = `BIBREF_Isa_14_10 ${dead_know_response_INTRO}
 	<p> Just as the Passover was a type of the Meshiakh. This passage is a type of future time. The king of Babilon represents The Satan, that is why <p> BIBREF_Isa_14_12 <p> is commonly cited to refer to The Satan. </p>
 	<p>Note that:</p> 
@@ -132,6 +134,8 @@ export function init_en_poll_txt(){
 	brfup[stm_id].Isa_14_9 = ["raised", ];
 	brfup[stm_id].Isa_14_18 = ["house.", ];
 
+	// -----------
+	
 	resp_bcit = `BIBREF_Mat_17_3 ${dead_know_response_INTRO}
 	<p>It important to note that the general <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead <a class='exam_ref' href='${hb.href_not_yet_resu}'>has not happend yet</a>. However tamporal resurrections happen in several places in the bible. So, the most important thing to note about this verse is that they were physically present, they all have BODIES, that is why they can TALK, and that is why Peter, in 
 	<p> BIBREF_Mat_17_4 
@@ -146,10 +150,11 @@ export function init_en_poll_txt(){
 	brfup[stm_id] = {};
 	brfup[stm_id].Mat_17_3 = ["talking", "him.", ];
 	brfup[stm_id].Mat_17_4 = ["make", "three", "tents", ];
+
+	// -----------
 	
 	const dead_know_response_144000 = `<p>This verse refers to the <a class='exam_ref' href='${hb.href_144000}'>144.000</a> saints of Revelation also mentioned in Daniel in the <a class='exam_ref' href='${hb.href_eternal_abhorrence}'>Eternal Abhorrence</a> (click on the links).</p>
-	<p> The most important thing to note about this verse is that it refers to people that have been resurrected. The Saints. The Great ones. The first fruits. The firstborn. The ones God brings with Jesus Christ. They are a FEW: 144.000 male genetic descendants of Israel when completed. They all have BODIES, and that is why they can actually CRY, SPEAK, GATHER and ASSEMBLY.</p>`;
-	
+	<p> The most important thing to note about this verse is that it refers to people that have been resurrected. The Saints. The Great ones. The first fruits. The firstborn. The ones God brings with Jesus Christ. They are a FEW: 144.000 male genetic descendants of Israel when completed. They all have BODIES, and that is why they can actually CRY, SPEAK, GATHER and ASSEMBLY.</p>`;	
 	
 	resp_bcit = `BIBREF_Rev_6_10 ${dead_know_response_INTRO}
 	${dead_know_response_144000}
@@ -162,6 +167,8 @@ export function init_en_poll_txt(){
 	brfup[stm_id] = {};
 	brfup[stm_id].Rev_6_10 = ["cried", "loud", "voice,", "saying,", ];
 	
+	// -----------
+	
 	resp_bcit = `BIBREF_Heb_12_23 ${dead_know_response_INTRO}
 	${dead_know_response_144000}
 	${dead_know_response_END}`;
@@ -173,6 +180,7 @@ export function init_en_poll_txt(){
 	brfup[stm_id] = {};
 	brfup[stm_id].Heb_12_23 = ["festal", "gathering", "assembly", ];
 	
+	// -----------
 
 	resp_bcit = `BIBREF_Luk_16_24 ${dead_know_response_INTRO}
 	<p>This verse is part of the famous PARABLE in Luke 16 about <a class='exam_ref' href='${hb.href_rich_and_laza}'>The rich and the poor Lazarus.</a>. Click the link to understand the meaning of the parable.</p>
@@ -188,194 +196,230 @@ export function init_en_poll_txt(){
 	
 	fill_range_with_stm_id("q_verse_for_knowledge_in_death__", "Luk_16_19_31", resp_bcit, true, brfup[stm_id]);
 	
-	lg.q12_1__sleep_sec = `<a class='exam_ref exam_title' href='${hb.href_sleeping}'>Sleep</a>`;
-	lg.q12_1__sleep = `Select a GOOD verse that supports that physically dead people DO HAVE CONSCIOUSNESS before <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a>.`;
-	lg.q12_1__no_consciousness = "According to TodaCarne.com none of these is a good verse";
-	lg.q12_1__verse1_str = uppercase_words_in_string(rf.isa_14_10_str, ["answer", "ask", "you,", ]);
-	lg.q12_1__verse1_href = rf.isa_14_10_href;
-	lg.q12_1__verse2_str = uppercase_words_in_string(rf.mat_17_3_str, ["talking", "him.", ]);;
-	lg.q12_1__verse2_href = rf.mat_17_3_href;
-	lg.q12_1__verse3_str = uppercase_words_in_string(rf.rev_6_10_str, ["cried", "loud", "voice,", "saying,", ]);
-	lg.q12_1__verse3_href = rf.rev_6_10_href;
-	lg.q12_1__verse4_str = uppercase_words_in_string(rf.heb_12_23_str, ["festal", "gathering", "assembly", ]);
-	lg.q12_1__verse4_href = rf.heb_12_23_href;
-	lg.q12_1__verse5_str = uppercase_words_in_string(rf.luk_16_24_str, ["cried", "said,", ]);
-	lg.q12_1__verse5_href = rf.luk_16_24_href;
+	// -----------
+	
+	const nowhere_knowledge = `<p> NOWHERE in this verse and its context is there any thing that remotely refers to physically dead people having KNOWLEDGE. It is really remarkable how the greek culture has affected the hebrew teachings of the hebrew scriptures.</p>`;
+	
+	const response_sheol = `<p> This verse refers to the fact that ALL dead people go to the Sheol, to the tomb, to the Sepulcre, to the pit. </p>
+	${nowhere_knowledge}
+	${dead_know_response_END}`;
+	
+	resp_bcit = `BIBREF_Gen_15_15 ${dead_know_response_INTRO}
+	${response_sheol}`;
 
-	const q12_1__response_INTRO = `<p> This is a commonly cited verse as objection to SPIRIT <a class='exam_ref' href='${hb.href_sleeping}'>sleep</a>.</p>
-	<p> When arguing against SPIRIT (NOT soul) <a class='exam_ref' href='${hb.href_sleeping}'>sleep</a> always remember that the whole bible refers to the dead as <a class='exam_ref' href='${hb.href_sleeping}'>SLEEP</a>, specially our Lord Jesus Christ. The reason is obvious: NO <a class='exam_ref' href='${hb.href_sleeping}'>sleeping</a> person has CONSCIOUSNESS. That is the most prominent characteristic of a <a class='exam_ref' href='${hb.href_sleeping}'>sleeping</a> person. Please read the section introducing the biblical concept of SPIRIT <a class='exam_ref' href='${hb.href_sleeping}'>sleep</a> of the completely FREE book <a class='exam_ref' href='${hb.href_home}'>TodaCarne.com</a>. </p>`;
-		
-	lg.q12_1__response_to_verse1 = `<a class='exam_ref' target='_blank' href=${rf.isa_14_10_href}>Isa 14:10</a> ${q12_1__response_INTRO}
-	<p> This verse refers to a literal future time or an spiritual one that happend as reafirmation of the literal case. The king of Babilon represents The Satan, that is why <a class='exam_ref' href=${rf.isa_14_12_href}>verse 12</a> is commonly cited to refer to The Satan. </p>
-	<p>Note that:</p> 
-	<li> <a class='exam_ref' href=${rf.isa_14_8_href}>Verse 8</a> says: Yes, the cypress trees rejoice with you, with the cedars of Lebanon, saying, "Since you are humbled, no lumberjack has come up against us". So for the spiritual case it is a metaphor and the literal case has not nappened yet because <a class='exam_ref' href=${rf.isa_14_7_href}>verse 7</a> has NOT happened literally: "The whole earth is at rest, and is quiet". 
-	<li> <a class='exam_ref' href=${rf.isa_14_9_txt_href}>Verse 9</a> shows that the literal case implies that the dead have AWAKEN (word <a class='exam_ref' href=${all_strongrefs.H5782_href}>H5782</a>) which has NOT happend either because the resurrection of the dead has not happend. 
-	<li> <a class='exam_ref' href=${rf.isa_14_18_txt_href}>Verse 18</a> tell us that each king is in his own HOUSE (word <a class='exam_ref' href=${all_strongrefs.H1004_href}>H1004</a>). For the literal case they have been resurrected. 
-	${dead_know_response_END}`;
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Gen_15_15");
+	lg[stm_id] = resp_bcit;
 	
+	brf[stm_id] = true;
 	
-	lg.q12_1__response_to_verse2 = `<a class='exam_ref' href=${rf.mat_17_3_href}>Mat 17:3</a> ${q12_1__response_INTRO}
-	<p>It is also recommended that you have at least read the section introducing the biblical concept of <a class='exam_ref' href='${hb.href_resurrection}'>Resurrection</a> and in particular the fact that <a class='exam_ref' href='${hb.href_not_yet_resu}'>It has not happend</a>.</p>
-	<p> The most important thing to note about this verse is that they were physically present, they all have BODIES, and that is why Peter, in <a class='exam_ref' href=${rf.mat_17_4_href}>verse 4</a>, offers to build three tents. Two tents for Moses and Elijah and one for Our Lord. They are physically ALIVE. They where in the Jewish festival of Sukkot. The feast of Tabernacles. Very appropiate signal to show that these "tabernacles" are going to be replaced by permanent "houses". </p>
-	${dead_know_response_END}
-	`;
+	// -----------
 	
-	const q12_1__response_144000 = `<p>This verse refers to the 144.000. Please read the section <a class='exam_ref' href='${hb.href_144000}'>144.000</a>.	Another section that could help is the one called <a class='exam_ref' href='${hb.href_eternal_abhorrence}'>Eternal Abhorrence</a>.</p>
-	<p> The most important thing to note about this verse is that it refers to people that have been resurrected. The Saints. The Great ones. The first fruits. The firstborn. The ones God brings with Jesus Christ. They are a FEW: 144.000 male genetic descendants of Israel when completed. They all have BODIES, and that is why they can actually CRY, SPEAK, GATHER and ASSEMBLY.</p>`;
+	resp_bcit = `BIBREF_Gen_25_8 ${dead_know_response_INTRO}
+	${response_sheol}`;
+
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Gen_25_8");
+	lg[stm_id] = resp_bcit;
 	
+	brf[stm_id] = true;
 	
-	lg.q12_1__response_to_verse3 = `<a class='exam_ref' href=${rf.rev_6_10_href}>Rev 6:10</a> ${q12_1__response_INTRO} 
-	${q12_1__response_144000}
-	${dead_know_response_END}`;
+	// -----------
 	
+	resp_bcit = `BIBREF_Gen_35_29 ${dead_know_response_INTRO}
+	${response_sheol}`;
+
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Gen_35_29");
+	lg[stm_id] = resp_bcit;
 	
-	lg.q12_1__response_to_verse4 = `<a class='exam_ref' href=${rf.heb_12_23_href}>Heb 12:23</a> ${q12_1__response_INTRO} 
-	${q12_1__response_144000}
-	${dead_know_response_END}`;
+	brf[stm_id] = true;
 	
+	// -----------
 	
-	lg.q12_1__response_to_verse5 = `<a class='exam_ref' href=${rf.luk_16_24_href}>Luk 16:24</a> ${q12_1__response_INTRO}
-	<p>This verse is part of the famous PARABLE in Luke. Please read the section called <a class='exam_ref' href='${hb.href_rich_and_laza}'>The rich and the poor Lazarus.</a>.</p>
-	<p> The most important thing to note about this verse is that it part of a PARABLE. So please read the correct <a class='exam_ref' href='${hb.href_rich_and_laza}'>INTERPRETATION</a>.</p>
-	${dead_know_response_END}
-	`;
-		
-	const q12_1__nowhere_consciousness = `<p> NOWHERE in this verse and its context is there any thing that remotely refers to CONSCIOUSNESS of physically dead people. It is really remarkable how the greek culture has affected the hebrew teachings of the hebrew scriptures.</p>`;
+	const response_spiritually_dead = `<p> This verse refers to <a class='exam_ref' href='${hb.href_death}'>spiritually dead people</a>, because they do NOT have <a class='exam_ref' href='${hb.href_life}'>The Life</a>, they have NOT been <a class='exam_ref' href='${hb.href_liberator}'>freed</a> from their <a class='exam_ref' href='${hb.href_death}'>spiritual death</a>. Click the links for further understanding. </p>`;
 	
-	const q12_1__response_sheol = `<p> This verse refers to the fact that ALL dead people go to the Sheol, to the tomb, to the Sepulcre, to the pit. </p>
-	${q12_1__nowhere_consciousness}
-	${dead_know_response_END}`;
-	
-	rdat = get_resp_for("q12_1__", rf.gen_15_15_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.gen_15_15_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__response_sheol}`;
-	
-	rdat = get_resp_for("q12_1__", rf.gen_25_8_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.gen_25_8_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__response_sheol}`;
-	
-	rdat = get_resp_for("q12_1__", rf.gen_35_29_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.gen_35_29_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__response_sheol}`;
-	
-	const q12_1__response_spiritually_dead = `<p> This verse refers to spiritually dead people. Please read the sections called <a class='exam_ref' href='${hb.href_life}'>Life</a>, <a class='exam_ref' href='${hb.href_death}'>Death</a>, and <a class='exam_ref' href='${hb.href_liberator}'>Liberator</a>.</p>`;
-	
-	rdat = get_resp_for("q12_1__", rf._1pe_3_19_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._1pe_3_19_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__response_spiritually_dead}
+	resp_bcit = `BIBREF_1Pe_3_19 ${dead_know_response_INTRO}
+	${response_spiritually_dead}
 	<p> The most important thing to note in this verse and its context is that ALL people are DEAD without Jesus Christ who is LIFE itself. So the verse refers to people PHYSICALLY alive but spiritually dead. Any person that does not believe in Jesus Christ is a slave, a PRISONER of the Spirit that rules this world, that person is a "spirit in prison". Jesus's RESURRECTION good news set that person free. It is a new begining. And the times of Noah, which were a new begining, were a SIGN of the new begining in the times of Christ. That is what the passage is about. Maybe NOT in a bad translation but certanly in the ancient koine greek.</p>
 	<p> The second thing to note is that NOWHERE, in the verse or its context, appears the greek word Hades, the greek word used in ancient greek manuscripts for the hebrew Sheol, the place where dead people go: the tomb, the Sepulcre, the pit. This passage is NOT talking about PHYSICALLY dead people. It is about spiritually dead people and they were ALL spiritually dead when Jesus died and resurrected. </p>
 	${dead_know_response_END}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf._2co_5_8_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._2co_5_8_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__nowhere_consciousness}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "1Pe_3_19");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_2Co_5_8 ${dead_know_response_INTRO}
+	${nowhere_knowledge}
 	<p>Ofcourse any believer in the RESURRECTION of Jesus Christ prefers to be absent of this body that dies AND, when RESURRECTED in a new body that cannot die, be present with the Lord. He is, after all, RESURRECTED in BODY and SPIRIT. So the ONLY way to be PRESENT with Him is to be ALSO RESURRECTED.</p>
 	${dead_know_response_END}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf.act_7_59_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.act_7_59_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	<p> This verse refers to the fact that when people die, as <a class='exam_ref' href=${rf.ecc_12_7_href}>Ecc 12:7</a> tells us, the spirit RETURNS to Elohim who gave it, so everything goes back as it was BEFORE the person was physically born. </p>
-	${q12_1__nowhere_consciousness}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "2Co_5_8");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_Act_7_59 ${dead_know_response_INTRO}
+	<p> This verse refers to the fact that when people die, as <br> 
+	BIBREF_Ecc_12_7 <br> tells us, the spirit RETURNS to Elohim who gave it, so everything GOES BACK as it was BEFORE the person was physically born. </p>
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf.luk_20_38_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.luk_20_38_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Act_7_59");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_Luk_20_38 ${dead_know_response_INTRO}
 	<p> This verse refers to the fact that dead people CAN be AWAKEN from their <a class='exam_ref' href='${hb.href_sleeping}'>SLEEP</a>, and that is why to the one who can WAKE them up they are still ALIVE.</p>
-	${q12_1__nowhere_consciousness}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
-	const q12_1__response_paradise = `<p> This verse refers to the PARADISE, a physical PLACE where RESURRECTED people will live eternally with Jesus Christ, NOT to the Sheol, to the tomb, to the Sepulcre, to the pit.</p>
-	${q12_1__nowhere_consciousness}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Luk_20_38");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	const response_paradise = `<p> This verse refers to the PARADISE, a physical PLACE where RESURRECTED people will live eternally with Jesus Christ, NOT to the Sheol, to the tomb, to the Sepulcre, to the pit. To be there dead people must be first AWAKEN from their <a class='exam_ref' href='${hb.href_sleeping}'>SLEEP</a>. Click the link for further understanding.</p>
+	${nowhere_knowledge}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf._2co_12_4_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._2co_12_4_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__response_paradise}
+	resp_bcit = `BIBREF_2Co_12_4 ${dead_know_response_INTRO}
+	${response_paradise}
 	${dead_know_response_END}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf.luk_23_43_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.luk_23_43_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__response_paradise}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "2Co_12_4");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_Luk_23_43 ${dead_know_response_INTRO}
+	${response_paradise}
 	${dead_know_response_END}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf._1ti_5_6_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._1ti_5_6_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__response_spiritually_dead}
-	${q12_1__nowhere_consciousness}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Luk_23_43");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_1Ti_5_6 ${dead_know_response_INTRO}
+	${response_spiritually_dead}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf.luk_15_24_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.luk_15_24_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__response_spiritually_dead}
-	${q12_1__nowhere_consciousness}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "1Ti_5_6");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_Luk_15_24 ${dead_know_response_INTRO}
+	${response_spiritually_dead}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf.jhn_4_24_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.jhn_4_24_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Luk_15_24");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_Jhn_4_24 ${dead_know_response_INTRO}
 	<p> This verse refers to PHYSICALLY alive people to worship in spirit and in truth.</p>
-	${q12_1__nowhere_consciousness}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf.heb_1_14_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.heb_1_14_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	<p>This verse refers to angels as spirits. The bible refers to any physically living person as a spirit. Please read the sections <a class='exam_ref' href='${hb.href_angels}'>Angels</a> and <a class='exam_ref' href='${hb.href_wings}'>Wings</a>.</p>
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Jhn_4_24");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_Heb_1_14 ${dead_know_response_INTRO}
+	<p>This verse refers to angels as spirits. The bible refers to any physically living person as a spirit. THese include <a class='exam_ref' href='${hb.href_angels}'>angels</a> and <a class='exam_ref' href='${hb.href_wings}'>creatures with wings</a>. Click the links for further understanding. </p>
 	${dead_know_response_END}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf.phl_1_23_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.phl_1_23_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__nowhere_consciousness}
-	<p>Ofcourse any believer in the RESURRECTION of Jesus Christ prefers depart and be with Christ when RESURRECTED in a new body that cannot die. He is, after all, RESURRECTED in BODY and SPIRIT. So the ONLY way to be with Him is to be ALSO RESURRECTED.</p>
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Heb_1_14");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_Phl_1_23 ${dead_know_response_INTRO}
+	${nowhere_knowledge}
+	<p>Ofcourse any believer in the RESURRECTION of Jesus Christ prefers to depart, to physically die, and be with Christ when RESURRECTED in a new body that cannot die. He is, after all, RESURRECTED in BODY and SPIRIT. So the ONLY way to be with Him is to be ALSO RESURRECTED.</p>
 	${dead_know_response_END}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf.psa_16_11_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.psa_16_11_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__nowhere_consciousness}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Phl_1_23");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_Psa_16_11 ${dead_know_response_INTRO}
+	${nowhere_knowledge}
 	<p>Ofcourse any believer in the RESURRECTION of Jesus Christ knows that he is The Way and The Life and that he will get to be in His presence when RESURRECTED in a new body that cannot die. He is, after all, RESURRECTED in BODY and SPIRIT. So the ONLY way to be in His presence is to be ALSO RESURRECTED.</p>
 	${dead_know_response_END}
-	`;
+	`;	
 	
-	rdat = get_resp_for("q12_1__", rf.isa_8_19_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.isa_8_19_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Psa_16_11");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_Isa_8_19 ${dead_know_response_INTRO}
 	<p> The prohibition in the Old Testament for people to speak to the dead is to prevent them from speaking to Celestial Powers, commonly known in the New Testament as DEMONS, that will pretend to be the dead person to decieve the one trying to communicate with the dead.</p>
-	${q12_1__nowhere_consciousness}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf._1th_4_14_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._1th_4_14_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${q12_1__response_INTRO}
-	${q12_1__response_144000}
-	${q12_1__nowhere_consciousness}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "Isa_8_19");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
+	
+	resp_bcit = `BIBREF_1Th_4_14 ${dead_know_response_INTRO}
+	${dead_know_response_144000}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;	
+	
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", "1Th_4_14");
+	lg[stm_id] = resp_bcit;
+	
+	brf[stm_id] = true;
+	
+	// -----------
 	
 	lg.q13_1__sleep = `Select all verses that support that dead people do NOT have CONSCIOUSNESS until <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a>.`;
 	lg.q13_1__verse1_str = uppercase_words_in_string(rf.jhn_11_11_str, ["asleep,", "awake", ]);
