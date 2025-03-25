@@ -11,6 +11,8 @@ export function init_module_text(){
 }
 
 export function init_en_poll_txt(){
+	console.log("Called init_en_poll_txt.");
+	
 	let rdat = null;
 	let cit_txt = null;
 	
@@ -53,8 +55,7 @@ export function init_en_poll_txt(){
 	const cl_jesus = `According to the bible, Jesus Christ claims that <br>`;
 	const cl_until = `The bible claims that AFTER physical death and UNTIL our resurrection <br>`;
 	const the_gospel = `${bf}To deny this is to deny the Good News, the Gospel.${ef}`;
-	
-	
+		
 	lg.q_sleep = `${cl_until}${bf}the spirit is ASLEEP and there is NO KNOWLEDGE.${ef}`;
 
 	lg.q_jesus_died = `${cl_bible}${bf}Jesus Christ died on the cross.${ef}`;
@@ -106,7 +107,7 @@ export function init_en_poll_txt(){
 	`;
 	
 	const dead_know_response_INTRO = `<p> This is a commonly cited verse as objection to 
-	"<a class='exam_ref' href='${hb.href_sleeping}'>the dead know NOTHING</a>".</p>`;
+	"<a class='exam_ref' href='${hb.href_sleeping}'>the dead know NOTHING</a>". Click on the link for more info. </p>`;
 	
 	const dead_know_response_END = `<p> So this verse <b>DOES NOT REFER</b> to the physically dead having KNOWLEDGE before resurrection. 
 		Only ALIVE people, which requires having a physycal body, can have knowledge. </p>`;
@@ -137,7 +138,7 @@ export function init_en_poll_txt(){
 	// -----------
 	
 	resp_bcit = `BIBREF_Mat_17_3 ${dead_know_response_INTRO}
-	<p>It important to note that the general <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead <a class='exam_ref' href='${hb.href_not_yet_resu}'>has not happend yet</a>. However tamporal resurrections happen in several places in the bible. So, the most important thing to note about this verse is that they were physically present, they all have BODIES, that is why they can TALK, and that is why Peter, in 
+	<p>It important to note that the general <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of the dead <a class='exam_ref' href='${hb.href_not_yet_resu}'>has not happend yet</a>. However temporal resurrections happen in several places in the bible. So, the most important thing to note about this verse is that they were physically present, they all have BODIES, that is why they can TALK, and that is why Peter, in 
 	<p> BIBREF_Mat_17_4 
 	<p>offers to build three tents. Two tents for Moses and Elijah and one for Our Lord. They are physically ALIVE. They where in the Jewish festival of Sukkot. The feast of Tabernacles. Very appropiate signal to show that these "tabernacles" are going to be replaced by permanent "houses". </p>
 	${dead_know_response_END}
@@ -153,7 +154,7 @@ export function init_en_poll_txt(){
 
 	// -----------
 	
-	const dead_know_response_144000 = `<p>This verse refers to the <a class='exam_ref' href='${hb.href_144000}'>144.000</a> saints of Revelation also mentioned in Daniel in the <a class='exam_ref' href='${hb.href_eternal_abhorrence}'>Eternal Abhorrence</a> (click on the links).</p>
+	const dead_know_response_144000 = `<p>This verse refers to the <a class='exam_ref' href='${hb.href_144000}'>144.000</a> saints of Revelation also mentioned in Daniel in the <a class='exam_ref' href='${hb.href_eternal_abhorrence}'>Eternal Abhorrence</a>.</p>
 	<p> The most important thing to note about this verse is that it refers to people that have been resurrected. The Saints. The Great ones. The first fruits. The firstborn. The ones God brings with Jesus Christ. They are a FEW: 144.000 male genetic descendants of Israel when completed. They all have BODIES, and that is why they can actually CRY, SPEAK, GATHER and ASSEMBLY.</p>`;	
 	
 	resp_bcit = `BIBREF_Rev_6_10 ${dead_know_response_INTRO}
@@ -183,7 +184,7 @@ export function init_en_poll_txt(){
 	// -----------
 
 	resp_bcit = `BIBREF_Luk_16_24 ${dead_know_response_INTRO}
-	<p>This verse is part of the famous PARABLE in Luke 16 about <a class='exam_ref' href='${hb.href_rich_and_laza}'>The rich and the poor Lazarus.</a>. Click the link to understand the meaning of the parable.</p>
+	<p>This verse is part of the famous PARABLE in Luke 16 about <a class='exam_ref' href='${hb.href_rich_and_laza}'>The rich and the poor Lazarus.</a>.</p>
 	${dead_know_response_END}
 	`;
 		
@@ -234,7 +235,7 @@ export function init_en_poll_txt(){
 	
 	// -----------
 	
-	const response_spiritually_dead = `<p> This verse refers to <a class='exam_ref' href='${hb.href_death}'>spiritually dead people</a>, because they do NOT have <a class='exam_ref' href='${hb.href_life}'>The Life</a>, they have NOT been <a class='exam_ref' href='${hb.href_liberator}'>freed</a> from their <a class='exam_ref' href='${hb.href_death}'>spiritual death</a>. Click the links for further understanding. </p>`;
+	const response_spiritually_dead = `<p> This verse refers to <a class='exam_ref' href='${hb.href_death}'>spiritually dead people</a>, because they do NOT have <a class='exam_ref' href='${hb.href_life}'>The Life</a>, they have NOT been <a class='exam_ref' href='${hb.href_liberator}'>freed</a> from their <a class='exam_ref' href='${hb.href_death}'>spiritual death</a>. </p>`;
 	
 	resp_bcit = `BIBREF_1Pe_3_19 ${dead_know_response_INTRO}
 	${response_spiritually_dead}
@@ -290,7 +291,7 @@ export function init_en_poll_txt(){
 	
 	// -----------
 	
-	const response_paradise = `<p> This verse refers to the PARADISE, a physical PLACE where RESURRECTED people will live eternally with Jesus Christ, NOT to the Sheol, to the tomb, to the Sepulcre, to the pit. To be there dead people must be first AWAKEN from their <a class='exam_ref' href='${hb.href_sleeping}'>SLEEP</a>. Click the link for further understanding.</p>
+	const response_paradise = `<p> This verse refers to the PARADISE, a physical PLACE where RESURRECTED people will live eternally with Jesus Christ, NOT to the Sheol, to the tomb, to the Sepulcre, to the pit. To be there dead people must be first AWAKEN from their <a class='exam_ref' href='${hb.href_sleeping}'>SLEEP</a>. </p>
 	${nowhere_knowledge}
 	`;
 	
@@ -358,7 +359,7 @@ export function init_en_poll_txt(){
 	// -----------
 	
 	resp_bcit = `BIBREF_Heb_1_14 ${dead_know_response_INTRO}
-	<p>This verse refers to angels as spirits. The bible refers to any physically living person as a spirit. THese include <a class='exam_ref' href='${hb.href_angels}'>angels</a> and <a class='exam_ref' href='${hb.href_wings}'>creatures with wings</a>. Click the links for further understanding. </p>
+	<p>This verse refers to angels as spirits. The bible refers to any physically living person as a spirit. THese include <a class='exam_ref' href='${hb.href_angels}'>angels</a> and <a class='exam_ref' href='${hb.href_wings}'>creatures with wings</a>.</p>
 	${dead_know_response_END}
 	`;
 	
