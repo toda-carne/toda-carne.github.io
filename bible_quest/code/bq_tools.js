@@ -211,6 +211,12 @@ function bibcit_to_bibobj(bcit){
 	return obj;
 }
 
+function bibobj_to_bibcit(bobj){
+	let bcit = num2abbr[bobj.book] + "_" + bobj.chapter + "_" + bobj.verse;
+	if(bobj.last_verse != null){ bcit = bcit + "_" + bobj.last_verse; }
+	return bcit;
+}
+
 export function make_bibref(book_num, chap_num, vers_num){
 	const bibref = bibref_prefix + num2abbr[book_num] + "_" + chap_num + "_" + vers_num;
 	return bibref
@@ -580,10 +586,44 @@ export function get_bibcit_obs(qid){
 }
 
 export function get_bibcit_obs_stm_id(qid, bcit){
-	const bibobj = bibcit_to_bibobj(bcit);
-	const kk = get_verse_key(bibobj, false);
-	const r_nam = qid + "reponse_" + kk;
+	const r_nam = qid + "_reponse_" + bcit;
 	return r_nam;
+}
+
+export function fill_range_with_stm_id(qid, bcit, stm, has_brefs, all_to_upper){
+	const lg = gvar.glb_poll_txt;
+	const brf = gvar.has_bibrefs;
+	const brfup = gvar.bibrefs_upper;
+	if(lg == null){ return; }
+	if(brf == null){ return; }
+	if(brfup == null){ return; }
+	
+	let stm2_id = null;
+	const bibobj = bibcit_to_bibobj(bcit);
+	if(bibobj.verse == null){ return; }
+	
+	if(bibobj.last_verse == null){
+		stm2_id = get_bibcit_obs_stm_id(qid, bcit);
+		lg[stm2_id] = stm;
+		brf[stm2_id] = has_brefs;
+		brfup[stm2_id] = all_to_upper;
+		return;
+	}
+	
+	const bibobj2 = JSON.parse(JSON.stringify(bibobj));
+	bibobj2.last_verse = null;
+	let bcit2 = null;
+	let ii = 0;
+	for(ii = bibobj.verse; ii <= bibobj.last_verse; ii++){
+		bibobj2.verse = ii;
+		bcit2 = bibobj_to_bibcit(bibobj2);
+		if(bcit2 == bcit){ continue; }
+			
+		stm2_id = get_bibcit_obs_stm_id(qid, bcit2);
+		lg[stm2_id] = stm;
+		brf[stm2_id] = has_brefs;
+		brfup[stm2_id] = all_to_upper;
+	}
 }
 
 export const all_strongrefs = {
