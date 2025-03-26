@@ -183,7 +183,7 @@ export function init_en_poll_txt(){
 	
 	// -----------
 
-	resp_bcit = `BIBREF_Luk_16_24 ${dead_know_response_INTRO}
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
 	<p>This verse is part of the famous PARABLE in Luke 16 about <a class='exam_ref' href='${hb.href_rich_and_laza}'>The rich and the poor Lazarus.</a>.</p>
 	${dead_know_response_END}
 	`;

@@ -2833,10 +2833,12 @@ function show_observation(qid, all_to_act, qid_cllr){
 	dv_stm.classList.add("observ_color");
 	
 	let stm_id = null;
+	let cho_bref = null;
 	if(quest.is_bibcit_observation){
 		const qid_bcit = Object.keys(quest.activated_if.c1)[0];
 		const quest_bcit = gvar.glb_poll_db[qid_bcit];
-		stm_id = get_bibcit_obs_stm_id(qid_bcit, bibref_to_bibcit(quest_bcit.answers.CHOSEN_BIBREF));
+		cho_bref = quest_bcit.answers.CHOSEN_BIBREF;
+		stm_id = get_bibcit_obs_stm_id(qid_bcit, bibref_to_bibcit(cho_bref));
 	} else {
 		stm_id = quest.htm_stm;
 	}
@@ -2851,6 +2853,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 
 	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[stm_id]){ 
 		dv_qstm.stm_id = stm_id;
+		dv_qstm.cho_bref = cho_bref;
 		set_bibrefs(dv_qstm);
 	}
 	

@@ -179,7 +179,7 @@ export function init_es_poll_txt(){
 	// -----------
 	
 	bcita = "Luk_16_24";
-	resp_bcit = `${bref}${bcita} ${dead_know_response_INTRO}
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
 	<p>Este versículo es parte de la famosa PARÁBOLA de Lucas 16 llamada <a class='exam_ref' href='${hb.href_rich_and_laza}'>El rico y el pobre Lázaro</a>.</p>
 	${dead_know_response_END}
 	`;
@@ -190,23 +190,35 @@ export function init_es_poll_txt(){
 	brfup[stm_id] = {};
 	brfup[stm_id][bcita] = ["llorando", "dijo:", ];
 
+	fill_range_with_stm_id("q_verse_for_knowledge_in_death__", "Luk_16_19_31", resp_bcit, true, brfup[stm_id]);
+	
 	// -----------
 	
-	const nowhere_consciousness = `<p> EN NINGUNA PARTE de este versículo y su contexto hay algo que se refiera remotamente a que las personas físicamente muertas tengan CONOCIMIENTO antes de su resurrección. Es realmente notable cómo la cultura griega ha afectado las enseñanzas hebreas de las escrituras hebreas.</p>`;
+	const nowhere_knowledge = `<p> EN NINGUNA PARTE de este versículo y su contexto hay algo que se refiera remotamente a que las personas físicamente muertas tengan CONOCIMIENTO antes de su resurrección. Es realmente notable cómo la cultura griega ha afectado las enseñanzas hebreas de las escrituras hebreas.</p>`;
 	
 	const response_sheol = `<p> Este versículo se refiere al hecho de que TODOS los muertos van al Seol, a la tumba, al Sepulcro, al foso. </p>
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	${dead_know_response_END}`;
 	
-	rdat = get_resp_for("q12_1__", rf.gen_15_15_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.gen_15_15_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
+	bcita = "Gen_15_15";
+	resp_bcit = `${bref}${bcita} ${dead_know_response_INTRO}
 	${response_sheol}`;
 	
-	rdat = get_resp_for("q12_1__", rf.gen_25_8_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.gen_25_8_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", bcita);
+	lg[stm_id] = resp_bcit;	
+	brf[stm_id] = true;
+
+	// -----------
+	
+	bcita = "Gen_25_8";
+	resp_bcit = `${bref}${bcita} ${dead_know_response_INTRO}
 	${response_sheol}`;
+	
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", bcita);
+	lg[stm_id] = resp_bcit;	
+	brf[stm_id] = true;
+
+	// -----------
 	
 	rdat = get_resp_for("q12_1__", rf.gen_35_29_obj);
 	cit_txt = rf[rdat.cit_kk + "_str"];
@@ -228,7 +240,7 @@ export function init_es_poll_txt(){
 	rdat = get_resp_for("q12_1__", rf._2co_5_8_obj);
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._2co_5_8_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	<p>Por supuesto, cualquier creyente en la RESURRECCIÓN de Jesucristo prefiere estar ausente de este cuerpo que muere y, cuando RESUCITE en un cuerpo nuevo que no puede morir, estar presente con el Señor. Él, después de todo, RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de estar PRESENTE con Él es estar TAMBIÉN RESUCITADO.</p>
 	${dead_know_response_END}
 	`;
@@ -237,7 +249,7 @@ export function init_es_poll_txt(){
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.act_7_59_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
 	<p> Este versiculo se refiere al hecho de que cuando una persona muere, como dice <a class='exam_ref' href=${rf.ecc_12_7_href}>Ecc 12:7</a>, el espíritu VUELVE a Elohim, que lo dió, asi que todo vuelve a estar como estaba ANTES de que la persona naciera físicamente.</p>
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
@@ -245,12 +257,12 @@ export function init_es_poll_txt(){
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.luk_20_38_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
 	<p> Este versiculo se refiere al hecho de que la gente muerta PUEDE ser DESPERTADA cuando esta <a class='exam_ref' href='${hb.href_sleeping}'>DORMIDITA</a>, y que para el que las puede DESPERTAR siguen VIVAS.</p>
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
 	const q12_1__response_paradise = `<p> Este versiculo se refiere al PARAISO, un LUGAR físico donde los RESUCITADOS vivirán eternamente con Jesucristo, NO se refiere al Sheol, a la tumba, al Sepulcro, al foso.</p>
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	`;
 	
 	rdat = get_resp_for("q12_1__", rf._2co_12_4_obj);
@@ -271,7 +283,7 @@ export function init_es_poll_txt(){
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._1ti_5_6_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
 	${q12_1__response_spiritually_dead}
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
@@ -279,7 +291,7 @@ export function init_es_poll_txt(){
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.luk_15_24_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
 	${q12_1__response_spiritually_dead}
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
@@ -287,7 +299,7 @@ export function init_es_poll_txt(){
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.jhn_4_24_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
 	<p> Este versiculo se refiere a personas FISICAMENTE vivas que adoran en Espíritu y en Verdad.</p>
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
@@ -301,7 +313,7 @@ export function init_es_poll_txt(){
 	rdat = get_resp_for("q12_1__", rf.phl_1_23_obj);
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.phl_1_23_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	<p>Por supuesto, cualquier creyente en la RESURRECCIÓN de Jesucristo prefiere partir y estar con Cristo cuando RESUCITE en un cuerpo nuevo que no puede morir. Después de todo, Él RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de estar con Él es estar RESUCITANDO TAMBIÉN.</p>
 	${dead_know_response_END}
 	`;
@@ -309,7 +321,7 @@ export function init_es_poll_txt(){
 	rdat = get_resp_for("q12_1__", rf.psa_16_11_obj);
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.psa_16_11_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	<p>Por supuesto, todo aquel que cree en la RESURRECCIÓN de Jesucristo sabe que Él es el Camino y la Vida y que podrá estar en Su presencia cuando RESUCITE en un cuerpo nuevo que no puede morir. Después de todo, Él RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de ver su ROSTRO es estar TAMBIÉN RESUCITADO.</p>
 	${dead_know_response_END}
 	`;
@@ -318,7 +330,7 @@ export function init_es_poll_txt(){
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.isa_8_19_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
 	<p> La prohibición en el Antiguo Testamento de que las personas hablen con los muertos es para evitar que hablen con los Poderes Celestiales, comúnmente conocidos en el Nuevo Testamento como DEMONIOS, que se harán pasar por la persona muerta para engañar a quien intente comunicarse con el muerto.</p>
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
 	
@@ -326,7 +338,7 @@ export function init_es_poll_txt(){
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._1th_4_14_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
 	${response_144000}
-	${nowhere_consciousness}
+	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;	
 	

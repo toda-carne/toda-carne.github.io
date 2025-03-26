@@ -232,7 +232,10 @@ export function bibcit_to_citxt(bcit){
 	return vcit;
 }
 
-async function bibcit_to_bibtxt(bcit, stm_id){
+async function bibcit_to_bibtxt(bcit, stm_id, cho_bref){
+	if(bcit == "CHOSEN"){
+		bcit = bibref_to_bibcit(cho_bref);
+	}
 	const bibobj = bibcit_to_bibobj(bcit);
 	
 	const cit_obj = JSON.parse(JSON.stringify(bibobj));
@@ -256,13 +259,13 @@ async function bibcit_to_bibtxt(bcit, stm_id){
 	return btxt;
 }
 
-async function replace_all_bibrefs(str, stm_id){
+async function replace_all_bibrefs(str, stm_id, cho_bref){
 	const words = str.split(' ');
 	let ii = 0;
 	for(ii = 0; ii < words.length; ii++){
 		const wrd = words[ii];
 		if(wrd.startsWith(bibref_prefix)){
-			words[ii] = await bibcit_to_bibtxt(bibref_to_bibcit(wrd), stm_id);
+			words[ii] = await bibcit_to_bibtxt(bibref_to_bibcit(wrd), stm_id, cho_bref);
 		}
 	}
 	
@@ -282,7 +285,7 @@ export function set_anchors_target(the_div){
 }
 
 export function set_bibrefs(dv_txt){
-	replace_all_bibrefs(dv_txt.innerHTML, dv_txt.stm_id).then((resp) => {
+	replace_all_bibrefs(dv_txt.innerHTML, dv_txt.stm_id, dv_txt.cho_bref).then((resp) => {
 		dv_txt.innerHTML = resp;
 		set_anchors_target(dv_txt);
 	});
