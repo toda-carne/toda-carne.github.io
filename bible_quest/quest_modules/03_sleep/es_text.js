@@ -219,110 +219,124 @@ export function init_es_poll_txt(){
 	
 	// -----------
 		
-	rdat = get_resp_for("q12_1__", rf._2co_5_8_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._2co_5_8_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
 	${nowhere_knowledge}
 	<p>Por supuesto, cualquier creyente en la RESURRECCIÓN de Jesucristo prefiere estar ausente de este cuerpo que muere y, cuando RESUCITE en un cuerpo nuevo que no puede morir, estar presente con el Señor. Él, después de todo, RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de estar PRESENTE con Él es estar TAMBIÉN RESUCITADO.</p>
 	${dead_know_response_END}
 	`;
+	fill_response("q_verse_for_knowledge_in_death__", "2Co_5_8", resp_bcit, true);
 	
-	rdat = get_resp_for("q12_1__", rf.act_7_59_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.act_7_59_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	<p> Este versiculo se refiere al hecho de que cuando una persona muere, como dice <a class='exam_ref' href=${rf.ecc_12_7_href}>Ecc 12:7</a>, el espíritu VUELVE a Elohim, que lo dió, asi que todo vuelve a estar como estaba ANTES de que la persona naciera físicamente.</p>
+	// -----------
+		
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
+	<p> Este versiculo se refiere al hecho de que cuando una persona muere, como <br> 
+	 BIBREF_Ecc_12_7 <br> nos dice: el espíritu VUELVE a Elohim, que lo dió, asi que todo vuelve a estar como estaba ANTES de que la persona naciera físicamente.</p>
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
+	fill_response("q_verse_for_knowledge_in_death__", "Act_7_59", resp_bcit, true);
 	
-	rdat = get_resp_for("q12_1__", rf.luk_20_38_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.luk_20_38_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	<p> Este versiculo se refiere al hecho de que la gente muerta PUEDE ser DESPERTADA cuando esta <a class='exam_ref' href='${hb.href_sleeping}'>DORMIDITA</a>, y que para el que las puede DESPERTAR siguen VIVAS.</p>
+	// -----------
+		
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
+	<p> Este versiculo se refiere al hecho de que la gente muerta PUEDE ser DESPERTADA cuando esta <a class='exam_ref' href='${hb.href_sleeping}'>DORMIDITA</a>, y que para el que las puede DESPERTAR siempre han estado VIVAS.</p>
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
+	fill_response("q_verse_for_knowledge_in_death__", "Luk_20_38", resp_bcit, true);
 	
-	const q12_1__response_paradise = `<p> Este versiculo se refiere al PARAISO, un LUGAR físico donde los RESUCITADOS vivirán eternamente con Jesucristo, NO se refiere al Sheol, a la tumba, al Sepulcro, al foso.</p>
+	// -----------
+			
+	const response_paradise = `<p> Este versiculo se refiere al PARAISO, un LUGAR físico donde los RESUCITADOS vivirán eternamente con Jesucristo, NO se refiere al Sheol, a la tumba, al Sepulcro, al foso.</p>
 	${nowhere_knowledge}
 	`;
 	
-	rdat = get_resp_for("q12_1__", rf._2co_12_4_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._2co_12_4_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	${q12_1__response_paradise}
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
+	${response_paradise}
+	${dead_know_response_END}
+	`;	
+	fill_response("q_verse_for_knowledge_in_death__", "2Co_12_4", resp_bcit, true);
+	
+	// -----------
+			
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
+	${response_paradise}
 	${dead_know_response_END}
 	`;
+	fill_response("q_verse_for_knowledge_in_death__", "Luk_23_43", resp_bcit, true);
 	
-	rdat = get_resp_for("q12_1__", rf.luk_23_43_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.luk_23_43_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	${q12_1__response_paradise}
-	${dead_know_response_END}
-	`;
+	// -----------
 	
-	rdat = get_resp_for("q12_1__", rf._1ti_5_6_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._1ti_5_6_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
 	${response_spiritually_dead}
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
+	fill_response("q_verse_for_knowledge_in_death__", "1Ti_5_6", resp_bcit, true);
 	
-	rdat = get_resp_for("q12_1__", rf.luk_15_24_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.luk_15_24_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
+	// -----------	
+	
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
 	${response_spiritually_dead}
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
+	fill_response("q_verse_for_knowledge_in_death__", "Luk_15_24", resp_bcit, true);
 	
-	rdat = get_resp_for("q12_1__", rf.jhn_4_24_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.jhn_4_24_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
+	// -----------	
+	
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
 	<p> Este versiculo se refiere a personas FISICAMENTE vivas que adoran en Espíritu y en Verdad.</p>
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
+	fill_response("q_verse_for_knowledge_in_death__", "Jhn_4_24", resp_bcit, true);
 	
-	rdat = get_resp_for("q12_1__", rf.heb_1_14_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.heb_1_14_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	<p>Este versículo se refiere a los ángeles como espíritus. La Biblia se refiere a cualquier persona físicamente viva como espíritu. Por favor lea las secciones de <a class='exam_ref' href='${hb.href_angels}'>Angeles</a> y <a class='exam_ref' href='${hb.href_wings}'>Alados</a>.</p>
+	// -----------	
+	
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
+	<p>Este versículo se refiere a los ángeles como espíritus. La Biblia se refiere a cualquier persona físicamente viva como espíritu. Esto incluye a los <a class='exam_ref' href='${hb.href_angels}'>ángeles</a> y las <a class='exam_ref' href='${hb.href_wings}'>criaturas aladas</a>.</p>
 	${dead_know_response_END}
 	`;
+	fill_response("q_verse_for_knowledge_in_death__", "Heb_1_14", resp_bcit, true);
 	
-	rdat = get_resp_for("q12_1__", rf.phl_1_23_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.phl_1_23_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
+	// -----------	
+	
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
 	${nowhere_knowledge}
 	<p>Por supuesto, cualquier creyente en la RESURRECCIÓN de Jesucristo prefiere partir y estar con Cristo cuando RESUCITE en un cuerpo nuevo que no puede morir. Después de todo, Él RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de estar con Él es estar RESUCITANDO TAMBIÉN.</p>
 	${dead_know_response_END}
 	`;
+	fill_response("q_verse_for_knowledge_in_death__", "Phl_1_23", resp_bcit, true);
 	
-	rdat = get_resp_for("q12_1__", rf.psa_16_11_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.psa_16_11_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
+	// -----------	
+	
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
 	${nowhere_knowledge}
 	<p>Por supuesto, todo aquel que cree en la RESURRECCIÓN de Jesucristo sabe que Él es el Camino y la Vida y que podrá estar en Su presencia cuando RESUCITE en un cuerpo nuevo que no puede morir. Después de todo, Él RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de ver su ROSTRO es estar TAMBIÉN RESUCITADO.</p>
 	${dead_know_response_END}
 	`;
+	fill_response("q_verse_for_knowledge_in_death__", "Psa_16_11", resp_bcit, true);
 	
-	rdat = get_resp_for("q12_1__", rf.isa_8_19_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.isa_8_19_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
+	// -----------	
+	
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
 	<p> La prohibición en el Antiguo Testamento de que las personas hablen con los muertos es para evitar que hablen con los Poderes Celestiales, comúnmente conocidos en el Nuevo Testamento como DEMONIOS, que se harán pasar por la persona muerta para engañar a quien intente comunicarse con el muerto.</p>
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
+	fill_response("q_verse_for_knowledge_in_death__", "Isa_8_19", resp_bcit, true);
 	
-	rdat = get_resp_for("q12_1__", rf._1th_4_14_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._1th_4_14_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
+	// -----------	
+	
+	resp_bcit = `BIBREF_CHOSEN ${dead_know_response_INTRO}
 	${response_144000}
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;	
+	fill_response("q_verse_for_knowledge_in_death__", "1Th_4_14", resp_bcit, true);
+	
+	// -----------	
 	
 	lg.q13_1__sleep = `Seleccione todos los versículos que soportan que las personas muertas NO tienen CONCIENCIA hasta la <a class='exam_ref' href='${hb.href_resurrection}'>resurrección</a>.`;
 	lg.q13_1__verse1_str = uppercase_words_in_string(rf.jhn_11_11_str, ["duerme;", "despertarle", ]);

@@ -176,8 +176,15 @@ export function replace_all_qrefs(str){
 
 const bibref_prefix = "BIBREF_";
 
+const regex_bibref = /\s*BIBREF_(\w*).*/;
+
 export function bibref_to_bibcit(brf){
-	return brf.slice(bibref_prefix.length);
+	const vcit = brf.split(regex_bibref);
+	const bcit = vcit[1];
+	if((bcit != null) && (bcit != "")){
+		return bcit;
+	}
+	return null;
 }
 
 function abbr2book_name(abbr){
@@ -235,6 +242,7 @@ export function bibcit_to_citxt(bcit){
 async function bibcit_to_bibtxt(bcit, stm_id, cho_bref){
 	if(bcit == "CHOSEN"){
 		bcit = bibref_to_bibcit(cho_bref);
+		if(bcit == null){ return bcit; }
 	}
 	const bibobj = bibcit_to_bibobj(bcit);
 	
@@ -264,8 +272,9 @@ async function replace_all_bibrefs(str, stm_id, cho_bref){
 	let ii = 0;
 	for(ii = 0; ii < words.length; ii++){
 		const wrd = words[ii];
-		if(wrd.startsWith(bibref_prefix)){
-			words[ii] = await bibcit_to_bibtxt(bibref_to_bibcit(wrd), stm_id, cho_bref);
+		const bcit = bibref_to_bibcit(wrd);
+		if(bcit != null){
+			words[ii] = await bibcit_to_bibtxt(bcit, stm_id, cho_bref);
 		}
 	}
 	

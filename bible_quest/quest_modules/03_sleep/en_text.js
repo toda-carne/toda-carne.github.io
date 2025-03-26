@@ -279,7 +279,7 @@ export function init_en_poll_txt(){
 	// -----------
 	
 	resp_bcit = `BIBREF_Luk_20_38 ${dead_know_response_INTRO}
-	<p> This verse refers to the fact that dead people CAN be AWAKEN from their <a class='exam_ref' href='${hb.href_sleeping}'>SLEEP</a>, and that is why to the one who can WAKE them up they are still ALIVE.</p>
+	<p> This verse refers to the fact that dead people CAN be AWAKEN from their <a class='exam_ref' href='${hb.href_sleeping}'>SLEEP</a>, and that is why to the one who can WAKE them up they have always been ALIVE.</p>
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
@@ -359,7 +359,7 @@ export function init_en_poll_txt(){
 	// -----------
 	
 	resp_bcit = `BIBREF_Heb_1_14 ${dead_know_response_INTRO}
-	<p>This verse refers to angels as spirits. The bible refers to any physically living person as a spirit. THese include <a class='exam_ref' href='${hb.href_angels}'>angels</a> and <a class='exam_ref' href='${hb.href_wings}'>creatures with wings</a>.</p>
+	<p>This verse refers to angels as spirits. The bible refers to any physically living person as a spirit. These include <a class='exam_ref' href='${hb.href_angels}'>angels</a> and <a class='exam_ref' href='${hb.href_wings}'>creatures with wings</a>.</p>
 	${dead_know_response_END}
 	`;
 	
