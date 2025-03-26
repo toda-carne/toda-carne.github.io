@@ -1,6 +1,6 @@
 
 
-import { gvar, uppercase_words_in_string, make_bible_ref, get_resp_for, all_strongrefs, bib_defaults, fill_range_with_stm_id, 
+import { gvar, uppercase_words_in_string, make_bible_ref, get_resp_for, all_strongrefs, bib_defaults, fill_response, fill_responses_for, 
 	get_bibcit_obs_stm_id, 
 } from '../../code/bq_tools.js';
 
@@ -195,7 +195,7 @@ export function init_en_poll_txt(){
 	brfup[stm_id] = {};
 	brfup[stm_id].Luk_16_24 = ["cried", "said,", ];
 	
-	fill_range_with_stm_id("q_verse_for_knowledge_in_death__", "Luk_16_19_31", resp_bcit, true, brfup[stm_id]);
+	fill_response("q_verse_for_knowledge_in_death__", "Luk_16_19_31", resp_bcit, true, brfup[stm_id]);
 	
 	// -----------
 	

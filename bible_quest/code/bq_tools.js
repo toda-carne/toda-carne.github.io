@@ -593,7 +593,14 @@ export function get_bibcit_obs_stm_id(qid, bcit){
 	return r_nam;
 }
 
-export function fill_range_with_stm_id(qid, bcit, stm, has_brefs, all_to_upper){
+export function fill_responses_for(qid, all_bcit, stm, has_brefs, all_to_upper){
+	if(all_bcit == null){ return; }
+	for (const bcit of all_bcit) {
+		fill_response(qid, bcit, stm, has_brefs, all_to_upper);
+	}
+}
+
+export function fill_response(qid, bcit, stm, has_brefs, all_to_upper){
 	const lg = gvar.glb_poll_txt;
 	const brf = gvar.has_bibrefs;
 	const brfup = gvar.bibrefs_upper;
@@ -605,7 +612,7 @@ export function fill_range_with_stm_id(qid, bcit, stm, has_brefs, all_to_upper){
 	const bibobj = bibcit_to_bibobj(bcit);
 	if(bibobj.verse == null){ return; }
 	
-	if(bibobj.last_verse == null){
+	if((bibobj.last_verse == null) || (bibobj.last_verse == "")){
 		stm2_id = get_bibcit_obs_stm_id(qid, bcit);
 		lg[stm2_id] = stm;
 		brf[stm2_id] = has_brefs;

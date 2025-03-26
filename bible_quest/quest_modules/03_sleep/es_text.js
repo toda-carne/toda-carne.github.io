@@ -1,5 +1,5 @@
 
-import { gvar, uppercase_words_in_string, make_bible_ref, get_resp_for, all_strongrefs, bib_defaults, fill_range_with_stm_id, 
+import { gvar, uppercase_words_in_string, make_bible_ref, get_resp_for, all_strongrefs, bib_defaults, fill_response, fill_responses_for, 
 	get_bibcit_obs_stm_id, 
 } from '../../code/bq_tools.js';
 
@@ -190,53 +190,35 @@ export function init_es_poll_txt(){
 	brfup[stm_id] = {};
 	brfup[stm_id][bcita] = ["llorando", "dijo:", ];
 
-	fill_range_with_stm_id("q_verse_for_knowledge_in_death__", "Luk_16_19_31", resp_bcit, true, brfup[stm_id]);
+	fill_response("q_verse_for_knowledge_in_death__", "Luk_16_19_31", resp_bcit, true, brfup[stm_id]);
 	
 	// -----------
 	
 	const nowhere_knowledge = `<p> EN NINGUNA PARTE de este versículo y su contexto hay algo que se refiera remotamente a que las personas físicamente muertas tengan CONOCIMIENTO antes de su resurrección. Es realmente notable cómo la cultura griega ha afectado las enseñanzas hebreas de las escrituras hebreas.</p>`;
 	
-	const response_sheol = `<p> Este versículo se refiere al hecho de que TODOS los muertos van al Seol, a la tumba, al Sepulcro, al foso. </p>
+	const response_sheol = `BIBREF_CHOSEN ${dead_know_response_INTRO}
+	<p> Este versículo se refiere al hecho de que TODOS los muertos van al Seol, a la tumba, al Sepulcro, al foso. </p>
 	${nowhere_knowledge}
 	${dead_know_response_END}`;
 	
-	bcita = "Gen_15_15";
-	resp_bcit = `${bref}${bcita} ${dead_know_response_INTRO}
-	${response_sheol}`;
+	fill_responses_for("q_verse_for_knowledge_in_death__", ["Gen_15_15", "Gen_25_8", "Gen_35_29", ], response_sheol, true);
 	
-	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", bcita);
-	lg[stm_id] = resp_bcit;	
-	brf[stm_id] = true;
-
 	// -----------
+		
+	const response_spiritually_dead = `BIBREF_CHOSEN ${dead_know_response_INTRO}
+	<p> Este versículo se refiere a personas <a class='exam_ref' href='${hb.href_death}'>espiritualmente muertas</a>, porque NO tienen <a class='exam_ref' href='${hb.href_life}'>La Vida</a>, no han sido <a class='exam_ref' href='${hb.href_liberator}'>liberadas</a> de su <a class='exam_ref' href='${hb.href_death}'>muerte espiritual</a>.</p>`;
 	
-	bcita = "Gen_25_8";
-	resp_bcit = `${bref}${bcita} ${dead_know_response_INTRO}
-	${response_sheol}`;
-	
-	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", bcita);
-	lg[stm_id] = resp_bcit;	
-	brf[stm_id] = true;
-
-	// -----------
-	
-	rdat = get_resp_for("q12_1__", rf.gen_35_29_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.gen_35_29_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	${response_sheol}`;
-	
-	const q12_1__response_spiritually_dead = `<p> Este versículo se refiere a personas espiritualmente muertas. Por favor, lea las secciones llamadas <a class='exam_ref' href='${hb.href_life}'>Vida</a>, <a class='exam_ref' href='${hb.href_death}'>Muerte</a>, and <a class='exam_ref' href='${hb.href_liberator}'>Libertador</a>.</p>`;
-	
-	rdat = get_resp_for("q12_1__", rf._1pe_3_19_obj);
-	cit_txt = rf[rdat.cit_kk + "_str"];
-	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._1pe_3_19_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	${q12_1__response_spiritually_dead}
+	resp_bcit = `${response_spiritually_dead}
 	<p> Lo más importante que hay que notar en este versículo y su contexto es que TODAS las personas están MUERTAS sin Jesucristo, quien es la VIDA misma. Así que el versículo se refiere a personas FÍSICAMENTE vivas pero espiritualmente muertas. Cualquier persona que no cree en Jesucristo es un esclavo, un PRISIONERO del Espíritu que gobierna este mundo, esa persona es un "espíritu en prisión". La buena noticia de la RESURRECCIÓN de Jesucristo es que liberó a esa persona. Es un nuevo comienzo. Y los tiempos de Noé, que fueron un nuevo comienzo, fueron una SEÑAL del nuevo comienzo en los tiempos de Jesucristo. De eso se trata el pasaje. Quizás NO en una mala traducción, pero ciertamente en el griego koiné antiguo.</p>
 
 	<p> La segunda cosa que hay que notar es que EN NINGÚN LUGAR, en el versículo o en su contexto, aparece la palabra griega Hades, la palabra griega usada en los manuscritos griegos antiguos para el Seol hebreo, el lugar donde van los muertos: la tumba, el Sepulcro, el pozo. Este pasaje NO está hablando de personas FÍSICAMENTE muertas. Se trata de personas espiritualmente muertas y TODOS estaban espiritualmente muertos cuando Jesucristo murió y resucitó.</p>
 	${dead_know_response_END}
 	`;
+
+	fill_response("q_verse_for_knowledge_in_death__", "1Pe_3_19", resp_bcit, true);
 	
+	// -----------
+		
 	rdat = get_resp_for("q12_1__", rf._2co_5_8_obj);
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._2co_5_8_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
@@ -282,7 +264,7 @@ export function init_es_poll_txt(){
 	rdat = get_resp_for("q12_1__", rf._1ti_5_6_obj);
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf._1ti_5_6_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	${q12_1__response_spiritually_dead}
+	${response_spiritually_dead}
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
@@ -290,7 +272,7 @@ export function init_es_poll_txt(){
 	rdat = get_resp_for("q12_1__", rf.luk_15_24_obj);
 	cit_txt = rf[rdat.cit_kk + "_str"];
 	lg[rdat.rnam] = `<a class='exam_ref' href=${rf.luk_15_24_href}>${rdat.cit_ref}</a> <b>${cit_txt}</b> ${dead_know_response_INTRO}
-	${q12_1__response_spiritually_dead}
+	${response_spiritually_dead}
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
