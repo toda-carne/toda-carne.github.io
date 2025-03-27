@@ -35,12 +35,12 @@ export function init_en_poll_txt(){
 	lg.a_simple_harder_to_understand = `Harder to understand`;
 	
 	lg.q1_0__bible = `<span class='big_font bold_font'>Bible?</span>`;
-	lg.q1_0__YES_bible = "YES Bible";
-	lg.q1_0__NO_bible = "NO Bible";
+	lg.q1_0__YES_bible = "YES, I like the Bible";
+	lg.q1_0__NO_bible = "NO, I don't like the Bible";
 
 	lg.q1_1__creator = `<span class='big_font bold_font'><a href='${hb.href_creator_tit}'>Creator</a>?</span>`;
-	lg.q1_1__YES_creator = "YES Creator";
-	lg.q1_1__NO_creator = "NO Creator";	
+	lg.q1_1__YES_creator = "YES there is a Creator";
+	lg.q1_1__NO_creator = "NO there is no Creator";	
 
 	lg.q1_1_2__six_days = `<span class='big_font bold_font'><a href='${hb.href_creation}'>Six Days</a>?</span>`;
 	lg.q1_1_2__YES_six_days = "YES six days";
