@@ -1630,47 +1630,6 @@ function save_button_handler(){
 		}
 	});
 	
-	/*
-	const mg_browser = gvar.glb_curr_lang.msg_save_in_browser;
-	const mg_cloud = gvar.glb_curr_lang.msg_save_in_cloud;
-	const where_arr = [mg_browser, mg_cloud];
-	toggle_select_option(dv_exam_top, id_pop_menu_sele, where_arr, function(dv_ret_w, dv_ops_w, val_sel_w, idx_sel_w){
-		dv_ops_w.remove();
-		if(val_sel_w == mg_browser){
-			const nw_nm = gvar.glb_curr_lang.msg_new_answers_name;
-			let all_sv_nams = read_all_exam_names();
-			let all_disp_nams = [];
-			if(all_sv_nams.length == 0){
-				all_disp_nams = [nw_nm];
-			} else {
-				all_disp_nams = all_sv_nams.concat([nw_nm]);
-			}
-			toggle_select_option(dv_exam_top, id_pop_menu_sele, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
-				dv_ops_n.remove();
-				if(exam_nm == nw_nm){
-					//toggle_exam_name_ed(dv_exam_nm, write_exam_object);
-					toggle_exam_name_ed(dv_exam_top, (the_nw_nam) => {
-						dv_exam_nm.innerHTML = the_nw_nam;
-						write_exam_object(the_nw_nam);
-						scroll_to_first_not_answered();
-						close_pop_menu();
-					});
-				} else {
-					dv_exam_nm.innerHTML = exam_nm;
-					write_exam_object(exam_nm);
-					scroll_to_first_not_answered();
-					close_pop_menu();
-				}
-			});
-		} else {
-			dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_fb_answers_writing;
-			write_firebase_qmodu_results().then((result) => {
-				dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_fb_answers_name;
-			});
-			close_pop_menu();
-		}
-	});
-	*/
 }
 
 function open_button_handler(){
@@ -2294,16 +2253,16 @@ function write_qmodu_results(err_fn){
 	
 }
 
-function can_write_qmodu_results(){
+function can_write_qmodu_result(){
 	const db = gvar.glb_poll_db;
 	const all_qids = db.all_qids_that_write;
 	for(const qid of all_qids){
 		const dv_qid = document.getElementById(qid);
 		if(dv_qid != null){
-			return true;
+			return dv_qid;
 		}
 	}
-	return false;
+	return null;
 }
 
 function write_firebase_qmodu_results(err_fn){
@@ -2317,7 +2276,8 @@ function write_firebase_qmodu_results(err_fn){
 	gvar.wrote_qmodu = true;
 	
 	close_pop_menu();
-	if(! can_write_qmodu_results()){
+	const dv_wrt = can_write_qmodu_result();
+	if(dv_wrt == null){
 		const msg = "write_firebase_qmodu_results. can_write_qmodu_results == false.";
 		console.error(msg);
 		if(err_fn != null){ err_fn(msg); }; 
@@ -2703,6 +2663,30 @@ function activate_signals(qid_cllr, all_to_act){
 }
 
 function ask_next(){
+	const dv_wrt = can_write_qmodu_result();
+	if(dv_wrt != null){
+		const quest = gvar.glb_poll_db[dv_wrt.id];
+		if(quest == null){ console.error("ask_next. (quest == null)."); return null; }
+		const dv_qstm = dv_wrt.dv_qstm;
+		let the_stm = null;
+		write_firebase_qmodu_results((err) => {
+			console.error(err);
+			const id_msg = quest.htm_stm_not_saved;
+			if(id_msg != null){ the_stm = get_msg(id_msg); }
+			if((id_msg != null) && (dv_qstm != null)){ dv_qstm.innerHTML = "" + the_stm; }
+		}).then((result) => {
+			if(fb_mod == null){ return; }
+			const id_msg = quest.htm_stm_saved_ok;
+			if(id_msg != null){ the_stm = get_msg(id_msg); }
+			
+			if((id_msg != null) && (dv_qstm != null)){ dv_qstm.innerHTML = "" + the_stm; }
+			if(fb_mod.tc_fb_user == null){
+				fill_div_user();
+			}
+			load_next_qmodu();
+		});
+		return null;
+	}
 	let stop_qid = gvar.glb_poll_db.stopping_observation_qid;
 	if(stop_qid != null){
 		scroll_to_qid(stop_qid);
@@ -2755,6 +2739,7 @@ function undo_last_quest(){
 		quest.has_answ = null;
 		quest.pos_page = null;
 		quest.watched = null;
+		if(quest.calls_write_object){ gvar.wrote_qmodu = false; }
 		
 		const dv_quest = document.getElementById(qid);
 		if(dv_quest != null){ dv_quest.remove(); }
@@ -2765,13 +2750,13 @@ function undo_last_quest(){
 		else if(undo_ok){ num_undo++; }
 		
 		if(num_undo == 2){
-			ask_next();
 			break;
 		}
 	
 		curr_idx--;
 	}
 	//console.log("get_curr_pos_page [2] curr_idx=" + curr_idx);
+	ask_next();
 	return quest;
 }
 
@@ -2834,8 +2819,9 @@ function show_observation(qid, all_to_act, qid_cllr){
 	
 	let stm_id = null;
 	let cho_bref = null;
+	let qid_bcit = null;
 	if(quest.is_bibcit_observation){
-		const qid_bcit = Object.keys(quest.activated_if.c1)[0];
+		qid_bcit = Object.keys(quest.activated_if.c1)[0];
 		const quest_bcit = gvar.glb_poll_db[qid_bcit];
 		cho_bref = quest_bcit.answers.CHOSEN_BIBREF;
 		stm_id = get_bibcit_obs_stm_id(qid_bcit, bibref_to_bibcit(cho_bref));
@@ -2843,6 +2829,10 @@ function show_observation(qid, all_to_act, qid_cllr){
 		stm_id = quest.htm_stm;
 	}
 	let the_stm = get_msg(stm_id);
+	if(quest.is_bibcit_observation && (the_stm == stm_id)){
+		stm_id = get_bibcit_obs_stm_id(qid_bcit, gvar.UNKNOWN_VERSE);
+		the_stm = get_msg(stm_id);
+	}
 	
 	const dv_qstm = dv_stm.appendChild(document.createElement("div"));
 	dv_qstm.id = qid + SUF_ID_QSTM;
@@ -2891,8 +2881,9 @@ function show_observation(qid, all_to_act, qid_cllr){
 			const dv_user = create_div_user(quest);
 			dv_user_observ.append(dv_user);
 		}
+		dv_quest.dv_qstm = dv_qstm;
 
-		write_firebase_qmodu_results((err) => {
+		/*write_firebase_qmodu_results((err) => {
 			console.error(err);
 			the_stm = get_msg(quest.htm_stm_not_saved);
 			dv_qstm.innerHTML = "" + the_stm;			
@@ -2904,7 +2895,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 				fill_div_user();
 			}
 			load_next_qmodu();
-		});
+		});*/
 	}
 
 	return dv_quest;

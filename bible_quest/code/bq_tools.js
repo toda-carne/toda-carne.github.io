@@ -10,6 +10,7 @@ import { get_bib_verse, } from './bq_bible_mgr.js';
 const INVALID_MESSAGE = "INVALID_MESSAGE";
 const SUF_QID = "__";
 const INVALID_BIBREF = "INVALID_BIBREF";
+const UNKNOWN_VERSE = "UNKNOWN_VERSE";
 
 export let gvar = {};
 
@@ -326,6 +327,7 @@ export function init_glb_vars(all_vars){
 	all_vars.bibref_prefix = bibref_prefix;
 	all_vars.qid_sufix = SUF_QID;
 	all_vars.INVALID_BIBREF = INVALID_BIBREF;
+	all_vars.UNKNOWN_VERSE = UNKNOWN_VERSE;
 	if(all_vars.has_qrefs == null){ all_vars.has_qrefs = {}; } 
 	if(all_vars.has_bibrefs == null){ all_vars.has_bibrefs = {}; } 
 	

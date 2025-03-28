@@ -106,11 +106,17 @@ export function init_es_poll_txt(){
 	
 	const dead_know_response_END = `<p> Así que este versiculo <b>NO SE REFIERE</b> a que las personas físicamente muertas tengan CONOCIMIENTO antes de su resurrección. Solamente las personas VIVAS, lo cual implica que tienen un cuerpo físico, pueden tener CONOCIMIENTO. </p>`;
 	
+	const dead_know_response_UNKNOWN_VERSE = `BIBREF_CHOSEN <p> Este versículo no parece decir nada acerca de que las personas físicamente muertas tengan CONOCIMIENTO antes de su resurrección. Si usted está seguro que se puede usar para argumentar a favor, por favor escriba un correo a debate@SiBiblia.com explicando el caso. </p>`;
+
 	let resp_bcit = null;
 	let stm_id = null;
 	let bref = gvar.bibref_prefix;
 	let bcita = null;
 	
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", gvar.UNKNOWN_VERSE);
+	lg[stm_id] = dead_know_response_UNKNOWN_VERSE;
+	brf[stm_id] = true;
+
 	// -----------
 	
 	resp_bcit = `BIBREF_Isa_14_10 ${dead_know_response_INTRO}

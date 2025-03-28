@@ -112,8 +112,14 @@ export function init_en_poll_txt(){
 	const dead_know_response_END = `<p> So this verse <b>DOES NOT REFER</b> to the physically dead having KNOWLEDGE before resurrection. 
 		Only ALIVE people, which requires having a physycal body, can have knowledge. </p>`;
 	
+	const dead_know_response_UNKNOWN_VERSE = `BIBREF_CHOSEN  <p> This verse does not seem to talk about physically dead people having KNOWLEDGE before resurrection. If you are sure that this verse can be used to argue for that, please write an email to debate@SiBibla.com explaining the case. </p>`;
+
 	let resp_bcit = null;
 	let stm_id = null;
+
+	stm_id = get_bibcit_obs_stm_id("q_verse_for_knowledge_in_death__", gvar.UNKNOWN_VERSE);
+	lg[stm_id] = dead_know_response_UNKNOWN_VERSE;
+	brf[stm_id] = true;
 
 	// -----------
 	

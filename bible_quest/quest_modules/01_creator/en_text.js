@@ -21,6 +21,7 @@ export function init_en_poll_txt(){
 	const lg = gvar.glb_poll_txt;
 	
 	const module_img_dir = gvar.qmodu_img_dir;
+	const site_img_dir = gvar.site_img_dir;
 	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
@@ -62,8 +63,7 @@ export function init_en_poll_txt(){
 	lg.a_YES_logic = "YES logic";
 	lg.a_NO_logic = "NO logic";
 	
-	const logic_needed = ` is needed in every day life. It is part of our systems. The question refers to that fact. You can change your
-	answer by clicking on it or by going back with the 'Ups' button`;
+	const logic_needed = ` is needed in every day life. It is part of our systems. The question refers to that fact.`;
 	
 	lg.o_logic_comm = `Logic ${logic_needed}`;
 
@@ -76,26 +76,26 @@ export function init_en_poll_txt(){
 	lg.q_technology = `<span class='big_font bold_font'>Technology?</span>`;
 	lg.o_technology_comm = `Technology uses logic. Technology ${logic_needed}`;
 	
-	lg.o_logic_incons_comm = `It seems you have some inconsistent answers if yo admit the necesity of logic.`;
+	lg.o_logic_incons_comm = `It seems you have some inconsistent answers if you admit the necesity of logic.`;
 	
 	lg.q_YES_NO_evidence = `<span class='big_font bold_font'><a href='${hb.href_evidence}'>Evidence</a>?</span>`;
 	lg.a_YES_evidence = "YES evidence";
 	lg.a_NO_evidence = "NO evidence";
 
-	const evidence_needed = ` is needed in every day life. It is needed to gain trust. The question refers to that fact. You can change your answer by clicking on it or by going back with the 'Ups' button`;
+	const evidence_needed = ` is needed in every day life. It is needed to gain trust. The question refers to that fact.`;
 
 	lg.o_evidence_comm = `Evidence ${evidence_needed}`;
 	
 	lg.q_justice = `<span class='big_font bold_font'>Justice?</span>`;
-	lg.o_justice_comm = `Justice uses evidence. Justice ${evidence_needed}`;
+	lg.o_justice_comm = `Human justice uses evidence. Evidence in justice ${evidence_needed}`;
 	lg.q_law = `<span class='big_font bold_font'>Law?</span>`;
-	lg.o_law_comm = `Law uses evidence. Law ${evidence_needed}`;
+	lg.o_law_comm = `Human law uses evidence. Evidence in law ${evidence_needed}`;
 	lg.q_contracts = `<span class='big_font bold_font'>Contracts?</span>`;
-	lg.o_contracts_comm = `A contract uses evidence. A contract ${evidence_needed}`;
+	lg.o_contracts_comm = `Contracts use evidence. Evidence in contracts ${evidence_needed}`;
 
-	lg.o_technology2_comm = `Technology uses evidence. Technology ${evidence_needed}`;
+	lg.o_technology2_comm = `Technology uses evidence. Evidence in technology ${evidence_needed}`;
 
-	lg.o_evidence_incons_comm = `It seems you have some inconsistent answers if yo admit the necesity of evidence.`;
+	lg.o_evidence_incons_comm = `It seems you have some inconsistent answers if you admit the necesity of evidence.`;
 	
 	lg.q_noah = `<span class='big_font bold_font'>Is Noah and the flood history?</span>`;
 	lg.q_genesis = `<span class='big_font bold_font'>Is the book of Genesis history?</span>`;
@@ -111,7 +111,6 @@ export function init_en_poll_txt(){
 	lg.o_knife_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a knife.</span>`;
 	lg.o_clock_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a clock.</span>`;
 	lg.o_phone_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a phone.</span>`;
-	lg.o_laptop_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a laptop.</span>`;
 	lg.o_laptop_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a laptop.</span>`;
 	
 	lg.o_complexity_with_design_is_harder_comm = `<span class='big_font bold_font'>More complexity and more design makes it harder to <a href='${hb.href_creator_tit}'>make</a></span>`;
@@ -163,7 +162,7 @@ export function init_en_poll_txt(){
 	
 	lg.o_biology_req_creativity_comm = `Logic and evidence show that biological machinery is much harder to make than machinery made by humans. If we are going to call ourselves itelligent designers with technical creatitivy for the machinery we make, we have to recognize that biological machinery also requires an intelligent designer with technical creativiy much greater than ours.`;
 	
-	lg.o_change_creator_comm = `You had chosen NO to creator. It seems you have changed your mind. Please change get rid of this comment to continue.`;
+	lg.o_change_creator_comm = `You had chosen NO to creator. It seems you have changed your mind. Please change your answer to get rid of this comment.`;
 
 	lg.o_faulty_logic_comm = `To continue with these questions you need get rid of this observation because your logic based on evidence seems faulty.`;
 	
@@ -175,39 +174,13 @@ export function init_en_poll_txt(){
 	lg.o_get_qrcode = `<span class='has_left_padding very_big_font bold_font'>You need to login to get your QR code and start spreading the Good News and winning some while doing so. Please login.</span>`;
 	
 	lg.o_congrats_you_have_a_qrcode = `
-		Congrats ! You can now spread the Good News using your QR code. Anyone using your QR code to access this page will be registered as a refered person by you. The more people use your QR code the more you will win, even if you or they do not donate.
+		Congrats ! You can now spread the Good News using your QR code. Anyone using your QR code to access this page will be registered as a refered person by you. The more people use your QR code the more you will win.
 	`;
 	
 	lg.o_sorry_no_loging_no_qrcode = `
-		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
-		<span class='big_font bold_font'>Sorry. No Google login, no QR code. If you don have a <a href='http://accounts.google.com'>Google account</a> please get one by clicking the <a href='http://accounts.google.com'>link</a>. You can login at any time by clicking the person in the top menu bar.</span>
+		<img class="img_observ" src="${site_img_dir}/woman_shrugging.webp"><br>
+		<span class='big_font bold_font'>Sorry. No Google login, no QR code. If you don have a <a href='http://accounts.google.com'>Google account</a>, please get one by clicking the <a href='http://accounts.google.com'>link</a>. You can login at any time by clicking in "Guest" or by clicking in the icon <img id="id_top_user_picture" class="img_user" src="${site_img_dir}/user.jpg"></span>
 	`;
-	
-	lg.t_good_job = `<span class='has_left_padding very_big_font bold_font'>Good job !</span>`;
-	lg.q_participate = `<span class='big_font bold_font'>Participate?</span>`;
-	lg.q_win_money = `<span class='big_font bold_font'>Win?</span>`;
-
-	lg.o_chose_yes_to_participate = `<span class='very_big_font bold_font'>
-		Waiting for Google Login. If you don have one get a <a href='http://accounts.google.com'>Google account</a>.</span>`;
-	lg.o_congrats_you_have_a_ticket = `
-		<img class="img_observ" src="${module_img_dir}/ticket.webp"><br>
-		<span class='very_big_font bold_font'>Congrats ! You have a ticket</span>
-	`;
-	lg.o_sorry_no_loging_no_participation = `
-		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
-		<span class='very_big_font bold_font'>Sorry. No Google login, no ticket. 
-			If you don have one get a <a href='http://accounts.google.com'>Google account</a>.</span>
-	`;
-	
-	lg.i_woman_shrugging = `<img src="${module_img_dir}/woman_shrugging.webp">`;
-	lg.o_chose_no_participation = `
-		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
-		<span class='very_big_font bold_font'>You chose no ...</span>
-	`;
-
-	lg.a_zero = `Zero`;
-	lg.a_one = `One`;
-	lg.a_more_than_one = `More than one`;
 	
 }
 

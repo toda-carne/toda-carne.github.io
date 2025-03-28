@@ -24,6 +24,7 @@ export function init_es_poll_txt(){
 	const lg = gvar.glb_poll_txt;
 	
 	const module_img_dir = gvar.qmodu_img_dir;
+	const site_img_dir = gvar.site_img_dir;
 	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
@@ -31,7 +32,7 @@ export function init_es_poll_txt(){
 	
 	lg.qmodu_title = `Creador de Bio-maquinas?`;  
 	
-	lg.a_simple_YES = `YES`;
+	lg.a_simple_YES = `SI`;
 	lg.a_simple_NO = `NO`;	
 
 	lg.a_simple_harder_to_make = `Harder to make`;
@@ -64,153 +65,124 @@ export function init_es_poll_txt(){
 	lg.a_YES_logic = "SI lógica";
 	lg.a_NO_logic = "NO lógica";
 	
-	const logic_needed = ` es necesaria para el dia a dia. Hace parte de nuestros sistemas. La pregunta se refiere a ese hecho.`;
+	const logic_needed = ` se necesita en el dia a dia. Hace parte de nuestros sistemas. La pregunta se refiere a ese hecho.`;
 	
 	lg.o_logic_comm = `La lógica ${logic_needed}`;
 
-	lg.q_language = `<span class='big_font bold_font'>Language?</span>`;
-	lg.o_language_comm = `Laguage uses logic. Laguage ${logic_needed}`;
+	lg.q_language = `<span class='big_font bold_font'>Lenguaje?</span>`;
+	lg.o_language_comm = `En el lenguaje se usa la lógica. La lógica en el lenguaje ${logic_needed}`;
 
-	lg.q_business = `<span class='big_font bold_font'>Business?</span>`;
-	lg.o_business_comm = `Business uses logic. Business ${logic_needed}`;
+	lg.q_business = `<span class='big_font bold_font'>Comercio?</span>`;
+	lg.o_business_comm = `En el comercio se usa la lógica. La lógica en el comercio ${logic_needed}`;
 	
-	lg.q_technology = `<span class='big_font bold_font'>Technology?</span>`;
-	lg.o_technology_comm = `Technology uses logic. Technology ${logic_needed}`;
+	lg.q_technology = `<span class='big_font bold_font'>Tecnología?</span>`;
+	lg.o_technology_comm = `En la tecnología se usa la lógica. La lógica en la tecnología ${logic_needed}`;
 	
-	lg.o_logic_incons_comm = `It seems you have some inconsistent answers if yo admit the necesity of logic.`;
+	lg.o_logic_incons_comm = `Parece que usted tiene respuestas inconsistentes si ud. admite la necesidad de la lógica.`;
 	
-	lg.q_YES_NO_evidence = `<span class='big_font bold_font'><a href='${hb.href_evidence}'>Evidence</a>?</span>`;
-	lg.a_YES_evidence = "YES evidence";
-	lg.a_NO_evidence = "NO evidence";
+	lg.q_YES_NO_evidence = `<span class='big_font bold_font'><a href='${hb.href_evidence}'>Evidencia</a>?</span>`;
+	lg.a_YES_evidence = "SI evidencia";
+	lg.a_NO_evidence = "NO evidencia";
 
-	const evidence_needed = ` is needed in every day life. It is needed to gain trust. The question refers to that fact. You can change your answer by clicking on it or by going back with the 'Ups' button`;
+	const evidence_needed = ` se necesita en el dia a dia. Se necesita para obtener confianza. La pregunta se refiere a ese hecho.`;
 
-	lg.o_evidence_comm = `Evidence ${evidence_needed}`;
+	lg.o_evidence_comm = `Evidencia ${evidence_needed}`;
 	
-	lg.q_justice = `<span class='big_font bold_font'>Justice?</span>`;
-	lg.o_justice_comm = `Justice uses evidence. Justice ${evidence_needed}`;
-	lg.q_law = `<span class='big_font bold_font'>Law?</span>`;
-	lg.o_law_comm = `Law uses evidence. Law ${evidence_needed}`;
-	lg.q_contracts = `<span class='big_font bold_font'>Contracts?</span>`;
-	lg.o_contracts_comm = `A contract uses evidence. A contract ${evidence_needed}`;
+	lg.q_justice = `<span class='big_font bold_font'>Justicia?</span>`;
+	lg.o_justice_comm = `La justicia humana usa evidencia. La evidencia en la justicia ${evidence_needed}`;
+	lg.q_law = `<span class='big_font bold_font'>Ley?</span>`;
+	lg.o_law_comm = `La ley humana usa evidencia. La evidencia en la ley ${evidence_needed}`;
+	lg.q_contracts = `<span class='big_font bold_font'>Contratos?</span>`;
+	lg.o_contracts_comm = `Los contratos usan evidencia. La evidencia en los contratos ${evidence_needed}`;
 
-	lg.o_technology2_comm = `Technology uses evidence. Technology ${evidence_needed}`;
+	lg.o_technology2_comm = `La tecnología usa evidencia. La evidencia en tecnología ${evidence_needed}`;
 
-	lg.o_evidence_incons_comm = `It seems you have some inconsistent answers if yo admit the necesity of evidence.`;
+	lg.o_evidence_incons_comm = `Parece que usted tiene respuestas inconsistentes si ud. admite la necesidad de la evidencia.`;
 	
-	lg.q_noah = `<span class='big_font bold_font'>Is Noah and the flood history?</span>`;
-	lg.q_genesis = `<span class='big_font bold_font'>Is the book of Genesis history?</span>`;
+	lg.q_noah = `<span class='big_font bold_font'>Noé y el diluvio son historia?</span>`;
+	lg.q_genesis = `<span class='big_font bold_font'>El libro de Génesis es historia?</span>`;
 	
-	lg.q_requires_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_tch_crea}'>creativity</a>?</span>`;
+	lg.q_requires_creativity = `<span class='big_font bold_font'>Requiere diseño y <a href='${hb.href_tch_crea}'>creatividad</a>?</span>`;
 	
-	lg.q_made_by_ape = "<span class='big_font bold_font'>Can an ape make it?</span>";
-	lg.q_evidence_made_by_ape = "<span class='big_font bold_font'>Is there evidence that an ape can make it?</span>";
+	lg.q_made_by_ape = "<span class='big_font bold_font'>Puede un simio hacerlo?</span>";
+	lg.q_evidence_made_by_ape = "<span class='big_font bold_font'>Hay evidencia de que un simio pueda hacerlo?</span>";
 	
-	const creativity_comm = `Logic and evidence show that one reason humans call themselves itelligent, designers and creators is the technology they make.` 
+	const creativity_comm = `La lógica y la evidencia muestran que una de las razones de los humanos para llamarse a si mismos inteligentes, diseñadores y creadores es la tecnología que construyen.` 
 
-	lg.o_car_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a car.</span>`;
-	lg.o_knife_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a knife.</span>`;
-	lg.o_clock_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a clock.</span>`;
-	lg.o_phone_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a phone.</span>`;
-	lg.o_laptop_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a laptop.</span>`;
-	lg.o_laptop_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} One example is a laptop.</span>`;
+	lg.o_car_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} Un ejemplo es un automóvil.</span>`;
+	lg.o_knife_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} Un ejemplo es un cuchillo.</span>`;
+	lg.o_clock_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} Un ejemplo es un reloj.</span>`;
+	lg.o_phone_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} Un ejemplo es un celular.</span>`;
+	lg.o_laptop_req_creativity_comm = `<span class='big_font bold_font'>${creativity_comm} Un ejemplo es un portatil.</span>`;
 	
-	lg.o_complexity_with_design_is_harder_comm = `<span class='big_font bold_font'>More complexity and more design makes it harder to <a href='${hb.href_creator_tit}'>make</a></span>`;
+	lg.o_complexity_with_design_is_harder_comm = `<span class='big_font bold_font'>Mas complejidad y mas diseño lo hacen mas difícil de <a href='${hb.href_creator_tit}'>hacer o construir</a></span>`;
 
-	lg.q_harder_to_make = `<span class='big_font bold_font'>Harder to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
+	lg.q_harder_to_make = `<span class='big_font bold_font'>Qué es mas difícil de <a href='${hb.href_creator_tit}'>hacer</a>?</span>`;
 
-	lg.q_more_time = `<span class='big_font bold_font'>What takes more time to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
-	lg.q_more_people = `<span class='big_font bold_font'>What takes more people to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
-	lg.q_more_planning = `<span class='big_font bold_font'>What takes more planning to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
-	lg.q_more_steps = `<span class='big_font bold_font'>What takes more steps to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
-	lg.q_more_complexity = `<span class='big_font bold_font'>What has more complexity to <a href='${hb.href_creator_tit}'>make</a>?</span>`;
+	lg.q_more_time = `<span class='big_font bold_font'>Qué es mas demorado de <a href='${hb.href_creator_tit}'>hacer</a>?</span>`;
+	lg.q_more_people = `<span class='big_font bold_font'>Qué necesita de mas personas para <a href='${hb.href_creator_tit}'>hacerlo</a>?</span>`;
+	lg.q_more_planning = `<span class='big_font bold_font'>Qué necesita un plan mas complejo para <a href='${hb.href_creator_tit}'>hacerlo</a>?</span>`;
+	lg.q_more_steps = `<span class='big_font bold_font'>Qué necesita mas pasos para <a href='${hb.href_creator_tit}'>hacerlo</a>?</span>`;
+	lg.q_more_complexity = `<span class='big_font bold_font'>Qué es mas complejo de <a href='${hb.href_creator_tit}'>hacer</a>?</span>`;
 	
-	lg.a_building = `A building`;
-	lg.a_knife = `A knife`;
+	lg.a_building = `Un edificio`;
+	lg.a_knife = `Un cuchillo`;
 
-	lg.a_car = `A car`;
-	lg.a_lamp = `A lamp`;
+	lg.a_car = `Un carro`;
+	lg.a_lamp = `Una lámpara`;
 
-	lg.a_clock = `A clock`;
-	lg.a_cellphone = `A cellphone`;
+	lg.a_clock = `Un reloj`;
+	lg.a_cellphone = `Un celular`;
 
-	lg.a_car_wheel = `A car wheel`;
-	lg.a_foot = `A foot`;
+	lg.a_car_wheel = `Una llanta`;
+	lg.a_foot = `Un pie`;
 	
-	lg.a_air_purifier = `An air purifier`;
-	lg.a_human_lung = `A human lung`;
+	lg.a_air_purifier = `Un purificador de aire`;
+	lg.a_human_lung = `Un pulmón`;
 	
-	lg.a_human_body = `A human body`;
+	lg.a_human_body = `Un cuerpo humano`;
 
-	lg.q_make_foot = `<span class='big_font bold_font'>Can we <a href='${hb.href_creator_tit}'>make</a> you a foot from your DNA?</span>`;
-	lg.q_make_lung = `<span class='big_font bold_font'>Can we <a href='${hb.href_creator_tit}'>make</a> you a lung from your DNA?</span>`;
-	lg.q_make_body = `<span class='big_font bold_font'>Can we <a href='${hb.href_creator_tit}'>make</a> you a body from your DNA?</span>`;
+	lg.q_make_foot = `<span class='big_font bold_font'>Podemos <a href='${hb.href_creator_tit}'>hacerle</a> un pie a partir de su ADN?</span>`;
+	lg.q_make_lung = `<span class='big_font bold_font'>Podemos <a href='${hb.href_creator_tit}'>hacerle</a> un pulmón a partir de su ADN?</span>`;
+	lg.q_make_body = `<span class='big_font bold_font'>Podemos <a href='${hb.href_creator_tit}'>hacerle</a> un cuerpo a partir de su ADN?</span>`;
 
-	lg.q_why_amputees = `<span class='big_font bold_font'>Have you seen an amputee?</span>`;
-	lg.q_why_one_lung = `<span class='big_font bold_font'>Are there people breathing on just one lung?</span>`;
-	lg.q_why_die = `<span class='big_font bold_font'>Are you going to die?</span>`;
+	lg.q_why_amputees = `<span class='big_font bold_font'>Ha visto un amputado?</span>`;
+	lg.q_why_one_lung = `<span class='big_font bold_font'>Hay personas respirando con un solo pulmón?</span>`;
+	lg.q_why_die = `<span class='big_font bold_font'>Usted se va a morir?</span>`;
 
-	lg.o_biology_is_harder_comm = `Logic and evidence show that biological machinery is much harder to make than machinery made by humans. That is why we cannot reprodce biological machinery at will.`;
+	lg.o_biology_is_harder_comm = `La lógica y la evidencia muestran que la maquinaria biológica es mucho mas difícil de hacer que la maquinaria hecha por los humanos. Es por eso que no podemos reproducir a voluntad la maquinaria biológica.`;
 
-	lg.q_phone_mitosis = `<span class='big_font bold_font'>Can we make phones that split in two identical ones?</span>`;
-	lg.q_truck_baby = `<span class='big_font bold_font'>Can we make trucks that have baby trucks?</span>`;
-	lg.q_red_cell = `<span class='big_font bold_font'>Can we make a red cell?</span>`;
-	lg.q_human_egg = `<span class='big_font bold_font'>Can we make a human egg?</span>`;
-	lg.q_liver = `<span class='big_font bold_font'>Can we make a human liver?</span>`;
+	lg.q_phone_mitosis = `<span class='big_font bold_font'>Podemos hacer celulares que se dividan en otros dos identicos?</span>`;
+	lg.q_truck_baby = `<span class='big_font bold_font'>Podemos hacer tractomulas que tengan bebés tractomula?</span>`;
+	lg.q_red_cell = `<span class='big_font bold_font'>Podemos hacer una celula globulo rojo?</span>`;
+	lg.q_human_egg = `<span class='big_font bold_font'>Podemos hacer un óvulo humano?</span>`;
+	lg.q_liver = `<span class='big_font bold_font'>Podemos hacer un hígado humano?</span>`;
 	
-	lg.o_we_cannot_simulate_biology_comm = `Logic and evidence show that machinery made by humans cannot simulate biological machinery behaviour because it is much harder to make.`;
+	lg.o_we_cannot_simulate_biology_comm = `La lógica y la evidencia muestran que la maquinaria hecha por los humanos no puede simular el comportamiento de la maquinaria biológica porque ésta es mucho mas difícil de hacer.`;
 
-	lg.q_bilology_req_creativity = `<span class='big_font bold_font'>Requires design and <a href='${hb.href_creator}'>creativity</a>?</span>`;
+	lg.q_bilology_req_creativity = `<span class='big_font bold_font'>Requiere diseño y <a href='${hb.href_creator}'>creatividad</a>?</span>`;
 	
-	lg.o_biology_req_creativity_comm = `Logic and evidence show that biological machinery is much harder to make than machinery made by humans. If we are going to call ourselves itelligent designers with technical creatitivy for the machinery we make, we have to recognize that biological machinery also requires an intelligent designer with technical creativiy much greater than ours.`;
+	lg.o_biology_req_creativity_comm = `La lógica y la evidencia muestran que maquinaria biológica es mucho mas difícil de hacer que la maquinaria hecha por humanos. Si nos vamos a llamar a nosotros mismos diseñadores inteligentes con creatividad técnica por la maquinaria que hacemos, tenemos que reconocer que la maquinaria biológica tambien requiere un diseñador inteligente con una creatividad técnica mucho mas grande que la nuestra.`;
 	
-	lg.o_change_creator_comm = `You had chosen NO to creator. It seems you have changed your mind. Please change get rid of this comment to continue.`;
+	lg.o_change_creator_comm = `Ud. había escogido que NO hay un creador. Parece que cambio de posición. Por favor cambie su respuesta para deshacerse de este comentario.`;
 
-	lg.o_faulty_logic_comm = `To continue with these questions you need get rid of this observation because your logic based on evidence seems faulty.`;
+	lg.o_faulty_logic_comm = `Para continuar con estas preguntas ud. necesita deshacerse de este comentario porque su lógica basada en evidencia parece equivocada.`;
 	
-	lg.q_you_can_make_a_car_again = `If you made it once, you can make it again.`;
-	lg.o_humans_can_re_create_their_creations = `If humans know how to make a car it is evident they can make more.`;
-	lg.q_he_can_make_a_body_again = `If He made it once, He can make it again.`;
-	lg.o_the_creator_can_re_create_his_creation = `The creator of the human body can make it again just as we humans can do it with our creations.`;
+	lg.q_you_can_make_a_car_again = `Si ud. lo puede hacer una vez, ud. lo puede volver a hacer.`;
+	lg.o_humans_can_re_create_their_creations = `Si los humanos saben como hacer un carro es evidente que pueden hacer mas.`;
+	lg.q_he_can_make_a_body_again = `Si El lo hiso una vez, El lo puede volver a hacer.`;
+	lg.o_the_creator_can_re_create_his_creation = `EL creador del cuerpo humano puede hacerlo de nuevo así como nosotros los humanos podemos hacer de nuevo nuestras creaciones.`;
 
-	lg.o_get_qrcode = `<span class='has_left_padding very_big_font bold_font'>You need to login to get your QR code and start spreading the Good News and winning some while doing so. Please login.</span>`;
+	lg.o_get_qrcode = `<span class='has_left_padding very_big_font bold_font'>Usted necesita hacer "login" (entrar) para obtener un código QR y comenzar a compartir las Buenas Nuevas y ganarse algo mientras lo hace. Por favor haga "login" (entre).</span>`;
 	
 	lg.o_congrats_you_have_a_qrcode = `
-		Congrats ! You can now spread the Good News using your QR code. Anyone using your QR code to access this page will be registered as a refered person by you. The more people use your QR code the more you will win, even if you or they do not donate.
+		Felicidades ! Ya puede compartir las Buenas Nuevas usando su código QR. Cualquiera que use su código QR para acceder esta página sera registrado como una persona referida por usted. Entre mas personas usen su código QR, mas ganará usted.
 	`;
 	
 	lg.o_sorry_no_loging_no_qrcode = `
-		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
-		<span class='big_font bold_font'>Sorry. No Google login, no QR code. If you don have a <a href='http://accounts.google.com'>Google account</a> please get one by clicking the <a href='http://accounts.google.com'>link</a>. You can login at any time by clicking the person in the top menu bar.</span>
+		<img class="img_observ" src="${site_img_dir}/woman_shrugging.webp"><br>
+		<span class='big_font bold_font'>Lo sentimos. Sin Google login, no hay código QR. Si usted no tiene una <a href='http://accounts.google.com'>cuenta Google</a>, por favor obtenga una haciendo click en <a href='http://accounts.google.com'>este link</a>. Usted puede hacer login en cualquier momento haciendo click "Invitado" o haciendo click en el icono <img id="id_top_user_picture" class="img_user" src="${site_img_dir}/user.jpg"></span>
 	`;
-	
-	lg.t_good_job = `<span class='has_left_padding very_big_font bold_font'>Good job !</span>`;
-	lg.q_participate = `<span class='big_font bold_font'>Participate?</span>`;
-	lg.q_win_money = `<span class='big_font bold_font'>Win?</span>`;
-
-	lg.o_chose_yes_to_participate = `<span class='very_big_font bold_font'>
-		Waiting for Google Login. If you don have one get a <a href='http://accounts.google.com'>Google account</a>.</span>`;
-	lg.o_congrats_you_have_a_ticket = `
-		<img class="img_observ" src="${module_img_dir}/ticket.webp"><br>
-		<span class='very_big_font bold_font'>Congrats ! You have a ticket</span>
-	`;
-	lg.o_sorry_no_loging_no_participation = `
-		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
-		<span class='very_big_font bold_font'>Sorry. No Google login, no ticket. 
-			If you don have one get a <a href='http://accounts.google.com'>Google account</a>.</span>
-	`;
-	
-	lg.i_woman_shrugging = `<img src="${module_img_dir}/woman_shrugging.webp">`;
-	lg.o_chose_no_participation = `
-		<img class="img_observ" src="${module_img_dir}/woman_shrugging.webp"><br>
-		<span class='very_big_font bold_font'>You chose no ...</span>
-	`;
-
-	lg.a_zero = `Zero`;
-	lg.a_one = `One`;
-	lg.a_more_than_one = `More than one`;
-	
-	
 	
 
 }

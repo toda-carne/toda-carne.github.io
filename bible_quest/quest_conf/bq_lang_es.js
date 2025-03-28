@@ -355,7 +355,7 @@ function init_es_basic_msg(){
 	obj.msg_change_answer = `Para adicionar respuestas click en la respuesta actual y click en "${obj.msg_edit_ans}"`;
 	obj.msg_caused_by_answers = "Esta observación se muestra por sus respuestas en las siguientes preguntas: ";
 	obj.msg_caused_by_observations = "Esta observación se muestra por causa de estas otras observaciones:";
-	obj.msg_to_get_rid = `Para desaherse de esta observacion cambie una o mas respuestas que esten causando esta observación haciendo click sobre la respuesta y luego click en "${obj.msg_edit_ans}" o haciendo click en "${obj.msg_undo}" hasta llegar a la respuesta deseada.`;
+	obj.msg_to_get_rid = `Para desaherse de esta observacion cambie una o mas respuestas que esten causando esta observación haciendo click sobre la respuesta y luego click en "${obj.msg_edit_ans}" o haciendo click en "${obj.msg_undo}" hasta llegar a la pregunta deseada.`;
 
 	obj.msg_dispute_rclick = "Dispute con clik derecho";
 	obj.msg_dispute_hold_click = "Dispute manteniendo clik";

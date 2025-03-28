@@ -132,8 +132,8 @@ export function init_exam_database(){
 		},
 	};
 	
-	db.o_verse_for_knowledge_in_death__ = get_bibcit_obs("q_verse_for_knowledge_in_death__");	
-
+	db.o_verse_for_knowledge_in_death__ = get_bibcit_obs("q_verse_for_knowledge_in_death__");
+	
 	db.q13_1__ = { 
 		htm_stm: "q13_1__sleep",
 		context: ["resurrection", "people", "sleep_analysis", ],
