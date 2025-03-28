@@ -26,7 +26,7 @@ export function init_es_poll_txt(){
 	
 	lg.qmodu_title = `Resurreccion biblica?`;
 	
-	lg.a_simple_YES = `YES`;
+	lg.a_simple_YES = `SI`;
 	lg.a_simple_NO = `NO`;	
 
 

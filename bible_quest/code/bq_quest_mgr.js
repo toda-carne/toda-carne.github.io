@@ -8,7 +8,7 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 import { add_to_pending, get_pending_qid, init_all_context, } from './bq_contexts.js';
 import { toggle_user_info, } from './bq_user_info.js';
 import { toggle_admin_opers, } from './bq_admin.js';
-import { load_qmodu, get_fini_qmodus, load_next_qmodu, } from './bq_module_mgr.js';
+import { load_qmodu, set_fini_qmodu, load_next_qmodu, } from './bq_module_mgr.js';
 
 //import "./qrcode.js";
 //import { QRCode, makeCode } from './qrcode.js';
@@ -2296,8 +2296,7 @@ function write_firebase_qmodu_results(err_fn){
 		});
 	}
 	
-	const fini_md = get_fini_qmodus();
-	fini_md[gvar.current_qmonam] = 1;
+	set_fini_qmodu(gvar.current_qmonam);
 	
 	if(fb_mod == null){ 
 		const msg = "write_firebase_qmodu_results. fb_mod == null.";

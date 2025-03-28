@@ -1,4 +1,6 @@
 
+import { write_storage_fini_qmodus, load_next_qmodu, } from './bq_module_mgr.js';
+
 "use strict";
 
 // CDN COntent D Network (gstatic)
@@ -144,6 +146,12 @@ async function firebase_get_user_finished_qmodules(){
 		return;
 	}
 	bq_fb_user_finished_qmodules = snapshot.val();
+	
+	const were_eq = write_storage_fini_qmodus(bq_fb_user_finished_qmodules);
+	if(! were_eq){
+		console.log("firebase_get_user_finished_qmodules. CALLING load_next_qmodu. DIFFERENT FINISHED MODULES !!!");
+		load_next_qmodu();
+	}
 }
 
 export function firebase_check_user(callbk){
@@ -181,9 +189,11 @@ export function firebase_check_user(callbk){
 				
 				firebase_write_user_id();
 				
-				firebase_get_user_finished_qmodules().then((result) => {
+				firebase_get_user_finished_qmodules();
+				if(callbk != null){ callbk(tc_fb_user); }
+				/*firebase_get_user_finished_qmodules().then((result) => {
 					if(callbk != null){ callbk(tc_fb_user); }
-				});
+				});*/
 			} else {
 				tc_fb_user = null;
 				if(DEBUG_FB_CHECK){ console.log("User is signed out"); }

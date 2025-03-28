@@ -11,12 +11,48 @@ const DEBUG_LOADER = true;
 const INVALID_MONAM = "INVALID_MONAM";
 
 let qmodule_lang = "en";
-let local_fini_qmudus = {};
 let local_conf_qmodus = null;
 
-export function get_fini_qmodus(){
-	if((fb_mod != null) && (fb_mod.bq_fb_user_finished_qmodules != null)){ local_fini_qmudus = fb_mod.bq_fb_user_finished_qmodules; }
-	return local_fini_qmudus;
+const STORAGE_FINI_QMODUS_ID = "STORAGE_FINI_QMODUS_ID";
+
+function read_storage_fini_qmodus(){
+	let all_fini_str = window.localStorage.getItem(STORAGE_FINI_QMODUS_ID);
+	let all_fini = {};
+	if(all_fini_str != null){
+		all_fini = JSON.parse(all_fini_str);
+	}
+	return all_fini;
+}
+
+export function write_storage_fini_qmodus(all_fini){
+	const prev = read_storage_fini_qmodus();
+	const are_eq = objs_eq(prev, all_fini);
+	if(! are_eq){
+		window.localStorage.setItem(STORAGE_FINI_QMODUS_ID, JSON.stringify(all_fini));
+	}
+	return are_eq;
+}
+
+function objs_eq(obj1, obj2){
+	const s1 = JSON.stringify(obj1);
+	const s2 = JSON.stringify(obj2);
+	return (s1 == s2);
+}
+
+export function set_fini_qmodu(qmonam){
+	const all_fini = get_fini_qmodus();
+	all_fini[qmonam] = 1;
+	write_storage_fini_qmodus(all_fini);
+}
+
+function get_fini_qmodus(){
+	let all_fini = null;
+	if((fb_mod != null) && (fb_mod.bq_fb_user_finished_qmodules != null)){ 
+		all_fini = fb_mod.bq_fb_user_finished_qmodules;		
+	} else {
+		all_fini = read_storage_fini_qmodus();
+	}
+	return all_fini;
 }
 
 function init_conf_qmodus(){
@@ -33,13 +69,13 @@ function init_conf_qmodus(){
 function get_nxt_qmonam(){
 	if(gvar.conf_qmodus == null){ console.error("get_nxt_qmonam. gvar.conf_qmodus == null."); return INVALID_MONAM; }
 	if(gvar.conf_qmodus.all_qmodus == null){ console.error("get_nxt_qmonam. gvar.conf_qmodus.all_qmodus == null."); return INVALID_MONAM; }
-	const fini_md = get_fini_qmodus();
 	const all_qmonams = Object.keys(gvar.conf_qmodus.all_qmodus);
+	const all_fini = get_fini_qmodus();
 	for(const qmonam of all_qmonams){
-		if(! is_qmodu_dnf_sat(qmonam)){
+		if(! is_qmodu_dnf_sat(qmonam, all_fini)){
 			continue;
 		}
-		if(fini_md[qmonam] == null){
+		if(all_fini[qmonam] == null){
 			return qmonam;
 		}
 	}
@@ -110,6 +146,7 @@ export async function load_qmodu(qmonam, init_pag){
 }
 
 export async function load_next_qmodu(){
+	console.log("load_next_qmodu. LOADING NEXT MODULE.");
 	const nxt_mod2 = get_nxt_qmonam();
 	await load_qmodu(nxt_mod2, true);
 }
@@ -135,8 +172,7 @@ export function load_current_module(curr_lang){
 	load_fb_mod();
 }
 
-function is_qmodu_dnf_sat(monam){
-	const fini_md = get_fini_qmodus();
+function is_qmodu_dnf_sat(monam, all_fini){
 	if(monam == null){ return false; }
 	const qmodu = gvar.conf_qmodus.all_qmodus[monam];
 	if(qmodu == null){ return false; }
@@ -159,7 +195,7 @@ function is_qmodu_dnf_sat(monam){
 		//console.log(" | monam=" + monam + " | conj_id=" + conj_id + " conj_obj=" + JSON.stringify(conj_obj, null, "  "));
 		for (const [cond_monam, resps_obj] of conj) {
 			if(resps_obj == null){ conj_act = false; break; }
-			if(fini_md[cond_monam] == null){ conj_act = false; break; }			
+			if(all_fini[cond_monam] == null){ conj_act = false; break; }			
 		}
 		if(conj_act){
 			if(qmodu.debug){ console.log("DEBUGING monam=" + monam + " is_qmodu_dnf_sat IS_SAT"); }
