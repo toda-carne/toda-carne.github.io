@@ -604,20 +604,37 @@ export function get_bibcit_obs_stm_id(qid, bcit){
 	return r_nam;
 }
 
-export function fill_responses_for(qid, all_bcit, stm, has_brefs, all_to_upper){
+export function fill_responses_for(qid, all_bcit, stm, all_to_upper){
 	if(all_bcit == null){ return; }
 	for (const bcit of all_bcit) {
-		fill_response(qid, bcit, stm, has_brefs, all_to_upper);
+		fill_response(qid, bcit, stm, all_to_upper);
 	}
 }
 
-export function fill_response(qid, bcit, stm, has_brefs, all_to_upper){
-	const lg = gvar.glb_poll_txt;
-	const brf = gvar.has_bibrefs;
-	const brfup = gvar.bibrefs_upper;
-	if(lg == null){ return; }
-	if(brf == null){ return; }
-	if(brfup == null){ return; }
+export function set_stm_bibref(stm_id, bref, all_to_upper){
+	gvar.glb_poll_txt[stm_id] = bref;
+	gvar.has_bibrefs[stm_id] = true;
+	if(all_to_upper != null){
+		gvar.bibrefs_upper[stm_id] = all_to_upper;
+	}
+}
+
+export function set_href_bibcit(href_id, bcit, site, bib_ver){
+	const bibobj = bibcit_to_bibobj(bcit);
+	bibobj.site = gvar.DEFAULT_BIB_HREF_SITE;
+	if(site != null){ bibobj.site = site; }
+	bibobj.bib_ver = gvar.DEFAULT_BIB_HREF_VERSION;
+	if(bib_ver != null){ bibobj.bib_ver = bib_ver; }
+	
+	const bref = make_bible_ref(bibobj);
+		
+	gvar.glb_poll_txt[href_id] = bref;
+}
+
+export function fill_response(qid, bcit, stm, all_to_upper){
+	if(gvar.glb_poll_txt == null){ return; }
+	if(gvar.has_bibrefs == null){ return; }
+	if(gvar.bibrefs_upper == null){ return; }
 	
 	let stm2_id = null;
 	const bibobj = bibcit_to_bibobj(bcit);
@@ -625,9 +642,7 @@ export function fill_response(qid, bcit, stm, has_brefs, all_to_upper){
 	
 	if((bibobj.last_verse == null) || (bibobj.last_verse == "")){
 		stm2_id = get_bibcit_obs_stm_id(qid, bcit);
-		lg[stm2_id] = stm;
-		brf[stm2_id] = has_brefs;
-		brfup[stm2_id] = all_to_upper;
+		set_stm_bibref(stm2_id, stm, all_to_upper);
 		return;
 	}
 	
@@ -641,9 +656,7 @@ export function fill_response(qid, bcit, stm, has_brefs, all_to_upper){
 		if(bcit2 == bcit){ continue; }
 			
 		stm2_id = get_bibcit_obs_stm_id(qid, bcit2);
-		lg[stm2_id] = stm;
-		brf[stm2_id] = has_brefs;
-		brfup[stm2_id] = all_to_upper;
+		set_stm_bibref(stm2_id, stm, all_to_upper);
 	}
 }
 

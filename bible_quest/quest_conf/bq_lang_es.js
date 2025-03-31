@@ -401,6 +401,12 @@ function init_es_basic_msg(){
 }
 
 function ini_glb_vars_es(all_vars){
+	all_vars.DEFAULT_BIB_HREF_SITE = "biblegateway";
+	all_vars.DEFAULT_BIB_HREF_VERSION = "RVA";
+	if(all_vars.has_qrefs == null){ all_vars.has_qrefs = {}; }
+	if(all_vars.has_bibrefs == null){ all_vars.has_bibrefs = {}; }
+	if(all_vars.bibrefs_upper == null){ all_vars.bibrefs_upper = {}; }
+	
 	all_vars.glb_exam_language = "es";
 	all_vars.glb_all_countries = countries_es;
 	all_vars.glb_all_marital = marital_es;

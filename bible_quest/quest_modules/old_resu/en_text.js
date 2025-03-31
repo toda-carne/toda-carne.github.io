@@ -1,8 +1,7 @@
 
 
 import { bib_defaults, uppercase_words_in_string, all_strongrefs, get_verse_reponse_name, make_bible_ref, get_verse_cit_key, bib_obj_to_txt, 
-	gvar,
-	//glb_all_bibrefs, glb_all_book_hrefs, glb_poll_txt 
+	gvar, set_stm_bibref, set_href_bibcit, 
 } from '../../code/bq_tools.js';
 
 
@@ -18,7 +17,7 @@ export function init_en_poll_txt(){
 	let cit_ref = null;
 	let cit_txt = null;
 	let bibref = {};
-	let rnam = null;	
+	let rnam = null;
 	
 	const rf = gvar.glb_all_bibrefs;
 	const hb = gvar.glb_all_book_hrefs;
@@ -29,6 +28,9 @@ export function init_en_poll_txt(){
 
 	if(gvar.has_bibrefs == null){ gvar.has_bibrefs = {}; } 
 	const brf = gvar.has_bibrefs;
+	
+	if(gvar.bibrefs_upper == null){ gvar.bibrefs_upper = {}; } 
+	const brfup = gvar.bibrefs_upper;
 	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
@@ -158,11 +160,15 @@ export function init_en_poll_txt(){
 
 	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${hb.href_physical_resu}'>Physical</a>`;
 	lg.q4_1__physical = `Select all verses that support a physical <a class='exam_ref' href='${hb.href_resurrection}'>resurrection</a> of Jesus Christ`;
-	lg.q4_1__verse1_str = uppercase_words_in_string(rf.luk_24_39_str, ["Touch", "flesh", "bones,"]);
-	lg.q4_1__verse1_href = rf.luk_24_39_href;
+	set_stm_bibref("q4_1__verse1_str", "BIBREF_Luk_24_39", { Luk_24_39: ["Touch", "flesh", "bones,"] });
+	set_href_bibcit("q4_1__verse1_href", "Luk_24_39");
+	set_stm_bibref("q4_1__verse2_str", "BIBREF_Jhn_20_27", { Jhn_20_27: ["hand,", "put", "side."] });
+	set_href_bibcit("q4_1__verse2_href", "Jhn_20_27");
+	//lg.q4_1__verse1_str = uppercase_words_in_string(rf.luk_24_39_str, ["Touch", "flesh", "bones,"]);
+	//lg.q4_1__verse1_href = rf.luk_24_39_href;
 	lg.q4_1__verse1_should = "FLESH and BONES are PHYSICAL.";
-	lg.q4_1__verse2_str = uppercase_words_in_string(rf.jhn_20_27_str, ["hand,", "put", "side."]);
-	lg.q4_1__verse2_href = rf.jhn_20_27_href;
+	//lg.q4_1__verse2_str = uppercase_words_in_string(rf.jhn_20_27_str, ["hand,", "put", "side."]);
+	//lg.q4_1__verse2_href = rf.jhn_20_27_href;
 	lg.q4_1__verse2_should = "Putting a hand into FLESH is something PHYSICAL.";
 	lg.q4_1__verse3_str = uppercase_words_in_string(rf.act_10_41_str, ["ate", "drank"]);
 	lg.q4_1__verse3_href = rf.act_10_41_href;

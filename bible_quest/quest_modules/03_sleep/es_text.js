@@ -196,7 +196,7 @@ export function init_es_poll_txt(){
 	brfup[stm_id] = {};
 	brfup[stm_id][bcita] = ["llorando", "dijo:", ];
 
-	fill_response("q_verse_for_knowledge_in_death__", "Luk_16_19_31", resp_bcit, true, brfup[stm_id]);
+	fill_response("q_verse_for_knowledge_in_death__", "Luk_16_19_31", resp_bcit, brfup[stm_id]);
 	
 	// -----------
 	
@@ -207,7 +207,7 @@ export function init_es_poll_txt(){
 	${nowhere_knowledge}
 	${dead_know_response_END}`;
 	
-	fill_responses_for("q_verse_for_knowledge_in_death__", ["Gen_15_15", "Gen_25_8", "Gen_35_29", ], response_sheol, true);
+	fill_responses_for("q_verse_for_knowledge_in_death__", ["Gen_15_15", "Gen_25_8", "Gen_35_29", ], response_sheol);
 	
 	// -----------
 		
@@ -221,7 +221,7 @@ export function init_es_poll_txt(){
 	${dead_know_response_END}
 	`;
 
-	fill_response("q_verse_for_knowledge_in_death__", "1Pe_3_19", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "1Pe_3_19", resp_bcit);
 	
 	// -----------
 		
@@ -230,7 +230,7 @@ export function init_es_poll_txt(){
 	<p>Por supuesto, cualquier creyente en la RESURRECCIÓN de Jesucristo prefiere estar ausente de este cuerpo que muere y, cuando RESUCITE en un cuerpo nuevo que no puede morir, estar presente con el Señor. Él, después de todo, RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de estar PRESENTE con Él es estar TAMBIÉN RESUCITADO.</p>
 	${dead_know_response_END}
 	`;
-	fill_response("q_verse_for_knowledge_in_death__", "2Co_5_8", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "2Co_5_8", resp_bcit);
 	
 	// -----------
 		
@@ -240,7 +240,7 @@ export function init_es_poll_txt(){
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
-	fill_response("q_verse_for_knowledge_in_death__", "Act_7_59", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "Act_7_59", resp_bcit);
 	
 	// -----------
 		
@@ -249,7 +249,7 @@ export function init_es_poll_txt(){
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
-	fill_response("q_verse_for_knowledge_in_death__", "Luk_20_38", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "Luk_20_38", resp_bcit);
 	
 	// -----------
 			
@@ -261,7 +261,7 @@ export function init_es_poll_txt(){
 	${response_paradise}
 	${dead_know_response_END}
 	`;	
-	fill_response("q_verse_for_knowledge_in_death__", "2Co_12_4", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "2Co_12_4", resp_bcit);
 	
 	// -----------
 			
@@ -269,7 +269,7 @@ export function init_es_poll_txt(){
 	${response_paradise}
 	${dead_know_response_END}
 	`;
-	fill_response("q_verse_for_knowledge_in_death__", "Luk_23_43", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "Luk_23_43", resp_bcit);
 	
 	// -----------
 	
@@ -278,7 +278,7 @@ export function init_es_poll_txt(){
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
-	fill_response("q_verse_for_knowledge_in_death__", "1Ti_5_6", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "1Ti_5_6", resp_bcit);
 	
 	// -----------	
 	
@@ -287,7 +287,7 @@ export function init_es_poll_txt(){
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
-	fill_response("q_verse_for_knowledge_in_death__", "Luk_15_24", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "Luk_15_24", resp_bcit);
 	
 	// -----------	
 	
@@ -296,7 +296,7 @@ export function init_es_poll_txt(){
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
-	fill_response("q_verse_for_knowledge_in_death__", "Jhn_4_24", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "Jhn_4_24", resp_bcit);
 	
 	// -----------	
 	
@@ -304,7 +304,7 @@ export function init_es_poll_txt(){
 	<p>Este versículo se refiere a los ángeles como espíritus. La Biblia se refiere a cualquier persona físicamente viva como espíritu. Esto incluye a los <a class='exam_ref' href='${hb.href_angels}'>ángeles</a> y las <a class='exam_ref' href='${hb.href_wings}'>criaturas aladas</a>.</p>
 	${dead_know_response_END}
 	`;
-	fill_response("q_verse_for_knowledge_in_death__", "Heb_1_14", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "Heb_1_14", resp_bcit);
 	
 	// -----------	
 	
@@ -313,7 +313,7 @@ export function init_es_poll_txt(){
 	<p>Por supuesto, cualquier creyente en la RESURRECCIÓN de Jesucristo prefiere partir y estar con Cristo cuando RESUCITE en un cuerpo nuevo que no puede morir. Después de todo, Él RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de estar con Él es estar RESUCITANDO TAMBIÉN.</p>
 	${dead_know_response_END}
 	`;
-	fill_response("q_verse_for_knowledge_in_death__", "Phl_1_23", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "Phl_1_23", resp_bcit);
 	
 	// -----------	
 	
@@ -322,7 +322,7 @@ export function init_es_poll_txt(){
 	<p>Por supuesto, todo aquel que cree en la RESURRECCIÓN de Jesucristo sabe que Él es el Camino y la Vida y que podrá estar en Su presencia cuando RESUCITE en un cuerpo nuevo que no puede morir. Después de todo, Él RESUCITÓ en CUERPO y ESPÍRITU. Así que la ÚNICA manera de ver su ROSTRO es estar TAMBIÉN RESUCITADO.</p>
 	${dead_know_response_END}
 	`;
-	fill_response("q_verse_for_knowledge_in_death__", "Psa_16_11", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "Psa_16_11", resp_bcit);
 	
 	// -----------	
 	
@@ -331,7 +331,7 @@ export function init_es_poll_txt(){
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;
-	fill_response("q_verse_for_knowledge_in_death__", "Isa_8_19", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "Isa_8_19", resp_bcit);
 	
 	// -----------	
 	
@@ -340,7 +340,7 @@ export function init_es_poll_txt(){
 	${nowhere_knowledge}
 	${dead_know_response_END}
 	`;	
-	fill_response("q_verse_for_knowledge_in_death__", "1Th_4_14", resp_bcit, true);
+	fill_response("q_verse_for_knowledge_in_death__", "1Th_4_14", resp_bcit);
 	
 	// -----------	
 	

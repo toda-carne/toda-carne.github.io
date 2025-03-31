@@ -1,7 +1,6 @@
 
 import { bib_defaults, uppercase_words_in_string, all_strongrefs, get_verse_reponse_name, make_bible_ref, get_verse_cit_key, bib_obj_to_txt, 
-	gvar,
-	//glb_all_bibrefs, glb_all_book_hrefs, glb_poll_txt 
+	gvar, set_stm_bibref, set_href_bibcit, 
 } from '../../code/bq_tools.js';
 
 "use strict";
@@ -16,6 +15,8 @@ export function init_es_poll_txt(){
 	let cit_ref = null;
 	let cit_txt = null;
 	let rnam = null;	
+	
+	gvar.working_bible = "RVA";
 	
 	const rf = gvar.glb_all_bibrefs;
 	const hb = gvar.glb_all_book_hrefs;
@@ -147,11 +148,15 @@ export function init_es_poll_txt(){
 
 	lg.q4_1__physical_sec = `<a class='exam_ref exam_title' href='${hb.href_physical_resu}'>Física</a>`;
 	lg.q4_1__physical = `Seleccione todos los versiculos que soportan una <a class='exam_ref' href='${hb.href_resurrection}'>resurrección</a> física de Jesucristo`;
-	lg.q4_1__verse1_str = uppercase_words_in_string(rf.luk_24_39_str, ["Tóquenme", "carne", "huesos,"]);
-	lg.q4_1__verse1_href = rf.luk_24_39_href;
+	set_stm_bibref("q4_1__verse1_str", "BIBREF_Luk_24_39", { Luk_24_39: ["Tóquenme", "carne", "huesos,"] });
+	set_href_bibcit("q4_1__verse1_href", "Luk_24_39");
+	set_stm_bibref("q4_1__verse2_str", "BIBREF_Jhn_20_27", { Jhn_20_27: ["mano,", "métela", "costado:"] });
+	set_href_bibcit("q4_1__verse2_href", "Jhn_20_27");
+	//lg.q4_1__verse1_str = uppercase_words_in_string(rf.luk_24_39_str, ["Tóquenme", "carne", "huesos,"]);
+	//lg.q4_1__verse1_href = rf.luk_24_39_href;
 	lg.q4_1__verse1_should = "La CARNE y los HUESOS son FISICOS.";
-	lg.q4_1__verse2_str = uppercase_words_in_string(rf.jhn_20_27_str, ["mano,", "métela", "costado:"]);
-	lg.q4_1__verse2_href = rf.jhn_20_27_href;
+	//lg.q4_1__verse2_str = uppercase_words_in_string(rf.jhn_20_27_str, ["mano,", "métela", "costado:"]);
+	//lg.q4_1__verse2_href = rf.jhn_20_27_href;
 	lg.q4_1__verse2_should = "Meter una MANO en el COSTADO es algo FISICO.";
 	lg.q4_1__verse3_str = uppercase_words_in_string(rf.act_10_41_str, ["comimos", "bebimos"]);
 	lg.q4_1__verse3_href = rf.act_10_41_href;

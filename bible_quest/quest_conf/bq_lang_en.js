@@ -402,6 +402,12 @@ function init_en_basic_msg(){
 }
 
 function ini_glb_vars_en(all_vars){
+	all_vars.DEFAULT_BIB_HREF_SITE = "biblegateway";
+	all_vars.DEFAULT_BIB_HREF_VERSION = "WEB";
+	if(all_vars.has_qrefs == null){ all_vars.has_qrefs = {}; }
+	if(all_vars.has_bibrefs == null){ all_vars.has_bibrefs = {}; }
+	if(all_vars.bibrefs_upper == null){ all_vars.bibrefs_upper = {}; }
+	
 	all_vars.glb_exam_language = "en";
 	all_vars.glb_all_countries = countries_en;
 	all_vars.glb_all_marital = marital_en;
@@ -416,7 +422,7 @@ function ini_glb_vars_en(all_vars){
 	all_vars.glb_all_bibrefs = all_en_bibrefs;
 	all_vars.glb_all_book_hrefs = book_en_hrefs;
 	all_vars.glb_poll_txt = all_en_poll_txt;
-	all_vars.glb_poll_db = {};
+	all_vars.glb_poll_db = {};	
 }
 
 export function init_en_module(all_vars){
