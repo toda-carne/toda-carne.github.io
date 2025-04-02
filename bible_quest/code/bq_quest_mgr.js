@@ -1515,16 +1515,16 @@ export function init_page_exam(){
 	init_DAG_func();
 	
 	init_exam_buttons();	
-	init_referref();
+	init_referrer();
 	
 	ask_next();
 };
 
-function init_referref(){
-	gvar.glb_poll_db.referrer_GET_parm = find_GET_parameter(GET_var_referrer);
+function init_referrer(){
+	const pm_rf = find_GET_parameter(GET_var_referrer);
 	
 	if(DEBUG_REFERRER){
-		console.log("REFERRER_GET_PM=" + gvar.glb_poll_db.referrer_GET_parm);
+		console.log("REFERRER_GET_PM=" + pm_rf);
 		
 		const delete_referrer = find_GET_parameter(GET_var_delete_referrer);
 		if(delete_referrer == "true"){
@@ -1533,16 +1533,11 @@ function init_referref(){
 		}
 	}
 	
-	let local_fst_referrer = window.localStorage.getItem(FIRST_REFERRER);
-	if((local_fst_referrer == "null") && (gvar.glb_poll_db.referrer_GET_parm != null)){  // CAREFUL TRICKY FIRST CONDITION. IT IS A STRING !!!
-		local_fst_referrer = gvar.glb_poll_db.referrer_GET_parm;
-		
-		if(DEBUG_REFERRER){ console.log("SETTING_FIRST_REFERRER=" + local_fst_referrer); }
-		window.localStorage.setItem(FIRST_REFERRER, local_fst_referrer);
+	const rf1 = window.localStorage.getItem(FIRST_REFERRER);
+	if((rf1 == "null") && (pm_rf != null)){  // CAREFUL TRICKY FIRST CONDITION. IT IS A STRING !!!
+		if(DEBUG_REFERRER){ console.log("SETTING_FIRST_REFERRER=" + pm_rf); }
+		window.localStorage.setItem(FIRST_REFERRER, pm_rf);
 	}
-	
-	gvar.glb_poll_db.referrer_local_storage_first = local_fst_referrer;
-	if(DEBUG_REFERRER){ console.log("SAVED_FIRST_REFERRER=" + local_fst_referrer); }
 }
 
 export function init_exam_buttons(){
