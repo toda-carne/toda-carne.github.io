@@ -5,7 +5,7 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 	is_observation, replace_all_qrefs, qid_to_qhref, set_bibrefs, make_bibref, bibref_to_bibcit, get_bibcit_obs_stm_id, 
 } from './bq_tools.js';
 
-import { get_user_href, init_loc_cand_referrer, 
+import { get_user_href, 
 } from './bq_referrer_mgr.js';
 
 import { add_to_pending, get_pending_qid, init_all_context, } from './bq_contexts.js';
@@ -1513,7 +1513,6 @@ export function init_page_exam(){
 	init_DAG_func();
 	
 	init_exam_buttons();	
-	init_loc_cand_referrer();
 	
 	ask_next();
 };

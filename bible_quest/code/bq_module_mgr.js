@@ -4,6 +4,9 @@ import { init_firebase_mgr, fb_mod, fill_div_user, scroll_to_first_not_answered,
 	close_pop_menu, get_user_path, id_pop_menu_sele, init_page_exam, 
 } from './bq_quest_mgr.js';
 
+import { init_loc_cand_referrer, 
+} from './bq_referrer_mgr.js';
+
 import { init_qmodu_info, } from '../quest_conf/bq_modules.js';
 
 const DEBUG_LOADER = true;
@@ -169,6 +172,7 @@ function load_fb_mod(){
 export function load_current_module(curr_lang){	
 	qmodule_lang = curr_lang;
 	init_conf_qmodus();
+	init_loc_cand_referrer();
 	load_fb_mod();
 }
 

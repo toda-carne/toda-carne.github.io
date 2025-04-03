@@ -1,6 +1,10 @@
 
 import { write_storage_fini_qmodus, load_next_qmodu, } from './bq_module_mgr.js';
 
+import { get_loc_cand_referrer, get_loc_confirmed_referrer, set_loc_confirmed_referrer, set_loc_cand_referrer, 
+} from './bq_referrer_mgr.js';
+
+
 "use strict";
 
 // CDN COntent D Network (gstatic)
@@ -129,6 +133,56 @@ export function firebase_get_user_path(){
 	return path;
 }
 
+async function firebase_update_user_referrer(force_it){
+	init_mod_vars();
+	
+	console.log("Called firebase_update_user_referrer.");
+	
+	const cand = get_loc_cand_referrer();
+	const confir = get_loc_confirmed_referrer();
+	const norm = (force_it == null);
+	if(norm && (cand == null)){ return; }
+	if(norm && (confir != null)){ return; }
+	
+	console.log("Doing firebase_update_user_referrer.");
+	
+	if(tc_fb_app == null){ console.error("firebase_update_user_referrer. (tc_fb_app == null)");  return; }
+	const db = md_db.getDatabase(tc_fb_app);
+	
+	const upd_path = firebase_bib_quest_path + "to_update/referred_by/" + tc_fb_user.uid;
+	const upd_ref = md_db.ref(db, upd_path);
+	
+	const usr_path = firebase_get_user_path();
+	const referrer_path = usr_path + "/referrer_by";
+	const db_ref = md_db.ref(db, referrer_path);
+	
+	const wr_data = {};
+	const snapshot = await md_db.get(db_ref);
+	if(! snapshot.exists()) {
+		if(cand != null){
+			wr_data.cand = cand;
+			md_db.update(db_ref, wr_data).catch((error) => { console.error("firebase_update_user_referrer. " + error); });	
+			md_db.set(upd_ref, 1).catch((error) => { console.error(error); });	
+		}
+		return;
+	} 
+	const fb_rf_by = snapshot.val();
+	if(fb_rf_by.confirmed != null){
+		set_loc_confirmed_referrer(fb_rf_by.confirmed);
+		if(confir == null){
+			set_loc_cand_referrer(null);
+		}
+	}
+	if((cand == null) && (fb_rf_by.cand != null)){
+		set_loc_cand_referrer(fb_rf_by.cand);
+	}
+	if((cand != null) && force_it){
+		wr_data.cand = cand;		
+		md_db.update(db_ref, wr_data).catch((error) => { console.error("firebase_update_user_referrer. " + error); });	
+		md_db.set(upd_ref, 1).catch((error) => { console.error(error); });	
+	}
+}
+
 async function firebase_get_user_finished_qmodules(){
 	init_mod_vars();
 	if(bq_fb_user_finished_qmodules != null){ return; }
@@ -188,6 +242,7 @@ export function firebase_check_user(callbk){
 				}
 				
 				firebase_write_user_id();
+				firebase_update_user_referrer();
 				
 				firebase_get_user_finished_qmodules();
 				if(callbk != null){ callbk(tc_fb_user); }
@@ -236,15 +291,11 @@ function firebase_user_ck_is_admin(){
 				tc_fb_is_admin = true;
 			}
 		}
-		if(tc_fb_is_admin){
-			if(DEBUG_FB_ADMIN){ console.log("IT IS ADMIN"); }
-		} else {
-			if(DEBUG_FB_ADMIN){ console.log("NOT ADMIN"); }
-		}
+		if(DEBUG_FB_ADMIN){ if(tc_fb_is_admin){ console.log("IT IS ADMIN"); } else { console.log("NOT ADMIN"); } }
 	}).catch((error) => {
 		tc_fb_is_admin = false;
 		console.error(error);
-		if(DEBUG_FB_ADMIN){ console.log("NOT ADMIN"); }
+		if(DEBUG_FB_ADMIN){ console.log("NOT ADMIN (get failed)"); }
 	});
 }
 
@@ -274,6 +325,7 @@ function firebase_write_user_id_in_list(){
 }
 
 function firebase_write_user_id(){ 
+	console.log("Called firebase_write_user_id.");
 	init_mod_vars();
 	firebase_user_ck_is_admin();
 	firebase_write_user_id_in_list();

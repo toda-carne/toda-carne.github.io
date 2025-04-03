@@ -131,22 +131,24 @@
 								",
 							},
 						},
-						"cand_referred_by": {
+					},
+					"referrer_by": {
+						"cand": {
 							"$cand_ref_uid": {
 								".validate": "root.child('bib_quest').child('users').child('list').child($cand_ref_uid).exists()",
 							},
 						},
-						"referred_by": {
+						"confirmed": {
 							".write": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
 							"$referrer_uid": {
 								".validate": "root.child('bib_quest').child('users').child('list').child($referrer_uid).exists()",
 							},
 						},
-						"referrer_of": {
-							".write": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
-							"$referred_uid": {
-								".validate": "root.child('bib_quest').child('users').child('list').child($referred_uid).exists()",
-							},
+					},
+					"referrer_of": {
+						".write": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
+						"$referred_uid": {
+							".validate": "root.child('bib_quest').child('users').child('list').child($referred_uid).exists()",
 						},
 					},
 				},

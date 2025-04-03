@@ -7,9 +7,13 @@ const GET_var_referrer = "referrer";
 const GET_var_delete_cand_referrer = "DELETE_CAND_REFERRER";
 
 const CAND_REFERRER = "candidate_referref";
+const SAVED_REFERRER = "saved_referref";
 
 export function get_user_href(the_usr){
-	const qr_href = window.location.href + "?" + GET_var_referrer + "=" + the_usr.uid;
+	//const qr_href = window.location.href + "?" + GET_var_referrer + "=" + the_usr.uid;
+	//const loc = window.location;
+	const loc = document.location;
+	const qr_href = loc.origin + loc.pathname + "?" + GET_var_referrer + "=" + the_usr.uid;
 	return qr_href;
 }
 
@@ -42,12 +46,28 @@ export function init_loc_cand_referrer(){
 	const rf1 = window.localStorage.getItem(CAND_REFERRER);
 	if((rf1 == "null") && (pm_rf != null)){  // CAREFUL TRICKY FIRST CONDITION. IT IS A STRING !!!
 		if(DEBUG_REFERRER){ console.log("SETTING_CAND_REFERRER=" + pm_rf); }
-		window.localStorage.setItem(CAND_REFERRER, pm_rf);
+		set_loc_cand_referrer(pm_rf);
 	}
+}
+
+export function set_loc_cand_referrer(val){
+	window.localStorage.setItem(CAND_REFERRER, val);
+}
+
+export function set_loc_confirmed_referrer(val){
+	window.localStorage.setItem(SAVED_REFERRER, val);
 }
 
 export function get_loc_cand_referrer(){
 	const rf1 = window.localStorage.getItem(CAND_REFERRER);
+	if(rf1 == "null"){  // CAREFUL TRICKY FIRST CONDITION. IT IS A STRING !!!
+		return null;
+	}
+	return rf1;
+}
+
+export function get_loc_confirmed_referrer(){
+	const rf1 = window.localStorage.getItem(SAVED_REFERRER);
 	if(rf1 == "null"){  // CAREFUL TRICKY FIRST CONDITION. IT IS A STRING !!!
 		return null;
 	}
