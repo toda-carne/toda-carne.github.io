@@ -2,9 +2,12 @@
 import { get_new_dv_under, gvar, 
 } from './bq_tools.js';
 
-import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, get_user_href, 
+import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, 
 	fb_mod, id_pop_menu_sele, user_logout, 
 } from './bq_quest_mgr.js';
+
+import { get_user_href, 
+} from './bq_referrer_mgr.js';
 
 const DEBUG_USER_INFO = true;
 

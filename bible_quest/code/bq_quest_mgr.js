@@ -5,6 +5,9 @@ import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_o
 	is_observation, replace_all_qrefs, qid_to_qhref, set_bibrefs, make_bibref, bibref_to_bibcit, get_bibcit_obs_stm_id, 
 } from './bq_tools.js';
 
+import { get_user_href, init_loc_cand_referrer, 
+} from './bq_referrer_mgr.js';
+
 import { add_to_pending, get_pending_qid, init_all_context, } from './bq_contexts.js';
 import { toggle_user_info, } from './bq_user_info.js';
 import { toggle_admin_opers, } from './bq_admin.js';
@@ -19,7 +22,6 @@ import { load_qmodu, set_fini_qmodu, load_next_qmodu, } from './bq_module_mgr.js
 const INVALID_PAGE_POS = "???";
 
 const DEBUG_QNUMS = true;
-const DEBUG_REFERRER = true;
 const DEBUG_PENDING = false;
 const DEBUG_POP_MENU = true;
 const DEBUG_WRITE = false;
@@ -29,9 +31,6 @@ const DEBUG_WRITE_RESULTS = false;
 
 const MIN_ANSW_SHOW_INVERT = 3;
 
-const GET_var_referrer = "referrer";
-const GET_var_delete_referrer = "DELETE_REFERRER";
-
 const stg_prefix = "STRONG";
 const lnk_prefix = "LINK";
 
@@ -39,7 +38,6 @@ const LEFT_POS = "grid_item_left";
 const RIGHT_POS = "grid_item_right";
 
 const ALL_SAVED_OBJ_NAMES = "all_saved_object_names";
-const FIRST_REFERRER = "first_referref";
 
 const SUF_ID_QSTM = "_qstm";
 const SUF_ID_QREFS_OBSERVATION = "_qrefs_observation";
@@ -1515,30 +1513,10 @@ export function init_page_exam(){
 	init_DAG_func();
 	
 	init_exam_buttons();	
-	init_referrer();
+	init_loc_cand_referrer();
 	
 	ask_next();
 };
-
-function init_referrer(){
-	const pm_rf = find_GET_parameter(GET_var_referrer);
-	
-	if(DEBUG_REFERRER){
-		console.log("REFERRER_GET_PM=" + pm_rf);
-		
-		const delete_referrer = find_GET_parameter(GET_var_delete_referrer);
-		if(delete_referrer == "true"){
-			console.log("DELETING_FIRST_REFERRER");
-			window.localStorage.setItem(FIRST_REFERRER, null);
-		}
-	}
-	
-	const rf1 = window.localStorage.getItem(FIRST_REFERRER);
-	if((rf1 == "null") && (pm_rf != null)){  // CAREFUL TRICKY FIRST CONDITION. IT IS A STRING !!!
-		if(DEBUG_REFERRER){ console.log("SETTING_FIRST_REFERRER=" + pm_rf); }
-		window.localStorage.setItem(FIRST_REFERRER, pm_rf);
-	}
-}
 
 export function init_exam_buttons(){
 	let dv_button = null;
@@ -1717,19 +1695,6 @@ function remove_all_classes(dv_elem) {
 	for (const value of all_cl) {
 		dv_elem.classList.remove(value);
 	}
-}
-
-function find_GET_parameter(prm_nm) {
-	let result = null,
-	tmp = [];
-	location.search
-		.substr(1)
-		.split("&")
-		.forEach(function (item) {
-			tmp = item.split("=");
-			if(tmp[0] === prm_nm){ result = decodeURIComponent(tmp[1]); }
-		});
-	return result;
 }
 
 // CODE_FOR STRONG REF ED
@@ -2922,11 +2887,6 @@ function create_div_user(quest){
 	dv_user.append(dv_nom);
 	
 	return dv_user;
-}
-
-export function get_user_href(the_usr){
-	const qr_href = window.location.href + "?" + GET_var_referrer + "=" + the_usr.uid;
-	return qr_href;
 }
 
 export function fill_div_user(){

@@ -73,20 +73,20 @@ export function firebase_check_login(err_fn){
 		});
 	}
 	// Initialize Firebase
-	if(tc_fb_app == null){ tc_fb_app = MOD_APP.initializeApp(firebase_config); }
+	if(tc_fb_app == null){ tc_fb_app = md_app.initializeApp(firebase_config); }
 	//const analytics = getAnalytics(tc_fb_app);
 	
-	const fb_provider = new MOD_AUTH.GoogleAuthProvider();
+	const fb_provider = new md_auth.GoogleAuthProvider();
 	
 	fb_provider.setCustomParameters({
 		prompt: "select_account"
 	});
 	
-	if(tc_fb_auth == null){ tc_fb_auth = MOD_AUTH.getAuth(); }
+	if(tc_fb_auth == null){ tc_fb_auth = md_auth.getAuth(); }
 	
-	return MOD_AUTH.signInWithPopup(tc_fb_auth, fb_provider).then((result) => {
+	return md_auth.signInWithPopup(tc_fb_auth, fb_provider).then((result) => {
 		// This gives you a Google Access Token. You can use it to access the Google API.
-		const fb_credential = MOD_AUTH.GoogleAuthProvider.credentialFromResult(result);
+		const fb_credential = md_auth.GoogleAuthProvider.credentialFromResult(result);
 		const fb_token = fb_credential.accessToken;
 		// The signed-in user info.
 		tc_fb_user = result.user;
@@ -112,7 +112,7 @@ export function firebase_check_login(err_fn){
 		// The email of the user's account used.
 		const email = error.customData.email;
 		// The AuthCredential type that was used.
-		const credential = MOD_AUTH.GoogleAuthProvider.credentialFromError(error);
+		const credential = md_auth.GoogleAuthProvider.credentialFromError(error);
 		
 		console.log('errorCode=' + errorCode);
 		console.log('errorMessage=' + errorMessage);
@@ -157,15 +157,15 @@ async function firebase_get_user_finished_qmodules(){
 export function firebase_check_user(callbk){
 	init_mod_vars();
 	try {
-		if(tc_fb_app == null){ tc_fb_app = MOD_APP.initializeApp(firebase_config); }
-		if(tc_fb_auth == null){ tc_fb_auth = MOD_AUTH.getAuth(); }
-		const db = MOD_DB.getDatabase(tc_fb_app);
+		if(tc_fb_app == null){ tc_fb_app = md_app.initializeApp(firebase_config); }
+		if(tc_fb_auth == null){ tc_fb_auth = md_auth.getAuth(); }
+		const db = md_db.getDatabase(tc_fb_app);
 		if(db == null){ return; }
 		
 		if(DEBUG_FB_CHECK){
-			const cn_ref = MOD_DB.ref(db, ".info/connected");
+			const cn_ref = md_db.ref(db, ".info/connected");
 			if(cn_ref == null){ return; }
-			MOD_DB.onValue(cn_ref, (snap) => {
+			md_db.onValue(cn_ref, (snap) => {
 				if (snap.val() === true) {
 					console.log("WAS CONNECTED TO FIREBASE !!!");				
 				} else {
@@ -174,7 +174,7 @@ export function firebase_check_user(callbk){
 			});
 		}
 		
-		MOD_AUTH.onAuthStateChanged(tc_fb_auth, (user) => {
+		md_auth.onAuthStateChanged(tc_fb_auth, (user) => {
 			if (user) {
 				tc_fb_user = user;
 				// User is signed in, see docs for a list of available properties
@@ -223,13 +223,13 @@ function firebase_user_ck_is_admin(){
 	init_mod_vars();
 	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
-	const fb_database = MOD_DB.getDatabase(tc_fb_app);
+	const fb_database = md_db.getDatabase(tc_fb_app);
 
 	const path_cntr = firebase_ck_admin_path;
-	const db_ref = MOD_DB.ref(fb_database, path_cntr);
+	const db_ref = md_db.ref(fb_database, path_cntr);
 	
 	tc_fb_is_admin = false;
-	MOD_DB.get(db_ref).then((snapshot) => {
+	md_db.get(db_ref).then((snapshot) => {
 		if (snapshot.exists()) {
 			const num = snapshot.val();
 			if(num == 1){
@@ -252,23 +252,23 @@ function firebase_inc_user_num_checks(){
 	init_mod_vars();
 	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
-	const fb_database = MOD_DB.getDatabase(tc_fb_app);
+	const fb_database = md_db.getDatabase(tc_fb_app);
 
 	const path_cntr = firebase_users_path + tc_fb_user.uid + "/stats/num_checks";
-	const db_ref = MOD_DB.ref(fb_database, path_cntr);
+	const db_ref = md_db.ref(fb_database, path_cntr);
 
-	MOD_DB.set(db_ref, MOD_DB.increment(1)).catch((error) => { console.error(error); });	
+	md_db.set(db_ref, md_db.increment(1)).catch((error) => { console.error(error); });	
 }
 
 function firebase_write_user_id_in_list(){ 
 	init_mod_vars();
 	if(tc_fb_app == null){ console.log("firebase_inc_user_num_checks. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_inc_user_num_checks. tc_fb_user is NULL!!"); return; }
-	const fb_database = MOD_DB.getDatabase(tc_fb_app);
+	const fb_database = md_db.getDatabase(tc_fb_app);
 
-	const db_ref = MOD_DB.ref(fb_database, firebase_users_list_path + tc_fb_user.uid);
+	const db_ref = md_db.ref(fb_database, firebase_users_list_path + tc_fb_user.uid);
 	console.log("firebase_write_user_id. db_ref = " + db_ref);
-	MOD_DB.set(db_ref, 1).catch((error) => { 
+	md_db.set(db_ref, 1).catch((error) => { 
 		console.error(error); 
 	});
 }
@@ -280,11 +280,11 @@ function firebase_write_user_id(){
 	
 	if(tc_fb_app == null){ console.log("firebase_write_user_id. tc_fb_app is NULL!!"); return; }
 	if(tc_fb_user == null){ console.log("firebase_write_user_id. tc_fb_user is NULL!!"); return; }
-	const fb_database = MOD_DB.getDatabase(tc_fb_app);
-	const db_ref = MOD_DB.ref(fb_database, firebase_users_path + tc_fb_user.uid + "/stats/last_check"); // THIS obj MUST FIT firebase rules
+	const fb_database = md_db.getDatabase(tc_fb_app);
+	const db_ref = md_db.ref(fb_database, firebase_users_path + tc_fb_user.uid + "/stats/last_check"); // THIS obj MUST FIT firebase rules
 	console.log("firebase_write_user_id. db_ref = " + db_ref);
 	const dt = get_date_and_time();  
-	MOD_DB.set(db_ref, dt).catch((error) => { 
+	md_db.set(db_ref, dt).catch((error) => { 
 		console.error(error); 
 	});
 	
@@ -295,10 +295,10 @@ export const firebase_write_object = (sub_ref, obj, err_fn) => {  //sub_ref MUST
 	init_mod_vars();
 	return firebase_check_login(err_fn).then((result) => {
 		if(tc_fb_app == null){ console.error("No firebase app in firebase_write_object !!");  return; }
-		const fb_database = MOD_DB.getDatabase(tc_fb_app);
-		const db_ref = MOD_DB.ref(fb_database, firebase_users_path + tc_fb_user.uid + sub_ref)
+		const fb_database = md_db.getDatabase(tc_fb_app);
+		const db_ref = md_db.ref(fb_database, firebase_users_path + tc_fb_user.uid + sub_ref)
 		console.log("firebase_write_object. db_ref = " + db_ref);
-		MOD_DB.set(db_ref, obj).catch((error) => { 
+		md_db.set(db_ref, obj).catch((error) => { 
 			console.error(error); 
 			if(err_fn != null){ err_fn(error); }
 		});
@@ -309,10 +309,10 @@ export const firebase_read_object = (sub_ref, callbak_func) => { //sub_ref MUST 
 	init_mod_vars();
 	return firebase_check_login().then((result) => {
 		if(tc_fb_app == null){ console.error("No firebase app in firebase_write_object !!");  return; }
-		const fb_database = MOD_DB.getDatabase(tc_fb_app);
-		const db_ref = MOD_DB.ref(fb_database, firebase_users_path + tc_fb_user.uid + sub_ref)
+		const fb_database = md_db.getDatabase(tc_fb_app);
+		const db_ref = md_db.ref(fb_database, firebase_users_path + tc_fb_user.uid + sub_ref)
 		console.log("firebase_read_object. db_ref = " + db_ref);
-		MOD_DB.onValue(db_ref, callbak_func);
+		md_db.onValue(db_ref, callbak_func);
 		/*.catch((error) => {
 			console.error(error);
 		});*/
@@ -322,12 +322,12 @@ export const firebase_read_object = (sub_ref, callbak_func) => { //sub_ref MUST 
 export const firebase_sign_out = () => {
 	init_mod_vars();
 	if(tc_fb_user == null){ return; }
-	if(tc_fb_app == null){ tc_fb_app = MOD_APP.initializeApp(firebase_config); }
-	if(tc_fb_auth == null){ tc_fb_auth = MOD_AUTH.getAuth(); }
+	if(tc_fb_app == null){ tc_fb_app = md_app.initializeApp(firebase_config); }
+	if(tc_fb_auth == null){ tc_fb_auth = md_auth.getAuth(); }
 	
 	tc_fb_user = null;
-	//const tc_fb_auth = MOD_AUTH.getAuth();
-	MOD_AUTH.signOut(tc_fb_auth);
+	//const tc_fb_auth = md_auth.getAuth();
+	md_auth.signOut(tc_fb_auth);
 	console.log('signed out');
 }
 
