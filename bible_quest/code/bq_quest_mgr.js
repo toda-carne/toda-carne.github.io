@@ -2166,12 +2166,6 @@ export function get_to_update_module_user_path(){
 	return path;
 }
 
-export function get_user_path(the_uid){
-	if(fb_mod == null){ return ""; }
-	const path = fb_mod.firebase_users_path + the_uid;
-	return path;
-}
-
 function write_qmodu_results(err_fn){
 	if(DEBUG_WRITE_RESULTS){ console.log("write_qmodu_results. CALLED. "); }
 	if(fb_mod.tc_fb_app == null){ console.error("write_qmodu_results. fb_mod.tc_fb_app == null. "); return; }
@@ -2202,7 +2196,7 @@ function write_qmodu_results(err_fn){
 	
 	if(DEBUG_WRITE){ console.log("write_qmodu_results. full_data=" + JSON.stringify(wr_data, null, "  ")); }
 	
-	const usr_path = get_user_path(fb_mod.tc_fb_user.uid);	
+	const usr_path = fb_mod.firebase_get_user_path();
 	db_ref = fb_mod.md_db.ref(fb_database, usr_path);
 	fb_mod.md_db.update(db_ref, wr_data).catch((error) => { console.error(error); });	
 

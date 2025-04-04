@@ -21,6 +21,7 @@ import * as MOD_DB from "https://www.gstatic.com/firebasejs/11.1.0/firebase-data
 const DEBUG_FB_LOGIN = false;
 const DEBUG_FB_CHECK = false;
 const DEBUG_FB_ADMIN = true;
+const DEBUG_FB_finished_qmodu = false;
 
 export let md_app = null;
 export let md_auth = null;
@@ -127,9 +128,10 @@ export function firebase_check_login(err_fn){
 	
 }
 
-export function firebase_get_user_path(){
+export function firebase_get_user_path(the_uid){
 	if(tc_fb_user == null){ return "INVALID_USER_PATH";}
-	const path = firebase_users_path + tc_fb_user.uid;
+	if(the_uid == null){ the_uid = tc_fb_user.uid; }
+	const path = firebase_users_path + the_uid;
 	return path;
 }
 
@@ -200,6 +202,7 @@ async function firebase_get_user_finished_qmodules(){
 		return;
 	}
 	bq_fb_user_finished_qmodules = snapshot.val();
+	if(DEBUG_FB_finished_qmodu){ console.log(bq_fb_user_finished_qmodules); }
 	
 	const were_eq = write_storage_fini_qmodus(bq_fb_user_finished_qmodules);
 	if(! were_eq){

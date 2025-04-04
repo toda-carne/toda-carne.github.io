@@ -149,6 +149,9 @@
 						".write": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
 						"$referred_uid": {
 							".validate": "root.child('bib_quest').child('users').child('list').child($referred_uid).exists()",
+							"$val": {
+								".validate": "newData.isNumber() && (newData.val() === 1)",
+							},
 						},
 					},
 				},

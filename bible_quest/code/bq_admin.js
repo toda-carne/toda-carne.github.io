@@ -3,7 +3,7 @@ import { get_new_dv_under, gvar, get_qid_base, bib_defaults, is_observation,
 } from './bq_tools.js';
 
 import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, 
-	fb_mod, close_pop_menu, get_user_path, id_pop_menu_sele, toggle_verse_ed, get_default_verse_obj, get_bibref_in, 
+	fb_mod, close_pop_menu, id_pop_menu_sele, toggle_verse_ed, get_default_verse_obj, get_bibref_in, 
 } from './bq_quest_mgr.js';
 
 import { load_qmodu, load_next_qmodu, } from './bq_module_mgr.js';
@@ -15,20 +15,22 @@ const DEBUG_ADMIN_OPS = true;
 const INVALID_OBSERVATION = "INVALID_OBSERVATION";
 
 const admin_ops = {
-	up_mods:"Update ALL modules",
+	up_all:"Update ALL to Update",
+	up_referrers:"Update ALL referrers",
 	up_stats:"Update ALL stats",
-	op1:"Update module observations",
-	op2:"Update module to update user stats",
-	op3:"Show user list",
-	op4:"Block user",
-	op5:"Unblock user",
-	op6:"Download Database",
-	//op7:`upload_index("W")`,
-	//op8:`upload_index("S")`,
-	//op9:`upload_index("A")`,
-	//op10:`print_totals()`,
-	//op11:"print_file_totals()",
-	//op12:"init_ascii_totals()",
+	up_mods:"Update ALL module observations",
+	up_qmodu_observ:"Update current module observations",
+	up_qmodu_ustats:"Update current module to update user stats",
+	show_user_list:"Show user list",
+	block_user:"Block user",
+	unblock_user:"Unblock user",
+	download_db:"Download Database",
+	//upload_index_W:`upload_index("W")`,
+	//upload_index_S:`upload_index("S")`,
+	//upload_index_A:`upload_index("A")`,
+	//prt_tots:`print_totals()`,
+	//prt_fl_tot:"print_file_totals()",
+	//ini_atots:"init_ascii_totals()",
 	get_verse:"get bible verse",
 };
 
@@ -42,19 +44,22 @@ export function toggle_admin_opers(fb_usr){
 	const dv_upper = document.getElementById("id_admin_ops_sec");
 	const all_vals = Object.values(admin_ops);
 	toggle_select_option(dv_upper, id_pop_menu_sele, all_vals, function(dv_ret_w, dv_ops_w, val_sel_w, idx_sel_w){
+		if(val_sel_w == admin_ops.up_referrers){
+			update_ALL_referrers();
+		}
 		if(val_sel_w == admin_ops.up_mods){
-			update_ALL_modules();
+			update_ALL_module_observations();
 		}
 		if(val_sel_w == admin_ops.up_stats){
 			update_ALL_stats();
 		}
-		if(val_sel_w == admin_ops.op1){
+		if(val_sel_w == admin_ops.up_qmodu_observ){
 			update_module_observations();
 		}
-		if(val_sel_w == admin_ops.op2){
+		if(val_sel_w == admin_ops.up_qmodu_ustats){
 			update_module_stats(gvar.current_qmonam);
 		}
-		if(val_sel_w == admin_ops.op6){
+		if(val_sel_w == admin_ops.download_db){
 			//test_php();
 			//sim_download('test_sim_download_jlq.txt', 'HOLA JOSE FUNCIONO!');
 			//generate_and_download();
@@ -63,22 +68,22 @@ export function toggle_admin_opers(fb_usr){
 		if(val_sel_w == admin_ops.get_verse){
 			test_get_verse();
 		}
-		if(val_sel_w == admin_ops.op7){
+		if(val_sel_w == admin_ops.upload_index_W){
 			upload_index("W");
 		}
-		if(val_sel_w == admin_ops.op8){
+		if(val_sel_w == admin_ops.upload_index_S){
 			upload_index("S");
 		}
-		if(val_sel_w == admin_ops.op9){
+		if(val_sel_w == admin_ops.upload_index_A){
 			upload_index("A");
 		}
-		if(val_sel_w == admin_ops.op10){
+		if(val_sel_w == admin_ops.prt_tots){
 			print_totals();
 		}
-		if(val_sel_w == admin_ops.op11){
+		if(val_sel_w == admin_ops.prt_fl_tot){
 			print_file_totals();
 		}
-		if(val_sel_w == admin_ops.op12){
+		if(val_sel_w == admin_ops.ini_atots){
 			init_ascii_totals();
 		}
 	});
@@ -134,7 +139,7 @@ function update_module_observations(){
 function update_user_module_in_stats(fb_database, the_uid, all_obs){
 	const wr_data = {};
 	
-	const usr_path = get_user_path(the_uid);
+	const usr_path = fb_mod.firebase_get_user_path(the_uid);
 	const old_stat_pth = usr_path + '/stats/' + gvar.current_qmonam;
 	const in_stat_pth = usr_path + '/stats/in_stats/' + gvar.current_qmonam;
 	const glb_stat_pth = fb_mod.firebase_bib_quest_path + 'stats/' + gvar.current_qmonam;	
@@ -562,7 +567,7 @@ async function update_index_in_chunks(pth, obj){
 	}
 }
 
-async function update_ALL_modules(){
+async function update_ALL_module_observations(){
 	const old_qmonam = gvar.current_qmonam;
 	if(gvar.conf_qmodus == null){ console.error("update_ALL_modules. gvar.conf_qmodus == null."); return; }
 	const all_qmonams = Object.keys(gvar.conf_qmodus.all_qmodus);
@@ -601,3 +606,68 @@ function test_get_verse(){
 		dv_ops.innerHTML = resp;
 	});*/
 }
+
+async function update_ALL_referrers(){	
+	console.log("Called update_ALL_referrers.");
+	close_pop_menu();
+	
+	if(fb_mod == null){ console.error("update_module_stats. fb_mod == null."); return; }
+	if(fb_mod.tc_fb_app == null){ console.error("update_module_stats. fb_mod.tc_fb_app == null.");  return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+	
+	//const ref_path = "users/list";
+	const ref_path = fb_mod.firebase_bib_quest_path + "to_update/referred_by";
+	const db_ref = fb_mod.md_db.ref(fb_database, ref_path);
+
+	const snapshot = await fb_mod.md_db.get(db_ref).catch((error) => { console.error("update_ALL_referrers. get failed." + error); });
+	if(! snapshot.exists()) {
+		console.log("update_ALL_referrers. Nothing to update.");
+		return;
+	}
+	
+	const all_usr = snapshot.val();
+	const all_uid = Object.keys(all_usr);
+	for(const the_uid of all_uid){
+		update_user_referrer(fb_database, the_uid);
+	}
+	
+}
+
+async function update_user_referrer(fb_database, the_uid){
+	const upd_path = firebase_bib_quest_path + "to_update/referred_by/" + the_uid;
+	
+	const usr_path = fb_mod.firebase_get_user_path(the_uid);
+	const rf_by_path = usr_path + "/referrer_by";
+	const cand_path = rf_by_path + "/cand";
+	const confir_path = rf_by_path + "/confirmed";
+
+	const db_base_ref = fb_mod.md_db.ref(fb_database);
+	const wr_data = {};
+	wr_data[upd_path] = {};
+	
+	let rf_by = null;
+	let usr2_path = null;
+	let rf_of_path = null;
+	
+	const db_rf_by = fb_mod.md_db.ref(db, rf_by_path);
+	const snapshot = await fb_mod.md_db.get(db_rf_by);
+	if(snapshot.exists()) {
+		rf_by = snapshot.val();
+	} 
+	
+	if((rf_by != null) && (rf_by.cand != null)){
+		wr_data[cand_path] = {};
+		wr_data[confir_path] = rf_by.cand;
+		usr2_path = fb_mod.firebase_get_user_path(rf_by.confirmed);
+		rf_of_path = usr2_path + "/referrer_of/" + the_uid;
+		wr_data[rf_of_path] = 1;
+	}
+	if((rf_by != null) && (rf_by.confirmed != null)){
+		usr2_path = fb_mod.firebase_get_user_path(rf_by.confirmed);
+		rf_of_path = usr2_path + "/referrer_of/" + the_uid;
+		wr_data[rf_of_path] = {};
+	}
+	
+	fb_mod.md_db.update(db_base_ref, wr_data).catch((error) => { console.error(error); });	
+}
+
