@@ -64,6 +64,9 @@ export function init_qmodu_info(all_vars){
 	mm.old_resu.text_lang = {};
 	mm.old_resu.text_lang.en = `${old_resu_dir}/en_text.js`;
 	mm.old_resu.text_lang.es = `${old_resu_dir}/es_text.js`;
+	mm.old_resu.pre_req = {
+		c1: { creator: 1, resurrection: 1, sleep: 1, },
+	};
 	/*
 	*/
 }

@@ -455,6 +455,9 @@ export function init_en_poll_txt(){
 	lg.q13_1__verse8_href = rf.jhn_5_28_href;
 	lg.q13_1__verse8_should = "People who get resurrection ARE IN the TOMBS, the sepulcre, the hebrew Sheol, the poorly translated greek Hades, NOT in heaven or hell.";
 	
+	lg.o_finished_resu_qmodu = "Congrats. You finished this module";
+	lg.o_module_writen_ok = "Module results saved ok in the cloud.";
+	lg.o_you_need_to_login_to_participate = "To participate you need to login.";
 	
 }
 

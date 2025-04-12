@@ -371,6 +371,9 @@ export function init_es_poll_txt(){
 	lg.q13_1__verse8_href = rf.jhn_5_28_href;
 	lg.q13_1__verse8_should = "Los que van a resucitar ESTAN EN SEPULCROS, el Sheol hebreo, el mal traducido al griego Hades, NO en el cielo o en el infierno.";
 	
+	lg.o_finished_resu_qmodu = "Felicitaciones. Terminaste este modulo";
+	lg.o_module_writen_ok = "Modulo guardado en la nube correctamente.";
+	lg.o_you_need_to_login_to_participate = "Para participar necesitas hacer login.";
 	
 }
 

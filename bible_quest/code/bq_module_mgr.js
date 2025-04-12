@@ -1,6 +1,6 @@
 
 import { gvar, init_glb_vars, get_qid_base, init_default_lang, } from './bq_tools.js';
-import { init_firebase_mgr, fb_mod, fill_div_user, init_page_exam, 
+import { init_firebase_mgr, fb_mod, fill_div_user, init_page_exam, add_last_module_ending, 
 } from './bq_quest_mgr.js';
 
 import { init_loc_cand_referrer, 
@@ -82,9 +82,12 @@ function get_nxt_qmonam(){
 		}
 	}
 	if(all_qmonams.length > 0){
-		return all_qmonams[0];
+		const fst_qmonam = all_qmonams[0];
+		if(all_fini[fst_qmonam] == null){
+			return fst_qmonam;
+		}
 	}
-	return INVALID_MONAM;
+	return null;
 }
 
 let md_lang = null;
@@ -118,6 +121,10 @@ async function import_qmodu_files(qmonam){
 }
 
 export async function load_qmodu(qmonam, init_pag){
+	if(qmonam == null){ 
+		gvar.current_qmonam = INVALID_MONAM;
+		return;
+	}
 	await import_qmodu_files(qmonam);
 	
 	const all_vars = {};
@@ -151,6 +158,9 @@ export async function load_next_qmodu(){
 	console.log("load_next_qmodu. LOADING NEXT MODULE.");
 	const nxt_mod2 = get_nxt_qmonam();
 	await load_qmodu(nxt_mod2, true);
+	if(gvar.current_qmonam == INVALID_MONAM){
+		add_last_module_ending();
+	}
 }
 
 async function init_current_qmodu(){
@@ -179,7 +189,7 @@ function is_qmodu_dnf_sat(monam, all_fini){
 	if(monam == null){ return false; }
 	const qmodu = gvar.conf_qmodus.all_qmodus[monam];
 	if(qmodu == null){ return false; }
-	if(qmodu.debug){ console.log("DEBUGING monam=" + monam + " called is_qmodu_dnf_sat"); }
+	if(qmodu.debug){ console.log("Called is_qmodu_dnf_sat. monam=" + monam); }
 	//if
 	qmodu.last_sat_conj = null;
 	qmodu.last_conj_qst = null;
@@ -197,17 +207,18 @@ function is_qmodu_dnf_sat(monam, all_fini){
 		let last_qst = null;
 		//console.log(" | monam=" + monam + " | conj_id=" + conj_id + " conj_obj=" + JSON.stringify(conj_obj, null, "  "));
 		for (const [cond_monam, resps_obj] of conj) {
-			if(resps_obj == null){ conj_act = false; break; }
-			if(all_fini[cond_monam] == null){ conj_act = false; break; }			
+			if(all_fini[cond_monam] != resps_obj){
+				conj_act = false; break; 
+			}
 		}
 		if(conj_act){
-			if(qmodu.debug){ console.log("DEBUGING monam=" + monam + " is_qmodu_dnf_sat IS_SAT"); }
+			if(qmodu.debug){ console.log("is_qmodu_dnf_sat. monam=" + monam + " IS_SAT"); }
 			qmodu.last_sat_conj = conj_id;
 			qmodu.last_conj_qst = last_qst;
 			return true;
 		}
 	}
-	if(qmodu.debug){ console.log("DEBUGING monam=" + monam + " is_qmodu_dnf_sat NOT_sat"); }
+	if(qmodu.debug){ console.log("is_qmodu_dnf_sat. monam=" + monam + " NOT_sat"); }
 	qmodu.last_sat_conj = null;
 	qmodu.last_conj_qst = null;
 	return false;

@@ -135,8 +135,6 @@ body {
 	font-size: 3vh;
 	height: 10vh;
 
-	//height: 6vh;
-	//border: 1px solid white;
 	overflow: hidden;
 	
 	grid-column: 1;
@@ -145,14 +143,10 @@ body {
 
 .adapt_item {
 	color: #f2f2f2;
-	//display: block;
-	//float: left;
-	//padding: 1em 1em;
 	text-align: center;
 	text-decoration: none;
 
 	display: flex;
-	//height: 6vh;
 	height: 10vh;
 	float: left;
 	align-items: center;  
@@ -173,8 +167,6 @@ body {
 
 .adapt_menu_pop {
 	height: 10vh;
-	//height: 6vh;
-	//border: 1px solid white;
 	align-items: center;  
 	align-content: center;
 	padding: 0em 1em 0em 1em;
@@ -221,7 +213,6 @@ body {
 	background-color: #254795;
 	/*background-color: red;*/
 	color: white;
-	//border: 0.1vw solid red;
 }
 
 .exam,h1 {
@@ -250,7 +241,6 @@ body {
 
 .exam.word {
 	display: inline-block;
-	//display: inline-flex;
 }
 
 .exam.is_qnum {
@@ -286,9 +276,18 @@ body {
 
 .exam.is_button {
 	border: 0.2vw solid white;
-	border-radius: 1em;
 	background-color: #1c396f;
 	text-align: center;
+}
+
+.exam.is_logout_button {
+	border: 0.2vw solid white;
+	height: 15vh;
+	border-radius: 1em;
+	margin: 5vh 5vh 5vh 5vh;
+	background-color: #1c396f;
+	text-align: center;
+	align-content: center;
 }
 
 .exam.is_button:hover,.exam.is_button:hover>* {
@@ -310,7 +309,6 @@ body {
 .exam.pos {
 	font-size:0.8em;
 	display: inline-block;
-	//margin-left: 1vh;
 	height: 100%;
 }
 
@@ -318,7 +316,6 @@ body {
 	display: inline-block;
 	flex-grow: 100;
 	margin: 1vh;
-	//padding-left: 1vw;
 }
 
 .exam.is_observ {
@@ -388,7 +385,6 @@ body {
 	display: grid;
 	grid-template-columns: repeat(4, var(--square_side)) 1fr;	
 	grid-auto-rows: auto;
-	//border: 0.2vw solid #ff0000;
 }
 
 .exam.grid_1col {
@@ -413,7 +409,6 @@ body {
 	grid-column: auto;
 	grid-row: auto;	
 	background-color: transparent;
-	//align-items: stretch;
 	text-align: center;
 }
 
@@ -423,16 +418,13 @@ body {
 	grid-template-columns: 1fr;
 	grid-template-rows: var(--two_sides) 1fr;
 	background-color: transparent;
-	//border: 0.2vw solid #ffff00;
 }
 
 .exam.grid_item_left {
 	grid-column: 1 / span 2;
 	grid-row: 1;	
 	text-align: right;
-	//border: 0.2vw solid #ff0000;
 	background-color: transparent;
-	//aspect-ratio: 1;
 }
 
 .exam.grid_item_center {
@@ -440,16 +432,13 @@ body {
 	grid-row: 1;	
 	text-align: center;
 	background-color: transparent;
-	//aspect-ratio: 1;
 }
 
 .exam.grid_item_right {
 	grid-column: 3 / span 2;
 	grid-row: 1;	
 	text-align: left;
-	//border: 0.2vw solid #00ff00;
 	background-color: transparent;
-	//aspect-ratio: 1;
 }
 
 
@@ -475,11 +464,9 @@ body {
 	grid-column: 1 / -1;
 	grid-row: auto;	
 	text-align: left;
-	//margin: 1vw;
 }
 
 .item_can_select {
-	//margin: 0.7vw;
 	border: 0.2vw solid white;
 	padding: 0.5em 0.5em 0.5em 0.5em;
 	border-radius: 1em;
@@ -487,6 +474,7 @@ body {
 }
 
 .item_can_select:hover {
+	//border: 0.2vw solid #00ff00;
 	border: 0.5vw solid white;
 }
 
@@ -515,11 +503,9 @@ body {
 .exam.is_answ_img {
 	background-color: transparent;
 	width: 100%;
-	//align-content: center center;
 }
 
 .exam.can_select {
-	//margin: 0.7vw;
 	padding: 0.5em 0.5em 0.5em 0.5em;
 	border: 0.2vw solid white;
 	border-radius: 1em;
@@ -531,7 +517,6 @@ body {
 }
 
 .exam.is_answer {
-	//position: relative;	
 	display: block;
 	margin: 0.7vw;
 	padding: 0.5em 0.5em 0.5em 0.5em;
@@ -592,7 +577,6 @@ body {
 }
 
 .exam.is_verse_cit {
-	//display: inline-block;
 	margin: 0.5vw;
 }
 
@@ -649,7 +633,6 @@ body {
 
 a.exam_ref {
 	color: yellow;
-	//color: red;
 }
 
 a.exam_ref:hover {
@@ -725,7 +708,6 @@ a.exam_ref:hover {
 .grid_item_auto_rest {
 	grid-column: auto / -1;
 	grid-row: auto;	
-	//border: 1px solid red;
 	background-color: transparent;
 }
 
@@ -736,3 +718,37 @@ a.exam_ref:hover {
 		border: 1px solid white;
 	}
 }
+
+/*
+	align-content: center center;
+	align-items: stretch;
+	aspect-ratio: 1;
+	aspect-ratio: 1;
+	border: 1px solid red;
+	border: 1px solid white;
+	border: 1px solid white;
+	border: 0.1vw solid red;
+	border-radius: 1em;
+	border: 0.2vw solid #ff0000;
+	border: 0.2vw solid #ffff00;
+	border: 0.2vw solid #ff0000;
+	border: 0.2vw solid #00ff00;
+	color: red;
+	display: inline-block;
+	display: block;
+	display: inline-flex;
+	float: left;
+	height: 6vh;
+	height: 6vh;
+	height: 6vh;
+	margin: 0.2vw 0.2vw 0.2vw 0.2vw;
+	margin: 0.7vw;
+	margin-left: 1vh;
+	margin: 1vw;
+	margin: 0.7vw;
+	padding: 1em 1em;
+	padding-left: 1vw;
+	position: relative;	
+
+
+*/

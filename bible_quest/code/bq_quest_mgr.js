@@ -27,7 +27,7 @@ const DEBUG_POP_MENU = true;
 const DEBUG_WRITE = false;
 const DEBUG_INIT_ANSW = false;
 const DEBUG_UPDATE_OBSERV = false;
-const DEBUG_WRITE_RESULTS = false;
+const DEBUG_WRITE_RESULTS = true;
 
 const MIN_ANSW_SHOW_INVERT = 3;
 
@@ -726,16 +726,16 @@ function add_undo_button(qid, dv_answers, dv_answ){
 	if(quest == null){ return; }
 	if(quest.pos_page == 1){ return; }
 	
-	const is_hor = is_content_horizontal();
-	
-	//let pos_cls = "grid_item_all_col";
-	//if(is_hor){ pos_cls = "grid_item_extra"; }
-	let pos_cls = "grid_item_extra";
+	//const is_hor = is_content_horizontal(); // old
+	//let pos_cls = "grid_item_all_col"; // old
+	//if(is_hor){ pos_cls = "grid_item_extra"; } // old
+	//let pos_cls = "grid_item_extra";
 	
 	const dv_undo = document.createElement("div");
 	dv_undo.id = id_dv_undo;
 	
-	dv_undo.classList.add("exam", "big_font", "item_can_select", pos_cls);
+	//dv_undo.classList.add("exam", "big_font", "item_can_select", pos_cls);
+	dv_undo.classList.add("exam", "big_font", "item_can_select", "grid_item_extra");
 	
 	dv_undo.innerHTML = gvar.glb_curr_lang.msg_undo;
 	dv_undo.addEventListener('click', function() {
@@ -2194,7 +2194,7 @@ function write_qmodu_results(err_fn){
 	wr_data[module_pth + '/' + 'last_check'] = dt;
 	wr_data[module_pth + '/' + 'num_checks'] = fb_mod.md_db.increment(1);
 	
-	if(DEBUG_WRITE){ console.log("write_qmodu_results. full_data=" + JSON.stringify(wr_data, null, "  ")); }
+	if(DEBUG_WRITE_RESULTS){ console.log("write_qmodu_results. full_data=" + JSON.stringify(wr_data, null, "  ")); }
 	
 	const usr_path = fb_mod.firebase_get_user_path();
 	db_ref = fb_mod.md_db.ref(fb_database, usr_path);
@@ -2218,7 +2218,7 @@ function can_write_qmodu_result(){
 	return null;
 }
 
-function write_firebase_qmodu_results(err_fn){
+function write_firebase_qmodu_results(err_fn, ck_can_write){
 	if(DEBUG_WRITE_RESULTS){ console.log("write_firebase_qmodu_results. CALLED. "); }
 	
 	if(gvar.wrote_qmodu){
@@ -2229,16 +2229,16 @@ function write_firebase_qmodu_results(err_fn){
 	gvar.wrote_qmodu = true;
 	
 	close_pop_menu();
-	const dv_wrt = can_write_qmodu_result();
-	if(dv_wrt == null){
-		const msg = "write_firebase_qmodu_results. can_write_qmodu_results == false.";
-		console.error(msg);
-		if(err_fn != null){ err_fn(msg); }; 
-		//const dv_exam_nm = document.getElementById("id_exam_name");
-		//dv_exam_nm.innerHTML = gvar.glb_curr_lang.msg_fb_not_finished;
-		return new Promise((resolve, reject) => {
-			resolve(msg);
-		});
+	if(ck_can_write){
+		const dv_wrt = can_write_qmodu_result();
+		if(dv_wrt == null){
+			const msg = "write_firebase_qmodu_results. can_write_qmodu_results == false.";
+			console.error(msg);
+			if(err_fn != null){ err_fn(msg); }; 
+			return new Promise((resolve, reject) => {
+				resolve(msg);
+			});
+		}
 	}
 	if(gvar.current_qmonam == null){
 		const msg = "write_firebase_qmodu_results. gvar.current_qmonam == null.";
@@ -2626,7 +2626,7 @@ function ask_next(){
 			const id_msg = quest.htm_stm_not_saved;
 			if(id_msg != null){ the_stm = get_msg(id_msg); }
 			if((id_msg != null) && (dv_qstm != null)){ dv_qstm.innerHTML = "" + the_stm; }
-		}).then((result) => {
+		}, true).then((result) => {
 			if(fb_mod == null){ return; }
 			const id_msg = quest.htm_stm_saved_ok;
 			if(id_msg != null){ the_stm = get_msg(id_msg); }
@@ -2834,20 +2834,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 			dv_user_observ.append(dv_user);
 		}
 		dv_quest.dv_qstm = dv_qstm;
-
-		/*write_firebase_qmodu_results((err) => {
-			console.error(err);
-			the_stm = get_msg(quest.htm_stm_not_saved);
-			dv_qstm.innerHTML = "" + the_stm;			
-		}).then((result) => {
-			the_stm = get_msg(quest.htm_stm_saved_ok);
-			
-			dv_qstm.innerHTML = "" + the_stm;
-			if(the_usr == null){
-				fill_div_user();
-			}
-			load_next_qmodu();
-		});*/
+		// write called in ask_next
 	}
 
 	return dv_quest;
@@ -3063,4 +3050,7 @@ function choose_qmodu_button_handler(){
 		load_qmodu(qmonam, true);
 		close_pop_menu();
 	});	
+}
+
+export function add_last_module_ending(){
 }

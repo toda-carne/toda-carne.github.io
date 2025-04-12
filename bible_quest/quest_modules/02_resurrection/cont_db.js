@@ -227,6 +227,20 @@ export function init_exam_database(){
 		},
 	};
 
+	db.o_finished_resu_qmodu__ = { 
+		// skip_in_results: true,
+		calls_write_object: true,
+		is_positive: true,
+		context: ["ctx_ending"],
+		htm_stm: "o_finished_resu_qmodu",
+		htm_stm_saved_ok: "o_module_writen_ok",
+		htm_stm_not_saved: "o_you_need_to_login_to_participate",
+		activated_if: {
+			c1: { q_new_earth__: { shown: "on", }, },
+		},
+	};
+	
+	
 }
 
 // 	c1: { q1_7__: { shown: "on", }, q1_91__: { shown: "on", }, q1_70__: { shown: "off", }, q1_91_0__: { shown: "off", }, },

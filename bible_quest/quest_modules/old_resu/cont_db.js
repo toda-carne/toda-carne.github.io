@@ -607,6 +607,7 @@ export function init_exam_database(){
 		},
 	};
 	
+	/*
 	db.o_end_observ__ = { 
 		calls_write_object: true,
 		is_positive: true,
@@ -618,7 +619,7 @@ export function init_exam_database(){
 			c1: { q14_1__ : { shown: "on", }, },
 		},
 	};
-	
+	*/
 	
 }
 

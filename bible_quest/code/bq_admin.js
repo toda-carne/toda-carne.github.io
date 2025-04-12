@@ -10,7 +10,7 @@ import { load_qmodu, load_next_qmodu, } from './bq_module_mgr.js';
 
 import { get_bib_verse, } from './bq_bible_mgr.js';
 
-const DEBUG_ADMIN_OPS = true;
+const DEBUG_ADMIN_OPS = false;
 const DEBUG_UPDATE_STATS = true;
 
 const INVALID_OBSERVATION = "INVALID_OBSERVATION";
@@ -127,6 +127,8 @@ function update_current_module_observations(){
 	
 	const ref_path = fb_mod.firebase_bib_quest_path + "modules/" + gvar.current_qmonam;
 	const obj = get_module_observations_obj();  // THIS ONLY WORKS FOR CURRENT MODULE
+	
+	if(DEBUG_ADMIN_OPS){ console.log("update_current_module_observations. PATH=" + ref_path + " full_data=\n" + JSON.stringify(obj, null, "  ")); }
 	
 	const db_ref = fb_mod.md_db.ref(fb_database, ref_path);
 	console.log("update_current_module_observations. db_ref = " + db_ref);

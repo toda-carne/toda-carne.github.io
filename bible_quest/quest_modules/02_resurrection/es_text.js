@@ -245,5 +245,8 @@ export function init_es_poll_txt(){
 	set_href_bibcit(`q11_1__verse${numv}_href`, bcit);
 	lg.q11_1__verse4_should = "Es en una TIERRA NUEVA con unos cielos nuevos";
 	
+	lg.o_finished_resu_qmodu = "Felicitaciones. Terminaste este modulo";
+	lg.o_module_writen_ok = "Modulo guardado en la nube correctamente.";
+	lg.o_you_need_to_login_to_participate = "Para participar necesitas hacer login.";
 }
 

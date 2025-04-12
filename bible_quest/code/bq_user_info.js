@@ -190,8 +190,8 @@ export function toggle_user_info(fb_usr){
 	const dv_logout = dv_edit_user.appendChild(document.createElement("div"));
 	dv_logout.classList.add("exam");
 	dv_logout.classList.add("grid_item_auto_span_4");
-	dv_logout.classList.add("is_button");
-	dv_logout.innerHTML = gvar.msg_logout;
+	dv_logout.classList.add("is_logout_button");
+	dv_logout.innerHTML = gvar.glb_curr_lang.msg_logout;
 	dv_logout.addEventListener('click', function() {		
 		dv_edit_user.remove();
 		user_logout();

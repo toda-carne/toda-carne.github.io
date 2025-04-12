@@ -231,6 +231,9 @@ export function init_en_poll_txt(){
 	set_href_bibcit(`q11_1__verse${numv}_href`, bcit);
 	lg.q11_1__verse4_should = "It is on a NEW EARTH with a new heavens";
 	
-	
+
+	lg.o_finished_resu_qmodu = "Congrats. You finished this module";
+	lg.o_module_writen_ok = "Module results saved ok in the cloud.";
+	lg.o_you_need_to_login_to_participate = "To participate you need to login.";
 }
 
