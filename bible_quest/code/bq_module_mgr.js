@@ -1,6 +1,6 @@
 
 import { gvar, init_glb_vars, get_qid_base, init_default_lang, } from './bq_tools.js';
-import { init_firebase_mgr, fb_mod, fill_div_user, init_page_exam, add_last_module_ending, 
+import { init_firebase_mgr, fb_mod, fill_div_user, init_page_exam, start_qmodu, add_last_module_ending, 
 } from './bq_quest_mgr.js';
 
 import { init_loc_cand_referrer, 
@@ -69,8 +69,8 @@ function init_conf_qmodus(){
 }
 
 function get_nxt_qmonam(){
-	if(gvar.conf_qmodus == null){ console.error("get_nxt_qmonam. gvar.conf_qmodus == null."); return INVALID_MONAM; }
-	if(gvar.conf_qmodus.all_qmodus == null){ console.error("get_nxt_qmonam. gvar.conf_qmodus.all_qmodus == null."); return INVALID_MONAM; }
+	if(gvar.conf_qmodus == null){ console.error("get_nxt_qmonam. gvar.conf_qmodus == null."); return null; }
+	if(gvar.conf_qmodus.all_qmodus == null){ console.error("get_nxt_qmonam. gvar.conf_qmodus.all_qmodus == null."); return null; }
 	const all_qmonams = Object.keys(gvar.conf_qmodus.all_qmodus);
 	const all_fini = get_fini_qmodus();
 	for(const qmonam of all_qmonams){
@@ -99,12 +99,16 @@ async function import_file(mod_nm){
 	return resp;
 }
 
-async function import_qmodu_files(qmonam){
-	if(gvar.conf_qmodus == null){ console.error("import_qmodu_files. gvar.conf_qmodus == null."); return; }
-	
+function init_loc_qmod_vars(){
 	md_lang = null;
 	md_txt = null;
 	md_cont_db = null;
+}
+
+async function import_qmodu_files(qmonam){
+	if(gvar.conf_qmodus == null){ console.error("import_qmodu_files. gvar.conf_qmodus == null."); return; }
+	
+	init_loc_qmod_vars();
 	
 	const db_fn = "../" + gvar.conf_qmodus.all_qmodus[qmonam].quest_file;
 	const txt_fnams = gvar.conf_qmodus.all_qmodus[qmonam].text_lang;
@@ -120,16 +124,20 @@ async function import_qmodu_files(qmonam){
 	md_cont_db = results[2];
 }
 
-export async function load_qmodu(qmonam, init_pag){
-	if(qmonam == null){ 
-		gvar.current_qmonam = INVALID_MONAM;
-		return;
-	}
-	await import_qmodu_files(qmonam);
-	
+export async function load_qmodu(qmonam, st_qmodu){
+	init_loc_qmod_vars();
 	const all_vars = {};
 	init_glb_vars(all_vars);
 	init_conf_qmodus();
+	init_page_exam();
+	
+	gvar.current_qmonam = qmonam;
+	console.log("CURRENT MODULE NAME:" + gvar.current_qmonam);	
+	
+	if(qmonam == null){ 
+		return;
+	}
+	await import_qmodu_files(qmonam);	
 
 	const cf_qmodu = gvar.conf_qmodus.all_qmodus[qmonam];
 	
@@ -143,22 +151,20 @@ export async function load_qmodu(qmonam, init_pag){
 	md_lang.init_lang_module(all_vars);
 	md_txt.init_module_text();
 
-	gvar.current_qmonam = qmonam;
-	console.log("CURRENT MODULE NAME:" + gvar.current_qmonam);	
 	if(md_cont_db != null){
 		gvar.init_qmodu_db = md_cont_db.init_exam_database;
 	}
 		
-	if(init_pag){
-		init_page_exam();
+	if(st_qmodu){
+		start_qmodu();
 	}
 }
 
 export async function load_next_qmodu(){
-	console.log("load_next_qmodu. LOADING NEXT MODULE.");
-	const nxt_mod2 = get_nxt_qmonam();
-	await load_qmodu(nxt_mod2, true);
-	if(gvar.current_qmonam == INVALID_MONAM){
+	const qmonam = get_nxt_qmonam();
+	console.log("load_next_qmodu. qmonam = " + qmonam);
+	await load_qmodu(qmonam, true);
+	if(gvar.current_qmonam == null){
 		add_last_module_ending();
 	}
 }

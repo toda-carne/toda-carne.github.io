@@ -123,7 +123,7 @@ export function init_es_poll_txt(){
 	lg.q_more_people = `<span class='big_font bold_font'>Qué necesita de mas personas para <a href='${hb.href_creator_tit}'>hacerlo</a>?</span>`;
 	lg.q_more_planning = `<span class='big_font bold_font'>Qué necesita un plan mas complejo para <a href='${hb.href_creator_tit}'>hacerlo</a>?</span>`;
 	lg.q_more_steps = `<span class='big_font bold_font'>Qué necesita mas pasos para <a href='${hb.href_creator_tit}'>hacerlo</a>?</span>`;
-	lg.q_more_complexity = `<span class='big_font bold_font'>Qué es mas complejo de <a href='${hb.href_creator_tit}'>hacer</a>?</span>`;
+	lg.q_more_complexity = `<span class='big_font bold_font'>Qué necesita mas gente, mas tiempo, mas pasos, mas partes para <a href='${hb.href_creator_tit}'>hacerlo</a>?</span>`;
 	
 	lg.a_building = `Un edificio`;
 	lg.a_knife = `Un cuchillo`;
@@ -144,6 +144,8 @@ export function init_es_poll_txt(){
 
 	lg.q_make_foot = `<span class='big_font bold_font'>Podemos <a href='${hb.href_creator_tit}'>hacerle</a> un pie a partir de su ADN?</span>`;
 	lg.q_make_lung = `<span class='big_font bold_font'>Podemos <a href='${hb.href_creator_tit}'>hacerle</a> un pulmón a partir de su ADN?</span>`;
+	lg.q_make_liver = `<span class='big_font bold_font'>Podemos <a href='${hb.href_creator_tit}'>hacerle</a> un higado a partir de su ADN?</span>`;
+	lg.q_make_kidney = `<span class='big_font bold_font'>Podemos <a href='${hb.href_creator_tit}'>hacerle</a> un riñon a partir de su ADN?</span>`;
 	lg.q_make_body = `<span class='big_font bold_font'>Podemos <a href='${hb.href_creator_tit}'>hacerle</a> un cuerpo a partir de su ADN?</span>`;
 
 	lg.q_why_amputees = `<span class='big_font bold_font'>Ha visto un amputado?</span>`;

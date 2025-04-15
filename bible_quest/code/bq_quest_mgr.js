@@ -113,27 +113,6 @@ export async function init_firebase_mgr(call_bk){ // NEW CODE
 	}); 
 }
 
-/*
-export function init_firebase_mgr(call_bk){ // OLD CODE
-	if(fb_mod != null){ return; }
-	const mod_nm = "./bq_firebase_mgr.js";
-	import(mod_nm)
-	.then((module) => {
-		if(module != null) { fb_mod = module; }
-		
-		if(fb_mod != null){ 
-			fb_mod.firebase_check_user((user) => {
-				if(call_bk != null){ call_bk(); }
-				else { fill_div_user(); }
-			}); 
-		}
-	})
-	.catch((err) => {
-		console.log("Could NOT import '${mod_nm}' err:" + err.message);
-	});
-}
-*/
-
 function is_content_horizontal() {
 	var dv_content = document.getElementById("id_exam_content");
 	var rect2 = dv_content.getBoundingClientRect();
@@ -1497,27 +1476,29 @@ function reset_page(){
 export function init_page_exam(){
 	console.log("Called init_page_exam");
 
-	if(gvar.init_qmodu_db == null){ 
-		console.error("init_page_exam. FAILED. Internal error 01");
-		return;
-	}
+	init_exam_buttons();	
 	
 	reset_page();
 	update_qmodu_title();
 	
-	//let sd_menu = document.getElementById("id_side_menu");
-	//sd_menu.classList.toggle("has_side_nav");
-	
 	init_firebase_mgr();
-	gvar.init_qmodu_db(); 
-	init_DAG_func();
-	
-	init_exam_buttons();	
-	
-	ask_next();
+
 };
 
-export function init_exam_buttons(){
+export function start_qmodu(){
+	console.log("Called start_qmodu");
+	
+	if(gvar.init_qmodu_db == null){ 
+		console.error("start_qmodu. (gvar.init_qmodu_db == null)");
+		return;
+	}
+	
+	gvar.init_qmodu_db(); 
+	init_DAG_func();
+	ask_next();
+}
+
+function init_exam_buttons(){
 	let dv_button = null;
 	let clk_hdlr = null;
 	
@@ -2879,10 +2860,7 @@ export function fill_div_user(){
 		return;
 	}
 	const the_usr = fb_mod.tc_fb_user;
-	
-	gvar.glb_poll_db.fb_user_info = JSON.parse(JSON.stringify(the_usr));
-	//gvar.glb_poll_db.user_info = 
-	
+		
 	const dv_user_qr = document.getElementById(id_dv_user_qrcod);
 	if(dv_user_qr != null){
 		const the_qr_maker = new QRCode(dv_user_qr, {

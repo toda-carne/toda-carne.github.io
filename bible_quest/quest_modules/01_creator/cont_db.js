@@ -837,15 +837,43 @@ export function init_exam_database(){
 		htm_stm: "q_harder_to_make",
 		answers: {
 			a_building: { img_pos: rgt, img_href: "building.webp", },
-			a_human_body: { img_pos: lft, img_href: "human_body.webp", },
+			a_human_body: { img_pos: lft, img_href: "baby.webp", },
 		},
 	};
 
+	db.q_make_liver__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_body_vs_building", ],
+		htm_stm: "q_make_liver",
+		img_href: "make_liver.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_human_body_vs_building_harder_to_make__: { a_building: "on", }, },
+		},
+	};
+	
+	db.q_make_kidney__ = { 
+		choose_yes: true,
+		context: ["ctx_harder_to_make", "ctx_body_vs_building", ],
+		htm_stm: "q_make_kidney",
+		img_href: "make_kidney.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_human_body_vs_building_harder_to_make__: { a_building: "on", }, },
+		},
+	};
+	
 	db.q_make_body__ = { 
 		choose_yes: true,
 		context: ["ctx_harder_to_make", "ctx_body_vs_building", ],
 		htm_stm: "q_make_body",
-		img_href: "make_body.webp", 
+		img_href: "make_baby.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -865,7 +893,9 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_make_body__: { a_simple_YES: "on", }, },
+			c1: { q_make_liver__: { a_simple_YES: "on", }, },
+			c2: { q_make_kidney__: { a_simple_YES: "on", }, },
+			c3: { q_make_body__: { a_simple_YES: "on", }, },
 		},
 	};
 	
@@ -885,7 +915,7 @@ export function init_exam_database(){
 			c3: { q_lung_vs_air_purifier_harder_to_make__: { a_air_purifier: "on", }, },
 			c4: { q_make_lung__: { a_simple_YES: "on", }, },
 			c5: { q_human_body_vs_building_harder_to_make__: { a_building: "on", }, },
-			c6: { q_make_body__: { a_simple_YES: "on", }, },
+			c6: { q_make_liver__: { a_simple_YES: "on", }, },
 	};
 			
 	db.q_phone_mitosis__ = { 
@@ -988,7 +1018,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_biology_req_creativity"],
 		htm_stm: "q_bilology_req_creativity",
-		img_href: "human_body.webp", 
+		img_href: "baby.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
@@ -1028,7 +1058,7 @@ export function init_exam_database(){
 		choose_yes: true,
 		context: ["ctx_reproduction", ],
 		htm_stm: "q_he_can_make_a_body_again",
-		img_href: "human_body_replica.webp", 
+		img_href: "baby_replica.webp", 
 		answers: {
 			a_simple_YES: { img_pos: rgt, },
 			a_simple_NO: { img_pos: lft, },
