@@ -48,16 +48,12 @@
 
 
 <script type="module">
-
 import * as mod_mgr from '../code/bq_module_mgr.js';
-mod_mgr.start_module_mgr("en");
+window.onload = function() {
+	mod_mgr.start_module_mgr("en");
+}
+</script>
 
-</script> 
-
-
-<!--
-<script src="../code/tc_script.js"></script>
--->
 
 </body>
 </html>

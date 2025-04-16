@@ -107,7 +107,7 @@ export let fb_mod = null;
 export async function init_firebase_mgr(call_bk){ // NEW CODE
 	if(fb_mod != null){ return; }
 	fb_mod = await import("./bq_firebase_mgr.js");
-	fb_mod.firebase_check_user((user) => {
+	await fb_mod.firebase_check_user((user) => {
 		if(call_bk != null){ call_bk(); }
 		else { fill_div_user(); }
 	}); 

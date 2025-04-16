@@ -199,7 +199,8 @@ async function init_current_qmodu(){
 	fill_div_user();
 }
 
-function load_fb_mod(){
+/*
+async function load_fb_mod(){
 	init_firebase_mgr(() => {
 		init_current_qmodu();
 	})
@@ -207,14 +208,20 @@ function load_fb_mod(){
 		console.log("load_fb_mod. Cannot load firebase manager module. Loading next LOCAL qmodu. " + err.message);
 		init_current_qmodu();
 	});
-}
+}*/
 
-export function start_module_mgr(curr_lang){	
+export async function start_module_mgr(curr_lang){	
 	site_lang = curr_lang;
 	init_page_buttons();
 	init_conf_qmodus();
 	init_loc_cand_referrer();
-	load_fb_mod();
+	try {
+		await init_firebase_mgr();
+		await init_current_qmodu();
+	} catch(err) {
+		console.error("start_module_mgr. init_firebase_mgr FAILED. " + err.message);
+		await init_current_qmodu();
+	}
 }
 
 function is_qmodu_dnf_sat(monam, all_fini){

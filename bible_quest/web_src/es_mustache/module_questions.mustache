@@ -4,11 +4,11 @@
 {{> ../all_mustache/top_exam}}
 
 <script type="module">
-
 import * as mod_mgr from '../code/bq_module_mgr.js';
-mod_mgr.start_module_mgr("es");
-
-</script> 
+window.onload = function() {
+	mod_mgr.start_module_mgr("es");
+}
+</script>
 
 {{> bottom}}
 

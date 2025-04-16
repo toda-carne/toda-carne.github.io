@@ -211,7 +211,7 @@ async function firebase_get_user_finished_qmodules(){
 	}
 }
 
-export function firebase_check_user(callbk){
+export async function firebase_check_user(callbk){
 	init_mod_vars();
 	try {
 		if(tc_fb_app == null){ tc_fb_app = md_app.initializeApp(firebase_config); }
@@ -249,9 +249,6 @@ export function firebase_check_user(callbk){
 				
 				firebase_get_user_finished_qmodules();
 				if(callbk != null){ callbk(tc_fb_user); }
-				/*firebase_get_user_finished_qmodules().then((result) => {
-					if(callbk != null){ callbk(tc_fb_user); }
-				});*/
 			} else {
 				tc_fb_user = null;
 				if(DEBUG_FB_CHECK){ console.log("User is signed out"); }
