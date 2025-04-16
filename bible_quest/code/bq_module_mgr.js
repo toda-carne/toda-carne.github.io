@@ -199,17 +199,6 @@ async function init_current_qmodu(){
 	fill_div_user();
 }
 
-/*
-async function load_fb_mod(){
-	init_firebase_mgr(() => {
-		init_current_qmodu();
-	})
-	.catch((err) => {
-		console.log("load_fb_mod. Cannot load firebase manager module. Loading next LOCAL qmodu. " + err.message);
-		init_current_qmodu();
-	});
-}*/
-
 export async function start_module_mgr(curr_lang){	
 	site_lang = curr_lang;
 	init_page_buttons();

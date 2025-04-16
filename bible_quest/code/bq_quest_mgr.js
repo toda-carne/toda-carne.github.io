@@ -1145,7 +1145,8 @@ function add_simple_cit_choosers(dv_ed_cit, cit_obj){
 	inp_book.innerHTML = gvar.glb_all_books[cit_obj.book];
 	inp_book.addEventListener('click', function() {
 		const books_arr = Object.values(gvar.glb_all_books);
-		toggle_select_option(inp_book, id_support_sele, books_arr, null);
+		const cho_classes = ["mid_item"];
+		toggle_select_option(inp_book, id_support_sele, books_arr, null, null, cho_classes);
 		return;
 	});
 	
@@ -1235,18 +1236,20 @@ export function toggle_verse_ed(dv_citation){
 	
 	inp_site.addEventListener('click', function() {
 		const all_sites_arr = Object.keys(gvar.glb_all_bibles);
+		const cho_classes = ["mid_item"];
 		toggle_select_option(inp_site, id_support_sele, all_sites_arr, function(dv_ret, dv_ops, val_sel, idx_sel){
 			const bibs = gvar.glb_all_bibles[val_sel];
 			if(bibs.length > 0){ inp_bib_ver_sel.innerHTML = bibs[0]; }
 			dv_ret.innerHTML = val_sel;
 			dv_ops.remove();
-		});
+		}, null, cho_classes);
 		return;
 	});
 	
 	inp_bib_ver_sel.addEventListener('click', function() {
 		const all_bibs_arr = gvar.glb_all_bibles[inp_site.innerHTML];
-		toggle_select_option(inp_bib_ver_sel, id_support_sele, all_bibs_arr, null);
+		const cho_classes = ["mid_item"];
+		toggle_select_option(inp_bib_ver_sel, id_support_sele, all_bibs_arr, null, null, cho_classes);
 		return;
 	});
 	
@@ -1363,7 +1366,7 @@ function set_answer_for_verse_cit(dv_citation){
 
 // CODE_FOR SELECT FROM ARRAY OF OPTIONS (for example several verses)
 
-export function toggle_select_option(dv_return, id_selec_men, all_options_arr, on_click_fn){
+export function toggle_select_option(dv_return, id_selec_men, all_options_arr, on_click_fn, menu_cls_arr, item_cls_arr){
 	var dv_options = get_new_dv_under(dv_return, id_selec_men); // old id_dv_sel_option
 	if(dv_options == null){
 		return;
@@ -1371,12 +1374,15 @@ export function toggle_select_option(dv_return, id_selec_men, all_options_arr, o
 	dv_options.classList.add("exam");
 	dv_options.classList.add("is_block");
 	dv_options.classList.add("grid_item_all_col");
+	if(menu_cls_arr != null){
+		dv_opt.classList.add(...menu_cls_arr);
+	}
 	
 	let consec = 0;
 	all_options_arr.forEach((value) => {
 		const opt_idx = consec;
 		consec++;
-		const dv_opt = add_option(dv_options, null, value, null);
+		const dv_opt = add_option(dv_options, null, value, null, item_cls_arr);
 		dv_opt.addEventListener('click', function() {
 			if(on_click_fn != null){
 				on_click_fn(dv_return, dv_options, value, opt_idx);
@@ -1391,13 +1397,16 @@ export function toggle_select_option(dv_return, id_selec_men, all_options_arr, o
 	scroll_to_top(dv_options);
 }
 
-function add_option(dv_parent, id_option, label, handler){
+function add_option(dv_parent, id_option, label, handler, item_cls_arr){
 	const dv_opt = dv_parent.appendChild(document.createElement("div"));
 	if(id_option != null){
 		dv_opt.id = id_option;
 	}
 	dv_opt.classList.add("exam");
 	dv_opt.classList.add("is_option");
+	if(item_cls_arr != null){
+		dv_opt.classList.add(...item_cls_arr);
+	}
 	dv_opt.innerHTML = label;
 	if(handler != null){
 		dv_opt.addEventListener('click', handler);
@@ -1510,6 +1519,7 @@ function save_button_handler(){
 	} else {
 		all_disp_nams = all_sv_nams.concat([nw_nm]);
 	}
+	const cho_classes = ["big_item"];
 	toggle_select_option(dv_exam_top, id_pop_menu_sele, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
 		if(exam_nm == nw_nm){
@@ -1525,7 +1535,7 @@ function save_button_handler(){
 			scroll_to_first_not_answered();
 			close_pop_menu();
 		}
-	});
+	}, null, cho_classes);
 	
 }
 
@@ -1533,11 +1543,12 @@ function open_button_handler(){
 	const dv_exam_top = document.getElementById("id_exam_top_content");
 
 	let all_disp_nams = read_all_exam_names();
+	const cho_classes = ["big_item"];
 	toggle_select_option(dv_exam_top, id_pop_menu_sele, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
 		read_exam_object(exam_nm);
 		close_pop_menu();
-	});	
+	}, null, cho_classes);	
 }
 
 function delete_button_handler(){
@@ -1548,11 +1559,12 @@ function delete_button_handler(){
 	const where_arr = [mg_browser, mg_cloud];
 	
 	let all_disp_nams = read_all_exam_names();
+	const cho_classes = ["big_item"];
 	toggle_select_option(dv_exam_top, id_pop_menu_sele, all_disp_nams, function(dv_ret_n, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
 		delete_exam_object(exam_nm);
 		close_pop_menu();
-	});	
+	}, null, cho_classes);	
 }
 
 function undo_button_handler(){
@@ -1593,6 +1605,7 @@ function pop_menu_handler(){
 			op.classList.remove("adapt_item");
 			op.classList.add("exam");
 			op.classList.add("is_block");
+			op.classList.add("big_item");
 		}
 		if(nd.click_handler != null){
 			op.addEventListener('click', nd.click_handler);
@@ -2955,13 +2968,15 @@ function choose_qmodu_button_handler(){
 	if(gvar.conf_qmodus == null){ console.error("choose_qmodu_button_handler. gvar.conf_qmodus == null."); return; }
 	
 	const dv_exam_top = document.getElementById("id_exam_top_content");
+	
+	const cho_classes = ["big_item"];
 
 	let all_qmonams = Object.keys(gvar.conf_qmodus.all_qmodus);
 	toggle_select_option(dv_exam_top, id_pop_menu_sele, all_qmonams, function(dv_ret_n, dv_ops_n, qmonam, idx_qmonam){
 		dv_ops_n.remove();
 		load_qmodu(qmonam, true);
 		close_pop_menu();
-	});	
+	}, null, cho_classes);
 }
 
 export function add_last_module_ending(){

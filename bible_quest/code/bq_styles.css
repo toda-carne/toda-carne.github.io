@@ -583,6 +583,16 @@ a.exam_ref:hover {
 	}
 }
 
+.big_item {
+	font-size: 1.5em;
+	padding: 0.5em 0.5em 0.5em 0.5em;
+}
+
+.mid_item {
+	font-size: 1.2em;
+	padding: 0.1em 0.1em 0.1em 0.1em;
+}
+
 /*
 	align-content: center center;
 	align-items: stretch;
