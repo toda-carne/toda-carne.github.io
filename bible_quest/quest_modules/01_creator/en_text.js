@@ -27,7 +27,7 @@ export function init_en_poll_txt(){
 	
 	//lg.ctx_bible2 = "<span class='has_left_padding very_big_font bold_font'>Bible?</span>";
 	
-	lg.qmodu_title = `Creator of Biomachines?`;  
+	lg.qmodu_title = gvar.qmodule_title;  
 	
 	lg.a_simple_YES = `YES`;
 	lg.a_simple_NO = `NO`;	

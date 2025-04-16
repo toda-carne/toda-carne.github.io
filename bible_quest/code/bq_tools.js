@@ -303,7 +303,9 @@ export function set_bibrefs(dv_txt){
 
 // TRADUCTION HANDLING
 
-function get_traduced_message(trad_msg, nom_msg){
+export function get_msg(nom_msg){
+	//const trad_msg = gvar.all_quest_txt;
+	const trad_msg = gvar.glb_poll_txt;
 	if(trad_msg == null){ return INVALID_MESSAGE; }
 	if(nom_msg == null){ return INVALID_MESSAGE; }
 	let tr_mg = trad_msg[nom_msg];
@@ -314,12 +316,14 @@ function get_traduced_message(trad_msg, nom_msg){
 	return tr_mg;
 }
 
-export let get_msg = null;
+//export let get_msg = null;
 
 export function init_get_msg(lang_msgs){
+	gvar.all_quest_txt = lang_msgs;
+	/*
 	get_msg = function (nom_msg){
-		return get_traduced_message(lang_msgs, nom_msg);
-	};
+		return get_traduced_message(nom_msg);
+	};*/
 }
 
 export function init_glb_vars(all_vars){

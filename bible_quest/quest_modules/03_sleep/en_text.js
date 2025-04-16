@@ -40,7 +40,7 @@ export function init_en_poll_txt(){
 	//lg.ctx_bible = `<span class='has_left_padding'><img src="${module_img_dir}/bible.webp"></span>`;
 	//lg.ctx_bible = "Bible?";
 
-	lg.qmodu_title = `The dead know nothing?`;
+	lg.qmodu_title = gvar.qmodule_title;
 	
 	lg.a_simple_YES = `YES`;
 	lg.a_simple_NO = `NO`;

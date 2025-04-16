@@ -1476,10 +1476,8 @@ function reset_page(){
 export function init_page_exam(){
 	console.log("Called init_page_exam");
 
-	init_exam_buttons();	
-	
 	reset_page();
-	update_qmodu_title();
+	update_qmodu_title("Loading");
 	
 	init_firebase_mgr();
 
@@ -1498,7 +1496,7 @@ export function start_qmodu(){
 	ask_next();
 }
 
-function init_exam_buttons(){
+export function init_page_buttons(){
 	let dv_button = null;
 	let clk_hdlr = null;
 	
@@ -1542,16 +1540,10 @@ function init_exam_buttons(){
 	
 }
 
-function update_qmodu_title(saved_nm){
-	if(gvar.current_qmonam == null){ console.error("write_firebase_qmodu_results. gvar.current_qmonam == null."); return; }
-	if(gvar.conf_qmodus == null){ return; }
-	const cf_qmodu = gvar.conf_qmodus.all_qmodus[gvar.current_qmonam];
-	const dv_exam_nm = document.getElementById("id_exam_name");
-	const d_nam = cf_qmodu.display_name;
-	let title = gvar.current_qmonam;
-	if(d_nam != null){ title = get_msg(d_nam); }
+export function update_qmodu_title(saved_nm){	
+	let title = gvar.qmodule_title;
 	if(saved_nm != null){ title = title + "(" + saved_nm + ")"; }
-	
+	const dv_exam_nm = document.getElementById("id_exam_name");
 	dv_exam_nm.innerHTML = title;
 }
 
@@ -3031,4 +3023,9 @@ function choose_qmodu_button_handler(){
 }
 
 export function add_last_module_ending(){
+	const dv_pick = document.getElementById("id_admin_ops_sec");
+	if(dv_pick != null){ dv_pick.innerHTML = gvar.glb_curr_lang.msg_qmodu_improve_one; }
+	gvar.qmodule_title = gvar.glb_curr_lang.msg_qmodu_all_finished;
+	update_qmodu_title();
+	choose_qmodu_button_handler();
 }

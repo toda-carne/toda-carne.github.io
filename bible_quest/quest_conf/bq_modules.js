@@ -11,7 +11,7 @@ export function init_qmodu_info(all_vars){
 	const conf_dir = "quest_conf";
 	const mod_dir = "quest_modules";
 
-	qmodu_info.image_dir = `img`;
+	qmodu_info.image_dir = `img`; // based on  bible_quest
 	
 	qmodu_info.conf_lang = {};
 	qmodu_info.conf_lang.en = `${conf_dir}/bq_lang_en.js`;
@@ -21,9 +21,12 @@ export function init_qmodu_info(all_vars){
 	const mm = qmodu_info.all_qmodus;
 	
 	const creator_dir = `${mod_dir}/01_creator`;
+	//lg.qmodu_title = gvar.qmodule_title;
 	
 	mm.creator = {};
-	mm.creator.display_name = `qmodu_title`;  
+	mm.creator.display_name = {};
+	mm.creator.display_name.en = `Creator of Biomachines?`;
+	mm.creator.display_name.es = `Creador de Bio-maquinas?`;
 	mm.creator.image_dir = `${creator_dir}/img`;
 	mm.creator.quest_file = `${creator_dir}/cont_db.js`;
 	mm.creator.text_lang = {};
@@ -33,7 +36,9 @@ export function init_qmodu_info(all_vars){
 	const resurrection_dir = `${mod_dir}/02_resurrection`;
 	
 	mm.resurrection = {};
-	mm.resurrection.display_name = `qmodu_title`;
+	mm.resurrection.display_name = {};
+	mm.resurrection.display_name.en = `Biblical Resurrection?`;
+	mm.resurrection.display_name.es = `Resurrección Biblica?`;
 	mm.resurrection.image_dir = `${resurrection_dir}/img`;
 	mm.resurrection.quest_file = `${resurrection_dir}/cont_db.js`;
 	mm.resurrection.text_lang = {};
@@ -43,7 +48,9 @@ export function init_qmodu_info(all_vars){
 	const sleep_dir = `${mod_dir}/03_sleep`;
 	
 	mm.sleep = {};
-	mm.sleep.display_name = `qmodu_title`;
+	mm.sleep.display_name = {};
+	mm.sleep.display_name.en = `The dead know nothing?`;
+	mm.sleep.display_name.es = `Los muertos nada conocen?`;
 	mm.sleep.image_dir = `${sleep_dir}/img`;
 	mm.sleep.quest_file = `${sleep_dir}/cont_db.js`;
 	mm.sleep.text_lang = {};

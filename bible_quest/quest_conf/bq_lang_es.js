@@ -314,6 +314,10 @@ const sex_es = {
 function init_es_basic_msg(){
 	const obj = all_es_msg;
 	
+	obj.msg_qmodu_loading = "cargando";
+	obj.msg_qmodu_all_finished = "Todos los modulos terminados";
+	obj.msg_qmodu_improve_one = "Escoja un modulo a mejorar";
+	
 	obj.msg_guest = "Invitado";
 	
 	obj.msg_ok = "ACEPTAR";

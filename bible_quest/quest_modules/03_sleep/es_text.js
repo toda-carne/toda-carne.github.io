@@ -34,7 +34,7 @@ export function init_es_poll_txt(){
 	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
-	lg.qmodu_title = `Los muertos no conocen nada?`;
+	lg.qmodu_title = gvar.qmodule_title;
 	
 	lg.a_simple_YES = `SI`;
 	lg.a_simple_NO = `NO`;	

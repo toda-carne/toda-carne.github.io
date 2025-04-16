@@ -1,6 +1,6 @@
 
 import { gvar, init_glb_vars, get_qid_base, init_default_lang, } from './bq_tools.js';
-import { init_firebase_mgr, fb_mod, fill_div_user, init_page_exam, start_qmodu, add_last_module_ending, 
+import { init_page_buttons, init_firebase_mgr, fb_mod, fill_div_user, init_page_exam, start_qmodu, update_qmodu_title, add_last_module_ending, 
 } from './bq_quest_mgr.js';
 
 import { init_loc_cand_referrer, 
@@ -11,8 +11,9 @@ import { init_qmodu_info, } from '../quest_conf/bq_modules.js';
 const DEBUG_LOADER = true;
 
 const INVALID_MONAM = "INVALID_MONAM";
+const INVALID_TITLE = "INVALID_TITLE";
 
-let qmodule_lang = "en";
+let site_lang = "en";
 let local_conf_qmodus = null;
 
 const STORAGE_FINI_QMODUS_ID = "STORAGE_FINI_QMODUS_ID";
@@ -95,11 +96,12 @@ let md_txt = null;
 let md_cont_db = null;
 
 async function import_file(mod_nm){
+	if(mod_nm == null){ return null; }
 	const resp = import(mod_nm);
 	return resp;
 }
 
-function init_loc_qmod_vars(){
+function init_all_jsmod_handles(){
 	md_lang = null;
 	md_txt = null;
 	md_cont_db = null;
@@ -108,13 +110,18 @@ function init_loc_qmod_vars(){
 async function import_qmodu_files(qmonam){
 	if(gvar.conf_qmodus == null){ console.error("import_qmodu_files. gvar.conf_qmodus == null."); return; }
 	
-	init_loc_qmod_vars();
-	
-	const db_fn = "../" + gvar.conf_qmodus.all_qmodus[qmonam].quest_file;
-	const txt_fnams = gvar.conf_qmodus.all_qmodus[qmonam].text_lang;
-	const txt_fn = "../" + txt_fnams[qmodule_lang];
+	init_all_jsmod_handles();
+
+	let txt_fn = null;
+	let db_fn = null;
+
+	if(qmonam != null){
+		const txt_fnams = gvar.conf_qmodus.all_qmodus[qmonam].text_lang;
+		txt_fn = "../" + txt_fnams[site_lang];
+		db_fn = "../" + gvar.conf_qmodus.all_qmodus[qmonam].quest_file;
+	}
 	const results = await Promise.all([
-		import_file("../quest_conf/bq_lang_" + qmodule_lang + ".js"),
+		import_file("../quest_conf/bq_lang_" + site_lang + ".js"),
 		import_file(txt_fn),
 		import_file(db_fn),
 	]);
@@ -124,40 +131,58 @@ async function import_qmodu_files(qmonam){
 	md_cont_db = results[2];
 }
 
+function get_title(){
+	if(gvar.current_qmonam == null){ console.error("write_firebase_qmodu_results. gvar.current_qmonam == null."); return INVALID_TITLE; }
+	if(gvar.conf_qmodus == null){ return INVALID_TITLE; }
+	const cf_qmodu = gvar.conf_qmodus.all_qmodus[gvar.current_qmonam];
+	let title = gvar.current_qmonam;
+	let d_nam = null;
+	if(cf_qmodu.display_name != null){ d_nam = cf_qmodu.display_name[gvar.site_lang]; }
+	if(d_nam != null){ title = d_nam; }
+	
+	return title;
+}
+
 export async function load_qmodu(qmonam, st_qmodu){
-	init_loc_qmod_vars();
+	init_all_jsmod_handles();
 	const all_vars = {};
-	init_glb_vars(all_vars);
+	all_vars.site_img_dir = "../img/";
+	all_vars.qmodu_img_dir = "../img/"
+	all_vars.site_lang = site_lang;
+	all_vars.qmodule_title = INVALID_TITLE;
+	init_glb_vars(all_vars);	
 	init_conf_qmodus();
+	
+	if(qmonam != null){ 
+		console.log("CURRENT MODULE NAME:" + qmonam);	
+		gvar.current_qmonam = qmonam;
+		gvar.qmodule_title = get_title();
+	}
 	init_page_exam();
 	
-	gvar.current_qmonam = qmonam;
-	console.log("CURRENT MODULE NAME:" + gvar.current_qmonam);	
-	
-	if(qmonam == null){ 
-		return;
-	}
 	await import_qmodu_files(qmonam);	
 
-	const cf_qmodu = gvar.conf_qmodus.all_qmodus[qmonam];
-	
-	gvar.site_img_dir = "../img/";
-	gvar.qmodu_img_dir = "../img/"
-	
-	if(gvar.conf_qmodus.image_dir != null){ gvar.site_img_dir = "../" + gvar.conf_qmodus.image_dir + "/"; }
-	if(cf_qmodu.image_dir != null){ gvar.qmodu_img_dir = "../" + cf_qmodu.image_dir + "/"; }
-	
 	init_default_lang(all_vars);
 	md_lang.init_lang_module(all_vars);
-	md_txt.init_module_text();
+	
+	update_qmodu_title();
+	
+	if(gvar.conf_qmodus.image_dir != null){ gvar.site_img_dir = "../" + gvar.conf_qmodus.image_dir + "/"; }
+	
+	if(qmonam != null){ 
+		const cf_qmodu = gvar.conf_qmodus.all_qmodus[qmonam];	
+		if(cf_qmodu.image_dir != null){ gvar.qmodu_img_dir = "../" + cf_qmodu.image_dir + "/"; }
+	}	
+	
+	if(md_txt != null){
+		md_txt.init_module_text();
+	}
 
 	if(md_cont_db != null){
 		gvar.init_qmodu_db = md_cont_db.init_exam_database;
+		if(st_qmodu){ start_qmodu(); }
 	}
 		
-	if(st_qmodu){
-		start_qmodu();
-	}
 }
 
 export async function load_next_qmodu(){
@@ -184,8 +209,9 @@ function load_fb_mod(){
 	});
 }
 
-export function load_current_module(curr_lang){	
-	qmodule_lang = curr_lang;
+export function start_module_mgr(curr_lang){	
+	site_lang = curr_lang;
+	init_page_buttons();
 	init_conf_qmodus();
 	init_loc_cand_referrer();
 	load_fb_mod();

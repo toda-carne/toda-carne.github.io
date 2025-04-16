@@ -315,6 +315,10 @@ const sex_en = {
 function init_en_basic_msg(){
 	const obj = all_en_msg;
 	
+	obj.msg_qmodu_loading = "loading";
+	obj.msg_qmodu_all_finished = "All modules finished";
+	obj.msg_qmodu_improve_one = "Choose a module to improve";
+	
 	obj.msg_guest = "Guest";
 	
 	obj.msg_ok = "OK";

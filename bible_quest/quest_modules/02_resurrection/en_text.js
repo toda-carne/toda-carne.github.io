@@ -24,7 +24,7 @@ export function init_en_poll_txt(){
 	
 	// ALL QUESTION IDS MUST END WITH DOBLE UNDERSCORE: "__"
 	
-	lg.qmodu_title = `Biblical Resurrection?`;  
+	lg.qmodu_title = gvar.qmodule_title;  
 	
 	lg.a_simple_YES = `YES`;
 	lg.a_simple_NO = `NO`;
