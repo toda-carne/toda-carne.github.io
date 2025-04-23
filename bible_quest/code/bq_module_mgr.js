@@ -9,7 +9,7 @@ import { init_loc_cand_referrer,
 
 import { init_qmodu_info, } from '../quest_conf/bq_modules.js';
 
-const PERSISTANT_STATE = false;
+const PERSISTANT_STATE = true;
 const DEBUG_LOADER = true;
 
 const INVALID_MONAM = "INVALID_MONAM";
