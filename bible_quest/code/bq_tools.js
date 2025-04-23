@@ -347,10 +347,10 @@ export function init_poll_glb(polldb){
 	console.log("Called init_poll_glb");
 }
 
-export function get_new_dv_under(dv_pop_up, id_dv){
+export function get_new_dv_under(dv_header, id_dv){
 	let dv_options = document.getElementById(id_dv);
 	if(dv_options != null){
-		var was_mine = (dv_pop_up.nextSibling == dv_options);
+		var was_mine = (dv_header.nextSibling == dv_options);
 		dv_options.remove();
 		if(was_mine){
 			//console.log("get_new_dv_under RETURNS NOTHING !!!!!");
@@ -358,7 +358,7 @@ export function get_new_dv_under(dv_pop_up, id_dv){
 		}
 	}
 	dv_options = document.createElement("div");
-	dv_pop_up.after(dv_options);
+	dv_header.after(dv_options);
 	
 	dv_options.id = id_dv;
 	return dv_options;
