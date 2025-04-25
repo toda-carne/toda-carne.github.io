@@ -38,7 +38,8 @@ const lnk_prefix = "LINK";
 const LEFT_POS = "grid_item_left";
 const RIGHT_POS = "grid_item_right";
 
-const ALL_SAVED_OBJ_NAMES = "all_saved_object_names";
+//const ALL_SAVED_OBJ_NAMES = "all_saved_object_names";
+const ALL_SAVED_OBJ_NAMES = "ALL_SAVED_OBJ_NAMES";
 
 const SUF_ID_QSTM = "_qstm";
 const SUF_ID_QREFS_OBSERVATION = "_qrefs_observation";
@@ -1513,7 +1514,7 @@ function save_button_handler(){
 	const dv_exam_top = document.getElementById("id_exam_top_content");
 	
 	const nw_nm = gvar.glb_curr_lang.msg_new_answers_name;
-	let all_sv_nams = read_all_exam_names();
+	let all_sv_nams = get_lang_exam_names();
 	let all_disp_nams = [];
 	if(all_sv_nams.length == 0){
 		all_disp_nams = [nw_nm];
@@ -1543,7 +1544,7 @@ function save_button_handler(){
 function open_button_handler(){
 	const dv_exam_top = document.getElementById("id_exam_top_content");
 
-	let all_disp_nams = read_all_exam_names();
+	let all_disp_nams = get_lang_exam_names();
 	const cho_classes = ["big_item"];
 	toggle_select_option(dv_exam_top, id_pop_menu_sele, all_disp_nams, function(dv_hdr, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
@@ -1559,7 +1560,7 @@ function delete_button_handler(){
 	const mg_cloud = gvar.glb_curr_lang.msg_open_from_cloud;
 	const where_arr = [mg_browser, mg_cloud];
 	
-	let all_disp_nams = read_all_exam_names();
+	let all_disp_nams = get_lang_exam_names();
 	const cho_classes = ["big_item"];
 	toggle_select_option(dv_exam_top, id_pop_menu_sele, all_disp_nams, function(dv_hdr, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
@@ -2021,28 +2022,40 @@ async function display_exam_load_object(name, ld_obj){
 	}
 }
 
+function get_lang_exam_names(){
+	const all_nm = read_all_exam_names();
+	return all_nm[gvar.site_lang];
+}
+
 function read_all_exam_names(){
+	if(gvar.site_lang == null){ console.error("read_all_exam_names. (gvar.site_lang == null)"); return null; }
 	let all_nm_str = window.localStorage.getItem(ALL_SAVED_OBJ_NAMES);
-	let all_nm = [];
+	let all_nm = {};
 	if(all_nm_str != null){
 		all_nm = JSON.parse(all_nm_str);
+	}
+	if(all_nm[gvar.site_lang] == null){
+		all_nm[gvar.site_lang] = [];
 	}
 	return all_nm;
 }
 
 function write_exam_name(name){
-	let all_nm = read_all_exam_names()
-	all_nm = [name].concat(all_nm.filter((val) => (val != name)));
+	const all_nm = read_all_exam_names();
+	const lang_nams = all_nm[gvar.site_lang];
+	all_nm[gvar.site_lang] = [name].concat(lang_nams.filter((val) => (val != name)));
 	window.localStorage.setItem(ALL_SAVED_OBJ_NAMES, JSON.stringify(all_nm));
 }
 
 function delete_exam_name(name){
-	let all_nm = read_all_exam_names()
-	all_nm = all_nm.filter((val) => (val != name));
+	let all_nm = read_all_exam_names();
+	const lang_nams = all_nm[gvar.site_lang];
+	all_nm[gvar.site_lang] = lang_nams.filter((val) => (val != name));
 	window.localStorage.setItem(ALL_SAVED_OBJ_NAMES, JSON.stringify(all_nm));
 }
 
-export function write_exam_object(name){
+export function write_exam_object(name){ 
+	if(name == null){ console.error("write_exam_object. (name == null)"); return; } 
 	console.log("SAVING " + name);
 	const wr_obj = calc_exam_save_object();
 	write_exam_name(name);
@@ -2052,6 +2065,7 @@ export function write_exam_object(name){
 }
 
 export function read_exam_object(name){
+	if(name == null){ console.error("read_exam_object. (name == null)"); return; } 
 	console.log("READING " + name);
 	write_exam_name(name);
 	let rd_obj_str = window.localStorage.getItem(name);

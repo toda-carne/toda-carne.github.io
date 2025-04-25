@@ -21,7 +21,6 @@ let local_conf_qmodus = null;
 const STORAGE_FINI_QMODUS_ID = "STORAGE_FINI_QMODUS_ID";
 const STORAGE_CURRENT_QMONAM = "STORAGE_CURRENT_QMONAM";
 const FINISHED_QMONAM = "FINISHED_QMONAM";
-const CURRENT_ANSWERS = "CURRENT_ANSWERS";
 
 function read_storage_fini_qmodus(){
 	let all_fini_str = window.localStorage.getItem(STORAGE_FINI_QMODUS_ID);
@@ -107,7 +106,7 @@ async function import_file(mod_nm){
 }
 
 function init_all_jsmod_handles(){
-	md_lang = null;
+	//md_lang = null;  // old lang mng
 	md_txt = null;
 	md_cont_db = null;
 }
@@ -125,6 +124,7 @@ async function import_qmodu_files(qmonam){
 		txt_fn = "../" + txt_fnams[site_lang];
 		db_fn = "../" + gvar.conf_qmodus.all_qmodus[qmonam].quest_file;
 	}
+	/* old lang mng
 	const results = await Promise.all([
 		import_file("../quest_conf/bq_lang_" + site_lang + ".js"),
 		import_file(txt_fn),
@@ -134,6 +134,14 @@ async function import_qmodu_files(qmonam){
 	md_lang = results[0];
 	md_txt = results[1];
 	md_cont_db = results[2];
+	*/
+	const results = await Promise.all([
+		import_file(txt_fn),
+		import_file(db_fn),
+	]);
+	
+	md_txt = results[0];
+	md_cont_db = results[1];
 }
 
 function get_title(){
@@ -151,6 +159,9 @@ function get_title(){
 export async function load_qmodu(qmonam, st_qmodu){
 	init_all_jsmod_handles();
 	const all_vars = {};
+	init_default_lang(all_vars);
+	md_lang.init_lang_module(all_vars);
+	
 	all_vars.site_img_dir = "../img/";
 	all_vars.qmodu_img_dir = "../img/"
 	all_vars.site_lang = site_lang;
@@ -167,9 +178,6 @@ export async function load_qmodu(qmonam, st_qmodu){
 	
 	await import_qmodu_files(qmonam);	
 
-	init_default_lang(all_vars);
-	md_lang.init_lang_module(all_vars);
-	
 	update_qmodu_title();
 	
 	if(gvar.conf_qmodus.image_dir != null){ gvar.site_img_dir = "../" + gvar.conf_qmodus.image_dir + "/"; }
@@ -213,17 +221,27 @@ function get_storage_current_qmonam(){
 	return qmonam;
 }
 
+function get_save_name(){
+	if(gvar.current_qmonam == null){ console.error("get_save_name.(gvar.current_qmonam == null)"); return null; }
+	if(gvar.conf_qmodus == null){ console.error("get_save_name.(gvar.conf_qmodus == null)"); return null; }
+	const cf_qmodu = gvar.conf_qmodus.all_qmodus[gvar.current_qmonam];
+	let d_nam = null;
+	if(cf_qmodu.save_name != null){ d_nam = cf_qmodu.save_name[gvar.site_lang]; }
+	return d_nam;
+}
+
 async function init_current_qmodu(){
 	const qmonam = get_storage_current_qmonam();
 	console.log("init_current_qmodu. qmonam = " + qmonam);
 	await load_qmodu(qmonam, true);
-	if(qmonam != null){
-		if(PERSISTANT_STATE){ read_exam_object(CURRENT_ANSWERS); }
+	if(gvar.current_qmonam != null){
+		if(PERSISTANT_STATE){ read_exam_object(get_save_name()); }
 	}
 	fill_div_user();
 }
 
-export async function start_module_mgr(curr_lang){	
+export async function start_module_mgr(lang_md, curr_lang){	
+	md_lang = lang_md;
 	site_lang = curr_lang;
 	if(PERSISTANT_STATE){ window.addEventListener('beforeunload', save_current_qmodu_hdlr); }
 	init_page_buttons();
@@ -241,10 +259,10 @@ export async function start_module_mgr(curr_lang){
 function save_current_qmodu_hdlr(){
 	if(gvar.current_qmonam != null){
 		window.localStorage.setItem(STORAGE_CURRENT_QMONAM, gvar.current_qmonam);
+		if(PERSISTANT_STATE){ write_exam_object(get_save_name()); }
 	} else {
 		window.localStorage.setItem(STORAGE_CURRENT_QMONAM, FINISHED_QMONAM);
 	}
-	write_exam_object(CURRENT_ANSWERS);
 	scroll_to_first_not_answered();
 }
 

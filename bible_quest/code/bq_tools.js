@@ -1,5 +1,5 @@
 
-import { book2num_en, all_en_poll_txt, num2book_en, DEFAULT_BOOK_NAME, init_en_module, } from '../quest_conf/bq_lang_en.js';
+import { book2num_en, all_en_poll_txt, num2book_en, init_en_module, } from '../quest_conf/bq_lang_en.js';
 import { get_bib_verse, } from './bq_bible_mgr.js';
 
 "use strict";
@@ -11,6 +11,7 @@ const INVALID_MESSAGE = "INVALID_MESSAGE";
 const SUF_QID = "__";
 const INVALID_BIBREF = "INVALID_BIBREF";
 const UNKNOWN_VERSE = "UNKNOWN_VERSE";
+const INVALID_BOOK_ABBR = "INVALID_BOOK_ABBR";
 
 export let gvar = {};
 
@@ -50,7 +51,7 @@ export const bib_defaults = {
 
 
 export const num2abbr = {
-	"-1":DEFAULT_BOOK_NAME,
+	"-1":INVALID_BOOK_ABBR,
 	"1":"Gen",
 	"2":"Exo",
 	"3":"Lev",

@@ -27,6 +27,9 @@ export function init_qmodu_info(all_vars){
 	mm.creator.display_name = {};
 	mm.creator.display_name.en = `Creator of Biomachines?`;
 	mm.creator.display_name.es = `Creador de Bio-maquinas?`;
+	mm.creator.save_name = {};
+	mm.creator.save_name.en = `Creator(auto)`;
+	mm.creator.save_name.es = `Creador(auto)`;
 	mm.creator.image_dir = `${creator_dir}/img`;
 	mm.creator.quest_file = `${creator_dir}/cont_db.js`;
 	mm.creator.text_lang = {};
@@ -39,6 +42,9 @@ export function init_qmodu_info(all_vars){
 	mm.resurrection.display_name = {};
 	mm.resurrection.display_name.en = `Biblical Resurrection?`;
 	mm.resurrection.display_name.es = `Resurrección Biblica?`;
+	mm.resurrection.save_name = {};
+	mm.resurrection.save_name.en = `Resurrection(auto)`;
+	mm.resurrection.save_name.es = `Resurrección(auto)`;
 	mm.resurrection.image_dir = `${resurrection_dir}/img`;
 	mm.resurrection.quest_file = `${resurrection_dir}/cont_db.js`;
 	mm.resurrection.text_lang = {};
@@ -51,6 +57,9 @@ export function init_qmodu_info(all_vars){
 	mm.sleep.display_name = {};
 	mm.sleep.display_name.en = `The dead know nothing?`;
 	mm.sleep.display_name.es = `Los muertos nada conocen?`;
+	mm.sleep.save_name = {};
+	mm.sleep.save_name.en = `Knowledge(auto)`;
+	mm.sleep.save_name.es = `Conocimiento(auto)`;
 	mm.sleep.image_dir = `${sleep_dir}/img`;
 	mm.sleep.quest_file = `${sleep_dir}/cont_db.js`;
 	mm.sleep.text_lang = {};

@@ -4,9 +4,10 @@
 {{> ../all_mustache/top_exam}}
 
 <script type="module">
+import * as lang_md from '../quest_conf/bq_lang_es.js';
 import * as mod_mgr from '../code/bq_module_mgr.js';
 window.onload = function() {
-	mod_mgr.start_module_mgr("es");
+	mod_mgr.start_module_mgr(lang_md, "es");
 }
 </script>
 
