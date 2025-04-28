@@ -43,6 +43,17 @@ export function init_en_poll_txt(){
 	lg.q_for_all = `${cl_ours}${bf}for ALL people good and bad.${ef}`;
 	lg.q_not_yet = `${cl_ours}${bf}on the FINAL day. Not yet.${ef}`;
 	lg.q_new_earth = `${cl_ours}${bf}in a NEW earth with a new heavens.${ef}`;
+	
+	lg.o_is_about_bible = `Have that in mind that these questions refer to what the bible claims, NOT to what you believe.`;
+	
+	const cl_denial_bib_claim = `You seem to be in denial of what the bible claims about `;
+	lg.o_denial_physical_resu = `${cl_denial_bib_claim} Jesus resurrecting in a physical body.`;
+	lg.o_denial_die_again = `${cl_denial_bib_claim} Jesus resurrecting to NOT die again.`;
+	lg.o_denial_alive_in_body_and_spirit = `${cl_denial_bib_claim} Jesus being alive in his resurrected body in a celestial city.`;
+	lg.o_denial_like_jesus_body = `${cl_denial_bib_claim} our future resurrection in a physical body and spirit, just like Jesus.`;
+	lg.o_denial_for_all = `${cl_denial_bib_claim} our future resurrection being for ALL people good and bad.`;
+	lg.o_denial_not_yet = `${cl_denial_bib_claim} our future resurrection being on the FINAL day. Not yet.`;
+	lg.o_denial_new_earth = `${cl_denial_bib_claim} our future resurrection being in a NEW earth with a new heavens.`;
 
 	let bcit = null;
 	let numv = null;

@@ -71,7 +71,6 @@ export function init_qmodu_info(all_vars){
 	mm.module1.pre_req = {
 		c1: { creator: 1, },
 	};
-	*/
 	
 	const old_resu_dir = `${mod_dir}/old_resu`;
 	
@@ -83,7 +82,6 @@ export function init_qmodu_info(all_vars){
 	mm.old_resu.pre_req = {
 		c1: { creator: 1, resurrection: 1, sleep: 1, },
 	};
-	/*
 	*/
 }
 

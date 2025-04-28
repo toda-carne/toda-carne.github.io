@@ -46,13 +46,13 @@ export function init_es_poll_txt(){
 	lg.q1_1__YES_creator = "SI hay un Creador";
 	lg.q1_1__NO_creator = "NO hay un Creador";	
 
-	lg.q1_1_2__six_days = `<span class='big_font bold_font'><a href='${hb.href_creation}'>Seis Dias</a>?</span>`;
-	lg.q1_1_2__YES_six_days = "SI seis dias";
-	lg.q1_1_2__NO_six_days = "NO seis dias";	
+	lg.q1_1_2__six_days = `<span class='big_font bold_font'>En <a href='${hb.href_creation}'>Seis Dias</a>?</span>`;
+	lg.q1_1_2__YES_six_days = "SI, en seis dias de creación";
+	lg.q1_1_2__NO_six_days = "NO, en mas de seis dias de creación";	
 
 	lg.q1_3__evolution = `<span class='big_font bold_font'><a href='${hb.href_factories}'>Evolución</a>?</span>`;
-	lg.q1_3__YES_evolution = "SI Evolución";
-	lg.q1_3__NO_evolution = "NO Evolución";
+	lg.q1_3__YES_evolution = "SI hay Evolución";
+	lg.q1_3__NO_evolution = "NO hay Evolución";
 	
 	lg.o_evolution_comm = `La pregunta sobre seis dias se refiere a seis rotaciones del planeta sobre su eje. Seis dias literales así que no hay tiempo para evolución.`;
 
@@ -62,8 +62,8 @@ export function init_es_poll_txt(){
 	lg.q_about_7_thousand_years = `<span class='big_font bold_font'>Una pareja hace aprox. 7 mil años?</span>`;
 	
 	lg.q_logic_stm = `<span class='big_font bold_font'>Lógica?</span>`;
-	lg.a_YES_logic = "SI lógica";
-	lg.a_NO_logic = "NO lógica";
+	lg.a_YES_logic = "SI es necesaria la lógica";
+	lg.a_NO_logic = "NO es necesaria la lógica";
 	
 	const logic_needed = ` se necesita en el dia a dia. Hace parte de nuestros sistemas. La pregunta se refiere a ese hecho.`;
 	
@@ -81,8 +81,8 @@ export function init_es_poll_txt(){
 	lg.o_logic_incons_comm = `Parece que usted tiene respuestas inconsistentes si ud. admite la necesidad de la lógica.`;
 	
 	lg.q_YES_NO_evidence = `<span class='big_font bold_font'><a href='${hb.href_evidence}'>Evidencia</a>?</span>`;
-	lg.a_YES_evidence = "SI evidencia";
-	lg.a_NO_evidence = "NO evidencia";
+	lg.a_YES_evidence = "SI es necesaria la evidencia";
+	lg.a_NO_evidence = "NO es necesaria la evidencia";
 
 	const evidence_needed = ` se necesita en el dia a dia. Se necesita para obtener confianza. La pregunta se refiere a ese hecho.`;
 

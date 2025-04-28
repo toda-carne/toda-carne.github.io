@@ -40,16 +40,16 @@ export function init_en_poll_txt(){
 	lg.q1_0__NO_bible = "NO, I don't like the Bible";
 
 	lg.q1_1__creator = `<span class='big_font bold_font'><a href='${hb.href_creator_tit}'>Creator</a>?</span>`;
-	lg.q1_1__YES_creator = "YES there is a Creator";
-	lg.q1_1__NO_creator = "NO there is no Creator";	
+	lg.q1_1__YES_creator = "YES, there is a Creator";
+	lg.q1_1__NO_creator = "NO, there is no Creator";	
 
-	lg.q1_1_2__six_days = `<span class='big_font bold_font'><a href='${hb.href_creation}'>Six Days</a>?</span>`;
-	lg.q1_1_2__YES_six_days = "YES six days";
-	lg.q1_1_2__NO_six_days = "NO six days";	
+	lg.q1_1_2__six_days = `<span class='big_font bold_font'>In <a href='${hb.href_creation}'>Six Days</a>?</span>`;
+	lg.q1_1_2__YES_six_days = "YES, in six days of creation";
+	lg.q1_1_2__NO_six_days = "NO, in more than six days of creation";	
 
 	lg.q1_3__evolution = `<span class='big_font bold_font'><a href='${hb.href_factories}'>Evolution</a>?</span>`;
-	lg.q1_3__YES_evolution = "YES evolution";
-	lg.q1_3__NO_evolution = "NO evolution";
+	lg.q1_3__YES_evolution = "YES, there is evolution";
+	lg.q1_3__NO_evolution = "NO, there is no evolution";
 	
 	lg.o_evolution_comm = `The question about six days refers to six rotations of the planet on its axis. Six literal days so
 	there is no time for evolution.`;
@@ -60,8 +60,8 @@ export function init_en_poll_txt(){
 	lg.q_about_7_thousand_years = `<span class='big_font bold_font'>One couple about 7 thousand year ago?</span>`;
 	
 	lg.q_logic_stm = `<span class='big_font bold_font'>Logic?</span>`;
-	lg.a_YES_logic = "YES logic";
-	lg.a_NO_logic = "NO logic";
+	lg.a_YES_logic = "YES, logic is needed";
+	lg.a_NO_logic = "NO, logic is not needed";
 	
 	const logic_needed = ` is needed in every day life. It is part of our systems. The question refers to that fact.`;
 	
@@ -79,8 +79,8 @@ export function init_en_poll_txt(){
 	lg.o_logic_incons_comm = `It seems you have some inconsistent answers if you admit the necesity of logic.`;
 	
 	lg.q_YES_NO_evidence = `<span class='big_font bold_font'><a href='${hb.href_evidence}'>Evidence</a>?</span>`;
-	lg.a_YES_evidence = "YES evidence";
-	lg.a_NO_evidence = "NO evidence";
+	lg.a_YES_evidence = "YES, evidence is needed";
+	lg.a_NO_evidence = "NO, evidence is not needed";
 
 	const evidence_needed = ` is needed in every day life. It is needed to gain trust. The question refers to that fact.`;
 
