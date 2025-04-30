@@ -11,8 +11,8 @@
 
   gtag('config', 'G-KBJN1N7HKP');
 </script>
-{{/with_gstats}}
 
+<!--
 <script src="https://apis.google.com/js/api:client.js?onload=on_load_check"></script>
 <script>
 function on_load_check(){
@@ -34,12 +34,11 @@ function on_load_check(){
 	}
 }
 </script>
+-->
 
-
-
-{{#with_gstats}}
 <!--
 <script type="module" src="../code/ba_gapi.js"></script>
+<script src="https://apis.google.com/js/api:client.js"></script>
 <script src="https://apis.google.com/js/api:client.js"></script>
 <script>
 	console.log('Calling CHECK_GOOSIGN_CODE.');
@@ -57,7 +56,10 @@ function on_load_check(){
 	}
 </script>
 -->
+
 {{/with_gstats}}
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

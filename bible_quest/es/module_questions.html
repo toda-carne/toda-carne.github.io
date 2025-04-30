@@ -4,31 +4,7 @@
 <head>
 
 
-<script src="https://apis.google.com/js/api:client.js?onload=on_load_check"></script>
-<script>
-function on_load_check(){
-	console.log('CALLING on_load_check.');
-	try{
-		gapi.load('auth2', (pm) => {
-			gapi.auth2.init().then((pm2) => {
-				const inst_auth = gapi.auth2.getAuthInstance();
-				const is_sgin = inst_auth.isSignedIn.get();
-				if(is_sgin){
-					console.log('ESTA_LOGEADO_EN_GOOGLE');
-				} else {
-					console.log('no_esta_logeado_en_google');
-				}
-			});
-		});
-	} catch(error) {
-		console.error(error);
-	}
-}
-</script>
-
-
-
-
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

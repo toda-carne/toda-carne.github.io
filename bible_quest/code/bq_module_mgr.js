@@ -320,13 +320,13 @@ function user_has_google_id(){
   console.log('user_has_google_id. SIN sesion.');
   return false;	
 }
-*/
-
 function check_google(){
 	console.log('CALLING check_google.');
 	try{
 		gapi.load('auth2', (pm) => {
+			console.log('check_google. FINNISHED load.');
 			gapi.auth2.init({ client_id: "313540425147-sgtmrf9uav4q7qs8ghmg4pce3n8sl28k.apps.googleusercontent.com" }).then((pm2) => {
+				console.log('check_google. FINNISHED init.');
 				const inst_auth = gapi.auth2.getAuthInstance();
 				const is_sgin = inst_auth.isSignedIn.get();
 				if(is_sgin){
@@ -340,3 +340,39 @@ function check_google(){
 		console.error(error);
 	}
 }
+
+*/
+
+function handle_ini_ok(resp){
+	console.log('CALLING handle_ini_ok.');
+	console.log(resp);
+	google.accounts.id.getStatus().then((status) => {
+		if(status === google.accounts.id.SignInStatus.SESSION_ALIVE){
+			console.log('TIENE SESION.');
+		} else {
+			console.log('no tiene sesion.');
+		}
+	});
+}
+
+function handle_ini_bad(resp){
+	console.log('CALLING handle_ini_bad.');
+	console.log(resp);
+}
+
+function check_google(){
+	console.log('CALLING check_google.');
+	try{
+		google.accounts.id.initialize({
+			//client_id: "313540425147-sgtmrf9uav4q7qs8ghmg4pce3n8sl28k.apps.googleusercontent.com",
+			client_id: "313540425147-g2070bfjvbgvtjjefjd7r43s3vj8vlmu.apps.googleusercontent.com",
+			callback: handle_ini_ok,
+			error_callback: handle_ini_bad,
+		});
+		//handle_ini_ok();
+		console.log('AFTER initialize.');
+	} catch(error) {
+		console.error(error);
+	}
+}
+
