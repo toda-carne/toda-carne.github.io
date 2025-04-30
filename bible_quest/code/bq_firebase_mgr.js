@@ -14,6 +14,12 @@ const fb_auth_js = "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 const fb_database_js = "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 */
 
+//import * as MOD_GSI from "https://cdn.jsdelivr.net/npm/google-sign-in@latest/dist/google-sign-in.js";
+//import * as MOD_GSI from "https://apis.google.com/js/platform.js";
+//import * as MOD_GSI from "https://apis.google.com/js/google-sign-in.js";
+//import * as MOD_GAPI from "https://apis.google.com/js/api:client.js";
+//import { load } from "https://apis.google.com/js/api:client.js";
+
 import * as MOD_APP from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import * as MOD_AUTH from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 import * as MOD_DB from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
@@ -51,6 +57,7 @@ export let tc_fb_auth = null;
 export let tc_fb_user = null;
 export let tc_fb_is_admin = false;
 export let bq_fb_user_finished_qmodules = null;
+
 
 function init_mod_vars(){
 	if(md_app != null){ return; }
@@ -384,3 +391,4 @@ export const firebase_sign_out = () => {
 }
 
 // TO GET KEYS USE: "//" as an ending of the path
+

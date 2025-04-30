@@ -13,6 +13,52 @@
 </script>
 {{/with_gstats}}
 
+<script src="https://apis.google.com/js/api:client.js?onload=on_load_check"></script>
+<script>
+function on_load_check(){
+	console.log('CALLING on_load_check.');
+	try{
+		gapi.load('auth2', (pm) => {
+			gapi.auth2.init().then((pm2) => {
+				const inst_auth = gapi.auth2.getAuthInstance();
+				const is_sgin = inst_auth.isSignedIn.get();
+				if(is_sgin){
+					console.log('ESTA_LOGEADO_EN_GOOGLE');
+				} else {
+					console.log('no_esta_logeado_en_google');
+				}
+			});
+		});
+	} catch(error) {
+		console.error(error);
+	}
+}
+</script>
+
+
+
+{{#with_gstats}}
+<!--
+<script type="module" src="../code/ba_gapi.js"></script>
+<script src="https://apis.google.com/js/api:client.js"></script>
+<script>
+	console.log('Calling CHECK_GOOSIGN_CODE.');
+	try{
+		await gapi.load('auth2');
+		const inst_auth = await gapi.getAuthInstance();
+		const is_sgin = await inst_auth.isSignedIn.get();
+		if(is_sgin){
+			console.log('CHECK_GOOSIGN_CODE. HAS GOOGLE SIGNED IN');
+		} else {
+			console.log('CHECK_GOOSIGN_CODE. no google signed in');
+		}
+	} catch(error) {
+		console.error(error);
+	}
+</script>
+-->
+{{/with_gstats}}
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>toda-carne.github.io</title>

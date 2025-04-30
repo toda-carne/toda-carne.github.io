@@ -250,10 +250,14 @@ export async function start_module_mgr(lang_md, curr_lang){
 	try {
 		await init_firebase_mgr();
 		await init_current_qmodu();
+		/*if(fb_mod != null){
+			await fb_mod.check_googe_sign_in();
+		}*/
 	} catch(err) {
 		console.error("start_module_mgr. init_firebase_mgr FAILED. " + err.message);
 		await init_current_qmodu();
 	}
+	check_google();
 }
 
 function save_current_qmodu_hdlr(){
@@ -301,3 +305,38 @@ function is_qmodu_dnf_sat(monam, all_fini){
 	return false;
 }
 
+/*
+function user_has_google_id(){
+  const cookies = document.cookie.split(';');
+  let ii = 0;
+  for(ii = 0; ii < cookies.length; ii++){
+    const cookie = cookies[ii].trim();
+	console.log('user_has_google_id. cookie=' + cookie);
+    if(cookie.startsWith('__Secure-3PAPISID=') || cookie.startsWith('__Secure-3PSID=') || cookie.startsWith('APISID=')) {
+		console.log('user_has_google_id. TIENE sesion.');
+		return true;
+    }
+  }
+  console.log('user_has_google_id. SIN sesion.');
+  return false;	
+}
+*/
+
+function check_google(){
+	console.log('CALLING check_google.');
+	try{
+		gapi.load('auth2', (pm) => {
+			gapi.auth2.init({ client_id: "313540425147-sgtmrf9uav4q7qs8ghmg4pce3n8sl28k.apps.googleusercontent.com" }).then((pm2) => {
+				const inst_auth = gapi.auth2.getAuthInstance();
+				const is_sgin = inst_auth.isSignedIn.get();
+				if(is_sgin){
+					console.log('ESTA_LOGEADO_EN_GOOGLE');
+				} else {
+					console.log('no_esta_logeado_en_google');
+				}
+			});
+		});
+	} catch(error) {
+		console.error(error);
+	}
+}

@@ -1,4 +1,5 @@
 
+
 import { get_new_dv_under, gvar, get_qid_base, bib_defaults, is_observation, 
 } from './bq_tools.js';
 
@@ -32,7 +33,8 @@ const admin_ops = {
 	//prt_tots:`print_totals()`,
 	//prt_fl_tot:"print_file_totals()",
 	//ini_atots:"init_ascii_totals()",
-	get_verse:"get bible verse",
+	//get_verse:"get bible verse",
+	//is_google_user:"Check if google signed-in",
 };
 
 const id_admin_ops = "id_admin_ops";

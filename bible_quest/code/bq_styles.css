@@ -107,6 +107,13 @@ body {
 	text-align: center;  
 }
 
+@media screen and (max-width: 600px) {
+	.big_title{
+		font-size: 300%;
+		text-align: center;  
+	}
+}
+
 .in_center{
 	text-align: center;  
 }
@@ -184,13 +191,6 @@ body {
 	background-color: #ffffff;
 	width: 8vh;
 	height: 8vh;
-}
-
-@media screen and (max-width: 600px) {
-	.big_title{
-		font-size: 300%;
-		text-align: center;  
-	}
 }
 
 /*border: 1em solid black;*/
@@ -306,6 +306,20 @@ body {
 	height: 100%;
 }
 
+.exam.observ_stm {
+	margin-top: max(2vw, 2vh);
+	display: block;
+	width: 100%;
+	height: 80%;
+	overflow-y: scroll;
+}
+
+.exam.observ_ok {
+	display: block;
+	width: 100%;
+	height: 13%;
+}
+
 .exam.pos {
 	font-size:0.8em;
 	display: inline-block;
@@ -318,10 +332,18 @@ body {
 	margin: 1vh;
 }
 
+.exam.observ_msg {
+	display: inline-block;
+	flex-grow: 100;
+	margin: 1vh;
+}
+
 .exam.is_observ {
-	margin-top: 1vw;
+	margin-top: max(1vw, 1vh);
 	border: 0.5vw solid #ffff00;
 	border-radius: 1em;
+	width: 90vw;
+	height: 87vh;
 }
 
 .exam.observ_color {
@@ -399,14 +421,12 @@ body {
 	background-color: transparent;
 }
 
-
 .exam.grid_item_extra {
 	grid-column: 1 / -1;
 	grid-row: auto;	
 	text-align: left;
 	background-color: transparent;
 }
-
 
 @media (min-width: 600px) and (orientation:landscape) {
 	.exam.grid_item_extra {
@@ -569,18 +589,18 @@ a.exam_ref:hover {
 	border: 1px solid white;
 }
 
-.grid_item_auto_rest {
-	grid-column: auto / -1;
-	grid-row: auto;	
-	background-color: transparent;
-}
-
 @media (min-width: 600px) and (orientation:landscape) {
 	.grid_item_user {
 		grid-column-start: auto;	
 		grid-row: auto;	
 		border: 1px solid white;
 	}
+}
+
+.grid_item_auto_rest {
+	grid-column: auto / -1;
+	grid-row: auto;	
+	background-color: transparent;
 }
 
 .big_item {
