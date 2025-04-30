@@ -91,7 +91,9 @@ export function firebase_check_login(err_fn){
 	const fb_provider = new md_auth.GoogleAuthProvider();
 	
 	fb_provider.setCustomParameters({
-		prompt: "select_account"
+		prompt: "select_account",
+		//button_auto_select: true,
+		//auto_select: true,
 	});
 	
 	if(tc_fb_auth == null){ tc_fb_auth = md_auth.getAuth(); }
@@ -215,6 +217,25 @@ async function firebase_get_user_finished_qmodules(){
 	if(! were_eq){
 		console.log("firebase_get_user_finished_qmodules. CALLING load_next_qmodu. DIFFERENT FINISHED MODULES !!!");
 		load_next_qmodu();
+	}
+}
+
+export function firebase_has_current_user(){
+	init_mod_vars();
+	try {
+		if(tc_fb_app == null){ tc_fb_app = md_app.initializeApp(firebase_config); }
+		if(tc_fb_auth == null){ tc_fb_auth = md_auth.getAuth(); }
+		console.log("firebase_has_current_user. tc_fb_auth=");
+		console.log(tc_fb_auth);
+		if(tc_fb_auth.currentUser){
+			console.log("firebase_has_current_user. tc_fb_auth.currentUser=");
+			console.log(tc_fb_auth.currentUser);
+		} else {
+			console.log("firebase_has_current_user. NO TIENEN USUARIO EN SESION");
+		}
+	} catch(error){
+		console.error("ERROR in firebase_has_current_user.");
+		console.error(error);
 	}
 }
 

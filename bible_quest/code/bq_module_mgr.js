@@ -250,9 +250,6 @@ export async function start_module_mgr(lang_md, curr_lang){
 	try {
 		await init_firebase_mgr();
 		await init_current_qmodu();
-		/*if(fb_mod != null){
-			await fb_mod.check_googe_sign_in();
-		}*/
 	} catch(err) {
 		console.error("start_module_mgr. init_firebase_mgr FAILED. " + err.message);
 		await init_current_qmodu();
@@ -341,7 +338,39 @@ function check_google(){
 	}
 }
 
-*/
+function check_google(){
+	console.log('CALLING check_google.');
+	try{
+		google.accounts.id.initialize({
+			//client_id: "313540425147-sgtmrf9uav4q7qs8ghmg4pce3n8sl28k.apps.googleusercontent.com",
+			client_id: "313540425147-g2070bfjvbgvtjjefjd7r43s3vj8vlmu.apps.googleusercontent.com",
+			callback: handle_ini_ok,
+			error_callback: handle_ini_bad,
+		});
+		google.accounts.id.getStatus({
+			callback: (status) => {
+				if (status.signedIn) {
+					console.log('User is already signed in.');
+					// You can optionally retrieve more user details here
+					google.accounts.id.getProfile()
+					.then(profile => {
+						console.log('User profile:', profile);
+					})
+					.catch(error => {
+						console.error('Error getting user profile:', error);
+					});
+				} else {
+					console.log('User is not signed in.');
+				}
+			}
+		});
+		//google.accounts.id.prompt();
+		//handle_ini_ok();
+		console.log('AFTER initialize.');
+	} catch(error) {
+		console.error(error);
+	}
+}
 
 function handle_ini_ok(resp){
 	console.log('CALLING handle_ini_ok.');
@@ -362,17 +391,53 @@ function handle_ini_bad(resp){
 
 function check_google(){
 	console.log('CALLING check_google.');
+	if(fb_mod == null){
+		console.log('check_google. (fb_mod == null)');
+		return;
+	}
+	fb_mod.firebase_has_current_user();
+}
+
+
+*/
+
+const APP_CLIENT_ID = "313540425147-sgtmrf9uav4q7qs8ghmg4pce3n8sl28k.apps.googleusercontent.com";
+//const APP_CLIENT_ID = "313540425147-g2070bfjvbgvtjjefjd7r43s3vj8vlmu.apps.googleusercontent.com";
+
+function check_google(){
+	console.log('CALLING check_google.');
 	try{
 		google.accounts.id.initialize({
-			//client_id: "313540425147-sgtmrf9uav4q7qs8ghmg4pce3n8sl28k.apps.googleusercontent.com",
-			client_id: "313540425147-g2070bfjvbgvtjjefjd7r43s3vj8vlmu.apps.googleusercontent.com",
+			client_id: APP_CLIENT_ID,
+			cookiepolicy: 'single_host_origin',
 			callback: handle_ini_ok,
 			error_callback: handle_ini_bad,
 		});
+		//google.accounts.id.prompt();
 		//handle_ini_ok();
 		console.log('AFTER initialize.');
 	} catch(error) {
 		console.error(error);
 	}
+}
+
+function handle_ini_ok(resp){
+	console.log('CALLING handle_ini_ok.');
+	console.log(resp);
+	google.accounts.getTokens({
+		client_id: APP_CLIENT_ID,
+		callback: (response) => {
+			if (response.accessToken) {
+				console.log('handle_ini_ok. Sesión de Google INICIADA');
+			} else {
+				console.log('handle_ini_ok. Sesión de Google NO iniciada');
+			}
+		}
+	});
+}
+
+function handle_ini_bad(resp){
+	console.log('CALLING handle_ini_bad.');
+	console.log(resp);
 }
 
