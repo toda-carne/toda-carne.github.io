@@ -11,6 +11,10 @@
 			"ck_admin": {
 				".read": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
 			},
+			"test_area": {
+				".read": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
+				".write": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
+			},
 			"modules": {
 				".read": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
 				".write": "root.child('bib_quest').child('admins').child(auth.uid).exists()",

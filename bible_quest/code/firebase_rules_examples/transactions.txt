@@ -1,0 +1,126 @@
+
+FROM
+https://firebase.google.com/docs/reference/js/database#runtransaction
+
+
+Basic write operations
+=======================
+
+For basic write operations, you can use set() to save data to a specified reference, replacing any existing data at that path. For example a social blogging application might add a user with set() as follows:
+
+function writeUserData(userId, name, email, imageUrl) {
+  firebase.database().ref('users/' + userId).set({
+    username: name,
+    email: email,
+    profile_picture : imageUrl
+  });
+}
+
+Updating or deleting data
+==========================
+
+Update specific fields
+
+To simultaneously write to specific children of a node without overwriting other child nodes, use the update() method.
+
+When calling update(), you can update lower-level child values by specifying a path for the key. If data is stored in multiple locations to scale better, you can update all instances of that data using data fan-out.
+
+For example, a social blogging app might create a post and simultaneously update it to the recent activity feed and the posting user's activity feed using code like this:
+
+function writeNewPost(uid, username, picture, title, body) {
+  // A post entry.
+  var postData = {
+    author: username,
+    uid: uid,
+    body: body,
+    title: title,
+    starCount: 0,
+    authorPic: picture
+  };
+
+  // Get a key for a new Post.
+  var newPostKey = firebase.database().ref().child('posts').push().key;
+
+  // Write the new post's data simultaneously in the posts list and the user's post list.
+  var updates = {};
+  updates['/posts/' + newPostKey] = postData;
+  updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+
+  return firebase.database().ref().update(updates);
+}
+
+This example uses push() to create a post in the node containing posts for all users at /posts/$postid and simultaneously retrieve the key. The key can then be used to create a second entry in the user's posts at /user-posts/$userid/$postid.
+
+Using these paths, you can perform simultaneous updates to multiple locations in the JSON tree with a single call to update(), such as how this example creates the new post in both locations. Simultaneous updates made this way are atomic: either all updates succeed or all updates fail.
+
+Add a Completion Callback
+-------------------------
+
+If you want to know when your data has been committed, you can add a completion callback. Both set() and update() take an optional completion callback that is called when the write has been committed to the database. If the call was unsuccessful, the callback is passed an error object indicating why the failure occurred.
+
+firebase.database().ref('users/' + userId).set({
+  username: name,
+  email: email,
+  profile_picture : imageUrl
+}, (error) => {
+  if (error) {
+    // The write failed...
+  } else {
+    // Data saved successfully!
+  }
+});
+
+
+
+Save data as transactions
+==========================
+
+When working with data that could be corrupted by concurrent modifications, such as incremental counters, you can use a transaction operation. You can give this operation an update function and an optional completion callback. The update function takes the current state of the data as an argument and returns the new desired state you would like to write. If another client writes to the location before your new value is successfully written, your update function is called again with the new current value, and the write is retried.
+
+For instance, in the example social blogging app, you could allow users to star and unstar posts and keep track of how many stars a post has received as follows:
+
+WEB NAMEDSPACED API
+
+function toggleStar(postRef, uid) {
+  postRef.transaction((post) => {
+    if (post) {
+      if (post.stars && post.stars[uid]) {
+        post.starCount--;
+        post.stars[uid] = null;
+      } else {
+        post.starCount++;
+        if (!post.stars) {
+          post.stars = {};
+        }
+        post.stars[uid] = true;
+      }
+    }
+    return post;
+  });
+}
+
+MODULAR API CODE
+
+import { getDatabase, ref, runTransaction } from "firebase/database";
+
+function toggleStar(uid) {
+  const db = getDatabase();
+  const postRef = ref(db, '/posts/foo-bar-123');
+
+  runTransaction(postRef, (post) => {
+    if (post) {
+      if (post.stars && post.stars[uid]) {
+        post.starCount--;
+        post.stars[uid] = null;
+      } else {
+        post.starCount++;
+        if (!post.stars) {
+          post.stars = {};
+        }
+        post.stars[uid] = true;
+      }
+    }
+    return post;
+  });
+}
+

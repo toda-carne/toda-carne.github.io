@@ -401,15 +401,15 @@ function check_google(){
 
 */
 
-const APP_CLIENT_ID = "313540425147-sgtmrf9uav4q7qs8ghmg4pce3n8sl28k.apps.googleusercontent.com";
-//const APP_CLIENT_ID = "313540425147-g2070bfjvbgvtjjefjd7r43s3vj8vlmu.apps.googleusercontent.com";
+//const APP_CLIENT_ID = "313540425147-sgtmrf9uav4q7qs8ghmg4pce3n8sl28k.apps.googleusercontent.com";
+const APP_CLIENT_ID = "313540425147-g2070bfjvbgvtjjefjd7r43s3vj8vlmu.apps.googleusercontent.com";
 
 function check_google(){
 	console.log('CALLING check_google.');
 	try{
 		google.accounts.id.initialize({
 			client_id: APP_CLIENT_ID,
-			cookiepolicy: 'single_host_origin',
+			//cookiepolicy: 'single_host_origin',
 			callback: handle_ini_ok,
 			error_callback: handle_ini_bad,
 		});

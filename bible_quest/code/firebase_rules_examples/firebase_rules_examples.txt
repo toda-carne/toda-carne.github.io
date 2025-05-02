@@ -484,3 +484,12 @@ CURRENT RULES
 }
 
 
+
+
+			"nuids": {
+				".read": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
+				".write": "root.child('bib_quest').child('admins').child(auth.uid).exists()",
+				"users": {
+					".validate": "newData.isNumber() && newData.val() <= now"
+				}
+			},      

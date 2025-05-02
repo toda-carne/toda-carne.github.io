@@ -35,6 +35,7 @@ const admin_ops = {
 	//ini_atots:"init_ascii_totals()",
 	//get_verse:"get bible verse",
 	//is_google_user:"Check if google signed-in",
+	show_server_timestamp:"Show server timestamp",
 };
 
 const id_admin_ops = "id_admin_ops";
@@ -89,6 +90,10 @@ export function toggle_admin_opers(fb_usr){
 		if(val_sel_w == admin_ops.ini_atots){
 			init_ascii_totals();
 		}
+		if(val_sel_w == admin_ops.show_server_timestamp){
+			get_server_timestamp();
+		}
+		
 	});
 	
 	scroll_to_top(dv_upper);
@@ -186,7 +191,7 @@ function get_user_stats_module_path(the_uid, qmonam){
 
 function update_user_module_stats(fb_database, the_uid, qmonam){
 	if(fb_mod == null){ console.error("update_user_module_stats. fb_mod == null."); return; }
-	if(DEBUG_UPDATE_STATS){ console.log("update_module_stats. Updating user " + the_uid + " | qmonam " + qmonam); }
+	if(DEBUG_UPDATE_STATS){ console.log("update_user_module_stats. Updating user " + the_uid + " | qmonam " + qmonam); }
 	
 	let path = null;
 	let db_ref = null;
@@ -676,5 +681,26 @@ async function update_user_referrer(fb_database, the_uid){
 	}
 	
 	fb_mod.md_db.update(db_base_ref, wr_data).catch((error) => { console.error(error); });	
+}
+
+function get_server_timestamp(){
+	if(fb_mod == null){ console.error("get_server_timestamp. fb_mod == null."); return; }
+	if(fb_mod.tc_fb_app == null){ console.error("get_server_timestamp. fb_mod.tc_fb_app == null.");  return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+
+	//console.log(fb_mod.md_db);
+	//fb_mod.md_db.serverTimestamp();
+
+	const wr_data = {};
+	
+	const ref_path = fb_mod.firebase_bib_quest_path + "test_area/";
+	
+	wr_data[ref_path + 'timestamp_jlq'] = fb_mod.md_db.serverTimestamp();
+	
+	const db_ref = fb_mod.md_db.ref(fb_database);
+	fb_mod.md_db.update(db_ref, wr_data).catch((error) => { console.error(error); });	
+	
+	// 1746139712609
+	// 2025/05/1 5:48 pm aprox
 }
 

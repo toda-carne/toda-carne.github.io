@@ -1,0 +1,296 @@
+
+FROM
+https://firebase.google.com/docs/database/security/rules-conditions
+
+Use conditions in Realtime Database Security Rules
+
+This guide builds on the learn the core Firebase Security Rules language guide to show how to add conditions to your Firebase Realtime Database Security Rules.
+
+The primary building block of Realtime Database Security Rules is the condition. A condition is a Boolean expression that determines whether a particular operation should be allowed or denied. For basic rules, using true and false literals as conditions works prefectly well. But the Realtime Database Security Rules language gives you ways to write more complex conditions that can:
+
+    Check user authentication
+    Evaluate existing data against newly-submitted data
+    Access and compare different parts of your database
+    Validate incoming data
+    Use the structure of incoming queries for security logic
+
+Using $ Variables to Capture Path Segments
+
+You can capture portions of the path for a read or write by declaring capture variables with the $ prefix. This serves as a wild card, and stores the value of that key for use inside rules conditions:
+
+{
+  "rules": {
+    "rooms": {
+      // this rule applies to any child of /rooms/, the key for each room id
+      // is stored inside $room_id variable for reference
+      "$room_id": {
+        "topic": {
+          // the room's topic can be changed if the room id has "public" in it
+          ".write": "$room_id.contains('public')"
+        }
+      }
+    }
+  }
+}
+
+The dynamic $ variables can also be used in parallel with constant path names. In this example, we're using the $other variable to declare a .validate rule that ensures that widget has no children other than title and color. Any write that would result in additional children being created would fail.
+
+{
+  "rules": {
+    "widget": {
+      // a widget can have a title or color attribute
+      "title": { ".validate": true },
+      "color": { ".validate": true },
+
+      // but no other child paths are allowed
+      // in this case, $other means any key excluding "title" and "color"
+      "$other": { ".validate": false }
+    }
+  }
+}
+
+Note: Path keys are always strings. For this reason, it's important to keep in mind that when we attempt to compare a $ variable to a number, this will always fail. This can be corrected by converting the number to a string (e.g. $key === newData.val()+'').
+Authentication
+
+One of the most common security rule patterns is controlling access based on the user's authentication state. For example, your app may want to allow only signed-in users to write data.
+
+If your app uses Firebase Authentication, the request.auth variable contains the authentication information for the client requesting data. For more information about request.auth, see the reference documentation.
+
+Firebase Authentication integrates with the Firebase Realtime Database to allow you to control data access on a per-user basis using conditions. Once a user authenticates, the auth variable in your Realtime Database Security Rules rules will be populated with the user's information. This information includes their unique identifier (uid) as well as linked account data, such as a Facebook id or an email address, and other info. If you implement a custom auth provider, you can add your own fields to your user's auth payload.
+
+This section explains how to combine the Firebase Realtime Database Security Rules language with authentication information about your users. By combining these two concepts, you can control access to data based on user identity.
+The auth Variable
+
+The predefined auth variable in the rules is null before authentication takes place.
+
+Once a user is authenticated with Firebase Authentication it will contain the following attributes:
+
+provider 	The authentication method used ("password", "anonymous", "facebook", "github", "google", or "twitter").
+uid 	A unique user id, guaranteed to be unique across all providers.
+token 	The contents of the Firebase Auth ID token. See the reference documentation for auth.token for more details.
+
+Here is an example rule that uses the auth variable to ensure that each user can only write to a user-specific path:
+
+{
+  "rules": {
+    "users": {
+      "$user_id": {
+        // grants write access to the owner of this user account
+        // whose uid must exactly match the key ($user_id)
+        ".write": "$user_id === auth.uid"
+      }
+    }
+  }
+}
+
+Structuring Your Database to Support Authentication Conditions
+
+It is usually helpful to structure your database in a way that makes writing Rules easier. One common pattern for storing user data in the Realtime Database is to store all of your users in a single users node whose children are the uid values for every user. If you wanted to restrict access to this data such that only the logged-in user can see their own data, your rules would look something like this.
+
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth !== null && auth.uid === $uid"
+      }
+    }
+  }
+}
+
+Working with Authentication Custom Claims
+
+For apps that require custom access control for different users, Firebase Authentication allows developers to set claims on a Firebase user. These claims are accessible in theauth.token variable in your rules. Here is an example of rules that make use of the hasEmergencyTowel custom claim:
+
+{
+  "rules": {
+    "frood": {
+      // A towel is about the most massively useful thing an interstellar
+      // hitchhiker can have
+      ".read": "auth.token.hasEmergencyTowel === true"
+    }
+  }
+}
+
+Developers creating their own custom authentication tokens can optionally add claims to these tokens. These claims are available on the auth.token variable in your rules.
+Existing Data vs. New Data
+
+The predefined data variable is used to refer to the data before a write operation takes place. Conversely, the newData variable contains the new data that will exist if the write operation is successful. newData represents the merged result of the new data being written and existing data.
+
+To illustrate, this rule would allow us to create new records or delete existing ones, but not to make changes to existing non-null data:
+
+// we can write as long as old data or new data does not exist
+// in other words, if this is a delete or a create, but not an update
+".write": "!data.exists() || !newData.exists()"
+
+Make sure to check for null or invalid data. Errors in rules lead to rejected operations.
+Referencing Data in other Paths
+
+Any data can be used as criterion for rules. Using the predefined variables root, data, and newData, we can access any path as it would exist before or after a write event.
+
+Consider this example, which allows write operations as long as the value of the /allow_writes/ node is true, the parent node does not have a readOnly flag set, and there is a child named foo in the newly written data:
+
+".write": "root.child('allow_writes').val() === true &&
+          !data.parent().child('readOnly').exists() &&
+          newData.child('foo').exists()"
+
+Validating Data
+
+Enforcing data structures and validating the format and content of data should be done using .validate rules, which are run only after a .write rule succeeds to grant access. Below is a sample .validate rule definition which only allows dates in the format YYYY-MM-DD between the years 1900-2099, which is checked using a regular expression.
+
+".validate": "newData.isString() &&
+              newData.val().matches(/^(19|20)[0-9][0-9][-\\/. ](0[1-9]|1[012])[-\\/. ](0[1-9]|[12][0-9]|3[01])$/)"
+
+Try it on JSFiddle: Click here to see this in action. Try writing different values to the input field.
+
+The .validate rules are the only type of security rule which do not cascade. If any validation rule fails on any child record, the entire write operation will be rejected. Additionally, the validate definitions are ignored when data is deleted (that is, when the new value being written is null).
+Note: The .validate rules are only evaluated for non-null values and do not cascade.
+
+These might seem like trivial points, but are in fact significant features for writing powerful Firebase Realtime Database Security Rules. Consider the following rules:
+
+{
+  "rules": {
+    // write is allowed for all paths
+    ".write": true,
+    "widget": {
+      // a valid widget must have attributes "color" and "size"
+      // allows deleting widgets (since .validate is not applied to delete rules)
+      ".validate": "newData.hasChildren(['color', 'size'])",
+      "size": {
+        // the value of "size" must be a number between 0 and 99
+        ".validate": "newData.isNumber() &&
+                      newData.val() >= 0 &&
+                      newData.val() <= 99"
+      },
+      "color": {
+        // the value of "color" must exist as a key in our mythical
+        // /valid_colors/ index
+        ".validate": "root.child('valid_colors/' + newData.val()).exists()"
+      }
+    }
+  }
+}
+
+With this variant in mind, look at the results for the following write operations:
+JavaScript
+Objective-C
+Swift
+Java
+REST
+
+var ref = db.ref("/widget");
+
+// PERMISSION_DENIED: does not have children color and size
+ref.set('foo');
+
+// PERMISSION DENIED: does not have child color
+ref.set({size: 22});
+
+// PERMISSION_DENIED: size is not a number
+ref.set({ size: 'foo', color: 'red' });
+
+// SUCCESS (assuming 'blue' appears in our colors list)
+ref.set({ size: 21, color: 'blue'});
+
+// If the record already exists and has a color, this will
+// succeed, otherwise it will fail since newData.hasChildren(['color', 'size'])
+// will fail to validate
+ref.child('size').set(99);
+
+Now let's look at the same structure, but using .write rules instead of .validate:
+
+{
+  "rules": {
+    // this variant will NOT allow deleting records (since .write would be disallowed)
+    "widget": {
+      // a widget must have 'color' and 'size' in order to be written to this path
+      ".write": "newData.hasChildren(['color', 'size'])",
+      "size": {
+        // the value of "size" must be a number between 0 and 99, ONLY IF WE WRITE DIRECTLY TO SIZE
+        ".write": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 99"
+      },
+      "color": {
+        // the value of "color" must exist as a key in our mythical valid_colors/ index
+        // BUT ONLY IF WE WRITE DIRECTLY TO COLOR
+        ".write": "root.child('valid_colors/'+newData.val()).exists()"
+      }
+    }
+  }
+}
+
+In this variant, any of the following operations would succeed:
+JavaScript
+Objective-C
+Swift
+Java
+REST
+
+var ref = new Firebase(URL + "/widget");
+
+// ALLOWED? Even though size is invalid, widget has children color and size,
+// so write is allowed and the .write rule under color is ignored
+ref.set({size: 99999, color: 'red'});
+
+// ALLOWED? Works even if widget does not exist, allowing us to create a widget
+// which is invalid and does not have a valid color.
+// (allowed by the write rule under "color")
+ref.child('size').set(99);
+
+This illustrates the differences between .write and .validate rules. As demonstrated, all of these rules should be written using .validate, with the possible exception of the newData.hasChildren() rule, which would depend on whether deletions should be allowed.
+Note: Validation rules are not meant to completely replace data validation code in your app. We recommend that you also perform input validation client-side for best performance and best user experience when your app is offline.
+Query-based Rules
+
+Although you can't use rules as filters, you can limit access to subsets of data by using query parameters in your rules. Use query. expressions in your rules to grant read or write access based on query parameters.
+
+For example, the following query-based rule uses user-based security rules and query-based rules to restrict access to data in the baskets collection to only the shopping baskets the active user owns:
+
+"baskets": {
+  ".read": "auth.uid !== null &&
+            query.orderByChild === 'owner' &&
+            query.equalTo === auth.uid" // restrict basket access to owner of basket
+}
+
+The following query, which includes the query parameters in the rule, would succeed:
+
+db.ref("baskets").orderByChild("owner")
+                 .equalTo(auth.currentUser.uid)
+                 .on("value", cb)                 // Would succeed
+
+However, queries that do not include the parameters in the rule would fail with a PermissionDenied error:
+
+db.ref("baskets").on("value", cb)                 // Would fail with PermissionDenied
+
+You can also use query-based rules to limit how much data a client downloads through read operations.
+
+For example, the following rule limits read access to only the first 1000 results of a query, as ordered by priority:
+
+messages: {
+  ".read": "query.orderByKey &&
+            query.limitToFirst <= 1000"
+}
+
+// Example queries:
+
+db.ref("messages").on("value", cb)                // Would fail with PermissionDenied
+
+db.ref("messages").limitToFirst(1000)
+                  .on("value", cb)                // Would succeed (default order by key)
+
+The following query. expressions are available in Realtime Database Security Rules.
+Query-based rule expressions
+Expression 	Type 	Description
+query.orderByKey
+query.orderByPriority
+query.orderByValue 	boolean 	True for queries ordered by key, priority, or value. False otherwise.
+query.orderByChild 	string
+null 	Use a string to represent the relative path to a child node. For example, query.orderByChild === "address/zip". If the query isn't ordered by a child node, this value is null.
+query.startAt
+query.endAt
+query.equalTo 	string
+number
+boolean
+null 	Retrieves the bounds of the executing query, or returns null if there is no bound set.
+query.limitToFirst
+query.limitToLast 	number
+null 	Retrieves the limit on the executing query, or returns null if there is no limit set.
+Next steps
+

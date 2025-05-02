@@ -1,0 +1,603 @@
+
+FROM
+https://firebase.google.com/docs/reference/security/database#variables
+
+
+Firebase Database Security Rules API
+
+Rule: Types
+.read
+
+Grants a client read access to a Firebase Realtime Database location.
+
+A .read rule is a type of Security Rule which grants a client read access to a Firebase Realtime Database location. For example:
+
+ ".read": "auth != null && auth.provider == 'twitter'"
+
+The value of a .read rule is a string, which is evaluated as a subset of JavaScript's expression syntax with a few behavioral changes to increase clarity and correctness. A .read rule which grants permission to read a location will also allow reading of any descendants of that location, even if the descendants have their own .read rules which fail.
+
+A .read rule has access to all of Firebase Realtime Database's Rule Variables except newData.
+.write
+
+Grants a client write access to a Firebase Realtime Database location.
+
+A .write rule is a type of Security Rule which grants a client write access to a Firebase Realtime Database location. For example:
+
+".write": "auth != null && auth.token.isAdmin == true"
+
+The value of a .write rule is a string, which is evaluated as a subset of JavaScript's expression syntax with a few behavioral changes to increase clarity and correctness. A .write rule which grants permission to write to a location will also allow writing to any descendants of that location, even if the descendants have their own .write rules which fail.
+
+A .write rule has access to all of Firebase Realtime Database's Rule Variables.
+.validate
+
+Used once a .write rule has granted access, to ensure that the data being written conforms to a specific schema.
+
+A .validate rule is used once a .write rule has granted access, to ensure that the data being written conforms to a specific standard. In addition to a .write granting access, all relevant .validate rules must succeed before a write is allowed. For example:
+
+".validate": "newData.hasChildren(['name', 'age'])"
+
+The value of a .validate rule is a string, which is evaluated as a subset of JavaScript's expression syntax with a few behavioral changes to increase clarity and correctness.
+
+A .validate rule has access to all of Firebase Realtime Database's Rule Variables.
+.indexOn
+
+Improves query performance by telling the Firebase Realtime Database which keys you want your data indexed.
+
+The .indexOn rule tells the Firebase Realtime Database servers to index specific keys in your data to improve the performance of your queries. For example, given a database with a collection of dinosaur data, we can tell Firebase Realtime Database to optimize for queries, before they are returned from the servers, by adding this rule:
+
+{
+  "rules": {
+    "dinosaurs": {
+      ".indexOn": ["height", "length"]
+    }
+  }
+}
+
+Note: A node's key and priority are indexed automatically, so there is no need to index them explicitly.
+
+You can find out more information about the .indexOn rule by referring to the section of the security guide on indexing your data.
+Rule: Variables
+auth
+
+A variable containing the token payload if a client is authenticated, or null if the client isn't authenticated.
+
+Firebase Realtime Database allows you to easily authenticate to several built-in providers and will generate auth tokens for them. After a user is authenticated with one of the built-in providers, the auth variable will contain the following:
+Field 	Description
+provider 	The authentication method used (e.g "password", "anonymous", "facebook", "github", "google", or "twitter").
+uid 	A unique user id, guaranteed to be unique across all providers.
+token 	The contents of the Firebase Auth ID token. See auth.token.
+
+As an example, we could have a rule like the following to allow users to create comments as long as they store their user ID with the comment:
+
+{
+  "rules": {
+    ".read": true,
+    "$comment": {
+      ".write": "!data.exists() && newData.child('user_id').val() == auth.uid"
+    }
+  }
+}
+
+We could also make a rule like the following to allow users to create comments as long as they are signed in using Facebook:
+
+{
+  "rules": {
+    ".read": true,
+    "$comment": {
+      ".write": "!data.exists() && auth.provider == 'facebook'"
+    }
+  }
+}
+
+auth.token
+
+A variable containing the contents of the Firebase Auth ID token.
+
+The token contains some or all of the following keys:
+Field 	Description
+email 	The email address associated with the account, if present.
+email_verified 	true if the user has verified they have access to the email address. Some providers automatically verify email addresses they own.
+phone_number 	The phone number associated with the account, if present.
+name 	The user's display name, if set.
+sub 	The user's Firebase UID. This is unique within a project.
+firebase.identities 	Dictionary of all the identities that are associated with this user's account. The keys of the dictionary can be any of the following: email, phone, google.com, facebook.com, github.com, twitter.com. The values of the dictionary are arrays of unique identifiers for each identity provider associated with the account. For example, auth.token.firebase.identities["google.com"][0] contains the first Google user ID associated with the account.
+firebase.sign_in_provider 	The sign-in provider used to obtain this token. Can be one of the following strings: custom, password, phone, anonymous, google.com, facebook.com, github.com, twitter.com.
+firebase.tenant 	The tenantId associated with the account, if present. e.g. tenant2-m6tyz
+
+If using custom authentication, auth.token also contains any custom claims specified by the developer.
+
+All of these values can be used within rules. For example, to restrict access to Google accounts associated with a gmail.com address, we could add the rule:
+
+{
+  "rules": {
+    ".read": "auth != null",
+    "gmailUsers": {
+      "$uid": {
+        ".write": "auth.token.email_verified == true && auth.token.email.matches(/.*@gmail.com$/)"
+      }
+    }
+  }
+}
+
+For completeness, the following fields are also included, in auth.token, but they are unlikely to be useful for rules.
+Field 	Description
+iss 	The issuer of the token.
+aud 	The audience for the token.
+auth_time 	The last time the user authenticated with a credential using the device receiving the token.
+iat 	The time at which the token was issued.
+exp 	The time at which the token expires.
+$location
+
+A variable that can be used to reference the key of a $location that was used earlier in a rule structure.
+
+When you have a $location in your rules structure, you can use a matching $ variable within your rule expression to get the name of the actual child being read or written. So suppose we want to give every user read and write access to their own /users/<user> location. We could use:
+
+{
+  "rules": {
+    "users": {
+      "$user": {
+        ".read": "auth.uid === $user",
+        ".write": "auth.uid === $user"
+      }
+    }
+  }
+}
+
+When a client tries to access /users/barney, the $user default location will match with $user being equal to "barney". So the .read rule will check if auth.uid === 'barney'. As a result, reading /users/barney will succeed only if the client is authenticated with a uid of "barney".
+Note: $ variables always have a type of string.
+
+now
+
+Contains the number of milliseconds since the Unix epoch according to the Firebase Realtime Database servers.
+
+The now variable contains the number of milliseconds since the UNIX epoch according to the Firebase Realtime Database servers. For instance, you could use this to validate that a user's created time is never set to a time in the future:
+
+{
+  "rules": {
+    "users": {
+      "$user": {
+        "created": {
+          ".validate": "newData.val() < now"
+        }
+      }
+    }
+  }
+}
+
+root
+
+A RuleDataSnapshot corresponding to the current data at the root of your Firebase Realtime Database.
+
+The root variable gives you a RuleDataSnapshot corresponding to the current data at the root of your Firebase Realtime Database. You can use this to read any data in your database in your rule expressions. For instance, if we wanted to allow users to read /comments only if their /users/<id>/active was set to true, we could use:
+
+{
+  "rules": {
+    "comments": {
+      ".read": "root.child('users').child(auth.uid).child('active').val() == true"
+    }
+  }
+}
+
+Then, if /users/barney/active contained the value true, a user authenticated with a uid of "barney" could write to the /comments node.
+data
+
+A RuleDataSnapshot corresponding to the current data in Firebase Realtime Database at the location of the currently executing rule.
+
+The data variable gives you a RuleDataSnapshot corresponding to the current data in the database location of the currently executing rule (as opposed to root, which gives you the data for the root of your database).
+
+So for example, if you wanted to let any client access /users/<user> if /users/<user>/public was set to true, you could use:
+
+{
+  "rules": {
+    "users": {
+      "$user": {
+        ".read": "data.child('public').val() == true"
+      }
+    }
+  }
+}
+
+The data variable is available in .read, .write, and .validate rules.
+
+newData
+
+A RuleDataSnapshot corresponding to the data that will result if the write is allowed.
+
+For .write and .validate rules, the newData variable gives you a RuleDataSnapshot corresponding to the data that will result if the write is allowed (it is a "merging" of the existing data plus the new data being written). So if you wanted to ensure that every user has a name and age, you could use:
+
+{
+  "rules": {
+    "users": {
+      "$user": {
+        ".read": true,
+        ".write": true,
+        ".validate": "newData.hasChildren(['name', 'age'])"
+      }
+    }
+  }
+}
+
+Since newData merges existing data and new data, it behaves properly even for "partial" updates. For example:
+
+var fredRef = firebase.database().ref("users/fred");
+// Valid since we have a name and age.
+fredRef.set({ name: "Fred", age: 19 });
+// Valid since we are updating the name but there's already an age.
+fredRef.child("age").set(27);
+// Invalid since the .validate rule will no longer be true.
+fredRef.child("name").remove();
+
+The newData variable is not available in .read rules since there is no new data being written. You should just use data.
+RuleDataSnapshot: Methods
+val()
+
+Gets the primitive value (string, number, boolean, or null) from this RuleDataSnapshot.
+
+Return Value: (String, Number, Boolean, Null) - The primitive value from this RuleDataSnapshot.
+
+Unlike DataSnapshot.val(), calling val() on a RuleDataSnapshot that has child data will not return an object containing the children. It will instead return a special sentinel value. This ensures the rules can always operate extremely efficiently.
+
+As a consequence, you must always use child() to access children (e.g. data.child('name').val(), not data.val().name).
+
+This example only allows reading if the isReadable child is set to true at the location being read.
+
+".read": "data.child('isReadable').val() == true"
+
+child()
+
+Gets a RuleDataSnapshot for the location at the specified relative path.
+
+Arguments: childPath String - A relative path to the location of child data.
+
+Return Value: RuleDataSnapshot - The RuleDataSnapshot for the child location.
+
+The relative path can either be a simple child name (e.g. 'fred') or a deeper slash-separated path (e.g. 'fred/name/first'). If the child location has no data, an empty RuleDataSnapshot is returned.
+
+This example only allows reading if the isReadable child is set to true at the location being read.
+
+".read": "data.child('isReadable').val() == true"
+
+parent()
+
+Gets a RuleDataSnapshot for the parent location.
+
+Return Value: RuleDataSnapshot - The RuleDataSnapshot for the parent location.
+
+If this instance refers to the root of your Firebase Realtime Database, it has no parent, and parent() will fail, causing the current rule expression to be skipped (as a failure).
+
+This example only allows reading if the isReadable sibling is set to true.
+
+".read": "data.parent().child('isReadable').val() == true"
+
+hasChild(childPath)
+
+Returns true if the specified child exists.
+
+Arguments: childPath String - A relative path to the location of a potential child.
+
+Return Value: Boolean - true if data exists at the specified child path; else false.
+
+This example only allows the data to be written if it contains a child "name".
+
+".validate": "newData.hasChild('name')"
+
+hasChildren([children])
+
+Checks for the existence of children.
+
+Arguments: children Array optional - An array of child keys that must all exist.
+
+Return Value: Boolean - true if (the specified) children exist; else false.
+
+If no arguments are provided, it will return true if the RuleDataSnapshot has any children. If an array of child names is provided, it will return true only if all of the specified children exist in the RuleDataSnapshot.
+
+This example only allows the data to be written if it contains one or more children.
+
+".validate": "newData.hasChildren()"
+
+This example only allows the data to be written if it contains "name" and "age" children.
+
+".validate": "newData.hasChildren(['name', 'age'])"
+
+exists()
+
+Returns true if this RuleDataSnapshot contains any data.
+
+Return Value: Boolean - true if the RuleDataSnapshot contains any data; else false.
+
+The exists function returns true if this RuleDataSnapshot contains any data. It is purely a convenience function since data.exists() is equivalent to data.val() != null.
+
+This example allows a write at this location as long as there's no existing data.
+
+".write": "!data.exists()"
+
+getPriority()
+
+Gets the priority of the data in a RuleDataSnapshot.
+
+Return Value: (String, Number, Null) - The priority of the data in this RuleDataSnapshot.
+
+This example ensures that the new data being written has a priority
+
+".validate": "newData.getPriority() != null"
+
+isNumber()
+
+Returns true if this RuleDataSnapshot contains a numeric value.
+
+Return Value: Boolean - true if the data is numeric; else false.
+
+This example ensures that the new data being written has child "age" with a numeric value.
+
+".validate": "newData.child('age').isNumber()"
+
+isString()
+
+Returns true if this RuleDataSnapshot contains a string value.
+
+Return Value: Boolean - true if the data is a String; else false.
+
+This example ensures that the new data being written has child "name" with a string value.
+
+".validate": "newData.child('name').isString()
+
+isBoolean()
+
+Returns true if this RuleDataSnapshot contains a boolean value.
+
+Return Value: Boolean - true if the data is a Boolean; else false.
+
+This example ensures that the new data being written has child "active" with a boolean value.
+
+".validate": "newData.child('active').isBoolean()"
+
+String: Properties
+length
+
+Returns the length of the string.
+
+Return Value: Number - The number of characters in the string.
+
+This example requires string to be at least 10 characters.
+
+".validate": "newData.isString() && newData.val().length >= 10"
+
+String: Methods
+contains(substring)
+
+Returns true if the string contains the specified substring.
+
+Arguments: substring String - A substring to look for.
+
+Return Value: Boolean - true if the string contains the specified substring; else false.
+
+This example requires data to be a string containing "@".
+
+".validate": "newData.isString() && newData.val().contains('@')"
+
+beginsWith(substring)
+
+Returns true if the string begins with the specified substring.
+
+Arguments: substring String - A substring to look for at the beginning.
+
+Return Value: Boolean - true if the string contains the specified substring; else false.
+
+This example allows read access if auth.token.identifier begins with "internal-"
+
+".read": "auth.token.identifier.beginsWith('internal-')"
+
+endsWith(substring)
+
+Returns true if the string ends with the specified substring.
+
+Arguments: substring String - A substring to look for at the end.
+
+Return Value: Boolean - true if the string ends with the specified substring; else false.
+
+This example allows read access if auth.token.identifier ends with "@company.com"
+
+".read": "auth.token.identifier.endsWith('@company.com')"
+
+replace(substring, replacement)
+
+Returns a copy of the string with all instances of a specified substring replaced with the specified replacement string.
+
+Arguments: substring String - A substring to look for. replacement String- A string to replace the substring with.
+
+Return Value: String - The new string after replacing substring with replacement.
+
+The replace() method differs slightly from the JavaScript replace() method in that it replaces all instances of a specified substring with the specified replacement string, not just the first instance.
+
+Since periods are not allowed in keys, we need to escape strings with periods before storing them. An example of this would be with email addresses. Assume we had a list of whitelisted email addresses in our /whitelist/ node:
+
+{
+ "user": {
+   "$uid": {
+     "email": <email>
+   }
+ },
+ "whitelist": {
+   "fred@gmail%2Ecom": true,
+   "barney@aol%2Ecom": true
+ }
+}
+
+We can craft a rule which only allows users to be added if their email is in the /whitelist/ node:
+
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "true",
+        ".write": "root.child('whitelist').child(newData.child('email').val().replace('.', '%2E')).exists()"
+      }
+    }
+  }
+}
+
+toLowerCase()
+
+Returns a copy of the string converted to lower case.
+
+Return Value: String - The string converted to lower case.
+
+This example allows read access if auth.token.identifier as all lower case exists under /users.
+
+".read": "root.child('users').child(auth.token.identifier.toLowerCase()).exists()"
+
+toUpperCase()
+
+Returns a copy of the string converted to upper case.
+
+Return Value: String - The string converted to upper case.
+
+This example allows read access if auth.token.identifier as all upper case exists under /users.
+
+".read": "root.child('users').child(auth.token.identifier.toUpperCase()).exists()"
+
+matches(regex)
+
+Returns true if the string matches the specified regular expression literal.
+
+Return Value: Boolean - true if the string matches the regular expression literal, regex; else false.
+
+See full rules regex documentation.
+Operators
++ (add)
+
+Used to add variables or for string concatenation.
+
+The following example ensures that the new value increments the existing value by exactly one. This is useful for implementing a counter:
+
+".write": "newData.val() === data.val() + 1"
+
+Note: PATH KEYS ARE ALWAYS STRINGS. Because keys are always strings, attempting to compare a $ variable to a number will always fail. This can be corrected by converting the number to a string using the + operator. The validation rule below checks that a room path exists by converting the $room_id variable to a string.
+
+".validate": "root.child('room_names/' + $room_id).exists()"
+
+- (negate or subtract)
+
+Used to negate a value or subtract two values in a rules expression.
+
+This validation rule checks that the new value is the inverse of a child value at the location:
+
+".validate": "newData.val() === -(data.child('quantity').val())"
+
+The following example uses subtraction to ensure that only messages from the last ten minutes can be read:
+
+".read": "newData.child('timestamp').val() > (now - 600000)"
+
+* (multiply)
+
+Used to multiply variables in a rules expression.
+
+This validation rule checks to see if the new value is equal to the produt of price and quantity (two existing values):
+
+".validate": "newData.val() === data.child('price').val() * data.child('quantity').val()"
+
+/ (divide)
+
+Used to divide variables in a rules expression.
+
+In the following example, the validation rule makes sure that the stored data is the average of the total data stored elsewhere:
+
+".validate": "newData.val() === data.parent().child('sum').val() / data.parent().child('numItems').val()"
+
+% (modulus)
+
+Used to find the remainder of dividing one variable by another in a rules expression.
+
+This rule validates that only even numbers can be written:
+
+".validate": "newData.val() % 2 === 0"
+
+=== (equals)
+
+Used to check if two variables in a rules expression have the same type and value.
+
+The following rule uses the === operator to grant write access only to the owner of the user account. The user's uid must exactly match the key ($user_id) for the rule to evaluate to true.
+
+"users": {
+  ".write": "$user_id === auth.uid"
+}
+
+Note: == IS TREATED AS ===. If you use == in your security rules, it will be translated to === when the rules are run.
+!== (not equals)
+
+Used to check if two variables in a rules expression are not equal.
+
+The following read rule ensures that only logged in users can read data:
+
+".read": "auth !== null"
+
+Note: != IS TREATED AS !==. If you use != in your security rules, it will be translated to !== when the rules are run.
+&& (AND)
+
+Evaluates to true if both operands are true. Used to evaluate multiple conditions in a rules expression.
+
+The following validation rule checks that the new data is a string less than 100 characters:
+
+".validate": "newData.isString() && newData.val().length < 100"
+
+|| (OR)
+
+Evaluates to true if one operand in the rules expression is true.
+
+In this example, we can write as long as old data or new data does not exist. In other words, we can write if we're deleting or creating data, but not updating data.
+
+".write": "!data.exists() || !newData.exists()"
+
+! (NOT)
+
+Evaluates to true if its single operand is false. In rules expressions, the ! operator is often used to see if data has been written to a location.
+
+The following rule only allows write access if there is no data at the specified location:
+
+".write": "!data.exists()"
+
+> (greater than)
+
+Used to check if a value is greater than another value in a rules expression.
+
+This validation rule checks that the string being written is not an empty string:
+
+".validate": "newData.isString() && newData.val().length > 0"
+
+< (less than)
+
+Used to check if a value i s less than another value in a rules expression.
+
+This validation rule checks that a string is less than 20 characters:
+
+".validate": "newData.isString() && newData.val().length < 20"
+
+>= (greater than or equal to)
+
+Used to check if a value is greater than or equal to another value in a rules expression.
+
+This validation rule checks that the string being written is not an empty string:
+
+".validate": "newData.isString() && newData.val().length >= 1"
+
+<= (less than or equal to)
+
+Used to check if a value is less than or equal to another value in a rules expression.
+
+This validation rule ensures that new data cannot be added in the future:
+
+".validate": "newData.val() <= now"
+
+? (ternary operator)
+
+Used to evaluate a conditional rules expression.
+
+The ternary operator takes three operands. The operand before the ? is the condition. If the condition evaluates to true, the second operand is evaluated. If the condition is false, the third operand is evaluated.
+
+For the following validation rule, the new value can be a number or a boolean. If it's a number, it must be greater than 0.
+
+".validate": "newData.isNumber() ? newData.val() > 0 : newData.isBoolean()"
+
+Was this helpful?
+
+
