@@ -100,7 +100,16 @@ function test_02(){
 	console.log(t1);
 }
 
-test_02();
+function test_03(){
+	const t1 = null;
+	if(! t1){
+		console.log("FALSE");
+	} else {
+		console.log("TRUE");
+	}
+}
+
+test_03();
 
 
 

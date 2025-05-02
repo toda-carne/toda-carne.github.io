@@ -1,7 +1,7 @@
 
 import { gvar, init_glb_vars, get_qid_base, init_default_lang, } from './bq_tools.js';
 import { init_page_buttons, init_firebase_mgr, fb_mod, fill_div_user, init_page_exam, start_qmodu, update_qmodu_title, add_last_module_ending, 
-	write_exam_object, scroll_to_first_not_answered, read_exam_object, 
+	write_exam_object, read_exam_object, 
 } from './bq_quest_mgr.js';
 
 import { init_loc_cand_referrer, 
@@ -254,7 +254,7 @@ export async function start_module_mgr(lang_md, curr_lang){
 		console.error("start_module_mgr. init_firebase_mgr FAILED. " + err.message);
 		await init_current_qmodu();
 	}
-	check_google();
+	//check_google();
 }
 
 function save_current_qmodu_hdlr(){
@@ -264,7 +264,6 @@ function save_current_qmodu_hdlr(){
 	} else {
 		window.localStorage.setItem(STORAGE_CURRENT_QMONAM, FINISHED_QMONAM);
 	}
-	scroll_to_first_not_answered();
 }
 
 function is_qmodu_dnf_sat(monam, all_fini){
@@ -398,9 +397,6 @@ function check_google(){
 	fb_mod.firebase_has_current_user();
 }
 
-
-*/
-
 //const APP_CLIENT_ID = "313540425147-sgtmrf9uav4q7qs8ghmg4pce3n8sl28k.apps.googleusercontent.com";
 const APP_CLIENT_ID = "313540425147-g2070bfjvbgvtjjefjd7r43s3vj8vlmu.apps.googleusercontent.com";
 
@@ -440,4 +436,7 @@ function handle_ini_bad(resp){
 	console.log('CALLING handle_ini_bad.');
 	console.log(resp);
 }
+
+
+*/
 

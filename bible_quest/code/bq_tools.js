@@ -685,3 +685,14 @@ export function get_resp_for(qid, cit_obj){
 	return resp;
 }
 
+export function get_date_and_time(){ 
+	const currentdate = new Date(); 
+	const datetime = currentdate.getFullYear() + "/"
+					+ (currentdate.getMonth()+1)  + "/"
+					+ currentdate.getDate() + "@"
+					+ currentdate.getHours() + ":"
+					+ currentdate.getMinutes() + ":"
+					+ currentdate.getSeconds();
+	return datetime;
+}
+

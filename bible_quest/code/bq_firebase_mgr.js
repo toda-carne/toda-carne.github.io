@@ -1,4 +1,6 @@
 
+import { get_date_and_time, } from './bq_tools.js';
+
 import { write_storage_fini_qmodus, load_next_qmodu, } from './bq_module_mgr.js';
 
 import { get_loc_cand_referrer, get_loc_confirmed_referrer, set_loc_confirmed_referrer, set_loc_cand_referrer, 
@@ -289,17 +291,6 @@ export async function firebase_check_user(callbk){
 		tc_fb_user = null;
 		if(callbk != null){ callbk(tc_fb_user); }
 	}
-}
-
-export function get_date_and_time(){ 
-	const currentdate = new Date(); 
-	const datetime = currentdate.getFullYear() + "/"
-					+ (currentdate.getMonth()+1)  + "/"
-					+ currentdate.getDate() + "@"
-					+ currentdate.getHours() + ":"
-					+ currentdate.getMinutes() + ":"
-					+ currentdate.getSeconds();
-	return datetime;
 }
 
 function firebase_user_ck_is_admin(){ 
