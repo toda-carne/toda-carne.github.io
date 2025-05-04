@@ -358,7 +358,7 @@ function init_es_basic_msg(){
 	obj.msg_fb_no_internet = "Sin conexion a internet.";
 	obj.msg_fb_not_finished = "Por favor complete el cuestionario para guardar los resultados";
 	
-	const loggin_str = `por favor asegurate de hacer login en google.com y luego haz click en el icono superior 
+	const loggin_str = `por favor asegurate de hacer login en google.com y luego haz click en el icono superior <br>
 	<img id="id_top_user_picture" class="img_user" src="../img/user.jpg">`;
 
 	obj.msg_write_results_not_signed_in = `Felicitaciones ! Terminaste este modulo. 

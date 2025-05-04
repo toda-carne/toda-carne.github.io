@@ -2005,6 +2005,11 @@ async function display_exam_load_object(name, ld_obj){
 	if(DEBUG_STO_RW){ console.log("display_exam_load_object. FULL_OBJECT_READ = " + JSON.stringify(ld_obj, null, "  ")); }
 	if((ld_obj == null) || (ld_obj.qmodu_state == null) || (ld_obj.qmodu_state.qmonam == null)){
 		console.error("display_exam_load_object. FAILED. Internal error 01");
+		if(gvar.current_qmonam != null){
+			await load_qmodu(gvar.current_qmonam, 1);
+		} else {
+			console.error("Could not load any module");
+		}
 		return;
 	}
 	if(ld_obj.qmodu_state.qmonam != gvar.current_qmonam){
@@ -2218,18 +2223,6 @@ function write_fb_qmodu_results(obj, dt){
 	
 }
 
-function can_write_fb_qmodu_result(){
-	const db = gvar.glb_poll_db;
-	const all_qids = db.all_qids_that_write;
-	for(const qid of all_qids){
-		const dv_qid = document.getElementById(qid);
-		if(dv_qid != null){
-			return dv_qid;
-		}
-	}
-	return null;
-}
-
 function write_firebase_qmodu_results(force_wr){
 	if(DEBUG_FB_WRITE_RESULTS){ console.log("write_firebase_qmodu_results. CALLED. "); }
 	
@@ -2309,6 +2302,7 @@ function get_comment_hrefs_of(the_conj_sat, skip_qid){
 
 function get_final_obs(){
 	const obs = { 
+		calls_write_results: true,
 		is_positive: true,
 		context: ["FINAL_CONTEXT"],
 		htm_stm: "FINAL_OBSERVATION",
@@ -2324,17 +2318,14 @@ function init_DAG_func(){
 	init_all_context();
 
 	const db = gvar.glb_poll_db;
-	db.all_qids_that_write = [];
-	db.all_trigg_at_no_more_quest = [];
 	
 	const all_qids = Object.keys(gvar.glb_poll_db);
 	for(const qid of all_qids){
 		init_signals_for(qid);
 	}
 	
-	if(db.all_trigg_at_no_more_quest.length == 0){
+	if(db.FINAL_OBSERVATION__ == null){
 		db.FINAL_OBSERVATION__ = get_final_obs();
-		db.all_trigg_at_no_more_quest.push("FINAL_OBSERVATION__");
 	}
 }
 
@@ -2347,9 +2338,6 @@ function init_signals_for(qid){
 	if(quest == null){ return; }
 
 	const db = gvar.glb_poll_db;
-	if(quest.calls_write_results){
-		db.all_qids_that_write.push(qid);
-	}
 	
 	if(quest.is_choose_verse_question){
 		quest.answers = {};
@@ -2374,7 +2362,7 @@ function init_signals_for(qid){
 			if(resps_obj == null){ continue; }
 			
 			if(qid_signl == NO_MORE_QUEST_COND){
-				db.all_trigg_at_no_more_quest.push(qid);
+				db.FINAL_OBSERVATION__ = quest;
 				continue;
 			}
 			
@@ -2635,9 +2623,10 @@ function activate_signals(qid_cllr, all_to_act){
 
 function ask_next(){
 	const db = gvar.glb_poll_db;
-	const dv_wrt = can_write_fb_qmodu_result();
-	if(dv_wrt != null){
-		finish_qmodu(dv_wrt);
+	const gst = gvar.glb_poll_db.qmodu_state;
+	const wrter = gst.writer_qid;
+	if(wrter != null){
+		finish_qmodu();
 		return null;
 	}
 	let not_answ_qid = get_first_not_answered(true);
@@ -2652,12 +2641,12 @@ function ask_next(){
 	}
 	if(qid == null){ 
 		gvar.no_more_questions = true;
-		let dv_last = null;
-		for(const qid_obs of db.all_trigg_at_no_more_quest){
-			const dv_o = show_observation(qid_obs, null, null);
-			if(dv_o != null){ dv_last = dv_o; }
-		}
-		finish_qmodu(dv_last);
+		
+		if(db.FINAL_OBSERVATION__ == null){ console.error("db.FINAL_OBSERVATION__ == null"); return null; }
+		show_observation("FINAL_OBSERVATION__", null, null);
+		if(gst.writer_qid != "FINAL_OBSERVATION__"){ console.error("gst.writer_qid != FINAL_OBSERVATION__"); return null; }
+		
+		finish_qmodu();
 		return null; 
 	}
 	const added = add_question(qid);
@@ -2676,10 +2665,13 @@ function undo_last_quest(){
 	let quest = null;
 	let num_undo = 0;
 
+	const gst = gvar.glb_poll_db.qmodu_state;
+	
 	while(curr_idx >= 0){
 		//console.log("get_curr_pos_page [1] curr_idx=" + curr_idx);
 		const qid = all_q[curr_idx].id;
 		if(qid == null){ continue; }
+		if(qid == gst.writer_qid){ gst.writer_qid = null; }
 		
 		quest = gvar.glb_poll_db[qid];
 		if(quest == null){ continue; }
@@ -2689,9 +2681,6 @@ function undo_last_quest(){
 		quest.has_answ = null;
 		quest.pos_page = null;
 		quest.watched = false;
-		//if(quest.calls_write_results){ 
-			//gvar.wrote_qmodu = false;
-		//}
 		
 		const dv_quest = document.getElementById(qid);
 		if(dv_quest != null){ dv_quest.remove(); }
@@ -2727,7 +2716,8 @@ function show_observation(qid, all_to_act, qid_cllr){
 		console.error("Trying to show_observation with invalid qid=" + qid);
 		return null;
 	}
-	const quest = gvar.glb_poll_db[qid];
+	const db = gvar.glb_poll_db;
+	const quest = db[qid];
 	if(quest == null){
 		console.error("Could not find observation " + qid + " in questions db.");
 		return null;
@@ -2738,7 +2728,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 	}
 	let dv_quest = document.getElementById(qid);
 	if(dv_quest != null){ 
-		console.log("Updating OLD observation from show_observation qid=" + qid);
+		console.error("Updating OLD observation from show_observation qid=" + qid);
 		update_observation(qid, all_to_act);
 		return null;
 	}
@@ -2763,11 +2753,11 @@ function show_observation(qid, all_to_act, qid_cllr){
 	
 	quest.pos_page = INVALID_PAGE_POS;
 	
-	const dv_stm = document.createElement("div");
-	dv_stm.classList.add("exam");
-	dv_stm.classList.add("observ_stm");
-	dv_stm.classList.add("observ_color");
-	dv_quest.appendChild(dv_stm);
+	const dv_obs_data = document.createElement("div"); // dv_obs_data
+	dv_obs_data.classList.add("exam");
+	dv_obs_data.classList.add("observ_stm");
+	dv_obs_data.classList.add("observ_color");
+	dv_quest.appendChild(dv_obs_data);
 	
 	let stm_id = null;
 	let cho_bref = null;
@@ -2791,8 +2781,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 	dv_qstm.classList.add("exam");
 	//dv_qstm.classList.add("observ_msg");
 	dv_qstm.classList.add("observ_color");
-	dv_qstm.innerHTML = "" + the_stm;
-	dv_stm.appendChild(dv_qstm);
+	dv_obs_data.appendChild(dv_qstm);
 
 	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[stm_id]){ 
 		dv_qstm.stm_id = stm_id;
@@ -2804,22 +2793,17 @@ function show_observation(qid, all_to_act, qid_cllr){
 		dv_qstm.title = qid;
 	}	
 	
+	if(! quest.calls_write_results){	
+		dv_qstm.innerHTML = "" + the_stm;
+	}
+	
 	const dv_qrefs_observ = document.createElement("div");
 	dv_qrefs_observ.id = qid + SUF_ID_QREFS_OBSERVATION;
 	dv_qrefs_observ.classList.add("exam");
 	dv_qrefs_observ.classList.add("observ_color");
 	//dv_quest.append(dv_qrefs_observ);
-	dv_stm.appendChild(dv_qrefs_observ);
+	dv_obs_data.appendChild(dv_qrefs_observ);
 
-	/*
-	const dv_user_observ = document.createElement("div");
-	dv_user_observ.id = qid + SUF_ID_USER_OBSERVATION;
-	dv_user_observ.classList.add("exam");
-	dv_user_observ.classList.add("observ_color");
-	//dv_quest.append(dv_user_observ);
-	dv_stm.appendChild(dv_user_observ);
-	*/
-	
 	const dv_ok_observ = document.createElement("div");
 	dv_ok_observ.id = qid + SUF_ID_OK_OBSERVATION;
 	dv_ok_observ.classList.add("exam");
@@ -2836,16 +2820,10 @@ function show_observation(qid, all_to_act, qid_cllr){
 	let the_usr = null;
 	if(fb_mod != null){ the_usr = fb_mod.tc_fb_user; }
 	
-	/*
 	if(quest.calls_write_results){
-		if(the_usr == null){
-			const dv_user = create_div_user(quest);
-			dv_user_observ.append(dv_user);
-		}
-		dv_quest.dv_qstm = dv_qstm;
-		// write called in ask_next
+		const gst = gvar.glb_poll_db.qmodu_state;
+		gst.writer_qid = qid;
 	}
-	*/
 
 	return dv_quest;
 }
@@ -3142,9 +3120,36 @@ function read_st_qmodu_results(){
 	resp.has_usr
 	*/
 
-function finish_qmodu(dv_observ){
-	if(dv_observ == null){ console.error("dv_observ == null"); }
+function finish_qmodu(){
 	const resp = write_firebase_qmodu_results(false);
+	
+	const gst = gvar.glb_poll_db.qmodu_state;
+	const qid = gst.writer_qid;
+	if(qid == null){ console.error("qid == null");  return; }
+	
+	const is_write = (resp.pr_o == null);
+	const is_signed = resp.has_usr;
+	let msg = null;
+	if(is_write && ! is_signed){
+		msg = gvar.glb_curr_lang.msg_write_results_not_signed_in;
+	}
+	if(is_write && is_signed){
+		msg = gvar.glb_curr_lang.msg_write_results_signed_in;
+	}
+	if(! is_write && ! is_signed){
+		msg = gvar.glb_curr_lang.msg_rewrite_results_not_signed_in;
+	}
+	if(! is_write && is_signed){
+		msg = gvar.glb_curr_lang.msg_rewrite_results_signed_in;
+	}
+
+	const id_stm = qid + SUF_ID_QSTM;
+	const dv_stm = document.getElementById(id_stm);
+	if(dv_stm == null){ console.error("dv_stm == null");  return; }
+	
+	dv_stm.innerHTML = msg;
+	
+	scroll_to_qid(get_first_not_answered());
 	//load_next_qmodu();
 }
 

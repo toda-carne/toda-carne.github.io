@@ -1074,7 +1074,6 @@ export function init_exam_database(){
 	};
 	
 	db.o_fast_track_get_qrcode__ = { 
-		// skip_in_results: true,
 		calls_write_results: true,
 		is_positive: true,
 		context: ["ctx_get_qrcode"],
@@ -1085,7 +1084,6 @@ export function init_exam_database(){
 	};
 	
 	db.o_get_qrcode__ = { 
-		// skip_in_results: true,
 		calls_write_results: true,
 		is_positive: true,
 		context: ["ctx_get_qrcode"],
@@ -1096,6 +1094,7 @@ export function init_exam_database(){
 	};
 	
 	db.o_fini_mod__ = { 
+		calls_write_results: true,
 		is_positive: true,
 		context: ["ctx_get_qrcode"],
 		htm_stm: "o_finished_module",

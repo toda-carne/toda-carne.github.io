@@ -359,7 +359,7 @@ function init_en_basic_msg(){
 	obj.msg_fb_no_internet = "No internet conection.";
 	obj.msg_fb_not_finished = "Please complete the questionary to save results";
 
-	const loggin_str = `please be sure to login in google.com and then click on the top icon 
+	const loggin_str = `please be sure to login in google.com and then click on the top icon <br>
 		<img id="id_top_user_picture" class="img_user" src="../img/user.jpg">`;
 
 	obj.msg_write_results_not_signed_in = `Congrats ! You finished this module. 
