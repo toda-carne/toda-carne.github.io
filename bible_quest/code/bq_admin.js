@@ -14,8 +14,6 @@ import { get_bib_verse, } from './bq_bible_mgr.js';
 const DEBUG_ADMIN_OPS = false;
 const DEBUG_UPDATE_STATS = true;
 
-const INVALID_OBSERVATION = "INVALID_OBSERVATION";
-
 const admin_ops = {
 	up_all:"Update ALL to Update",
 	up_referrers:"Update ALL referrers",
@@ -116,9 +114,7 @@ function get_module_observations_obj(){
 			added = true;
 		}
 	}
-	if(! added){
-		all_obs[INVALID_OBSERVATION] = 1;
-	}
+	all_obs.FINAL_OBSERVATION__	= 1;
 	return all_obs;
 }
 

@@ -1100,7 +1100,7 @@ export function init_exam_database(){
 		context: ["ctx_get_qrcode"],
 		htm_stm: "o_finished_module",
 		activated_if: {
-			c2: { FINISHED_MODULE__	: true, },
+			c2: { NO_QUESTIONS_LEFT : true, },
 		},
 	};
 	

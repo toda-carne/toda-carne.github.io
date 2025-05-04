@@ -22,7 +22,7 @@ import { load_qmodu, set_fini_qmodu, is_fini_qmodu, load_next_qmodu, } from './b
 const INVALID_PAGE_POS = "???";
 const TRUE_STR = "true";
 
-const FINISHED_MOD_COND_ID = "FINISHED_MODULE__";
+const NO_MORE_QUEST_COND = "NO_QUESTIONS_LEFT";
 
 const DEBUG_QNUMS = true;
 const DEBUG_PENDING = false;
@@ -1442,7 +1442,7 @@ function reset_page(){
     dv_reset = document.getElementById("id_exam_all_questions");
 	if(dv_reset != null){ dv_reset.innerHTML = ""; }
 	
-	gvar.finished_all_quest = false;
+	gvar.no_more_questions = false;
 	//gvar.wrote_qmodu = false;
 }
 
@@ -2307,17 +2307,34 @@ function get_comment_hrefs_of(the_conj_sat, skip_qid){
 
 // CODE_FOR DAG HANDLING
 
+function get_final_obs(){
+	const obs = { 
+		is_positive: true,
+		context: ["FINAL_CONTEXT"],
+		htm_stm: "FINAL_OBSERVATION",
+		activated_if: {
+			c2: { NO_QUESTIONS_LEFT : true, },
+		},
+	};
+	return obs;
+}
+
 function init_DAG_func(){
 	console.log("init_DAG_func.CALLED.");
 	init_all_context();
 
 	const db = gvar.glb_poll_db;
 	db.all_qids_that_write = [];
-	db.all_qids_at_finished = [];
+	db.all_trigg_at_no_more_quest = [];
 	
 	const all_qids = Object.keys(gvar.glb_poll_db);
 	for(const qid of all_qids){
 		init_signals_for(qid);
+	}
+	
+	if(db.all_trigg_at_no_more_quest.length == 0){
+		db.FINAL_OBSERVATION__ = get_final_obs();
+		db.all_trigg_at_no_more_quest.push("FINAL_OBSERVATION__");
 	}
 }
 
@@ -2356,8 +2373,8 @@ function init_signals_for(qid){
 		for (const [qid_signl, resps_obj] of conj) {
 			if(resps_obj == null){ continue; }
 			
-			if(qid_signl == FINISHED_MOD_COND_ID){
-				db.all_qids_at_finished.push(qid);
+			if(qid_signl == NO_MORE_QUEST_COND){
+				db.all_trigg_at_no_more_quest.push(qid);
 				continue;
 			}
 			
@@ -2445,7 +2462,7 @@ function check_if_dnf_is_sat(qid){
 		//console.log(" | qid=" + qid + " | conj_id=" + conj_id + " conj_obj=" + JSON.stringify(conj_obj, null, "  "));
 		for (const [qid_signl, resps_obj] of conj) {
 			if(resps_obj == null){ conj_act = false; break; }
-			if(qid_signl == FINISHED_MOD_COND_ID){ conj_act = false; break; }
+			if(qid_signl == NO_MORE_QUEST_COND){ conj_act = false; break; }
 			
 			const qst_to_signl = gvar.glb_poll_db[qid_signl];
 			if(qst_to_signl == null){ conj_act = false; break; }
@@ -2620,14 +2637,8 @@ function ask_next(){
 	const db = gvar.glb_poll_db;
 	const dv_wrt = can_write_fb_qmodu_result();
 	if(dv_wrt != null){
-		const resp = write_firebase_qmodu_results(false);
-		//load_next_qmodu();
+		finish_qmodu(dv_wrt);
 		return null;
-	}
-	let stop_qid = db.stopping_observation_qid;
-	if(stop_qid != null){
-		scroll_to_qid(stop_qid); // dbg_scroll
-		return stop_qid;
 	}
 	let not_answ_qid = get_first_not_answered(true);
 	if(not_answ_qid != null){
@@ -2640,11 +2651,13 @@ function ask_next(){
 		qid = get_pending();
 	}
 	if(qid == null){ 
-		gvar.finished_all_quest = true;
-		for(const qid_obs of db.all_qids_at_finished){
-			show_observation(qid_obs, null, null);
+		gvar.no_more_questions = true;
+		let dv_last = null;
+		for(const qid_obs of db.all_trigg_at_no_more_quest){
+			const dv_o = show_observation(qid_obs, null, null);
+			if(dv_o != null){ dv_last = dv_o; }
 		}
-		//const resp = write_firebase_qmodu_results(false);
+		finish_qmodu(dv_last);
 		return null; 
 	}
 	const added = add_question(qid);
@@ -2695,7 +2708,7 @@ function undo_last_quest(){
 		curr_idx--;
 	}
 	//console.log("get_curr_pos_page [2] curr_idx=" + curr_idx);
-	if(gvar.finished_all_quest){ gvar.finished_all_quest = false; }
+	if(gvar.no_more_questions){ gvar.no_more_questions = false; }
 	ask_next();
 	return quest;
 }
@@ -2966,9 +2979,6 @@ function update_observation(qid, all_to_act){
 	const the_conj_sat = get_sat_conj_qids(qid);
 	if(the_conj_sat == null){		
 		if(all_to_act != null){ quest.watched = false; }
-		if(gvar.glb_poll_db.stopping_observation_qid == qid){
-			gvar.glb_poll_db.stopping_observation_qid = null;
-		}
 		if(DEBUG_UPDATE_OBSERV){ console.log("REMOVING ABSERVATION with qid=" + qid); }
 		dv_quest.remove(); 
 	
@@ -2983,9 +2993,6 @@ function update_observation(qid, all_to_act){
 		}
 		return;
 	}
-	if(quest.stops_until_not_shown){
-		gvar.glb_poll_db.stopping_observation_qid = qid;
-	}	
 	
 	update_observation_signals(quest, all_to_act);
 	
@@ -3129,4 +3136,15 @@ function read_st_qmodu_results(){
 	obj.msg_results
 	obj.msg_yes
 	obj.msg_no
+	resp.nw_o
+	resp.wr_o
+	resp.pr_o
+	resp.has_usr
 	*/
+
+function finish_qmodu(dv_observ){
+	if(dv_observ == null){ console.error("dv_observ == null"); }
+	const resp = write_firebase_qmodu_results(false);
+	//load_next_qmodu();
+}
+
