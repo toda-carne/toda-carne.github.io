@@ -186,6 +186,7 @@ export function init_es_poll_txt(){
 		<span class='big_font bold_font'>Lo sentimos. Sin Google login, no hay código QR. Si usted no tiene una <a href='http://accounts.google.com'>cuenta Google</a>, por favor obtenga una haciendo click en <a href='http://accounts.google.com'>este link</a>. Usted puede hacer login en cualquier momento haciendo click "Invitado" o haciendo click en el icono <img id="id_top_user_picture" class="img_user" src="${site_img_dir}/user.jpg"></span>
 	`;
 	
+	lg.o_finished_module = `TERMINASTE ESTE MODULO !!!`;
 
 }
 

@@ -1075,12 +1075,10 @@ export function init_exam_database(){
 	
 	db.o_fast_track_get_qrcode__ = { 
 		// skip_in_results: true,
-		calls_write_object: true,
+		calls_write_results: true,
 		is_positive: true,
 		context: ["ctx_get_qrcode"],
 		htm_stm: "o_get_qrcode",
-		htm_stm_saved_ok: "o_congrats_you_have_a_qrcode",
-		htm_stm_not_saved: "o_sorry_no_loging_no_qrcode",
 		activated_if: {
 			c1: { q_genesis__: { a_simple_YES: "on", }, },
 		},
@@ -1088,16 +1086,24 @@ export function init_exam_database(){
 	
 	db.o_get_qrcode__ = { 
 		// skip_in_results: true,
-		calls_write_object: true,
+		calls_write_results: true,
 		is_positive: true,
 		context: ["ctx_get_qrcode"],
 		htm_stm: "o_get_qrcode",
-		htm_stm_saved_ok: "o_congrats_you_have_a_qrcode",
-		htm_stm_not_saved: "o_sorry_no_loging_no_qrcode",
 		activated_if: {
 			c2: { q_he_can_make_a_body_again__	: { shown: "on", }, },
 		},
 	};
+	
+	db.o_fini_mod__ = { 
+		is_positive: true,
+		context: ["ctx_get_qrcode"],
+		htm_stm: "o_finished_module",
+		activated_if: {
+			c2: { FINISHED_MODULE__	: true, },
+		},
+	};
+	
 	
 	/*
 	db.o_o_faulty_logic_comm__ = { 

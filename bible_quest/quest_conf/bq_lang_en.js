@@ -329,6 +329,8 @@ function init_en_basic_msg(){
 	obj.msg_end_ans = "END ANSWER";
 	obj.msg_edit_ans = "CHANGE ANSWER";
 	obj.msg_understood = "OK";
+	obj.msg_yes = "YES";
+	obj.msg_no = "NO";
 	
 	obj.msg_undo = "<i class='has_icons icon-undo'></i> Ups!";	
 	
@@ -356,7 +358,23 @@ function init_en_basic_msg(){
 	obj.msg_fb_answers_reading = "Opening...";
 	obj.msg_fb_no_internet = "No internet conection.";
 	obj.msg_fb_not_finished = "Please complete the questionary to save results";
-	
+
+	const loggin_str = `please be sure to login in google.com and then click on the top icon 
+		<img id="id_top_user_picture" class="img_user" src="../img/user.jpg">`;
+
+	obj.msg_write_results_not_signed_in = `Congrats ! You finished this module. 
+		To get a personal link and a QR code and participate in the contest ${loggin_str}`;
+
+	obj.msg_write_results_signed_in = `Congrats ! You finished this module.`;
+
+	obj.msg_rewrite_results_not_signed_in = `You have finished this module more than once. 
+		If you want to write your results again in the stats, ${loggin_str}`;
+
+	obj.msg_rewrite_results_signed_in = `You have finished this module more than once. 
+		Do you want to write your results again in the stats?`;
+
+	obj.msg_results = `These are your results compared to others:`;
+		
 	obj.msg_change_answer = `To add answers click on the current answer and click on "${obj.msg_edit_ans}"`;
 	obj.msg_caused_by_answers = "This observation is shown due to your answer in these questions: ";
 	obj.msg_caused_by_observations = "This observation is shown due these other observations: ";

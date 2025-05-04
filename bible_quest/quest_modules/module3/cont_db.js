@@ -1,5 +1,5 @@
 
-import { get_verse_reponse_name, get_answer_key, init_poll_glb, add_response_observation, 
+import { get_verse_reponse_name, get_answer_key, init_poll_glb, 
 	gvar,
 	//glb_all_bibrefs, 
 } from '../../code/bq_tools.js';

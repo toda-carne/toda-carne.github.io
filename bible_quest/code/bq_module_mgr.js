@@ -17,6 +17,7 @@ const INVALID_TITLE = "INVALID_TITLE";
 
 let site_lang = "en";
 let local_conf_qmodus = null;
+let bq_st_user_finished_qmodules = null;
 
 const STORAGE_FINI_QMODUS_ID = "STORAGE_FINI_QMODUS_ID";
 const STORAGE_CURRENT_QMONAM = "STORAGE_CURRENT_QMONAM";
@@ -52,12 +53,20 @@ export function set_fini_qmodu(qmonam){
 	write_storage_fini_qmodus(all_fini);
 }
 
+export function is_fini_qmodu(qmonam){
+	const all_fini = get_fini_qmodus();
+	return all_fini[qmonam];
+}
+
 function get_fini_qmodus(){
 	let all_fini = null;
 	if((fb_mod != null) && (fb_mod.bq_fb_user_finished_qmodules != null)){ 
 		all_fini = fb_mod.bq_fb_user_finished_qmodules;		
+	} else if(bq_st_user_finished_qmodules != null){ 
+		all_fini = bq_st_user_finished_qmodules;
 	} else {
-		all_fini = read_storage_fini_qmodus();
+		bq_st_user_finished_qmodules = read_storage_fini_qmodus();
+		all_fini = bq_st_user_finished_qmodules;
 	}
 	return all_fini;
 }
@@ -192,8 +201,15 @@ export async function load_qmodu(qmonam, st_qmodu){
 	}
 
 	if(md_cont_db != null){
+		if(gvar.current_qmonam == null){ console.error("gvar.current_qmonam == null"); }
 		gvar.init_qmodu_db = md_cont_db.init_exam_database;
-		if(st_qmodu){ start_qmodu(); }
+		if(st_qmodu != null){ 
+			if(PERSISTANT_STATE && (st_qmodu == 2)){ 
+				read_exam_object(get_save_name()); 					
+			} else {
+				start_qmodu();
+			}
+		}
 	}
 
 	if(qmonam == null){
@@ -201,10 +217,10 @@ export async function load_qmodu(qmonam, st_qmodu){
 	}
 }
 
-export async function load_next_qmodu(){
+export async function load_next_qmodu(st_qmodu){
 	const qmonam = get_nxt_qmonam();
 	console.log("load_next_qmodu. qmonam = " + qmonam);
-	await load_qmodu(qmonam, true);
+	await load_qmodu(qmonam, st_qmodu);
 }
 
 function get_storage_current_qmonam(){
@@ -233,10 +249,7 @@ function get_save_name(){
 async function init_current_qmodu(){
 	const qmonam = get_storage_current_qmonam();
 	console.log("init_current_qmodu. qmonam = " + qmonam);
-	await load_qmodu(qmonam, true);
-	if(gvar.current_qmonam != null){
-		if(PERSISTANT_STATE){ read_exam_object(get_save_name()); }
-	}
+	await load_qmodu(qmonam, 2);
 	fill_div_user();
 }
 

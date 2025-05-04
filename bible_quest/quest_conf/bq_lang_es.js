@@ -328,6 +328,8 @@ function init_es_basic_msg(){
 	obj.msg_end_ans = "TERMINAR RESPUESTA";
 	obj.msg_edit_ans = "CAMBIAR RESPUESTA";
 	obj.msg_understood = "ENTENDIDO";
+	obj.msg_yes = "SI";
+	obj.msg_no = "NO";
 	
 	obj.msg_undo = "<i class='has_icons icon-undo'></i> Ups!";	
 
@@ -355,7 +357,23 @@ function init_es_basic_msg(){
 	obj.msg_fb_answers_reading = "Abriendo...";
 	obj.msg_fb_no_internet = "Sin conexion a internet.";
 	obj.msg_fb_not_finished = "Por favor complete el cuestionario para guardar los resultados";
+	
+	const loggin_str = `por favor asegurate de hacer login en google.com y luego haz click en el icono superior 
+	<img id="id_top_user_picture" class="img_user" src="../img/user.jpg">`;
 
+	obj.msg_write_results_not_signed_in = `Felicitaciones ! Terminaste este modulo. 
+		Para obtener un link personal, un codigo QR y participar en el concurso ${loggin_str}`;
+
+	obj.msg_write_results_signed_in = `Felicitaciones ! Terminaste este modulo.`;
+
+	obj.msg_rewrite_results_not_signed_in = `Has terminado este modulo mas de una vez. 
+		Si quieres escribir de nuevo tus resultados en las estadísticas, ${loggin_str}`;
+
+	obj.msg_rewrite_results_signed_in = `Has terminado este modulo mas de una vez. 
+		Quieres escribir de nuevo tus resultados en las estadísticas?`;
+
+	obj.msg_results = `Estos son tus resultados comparados con otros:`;
+		
 	obj.msg_change_answer = `Para adicionar respuestas click en la respuesta actual y click en "${obj.msg_edit_ans}"`;
 	obj.msg_caused_by_answers = "Esta observación se muestra por sus respuestas en las siguientes preguntas: ";
 	obj.msg_caused_by_observations = "Esta observación se muestra por causa de estas otras observaciones:";

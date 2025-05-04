@@ -183,6 +183,8 @@ export function init_en_poll_txt(){
 		<img class="img_observ" src="${site_img_dir}/woman_shrugging.webp"><br>
 		<span class='big_font bold_font'>Sorry. No Google login, no QR code. If you don have a <a href='http://accounts.google.com'>Google account</a>, please get one by clicking the <a href='http://accounts.google.com'>link</a>. You can login at any time by clicking in "Guest" or by clicking in the icon <img id="id_top_user_picture" class="img_user" src="${site_img_dir}/user.jpg"></span>
 	`;
+
+	lg.o_finished_module = `YOU HAVE FINISHED THIS MODULE !!!`;
 	
 }
 
