@@ -3,7 +3,7 @@
 import { get_new_dv_under, gvar, get_qid_base, bib_defaults, is_observation, 
 } from './bq_tools.js';
 
-import { scroll_to_top, toggle_select_option, 
+import { scroll_to_top, toggle_select_option, start_qmodu, 
 	fb_mod, close_pop_menu, id_pop_menu_sele, toggle_verse_ed, get_default_verse_obj, get_bibref_in, 
 } from './bq_quest_mgr.js';
 
@@ -97,24 +97,9 @@ export function toggle_admin_opers(fb_usr){
 	scroll_to_top(dv_upper);
 }
 
-function is_valid_observ(qid){
-	if(get_qid_base(qid) == null){ return false; }
-	const quest = gvar.glb_poll_db[qid];
-	if(! is_observation(quest)){ return false; }
-	return true;
-}
-
 function get_module_observations_obj(){
-	const all_obs = {};
-	const all_qids = Object.keys(gvar.glb_poll_db);
-	let added = false;
-	for(const qid of all_qids){
-		if(is_valid_observ(qid)){
-			all_obs[qid] = 1;
-			added = true;
-		}
-	}
-	all_obs.FINAL_OBSERVATION__	= 1;
+	const all_obs = gvar.all_observations;
+	if(all_obs == null){ console.error("all_obs == null"); }
 	return all_obs;
 }
 
@@ -581,7 +566,7 @@ async function update_ALL_module_observations(){
 	for(const qmonam of all_qmonams){
 		await load_qmodu(qmonam);
 		if(gvar.init_qmodu_db != null){
-			gvar.init_qmodu_db();
+			start_qmodu(true);
 		}
 		update_current_module_observations();
 	}

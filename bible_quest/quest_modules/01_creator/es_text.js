@@ -188,5 +188,32 @@ export function init_es_poll_txt(){
 	
 	lg.o_finished_module = `TERMINASTE ESTE MODULO !!!`;
 
+	lg.o_evolution_nam = `Evolución`;
+	lg.o_logic_nam = `Lógica`;
+	lg.o_language_nam = `Lenguaje`;
+	lg.o_business_nam = `Comercio`;
+	lg.o_technology_nam = `Tecnología & logica`;
+	lg.o_logic_incons_nam = `Inconsistencia acerca de la lógica`;
+	lg.o_evidence_nam = `Evidencia`;
+	lg.o_law_nam = `Ley humana`;
+	lg.o_justice_nam = `Justicia humana`;
+	lg.o_contracts_nam = `Contratos`;
+	lg.o_technology2_nam = `Tecnología & evidencia`;
+	lg.o_evidence_incons_nam = `Inconsistencia acerca de la evidencia`;
+	lg.o_car_req_creativity_nam = `Creatividad & carro`;
+	lg.o_knife_req_creativity_nam = `Creatividad & cuchillo`;
+	lg.o_clock_req_creativity_nam = `Creatividad & reloj`;
+	lg.o_phone_req_creativity_nam = `Creatividad & celula`;
+	lg.o_laptop_req_creativity_nam = `Creatividad & portatil`;
+	lg.o_complexity_with_design_is_harder_nam = `complejidad y diseño & Dificultad`;
+	lg.o_biology_is_harder_nam = `Biologico vs hecho por el hombre`;
+	lg.o_we_cannot_simulate_biology_nam = `SImulacion de la biología`;
+	lg.o_biology_req_creativity_nam = `Maquinaria biológica & Creatividad`;
+	lg.o_humans_can_re_create_their_creations_nam = `Re-creando de lo hecho por el hombre`;
+	lg.o_the_creator_can_re_create_his_creation_nam = `Re-creando la biología`;
+	lg.o_short_end_nam = `Final corto`;
+	lg.o_long_end_nam = `Final largo`;
+	lg.o_final_nam = `Observación Final`;
+
 }
 

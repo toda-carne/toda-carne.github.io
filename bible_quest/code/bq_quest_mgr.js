@@ -32,6 +32,7 @@ const DEBUG_STO_RW = false;
 const DEBUG_INIT_ANSW = false;
 const DEBUG_UPDATE_OBSERV = false;
 const DEBUG_FB_WRITE_RESULTS = true;
+const DEBUG_SHOW_RESULTS = true;
 const DEBUG_SCROLL = false;
 
 const MIN_ANSW_SHOW_INVERT = 3;
@@ -49,6 +50,10 @@ const SUF_RESULTS_IN_FB_PSTAT = "_results_in_fb_Pstat";
 const SUF_RESULTS_IN_FB_USTAT = "_results_in_fb_Ustat";
 
 const SUF_ID_QSTM = "_qstm";
+const SUF_ID_DATA_OBSERVATION = "_data_observation";
+const SUF_ID_PSTATS_RESULTS = "_Pstat_results";
+const SUF_ID_USTATS_RESULTS = "_Ustat_results";
+const SUF_ID_RESULTS_OBSERVATION = "_results_observation";
 const SUF_ID_QREFS_OBSERVATION = "_qrefs_observation";
 const SUF_ID_USER_OBSERVATION = "_user_observation";
 const SUF_ID_OK_OBSERVATION = "_ok_observation";
@@ -369,7 +374,7 @@ function init_choose_words(dv_answ, quest, anid){
 		const is_cho = all_cho[a_wd];
 			
 		const sp_wd = document.createElement("span");
-		sp_wd.classList.add("exam", "word");
+		sp_wd.classList.add("exam", "is_word");
 		sp_wd.innerHTML = a_wd + " ";
 		if(is_cho){ sp_wd.classList.add("selected", "upper"); }
 
@@ -1453,10 +1458,9 @@ export function init_page_exam(){
 	update_qmodu_title("Loading");
 	
 	init_firebase_mgr();
-
 };
 
-export function start_qmodu(){
+export function start_qmodu(just_init){
 	console.log("Called start_qmodu");
 	
 	if(gvar.init_qmodu_db == null){ 
@@ -1466,7 +1470,9 @@ export function start_qmodu(){
 	
 	gvar.init_qmodu_db(); 
 	init_DAG_func();
-	ask_next();
+	if(! just_init){
+		ask_next();
+	}
 }
 
 export function init_page_buttons(){
@@ -2143,22 +2149,26 @@ function write_fb_qmodu_presults(obj, dt){
 	if(DEBUG_FB_WRITE_RESULTS){ console.log("write_fb_qmodu_presults. CALLED. "); }
 	if(fb_mod == null){ console.error("fb_mod == null"); return; }
 	
+	if(fb_mod.tc_fb_app == null){ console.error("write_fb_qmodu_presults. fb_mod.tc_fb_app == null. "); return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+	
+	const pstats_path = fb_mod.firebase_bib_quest_path + "pstats/";
+	const module_pth = pstats_path + gvar.current_qmonam;
+	
+	const suf_id_results = gvar.current_qmonam + SUF_ID_PSTATS_RESULTS;
+	on_stats_change_show_results(suf_id_results, "PSTATS", module_pth, obj);
+	
 	if(in_fb_Pstat()){ 
 		console.log("write_fb_qmodu_presults. ALREADY in Pstat. "); 
 		return;
 	}
 	
-	if(fb_mod.tc_fb_app == null){ console.error("write_fb_qmodu_presults. fb_mod.tc_fb_app == null. "); return; }
-	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
 	
 	let db_ref = null;
-	
-	const pstats_path = fb_mod.firebase_bib_quest_path + "pstats/";
 	const wr_data = {};
 	
 	wr_data[pstats_path + 'last_check'] = dt;
 	
-	const module_pth = pstats_path + gvar.current_qmonam;
 	const all_qids = Object.keys(obj);
 	for(const qid of all_qids){
 		wr_data[module_pth + '/' + qid] = fb_mod.md_db.increment(1);
@@ -2168,37 +2178,41 @@ function write_fb_qmodu_presults(obj, dt){
 
 	if(DEBUG_FB_WRITE_RESULTS){ console.log("write_fb_qmodu_presults. full_data=" + JSON.stringify(wr_data, null, "  ")); }
 	
+	set_fb_Pstat();
+	
 	const db_pref = fb_mod.md_db.ref(fb_database);
 	fb_mod.md_db.update(db_pref, wr_data).catch((error) => { 
 		console.error("write_fb_qmodu_presults." + error); 
 		reset_fb_Pstat();
 	});	
-	
-	set_fb_Pstat();
 }
 
 function write_fb_qmodu_results(obj, dt){
 	if(DEBUG_FB_WRITE_RESULTS){ console.log("write_fb_qmodu_results. CALLED. "); }
 	if(fb_mod == null){ console.error("fb_mod == null"); return; }
+
+	if(fb_mod.tc_fb_app == null){ console.error("write_fb_qmodu_results. fb_mod.tc_fb_app == null. "); return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
 	
+	const module_pth = 'stats/to_add/' + gvar.current_qmonam;
+	
+	const suf_id_results = gvar.current_qmonam + SUF_ID_USTATS_RESULTS;
+	on_stats_change_show_results(suf_id_results, "USTATS", module_pth, obj);
+
 	if(in_fb_Ustat()){ 
 		console.log("write_fb_qmodu_results. ALREADY in Ustat. "); 
 		return;
 	}
 	
-	if(fb_mod.tc_fb_app == null){ console.error("write_fb_qmodu_results. fb_mod.tc_fb_app == null. "); return; }
-	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
-	
-	let db_ref = null;
-	
+	let db_ref = null;	
 	const wr_data = {};
+	
 	const results_module_pth = 'results/' + gvar.current_qmonam;
 	wr_data[results_module_pth] = obj;
 
 	const finished_module_pth = 'finished/' + gvar.current_qmonam;
 	wr_data[finished_module_pth] = 1;
 	
-	const module_pth = 'stats/to_add/' + gvar.current_qmonam;
 	const all_qids = Object.keys(obj);
 	for(const qid of all_qids){
 		wr_data[module_pth + '/' + qid] = fb_mod.md_db.increment(1);
@@ -2207,6 +2221,8 @@ function write_fb_qmodu_results(obj, dt){
 	wr_data[module_pth + '/' + 'num_checks'] = fb_mod.md_db.increment(1);
 	
 	if(DEBUG_FB_WRITE_RESULTS){ console.log("write_fb_qmodu_results. full_data=" + JSON.stringify(wr_data, null, "  ")); }
+
+	set_fb_Ustat();
 	
 	const usr_path = fb_mod.firebase_get_user_path();
 	db_ref = fb_mod.md_db.ref(fb_database, usr_path);
@@ -2214,8 +2230,6 @@ function write_fb_qmodu_results(obj, dt){
 		console.error("write_fb_qmodu_results." + error); 
 		reset_fb_Ustat();
 	});
-
-	set_fb_Ustat();
 	
 	const path_flag = get_to_update_module_user_path();
 	db_ref = fb_mod.md_db.ref(fb_database, path_flag);
@@ -2313,19 +2327,32 @@ function get_final_obs(){
 	return obs;
 }
 
+function is_valid_observ(qid){
+	if(get_qid_base(qid) == null){ return false; }
+	const quest = gvar.glb_poll_db[qid];
+	if(! is_observation(quest)){ return false; }
+	return true;
+} 
+
 function init_DAG_func(){
 	console.log("init_DAG_func.CALLED.");
 	init_all_context();
 
 	const db = gvar.glb_poll_db;
+	gvar.all_observations = {};
+	const all_obs = gvar.all_observations;
 	
 	const all_qids = Object.keys(gvar.glb_poll_db);
 	for(const qid of all_qids){
+		if(is_valid_observ(qid)){
+			all_obs[qid] = 1;
+		}
 		init_signals_for(qid);
 	}
 	
 	if(db.FINAL_OBSERVATION__ == null){
 		db.FINAL_OBSERVATION__ = get_final_obs();
+		all_obs.FINAL_OBSERVATION__	= 1;
 	}
 }
 
@@ -2754,6 +2781,7 @@ function show_observation(qid, all_to_act, qid_cllr){
 	quest.pos_page = INVALID_PAGE_POS;
 	
 	const dv_obs_data = document.createElement("div"); // dv_obs_data
+	dv_obs_data.id = qid + SUF_ID_DATA_OBSERVATION;
 	dv_obs_data.classList.add("exam");
 	dv_obs_data.classList.add("observ_stm");
 	dv_obs_data.classList.add("observ_color");
@@ -2796,6 +2824,12 @@ function show_observation(qid, all_to_act, qid_cllr){
 	if(! quest.calls_write_results){	
 		dv_qstm.innerHTML = "" + the_stm;
 	}
+	
+	const dv_results_observ = document.createElement("div");
+	dv_results_observ.id = qid + SUF_ID_RESULTS_OBSERVATION;
+	dv_results_observ.classList.add("exam");
+	dv_results_observ.classList.add("observ_color");
+	dv_obs_data.appendChild(dv_results_observ);
 	
 	const dv_qrefs_observ = document.createElement("div");
 	dv_qrefs_observ.id = qid + SUF_ID_QREFS_OBSERVATION;
@@ -3152,4 +3186,166 @@ function finish_qmodu(){
 	scroll_to_qid(get_first_not_answered());
 	//load_next_qmodu();
 }
+
+function get_grid_results(fb_stats, fb_results){
+	const db = gvar.glb_poll_db;
+	const tot = fb_stats.num_checks;
+	const all_obs = gvar.all_observations;
+	
+	if(tot <= 0){ 
+		console.error("tot == 0");
+		return;
+	}
+	
+	const dv_gr = document.createElement("div");
+	dv_gr.classList.add("exam", "grid_results");
+	
+	for (const qid of Object.keys(all_obs)) {
+		if(get_qid_base(qid) == null){
+			continue;
+		}
+		let cntr = fb_stats[qid];
+		if((cntr != null) && ((cntr <= 0) || (cntr > tot))){
+			console.error("cntr <= 0 OR cntr > tot");
+			continue;
+		}
+		if(cntr == null){
+			cntr = 0;
+		}
+		const quest = db[qid];
+		const nam = get_msg(quest.htm_nam);
+		
+		const perc_red = Math.floor((cntr * 100) / tot);
+		const perc_green = 100 - perc_red;
+
+		const dv_nam = document.createElement("div");
+		dv_nam.classList.add("exam", "results_item");
+		const dv_val = document.createElement("div");
+		dv_val.classList.add("results_item");
+		//dv_val.classList.add("exam", "results_item");
+		
+		dv_nam.style.gridColumnStart = 1;
+		dv_nam.style.gridColumnEnd = 60;
+		dv_val.style.gridColumnStart = 80;
+		dv_val.style.gridColumnEnd = 90;
+		
+		dv_nam.innerHTML = nam;
+		if(fb_results[qid] != null){
+			dv_val.classList.add("background_red");
+			dv_val.innerHTML = "BAD";
+		} else {
+			dv_val.classList.add("background_green");
+			dv_val.innerHTML = "GOOD";
+		}
+		dv_gr.appendChild(dv_nam);
+		dv_gr.appendChild(dv_val);
+		
+		if(DEBUG_SHOW_RESULTS){ console.log("nam=" + nam + " perc_green=" + perc_green); }
+		if(perc_green > 0){
+			const dv_green = document.createElement("div");
+			dv_green.classList.add("results_item", "background_green");
+			//dv_green.classList.add("exam", "results_item", "background_green");
+			dv_green.style.gridColumnStart = 1;
+			dv_green.style.gridColumnEnd = perc_green;
+			dv_green.innerHTML = perc_green;
+			dv_gr.appendChild(dv_green);
+		}
+		if((perc_green + 1) < 100){
+			const dv_red = document.createElement("div");
+			dv_red.classList.add("results_item", "background_red");
+			//dv_red.classList.add("exam", "results_item", "background_red");
+			dv_red.style.gridColumnStart = perc_green + 1;
+			dv_red.style.gridColumnEnd = 100;
+			dv_red.innerHTML = perc_red;
+			dv_gr.appendChild(dv_red);
+		}
+	}
+	return dv_gr;
+}
+
+function on_stats_change_show_results(suf_id_results, htm_tit, stts_path, fb_results){
+	const gst = gvar.glb_poll_db.qmodu_state;
+	const qid = gst.writer_qid;
+	const id_results = qid + suf_id_results;
+	let dv_results = document.getElementById(id_results);
+	let is_nw_elem = false;
+	if(dv_results == null){	
+		const dv_results_observ = document.getElementById(qid + SUF_ID_RESULTS_OBSERVATION);
+		if(dv_results_observ == null){ console.error("dv_results_observ == null"); return; }
+
+		dv_results = document.createElement("div");
+		dv_results.id = id_results;
+		dv_results.classList.add("exam");
+		dv_results.classList.add("observ_color");
+		dv_results_observ.appendChild(dv_results);
+		is_nw_elem = true;;
+	}
+	
+	gvar.fb_results = fb_results;
+	
+	if(! is_nw_elem){
+		return;
+	}
+	
+	if(fb_mod == null){ console.error("fb_mod == null"); return; }
+	if(fb_mod.tc_fb_app == null){ console.error("fb_mod.tc_fb_app == null"); return; }
+	const fb_database = fb_mod.md_db.getDatabase(fb_mod.tc_fb_app);
+	
+	const db_ref = fb_mod.md_db.ref(fb_database, stts_path);
+	fb_mod.md_db.onValue(db_ref, (snapshot) => {
+		if (snapshot.exists()) {
+			const rd_obj = snapshot.val();
+			const fb_stats = JSON.parse(JSON.stringify(rd_obj));
+			if(DEBUG_FB_WRITE_RESULTS){ 
+				console.log("on_stats_change_show_results. FULL_OBJ=");
+				console.log(fb_stats);
+			}
+			show_results_in_observation(dv_results, htm_tit, fb_stats);
+		} else {
+			console.error("on_stats_change_show_results. No data available");
+		}
+	});
+}
+
+function show_results_in_observation(dv_results, htm_tit, fb_stats){
+	dv_results.innerHTML = "";		
+	const grd_res = get_grid_results(fb_stats, gvar.fb_results);
+	dv_results.appendChild(grd_res);
+}
+
+/*
+const element = document.getElementById('yourElementId'); // Replace 'yourElementId'
+
+// Set grid-column-start using a line number
+element.style.gridColumnStart = '2';
+
+// Set grid-column-start using a named grid line
+element.style.gridColumnStart = 'column-name';
+
+// Set grid-column-start to span a certain number of columns
+element.style.gridColumnStart = 'span 3';
+
+// Set grid-column-start to span until a named grid line
+element.style.gridColumnStart = 'span column-name';
+
+import { getDatabase, ref, onValue, off } from "firebase/database";
+
+const db = getDatabase();
+const dataRef = ref(db, 'your/data/path');
+
+// Listener function
+const valueListener = onValue(dataRef, (snapshot) => {
+  const data = snapshot.val();
+  console.log(data);
+});
+
+// Detach the specific listener
+off(dataRef, "value", valueListener);
+
+// Detach all "value" listeners at the reference
+off(dataRef, "value");
+
+// Detach all listeners at the reference
+off(dataRef);
+*/
 

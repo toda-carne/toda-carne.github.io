@@ -185,6 +185,34 @@ export function init_en_poll_txt(){
 	`;
 
 	lg.o_finished_module = `YOU HAVE FINISHED THIS MODULE !!!`;
+
+	lg.o_evolution_nam = `Evolution`;
+	lg.o_logic_nam = `Logic`;
+	lg.o_language_nam = `Language`;
+	lg.o_business_nam = `Business`;
+	lg.o_technology_nam = `Technoly & logic`;
+	lg.o_logic_incons_nam = `Inconsistent about logic`;
+	lg.o_evidence_nam = `Evidence`;
+	lg.o_law_nam = `Human law`;
+	lg.o_justice_nam = `Human justice`;
+	lg.o_contracts_nam = `Contracts`;
+	lg.o_technology2_nam = `Technology & evidence`;
+	lg.o_evidence_incons_nam = `Inconsistent about evidence`;
+	lg.o_car_req_creativity_nam = `Creativity & car`;
+	lg.o_knife_req_creativity_nam = `Creativity & knife`;
+	lg.o_clock_req_creativity_nam = `Creativity & clock`;
+	lg.o_phone_req_creativity_nam = `Creativity & phone`;
+	lg.o_laptop_req_creativity_nam = `Creativity & laptop`;
+	lg.o_complexity_with_design_is_harder_nam = `Complexity and desing & Dificulty`;
+	lg.o_biology_is_harder_nam = `Biological vs human made`;
+	lg.o_we_cannot_simulate_biology_nam = `Biology simulation`;
+	lg.o_biology_req_creativity_nam = `Bological machinery & Creativity`;
+	lg.o_humans_can_re_create_their_creations_nam = `Human Re-creating`;
+	lg.o_the_creator_can_re_create_his_creation_nam = `Biology Re-creation`;
+	lg.o_short_end_nam = `Short ending`;
+	lg.o_long_end_nam = `Long endign`;
+	lg.o_final_nam = `Final observation`;
+
 	
 }
 

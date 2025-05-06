@@ -75,6 +75,7 @@ export function init_exam_database(){
 	db.o_evolution_comm__ = { 
 		context: ["ctx_general", "ctx_intelligent_design"],
 		htm_stm: "o_evolution_comm",
+		htm_nam: "o_evolution_nam",
 		activated_if: {
 			c1: { q_six_days__: { q1_1_2__YES_six_days: "on", }, q_evolution__: { q1_3__YES_evolution: "on", }, },
 		},
@@ -140,6 +141,7 @@ export function init_exam_database(){
 	db.o_logic_comm__ = { 
 		context: ["ctx_general", "ctx_logic"],
 		htm_stm: "o_logic_comm",
+		htm_nam: "o_logic_nam",
 		activated_if: {
 			c1: { q_logic__: { a_NO_logic: "on", }, },
 		},
@@ -162,6 +164,7 @@ export function init_exam_database(){
 	db.o_language_comm__ = { 
 		context: ["ctx_general", "ctx_logic", "ctx_language"],
 		htm_stm: "o_language_comm",
+		htm_nam: "o_language_nam",
 		activated_if: {
 			c1: { q_language__: { a_simple_NO: "on", }, },
 		},
@@ -184,6 +187,7 @@ export function init_exam_database(){
 	db.o_business_comm__ = { 
 		context: ["ctx_general", "ctx_logic", "ctx_business"],
 		htm_stm: "o_business_comm",
+		htm_nam: "o_business_nam",
 		activated_if: {
 			c1: { q_business__: { a_simple_NO: "on", }, },
 		},
@@ -206,6 +210,7 @@ export function init_exam_database(){
 	db.o_technology_comm__ = { 
 		context: ["ctx_general", "ctx_logic", "ctx_technology"],
 		htm_stm: "o_technology_comm",
+		htm_nam: "o_technology_nam",
 		activated_if: {
 			c1: { q_technology__: { a_simple_NO: "on", }, },
 		},
@@ -214,6 +219,7 @@ export function init_exam_database(){
 	db.o_logic_incons_comm__ = { 
 		context: ["ctx_general", "ctx_logic"],
 		htm_stm: "o_logic_incons_comm",
+		htm_nam: "o_logic_incons_nam",
 		activated_if: {
 			c1: { q_logic__: { a_YES_logic: "on", }, o_language_comm__: { shown: "on", }, },
 			c2: { q_logic__: { a_YES_logic: "on", }, o_business_comm__: { shown: "on", }, },
@@ -235,6 +241,7 @@ export function init_exam_database(){
 	db.o_evidence_comm__ = { 
 		context: ["ctx_general", "ctx_evidence"],
 		htm_stm: "o_evidence_comm",
+		htm_nam: "o_evidence_nam",
 		activated_if: {
 			c1: { q_evidence__: { a_NO_evidence: "on", }, },
 		},
@@ -257,6 +264,7 @@ export function init_exam_database(){
 	db.o_law_comm__ = { 
 		context: ["ctx_general", "ctx_evidence", "ctx_law"],
 		htm_stm: "o_law_comm",
+		htm_nam: "o_law_nam",
 		activated_if: {
 			c1: { q_law__: { a_simple_NO: "on", }, },
 		},
@@ -279,6 +287,7 @@ export function init_exam_database(){
 	db.o_justice_comm__ = { 
 		context: ["ctx_general", "ctx_evidence", "ctx_law", "ctx_justice"],
 		htm_stm: "o_justice_comm",
+		htm_nam: "o_justice_nam",
 		activated_if: {
 			c1: { q_justice__: { a_simple_NO: "on", }, },
 		},
@@ -301,6 +310,7 @@ export function init_exam_database(){
 	db.o_contracts_comm__ = { 
 		context: ["ctx_general", "ctx_evidence", "ctx_contracts"],
 		htm_stm: "o_contracts_comm",
+		htm_nam: "o_contracts_nam",
 		activated_if: {
 			c1: { q_contracts__: { a_simple_NO: "on", }, },
 		},
@@ -323,6 +333,7 @@ export function init_exam_database(){
 	db.o_technology2_comm__ = { 
 		context: ["ctx_general", "ctx_evidence", "ctx_technology2"],
 		htm_stm: "o_technology2_comm",
+		htm_nam: "o_technology2_nam",
 		activated_if: {
 			c1: { q_technology2__: { a_simple_NO: "on", }, },
 		},
@@ -331,6 +342,7 @@ export function init_exam_database(){
 	db.o_evidence_incons_comm__ = { 
 		context: ["ctx_general", "ctx_evidence", ],
 		htm_stm: "o_evidence_incons_comm",
+		htm_nam: "o_evidence_incons_nam",
 		activated_if: {
 			c1: { q_evidence__: { a_YES_evidence: "on", }, o_law_comm__: { shown: "on", }, },
 			c2: { q_evidence__: { a_YES_evidence: "on", }, o_justice_comm__: { shown: "on", }, },
@@ -414,6 +426,7 @@ export function init_exam_database(){
 	db.o_car_req_creativity_comm__ = { 
 		context: ["ctx_requires_creativity", "ctx_car_req_creativity"],
 		htm_stm: "o_car_req_creativity_comm",
+		htm_nam: "o_car_req_creativity_nam",
 		activated_if: {
 			c1: { q_car_req_creativity__: { a_simple_NO: "on", }, },
 		},
@@ -461,6 +474,7 @@ export function init_exam_database(){
 	db.o_knife_req_creativity_comm__ = { 
 		context: ["ctx_requires_creativity", "ctx_knife_req_creativity"],
 		htm_stm: "o_knife_req_creativity_comm",
+		htm_nam: "o_knife_req_creativity_nam",
 		activated_if: {
 			c1: { q_knife_req_creativity__: { a_simple_NO: "on", }, },
 		},
@@ -508,6 +522,7 @@ export function init_exam_database(){
 	db.o_clock_req_creativity_comm__ = { 
 		context: ["ctx_requires_creativity", "ctx_clock_req_creativity"],
 		htm_stm: "o_clock_req_creativity_comm",
+		htm_nam: "o_clock_req_creativity_nam",
 		activated_if: {
 			c1: { q_clock_req_creativity__: { a_simple_NO: "on", }, },
 		},
@@ -560,6 +575,7 @@ export function init_exam_database(){
 	/*db.o_phone_req_creativity_comm__ = { 
 		context: ["ctx_requires_creativity", "ctx_phone_req_creativity"],
 		htm_stm: "o_phone_req_creativity_comm",
+		htm_nam: "o_phone_req_creativity_nam",
 		activated_if: {
 			c1: { q_phone_req_creativity__: { a_simple_NO: "on", }, },
 		},
@@ -612,6 +628,7 @@ export function init_exam_database(){
 	/*db.o_laptop_req_creativity_comm__ = { 
 		context: ["ctx_requires_creativity", "ctx_laptop_req_creativity"],
 		htm_stm: "o_laptop_req_creativity_comm",
+		htm_nam: "o_laptop_req_creativity_nam",
 		activated_if: {
 			c1: { q_laptop_req_creativity__: { a_simple_NO: "on", }, },
 		},
@@ -739,6 +756,7 @@ export function init_exam_database(){
 	db.o_complexity_with_design_is_harder_comm__ = { 
 		context: ["ctx_harder_to_make", ],
 		htm_stm: "o_complexity_with_design_is_harder_comm",
+		htm_nam: "o_complexity_with_design_is_harder_nam",
 		activated_if: {
 			c1: { 
 				q_building_vs_knife_more_planning__: { shown: "on", }, 
@@ -902,6 +920,7 @@ export function init_exam_database(){
 	db.o_biology_is_harder_comm__ = { 
 		context: ["ctx_harder_to_make", ],
 		htm_stm: "o_biology_is_harder_comm",
+		htm_nam: "o_biology_is_harder_nam",
 		activated_if: {
 			c1: { q_foot_vs_car_wheel_harder_to_make__: { a_car_wheel: "on", }, },
 			c2: { q_lung_vs_air_purifier_harder_to_make__: { a_air_purifier: "on", }, },
@@ -982,6 +1001,7 @@ export function init_exam_database(){
 	db.o_we_cannot_simulate_biology_comm__ = { 
 		context: ["ctx_harder_to_make", ],
 		htm_stm: "o_we_cannot_simulate_biology_comm",
+		htm_nam: "o_we_cannot_simulate_biology_nam",
 		activated_if: {
 			c1: { q_phone_mitosis__: { a_simple_YES: "on", }, },
 			c2: { q_truck_baby__: { a_simple_YES: "on", }, },
@@ -1028,6 +1048,7 @@ export function init_exam_database(){
 	db.o_biology_req_creativity_comm__ = { 
 		context: ["ctx_biology_req_creativity", "ctx_human_body_req_creativity"],
 		htm_stm: "o_biology_req_creativity_comm",
+		htm_nam: "o_biology_req_creativity_nam",
 		activated_if: {
 			c1: { q_foot_req_creativity__: { a_simple_NO: "on", }, },
 			c2: { q_lungs_req_creativity__: { a_simple_NO: "on", }, },
@@ -1049,6 +1070,7 @@ export function init_exam_database(){
 	db.o_humans_can_re_create_their_creations__ = { 
 		context: ["ctx_reproduction", ],
 		htm_stm: "o_humans_can_re_create_their_creations",
+		htm_nam: "o_humans_can_re_create_their_creations_nam",
 		activated_if: {
 			c1: { q_you_can_make_a_car_again__: { a_simple_NO: "on", }, },
 		},
@@ -1068,6 +1090,7 @@ export function init_exam_database(){
 	db.o_the_creator_can_re_create_his_creation__ = { 
 		context: ["ctx_reproduction", ],
 		htm_stm: "o_the_creator_can_re_create_his_creation",
+		htm_nam: "o_the_creator_can_re_create_his_creation_nam",
 		activated_if: {
 			c1: { q_he_can_make_a_body_again__: { a_simple_NO: "on", }, },
 		},
@@ -1078,6 +1101,7 @@ export function init_exam_database(){
 		is_positive: true,
 		context: ["ctx_get_qrcode"],
 		htm_stm: "o_get_qrcode",
+		htm_nam: "o_short_end_nam",
 		activated_if: {
 			c1: { q_genesis__: { a_simple_YES: "on", }, },
 		},
@@ -1088,6 +1112,7 @@ export function init_exam_database(){
 		is_positive: true,
 		context: ["ctx_get_qrcode"],
 		htm_stm: "o_get_qrcode",
+		htm_nam: "o_long_end_nam",
 		activated_if: {
 			c2: { q_he_can_make_a_body_again__	: { shown: "on", }, },
 		},
@@ -1098,6 +1123,7 @@ export function init_exam_database(){
 		is_positive: true,
 		context: ["ctx_get_qrcode"],
 		htm_stm: "o_finished_module",
+		htm_nam: "o_final_nam",
 		activated_if: {
 			c2: { NO_QUESTIONS_LEFT : true, },
 		},
