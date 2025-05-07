@@ -2099,16 +2099,18 @@ export function write_exam_object(name){
 }
 
 export function read_exam_object(name){
-	if(name == null){ console.error("read_exam_object. (name == null)"); return; } 
+	if(name == null){ console.error("name == null"); return; } 
 	console.log("READING " + name);
-	write_exam_name(name);
 	let rd_obj_str = window.localStorage.getItem(name);
 	let rd_obj = null;
 	if((rd_obj_str != null) && (rd_obj_str != "null")){
 		rd_obj = JSON.parse(rd_obj_str);
 	}
 	if(rd_obj != null){
+		write_exam_name(name);
 		display_exam_load_object(name, rd_obj);
+	} else {
+		start_qmodu();
 	}
 }
 
@@ -2882,7 +2884,13 @@ function add_observation_ok(qid){
 	dv_ok.addEventListener('click', function() {
 		quest.watched = true;
 		//dv_blk_ok.remove();
-		scroll_to_qid(get_first_not_answered()); // dbg_scroll
+		const gst = gvar.glb_poll_db.qmodu_state;
+		const is_wrter = (qid == gst.writer_qid);
+		if(is_wrter){
+			load_next_qmodu();
+		} else {
+			scroll_to_qid(get_first_not_answered()); // dbg_scroll
+		}
 		return;
 	});		
 	
@@ -3223,20 +3231,21 @@ function get_grid_results(fb_stats, fb_results){
 		const dv_val = document.createElement("div");
 		dv_val.classList.add("results_item");
 		//dv_val.classList.add("exam", "results_item");
+		const sp_you = document.createElement("span")
+		sp_you.innerHTML = gvar.glb_curr_lang.msg_you;
 		
 		dv_nam.style.gridColumnStart = 1;
-		dv_nam.style.gridColumnEnd = 60;
-		dv_val.style.gridColumnStart = 80;
-		dv_val.style.gridColumnEnd = 90;
+		dv_nam.style.gridColumnEnd = 70;
+		dv_val.style.gridColumnStart = 71;
+		dv_val.style.gridColumnEnd = -1;
 		
 		dv_nam.innerHTML = nam;
 		if(fb_results[qid] != null){
-			dv_val.classList.add("background_red");
-			dv_val.innerHTML = "BAD";
+			sp_you.classList.add("background_red");
 		} else {
-			dv_val.classList.add("background_green");
-			dv_val.innerHTML = "GOOD";
+			sp_you.classList.add("background_green");
 		}
+		dv_val.append(sp_you);
 		dv_gr.appendChild(dv_nam);
 		dv_gr.appendChild(dv_val);
 		
@@ -3247,7 +3256,7 @@ function get_grid_results(fb_stats, fb_results){
 			//dv_green.classList.add("exam", "results_item", "background_green");
 			dv_green.style.gridColumnStart = 1;
 			dv_green.style.gridColumnEnd = perc_green;
-			dv_green.innerHTML = perc_green;
+			dv_green.innerHTML = perc_green + "%";
 			dv_gr.appendChild(dv_green);
 		}
 		if((perc_green + 1) < 100){
@@ -3256,7 +3265,7 @@ function get_grid_results(fb_stats, fb_results){
 			//dv_red.classList.add("exam", "results_item", "background_red");
 			dv_red.style.gridColumnStart = perc_green + 1;
 			dv_red.style.gridColumnEnd = 100;
-			dv_red.innerHTML = perc_red;
+			dv_red.innerHTML = perc_red + "%";
 			dv_gr.appendChild(dv_red);
 		}
 	}

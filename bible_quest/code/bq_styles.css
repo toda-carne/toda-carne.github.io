@@ -622,18 +622,23 @@ a.exam_ref:hover {
 }
 
 .results_item {
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
 	grid-row: auto;	
+	font-size:0.7em;
 }
 
 .background_red {
-	border: 0.2vw solid #ff0000;
-	background-color: solid #ff0000;
-	z-index: 100;
+	font-weight: bold;
+	color: #12244a;
+	border: 0.3em solid #ff0000;
+	background-color: #ff0000;
 }
 .background_green {
-	border: 0.2vw solid #00ff00;
-	background-color: solid #00ff00;
-	z-index: 100;
+	font-weight: bold;
+	color: #12244a;
+	border: 0.3em solid #00ff00;
+	background-color: #00ff00;
 }
 
 /*

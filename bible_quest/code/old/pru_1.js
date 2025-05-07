@@ -102,10 +102,10 @@ function test_02(){
 
 function test_03(){
 	const t1 = null;
-	if(! t1){
-		console.log("FALSE");
-	} else {
+	if(t1){
 		console.log("TRUE");
+	} else {
+		console.log("FALSE");
 	}
 }
 

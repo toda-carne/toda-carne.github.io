@@ -203,7 +203,7 @@ export async function load_qmodu(qmonam, st_qmodu){
 	if(md_cont_db != null){
 		if(gvar.current_qmonam == null){ console.error("gvar.current_qmonam == null"); }
 		gvar.init_qmodu_db = md_cont_db.init_exam_database;
-		if(st_qmodu != null){ 
+		if(st_qmodu){ 
 			if(PERSISTANT_STATE && (st_qmodu == 2)){ 
 				read_exam_object(get_save_name()); 					
 			} else {
@@ -217,7 +217,7 @@ export async function load_qmodu(qmonam, st_qmodu){
 	}
 }
 
-export async function load_next_qmodu(st_qmodu){
+export async function load_next_qmodu(st_qmodu = 2){
 	const qmonam = get_nxt_qmonam();
 	console.log("load_next_qmodu. qmonam = " + qmonam);
 	await load_qmodu(qmonam, st_qmodu);

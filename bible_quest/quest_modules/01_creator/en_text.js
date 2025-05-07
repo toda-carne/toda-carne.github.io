@@ -191,13 +191,13 @@ export function init_en_poll_txt(){
 	lg.o_language_nam = `Language`;
 	lg.o_business_nam = `Business`;
 	lg.o_technology_nam = `Technoly & logic`;
-	lg.o_logic_incons_nam = `Inconsistent about logic`;
+	lg.o_logic_incons_nam = `Consistency in logic`;
 	lg.o_evidence_nam = `Evidence`;
 	lg.o_law_nam = `Human law`;
 	lg.o_justice_nam = `Human justice`;
 	lg.o_contracts_nam = `Contracts`;
 	lg.o_technology2_nam = `Technology & evidence`;
-	lg.o_evidence_incons_nam = `Inconsistent about evidence`;
+	lg.o_evidence_incons_nam = `Consistency in evidence`;
 	lg.o_car_req_creativity_nam = `Creativity & car`;
 	lg.o_knife_req_creativity_nam = `Creativity & knife`;
 	lg.o_clock_req_creativity_nam = `Creativity & clock`;

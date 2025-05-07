@@ -331,6 +331,7 @@ function init_en_basic_msg(){
 	obj.msg_understood = "OK";
 	obj.msg_yes = "YES";
 	obj.msg_no = "NO";
+	obj.msg_you = "You";
 	
 	obj.msg_undo = "<i class='has_icons icon-undo'></i> Ups!";	
 	
