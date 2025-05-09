@@ -3208,10 +3208,16 @@ function get_grid_results(fb_stats, fb_results){
 	const dv_gr = document.createElement("div");
 	dv_gr.classList.add("exam", "grid_results");
 	
+	const all_wters = [];
+	let tot_wters = 0;
+	
 	for (const qid of Object.keys(all_obs)) {
 		if(get_qid_base(qid) == null){
 			continue;
 		}
+		const quest = db[qid];
+		if(quest == null){ console.error("quest == null"); continue; }
+		
 		let cntr = fb_stats[qid];
 		if((cntr != null) && ((cntr <= 0) || (cntr > tot))){
 			console.error("cntr <= 0 OR cntr > tot");
@@ -3220,10 +3226,16 @@ function get_grid_results(fb_stats, fb_results){
 		if(cntr == null){
 			cntr = 0;
 		}
-		const quest = db[qid];
+		if(quest.calls_write_results){
+			all_wters.push(qid);
+			tot_wters = tot_wters + cntr;
+			continue; 
+		}
+		
+		
 		const nam = get_msg(quest.htm_nam);
 		
-		const perc_red = Math.floor((cntr * 100) / tot);
+		const perc_red = Math.round((cntr * 100) / tot);
 		const perc_green = 100 - perc_red;
 
 		const dv_nam = document.createElement("div");
@@ -3269,6 +3281,72 @@ function get_grid_results(fb_stats, fb_results){
 			dv_gr.appendChild(dv_red);
 		}
 	}
+	
+	const colors = ["#00ffff", "#ffaa00", "#ffc6ee", "#ff00ff", "#aaaaff", "#aa557f", "#bb67ff", "#c3c361", "#96644b", ];
+	
+	let ii = 0;
+	for (const qid of all_wters) {
+		const quest = db[qid];
+		let cntr = fb_stats[qid];
+		if(cntr == null){
+			cntr = 0;
+		}		
+		const perc = Math.round((cntr * 100) / tot_wters);
+		let nam = get_msg(quest.htm_nam) + " " + perc + "%";
+
+		if(DEBUG_SHOW_RESULTS){ console.log("nam=" + nam + " cntr=" + cntr + " tot_wters=" + tot_wters); }
+		
+		const dv_nam = document.createElement("div");
+		dv_nam.classList.add("exam", "results_item");
+		const dv_val = document.createElement("div");
+		dv_val.classList.add("results_item");
+		const sp_you = document.createElement("span")
+		sp_you.style.backgroundColor = colors[ii];
+		sp_you.innerHTML = "___";
+		
+		dv_nam.style.gridColumnStart = 1;
+		dv_nam.style.gridColumnEnd = 70;
+		dv_val.style.gridColumnStart = 71;
+		dv_val.style.gridColumnEnd = -1;
+
+		if(fb_results[qid] != null){
+			nam = nam + " (" + gvar.glb_curr_lang.msg_you + ")";
+		}
+		dv_nam.innerHTML = nam;
+		dv_val.append(sp_you);
+		dv_gr.appendChild(dv_nam);
+		dv_gr.appendChild(dv_val);
+		
+		ii++;
+		ii = ii % colors.length;
+	}
+	
+	ii = 0;
+	let curr_pos = 1;
+	for (const qid of all_wters) {
+		const quest = db[qid];
+		let cntr = fb_stats[qid];
+		if(cntr == null){
+			cntr = 0;
+		}		
+		const perc_col = Math.round((cntr * 100) / tot_wters);
+
+		if(perc_col > 0){
+			const dv_wrter = document.createElement("div");
+			dv_wrter.classList.add("results_item");
+			dv_wrter.style.gridColumnStart = curr_pos;
+			curr_pos = curr_pos + perc_col;
+			dv_wrter.style.gridColumnEnd = curr_pos;
+			curr_pos++;
+			dv_wrter.innerHTML = perc_col + "%";
+			dv_wrter.style.backgroundColor = colors[ii];
+			dv_gr.appendChild(dv_wrter);
+		}
+		
+		ii++;
+		ii = ii % colors.length;
+	}
+	
 	return dv_gr;
 }
 

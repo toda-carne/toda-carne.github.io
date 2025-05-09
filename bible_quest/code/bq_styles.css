@@ -634,12 +634,14 @@ a.exam_ref:hover {
 	border: 0.3em solid #ff0000;
 	background-color: #ff0000;
 }
+
 .background_green {
 	font-weight: bold;
 	color: #12244a;
 	border: 0.3em solid #00ff00;
 	background-color: #00ff00;
 }
+
 
 /*
 	align-content: center center;
