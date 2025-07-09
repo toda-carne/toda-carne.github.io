@@ -1,6 +1,10 @@
 
+import { get_new_dv_under, scroll_to_top, toggle_select_option, 
+} from '../../bible_quest/code/bq_select_option_mgr.js';
 
-import { get_bib_verse, bibobj_to_bibhtm } from '../../bible_quest/code/bq_bible_mgr.js';
+import { get_bib_verse, bibobj_to_bibhtm,  	
+} from '../../bible_quest/code/bq_bible_mgr.js';
+
 import { get_strocode_verses, } from './sf_strong_mgr.js';
 import { init_lang, } from './sf_lang_mgr.js';
 
@@ -39,9 +43,38 @@ const bib_version = {
 	"5": "Critical Text (CRI)",
 };
 
+const id_crit_sele = "id_crit_sele";
+
+function init_menus(){
+	const dv_old_tes = document.getElementById("id_old_test");
+	dv_old_tes.addEventListener('click', function() {
+		const all_ops = Object.values(old_crit_txt);
+		toggle_select_option(dv_old_tes, id_crit_sele, all_ops, function(dv_ret, dv_ops, val_sel, idx_sel){
+			dv_ops.remove();
+		});
+		return;
+	});
+	const dv_new_tes = document.getElementById("id_new_test");
+	dv_new_tes.addEventListener('click', function() {
+		const all_ops = Object.values(new_crit_txt);
+		toggle_select_option(dv_new_tes, id_crit_sele, all_ops, function(dv_ret, dv_ops, val_sel, idx_sel){
+			dv_ops.remove();
+		});
+		return;
+	});
+	const dv_version = document.getElementById("id_version");
+	dv_version.addEventListener('click', function() {
+		const all_ops = Object.values(bib_version);
+		toggle_select_option(dv_version, id_crit_sele, all_ops, function(dv_ret, dv_ops, val_sel, idx_sel){
+			dv_ops.remove();
+		});
+		return;
+	});
+}
 
 export async function start_srch_mgr(curr_lang){
 	init_lang(curr_lang);
+	init_menus();
 
 	const dv_old_tes = document.getElementById("id_old_test");
 	const oldt = dv_old_tes.innerHTML.trim();

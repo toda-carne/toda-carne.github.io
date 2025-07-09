@@ -23,11 +23,12 @@ export function toggle_select_option(dv_return, id_selec_men, all_options_arr, o
 	if(dv_options == null){
 		return;
 	}
-	dv_options.classList.add("exam");
-	dv_options.classList.add("is_block");
-	dv_options.classList.add("grid_item_all_col");
 	if(menu_cls_arr != null){
-		dv_opt.classList.add(...menu_cls_arr);
+		dv_options.classList.add(...menu_cls_arr);
+	} else {
+		dv_options.classList.add("exam");
+		dv_options.classList.add("is_block");
+		dv_options.classList.add("grid_item_all_col");
 	}
 	
 	let consec = 0;
@@ -54,10 +55,11 @@ function add_option(dv_parent, id_option, label, handler, item_cls_arr){
 	if(id_option != null){
 		dv_opt.id = id_option;
 	}
-	dv_opt.classList.add("exam");
-	dv_opt.classList.add("is_option");
 	if(item_cls_arr != null){
 		dv_opt.classList.add(...item_cls_arr);
+	} else {
+		dv_opt.classList.add("exam");
+		dv_opt.classList.add("is_option");
 	}
 	dv_opt.innerHTML = label;
 	if(handler != null){

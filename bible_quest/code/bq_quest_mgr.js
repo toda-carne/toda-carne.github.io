@@ -1149,7 +1149,8 @@ function add_simple_cit_choosers(dv_ed_cit, cit_obj){
 	inp_book.innerHTML = gvar.glb_all_books[cit_obj.book];
 	inp_book.addEventListener('click', function() {
 		const books_arr = Object.values(gvar.glb_all_books);
-		const cho_classes = ["mid_item"];
+		//const cho_classes = ["mid_item"];
+		const cho_classes = ["exam", "is_option", "mid_item"];
 		toggle_select_option(inp_book, id_support_sele, books_arr, null, null, cho_classes);
 		return;
 	});
@@ -1240,7 +1241,8 @@ export function toggle_verse_ed(dv_citation){
 	
 	inp_site.addEventListener('click', function() {
 		const all_sites_arr = Object.keys(gvar.glb_all_bibles);
-		const cho_classes = ["mid_item"];
+		//const cho_classes = ["mid_item"];
+		const cho_classes = ["exam", "is_option", "mid_item"];
 		toggle_select_option(inp_site, id_support_sele, all_sites_arr, function(dv_ret, dv_ops, val_sel, idx_sel){
 			const bibs = gvar.glb_all_bibles[val_sel];
 			if(bibs.length > 0){ inp_bib_ver_sel.innerHTML = bibs[0]; }
@@ -1252,7 +1254,8 @@ export function toggle_verse_ed(dv_citation){
 	
 	inp_bib_ver_sel.addEventListener('click', function() {
 		const all_bibs_arr = gvar.glb_all_bibles[inp_site.innerHTML];
-		const cho_classes = ["mid_item"];
+		//const cho_classes = ["mid_item"];
+		const cho_classes = ["exam", "is_option", "mid_item"];
 		toggle_select_option(inp_bib_ver_sel, id_support_sele, all_bibs_arr, null, null, cho_classes);
 		return;
 	});
@@ -1480,7 +1483,8 @@ function save_button_handler(){
 	} else {
 		all_disp_nams = all_sv_nams.concat([nw_nm]);
 	}
-	const cho_classes = ["big_item"];
+	//const cho_classes = ["big_item"];
+	const cho_classes = ["exam", "is_option", "big_item"];
 	toggle_select_option(dv_exam_top, id_pop_menu_sele, all_disp_nams, function(dv_hdr, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
 		if(exam_nm == nw_nm){
@@ -1504,7 +1508,8 @@ function open_button_handler(){
 	const dv_exam_top = document.getElementById("id_exam_top_content");
 
 	let all_disp_nams = get_lang_exam_names();
-	const cho_classes = ["big_item"];
+	//const cho_classes = ["big_item"];
+	const cho_classes = ["exam", "is_option", "big_item"];
 	toggle_select_option(dv_exam_top, id_pop_menu_sele, all_disp_nams, function(dv_hdr, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
 		read_exam_object(exam_nm);
@@ -1520,7 +1525,8 @@ function delete_button_handler(){
 	const where_arr = [mg_browser, mg_cloud];
 	
 	let all_disp_nams = get_lang_exam_names();
-	const cho_classes = ["big_item"];
+	//const cho_classes = ["big_item"];
+	const cho_classes = ["exam", "is_option", "big_item"];
 	toggle_select_option(dv_exam_top, id_pop_menu_sele, all_disp_nams, function(dv_hdr, dv_ops_n, exam_nm, idx_exam){
 		dv_ops_n.remove();
 		delete_exam_object(exam_nm);
@@ -3005,7 +3011,8 @@ function choose_qmodu_button_handler(id_header){
 	let dv_header = document.getElementById(id_hh);
 	if(dv_header == null){ dv_header = document.getElementById("id_exam_top_content"); }
 	
-	const cho_classes = ["big_item"];
+	//const cho_classes = ["big_item"];
+	const cho_classes = ["exam", "is_option", "big_item"];
 
 	let all_qmonams = Object.keys(gvar.conf_qmodus.all_qmodus);
 	toggle_select_option(dv_header, id_pop_menu_sele, all_qmonams, function(dv_hdr, dv_ops_n, qmonam, idx_qmonam){

@@ -40,6 +40,54 @@ const admin_ops = {
 
 const id_admin_ops = "id_admin_ops";
 
+function do_selec(val_sel_w){
+	if(val_sel_w == admin_ops.up_referrers){
+		update_ALL_referrers();
+	}
+	if(val_sel_w == admin_ops.up_mods){
+		update_ALL_module_observations();
+	}
+	if(val_sel_w == admin_ops.up_stats){
+		update_ALL_stats();
+	}
+	if(val_sel_w == admin_ops.up_qmodu_observ){
+		update_current_module_observations();
+	}
+	if(val_sel_w == admin_ops.up_qmodu_ustats){
+		update_module_stats(gvar.current_qmonam);
+	}
+	if(val_sel_w == admin_ops.download_db){
+		//test_php();
+		//sim_download('test_sim_download_jlq.txt', 'HOLA JOSE FUNCIONO!');
+		//generate_and_download();
+		download_database();
+	}
+	if(val_sel_w == admin_ops.get_verse){
+		test_get_verse();
+	}
+	if(val_sel_w == admin_ops.upload_index_W){
+		upload_index("W");
+	}
+	if(val_sel_w == admin_ops.upload_index_S){
+		upload_index("S");
+	}
+	if(val_sel_w == admin_ops.upload_index_A){
+		upload_index("A");
+	}
+	if(val_sel_w == admin_ops.prt_tots){
+		print_totals();
+	}
+	if(val_sel_w == admin_ops.prt_fl_tot){
+		print_file_totals();
+	}
+	if(val_sel_w == admin_ops.ini_atots){
+		init_ascii_totals();
+	}
+	if(val_sel_w == admin_ops.show_server_timestamp){
+		get_server_timestamp();
+	}
+}
+
 export function toggle_admin_opers(fb_usr){
 	let lbl = null;
 	let fld = null;
@@ -48,52 +96,7 @@ export function toggle_admin_opers(fb_usr){
 	const dv_upper = document.getElementById("id_admin_ops_sec");
 	const all_vals = Object.values(admin_ops);
 	toggle_select_option(dv_upper, id_pop_menu_sele, all_vals, function(dv_ret_w, dv_ops_w, val_sel_w, idx_sel_w){
-		if(val_sel_w == admin_ops.up_referrers){
-			update_ALL_referrers();
-		}
-		if(val_sel_w == admin_ops.up_mods){
-			update_ALL_module_observations();
-		}
-		if(val_sel_w == admin_ops.up_stats){
-			update_ALL_stats();
-		}
-		if(val_sel_w == admin_ops.up_qmodu_observ){
-			update_current_module_observations();
-		}
-		if(val_sel_w == admin_ops.up_qmodu_ustats){
-			update_module_stats(gvar.current_qmonam);
-		}
-		if(val_sel_w == admin_ops.download_db){
-			//test_php();
-			//sim_download('test_sim_download_jlq.txt', 'HOLA JOSE FUNCIONO!');
-			//generate_and_download();
-			download_database();
-		}
-		if(val_sel_w == admin_ops.get_verse){
-			test_get_verse();
-		}
-		if(val_sel_w == admin_ops.upload_index_W){
-			upload_index("W");
-		}
-		if(val_sel_w == admin_ops.upload_index_S){
-			upload_index("S");
-		}
-		if(val_sel_w == admin_ops.upload_index_A){
-			upload_index("A");
-		}
-		if(val_sel_w == admin_ops.prt_tots){
-			print_totals();
-		}
-		if(val_sel_w == admin_ops.prt_fl_tot){
-			print_file_totals();
-		}
-		if(val_sel_w == admin_ops.ini_atots){
-			init_ascii_totals();
-		}
-		if(val_sel_w == admin_ops.show_server_timestamp){
-			get_server_timestamp();
-		}
-		
+		do_selec(val_sel_w);
 	});
 	
 	scroll_to_top(dv_upper);
