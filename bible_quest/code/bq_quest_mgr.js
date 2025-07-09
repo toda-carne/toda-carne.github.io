@@ -1,7 +1,10 @@
 
+import { get_new_dv_under, scroll_to_top, toggle_select_option, 
+} from './bq_select_option_mgr.js';
+
 import { get_msg, make_bible_ref, make_strong_ref, bib_defaults, refs_ids, bib_obj_to_txt, get_verse_cit_txt, bib_obj_to_cit_obj, 
 	gvar, 
-	get_qid_base, get_verse_match, get_answer_key, get_new_dv_under, set_anchors_target, get_date_and_time, 
+	get_qid_base, get_verse_match, get_answer_key, set_anchors_target, get_date_and_time, 
 	is_observation, qid_to_qhref, set_bibrefs, make_bibref, bibref_to_bibcit, get_bibcit_obs_stm_id, 
 } from './bq_tools.js';
 
@@ -140,22 +143,6 @@ function is_content_horizontal() {
 	}
 	return false;
 }
-
-export function scroll_to_top(dv_elem) {
-	if(dv_elem == null){ return; }
-	const rect = dv_elem.getBoundingClientRect();
-	const dv_content = document.getElementById("id_exam_content");
-	const rect2 = dv_content.getBoundingClientRect();
-	
-	const dist = (rect.top - rect2.top);
-	//dv_content.scrollBy(0, dist);
-	dv_content.scrollBy({
-		top: dist,
-		left: 0,
-		behavior: "smooth",
-	});
-}
-
 
 // CODE_FOR QUESTION DYSPLAY AND USER OPERATION
 function has_pos_page(quest){
@@ -1379,56 +1366,6 @@ function remove_answer_cit(dv_citation){
 function set_answer_for_verse_cit(dv_citation){
 	const obj_ok = calc_verse_cit_object(dv_citation);
 	set_answer_cit(dv_citation, obj_ok);
-}
-
-// CODE_FOR SELECT FROM ARRAY OF OPTIONS (for example several verses)
-
-export function toggle_select_option(dv_return, id_selec_men, all_options_arr, on_click_fn, menu_cls_arr, item_cls_arr){
-	var dv_options = get_new_dv_under(dv_return, id_selec_men); // old id_dv_sel_option
-	if(dv_options == null){
-		return;
-	}
-	dv_options.classList.add("exam");
-	dv_options.classList.add("is_block");
-	dv_options.classList.add("grid_item_all_col");
-	if(menu_cls_arr != null){
-		dv_opt.classList.add(...menu_cls_arr);
-	}
-	
-	let consec = 0;
-	all_options_arr.forEach((value) => {
-		const opt_idx = consec;
-		consec++;
-		const dv_opt = add_option(dv_options, null, value, null, item_cls_arr);
-		dv_opt.addEventListener('click', function() {
-			if(on_click_fn != null){
-				on_click_fn(dv_return, dv_options, value, opt_idx);
-			} else {
-				dv_return.innerHTML = value;
-				dv_return.selected_id = opt_idx;
-				dv_options.remove();
-			}
-		});
-	});
-
-	scroll_to_top(dv_options);
-}
-
-function add_option(dv_parent, id_option, label, handler, item_cls_arr){
-	const dv_opt = dv_parent.appendChild(document.createElement("div"));
-	if(id_option != null){
-		dv_opt.id = id_option;
-	}
-	dv_opt.classList.add("exam");
-	dv_opt.classList.add("is_option");
-	if(item_cls_arr != null){
-		dv_opt.classList.add(...item_cls_arr);
-	}
-	dv_opt.innerHTML = label;
-	if(handler != null){
-		dv_opt.addEventListener('click', handler);
-	}
-	return dv_opt; 
 }
 
 // CODE_FOR GLOBAL BUTTONS HANDLERS

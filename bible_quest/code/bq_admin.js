@@ -1,9 +1,11 @@
 
+import { get_new_dv_under, scroll_to_top, toggle_select_option, 
+} from './bq_select_option_mgr.js';
 
-import { get_new_dv_under, gvar, get_qid_base, bib_defaults, is_observation, 
+import { gvar, get_qid_base, bib_defaults, is_observation
 } from './bq_tools.js';
 
-import { scroll_to_top, toggle_select_option, start_qmodu, 
+import { start_qmodu, 
 	fb_mod, close_pop_menu, id_pop_menu_sele, toggle_verse_ed, get_default_verse_obj, get_bibref_in, 
 } from './bq_quest_mgr.js';
 

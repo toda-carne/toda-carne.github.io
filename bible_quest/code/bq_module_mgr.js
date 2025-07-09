@@ -133,17 +133,6 @@ async function import_qmodu_files(qmonam){
 		txt_fn = "../" + txt_fnams[site_lang];
 		db_fn = "../" + gvar.conf_qmodus.all_qmodus[qmonam].quest_file;
 	}
-	/* old lang mng
-	const results = await Promise.all([
-		import_file("../quest_conf/bq_lang_" + site_lang + ".js"),
-		import_file(txt_fn),
-		import_file(db_fn),
-	]);
-	
-	md_lang = results[0];
-	md_txt = results[1];
-	md_cont_db = results[2];
-	*/
 	const results = await Promise.all([
 		import_file(txt_fn),
 		import_file(db_fn),

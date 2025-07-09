@@ -1,5 +1,5 @@
 
-import { gvar, bibobj_to_bibtxt } from './bq_tools.js';
+import { gvar, bibobj_to_bibtxt, } from './bq_tools.js';
 import * as MOD_BIB_WEB from "../bibles/WEB/index_of_WEB.js";
 import * as MOD_BIB_SBLM from "../bibles/SBLM/index_of_SBLM.js";
 import * as MOD_BIB_RVA from "../bibles/RVA/index_of_RVA.js";
@@ -58,7 +58,9 @@ export async function get_bib_verse(bib_cod, book, chapter, verse){
 	return part[book][chapter][verse];
 }
 
-export async function bib_obj_to_txt(bibobj, bcit){
+export async function bibobj_to_bibhtm(bibobj, bcit, book_nams){
+	if(gvar.glb_all_books == null){
+		gvar.glb_all_books = book_nams;
+	}
 	return bibobj_to_bibtxt(bibobj, null, bcit);
 }
-

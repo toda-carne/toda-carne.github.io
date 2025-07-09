@@ -1,8 +1,12 @@
 
-import { get_new_dv_under, gvar, 
+
+import { get_new_dv_under, scroll_to_top, toggle_select_option, 
+} from './bq_select_option_mgr.js';
+
+import { gvar, 
 } from './bq_tools.js';
 
-import { scroll_to_first_not_answered, scroll_to_top, toggle_select_option, 
+import { scroll_to_first_not_answered, 
 	fb_mod, id_pop_menu_sele, user_logout, 
 } from './bq_quest_mgr.js';
 
