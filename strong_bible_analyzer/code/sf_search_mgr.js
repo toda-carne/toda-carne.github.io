@@ -8,18 +8,9 @@ import { get_bib_verse, bibobj_to_bibhtm,
 import { get_strocode_verses, } from './sf_strong_mgr.js';
 import { init_lang, } from './sf_lang_mgr.js';
 
-
-/*
-id_search
-id_old_test
-id_new_test
-id_version
-id_select
-id_find
-*/
+const DEBUG_SELECTOR = true;
 
 export let gvar = {};
-
 
 const old_crit_txt = {
 	"1": "WM Leningrad Codex (WLC)",
@@ -37,19 +28,44 @@ const new_crit_txt = {
 
 const bib_version = {
 	"1": "Reina-Valera 1909 (RVA)",
-	"2": "King James Bible (KJB)",
+	"2": "King James Bible (KJV)",
 	"3": "Sagrada Biblia Libre Mundial (SBLM)",
 	"4": "World Estandard Bible (WEB)",
-	"5": "Critical Text (CRI)",
+	"5": "Critical text in minuscule (MIN)",
+	"6": "Critical text in mayuscule (MAY)",
+	"7": "Critical text in ASCII (ASCII)",
+	"8": "Critical text in Strong codes (SCOD)",
 };
 
 const id_crit_sele = "id_crit_sele";
+const id_expression = "id_expression";
+
+const crit_regex = /[^(]*\((\w+)\).*/;
+
+function get_crit_cod(val_sel){
+	const matches = val_sel.match(crit_regex);
+	
+	if(matches){
+		console.log(matches);
+		let cod = matches[1].trim();
+		return cod;
+	}
+	return null;
+}
+
+function set_selec(dv_ret, val_sel){
+	const cod = get_crit_cod(val_sel);
+	if(cod != null){
+		dv_ret.innerHTML = cod;
+	}
+}
 
 function init_menus(){
 	const dv_old_tes = document.getElementById("id_old_test");
 	dv_old_tes.addEventListener('click', function() {
 		const all_ops = Object.values(old_crit_txt);
 		toggle_select_option(dv_old_tes, id_crit_sele, all_ops, function(dv_ret, dv_ops, val_sel, idx_sel){
+			set_selec(dv_ret, val_sel);
 			dv_ops.remove();
 		});
 		return;
@@ -58,6 +74,7 @@ function init_menus(){
 	dv_new_tes.addEventListener('click', function() {
 		const all_ops = Object.values(new_crit_txt);
 		toggle_select_option(dv_new_tes, id_crit_sele, all_ops, function(dv_ret, dv_ops, val_sel, idx_sel){
+			set_selec(dv_ret, val_sel);
 			dv_ops.remove();
 		});
 		return;
@@ -66,34 +83,68 @@ function init_menus(){
 	dv_version.addEventListener('click', function() {
 		const all_ops = Object.values(bib_version);
 		toggle_select_option(dv_version, id_crit_sele, all_ops, function(dv_ret, dv_ops, val_sel, idx_sel){
+			set_selec(dv_ret, val_sel);
 			dv_ops.remove();
 		});
 		return;
 	});
+
+	const dv_search = document.getElementById("id_search");
+	const inp_box = document.createElement("input");
+	inp_box.id = id_expression;
+	inp_box.value = "G_66";
+	inp_box.type = "text";
+	dv_search.appendChild(inp_box);
+
+	const dv_select = document.getElementById("id_select");
+	dv_select.addEventListener('click', function() {
+		do_select();
+		return;
+	});
+
+	inp_box.addEventListener('keydown', function(ev) {
+		if(ev.key === "Enter"){
+			do_select();
+		}
+		return;
+	});
+	
 }
 
-export async function start_srch_mgr(curr_lang){
-	init_lang(curr_lang);
-	init_menus();
-
+function do_select(){
 	const dv_old_tes = document.getElementById("id_old_test");
 	const oldt = dv_old_tes.innerHTML.trim();
 	const dv_new_tes = document.getElementById("id_new_test");
 	const newt = dv_new_tes.innerHTML.trim();
 	const dv_version = document.getElementById("id_version");
 	const bib = dv_version.innerHTML.trim();
-	const dv_select = document.getElementById("id_select");
-	/*get_bib_verse("SBLM", "revelation", 21, 10).then((resp) => {
-		dv_select.innerHTML = resp;
-	});*/
-	console.log("oldt=" + oldt);
-	console.log("newt=" + newt);
-	console.log("bib=" + bib);
-	get_strocode_verses(oldt, "H_4083").then((resp) => {
+	const dv_expr = document.getElementById(id_expression);
+	const expr = dv_expr.value.trim();
+
+	let crit = oldt;
+	if(expr.startsWith("G_")){
+		crit = newt;
+	}
+
+	if(DEBUG_SELECTOR){
+		console.log("oldt=" + oldt);
+		console.log("newt=" + newt);
+		console.log("bib=" + bib);
+		console.log("expr='" + expr + "'");
+		console.log("crit=" + crit);
+	}
+	const dv_verses = document.getElementById("id_verses");
+	dv_verses.innerHTML = "";
+	
+	get_strocode_verses(crit, expr).then((resp) => {
 		const all_v = JSON.stringify(resp, null, "  ");
-		dv_select.innerHTML = all_v;
 		fill_verses(bib, resp);
 	});
+}	
+
+export async function start_srch_mgr(curr_lang){
+	init_lang(curr_lang);
+	init_menus();
 
 }
 
@@ -120,4 +171,14 @@ function fill_verses(bib_cod, all_found){
 		});
 	}
 }
+
+
+/*
+id_search
+id_old_test
+id_new_test
+id_version
+id_select
+id_find
+*/
 

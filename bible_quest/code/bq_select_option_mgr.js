@@ -72,6 +72,10 @@ export function scroll_to_top(dv_elem) {
 	if(dv_elem == null){ return; }
 	const rect = dv_elem.getBoundingClientRect();
 	const dv_content = document.getElementById("id_exam_content");
+	if(dv_content == null){
+		console.error("dv_content == null");
+		return;
+	}
 	const rect2 = dv_content.getBoundingClientRect();
 	
 	const dist = (rect.top - rect2.top);

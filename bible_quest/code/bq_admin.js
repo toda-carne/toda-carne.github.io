@@ -33,9 +33,9 @@ const admin_ops = {
 	//prt_tots:`print_totals()`,
 	//prt_fl_tot:"print_file_totals()",
 	//ini_atots:"init_ascii_totals()",
-	//get_verse:"get bible verse",
+	get_verse:"get bible verse",
 	//is_google_user:"Check if google signed-in",
-	show_server_timestamp:"Show server timestamp",
+	//show_server_timestamp:"Show server timestamp",
 };
 
 const id_admin_ops = "id_admin_ops";
@@ -596,12 +596,11 @@ function test_get_verse(){
 	toggle_verse_ed(dv_ops);
 	*/
 	
-	get_bibref_in(dv_ops);
+	//get_bibref_in(dv_ops);
 	
-	/*
 	get_bib_verse("SBLM", "revelation", 22, 20).then((resp) => {
 		dv_ops.innerHTML = resp;
-	});*/
+	});
 }
 
 async function update_ALL_referrers(){	
