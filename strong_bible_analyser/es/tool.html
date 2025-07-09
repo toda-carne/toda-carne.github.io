@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>toda-carne.github.io</title>
+<meta name="author" content="Jose Luis Quiroga">
+<link rel="stylesheet" href="../code/sf_styles.css">
+</head>
+<body>
+
+<div class="adapt_menu_bar">
+	<div id="id_top_menu" class="adapt_menu">
+		<a id="id_home" class="adapt_item" title="Home" href="tool.html"><i class="has_icons icon-bible"></i></a>
+	</div>
+	<div class="adapt_menu_pop">
+	</div>		
+</div>
+
+
+
+
+<div class="exam_content">
+
+<h1 class="big_title">Encontrador Biblico Strong</h1>
+
+<div class="grid_tool">
+	<div id="id_old_test" class="old_testam_item">
+	ANTIGUO TESTAM
+	</div>
+	<div id="id_new_test" class="new_testam_item">
+	NUEVO TESTAM
+	</div>
+	<div id="id_version" class="version_item">
+	VERSION
+	</div>
+	<div id="id_select" class="select_item">
+	</div>
+	<div id="id_search" class="search_item">
+	BUSQUE
+	</div>
+	<div id="id_find" class="search_button_item">
+	ENCUENTRA
+	</div>
+	<div id="id_verses" class="verse_list">
+	ENCONTRADOS
+	</div>
+
+</div>
+
+
+<script type="module">
+import * as srch_mgr from '../code/sf_search_mgr.js';
+window.onload = function() {
+	srch_mgr.start_srch_mgr("es");
+}
+</script>
+
+
+</body>
+</html>
+
+

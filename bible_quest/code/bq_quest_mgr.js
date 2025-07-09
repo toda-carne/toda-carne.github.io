@@ -30,6 +30,7 @@ const DEBUG_POP_MENU = true;
 const DEBUG_FB_WRITE = false;
 const DEBUG_STO_RW = false;
 const DEBUG_INIT_ANSW = false;
+const DEBUG_SHOW_OBSERV = false;
 const DEBUG_UPDATE_OBSERV = false;
 const DEBUG_FB_WRITE_RESULTS = true;
 const DEBUG_SHOW_RESULTS = true;
@@ -2810,21 +2811,22 @@ function show_observation(qid, all_to_act, qid_cllr){
 	dv_qstm.id = qid + SUF_ID_QSTM;
 	dv_qstm.classList.add("exam");
 	//dv_qstm.classList.add("observ_msg");
-	dv_qstm.classList.add("observ_color");
+	dv_qstm.classList.add("observ_color", "border_red");
 	dv_obs_data.appendChild(dv_qstm);
 
-	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[stm_id]){ 
-		dv_qstm.stm_id = stm_id;
-		dv_qstm.cho_bref = cho_bref;
-		set_bibrefs(dv_qstm);
-	}
-	
 	if(DEBUG_QNUMS){
 		dv_qstm.title = qid;
 	}	
 	
 	if(! quest.calls_write_results){	
 		dv_qstm.innerHTML = "" + the_stm;
+		if(DEBUG_SHOW_OBSERV){ console.log("show_observation. setting dv_qstm.innerHTML=" + dv_qstm.innerHTML); }
+	}
+	
+	if((gvar.has_bibrefs != null) && gvar.has_bibrefs[stm_id]){ 
+		dv_qstm.stm_id = stm_id;
+		dv_qstm.cho_bref = cho_bref;
+		set_bibrefs(dv_qstm); // CALL AFTER SETTING dv_qstm.innerHTML !!!
 	}
 	
 	const dv_results_observ = document.createElement("div");
@@ -2989,7 +2991,7 @@ function update_observation(qid, all_to_act){
 	
 	const dv_qrefs_observ = document.getElementById(qid + SUF_ID_QREFS_OBSERVATION);
 	if(dv_qrefs_observ == null){ 
-		if(DEBUG_UPDATE_OBSERV){ console.log("Internal error. Trying to update observation qid=" + qid + " without qrefs span"); }
+		if(DEBUG_UPDATE_OBSERV){ console.error("Internal error. Trying to update observation qid=" + qid + " without qrefs span"); }
 		//console.log("Already removed qid=" + qid);
 		return null;
 	}

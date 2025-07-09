@@ -642,6 +642,9 @@ a.exam_ref:hover {
 	background-color: #00ff00;
 }
 
+.border_red {
+	border: 0.3em solid #ff0000;
+}
 
 /*
 	align-content: center center;
