@@ -1,0 +1,68 @@
+
+HEBREW
+
+ALEF    -> e
+BET     -> b
+GIMEL   -> g
+DALET   -> d
+HE      -> h
+VAV     -> v
+ZAYIN   -> x
+HET     -> k
+TET     -> p
+YOD     -> i
+F_KAF   -> c
+KAF     -> c
+LAMED   -> l
+F_MEM   -> m
+MEM     -> m
+F_NUN   -> n
+NUN     -> n
+SAMEKH  -> s
+AYIN    -> a
+F_PE    -> f
+PE      -> f
+F_TSADI -> z
+TSADI   -> z
+KUF     -> q
+RESH    -> r
+SHIN    -> w
+TAV     -> t
+
+
+GREEK
+α -> a
+β -> b
+γ -> g
+δ -> d
+ε -> e
+ϝ -> F
+ͷ -> N
+ϛ -> S
+ζ -> z
+ͱ -> H
+η -> h
+θ -> q
+ι -> i
+ϳ -> j
+κ -> k
+λ -> l
+μ -> m
+ν -> n
+ξ -> x
+ο -> o
+π -> p
+ϻ -> M
+ϟ -> K
+ϙ -> Q
+ρ -> r
+ς -> s
+σ -> s
+ͼ -> Z
+τ -> t
+υ -> u
+φ -> f
+χ -> c
+ψ -> y
+ω -> w
+

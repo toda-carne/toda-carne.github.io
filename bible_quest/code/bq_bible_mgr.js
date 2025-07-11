@@ -22,12 +22,18 @@ function ck_bib_cod(bib_cod){
 	}
 }
 
-export function add_bible(bib_cod, bib_index){
+const bibles_dir = "../bibles/";
+
+export function add_bible(bib_cod, bib_index, url_base){
 	if(gvar.all_bibles == null){
 		gvar.all_bibles = {}; 
 	}
 	gvar.all_bibles[bib_cod] = {};
 	const bib_dat = gvar.all_bibles[bib_cod];
+	bib_dat.url_base = bibles_dir;
+	if(url_base != null){
+		bib_dat.url_base = url_base;
+	}
 	bib_dat.bib_index = bib_index;
 	bib_dat.bib_parts = {};
 }
@@ -39,10 +45,8 @@ function init_all_bibles(){
 	add_bible("KJV", MOD_BIB_KJV.bib_index);
 }
 
-const bibles_dir = "../bibles/";
-
-async function import_bible_part(bib_cod, fl_part){
-	const part_fn = bibles_dir + bib_cod + "/" + fl_part;
+async function import_bible_part(url_base, bib_cod, fl_part){
+	const part_fn = url_base + bib_cod + "/" + fl_part;
 	const resp = import(part_fn);
 	return resp;
 }
@@ -55,12 +59,12 @@ export async function get_bib_verse(bib_cod, book, chapter, verse){
 	
 	const bib_dat = all_bib[bib_cod];
 	if(bib_dat.bib_index[book] == null){ return null; }
-	
+
 	const fl_part = bib_dat.bib_index[book][chapter];
 	if(fl_part == null){ return null; }
 	
 	if(bib_dat.bib_parts[fl_part] == null){
-		const md_part = await import_bible_part(bib_cod, fl_part);
+		const md_part = await import_bible_part(bib_dat.url_base, bib_cod, fl_part);
 		bib_dat.bib_parts[fl_part] = md_part.bib_verses;
 	}
 	const part = bib_dat.bib_parts[fl_part];
@@ -68,9 +72,9 @@ export async function get_bib_verse(bib_cod, book, chapter, verse){
 	return part[book][chapter][verse];
 }
 
-export async function bibobj_to_bibhtm(bibobj, bcit, book_nams){
+export async function bibobj_to_bibhtm(bibobj, bcit, book_nams, conv_fn){
 	if(gvar.glb_all_books == null){
 		gvar.glb_all_books = book_nams;
 	}
-	return bibobj_to_bibtxt(bibobj, null, bcit);
+	return bibobj_to_bibtxt(bibobj, conv_fn);
 }
