@@ -1,12 +1,35 @@
 
+import * as MOD_BIB_WLC from "../data/js_bib/WLC_BIB/index_of_WLC_BIB.js";
+import * as MOD_BIB_ALE from "../data/js_bib/ALE_BIB/index_of_ALE_BIB.js";
+import * as MOD_BIB_TKH from "../data/js_bib/TKH_BIB/index_of_TKH_BIB.js";
+import * as MOD_BIB_LXX from "../data/js_bib/LXX_BIB/index_of_LXX_BIB.js";
+
+import * as MOD_BIB_NES from "../data/js_bib/NES_BIB/index_of_NES_BIB.js";
+import * as MOD_BIB_BYZ from "../data/js_bib/BYZ_BIB/index_of_BYZ_BIB.js";
+import * as MOD_BIB_TR from "../data/js_bib/TR_BIB/index_of_TR_BIB.js";
+import * as MOD_BIB_WH from "../data/js_bib/WH_BIB/index_of_WH_BIB.js";
+
 import { get_new_dv_under, scroll_to_top, toggle_select_option, 
 } from '../../bible_quest/code/bq_select_option_mgr.js';
 
-import { get_bib_verse, bibobj_to_bibhtm,  	
+import { get_bib_verse, bibobj_to_bibhtm, add_bible, 
 } from '../../bible_quest/code/bq_bible_mgr.js';
 
 import { get_strocode_verses, } from './sf_strong_mgr.js';
 import { init_lang, } from './sf_lang_mgr.js';
+
+const local_bibles = {
+	WLC : MOD_BIB_WLC.bib_index,
+	ALE : MOD_BIB_ALE.bib_index,
+	TKH : MOD_BIB_TKH.bib_index,
+	LXX : MOD_BIB_LXX.bib_index,
+	
+	NES : MOD_BIB_NES.bib_index,
+	BYZ : MOD_BIB_BYZ.bib_index,
+	TR : MOD_BIB_TR.bib_index,
+	WH : MOD_BIB_WH.bib_index,
+};
+
 
 const DEBUG_SELECTOR = true;
 
@@ -42,6 +65,15 @@ const id_expression = "id_expression";
 
 const crit_regex = /[^(]*\((\w+)\).*/;
 
+function add_bibles(){
+	const all_cod = Object.keys(local_bibles);
+	let ii = 0;
+	for(ii = 0; ii < all_cod.length; ii++){
+		const cod = all_cod[ii];
+		add_bible(cod, local_bibles[cod]);
+	}
+}
+
 function get_crit_cod(val_sel){
 	const matches = val_sel.match(crit_regex);
 	
@@ -61,6 +93,7 @@ function set_selec(dv_ret, val_sel){
 }
 
 function init_menus(){
+	
 	const dv_old_tes = document.getElementById("id_old_test");
 	dv_old_tes.addEventListener('click', function() {
 		const all_ops = Object.values(old_crit_txt);
@@ -117,7 +150,7 @@ function do_select(){
 	const dv_new_tes = document.getElementById("id_new_test");
 	const newt = dv_new_tes.innerHTML.trim();
 	const dv_version = document.getElementById("id_version");
-	const bib = dv_version.innerHTML.trim();
+	let bib = dv_version.innerHTML.trim();
 	const dv_expr = document.getElementById(id_expression);
 	const expr = dv_expr.value.trim();
 
@@ -125,7 +158,10 @@ function do_select(){
 	if(expr.startsWith("G_")){
 		crit = newt;
 	}
-
+	if((bib == "MIN") || (bib == "MAY") || (bib == "ASCII")){
+		bib = crit;
+	}
+	
 	if(DEBUG_SELECTOR){
 		console.log("oldt=" + oldt);
 		console.log("newt=" + newt);
@@ -143,9 +179,9 @@ function do_select(){
 }	
 
 export async function start_srch_mgr(curr_lang){
+	add_bibles();
 	init_lang(curr_lang);
 	init_menus();
-
 }
 
 function fill_verses(bib_cod, all_found){

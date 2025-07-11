@@ -1,0 +1,323 @@
+
+	
+export const bib_version = "WH_BIB";
+export const bib_index = {
+  "genesis": {
+    "1": "bib_part_0.js"
+  },
+  "matthew": {
+    "1": "bib_part_0.js",
+    "2": "bib_part_0.js",
+    "3": "bib_part_0.js",
+    "4": "bib_part_0.js",
+    "5": "bib_part_0.js",
+    "6": "bib_part_0.js",
+    "7": "bib_part_0.js",
+    "8": "bib_part_0.js",
+    "9": "bib_part_0.js",
+    "10": "bib_part_0.js",
+    "11": "bib_part_0.js",
+    "12": "bib_part_0.js",
+    "13": "bib_part_0.js",
+    "14": "bib_part_0.js",
+    "15": "bib_part_1.js",
+    "16": "bib_part_1.js",
+    "17": "bib_part_1.js",
+    "18": "bib_part_1.js",
+    "19": "bib_part_1.js",
+    "20": "bib_part_1.js",
+    "21": "bib_part_1.js",
+    "22": "bib_part_1.js",
+    "23": "bib_part_1.js",
+    "24": "bib_part_1.js",
+    "25": "bib_part_1.js",
+    "26": "bib_part_1.js",
+    "27": "bib_part_2.js",
+    "28": "bib_part_2.js"
+  },
+  "mark": {
+    "1": "bib_part_2.js",
+    "2": "bib_part_2.js",
+    "3": "bib_part_2.js",
+    "4": "bib_part_2.js",
+    "5": "bib_part_2.js",
+    "6": "bib_part_2.js",
+    "7": "bib_part_2.js",
+    "8": "bib_part_2.js",
+    "9": "bib_part_2.js",
+    "10": "bib_part_2.js",
+    "11": "bib_part_3.js",
+    "12": "bib_part_3.js",
+    "13": "bib_part_3.js",
+    "14": "bib_part_3.js",
+    "15": "bib_part_3.js",
+    "16": "bib_part_3.js"
+  },
+  "luke": {
+    "1": "bib_part_3.js",
+    "2": "bib_part_3.js",
+    "3": "bib_part_3.js",
+    "4": "bib_part_3.js",
+    "5": "bib_part_3.js",
+    "6": "bib_part_4.js",
+    "7": "bib_part_4.js",
+    "8": "bib_part_4.js",
+    "9": "bib_part_4.js",
+    "10": "bib_part_4.js",
+    "11": "bib_part_4.js",
+    "12": "bib_part_4.js",
+    "13": "bib_part_4.js",
+    "14": "bib_part_4.js",
+    "15": "bib_part_4.js",
+    "16": "bib_part_4.js",
+    "17": "bib_part_5.js",
+    "18": "bib_part_5.js",
+    "19": "bib_part_5.js",
+    "20": "bib_part_5.js",
+    "21": "bib_part_5.js",
+    "22": "bib_part_5.js",
+    "23": "bib_part_5.js",
+    "24": "bib_part_5.js"
+  },
+  "john": {
+    "1": "bib_part_5.js",
+    "2": "bib_part_5.js",
+    "3": "bib_part_5.js",
+    "4": "bib_part_6.js",
+    "5": "bib_part_6.js",
+    "6": "bib_part_6.js",
+    "7": "bib_part_6.js",
+    "8": "bib_part_6.js",
+    "9": "bib_part_6.js",
+    "10": "bib_part_6.js",
+    "11": "bib_part_6.js",
+    "12": "bib_part_6.js",
+    "13": "bib_part_6.js",
+    "14": "bib_part_7.js",
+    "15": "bib_part_7.js",
+    "16": "bib_part_7.js",
+    "17": "bib_part_7.js",
+    "18": "bib_part_7.js",
+    "19": "bib_part_7.js",
+    "20": "bib_part_7.js",
+    "21": "bib_part_7.js"
+  },
+  "acts": {
+    "1": "bib_part_7.js",
+    "2": "bib_part_7.js",
+    "3": "bib_part_7.js",
+    "4": "bib_part_7.js",
+    "5": "bib_part_7.js",
+    "6": "bib_part_7.js",
+    "7": "bib_part_7.js",
+    "8": "bib_part_8.js",
+    "9": "bib_part_8.js",
+    "10": "bib_part_8.js",
+    "11": "bib_part_8.js",
+    "12": "bib_part_8.js",
+    "13": "bib_part_8.js",
+    "14": "bib_part_8.js",
+    "15": "bib_part_8.js",
+    "16": "bib_part_8.js",
+    "17": "bib_part_8.js",
+    "18": "bib_part_8.js",
+    "19": "bib_part_8.js",
+    "20": "bib_part_8.js",
+    "21": "bib_part_9.js",
+    "22": "bib_part_9.js",
+    "23": "bib_part_9.js",
+    "24": "bib_part_9.js",
+    "25": "bib_part_9.js",
+    "26": "bib_part_9.js",
+    "27": "bib_part_9.js",
+    "28": "bib_part_9.js"
+  },
+  "romans": {
+    "1": "bib_part_9.js",
+    "2": "bib_part_9.js",
+    "3": "bib_part_9.js",
+    "4": "bib_part_9.js",
+    "5": "bib_part_9.js",
+    "6": "bib_part_9.js",
+    "7": "bib_part_9.js",
+    "8": "bib_part_9.js",
+    "9": "bib_part_10.js",
+    "10": "bib_part_10.js",
+    "11": "bib_part_10.js",
+    "12": "bib_part_10.js",
+    "13": "bib_part_10.js",
+    "14": "bib_part_10.js",
+    "15": "bib_part_10.js",
+    "16": "bib_part_10.js"
+  },
+  "1_corinthians": {
+    "1": "bib_part_10.js",
+    "2": "bib_part_10.js",
+    "3": "bib_part_10.js",
+    "4": "bib_part_10.js",
+    "5": "bib_part_10.js",
+    "6": "bib_part_10.js",
+    "7": "bib_part_10.js",
+    "8": "bib_part_10.js",
+    "9": "bib_part_10.js",
+    "10": "bib_part_10.js",
+    "11": "bib_part_10.js",
+    "12": "bib_part_10.js",
+    "13": "bib_part_11.js",
+    "14": "bib_part_11.js",
+    "15": "bib_part_11.js",
+    "16": "bib_part_11.js"
+  },
+  "2_corinthians": {
+    "1": "bib_part_11.js",
+    "2": "bib_part_11.js",
+    "3": "bib_part_11.js",
+    "4": "bib_part_11.js",
+    "5": "bib_part_11.js",
+    "6": "bib_part_11.js",
+    "7": "bib_part_11.js",
+    "8": "bib_part_11.js",
+    "9": "bib_part_11.js",
+    "10": "bib_part_11.js",
+    "11": "bib_part_11.js",
+    "12": "bib_part_11.js",
+    "13": "bib_part_11.js"
+  },
+  "galatians": {
+    "1": "bib_part_11.js",
+    "2": "bib_part_11.js",
+    "3": "bib_part_11.js",
+    "4": "bib_part_11.js",
+    "5": "bib_part_12.js",
+    "6": "bib_part_12.js"
+  },
+  "ephesians": {
+    "1": "bib_part_12.js",
+    "2": "bib_part_12.js",
+    "3": "bib_part_12.js",
+    "4": "bib_part_12.js",
+    "5": "bib_part_12.js",
+    "6": "bib_part_12.js"
+  },
+  "philippians": {
+    "1": "bib_part_12.js",
+    "2": "bib_part_12.js",
+    "3": "bib_part_12.js",
+    "4": "bib_part_12.js"
+  },
+  "colossians": {
+    "1": "bib_part_12.js",
+    "2": "bib_part_12.js",
+    "3": "bib_part_12.js",
+    "4": "bib_part_12.js"
+  },
+  "1_thessalonians": {
+    "1": "bib_part_12.js",
+    "2": "bib_part_12.js",
+    "3": "bib_part_12.js",
+    "4": "bib_part_12.js",
+    "5": "bib_part_12.js"
+  },
+  "2_thessalonians": {
+    "1": "bib_part_12.js",
+    "2": "bib_part_13.js",
+    "3": "bib_part_13.js"
+  },
+  "1_timothy": {
+    "1": "bib_part_13.js",
+    "2": "bib_part_13.js",
+    "3": "bib_part_13.js",
+    "4": "bib_part_13.js",
+    "5": "bib_part_13.js",
+    "6": "bib_part_13.js"
+  },
+  "2_timothy": {
+    "1": "bib_part_13.js",
+    "2": "bib_part_13.js",
+    "3": "bib_part_13.js",
+    "4": "bib_part_13.js"
+  },
+  "titus": {
+    "1": "bib_part_13.js",
+    "2": "bib_part_13.js",
+    "3": "bib_part_13.js"
+  },
+  "philemon": {
+    "1": "bib_part_13.js"
+  },
+  "hebrews": {
+    "1": "bib_part_13.js",
+    "2": "bib_part_13.js",
+    "3": "bib_part_13.js",
+    "4": "bib_part_13.js",
+    "5": "bib_part_13.js",
+    "6": "bib_part_13.js",
+    "7": "bib_part_13.js",
+    "8": "bib_part_13.js",
+    "9": "bib_part_13.js",
+    "10": "bib_part_13.js",
+    "11": "bib_part_14.js",
+    "12": "bib_part_14.js",
+    "13": "bib_part_14.js"
+  },
+  "james": {
+    "1": "bib_part_14.js",
+    "2": "bib_part_14.js",
+    "3": "bib_part_14.js",
+    "4": "bib_part_14.js",
+    "5": "bib_part_14.js"
+  },
+  "1_peter": {
+    "1": "bib_part_14.js",
+    "2": "bib_part_14.js",
+    "3": "bib_part_14.js",
+    "4": "bib_part_14.js",
+    "5": "bib_part_14.js"
+  },
+  "2_peter": {
+    "1": "bib_part_14.js",
+    "2": "bib_part_14.js",
+    "3": "bib_part_14.js"
+  },
+  "1_john": {
+    "1": "bib_part_14.js",
+    "2": "bib_part_14.js",
+    "3": "bib_part_14.js",
+    "4": "bib_part_14.js",
+    "5": "bib_part_14.js"
+  },
+  "2_john": {
+    "1": "bib_part_14.js"
+  },
+  "3_john": {
+    "1": "bib_part_14.js"
+  },
+  "jude": {
+    "1": "bib_part_15.js"
+  },
+  "revelation": {
+    "1": "bib_part_15.js",
+    "2": "bib_part_15.js",
+    "3": "bib_part_15.js",
+    "4": "bib_part_15.js",
+    "5": "bib_part_15.js",
+    "6": "bib_part_15.js",
+    "7": "bib_part_15.js",
+    "8": "bib_part_15.js",
+    "9": "bib_part_15.js",
+    "10": "bib_part_15.js",
+    "11": "bib_part_15.js",
+    "12": "bib_part_15.js",
+    "13": "bib_part_15.js",
+    "14": "bib_part_15.js",
+    "15": "bib_part_15.js",
+    "16": "bib_part_15.js",
+    "17": "bib_part_15.js",
+    "18": "bib_part_15.js",
+    "19": "bib_part_15.js",
+    "20": "bib_part_15.js",
+    "21": "bib_part_15.js",
+    "22": "bib_part_15.js"
+  }
+};
+

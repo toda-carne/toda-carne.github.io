@@ -5,26 +5,38 @@ import * as MOD_BIB_SBLM from "../bibles/SBLM/index_of_SBLM.js";
 import * as MOD_BIB_RVA from "../bibles/RVA/index_of_RVA.js";
 import * as MOD_BIB_KJV from "../bibles/KJV/index_of_KJV.js";
 
+const local_bibles = {
+	WEB : MOD_BIB_WEB.bib_index,
+	SBLM : MOD_BIB_SBLM.bib_index,
+	RVA : MOD_BIB_RVA.bib_index,
+	KJV : MOD_BIB_KJV.bib_index,
+};
+
+function ck_bib_cod(bib_cod){
+	if(local_bibles[bib_cod] != null){
+		if(gvar.all_bibles == null){
+			init_all_bibles();
+		} else if (gvar.all_bibles[bib_cod] == null){
+			add_bible(bib_cod, local_bibles[bib_cod]);
+		}
+	}
+}
+
+export function add_bible(bib_cod, bib_index){
+	if(gvar.all_bibles == null){
+		gvar.all_bibles = {}; 
+	}
+	gvar.all_bibles[bib_cod] = {};
+	const bib_dat = gvar.all_bibles[bib_cod];
+	bib_dat.bib_index = bib_index;
+	bib_dat.bib_parts = {};
+}
+
 function init_all_bibles(){
-	gvar.all_bibles = {}; 
-	const all_bib = gvar.all_bibles;
-	
-	all_bib.WEB = {};
-	all_bib.WEB.bib_index = MOD_BIB_WEB.bib_index;
-	all_bib.WEB.bib_parts = {};
-
-	all_bib.SBLM = {};
-	all_bib.SBLM.bib_index = MOD_BIB_SBLM.bib_index;
-	all_bib.SBLM.bib_parts = {};
-
-	all_bib.RVA = {};
-	all_bib.RVA.bib_index = MOD_BIB_RVA.bib_index;
-	all_bib.RVA.bib_parts = {};
-	
-	all_bib.KJV = {};
-	all_bib.KJV.bib_index = MOD_BIB_KJV.bib_index;
-	all_bib.KJV.bib_parts = {};
-	
+	add_bible("WEB", MOD_BIB_WEB.bib_index);
+	add_bible("SBLM", MOD_BIB_SBLM.bib_index);
+	add_bible("RVA", MOD_BIB_RVA.bib_index);
+	add_bible("KJV", MOD_BIB_KJV.bib_index);
 }
 
 const bibles_dir = "../bibles/";
@@ -36,9 +48,7 @@ async function import_bible_part(bib_cod, fl_part){
 }
 
 export async function get_bib_verse(bib_cod, book, chapter, verse){
-	if(gvar.all_bibles == null){
-		init_all_bibles();
-	}
+	ck_bib_cod(bib_cod);
 	
 	const all_bib = gvar.all_bibles;
 	if(all_bib[bib_cod] == null){ return null; }

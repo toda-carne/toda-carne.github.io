@@ -272,28 +272,6 @@ async function bibcit_to_bibtxt(bcit, stm_id, cho_bref){
 	}
 	const bibobj = bibcit_to_bibobj(bcit);
 	return bibobj_to_bibtxt(bibobj, stm_id, bcit);
-	/*
-	const cit_obj = JSON.parse(JSON.stringify(bibobj));
-	cit_obj.bib_ver = "text";
-	cit_obj.site = "biblehub";
-	const vhref = make_bible_ref(cit_obj);
-	
-	let vcit = bcit;
-	let vtxt = "INVALID_BIBLE_TEXT";
-	if((bibobj.book != null) && (bibobj.chapter != null) && (bibobj.verse != null)){ 
-		vcit = get_loc_book_nam(bibobj.book) + " " + bibobj.chapter + ":" + bibobj.verse;
-		vtxt = await get_bib_verse(bibobj.bible, num2book_en[bibobj.book], bibobj.chapter, bibobj.verse);
-
-		if((stm_id != null) && (gvar.bibrefs_upper != null) && (gvar.bibrefs_upper[stm_id] != null)){ 
-			const wds = gvar.bibrefs_upper[stm_id][bcit];
-			if(wds != null){ vtxt = uppercase_words_in_string(vtxt, wds); }
-		} 
-	}
-	if((bibobj.last_verse != null) && (bibobj.last_verse != "")){ vcit = vcit + "-" + bibobj.last_verse; }
-	const btxt = `<a class='exam_ref' href="${vhref}"> ${vcit} </a><br><b> ${vtxt} </b>`;
-	return btxt;
-	*/
-	
 }
 
 async function replace_all_bibrefs(str, stm_id, cho_bref){
