@@ -52,6 +52,7 @@ export function init_exam_database(){
 	db.o_jesus_died_comm__ = { 
 		context: ["ctx_people", "ctx_sleep", "ctx_died", ],
 		htm_stm: "o_jesus_died_comm",
+		htm_nam: "o_jesus_died_nm",
 		activated_if: {
 			c1: { q_jesus_died__: { a_simple_NO: "on", }, },
 		},
@@ -74,6 +75,7 @@ export function init_exam_database(){
 	db.o_jesus_eternal_comm__ = { 
 		context: ["ctx_people", "ctx_sleep", "ctx_three_days", ],
 		htm_stm: "o_jesus_eternal_comm",
+		htm_nam: "o_jesus_eternal_nm",
 		activated_if: {
 			c1: { q_jesus_eternal__: { a_simple_NO: "on", }, },
 		},
@@ -96,6 +98,7 @@ export function init_exam_database(){
 	db.o_eternal_life_comm__ = { 
 		context: ["ctx_people", "ctx_sleep", "ctx_eternal", ],
 		htm_stm: "o_eternal_life_comm",
+		htm_nam: "o_eternal_life_nm",
 		activated_if: {
 			c1: { q_eternal_life__: { a_simple_NO: "on", }, },
 		},
@@ -118,6 +121,7 @@ export function init_exam_database(){
 	db.o_no_knowledge_comm__ = { 
 		context: ["ctx_people", "ctx_sleep", "ctx_no_knowledge", ],
 		htm_stm: "o_no_knowledge_comm",
+		htm_nam: "o_no_knowledge_nm",
 		activated_if: {
 			c1: { q_no_knowledge_in_death__: { a_simple_NO: "on", }, },
 		},
@@ -132,7 +136,8 @@ export function init_exam_database(){
 		},
 	};
 	
-	db.o_verse_for_knowledge_in_death__ = get_bibcit_obs("q_verse_for_knowledge_in_death__");
+	const ctx_obs = ["ctx_people", "ctx_sleep", "ctx_verse_knowledge", ];
+	db.o_verse_for_knowledge_in_death__ = get_bibcit_obs("q_verse_for_knowledge_in_death__", ctx_obs);
 	
 	db.q13_1__ = { 
 		htm_stm: "q13_1__sleep",
@@ -148,21 +153,7 @@ export function init_exam_database(){
 			q13_1__verse7_str: { rclk_href: "q13_1__verse7_href", should_on: "q13_1__verse7_should", },
 			q13_1__verse8_str: { rclk_href: "q13_1__verse8_href", should_on: "q13_1__verse8_should", },
 		},
-	};
-	
-	/*
-	db.o_finished_sleep_qmodu__ = { 
-		// skip_in_results: true,
-		calls_write_results: true,
-		is_positive: true,
-		context: ["ctx_ending"],
-		htm_stm: "o_finished_resu_qmodu",
-		activated_if: {
-			c1: { q13_1__: { shown: "on", }, },
-		},
-	};
-	*/
-
+	};	
 }
 
 // 	c1: { q1_7__: { shown: "on", }, q1_91__: { shown: "on", }, q1_70__: { shown: "off", }, q1_91_0__: { shown: "off", }, },

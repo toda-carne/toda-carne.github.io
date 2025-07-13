@@ -56,15 +56,23 @@ export function init_es_poll_txt(){
 	lg.q_new_earth = `${cl_ours}${bf}en una tierra NUEVA con unos cielos nuevos.${ef}`;
 
 	lg.o_is_about_bible = `Tenga en cuenta que estas preguntas se refieren a lo que afirma la biblia, NO a lo que usted cree.`;
+	lg.o_is_about_bible_nm = `Sobre La Biblia`;
 	
 	const cl_denial_bib_claim = `Usted parece estar en negación de lo que afirma la biblia respecto a `;
 	lg.o_denial_physical_resu = `${cl_denial_bib_claim} que Jesucristo resucitó en un cuerpo físico.`;
+	lg.o_denial_physical_resu_nm = `No cuerpo físico`;
 	lg.o_denial_die_again = `${cl_denial_bib_claim} que Jesucristo resucitó para NO volver a morir.`;
+	lg.o_denial_die_again_nm = `Morir de nuevo`;
 	lg.o_denial_alive_in_body_and_spirit = `${cl_denial_bib_claim} que Jesucristo está vivo en su cuerpo resucitado en una ciudad celestial.`;
+	lg.o_denial_alive_in_body_and_spirit_nm = `Vivo en cuerpo y espíritu`;
 	lg.o_denial_like_jesus_body = `${cl_denial_bib_claim} que nuestra futura resurrección es en un cuerpo físico y en espíritu, tal cual como Jesucristo.`;
+	lg.o_denial_like_jesus_body = `No como cuerpo Jesus`;
 	lg.o_denial_for_all = `${cl_denial_bib_claim} que nuestra futura resurrección es para TODOS, los buenos y los malos.`;
+	lg.o_denial_for_all_nm = `No para todos`;
 	lg.o_denial_not_yet = `${cl_denial_bib_claim} que nuestra futura resurrección es en el dia FINAL. No todavía.`;
+	lg.o_denial_not_yet_nm = `No todavía`;
 	lg.o_denial_new_earth = `${cl_denial_bib_claim} que nuestra futura resurrección es en una tierra NUEVA con unos cielos nuevos..`;
+	lg.o_denial_new_earth_nm = `Tierra nueva`;
 
 	let bcit = null;
 	let numv = null;

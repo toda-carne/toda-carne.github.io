@@ -63,6 +63,7 @@ export function init_es_poll_txt(){
 	<br>	
 	${the_gospel}
 	`;
+	lg.o_jesus_died_nm = `Jesus Murió`;
 
 	lg.q_jesus_eternal = `${cl_bible}${bf}Su VIDA ETERNA fue interrumpida por tres noches y tres dias.${ef}`;
 
@@ -75,6 +76,7 @@ export function init_es_poll_txt(){
 	<br>
 	${the_gospel}
 	`;
+	lg.o_jesus_eternal_nm = `Vida de Jesus interrumpida`;
 	
 	lg.q_eternal_life = `${cl_jesus}${bf}La VIDA ETERNA es conocer al Dios Verdadero y su Hijo Jesucristo.${ef}`;
 
@@ -82,6 +84,7 @@ export function init_es_poll_txt(){
 	lg.o_eternal_life_comm = `El siguiente versiculo enseña PRECISAMENTE eso <br> 
 	${bf} BIBREF_Jhn_17_3 ${ef}
 	`;
+	lg.o_eternal_life_nm = `Definición de Vida Eterna`;
 
 	lg.q_no_knowledge_in_death = `Podemos concluir que de acuerdo a la biblia <br> 
 	${bf}El CONOCIMIENTO de Jesucristo de Dios y de si mismo${ef} <br> 
@@ -96,6 +99,7 @@ export function init_es_poll_txt(){
 	${lg.q_no_knowledge_in_death} <br> 
 	${the_gospel}
 	`;
+	lg.o_no_knowledge_nm = `No hay conocimiento`;
 
 	lg.q_verse_for_knowledge_in_death = `Seleccione UN versiculo que apoye la afirmación de que: según la biblia <br>
 	${bf} los muertos físicos que NO han resucitado TIENEN CONOCIMIENTO.${ef}

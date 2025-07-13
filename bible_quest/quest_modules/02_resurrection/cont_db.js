@@ -104,6 +104,7 @@ export function init_exam_database(){
 
 	db.o_is_about_bible__ = { 
 		htm_stm: "o_is_about_bible",
+		htm_nam: "o_is_about_bible_nm",
 		context: ["ctx_points_resurr", ],
 		activated_if: {
 			c1: { q_physical_resu__: { a_simple_NO: "on", }, },
@@ -137,6 +138,7 @@ export function init_exam_database(){
 	
 	db.o_denial_physical_resu__ = { 
 		htm_stm: "o_denial_physical_resu",
+		htm_nam: "o_denial_physical_resu_nm",
 		context: ["ctx_jesus_physical", ],
 		activated_if: {
 			c1: { q_jesus_physical__: { q4_1__verse1_str: "off", }, },
@@ -167,6 +169,7 @@ export function init_exam_database(){
 	
 	db.o_denial_die_again__ = { 
 		htm_stm: "o_denial_die_again",
+		htm_nam: "o_denial_die_again_nm",
 		context: ["ctx_jesus_not_die", ],
 		activated_if: {
 			c1: { q_jesus_not_die__: { q5_1__verse1_str: "off", }, },
@@ -197,6 +200,7 @@ export function init_exam_database(){
 	
 	db.o_denial_alive_in_body_and_spirit__ = { 
 		htm_stm: "o_denial_alive_in_body_and_spirit",
+		htm_nam: "o_denial_alive_in_body_and_spirit_nm",
 		context: ["ctx_jesus_body_and_spirit", ],
 		activated_if: {
 			c1: { jesus_in_heaven__: { q6_1__verse1_str: "off", }, },
@@ -229,6 +233,7 @@ export function init_exam_database(){
 	
 	db.o_denial_like_jesus_body__ = { 
 		htm_stm: "o_denial_like_jesus_body",
+		htm_nam: "o_denial_like_jesus_body_nm",
 		context: ["ctx_people_like_jesus", ],
 		activated_if: {
 			c1: { ours_like_jesus__: { q7_1__verse1_str: "off", }, },
@@ -260,6 +265,7 @@ export function init_exam_database(){
 	
 	db.o_denial_for_all__ = { 
 		htm_stm: "o_denial_for_all",
+		htm_nam: "o_denial_for_all_nm",
 		context: ["ctx_people_for_all", ],
 		activated_if: {
 			c1: { ours_for_all__: { q8_1__verse1_str: "off", }, },
@@ -292,6 +298,7 @@ export function init_exam_database(){
 	
 	db.o_denial_not_yet__ = { 
 		htm_stm: "o_denial_not_yet",
+		htm_nam: "o_denial_not_yet_nm",
 		context: ["ctx_people_not_yet", ],
 		activated_if: {
 			c1: { ours_not_yet__: { q9_1__verse1_str: "off", }, },
@@ -322,6 +329,7 @@ export function init_exam_database(){
 
 	db.o_denial_new_earth__ = { 
 		htm_stm: "o_denial_new_earth",
+		htm_nam: "o_denial_new_earth_nm",
 		context: ["ctx_people_new_earth", ],
 		activated_if: {
 			c1: { ours_in_new_earth__: { q11_1__verse1_str: "off", }, },
@@ -331,17 +339,6 @@ export function init_exam_database(){
 		}
 	};	
 
-	/*
-	db.o_finished_resu_qmodu__ = { 
-		calls_write_results: true,
-		is_positive: true,
-		context: ["ctx_ending"],
-		htm_stm: "o_finished_resu_qmodu",
-		activated_if: {
-			c1: { q_new_earth__: { shown: "on", }, },
-		},
-	};	
-	*/
 }
 
 // 	c1: { q1_7__: { shown: "on", }, q1_91__: { shown: "on", }, q1_70__: { shown: "off", }, q1_91_0__: { shown: "off", }, },

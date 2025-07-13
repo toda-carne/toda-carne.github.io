@@ -331,6 +331,11 @@ function init_es_basic_msg(){
 	obj.msg_yes = "SI";
 	obj.msg_no = "NO";
 	obj.msg_you = "Ud.";
+	obj.msg_others = "Otros";
+	obj.msg_final_obs_html = "Terminaste";
+	obj.msg_final_obs_name = "Tipo de final";
+	obj.msg_citation_obs_html = "Observación de cita biblica";
+	obj.msg_citation_obs_name = "Observación de cita biblica";
 	
 	obj.msg_undo = "<i class='has_icons icon-undo'></i> Ups!";	
 

@@ -606,10 +606,23 @@ export function get_answer_key(qid, cit_obj){
 }
 */
 
-export function get_bibcit_obs(qid){
+const ___citation_observation_html = "___citation_observation_html";
+const ___citation_observation_name = "___citation_observation_name";
+
+export function get_bibcit_obs(qid, ctx){
+	if(gvar.glb_poll_txt[___citation_observation_html] == null){
+		gvar.glb_poll_txt[___citation_observation_html] = gvar.glb_curr_lang.msg_citation_obs_html;
+	}	
+	if(gvar.glb_poll_txt[___citation_observation_name] == null){
+		gvar.glb_poll_txt[___citation_observation_name] = gvar.glb_curr_lang.msg_citation_obs_name;
+	}	
 	const obj_resp = { 
 		is_bibcit_observation: true,
+		context: ctx,
+		htm_stm: ___citation_observation_html,
+		htm_nam: ___citation_observation_name,
 		activated_if: {	c1: {}, },
+		last_sat_conj: "c1",
 	};
 	const conj1 = obj_resp.activated_if.c1;
 	conj1[qid] = {};

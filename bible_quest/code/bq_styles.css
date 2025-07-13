@@ -628,6 +628,13 @@ a.exam_ref:hover {
 	font-size:0.7em;
 }
 
+.results_title {
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+	font-size:0.7em;
+	z-index: 60;
+}
+
 .background_red {
 	font-weight: bold;
 	color: #12244a;

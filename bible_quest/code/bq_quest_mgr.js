@@ -26,6 +26,8 @@ const INVALID_PAGE_POS = "???";
 const TRUE_STR = "true";
 
 const NO_MORE_QUEST_COND = "NO_QUESTIONS_LEFT";
+const ___final_observation_html = "___final_observation_html";
+const ___final_observation_name = "___final_observation_name";
 
 const DEBUG_QNUMS = true;
 const DEBUG_PENDING = false;
@@ -2261,11 +2263,18 @@ function get_comment_hrefs_of(the_conj_sat, skip_qid){
 // CODE_FOR DAG HANDLING
 
 function get_final_obs(){
+	if(gvar.glb_poll_txt[___final_observation_html] == null){
+		gvar.glb_poll_txt[___final_observation_html] = gvar.glb_curr_lang.msg_final_obs_html;
+	}	
+	if(gvar.glb_poll_txt[___final_observation_name] == null){
+		gvar.glb_poll_txt[___final_observation_name] = gvar.glb_curr_lang.msg_final_obs_name;
+	}	
 	const obs = { 
 		calls_write_results: true,
 		is_positive: true,
 		context: ["FINAL_CONTEXT"],
-		htm_stm: "FINAL_OBSERVATION",
+		htm_stm: ___final_observation_html,
+		htm_nam: ___final_observation_name,
 		activated_if: {
 			c1: { NO_QUESTIONS_LEFT : true, },
 		},
@@ -2300,6 +2309,7 @@ function init_DAG_func(){
 	if(db.FINAL_OBSERVATION__ == null){
 		db.FINAL_OBSERVATION__ = get_final_obs();
 		all_obs.FINAL_OBSERVATION__	= 1;
+		
 	}
 }
 
@@ -3158,12 +3168,14 @@ function get_grid_results(fb_stats, fb_results){
 	const all_wters = [];
 	let tot_wters = 0;
 	
+	let num_row = 0;
 	for (const qid of Object.keys(all_obs)) {
 		if(get_qid_base(qid) == null){
 			continue;
 		}
 		const quest = db[qid];
 		if(quest == null){ console.error("quest == null"); continue; }
+		if(quest.is_choose_verse_question){ continue; }
 		
 		let cntr = fb_stats[qid];
 		if((cntr != null) && ((cntr <= 0) || (cntr > tot))){
@@ -3179,8 +3191,9 @@ function get_grid_results(fb_stats, fb_results){
 			continue; 
 		}
 		
-		
-		const nam = get_msg(quest.htm_nam);
+		let qhnam = quest.htm_nam;
+		if(qhnam == null){ qhnam = qid; }
+		const nam = get_msg(qhnam);
 		
 		const perc_red = Math.round((cntr * 100) / tot);
 		const perc_green = 100 - perc_red;
@@ -3208,6 +3221,8 @@ function get_grid_results(fb_stats, fb_results){
 		dv_gr.appendChild(dv_nam);
 		dv_gr.appendChild(dv_val);
 		
+		num_row++;
+		
 		if(DEBUG_SHOW_RESULTS){ console.log("nam=" + nam + " perc_green=" + perc_green); }
 		if(perc_green > 0){
 			const dv_green = document.createElement("div");
@@ -3227,6 +3242,23 @@ function get_grid_results(fb_stats, fb_results){
 			dv_red.innerHTML = perc_red + "%";
 			dv_gr.appendChild(dv_red);
 		}
+
+		num_row++;
+		//const gr_rows = window.getComputedStyle(dv_gr).gridTemplateRows;;
+		//const num_rows = gr_rows.split(',').length;
+		console.log("NUM_ROWS = " + num_row);
+		/*
+		
+		const dv_title = document.createElement("div");
+		dv_title.classList.add("results_title");
+		dv_title.style.backgroundColor = 'rgba(0,0,0,0)';
+		dv_title.style.gridColumnStart = 1;
+		dv_title.style.gridColumnEnd = -1;
+		dv_title.style.gridRowStart = num_row;
+		dv_title.style.gridRowEnd = num_row;
+		dv_title.innerHTML = gvar.glb_curr_lang.msg_others;
+		dv_gr.appendChild(dv_title);
+		*/
 	}
 	
 	const colors = ["#00ffff", "#ffaa00", "#ffc6ee", "#ff00ff", "#aaaaff", "#aa557f", "#bb67ff", "#c3c361", "#96644b", ];
@@ -3234,12 +3266,16 @@ function get_grid_results(fb_stats, fb_results){
 	let ii = 0;
 	for (const qid of all_wters) {
 		const quest = db[qid];
+		if(quest == null){ console.error("quest == null"); continue; }
+		if(quest.is_choose_verse_question){ continue; }
 		let cntr = fb_stats[qid];
 		if(cntr == null){
 			cntr = 0;
 		}		
 		const perc = Math.round((cntr * 100) / tot_wters);
-		let nam = get_msg(quest.htm_nam) + " " + perc + "%";
+		let qhnam = quest.htm_nam;
+		if(qhnam == null){ qhnam = qid; }
+		let nam = get_msg(qhnam) + " " + perc + "%";
 
 		if(DEBUG_SHOW_RESULTS){ console.log("nam=" + nam + " cntr=" + cntr + " tot_wters=" + tot_wters); }
 		

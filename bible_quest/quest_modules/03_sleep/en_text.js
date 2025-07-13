@@ -68,6 +68,7 @@ export function init_en_poll_txt(){
 	<br>	
 	${the_gospel}
 	`;
+	lg.o_jesus_died_nm = `Jesus died`;
 
 	lg.q_jesus_eternal = `${cl_bible}${bf}His ETERNAL LIFE was interrupted for three nights and three days.${ef}`;
 
@@ -80,6 +81,7 @@ export function init_en_poll_txt(){
 	<br>
 	${the_gospel}
 	`;
+	lg.o_jesus_eternal_nm = `Jesus life interrupted`;
 	
 	lg.q_eternal_life = `${cl_jesus}${bf}ETERNAL LIFE is to know the True God and His son Jesus Christ.${ef}`;
 
@@ -87,6 +89,7 @@ export function init_en_poll_txt(){
 	lg.o_eternal_life_comm = `In the following verse teaches PRECISELY that <br> 
 	${bf} BIBREF_Jhn_17_3 ${ef}
 	`;
+	lg.o_eternal_life_nm = `Eternal Life definition`;
 
 	lg.q_no_knowledge_in_death = `We can conclude that according to the bible <br> 
 	${bf}Jesus Christ KNOWLEDGE of God and of Himself${ef} <br> 
@@ -101,6 +104,7 @@ export function init_en_poll_txt(){
 	${lg.q_no_knowledge_in_death} <br> 
 	${the_gospel}
 	`;
+	lg.o_no_knowledge_nm = `No Knowledge`;
 
 	lg.q_verse_for_knowledge_in_death = `Choose ONE verse that supports the claim that according to the bible <br>
 	${bf} the NOT resurrected and physically dead people HAVE KNOWLEDGE${ef}
