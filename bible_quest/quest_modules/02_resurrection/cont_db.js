@@ -340,9 +340,8 @@ export function init_exam_database(){
 		activated_if: {
 			c1: { q_new_earth__: { shown: "on", }, },
 		},
-	};
+	};	
 	*/
-	
 }
 
 // 	c1: { q1_7__: { shown: "on", }, q1_91__: { shown: "on", }, q1_70__: { shown: "off", }, q1_91_0__: { shown: "off", }, },

@@ -2267,8 +2267,9 @@ function get_final_obs(){
 		context: ["FINAL_CONTEXT"],
 		htm_stm: "FINAL_OBSERVATION",
 		activated_if: {
-			c2: { NO_QUESTIONS_LEFT : true, },
+			c1: { NO_QUESTIONS_LEFT : true, },
 		},
+		last_sat_conj: "c1",
 	};
 	return obs;
 }

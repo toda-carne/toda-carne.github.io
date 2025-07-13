@@ -38,7 +38,7 @@ export function init_es_poll_txt(){
 	lg.a_simple_harder_to_make = `Harder to make`;
 	lg.a_simple_harder_to_understand = `Harder to understand`;
 	
-	lg.q1_0__bible = `<span class='big_font bold_font'>Biblia?</span>`;
+	lg.q1_0__bible = `<span class='big_font bold_font'>Es La Biblia La Palabra Escrita de Dios?</span>`;
 	lg.q1_0__YES_bible = "SI me gusta la Biblia";
 	lg.q1_0__NO_bible = "NO me gusta la Biblia";
 	

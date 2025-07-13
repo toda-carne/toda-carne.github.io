@@ -24,18 +24,6 @@ export function init_exam_database(){
 
 	// ALL IMAGES (img_href) MUST BE IN THE DIRECTORY 'all_vars.conf_qmodus.all_qmodus[this_qmonam].image_dir' CONFIGURED IN bq_modules.js
 	
-	db.q_bible__ = { 
-		choose_yes: true,
-		context: ["ctx_general", "ctx_bible"],
-		htm_stm: "q1_0__bible",
-		img_href: "bible.webp", 
-		answers: {
-			q1_0__YES_bible: { img_pos: rgt, },
-			q1_0__NO_bible: { img_pos: lft, },
-		},
-		
-	};
-	
 	db.q_creator__ = { 
 		choose_yes: true,
 		context: ["ctx_general", "ctx_creator"],
@@ -105,7 +93,8 @@ export function init_exam_database(){
 			a_simple_NO: { img_pos: lft, },
 		},
 		activated_if: {
-			c1: { q_bible__: { q1_0__YES_bible: "on", }, 
+			c1: { 
+				//q_bible__: { q1_0__YES_bible: "on", }, 
 				q_creator__: { q1_1__YES_creator: "on", }, 
 				q_six_days__: { q1_1_2__YES_six_days: "on", }, 
 				q_evolution__: { q1_3__NO_evolution: "on", }, 
@@ -383,6 +372,20 @@ export function init_exam_database(){
 			c1: { q_noah__: { a_simple_YES: "on", }, },
 		},
 	};	
+	
+	db.q_bible__ = { 
+		choose_yes: true,
+		context: ["ctx_general", "ctx_bible"],
+		htm_stm: "q1_0__bible",
+		img_href: "bible.webp", 
+		answers: {
+			a_simple_YES: { img_pos: rgt, },
+			a_simple_NO: { img_pos: lft, },
+		},
+		activated_if: {
+			c1: { q_genesis__: { a_simple_YES: "on", }, },
+		},		
+	};
 	
 	db.q_car_req_creativity__ = { 
 		choose_yes: true,
@@ -1103,7 +1106,7 @@ export function init_exam_database(){
 		htm_stm: "o_get_qrcode",
 		htm_nam: "o_short_end_nam",
 		activated_if: {
-			c1: { q_genesis__: { a_simple_YES: "on", }, },
+			c1: { q_bible__: { a_simple_YES: "on", }, },
 		},
 	};
 	
