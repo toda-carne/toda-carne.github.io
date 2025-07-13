@@ -1,0 +1,23 @@
+#!/bin/bash
+
+CURR_DIR=$(pwd)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+echo "GENERATING scodes using "${BASH_SOURCE[0]}
+
+cd $SCRIPT_DIR
+
+rm *_ref_scodes.tab
+
+bash gen_ref_scodes_sh BYZ
+bash gen_ref_scodes_sh NES
+bash gen_ref_scodes_sh TR
+bash gen_ref_scodes_sh WH
+
+bash gen_ref_scodes_sh LXX
+bash gen_ref_scodes_sh WLC
+bash gen_ref_scodes_sh TKH
+bash gen_ref_scodes_sh ALE
+
+cd ${CURR_DIR}
+

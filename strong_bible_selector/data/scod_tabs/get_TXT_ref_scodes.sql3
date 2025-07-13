@@ -1,0 +1,20 @@
+
+CREATE TABLE IF NOT EXISTS bib0 (
+	b INT NOT NULL,
+	c INT NOT NULL,
+	v INT NOT NULL,
+	w INT NOT NULL,
+	ta_id TEXT NOT NULL,
+	cid TEXT
+);
+
+.import in.tab bib0
+
+create table refs_codes as select cid, b || ':' || c || ':' || v  as vid
+	from bib0 as t0
+	group by cid, b, c, v
+;
+
+.output out.tab
+select * from refs_codes;
+.output

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+CURR_DIR=$(pwd)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+echo "GENERATING CRIT bib using "${BASH_SOURCE[0]}
+
+cd $SCRIPT_DIR
+
+rm *_bib.tab
+
+bash gen_bib_tab_sh BYZ
+bash gen_bib_tab_sh NES
+bash gen_bib_tab_sh TR
+bash gen_bib_tab_sh WH
+
+bash gen_bib_tab_sh LXX
+bash gen_bib_tab_sh WLC
+bash gen_bib_tab_sh TKH
+bash gen_bib_tab_sh ALE
+
+cd ${CURR_DIR}
+

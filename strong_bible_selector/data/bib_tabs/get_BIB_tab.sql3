@@ -1,0 +1,19 @@
+
+CREATE TABLE IF NOT EXISTS bib (
+	b INT NOT NULL,
+	c INT NOT NULL,
+	v INT NOT NULL,
+	w INT NOT NULL,
+	txta TEXT NOT NULL,
+	cid TEXT	
+);
+
+.import in.tab bib
+
+create table fv as select b || ':' || c || ':' || v  as vid, GROUP_CONCAT(txta, ' ') as dat 
+	from bib GROUP BY b,c,v;
+
+.output out.tab
+select * from fv;
+.output
+
