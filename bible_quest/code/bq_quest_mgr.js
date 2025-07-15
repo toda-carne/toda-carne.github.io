@@ -3168,6 +3168,7 @@ function get_grid_results(fb_stats, fb_results){
 	const all_wters = [];
 	let tot_wters = 0;
 	
+	//let wrote_others = 
 	let num_row = 0;
 	for (const qid of Object.keys(all_obs)) {
 		if(get_qid_base(qid) == null){
@@ -3199,17 +3200,24 @@ function get_grid_results(fb_stats, fb_results){
 		const perc_green = 100 - perc_red;
 
 		const dv_nam = document.createElement("div");
-		dv_nam.classList.add("exam", "results_item");
+		dv_nam.classList.add("exam", "results_data");
 		const dv_val = document.createElement("div");
-		dv_val.classList.add("results_item");
-		//dv_val.classList.add("exam", "results_item");
+		dv_val.classList.add("results_data");
+		//dv_val.classList.add("exam", "results_data");
 		const sp_you = document.createElement("span")
 		sp_you.innerHTML = gvar.glb_curr_lang.msg_you;
+
+		num_row++;
 		
 		dv_nam.style.gridColumnStart = 1;
 		dv_nam.style.gridColumnEnd = 70;
+		dv_nam.style.gridRowStart = num_row;
+		dv_nam.style.gridRowEnd = num_row;
+		
 		dv_val.style.gridColumnStart = 71;
 		dv_val.style.gridColumnEnd = -1;
+		dv_val.style.gridRowStart = num_row;
+		dv_val.style.gridRowEnd = num_row;
 		
 		dv_nam.innerHTML = nam;
 		if(fb_results[qid] != null){
@@ -3226,28 +3234,31 @@ function get_grid_results(fb_stats, fb_results){
 		if(DEBUG_SHOW_RESULTS){ console.log("nam=" + nam + " perc_green=" + perc_green); }
 		if(perc_green > 0){
 			const dv_green = document.createElement("div");
-			dv_green.classList.add("results_item", "background_green");
-			//dv_green.classList.add("exam", "results_item", "background_green");
+			dv_green.classList.add("results_data", "background_green");
+			//dv_green.classList.add("exam", "results_data", "background_green");
 			dv_green.style.gridColumnStart = 1;
 			dv_green.style.gridColumnEnd = perc_green;
+			dv_green.style.gridRowStart = num_row;
+			dv_green.style.gridRowEnd = num_row;
 			dv_green.innerHTML = perc_green + "%";
 			dv_gr.appendChild(dv_green);
 		}
 		if((perc_green + 1) < 100){
 			const dv_red = document.createElement("div");
-			dv_red.classList.add("results_item", "background_red");
-			//dv_red.classList.add("exam", "results_item", "background_red");
+			dv_red.classList.add("results_data", "background_red");
+			//dv_red.classList.add("exam", "results_data", "background_red");
 			dv_red.style.gridColumnStart = perc_green + 1;
 			dv_red.style.gridColumnEnd = 100;
+			dv_red.style.gridRowStart = num_row;
+			dv_red.style.gridRowEnd = num_row;
 			dv_red.innerHTML = perc_red + "%";
 			dv_gr.appendChild(dv_red);
 		}
 
-		num_row++;
+		//num_row++;
 		//const gr_rows = window.getComputedStyle(dv_gr).gridTemplateRows;;
 		//const num_rows = gr_rows.split(',').length;
 		console.log("NUM_ROWS = " + num_row);
-		/*
 		
 		const dv_title = document.createElement("div");
 		dv_title.classList.add("results_title");
@@ -3256,9 +3267,13 @@ function get_grid_results(fb_stats, fb_results){
 		dv_title.style.gridColumnEnd = -1;
 		dv_title.style.gridRowStart = num_row;
 		dv_title.style.gridRowEnd = num_row;
-		dv_title.innerHTML = gvar.glb_curr_lang.msg_others;
+		dv_title.innerHTML = gvar.glb_curr_lang.msg_all;
 		dv_gr.appendChild(dv_title);
-		*/
+		
+	}
+	
+	if(all_wters.length <= 1){
+		return dv_gr;
 	}
 	
 	const colors = ["#00ffff", "#ffaa00", "#ffc6ee", "#ff00ff", "#aaaaff", "#aa557f", "#bb67ff", "#c3c361", "#96644b", ];

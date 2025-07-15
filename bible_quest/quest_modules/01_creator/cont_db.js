@@ -1110,6 +1110,7 @@ export function init_exam_database(){
 		},
 	};
 	
+	/*
 	db.o_get_qrcode__ = { 
 		calls_write_results: true,
 		is_positive: true,
@@ -1119,14 +1120,14 @@ export function init_exam_database(){
 		activated_if: {
 			c2: { q_he_can_make_a_body_again__	: { shown: "on", }, },
 		},
-	};
+	};*/
 	
-	db.o_fini_mod__ = { 
+	db.o_get_qrcode__ = { 
 		calls_write_results: true,
 		is_positive: true,
 		context: ["ctx_get_qrcode"],
-		htm_stm: "o_finished_module",
-		htm_nam: "o_final_nam",
+		htm_stm: "o_get_qrcode",
+		htm_nam: "o_long_end_nam",
 		activated_if: {
 			c2: { NO_QUESTIONS_LEFT : true, },
 		},

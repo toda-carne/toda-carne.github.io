@@ -628,10 +628,17 @@ a.exam_ref:hover {
 	font-size:0.7em;
 }
 
-.results_title {
+.results_data {
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
 	font-size:0.7em;
+}
+
+.results_title {
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+	font-size:1em;
+	text-align: center;  
 	z-index: 60;
 }
 

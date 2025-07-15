@@ -332,7 +332,7 @@ function init_en_basic_msg(){
 	obj.msg_yes = "YES";
 	obj.msg_no = "NO";
 	obj.msg_you = "You";
-	obj.msg_others = "Others";
+	obj.msg_all = "All";
 	obj.msg_final_obs_html = "You finished";
 	obj.msg_final_obs_name = "Ending Kind";
 	obj.msg_citation_obs_html = "Bible Citation observation";
