@@ -97,7 +97,7 @@ function init_menus(){
 	const dv_search = document.getElementById("id_search");
 	const inp_box = document.createElement("input");
 	inp_box.id = id_expression;
-	inp_box.value = "G_66";
+	inp_box.value = "G66";
 	inp_box.type = "text";
 	dv_search.appendChild(inp_box);
 
