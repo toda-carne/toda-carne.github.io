@@ -153,8 +153,10 @@ export function init_lang(nm_lang){
 
 function init_es(){
 	gvar.book_names = num2book_es;
+	gvar.glb_all_books = num2book_es;
 }
 
 function init_en(){
 	gvar.book_names = num2book_en;
+	gvar.glb_all_books = num2book_en;
 }
