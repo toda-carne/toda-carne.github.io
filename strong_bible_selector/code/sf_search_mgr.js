@@ -5,7 +5,7 @@ import { get_new_dv_under, scroll_to_top, toggle_select_option,
 import { bibobj_to_bibtxt, 
 } from './sf_bible_mgr.js';
 
-import { get_strocode_verses, } from './sf_strong_mgr.js';
+import { get_scode_verses, } from './sf_strong_mgr.js';
 import { init_lang, } from './sf_lang_mgr.js';
 
 
@@ -151,7 +151,7 @@ function do_select(){
 	const dv_verses = document.getElementById("id_verses");
 	dv_verses.innerHTML = "";
 	
-	get_strocode_verses(crit, expr).then((resp) => {
+	get_scode_verses(crit, expr).then((resp) => {
 		const all_v = JSON.stringify(resp, null, "  ");
 		fill_verses(bib, resp, conv_fn);
 	});

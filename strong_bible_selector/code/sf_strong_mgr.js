@@ -1,5 +1,7 @@
 
 import { gvar, } from './sf_search_mgr.js';
+
+/*
 import * as MOD_IDX_WLC from "../data/js_scods/WLC/index_of_WLC.js";
 import * as MOD_IDX_ALE from "../data/js_scods/ALE/index_of_ALE.js";
 import * as MOD_IDX_TKH from "../data/js_scods/TKH/index_of_TKH.js";
@@ -9,7 +11,50 @@ import * as MOD_IDX_NES from "../data/js_scods/NES/index_of_NES.js";
 import * as MOD_IDX_BYZ from "../data/js_scods/BYZ/index_of_BYZ.js";
 import * as MOD_IDX_TR from "../data/js_scods/TR/index_of_TR.js";
 import * as MOD_IDX_WH from "../data/js_scods/WH/index_of_WH.js";
+*/
 
+const scodes_dir = "../data/js_scods/";
+
+const local_scods_files = {
+	WLC : scodes_dir + "WLC_SCODES.js",
+	ALE : scodes_dir + "ALE_SCODES.js",
+	TKH : scodes_dir + "TKH_SCODES.js",
+	LXX : scodes_dir + "LXX_SCODES.js",
+	
+	NES : scodes_dir + "NES_SCODES.js",
+	BYZ : scodes_dir + "BYZ_SCODES.js",
+	TR : scodes_dir + "TR_SCODES.js",
+	WH : scodes_dir + "WH_SCODES.js",	
+};
+
+export async function get_scode_verses(bib_cod, scode){
+	await import_scodes(bib_cod);
+	
+	return gvar.full_scodes[bib_cod][scode];
+}
+
+async function import_file(scod_fl){
+	const resp = import(scod_fl);
+	return resp;
+}
+
+async function import_scodes(bib_cod){
+	if(local_scods_files[bib_cod] == null){
+		return;
+	}
+	if(gvar.full_scodes == null){
+		gvar.full_scodes = {};
+	} 
+	if(gvar.full_scodes[bib_cod] != null){
+		return;
+	}
+	const scod_fl = local_scods_files[bib_cod];
+	const md_scod = await import_file(scod_fl);
+	
+	gvar.full_scodes[bib_cod] = md_scod.scode_verses;	
+}
+
+/*
 const local_scods = {
 	WLC : MOD_IDX_WLC.bib_index,
 	ALE : MOD_IDX_ALE.bib_index,
@@ -79,4 +124,4 @@ export async function get_strocode_verses(bib_cod, strocode){
 	return part[strocode];
 }
 
-
+*/
