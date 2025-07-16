@@ -16,6 +16,8 @@ export let gvar = {};
 
 const DEBUG_SELECTOR = true;
 
+const GREEK_PREFIX = "G";
+
 const old_crit_txt = {
 	"1": "WM Leningrad Codex (WLC)",
 	"2": "Aleppo (ALE)",
@@ -128,7 +130,7 @@ function do_select(){
 
 	let crit = oldt;
 	let conv_fn = null;
-	if(expr.startsWith("G_")){
+	if(expr.startsWith(GREEK_PREFIX)){
 		crit = newt;
 	}
 	if((bib == "MIN") || (bib == "MAY") || (bib == "ASCII")){
