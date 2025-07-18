@@ -1,0 +1,8 @@
+
+bib_expr := {regex} <bib_cit> (bib_expr)[=nom] .3 .5 .10 .100 .all .txt .gre .heb .loc .asc .may && ! || xxx Hddd[:dd/] Gddd[:dd/] H{ G{ nom ;
+	
++tkh +wlc +ale +lxx +byz +nes +wh +tr +rva +sblm +web +kjv
+
+<TAB
+.TAB
++TAB

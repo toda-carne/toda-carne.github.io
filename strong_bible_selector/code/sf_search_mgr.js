@@ -8,6 +8,9 @@ import { bibobj_to_bibtxt,
 import { get_scode_verses, } from './sf_strong_mgr.js';
 import { init_lang, } from './sf_lang_mgr.js';
 
+//import { keyb_handler, 
+//} from './sf_tokenizer.js';
+
 
 
 export let gvar = {};
@@ -166,7 +169,8 @@ export async function start_srch_mgr(curr_lang){
 
 function fill_verses(bib_cod, all_found, conv_fn){
 	const dv_verses = document.getElementById("id_verses");
-	const all_vrs = Object.keys(all_found);
+	//const all_vrs = Object.keys(all_found);
+	const all_vrs = all_found.split(' ');
 	let ii = 0;
 	for(ii = 0; ii < all_vrs.length; ii++){
 		const cod_ver = all_vrs[ii].split(':');

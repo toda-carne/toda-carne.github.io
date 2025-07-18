@@ -1,6 +1,6 @@
 
 	
-export const loc_txt = {
+export const scode_verses = {
   "G1": "66:1:11",
   "G10": "40:1:13 40:1:13",
   "G100": "47:8:20",

@@ -626,21 +626,7 @@ a.exam_ref:hover {
 	font-size:1em;
 }
 
-.old_testam_item {
-	margin-top: 0.2em;
-	margin-bottom: 0.2em;
-	grid-column: auto;
-	grid-row: auto;
-}
-
-.new_testam_item {
-	margin-top: 0.2em;
-	margin-bottom: 0.2em;
-	grid-column: auto;
-	grid-row: auto;
-}
-
-.version_item {
+.bib_item {
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
 	grid-column: auto;
@@ -655,7 +641,7 @@ a.exam_ref:hover {
 	border: 0.2vw solid #ff0000;
 }
 
-.search_item {
+.input_item {
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
 	grid-column: 1;
@@ -672,7 +658,7 @@ a.exam_ref:hover {
 	border: 0.2vw solid #00ff00;
 }
 
-.verse_list {
+.results_item {
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
 	grid-column: 1;
@@ -700,7 +686,7 @@ a.exam_ref:hover {
 		border: 0.2vw solid #ff0000;
 	}
 
-	.search_item {
+	.input_item {
 		margin-top: 0.2em;
 		margin-bottom: 0.2em;
 		grid-column: 4 / 1;
@@ -717,7 +703,7 @@ a.exam_ref:hover {
 		border: 0.2vw solid #00ff00;
 	}
 
-	.verse_list {
+	.results_item {
 		margin-top: 0.2em;
 		margin-bottom: 0.2em;
 		grid-column: 4 / 1;
