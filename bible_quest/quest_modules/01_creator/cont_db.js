@@ -1129,7 +1129,7 @@ export function init_exam_database(){
 		htm_stm: "o_get_qrcode",
 		htm_nam: "o_long_end_nam",
 		activated_if: {
-			c2: { NO_QUESTIONS_LEFT : true, },
+			c1: { NO_QUESTIONS_LEFT : true, },
 		},
 	};
 	

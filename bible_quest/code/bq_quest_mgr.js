@@ -2434,7 +2434,9 @@ function check_if_dnf_is_sat(qid){
 		//console.log(" | qid=" + qid + " | conj_id=" + conj_id + " conj_obj=" + JSON.stringify(conj_obj, null, "  "));
 		for (const [qid_signl, resps_obj] of conj) {
 			if(resps_obj == null){ conj_act = false; break; }
-			if(qid_signl == NO_MORE_QUEST_COND){ conj_act = false; break; }
+			if(qid_signl == NO_MORE_QUEST_COND){ 
+				conj_act = true; break; 
+			}
 			
 			const qst_to_signl = gvar.glb_poll_db[qid_signl];
 			if(qst_to_signl == null){ conj_act = false; break; }
@@ -2473,7 +2475,9 @@ function check_if_dnf_is_sat(qid){
 		if(conj_act){
 			if(quest.debug){ console.log("DEBUGING qid=" + qid + " check_if_dnf_is_sat IS_SAT"); }
 			quest.last_sat_conj = conj_id;
-			quest.last_conj_qid = last_qst.qid;
+			if(last_qst != null){
+				quest.last_conj_qid = last_qst.qid;
+			}
 			return true;
 		}
 	}
@@ -2803,6 +2807,10 @@ function show_observation(qid, all_to_act, qid_cllr){
 	dv_ok_observ.classList.add("observ_color");
 	//dv_quest.append(dv_ok_observ);
 	dv_quest.appendChild(dv_ok_observ);
+
+	if(quest.calls_write_results){
+		check_if_dnf_is_sat(qid);		
+	}
 	
 	if(DEBUG_UPDATE_OBSERV){ console.log("Updating NEW observation qid=" + qid); }
 	update_observation(qid, all_to_act);
@@ -2919,7 +2927,13 @@ function get_sat_conj_qids(qid){
 	const quest = gvar.glb_poll_db[qid];
 	if(quest == null){ return null; }
 	if(quest.activated_if == null){ return null; }
-	if(quest.last_sat_conj == null){ return null; }
+	if(quest.last_sat_conj == null){ 
+		if(quest.calls_write_results){
+			check_if_dnf_is_sat(qid);
+		} else {
+			return null; 
+		}
+	}
 	const the_conj = quest.activated_if[quest.last_sat_conj];
 	return the_conj;
 }
