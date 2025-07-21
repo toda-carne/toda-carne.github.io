@@ -3,20 +3,6 @@ import { gvar, } from './sf_search_mgr.js';
 
 const scodes_dir = "../data/js_scods/";
 
-/*
-const local_scods_files = {
-	WLC : scodes_dir + "WLC_SCODES.js",
-	ALE : scodes_dir + "ALE_SCODES.js",
-	TKH : scodes_dir + "TKH_SCODES.js",
-	LXX : scodes_dir + "LXX_SCODES.js",
-	
-	NES : scodes_dir + "NES_SCODES.js",
-	BYZ : scodes_dir + "BYZ_SCODES.js",
-	TR : scodes_dir + "TR_SCODES.js",
-	WH : scodes_dir + "WH_SCODES.js",	
-};
-*/
-
 const local_scods_files = {
 	WLC : scodes_dir + "WLC_SVERSES.js",
 	ALE : scodes_dir + "ALE_SVERSES.js",
@@ -32,7 +18,11 @@ const local_scods_files = {
 export async function get_scode_verses(bib_cod, scode){
 	await import_scodes(bib_cod);
 	
-	return gvar.full_scodes[bib_cod][scode];
+	let resp = gvar.full_scodes[bib_cod][scode];
+	if(resp == null){
+		resp = "";
+	}
+	return resp;
 }
 
 async function import_file(scod_fl){

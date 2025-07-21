@@ -2,6 +2,7 @@
 import { gvar, } from './sf_search_mgr.js';
 
 const DEFAULT_BOOK_NAME = "INVALID_BOOK_NAME";
+const INVALID_BOOK_ABBR = "INVALID_BOOK_ABBR";
 
 export const num2book_en = {
 	"-1":DEFAULT_BOOK_NAME,
@@ -143,6 +144,77 @@ const num2book_es = {
 	"66":"apocalipsis",
 };
 
+export const num2abbr = {
+	"-1":INVALID_BOOK_ABBR,
+	"1":"gen",
+	"2":"exo",
+	"3":"lev",
+	"4":"num",
+	"5":"deu",
+	"6":"jos",
+	"7":"jdg",
+	"8":"rth",
+	"9":"1sa",
+	"10":"2sa",
+	"11":"1ki",
+	"12":"2ki",
+	"13":"1ch",
+	"14":"2ch",
+	"15":"ezr",
+	"16":"neh",
+	"17":"est",
+	"18":"job",
+	"19":"psa",
+	"20":"pro",
+	"21":"ecc",
+	"22":"sng",
+	"23":"isa",
+	"24":"jer",
+	"25":"lam",
+	"26":"eze",
+	"27":"dan",
+	"28":"hos",
+	"29":"joe",
+	"30":"amo",
+	"31":"oba",
+	"32":"jon",
+	"33":"mic",
+	"34":"nah",
+	"35":"hab",
+	"36":"zep",
+	"37":"Hag",
+	"38":"Zec",
+	"39":"mal",
+	"40":"mat",
+	"41":"mar",
+	"42":"luk",
+	"43":"jhn",
+	"44":"act",
+	"45":"rom",
+	"46":"1co",
+	"47":"2co",
+	"48":"gal",
+	"49":"eph",
+	"50":"phl",
+	"51":"col",
+	"52":"1th",
+	"53":"2th",
+	"54":"1ti",
+	"55":"2Ti",
+	"56":"tit",
+	"57":"phm",
+	"58":"heb",
+	"59":"jas",
+	"60":"1pe",
+	"61":"2pe",
+	"62":"1jo",
+	"63":"2jo",
+	"64":"3jo",
+	"65":"jde",
+	"66":"rev",
+};
+
+
 export function init_lang(nm_lang){
 	if(nm_lang == "es"){
 		init_es();
@@ -151,12 +223,60 @@ export function init_lang(nm_lang){
 	init_en();
 }
 
+function fill_reversed_object(orig, reverse){
+	for (const [key, value] of Object.entries(orig)) {
+		reverse[value] = key;
+		//console.log(`${key} = ${value}`);
+	}  
+}
+
+function fill_inbook2num(orig, inbook2num){
+	for (const [num, book] of Object.entries(orig)) {
+		const inbook = book2inbook(book);
+		inbook2num[inbook] = num;
+		//console.log(`${key} = ${value}`);
+	}  
+}
+
+function book2inbook(bb){
+	let s1 = bb.replace(/_/g, "").replace(/á/g, "a").replace(/é/g, "e").replace(/í/g, "i").replace(/ó/g, "o").replace(/ú/g, "u");
+	return s1;
+}
+
+const book2num_en = {};
+const book2num_es = {};
+const inbook2num_es = {};
+const abbr2num = {};
+
+function init_common(){
+	fill_reversed_object(num2abbr, abbr2num);
+	fill_reversed_object(num2book_es, book2num_es);
+	fill_reversed_object(num2book_en, book2num_en);
+	fill_inbook2num(num2book_es, inbook2num_es);
+	gvar.num2abbr = num2abbr;
+	gvar.abbr2num = abbr2num;
+	gvar.num2book_es = num2book_es;
+	gvar.book2num_es = book2num_es;
+	gvar.inbook2num_es = inbook2num_es;
+	gvar.num2book_en = num2book_en;
+	gvar.book2num_en = book2num_en;
+	gvar.inbook2num_en = book2num_en;
+}
+
 function init_es(){
+	init_common();
 	gvar.book_names = num2book_es;
 	gvar.glb_all_books = num2book_es;
+	gvar.num2book = num2book_es;
+	gvar.book2num = book2num_es;
+	gvar.inbook2num = inbook2num_es;
 }
 
 function init_en(){
+	init_common();
 	gvar.book_names = num2book_en;
 	gvar.glb_all_books = num2book_en;
+	gvar.num2book = num2book_en;
+	gvar.book2num = book2num_en;
+	gvar.inbook2num = book2num_en;
 }

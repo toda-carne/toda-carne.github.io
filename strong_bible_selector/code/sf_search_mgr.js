@@ -22,7 +22,7 @@ const DEBUG_SELECTOR = true;
 const GREEK_PREFIX = "G";
 
 const old_crit_txt = {
-	"1": "WM Leningrad Codex (WLC)",
+	"1": "WestMin Leningrad Codex (WLC)",
 	"2": "Aleppo (ALE)",
 	"3": "Tanakh (TKH)",
 	"4": "Septuagint (LXX)",
@@ -38,7 +38,7 @@ const new_crit_txt = {
 const bib_version = {
 	"1": "Reina-Valera 1909 (RVA)",
 	"2": "King James Bible (KJV)",
-	"3": "Sagrada Biblia Libre Mundial (SBLM)",
+	"3": "Sagrada Biblia Libre para el Mundo (SBLM)",
 	"4": "World Estandard Bible (WEB)",
 	"5": "Critical text in minuscule (MIN)",
 	"6": "Critical text in mayuscule (MAY)",
