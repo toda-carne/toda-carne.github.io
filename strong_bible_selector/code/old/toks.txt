@@ -21,6 +21,22 @@ bib_expr := {regex} <bib_cit> (bib_expr)[=nom] .3 .5 .10 .100 .all .txt .gre .he
 .wi = loc ot nt
 .word_input
 
+#txt:all
+.loc
+.txt
+.asc
+.src
+.SRC
+
+.rx:loc
+.rx:ot
+.rx:nt
+.wd:loc
+.wd:ot
+.wd:nt
+
+
+
 <TAB
 .TAB
 +TAB

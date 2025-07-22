@@ -16,12 +16,14 @@ const local_bible_files = {
 	WH_BIB : bibles_dir + "WH_BIB.js",
 	
 	WEB : bibles_dir + "WEB_BIB.js",
-	SBLM : bibles_dir + "SBLM_BIB.js",
-	RVA : bibles_dir + "RVA_BIB.js",
 	KJV : bibles_dir + "KJV_BIB.js",
+	SBLM : bibles_dir + "SBLM_BIB.js",
+	SBLMi : bibles_dir + "SBLMi_BIB.js",
+	RVA : bibles_dir + "RVA_BIB.js",
+	RVAi : bibles_dir + "RVAi_BIB.js",
 };
 
-async function get_bible_verse(bib_cod, book, chapter, verse){
+export async function get_bible_verse(bib_cod, book, chapter, verse){
 	await import_bible(bib_cod);
 	
 	return gvar.full_bible[bib_cod][book][chapter][verse];
@@ -64,11 +66,6 @@ export async function bibobj_to_bibtxt(bibobj, conv_fn){
 		if(conv_fn != null){
 			vtxt = conv_fn(vtxt);
 		}
-		/*
-		if((stm_id != null) && (gvar.bibrefs_upper != null) && (gvar.bibrefs_upper[stm_id] != null)){ 
-			const wds = gvar.bibrefs_upper[stm_id][bcit];
-			if(wds != null){ vtxt = uppercase_words_in_string(vtxt, wds); }
-		} */
 	}
 	if((bibobj.last_verse != null) && (bibobj.last_verse != "")){ vcit = vcit + "-" + bibobj.last_verse; }
 	const btxt = `<a class='exam_ref' href="${vhref}"> ${vcit} </a><br><b> ${vtxt} </b>`;

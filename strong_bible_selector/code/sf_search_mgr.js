@@ -7,6 +7,7 @@ import { bibobj_to_bibtxt,
 
 import { get_scode_verses, } from './sf_strong_mgr.js';
 import { init_lang, } from './sf_lang_mgr.js';
+import { init_biblang, eval_biblang_command } from './sf_biblang_mgr.js'
 
 //import { keyb_handler, 
 //} from './sf_tokenizer.js';
@@ -42,8 +43,8 @@ const bib_version = {
 	"4": "World Estandard Bible (WEB)",
 	"5": "Critical text in minuscule (MIN)",
 	"6": "Critical text in mayuscule (MAY)",
-	"7": "Critical text in ASCII (ASCII)",
-	"8": "Critical text in Strong codes (SCOD)",
+	"7": "Critical text in ASCII (ASC)",
+	"8": "Critical text in Strong codes (SCO)",
 };
 
 const id_crit_sele = "id_crit_sele";
@@ -131,8 +132,18 @@ function do_select(){
 	const dv_expr = document.getElementById(id_expression);
 	const expr = dv_expr.value.trim();
 
+	gvar.biblang.curr_OT = oldt;
+	gvar.biblang.curr_NT = newt;
+	gvar.biblang.curr_LOC = bib;
+	
+	eval_biblang_command(expr).then((all_vrs) => {
+		let conv_fn = null;
+		fill_verses(gvar.biblang.curr_LOC, all_vrs, conv_fn);
+	});
+	
+	
+	/*
 	let crit = oldt;
-	let conv_fn = null;
 	if(expr.startsWith(GREEK_PREFIX)){
 		crit = newt;
 	}
@@ -157,20 +168,23 @@ function do_select(){
 	dv_verses.innerHTML = "";
 	
 	get_scode_verses(crit, expr).then((resp) => {
-		const all_v = JSON.stringify(resp, null, "  ");
-		fill_verses(bib, resp, conv_fn);
+		//const all_v = JSON.stringify(resp, null, "  ");
+		const all_vrs = resp.split(' ');
+		fill_verses(bib, all_vrs, conv_fn);
 	});
+	*/
 }	
 
 export async function start_srch_mgr(curr_lang){
 	init_lang(curr_lang);
+	init_biblang(curr_lang);
 	init_menus();
 }
 
-function fill_verses(bib_cod, all_found, conv_fn){
+function fill_verses(bib_cod, all_vrs, conv_fn){
 	const dv_verses = document.getElementById("id_verses");
+	dv_verses.innerHTML = "";
 	//const all_vrs = Object.keys(all_found);
-	const all_vrs = all_found.split(' ');
 	let ii = 0;
 	for(ii = 0; ii < all_vrs.length; ii++){
 		const cod_ver = all_vrs[ii].split(':');

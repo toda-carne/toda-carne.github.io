@@ -79,7 +79,7 @@ const evaluate = (thunkExpression) => {
         return thunkExpression;
     }
 };
-const thunk = (delegate, ...args) => () => delegate(...args);
+const thunk = (delegate, ...args) => (...prev) => delegate(...args, ...prev);
 const isOptionsLegacy = (options) => {
     return options.hasOwnProperty("SEPARATOR");
 };
