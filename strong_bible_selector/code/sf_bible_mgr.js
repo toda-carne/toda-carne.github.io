@@ -5,15 +5,15 @@ import { num2book_en, } from './sf_lang_mgr.js';
 const bibles_dir = "../data/js_bib/";
 
 const local_bible_files = {
-	WLC_BIB : bibles_dir + "WLC_BIB.js",
-	ALE_BIB : bibles_dir + "ALE_BIB.js",
-	TKH_BIB : bibles_dir + "TKH_BIB.js",
-	LXX_BIB : bibles_dir + "LXX_BIB.js",
+	WLC : bibles_dir + "WLC_BIB.js",
+	ALE : bibles_dir + "ALE_BIB.js",
+	TKH : bibles_dir + "TKH_BIB.js",
+	LXX : bibles_dir + "LXX_BIB.js",
 	
-	NES_BIB : bibles_dir + "NES_BIB.js",
-	BYZ_BIB : bibles_dir + "BYZ_BIB.js",
-	TR_BIB : bibles_dir + "TR_BIB.js",
-	WH_BIB : bibles_dir + "WH_BIB.js",
+	NES : bibles_dir + "NES_BIB.js",
+	BYZ : bibles_dir + "BYZ_BIB.js",
+	TR : bibles_dir + "TR_BIB.js",
+	WH : bibles_dir + "WH_BIB.js",
 	
 	WEB : bibles_dir + "WEB_BIB.js",
 	KJV : bibles_dir + "KJV_BIB.js",

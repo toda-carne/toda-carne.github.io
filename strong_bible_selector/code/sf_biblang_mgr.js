@@ -1,13 +1,9 @@
 
 
 import { isArgumentsArray, ExpressionParser } from './sf_expression_parser.js'
-
 import { get_scode_verses, } from './sf_strong_mgr.js';
-
 import { gvar, } from './sf_search_mgr.js';
-
 import { bib_ranges, } from './sf_bib_ranges.js';
-
 import { get_bible_verse, } from './sf_bible_mgr.js';
 
 const GREEK_PREFIX = "G";
@@ -580,7 +576,17 @@ async function calc_bibvar(bvar){
 	return [];
 }
 
-async function calc_word(wrd, prev){
+function no_tildes_word(wrd){
+	const ntil = wrd.replace(/Á/g, 'A').replace(/á/g, 'a')
+		.replace(/É/g, 'E').replace(/é/g, 'e')
+		.replace(/Í/g, 'I').replace(/í/g, 'i')
+		.replace(/Ó/g, 'O').replace(/ó/g, 'o')
+		.replace(/Ú/g, 'U').replace(/ú/g, 'u');
+	return ntil;
+}
+
+async function calc_word(word, prev){
+	const wrd = no_tildes_word(word);
 	if(gvar.dbg_biblang){
 		console.log("calc_word");
 		console.log(wrd);

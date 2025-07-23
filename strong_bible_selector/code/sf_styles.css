@@ -615,15 +615,12 @@ a.exam_ref:hover {
 	padding: 0.1em 0.1em 0.1em 0.1em;
 }
 
-.grid_tool {
-	display: grid;
-	margin-left: 3%;
-	margin-right: 3%;
-	grid-template-columns: 1fr;
-	grid-template-rows: auto;
-	/* grid-auto-rows: 10%; */
-	/* grid-auto-rows: auto; */
-	font-size:1em;
+.full_width {
+	width: 100%;
+}
+
+.big_font{
+	font-size: 1.5em;
 }
 
 .bib_item {
@@ -633,10 +630,20 @@ a.exam_ref:hover {
 	grid-row: auto;
 }
 
+.grid_tool {
+	display: grid;
+	margin-left: 10%;
+	margin-right: 10%;
+	grid-template-columns: 15fr 15fr 15fr 15fr 15fr;
+	grid-template-rows: auto;
+	font-size:1em;
+}
+
 .select_item {
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
-	grid-column: 1;
+	grid-column-start: 1;
+	grid-column-end: -1;
 	grid-row: auto;
 	border: 0.2vw solid #ff0000;
 }
@@ -644,7 +651,9 @@ a.exam_ref:hover {
 .input_item {
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
-	grid-column: 1;
+	font-size:1.5em;
+	grid-column-start: 1;
+	grid-column-end: -1;
 	grid-row: auto;
 }
 
@@ -652,7 +661,8 @@ a.exam_ref:hover {
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
 	text-align: center;  
-	grid-column: 1;
+	grid-column-start: 1;
+	grid-column-end: -1;
 	grid-row: auto;
 	font-size:1.5em;
 	border: 0.2vw solid #00ff00;
@@ -661,56 +671,10 @@ a.exam_ref:hover {
 .results_item {
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
-	grid-column: 1;
+	grid-column-start: 1;
+	grid-column-end: -1;
 	grid-row: auto;
 	border: 0.2vw solid #ffff00;
-}
-
-@media (min-width: 600px) and (orientation:landscape) {
-	.grid_tool {
-		display: grid;
-		margin-left: 10%;
-		margin-right: 10%;
-		grid-template-columns: 15fr 15fr 15fr;
-		grid-template-rows: auto;
-		/* grid-auto-rows: 10%; */
-		/* grid-auto-rows: auto; */
-		font-size:1em;
-	}
-
-	.select_item {
-		margin-top: 0.2em;
-		margin-bottom: 0.2em;
-		grid-column: 4 / 1;
-		grid-row: auto;
-		border: 0.2vw solid #ff0000;
-	}
-
-	.input_item {
-		margin-top: 0.2em;
-		margin-bottom: 0.2em;
-		grid-column: 4 / 1;
-		grid-row: auto;
-	}
-
-	.search_button_item {
-		margin-top: 0.2em;
-		margin-bottom: 0.2em;
-		text-align: center;  
-		grid-column: 4 / 1;
-		grid-row: auto;
-		font-size:1.5em;
-		border: 0.2vw solid #00ff00;
-	}
-
-	.results_item {
-		margin-top: 0.2em;
-		margin-bottom: 0.2em;
-		grid-column: 4 / 1;
-		grid-row: auto;
-		border: 0.2vw solid #ffff00;
-	}
-
 }
 
 
@@ -745,6 +709,9 @@ a.exam_ref:hover {
 	padding: 1em 1em;
 	padding-left: 1vw;
 	position: relative;	
+
+@media (min-width: 600px) and (orientation:landscape) {
+}
 
 
 */

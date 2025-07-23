@@ -11,7 +11,15 @@ import { init_biblang, eval_biblang_command } from './sf_biblang_mgr.js'
 
 //import { keyb_handler, 
 //} from './sf_tokenizer.js';
+/*
+id_search
+id_old_test
+id_new_test
+id_loc_bib
+id_select
+id_find
 
+*/
 
 
 export let gvar = {};
@@ -36,15 +44,23 @@ const new_crit_txt = {
 	"4": "Nestle 1904 Text (NES)",
 };
 
-const bib_version = {
+const loc_bible = {
 	"1": "Reina-Valera 1909 (RVA)",
 	"2": "King James Bible (KJV)",
 	"3": "Sagrada Biblia Libre para el Mundo (SBLM)",
 	"4": "World Estandard Bible (WEB)",
-	"5": "Critical text in minuscule (MIN)",
-	"6": "Critical text in mayuscule (MAY)",
-	"7": "Critical text in ASCII (ASC)",
-	"8": "Critical text in Strong codes (SCO)",
+};
+
+const tgt_rx = {
+	"1": "Old Testament Critical text (OT)",
+	"2": "New Testament Critical text (NT)",
+	"3": "Local bible (LOC)",
+};
+
+const out_txt = {
+	"1": "Critical text minuscule (MIN)",
+	"2": "Critical text mayuscule (MAY)",
+	"3": "ASCII (ASC)",
 };
 
 const id_crit_sele = "id_crit_sele";
@@ -70,39 +86,34 @@ function set_selec(dv_ret, val_sel){
 	}
 }
 
+function add_menu(dv_menu, ops_menu){
+	dv_menu.addEventListener('click', function() {
+		const all_ops = Object.values(ops_menu);
+		toggle_select_option(dv_menu, id_crit_sele, all_ops, function(dv_ret, dv_ops, val_sel, idx_sel){
+			set_selec(dv_ret, val_sel);
+			dv_ops.remove();
+		});
+		return;
+	});
+}
+
 function init_menus(){
 	
 	const dv_old_tes = document.getElementById("id_old_test");
-	dv_old_tes.addEventListener('click', function() {
-		const all_ops = Object.values(old_crit_txt);
-		toggle_select_option(dv_old_tes, id_crit_sele, all_ops, function(dv_ret, dv_ops, val_sel, idx_sel){
-			set_selec(dv_ret, val_sel);
-			dv_ops.remove();
-		});
-		return;
-	});
+	add_menu(dv_old_tes, old_crit_txt);
 	const dv_new_tes = document.getElementById("id_new_test");
-	dv_new_tes.addEventListener('click', function() {
-		const all_ops = Object.values(new_crit_txt);
-		toggle_select_option(dv_new_tes, id_crit_sele, all_ops, function(dv_ret, dv_ops, val_sel, idx_sel){
-			set_selec(dv_ret, val_sel);
-			dv_ops.remove();
-		});
-		return;
-	});
-	const dv_version = document.getElementById("id_version");
-	dv_version.addEventListener('click', function() {
-		const all_ops = Object.values(bib_version);
-		toggle_select_option(dv_version, id_crit_sele, all_ops, function(dv_ret, dv_ops, val_sel, idx_sel){
-			set_selec(dv_ret, val_sel);
-			dv_ops.remove();
-		});
-		return;
-	});
+	add_menu(dv_new_tes, new_crit_txt);
+	const dv_loc_bib = document.getElementById("id_loc_bib");
+	add_menu(dv_loc_bib, loc_bible);
+	const dv_rx_tgt = document.getElementById("id_rx_tgt");
+	add_menu(dv_rx_tgt, tgt_rx);
+	const dv_out_txt = document.getElementById("id_out_txt");
+	add_menu(dv_out_txt, out_txt);
 
 	const dv_search = document.getElementById("id_search");
 	const inp_box = document.createElement("input");
 	inp_box.id = id_expression;
+	inp_box.classList.add("full_width", "big_font");
 	inp_box.value = "G66";
 	inp_box.type = "text";
 	dv_search.appendChild(inp_box);
@@ -127,83 +138,34 @@ function do_select(){
 	const oldt = dv_old_tes.innerHTML.trim();
 	const dv_new_tes = document.getElementById("id_new_test");
 	const newt = dv_new_tes.innerHTML.trim();
-	const dv_version = document.getElementById("id_version");
-	let bib = dv_version.innerHTML.trim();
+	const dv_loc_bib = document.getElementById("id_loc_bib");
+	const loc_bib = dv_loc_bib.innerHTML.trim();
+	const dv_rx_tgt = document.getElementById("id_rx_tgt");
+	const rxtgt = dv_rx_tgt.innerHTML.trim();
+	const dv_out_txt = document.getElementById("id_out_txt");
+	const otxt = dv_out_txt.innerHTML.trim();
 	const dv_expr = document.getElementById(id_expression);
 	const expr = dv_expr.value.trim();
 
 	gvar.biblang.curr_OT = oldt;
 	gvar.biblang.curr_NT = newt;
-	gvar.biblang.curr_LOC = bib;
+	gvar.biblang.curr_LOC = loc_bib;
+	
+	const suf_tgt = rxtgt.toLowerCase();
+	const rxin = "rx:" + suf_tgt;		// MUST MATCH ONE OF rx_in_nams in sf_biblang_mgr.js
+	const wdin = "wd:" + suf_tgt;		// MUST MATCH ONE OF wd_in_nams in sf_biblang_mgr.js
+	gvar.biblang.regex_input = rxin;
+	gvar.biblang.word_input = wdin;
 	
 	eval_biblang_command(expr).then((all_vrs) => {
-		let conv_fn = null;
-		fill_verses(gvar.biblang.curr_LOC, all_vrs, conv_fn);
-	});
-	
-	
-	/*
-	let crit = oldt;
-	if(expr.startsWith(GREEK_PREFIX)){
-		crit = newt;
-	}
-	if((bib == "MIN") || (bib == "MAY") || (bib == "ASCII")){
-		if((bib == "MIN") || (bib == "MAY")){
-			conv_fn = verse_to_hebrew;
-			if(crit == newt){
-				conv_fn = verse_to_greek;
-			} 
-		}
-		bib = crit + "_BIB";
-	}
-	
-	if(DEBUG_SELECTOR){
-		console.log("oldt=" + oldt);
-		console.log("newt=" + newt);
-		console.log("bib=" + bib);
-		console.log("expr='" + expr + "'");
-		console.log("crit=" + crit);
-	}
-	const dv_verses = document.getElementById("id_verses");
-	dv_verses.innerHTML = "";
-	
-	get_scode_verses(crit, expr).then((resp) => {
-		//const all_v = JSON.stringify(resp, null, "  ");
-		const all_vrs = resp.split(' ');
-		fill_verses(bib, all_vrs, conv_fn);
-	});
-	*/
+		fill_verses(all_vrs);
+	});	
 }	
 
 export async function start_srch_mgr(curr_lang){
 	init_lang(curr_lang);
 	init_biblang(curr_lang);
 	init_menus();
-}
-
-function fill_verses(bib_cod, all_vrs, conv_fn){
-	const dv_verses = document.getElementById("id_verses");
-	dv_verses.innerHTML = "";
-	//const all_vrs = Object.keys(all_found);
-	let ii = 0;
-	for(ii = 0; ii < all_vrs.length; ii++){
-		const cod_ver = all_vrs[ii].split(':');
-		const id_ver = cod_ver.join('_');
-		const dv_ver = document.createElement("div");
-		dv_ver.id = id_ver;
-		dv_ver.innerHTML = id_ver;
-		dv_verses.appendChild(dv_ver);
-		
-		const bibobj = {};
-		bibobj.bible = bib_cod;
-		bibobj.book = cod_ver[0];
-		bibobj.chapter = cod_ver[1];
-		bibobj.verse = cod_ver[2];
-		
-		bibobj_to_bibtxt(bibobj, conv_fn).then((vs_txt) => {
-			dv_ver.innerHTML = vs_txt;
-		});
-	}
 }
 
 const hebrew_chars = {
@@ -339,13 +301,43 @@ function verse_to_hebrew(verse){
 	return heb.join(' ');
 }
 
-/*
-id_search
-id_old_test
-id_new_test
-id_version
-id_select
-id_find
+function fill_verses(all_vrs){
+	const bib_cod = gvar.biblang.curr_LOC;
+	const conv_fn = null;
+	
+	const dv_verses = document.getElementById("id_verses");
+	dv_verses.innerHTML = "";
+	//const all_vrs = Object.keys(all_found);
+	let ii = 0;
+	for(ii = 0; ii < all_vrs.length; ii++){
+		const cod_ver = all_vrs[ii].split(':');
+		const id_ver = cod_ver.join('_');
+		const dv_ver = document.createElement("div");
+		dv_ver.id = id_ver;
+		dv_ver.innerHTML = id_ver;
+		dv_verses.appendChild(dv_ver);
+		
+		const bibobj = {};
+		bibobj.bible = bib_cod;
+		bibobj.book = cod_ver[0];
+		bibobj.chapter = cod_ver[1];
+		bibobj.verse = cod_ver[2];
+		
+		bibobj_to_bibtxt(bibobj, conv_fn).then((vs_txt) => {
+			dv_ver.innerHTML = vs_txt;
+		});
+	}
+}
 
-*/
-
+	/*
+	if((bib == "MIN") || (bib == "MAY") || (bib == "ASCII")){
+		if((bib == "MIN") || (bib == "MAY")){
+			conv_fn = verse_to_hebrew;
+			if(crit == newt){
+				conv_fn = verse_to_greek;
+			} 
+		}
+		bib = crit + "_BIB";
+	}
+	*/
+	
