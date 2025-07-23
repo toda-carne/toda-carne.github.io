@@ -65,20 +65,13 @@ const LOC_nams = {
 };
 
 const out_nams = {
-	"loc":1,
-	"txt":1,
 	"asc":1,
 	"min":1,
 	"may":1,
-	"sco":1,
 };
 
 const size_nams = {
-	"loc":1,
-	"txt":1,
-	"asc":1,
-	"min":1,
-	"may":1,
+	"sco":1,
 	"rx":1,			// CAREFUL. if you change this, then also file "size_output.rx" occurences.
 	"wd":1,			// CAREFUL. if you change this, then also file "size_output.wd" occurences.
 };
@@ -98,6 +91,16 @@ const wd_in_nams = {
 const rx_insen = "rx:i";
 const rx_notisen = "rx:ni";
 const dbg_lang = "dbg";
+const nodbg_lang = "nodbg";
+
+function size_outputs_to_all(){
+	const sizes = Object.keys(gvar.biblang.size_output);
+	let ii = 0;
+	for(ii = 0; ii < sizes.length; ii++){
+		const kk = sizes[ii];
+		gvar.biblang.size_output[kk] = "all";
+	}
+}
 
 export function init_biblang(lng){
 	gvar.biblang = {};
@@ -115,11 +118,7 @@ export function init_biblang(lng){
 	
 	if(gvar.biblang.size_output == null){ gvar.biblang.size_output = {}; }
 	
-	gvar.biblang.size_output.loc = "all";
-	gvar.biblang.size_output.txt = 1;
-	gvar.biblang.size_output.asc = "all";
-	gvar.biblang.size_output.min = "all";
-	gvar.biblang.size_output.may = "all";
+	size_outputs_to_all();
 	gvar.biblang.size_output.rx = 5;
 	gvar.biblang.size_output.wd = 5;
 
@@ -515,12 +514,7 @@ async function calc_bibvar(bvar){
 		console.log(bvar);
 	}
 	if(nam == 'all'){
-		const sizes = Object.keys(gvar.biblang.size_output);
-		let ii = 0;
-		for(ii = 0; ii < sizes.length; ii++){
-			const kk = sizes[ii];
-			gvar.biblang.size_output[kk] = "all";
-		}
+		size_outputs_to_all();
 		return [];
 	}
 	if(kk == '.'){
@@ -551,6 +545,10 @@ async function calc_bibvar(bvar){
 		}
 		if(vr == dbg_lang){
 			gvar.dbg_biblang = true;
+			if(gvar.dbg_biblang){ console.log("dbg_biblang ON"); }
+		}
+		if(vr == nodbg_lang){
+			gvar.dbg_biblang = false;
 			if(gvar.dbg_biblang){ console.log("dbg_biblang ON"); }
 		}
 	}
@@ -650,6 +648,7 @@ function to_insenitive_bib(bib){
 	if(bib == "SBLM"){
 		return "SBLMi";
 	}
+	return bib;
 }
 
 async function find_regex(bib, num, rx, prev){	

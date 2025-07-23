@@ -157,6 +157,8 @@ function do_select(){
 	gvar.biblang.regex_input = rxin;
 	gvar.biblang.word_input = wdin;
 	
+	gvar.biblang.output = otxt.toLowerCase();
+	
 	eval_biblang_command(expr).then((all_vrs) => {
 		fill_verses(all_vrs);
 	});	
@@ -236,7 +238,7 @@ const ascii_to_hebrew = {
 't':hebrew_chars.TAV,
 };
 
-const ascii_to_greek = {
+const ascii_to_min_greek = {
 'a':'α',
 'b':'β',
 'g':'γ',
@@ -273,15 +275,64 @@ const ascii_to_greek = {
 'w':'ω',
 };
 
-function word_to_greek(word){
+const ascii_to_may_greek = {
+'a':'Α',
+'b':'Β',
+'g':'Γ',
+'d':'Δ',
+'e':'Ε',
+'F':'Ϝ',
+'N':'Ͷ',
+'S':'Ϛ',
+'z':'Ζ',
+'H':'Ͱ',
+'h':'Η',
+'q':'Θ',
+'i':'Ι',
+'j':'Ϳ',
+'k':'Κ',
+'l':'Λ',
+'m':'Μ',
+'n':'Ν',
+'x':'Ξ',
+'o':'Ο',
+'p':'Π',
+'M':'Ϻ',
+'K':'Ϟ',
+'Q':'Ϙ',
+'r':'Ρ',
+'s':'Σ',
+'s':'Σ',
+'Z':'ͼ',
+'t':'Τ',
+'u':'Υ',
+'f':'Φ',
+'c':'Χ',
+'y':'Ψ',
+'w':'Ω',
+};
+
+function word_to_min_greek(word){
 	const letras = word.split('');
-	let gre = letras.map(ll => ascii_to_greek[ll]);
+	let gre = letras.map(ll => ascii_to_min_greek[ll]);
 	return gre.join('');
 }
 
-function verse_to_greek(verse){
+function verse_to_min_greek(verse){
 	const all_ww = verse.split(' ');
-	let gre = all_ww.map(ww => word_to_greek(ww));
+	let gre = all_ww.map(ww => word_to_min_greek(ww));
+	return gre.join(' ');
+}
+
+function word_to_may_greek(word){
+	const letras = word.split('');
+	let gre = letras.map(ll => ascii_to_may_greek[ll]);
+	return gre.join('');
+}
+
+function verse_to_may_greek(verse){
+	const all_ww = verse.split(' ');
+	let gre = all_ww.map(ww => word_to_may_greek(ww));
 	return gre.join(' ');
 }
 
@@ -302,8 +353,49 @@ function verse_to_hebrew(verse){
 }
 
 function fill_verses(all_vrs){
-	const bib_cod = gvar.biblang.curr_LOC;
-	const conv_fn = null;
+	const oldt = gvar.biblang.curr_OT;
+	const newt = gvar.biblang.curr_NT;
+	const loc_bib = gvar.biblang.curr_LOC;
+	let otxt = gvar.biblang.output.toUpperCase();
+	const dv_old_tes = document.getElementById("id_old_test");
+	dv_old_tes.innerHTML = oldt;
+	const dv_new_tes = document.getElementById("id_new_test");
+	dv_new_tes.innerHTML = newt;
+	const dv_loc_bib = document.getElementById("id_loc_bib");
+	dv_loc_bib.innerHTML = loc_bib;
+	
+	const rxin = gvar.biblang.regex_input;
+	const rxi_val = (rxin.split(":"))[1].toUpperCase();
+
+	if(rxi_val == "LOC"){
+		otxt = "ASC";
+	}
+	
+	const dv_out_txt = document.getElementById("id_out_txt");
+	dv_out_txt.innerHTML = otxt;
+	
+	const dv_rx_tgt = document.getElementById("id_rx_tgt");
+	dv_rx_tgt.innerHTML = rxi_val;
+	
+	let bib_ot = gvar.biblang.curr_LOC;
+	let bib_nt = gvar.biblang.curr_LOC;
+	let conv_fn_ot = null;
+	let conv_fn_nt = null;
+	if(rxi_val == "OT"){
+		bib_ot = gvar.biblang.curr_OT;
+		if((otxt == "MAY") || (otxt == "MIN")){
+			conv_fn_ot = verse_to_hebrew;
+		}
+	}
+	if(rxi_val == "NT"){
+		bib_nt = gvar.biblang.curr_NT;
+		if(otxt == "MAY"){
+			conv_fn_nt = verse_to_may_greek;
+		}
+		if(otxt == "MIN"){
+			conv_fn_nt = verse_to_min_greek;
+		}
+	}
 	
 	const dv_verses = document.getElementById("id_verses");
 	dv_verses.innerHTML = "";
@@ -317,6 +409,13 @@ function fill_verses(all_vrs){
 		dv_ver.innerHTML = id_ver;
 		dv_verses.appendChild(dv_ver);
 		
+		let bib_cod = bib_ot;
+		let conv_fn = conv_fn_ot;
+		if(cod_ver[0] > 39){
+			bib_cod = bib_nt;
+			conv_fn = conv_fn_nt;
+		}
+		
 		const bibobj = {};
 		bibobj.bible = bib_cod;
 		bibobj.book = cod_ver[0];
@@ -328,16 +427,4 @@ function fill_verses(all_vrs){
 		});
 	}
 }
-
-	/*
-	if((bib == "MIN") || (bib == "MAY") || (bib == "ASCII")){
-		if((bib == "MIN") || (bib == "MAY")){
-			conv_fn = verse_to_hebrew;
-			if(crit == newt){
-				conv_fn = verse_to_greek;
-			} 
-		}
-		bib = crit + "_BIB";
-	}
-	*/
 	
