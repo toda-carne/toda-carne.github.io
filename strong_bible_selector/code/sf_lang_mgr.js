@@ -265,6 +265,7 @@ function init_common(){
 
 function init_es(){
 	init_common();
+	gvar.lang = 'es';
 	gvar.book_names = num2book_es;
 	gvar.glb_all_books = num2book_es;
 	gvar.num2book = num2book_es;
@@ -274,6 +275,7 @@ function init_es(){
 
 function init_en(){
 	init_common();
+	gvar.lang = 'en';
 	gvar.book_names = num2book_en;
 	gvar.glb_all_books = num2book_en;
 	gvar.num2book = num2book_en;
