@@ -47,6 +47,149 @@ const local_text_files = {
 	GRE_ES : loc_dir + "GRE_ES.js",
 };
 
+const hebrew_chars = {
+ALEF:'\u05D0',
+BET:'\u05D1',
+GIMEL:'\u05D2',
+DALET:'\u05D3',
+HE:'\u05D4',
+VAV:'\u05D5',
+ZAYIN:'\u05D6',
+HET:'\u05D7',
+TET:'\u05D8',
+YOD:'\u05D9',
+F_KAF:'\u05DA',
+KAF:'\u05DB',
+LAMED:'\u05DC',
+F_MEM:'\u05DD',
+MEM:'\u05DE',
+F_NUN:'\u05DF',
+NUN:'\u05E0',
+SAMEKH:'\u05E1',
+AYIN:'\u05E2',
+F_PE:'\u05E3',
+PE:'\u05E4',
+F_TSADI:'\u05E5',
+TSADI:'\u05E6',
+KUF:'\u05E7',
+RESH:'\u05E8',
+SHIN:'\u05E9',
+TAV:'\u05EA',
+};
+
+const ascii_heb_finals = {
+'c':1,
+'m':1,
+'n':1,
+'f':1,
+'z':1,
+}
+
+const ascii_to_hebrew = {
+'e':hebrew_chars.ALEF,
+'b':hebrew_chars.BET,
+'g':hebrew_chars.GIMEL,
+'d':hebrew_chars.DALET,
+'h':hebrew_chars.HE,
+'v':hebrew_chars.VAV,
+'x':hebrew_chars.ZAYIN,
+'k':hebrew_chars.HET,
+'p':hebrew_chars.TET,
+'i':hebrew_chars.YOD,
+'cf':hebrew_chars.F_KAF,
+'c':hebrew_chars.KAF,
+'l':hebrew_chars.LAMED,
+'mf':hebrew_chars.F_MEM,
+'m':hebrew_chars.MEM,
+'nf':hebrew_chars.F_NUN,
+'n':hebrew_chars.NUN,
+'s':hebrew_chars.SAMEKH,
+'a':hebrew_chars.AYIN,
+'ff':hebrew_chars.F_PE,
+'f':hebrew_chars.PE,
+'zf':hebrew_chars.F_TSADI,
+'z':hebrew_chars.TSADI,
+'q':hebrew_chars.KUF,
+'r':hebrew_chars.RESH,
+'w':hebrew_chars.SHIN,
+'t':hebrew_chars.TAV,
+};
+
+const ascii_to_min_greek = {
+'a':'α',
+'b':'β',
+'g':'γ',
+'d':'δ',
+'e':'ε',
+'F':'ϝ',
+'N':'ͷ',
+'S':'ϛ',
+'z':'ζ',
+'H':'ͱ',
+'h':'η',
+'q':'θ',
+'i':'ι',
+'j':'ϳ',
+'k':'κ',
+'l':'λ',
+'m':'μ',
+'n':'ν',
+'x':'ξ',
+'o':'ο',
+'p':'π',
+'M':'ϻ',
+'K':'ϟ',
+'Q':'ϙ',
+'r':'ρ',
+'s':'ς',
+'s':'σ',
+'Z':'ͼ',
+'t':'τ',
+'u':'υ',
+'f':'φ',
+'c':'χ',
+'y':'ψ',
+'w':'ω',
+};
+
+const ascii_to_may_greek = {
+'a':'Α',
+'b':'Β',
+'g':'Γ',
+'d':'Δ',
+'e':'Ε',
+'F':'Ϝ',
+'N':'Ͷ',
+'S':'Ϛ',
+'z':'Ζ',
+'H':'Ͱ',
+'h':'Η',
+'q':'Θ',
+'i':'Ι',
+'j':'Ϳ',
+'k':'Κ',
+'l':'Λ',
+'m':'Μ',
+'n':'Ν',
+'x':'Ξ',
+'o':'Ο',
+'p':'Π',
+'M':'Ϻ',
+'K':'Ϟ',
+'Q':'Ϙ',
+'r':'Ρ',
+'s':'Σ',
+'s':'Σ',
+'Z':'ͼ',
+'t':'Τ',
+'u':'Υ',
+'f':'Φ',
+'c':'Χ',
+'y':'Ψ',
+'w':'Ω',
+};
+
+
 export async function get_text_analysis(bib, book, chapter, verse){
 	const asc = await get_bible_verse(bib, book, chapter, verse);
 	const sbib = bib + "_S";
@@ -350,5 +493,45 @@ function get_loc_book_nam(book){
 	}
 	let book_nam =  gvar.glb_all_books[num];  
 	return book_nam;
+}
+
+function word_to_min_greek(word){
+	const letras = word.split('');
+	let gre = letras.map(ll => ascii_to_min_greek[ll]);
+	return gre.join('');
+}
+
+export function verse_to_min_greek(verse){
+	const all_ww = verse.split(' ');
+	let gre = all_ww.map(ww => word_to_min_greek(ww));
+	return gre.join(' ');
+}
+
+function word_to_may_greek(word){
+	const letras = word.split('');
+	let gre = letras.map(ll => ascii_to_may_greek[ll]);
+	return gre.join('');
+}
+
+export function verse_to_may_greek(verse){
+	const all_ww = verse.split(' ');
+	let gre = all_ww.map(ww => word_to_may_greek(ww));
+	return gre.join(' ');
+}
+
+function word_to_hebrew(word){
+	const letras = word.split('');
+	const last = letras[letras.length - 1];
+	if(ascii_heb_finals[last] != null){
+		letras[letras.length - 1] = last + 'f';
+	}
+	let heb = letras.map(ll => ascii_to_hebrew[ll]);
+	return heb.join('');
+}
+
+export function verse_to_hebrew(verse){
+	const all_ww = verse.split(' ');
+	let heb = all_ww.map(ww => word_to_hebrew(ww));
+	return heb.join(' ');
 }
 
