@@ -47,7 +47,7 @@ export function toggle_select_option(dv_return, id_selec_men, all_options_arr, o
 		});
 	});
 
-	scroll_to_top(dv_options);
+	//scroll_to_top(dv_options);
 }
 
 function add_option(dv_parent, id_option, label, handler, item_cls_arr){
@@ -71,7 +71,7 @@ function add_option(dv_parent, id_option, label, handler, item_cls_arr){
 export function scroll_to_top(dv_elem) {
 	if(dv_elem == null){ return; }
 	const rect = dv_elem.getBoundingClientRect();
-	const dv_content = document.getElementById("id_exam_content");
+	const dv_content = document.getElementById("id_tool_content");
 	if(dv_content == null){
 		console.error("dv_content == null");
 		return;
