@@ -416,7 +416,7 @@ async function import_bible(bib_cod){
 	gvar.full_bible[bib_cod] = md_bib.bib_verses;	
 }
 
-export async function bibobj_to_bibtxt(bibobj, conv_fn){
+export async function bibobj_to_bibtxt(bibobj, conv_fn, id_txt){
 	const cit_obj = JSON.parse(JSON.stringify(bibobj));
 	cit_obj.bib_ver = "text";
 	cit_obj.site = "biblehub";
@@ -434,7 +434,11 @@ export async function bibobj_to_bibtxt(bibobj, conv_fn){
 		}
 	}
 	if((bibobj.last_verse != null) && (bibobj.last_verse != "")){ vcit = vcit + "-" + bibobj.last_verse; }
-	const btxt = `<a class='exam_ref' href="${vhref}"> ${vcit} </a><br><b> ${vtxt} </b>`;
+	let id_sec = "";
+	if(id_txt != null){
+		id_sec = ` id="${id_txt}" `;
+	}
+	const btxt = `<a class='exam_ref' href="${vhref}"> ${vcit} </a><br><div ${id_sec}><b> ${vtxt} </b></div>`;
 	return btxt;
 }
 

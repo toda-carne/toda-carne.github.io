@@ -382,6 +382,21 @@ a.exam_ref:hover {
 	border: 0.2vw solid #ffff00;
 }
 
+.grid_txt_analysis {
+	display: grid;
+	margin-left: 10%;
+	margin-right: 10%;
+	grid-template-columns: 15fr 15fr 15fr 15fr 15fr;
+	grid-template-rows: auto;
+	font-size:1em;
+}
+
+.txt_ana_item {
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+	grid-row: auto;
+}
+
 
 /*
 	align-content: center center;

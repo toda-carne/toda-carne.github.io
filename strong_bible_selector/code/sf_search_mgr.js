@@ -2,7 +2,7 @@
 import { get_new_dv_under, scroll_to_top, toggle_select_option, 
 } from './sf_select_option_mgr.js';
 
-import { bibobj_to_bibtxt, verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, 
+import { bibobj_to_bibtxt, verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, get_text_analysis, 
 } from './sf_bible_mgr.js';
 
 import { get_scode_verses, } from './sf_strong_mgr.js';
@@ -25,6 +25,7 @@ id_find
 export let gvar = {};
 
 
+const id_grid_text_analysis = "id_grid_text_analysis";
 
 const DEBUG_SELECTOR = true;
 
@@ -240,9 +241,48 @@ function fill_verses(all_vrs){
 		bibobj.chapter = cod_ver[1];
 		bibobj.verse = cod_ver[2];
 		
-		bibobj_to_bibtxt(bibobj, conv_fn).then((vs_txt) => {
+		const id_txt = "id_verse_" + ii;
+		
+		bibobj_to_bibtxt(bibobj, conv_fn, id_txt).then((vs_txt) => {
 			dv_ver.innerHTML = vs_txt;
+			const dv_txt = document.getElementById(id_txt);
+			dv_txt.addEventListener('click', async function() {
+				await toggle_text_analysis(dv_txt, bibobj);
+			});
 		});
 	}
 }
 	
+async function toggle_text_analysis(dv_txt, bibobj){
+	var dv_ana = get_new_dv_under(dv_txt, id_grid_text_analysis);
+	if(dv_ana == null){
+		return;
+	}
+	dv_ana.classList.add("grid_txt_analysis");
+	
+	const n2b = gvar.num2book_en;
+	const book = Number(bibobj.book);
+	const chapter = bibobj.chapter;
+	const verse = bibobj.verse;
+	
+	let bib = gvar.biblang.curr_OT;
+	if(book > 39){
+		bib = gvar.biblang.curr_NT;
+	}
+	const full_ana = await get_text_analysis(bib, n2b[book], chapter, verse);
+	
+	console.log("TEXT_ANALYSIS_OF " + dv_txt.id);
+	console.log(bibobj);
+	console.log(full_ana);
+	
+	const toks = full_ana.ana;
+	let ii = 0;
+	for(; ii < toks.length; ii++){
+		const tok = toks[ii];
+		const dv_tok = dv_ana.appendChild(document.createElement("div"));
+		dv_tok.classList.add("txt_ana_item");
+		dv_tok.style.gridColumnStart = 1;
+		dv_tok.style.gridColumnEnd = -1;
+		dv_tok.innerHTML = tok.id + " " + tok.sco + " :" + tok.tra;
+	}
+}
