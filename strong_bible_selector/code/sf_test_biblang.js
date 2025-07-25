@@ -6,7 +6,7 @@ import { init_lang, } from './sf_lang_mgr.js';
 import { diffSequence } from './sf_diff_sequence.js';
 import { distance, closest,  } from './sf_word_dist.js';
 
-import { get_bible_verse, find_ana, } from './sf_bible_mgr.js';
+import { get_bible_verse, find_ana, get_text_analysis, } from './sf_bible_mgr.js';
 
 async function main_selector(){
 	if (process.argv.length < 3) {
@@ -73,6 +73,9 @@ async function main_diff_bib(){
 	
 	console.log("" + bib + ":" + lbib + ":" + book + ":" + chapter + ":" + verse);
 	
+	const ana = await get_text_analysis(bib, n2b[book], chapter, verse);
+	
+	/*
 	const asc = await get_bible_verse(bib, n2b[book], chapter, verse);
 	const loc = await get_bible_verse(lbib, n2b[book], chapter, verse);
 
@@ -99,6 +102,7 @@ async function main_diff_bib(){
 	
 	const comm = find_ana(vasc, vloc, ana);
 	console.log(comm);
+	*/
 	console.log(JSON.stringify(ana, null, " "));
 	
 }

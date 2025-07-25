@@ -47,21 +47,32 @@ const local_text_files = {
 	GRE_ES : loc_dir + "GRE_ES.js",
 };
 
-export async function get_text_analysis(bib_cod, book, chapter, verse){
-	const asc = await get_bible_verse(bib_cod, book, chapter, verse);
+export async function get_text_analysis(bib, book, chapter, verse){
+	const asc = await get_bible_verse(bib, book, chapter, verse);
 	const sbib = bib + "_S";
 	const sco = await get_bible_verse(sbib, book, chapter, verse);
 	let lpref = "HEB";
-	if(book > 39){
+	const num_book = gvar.book2num_en[book];
+	if(num_book > 39){
 		lpref = "GRE";
 	}
 	const lbib = lpref + "_LOC";
+	console.log("" + lbib + " " + book + "_" + chapter + ":" + verse);
 	const loc = await get_bible_verse(lbib, book, chapter, verse);
 
 	const ana = get_obj_analysis(asc, sco, loc);
 	
 	const ltra = lpref + "_" + gvar.lang.toUpperCase();
 	await fill_translation(ltra, ana);
+	
+	const txt_ana = {
+		tasc: asc,
+		tsco: sco,
+		tloc: loc,
+		ana: ana,
+	};
+	
+	return txt_ana;
 }
 
 function get_obj_analysis(asc, sco, loc){
@@ -76,13 +87,45 @@ function get_obj_analysis(asc, sco, loc){
 		const arr = tok.split(":");
 		return { id: arr[0], idtra: arr[1], };
 	});
-	const cri = vasc.map((idval, ii) => {
-		return { id: idval, sco: vsco[ii], idx: ii, };
-	});
 	const comm = find_ana(vasc, vloc, ana);
 	
+	fill_scodes(ana, vsco, vasc);
 	// [ { id: "asc", sco: "sco"; txt: "g/h"; tra: "tra"; idtra: "idtra"; is_cri: "T/F" } , ... ]
 	return ana;
+}
+
+function fill_scodes(ana, vsco, vasc){
+	let ii = 0;
+	for(; ii < ana.length; ii++){
+		const obj = ana[ii];
+		if(obj.idx1 != null){
+			const idx1 = obj.idx1;
+			if(! obj.comm){
+				console.err("FALSE idx1");
+			}
+			if(vasc[idx1] != obj.id){
+				console.err("FALSE idx1 (case 2)");
+			}
+			obj.sco = vsco[idx1];
+		} else if(obj.added != null){
+			fill_added_scodes(obj.added, vsco, vasc);
+		}
+		//obj.sco = vsco[]:;
+	}
+}
+
+function fill_added_scodes(added, vsco, vasc){
+	let ii = 0;
+	for(; ii < added.length; ii++){
+		const obj = added[ii];
+		if(obj.idx1 != null){
+			const idx1 = obj.idx1;
+			if(vasc[idx1] != obj.id){
+				console.err("FALSE idx1 (case 2)");
+			}
+			obj.sco = vsco[idx1];
+		} 
+	}
 }
 
 function add_common(rr, s1, nc, ii1){
@@ -91,9 +134,10 @@ function add_common(rr, s1, nc, ii1){
 	}
 }
 
-function mark_common(ana2, nc, idx){
-	for (; nc > 0; nc -= 1, idx += 1) {
-		ana2[idx].comm = true;
+function mark_common(ana2, nc, idx2, idx1){
+	for (; nc > 0; nc -= 1, idx2 += 1, idx1 += 1) {
+		ana2[idx2].comm = true;
+		ana2[idx2].idx1 = idx1;
 	}
 }
 
@@ -131,7 +175,7 @@ function add_not_common(ana2, prv2, idx2, s1, prv1, idx1){
 		if(s1[ii1] != wd1){
 			console.err("FALSE ii1");
 		}
-		obj2.added.push({id: wd1, idx:ii1});
+		obj2.added.push({id: wd1, idx1: ii1});
 		ii2 = aii2;
 		ii1++;
 	}
@@ -145,7 +189,7 @@ function add_not_common(ana2, prv2, idx2, s1, prv1, idx1){
 			if(s1[ii1] != wd1){
 				console.err("FALSE ii1 (case 2)");
 			}			
-			obj2.added.push({id: wd1, idx:ii1});
+			obj2.added.push({id: wd1, idx1: ii1});
 			ii1++;
 		}
 	}
@@ -161,7 +205,7 @@ export function find_ana(s1, s2, ana2){
 		(idx1, idx2) => Object.is(s1[idx1], s2[idx2]),
 		(n_comm, idx1, idx2) => {
 			add_common(rr, s1, n_comm, idx1);
-			mark_common(ana2, n_comm, idx2);
+			mark_common(ana2, n_comm, idx2, idx1);
 			add_not_common(ana2, prv2, idx2, s1, prv1, idx1);
 			prv1 = idx1 + n_comm - 1;
 			prv2 = idx2 + n_comm - 1;
@@ -172,8 +216,12 @@ export function find_ana(s1, s2, ana2){
 }
 
 async function fill_translation(ltra, ana){
-	const tra = {};
-	return tra;
+	let ii = 0;
+	for(; ii < ana.length; ii++){
+		const obj = ana[ii];
+		const tra = await get_local_text(ltra, obj.idtra);
+		obj.tra = tra;
+	}
 }
 
 export async function get_local_text(locid, idtxt){
