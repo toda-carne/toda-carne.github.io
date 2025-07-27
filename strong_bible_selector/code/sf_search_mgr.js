@@ -2,10 +2,9 @@
 import { get_new_dv_under, scroll_to_top, toggle_select_option, 
 } from './sf_select_option_mgr.js';
 
-import { bibobj_to_bibtxt, verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, get_text_analysis, 
+import { bibobj_to_bibtxt, verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, get_text_analysis, get_scode_verses, 
 } from './sf_bible_mgr.js';
 
-import { get_scode_verses, } from './sf_strong_mgr.js';
 import { init_lang, } from './sf_lang_mgr.js';
 import { init_biblang, eval_biblang_command } from './sf_biblang_mgr.js'
 

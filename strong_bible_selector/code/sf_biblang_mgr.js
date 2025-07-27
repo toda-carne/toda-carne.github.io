@@ -1,10 +1,9 @@
 
 
 import { isArgumentsArray, ExpressionParser } from './sf_expression_parser.js'
-import { get_scode_verses, } from './sf_strong_mgr.js';
 import { gvar, } from './sf_search_mgr.js';
 import { bib_ranges, } from './sf_bib_ranges.js';
-import { get_bible_verse, } from './sf_bible_mgr.js';
+import { get_bible_verse, get_scode_verses, dbg_log_all_loaded_files, } from './sf_bible_mgr.js';
 
 const GREEK_PREFIX = "G";
 
@@ -74,18 +73,21 @@ const size_nams = {
 	"sco":1,
 	"rx":1,			// CAREFUL. if you change this, then also file "size_output.rx" occurences.
 	"wd":1,			// CAREFUL. if you change this, then also file "size_output.wd" occurences.
+	"his":1,			// CAREFUL. if you change this, then also file "size_output.his" occurences.
 };
+
+const loc_input = "loc";
+const ot_input = "ot";
+const nt_input = "nt";
+const sco_input = "sco";
+const def_input = "def";
 
 const rx_in_nams = {
-	"rx:loc":1,
-	"rx:ot":1,		// CAREFUL. if you change this, then also file "rx:ot" occurences.
-	"rx:nt":1,		// CAREFUL. if you change this, then also file "rx:nt" occurences.
-};
-
-const wd_in_nams = {
-	"wd:loc":1,
-	"wd:ot":1,		// CAREFUL. if you change this, then also file "wd:ot" occurences.
-	"wd:nt":1,		// CAREFUL. if you change this, then also file "wd:nt" occurences.
+	"loc":1,	// use loc_input to locate and compare
+	"ot":1,		// use ot_input to locate and compare
+	"nt":1,		// use nt_input to locate and compare
+	"sco":1,	// use sco_input to locate and compare
+	"def":1,	// use def_input to locate and compare
 };
 
 const rx_insen = "rx:i";
@@ -113,14 +115,18 @@ export function init_biblang(lng){
 	}
 	
 	gvar.biblang.output = "loc";
-	gvar.biblang.regex_input = "rx:loc";
-	gvar.biblang.word_input = "wd:loc";
+	gvar.biblang.regex_input = "loc";
+	
+	gvar.biblang.history = [];
+	gvar.biblang.dbg_log = [];
 	
 	if(gvar.biblang.size_output == null){ gvar.biblang.size_output = {}; }
 	
 	size_outputs_to_all();
 	gvar.biblang.size_output.rx = 5;
 	gvar.biblang.size_output.wd = 5;
+	gvar.biblang.size_output.his = 1000;
+	gvar.biblang.size_output.dbg = 1000;
 
 	gvar.biblang.regex_insensitive = true;
 	
@@ -150,11 +156,11 @@ async function calc_and(aa, bb){
 	//const vand = vtmp.sort(cmp_verses);
 	const vand = vtmp;
 	if(gvar.dbg_biblang){
-		console.log("calc_and");
-		console.log(vaa);
-		console.log(vbb);
-		console.log(vand);
-		console.log("_____________________________");
+		add_dbg_log("calc_and");
+		add_dbg_log(vaa);
+		add_dbg_log(vbb);
+		add_dbg_log(vand);
+		add_dbg_log("_____________________________");
 	}
 	return vand;
 }
@@ -166,11 +172,11 @@ async function calc_or(aa, bb){
 	//const vor = vtmp.sort(cmp_verses);
 	const vor = vtmp;
 	if(gvar.dbg_biblang){
-		console.log("calc_or");
-		console.log(vaa);
-		console.log(vbb);
-		console.log(vor);
-		console.log("_____________________________");
+		add_dbg_log("calc_or");
+		add_dbg_log(vaa);
+		add_dbg_log(vbb);
+		add_dbg_log(vor);
+		add_dbg_log("_____________________________");
 	}
 	return vor;
 }
@@ -182,11 +188,11 @@ async function calc_not(aa, bb){
 	//const vnot = vtmp.sort(cmp_verses);
 	const vnot = vtmp;
 	if(gvar.dbg_biblang){
-		console.log("calc_not");
-		console.log(vaa);
-		console.log(vbb);
-		console.log(vnot);
-		console.log("_____________________________");
+		add_dbg_log("calc_not");
+		add_dbg_log(vaa);
+		add_dbg_log(vbb);
+		add_dbg_log(vnot);
+		add_dbg_log("_____________________________");
 	}
 	return vnot;
 }
@@ -277,24 +283,24 @@ function set_bib(inbib){
 	if(OT_nams[bib] != null){
 		gvar.biblang.curr_OT = bib;
 		if(gvar.dbg_biblang){
-			console.log("set_bib OT");
-			console.log(bib);
+			add_dbg_log("set_bib OT");
+			add_dbg_log(bib);
 		}
 		return true;
 	}
 	if(NT_nams[bib] != null){
 		gvar.biblang.curr_NT = bib;
 		if(gvar.dbg_biblang){
-			console.log("set_bib NT");
-			console.log(bib);
+			add_dbg_log("set_bib NT");
+			add_dbg_log(bib);
 		}
 		return true;
 	}
 	if(LOC_nams[bib] != null){
 		gvar.biblang.curr_LOC = bib;
 		if(gvar.dbg_biblang){
-			console.log("set_bib LOC");
-			console.log(bib);
+			add_dbg_log("set_bib LOC");
+			add_dbg_log(bib);
 		}
 		return true;
 	}
@@ -423,7 +429,7 @@ function is_bib_citation(tm){
 	return false;
 }
 
-const regex_bibvar = /^([.#])([\w\d:_.]+)$/;
+const regex_bibvar = /^([.#+-=><:])([\w\d:_.]+)$/;
 
 function is_bib_var(tm){
 	const matches = tm.match(regex_bibvar);	
@@ -449,9 +455,9 @@ async function calc_scode(scode){
 		arr_vrs = vss.split(' ');
 	}
 	if(gvar.dbg_biblang){
-		console.log("calc_scode");
-		console.log("get_scode_verses(" + bib + "," + scod + ")");
-		console.log(arr_vrs);
+		add_dbg_log("calc_scode");
+		add_dbg_log("get_scode_verses(" + bib + "," + scod + ")");
+		add_dbg_log(arr_vrs);
 	}
 	
 	const is_lxx = (gvar.biblang.curr_OT == "LXX");
@@ -467,22 +473,22 @@ async function calc_scode(scode){
 			arr_vrs = all_vrs;
 		}
 		if(gvar.dbg_biblang){
-			console.log("calc_scode LXX");
-			console.log("get_scode_verses(" + bib + "," + scod + ")");
-			console.log(arr_vrs2);
-			console.log(arr_vrs);
+			add_dbg_log("calc_scode LXX");
+			add_dbg_log("get_scode_verses(" + bib + "," + scod + ")");
+			add_dbg_log(arr_vrs2);
+			add_dbg_log(arr_vrs);
 		}
 	}
 	if(gvar.dbg_biblang){
-		console.log("_____________________________");
+		add_dbg_log("_____________________________");
 	}
 	return arr_vrs;
 }
 
 async function calc_citation(cit){
 	if(gvar.dbg_biblang){
-		console.log("calc_citation");
-		console.log(cit);
+		add_dbg_log("calc_citation");
+		add_dbg_log(cit);
 	}
 	const v1 = "" + cit.book + ":" + cit.chapter + ":" + cit.verse;
 	const v2 = "" + cit.book + ":" + cit.chapter + ":" + cit.verse_end;
@@ -492,8 +498,8 @@ async function calc_citation(cit){
 
 async function calc_verse(wrd){
 	if(gvar.dbg_biblang){
-		console.log("calc_verse");
-		console.log(wrd);
+		add_dbg_log("calc_verse");
+		add_dbg_log(wrd);
 		/*
 		const vr = wrd.split(':');
 		const vr2 = inc_verse(vr);
@@ -510,12 +516,18 @@ async function calc_bibvar(bvar){
 	const kk = bvar.kind;
 	const nam = bvar.name;
 	if(gvar.dbg_biblang){
-		console.log("calc_bibvar");
-		console.log(bvar);
+		add_dbg_log("calc_bibvar");
+		add_dbg_log(bvar);
 	}
 	if(nam == 'all'){
 		size_outputs_to_all();
 		return [];
+	}
+	if(kk == ':'){
+		if(rx_in_nams[vr] != null){
+			gvar.biblang.regex_input = vr;
+			if(gvar.dbg_biblang){ add_dbg_log("regex_input=" + vr); }
+		}
 	}
 	if(kk == '.'){
 		const set_ok = set_bib(nam);
@@ -525,31 +537,23 @@ async function calc_bibvar(bvar){
 		const vr = nam.toLowerCase();
 		if(out_nams[vr] != null){
 			gvar.biblang.output = vr;
-			if(gvar.dbg_biblang){ console.log("output=" + vr); }
-		}
-		if(rx_in_nams[vr] != null){
-			gvar.biblang.regex_input = vr;
-			if(gvar.dbg_biblang){ console.log("regex_input=" + vr); }
-		}
-		if(wd_in_nams[vr] != null){
-			gvar.biblang.word_input = vr;
-			if(gvar.dbg_biblang){ console.log("word_input=" + vr); }
+			if(gvar.dbg_biblang){ add_dbg_log("output=" + vr); }
 		}
 		if(vr == rx_insen){
 			gvar.biblang.regex_insensitive = true;
-			if(gvar.dbg_biblang){ console.log("regex_insensitive=" + vr); }
+			if(gvar.dbg_biblang){ add_dbg_log("regex_insensitive=" + vr); }
 		}
 		if(vr == rx_notisen){
 			gvar.biblang.regex_insensitive = false;
-			if(gvar.dbg_biblang){ console.log("regex_insensitive=" + vr); }
+			if(gvar.dbg_biblang){ add_dbg_log("regex_insensitive=" + vr); }
 		}
 		if(vr == dbg_lang){
 			gvar.dbg_biblang = true;
-			if(gvar.dbg_biblang){ console.log("dbg_biblang ON"); }
+			add_dbg_log("dbg_biblang ON");
 		}
 		if(vr == nodbg_lang){
+			add_dbg_log("dbg_biblang OFF");
 			gvar.dbg_biblang = false;
-			if(gvar.dbg_biblang){ console.log("dbg_biblang ON"); }
 		}
 	}
 	if(kk == '#'){
@@ -565,11 +569,10 @@ async function calc_bibvar(bvar){
 			if(size_nams[vr] != null){
 				if(gvar.biblang.size_output == null){ gvar.biblang.size_output = {}; }
 				gvar.biblang.size_output[vr] = num;
-				if(gvar.dbg_biblang){ console.log("size_output[" + vr + "]=" + num); }
+				if(gvar.dbg_biblang){ add_dbg_log("size_output[" + vr + "]=" + num); }
 			}
 		}
 	}
-	if(gvar.dbg_biblang){ console.log(gvar.biblang); }
 	
 	return [];
 }
@@ -586,14 +589,14 @@ function no_tildes_word(wrd){
 async function calc_word(word, prev){
 	const wrd = no_tildes_word(word);
 	if(gvar.dbg_biblang){
-		console.log("calc_word");
-		console.log(wrd);
+		add_dbg_log("calc_word");
+		add_dbg_log(wrd);
 	}
 	let bib = gvar.biblang.curr_LOC;
-	if(gvar.biblang.word_input == "wd:ot"){
+	if(gvar.biblang.regex_input == ot_input){
 		bib = gvar.biblang.curr_OT;
 	}
-	if(gvar.biblang.word_input == "wd:nt"){
+	if(gvar.biblang.regex_input == nt_input){
 		bib = gvar.biblang.curr_NT;
 	}
 	let num = gvar.biblang.size_output.wd;
@@ -603,14 +606,14 @@ async function calc_word(word, prev){
 
 async function calc_bibregex(rx, prev){
 	if(gvar.dbg_biblang){
-		console.log("calc_bibregex");
-		console.log(rx);
+		add_dbg_log("calc_bibregex");
+		add_dbg_log(rx);
 	}
 	let bib = gvar.biblang.curr_LOC;
-	if(gvar.biblang.regex_input == "rx:ot"){
+	if(gvar.biblang.regex_input == ot_input){
 		bib = gvar.biblang.curr_OT;
 	}
-	if(gvar.biblang.regex_input == "rx:nt"){
+	if(gvar.biblang.regex_input == nt_input){
 		bib = gvar.biblang.curr_NT;
 	}
 	let num = gvar.biblang.size_output.rx;
@@ -633,8 +636,8 @@ async function verse_match(bib, vii, rxo){
 	if(mm){
 		const vss = "" + book + ":" + chapter + ":" + verse;
 		/*if(gvar.dbg_biblang){
-			console.log("MATCHED_VERSE");
-			console.log(vtxt);
+			add_dbg_log("MATCHED_VERSE");
+			add_dbg_log(vtxt);
 		}*/
 		return vss;
 	}
@@ -662,8 +665,8 @@ async function find_regex(bib, num, rx, prev){
 	}
 	if(prev != null){
 		if(gvar.dbg_biblang){
-			console.log("find_regex PREV");
-			console.log(prev);
+			add_dbg_log("find_regex PREV");
+			add_dbg_log(prev);
 		}
 		let ii = 0;
 		const all_mm = [];
@@ -682,9 +685,9 @@ async function find_regex(bib, num, rx, prev){
 	const found = [];
 
 	if(gvar.dbg_biblang){
-		console.log("find_regex");
-		console.log(rx);
-		console.log(rxo);
+		add_dbg_log("find_regex");
+		add_dbg_log(rx);
+		add_dbg_log(rxo);
 	}
 	
 	let vii = [1, 1, 1];
@@ -701,8 +704,8 @@ async function find_regex(bib, num, rx, prev){
 		vii = inc_verse(vii);		
 	}
 	if(gvar.dbg_biblang){
-		console.log(found);
-		console.log("_____________________________");
+		add_dbg_log(found);
+		add_dbg_log("_____________________________");
 	}
 	return found;
 }
@@ -734,18 +737,49 @@ export async function eval_biblang_command(command){
 	if(par == null){
 		console.error(eval_biblang_term);
 	}
+
+	gvar.biblang.dbg_log = [];
+	
+	dbg_log_all_loaded_files();
+	
+	if(gvar.biblang.size_output.his != null){
+		const hsz = Number(gvar.biblang.size_output.his);
+		if(gvar.biblang.history == null){ gvar.biblang.history = []; }
+		const his = gvar.biblang.history;
+		while((his.length > 0) && (his.length >= hsz)){ his.shift(); }
+		his.push(command);
+	}
+	
 	if(gvar.dbg_biblang){
 		const toks = par.tokenize(command);
-		console.log("TOKENS");
-		console.log(toks);
+		add_dbg_log("TOKENS");
+		add_dbg_log(toks);
 	}
 
 	const all_vss = await par.expressionToValue(command);
 	const sorvers = all_vss.sort(cmp_verses);
 	if(gvar.dbg_biblang){
-		console.log("FINAL_RESULT");
-		console.log(sorvers);
+		add_dbg_log("FINAL_RESULT");
+		add_dbg_log(sorvers);
 	}
 	return sorvers;
 }
+
+export function add_dbg_log(obj){
+	if(! gvar.dbg_biblang){
+		return;
+	}
+	if(gvar.biblang.dbg_log == null){
+		gvar.biblang.dbg_log = [];
+	}
+	
+	const log = gvar.biblang.dbg_log;
+	const dbgsz = Number(gvar.biblang.size_output.dbg);
+	while((log.length > 0) && (log.length >= dbgsz)){ log.shift(); }
+	const msg = JSON.stringify(obj, null, " ");
+	
+	log.push(msg);
+	console.log(obj);
+}
+
 

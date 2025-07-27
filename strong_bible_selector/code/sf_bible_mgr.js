@@ -3,10 +3,25 @@ import { gvar, } from './sf_search_mgr.js';
 import { num2book_en, } from './sf_lang_mgr.js';
 import { diffSequence } from './sf_diff_sequence.js';
 import { distance, closest,  } from './sf_word_dist.js';
+import { add_dbg_log, } from './sf_biblang_mgr.js';
 
 const bibles_dir = "../data/js_bib/";
 const strongs_dir = "../data/js_sbib/";
 const loc_dir = "../data/js_loc/";
+
+const scodes_dir = "../data/js_scods/";
+
+const local_scods_files = {
+	WLC : scodes_dir + "WLC_SVERSES.js",
+	ALE : scodes_dir + "ALE_SVERSES.js",
+	TKH : scodes_dir + "TKH_SVERSES.js",
+	LXX : scodes_dir + "LXX_SVERSES.js",
+	
+	NES : scodes_dir + "NES_SVERSES.js",
+	BYZ : scodes_dir + "BYZ_SVERSES.js",
+	TR : scodes_dir + "TR_SVERSES.js",
+	WH : scodes_dir + "WH_SVERSES.js",	
+};
 
 const local_bible_files = {
 	WLC : bibles_dir + "WLC_BIB.js",
@@ -395,8 +410,12 @@ export async function get_bible_verse(bib_cod, book, chapter, verse){
 	return gvar.full_bible[bib_cod][book][chapter][verse];
 }
 
-async function import_file(bib_fl){
-	const resp = import(bib_fl);
+export async function import_file(bib_fl){
+	add_dbg_log("importing file " + bib_fl);
+	
+	const resp = await import(bib_fl);
+
+	add_dbg_log("FINISHED importing file " + bib_fl);
 	return resp;
 }
 
@@ -538,4 +557,51 @@ export function verse_to_hebrew(verse){
 	let heb = all_ww.map(ww => word_to_hebrew(ww));
 	return heb.join(' ');
 }
+
+export async function get_scode_verses(bib_cod, scode){
+	await import_scodes(bib_cod);
+	
+	let resp = gvar.full_scodes[bib_cod][scode];
+	if(resp == null){
+		resp = "";
+	}
+	return resp;
+}
+
+async function import_scodes(bib_cod){
+	if(local_scods_files[bib_cod] == null){
+		return;
+	}
+	if(gvar.full_scodes == null){
+		gvar.full_scodes = {};
+	} 
+	if(gvar.full_scodes[bib_cod] != null){
+		return;
+	}
+	const scod_fl = local_scods_files[bib_cod];
+	const md_scod = await import_file(scod_fl);
+	
+	gvar.full_scodes[bib_cod] = md_scod.scode_verses;	
+}
+
+export function dbg_log_loaded_files_from(file_names, loaded){
+	const all_kk = Object.keys(file_names);
+	let ii = 0;
+	for(ii = 0; ii < all_kk.length; ii++){
+		const nm = all_kk[ii];
+		if(loaded[nm] != null){
+			add_dbg_log("FILE " + file_names[nm] + " ALREADY LOADED AT START OF BIBLANG COMMAND");
+		}
+	}
+}
+
+export function dbg_log_all_loaded_files(){
+	if(! gvar.dbg_biblang){
+		return;
+	}
+	dbg_log_loaded_files_from(local_text_files, gvar.full_local_text);
+	dbg_log_loaded_files_from(local_scods_files, gvar.full_scodes);
+	dbg_log_loaded_files_from(local_bible_files, gvar.full_bible);
+}
+
 
