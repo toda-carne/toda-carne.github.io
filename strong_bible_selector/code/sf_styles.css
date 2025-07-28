@@ -374,7 +374,7 @@ a.exam_ref:hover {
 }
 
 .results_item {
-	height: 100vh;
+	max-height: 100vh;
 	overflow-y: scroll;
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
@@ -382,6 +382,14 @@ a.exam_ref:hover {
 	grid-column-end: -1;
 	grid-row: auto;
 	border: 0.2vw solid #ffff00;
+}
+
+.aux_item {
+	max-height: 50vh;
+	overflow-y: scroll;
+	grid-column-start: 1;
+	grid-column-end: -1;
+	grid-row: auto;
 }
 
 .grid_txt_analysis {

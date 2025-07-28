@@ -190,8 +190,8 @@ export const num2abbr = {
 	"34":"nah",
 	"35":"hab",
 	"36":"zep",
-	"37":"Hag",
-	"38":"Zec",
+	"37":"hag",
+	"38":"zec",
 	"39":"mal",
 	"40":"mat",
 	"41":"mar",
@@ -220,6 +220,65 @@ export const num2abbr = {
 	"64":"3jo",
 	"65":"jde",
 	"66":"rev",
+};
+
+const old_crit_txt_en = {
+	"1": "W. Leningrad Codex (WLC)",
+	"2": "Aleppo (ALE)",
+	"3": "Tanakh (TKH)",
+	"4": "Septuagint (LXX)",
+};
+
+const old_crit_txt_es = {
+	"1": "Codex Leningrado W. (WLC)",
+	"2": "Aleppo (ALE)",
+	"3": "Tanakh (TKH)",
+	"4": "Septuaginta (LXX)",
+};
+
+const new_crit_txt_en = {
+	"1": "Byzantine Text (BYZ)",
+	"2": "Textus Receptus (TR)",
+	"3": "Wescott and Hort Text (WH)",
+	"4": "Nestle 1904 Text (NES)",
+};
+
+const new_crit_txt_es = {
+	"1": "Texto Bisantino (BYZ)",
+	"2": "Textus Receptus (TR)",
+	"3": "Texto Wescott and Hort (WH)",
+	"4": "Texto Nestle 1904 (NES)",
+};
+
+const loc_bible_en = {
+	"1": "Reina-Valera 1909 (RVA)",
+	"2": "King James Bible (KJV)",
+	"3": "Sagrada Biblia Libre para el Mundo (SBLM)",
+	"4": "World Estandard Bible (WEB)",
+};
+
+const tgt_rx_en = {
+	"1": "Use Old Tes. (OT) = ",
+	"2": "Use New Tes. (NT) = ",
+	"3": "Use Local bible (LOC) = ",
+};
+
+const tgt_rx_es = {
+	"1": "Use Antiguo Tes. (OT) = ",
+	"2": "Use Nuevo Tes. (NT) = ",
+	"3": "Use Biblia Local (LOC) = ",
+};
+
+const out_txt_en = {
+	"1": "Show in minuscule (MIN)",
+	"2": "Show in mayuscule (MAY)",
+	"3": "Show in ASCII (ASC)",
+};
+
+const out_txt_es = {
+	"1": "Muestre en minusculas (MIN)",
+	"2": "Muestre en mayusculas (MAY)",
+	"3": "Muestre en ASCII (ASC)",
 };
 
 
@@ -280,6 +339,12 @@ function init_es(){
 	gvar.book2num = book2num_es;
 	gvar.inbook2num = inbook2num_es;
 	gvar.all_msg = msg_es;
+	
+	gvar.old_crit_txt = old_crit_txt_es;
+	gvar.new_crit_txt = new_crit_txt_es;
+	gvar.loc_bible = loc_bible_en;
+	gvar.tgt_rx = tgt_rx_es;
+	gvar.out_txt = out_txt_es;
 }
 
 function init_en(){
@@ -291,4 +356,11 @@ function init_en(){
 	gvar.book2num = book2num_en;
 	gvar.inbook2num = book2num_en;
 	gvar.all_msg = msg_en;
+
+	gvar.old_crit_txt = old_crit_txt_en;
+	gvar.new_crit_txt = new_crit_txt_en;
+	gvar.loc_bible = loc_bible_en;
+	gvar.tgt_rx = tgt_rx_en;
+	gvar.out_txt = out_txt_en;
 }
+

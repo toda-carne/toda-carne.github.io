@@ -634,7 +634,7 @@ function start_loading(fl_nam){
 	
 	const msg_ld = gvar.all_msg.loading;
 	const tag_fl_nam = `<div class="file_loading_name">${msg_ld} ${fl_nam}</div><br>`;
-	const tag_img = `<img class="file_loading_img" src="${loading_img}">`;
+	const tag_img = `<img class="file_loading_img" width="100%" src="${loading_img}">`;
 	const dv_verses = document.getElementById("id_verses");
 	dv_loading = document.createElement("div");
 	dv_loading.id = id_dv_loading;

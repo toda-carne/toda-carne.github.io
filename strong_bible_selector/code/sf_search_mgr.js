@@ -25,43 +25,11 @@ export let gvar = {};
 
 
 const id_grid_text_analysis = "id_grid_text_analysis";
+const id_pop_menu_sele = "id_pop_menu_sele";
 
 const DEBUG_SELECTOR = true;
 
 const GREEK_PREFIX = "G";
-
-const old_crit_txt = {
-	"1": "WestMin Leningrad Codex (WLC)",
-	"2": "Aleppo (ALE)",
-	"3": "Tanakh (TKH)",
-	"4": "Septuagint (LXX)",
-};
-
-const new_crit_txt = {
-	"1": "Byzantine Text (BYZ)",
-	"2": "Textus Receptus Text (TR)",
-	"3": "Wescott and Hort Text (WH)",
-	"4": "Nestle 1904 Text (NES)",
-};
-
-const loc_bible = {
-	"1": "Reina-Valera 1909 (RVA)",
-	"2": "King James Bible (KJV)",
-	"3": "Sagrada Biblia Libre para el Mundo (SBLM)",
-	"4": "World Estandard Bible (WEB)",
-};
-
-const tgt_rx = {
-	"1": "Old Testament Critical text (OT)",
-	"2": "New Testament Critical text (NT)",
-	"3": "Local bible (LOC)",
-};
-
-const out_txt = {
-	"1": "Critical text minuscule (MIN)",
-	"2": "Critical text mayuscule (MAY)",
-	"3": "ASCII (ASC)",
-};
 
 const simbol_chars = {
 UP:'\u2191',
@@ -72,8 +40,11 @@ const id_dv_tab = "id_dv_tab";
 const tab_txt = "TAB";
 
 const tab1_adds = {
-	id_up_arrow: "" + simbol_chars.UP,
-	id_down_arrow: "" + simbol_chars.DOWN,
+	id_up_arrow: { htm: "" + simbol_chars.UP, hndlr: set_prv_in_history, },
+	id_down_arrow: { htm: "" + simbol_chars.DOWN, hndlr: set_nxt_in_history, },
+	id_equal: { htm: "=", hndlr: () => { append_command_text("="); }, },
+	id_more: { htm: ">", hndlr: () => { append_command_text(">"); }, },
+	id_less: { htm: "<", hndlr: () => { append_command_text("<"); }, },
 };
 
 const id_crit_sele = "id_crit_sele";
@@ -110,18 +81,26 @@ function add_menu(dv_menu, ops_menu){
 	});
 }
 
+function get_tgt_rx_options(){
+	const rx_ops = JSON.parse(JSON.stringify(gvar.tgt_rx, null, null));
+	rx_ops["1"] += gvar.biblang.curr_OT;
+	rx_ops["2"] += gvar.biblang.curr_NT;
+	rx_ops["3"] += gvar.biblang.curr_LOC;
+	return rx_ops;
+}
+
 function init_menus(){
 	
 	const dv_old_tes = document.getElementById("id_old_test");
-	add_menu(dv_old_tes, old_crit_txt);
+	add_menu(dv_old_tes, gvar.old_crit_txt);
 	const dv_new_tes = document.getElementById("id_new_test");
-	add_menu(dv_new_tes, new_crit_txt);
+	add_menu(dv_new_tes, gvar.new_crit_txt);
 	const dv_loc_bib = document.getElementById("id_loc_bib");
-	add_menu(dv_loc_bib, loc_bible);
+	add_menu(dv_loc_bib, gvar.loc_bible);
 	const dv_rx_tgt = document.getElementById("id_rx_tgt");
-	add_menu(dv_rx_tgt, tgt_rx);
+	add_menu(dv_rx_tgt, get_tgt_rx_options());
 	const dv_out_txt = document.getElementById("id_out_txt");
-	add_menu(dv_out_txt, out_txt);
+	add_menu(dv_out_txt, gvar.out_txt);
 
 	const dv_tab = document.createElement("div");
 	dv_tab.id = id_dv_tab;
@@ -154,7 +133,13 @@ function init_menus(){
 		}
 		return;
 	});
+
+	let dv_button = null;
+	let clk_hdlr = null;
 	
+	dv_button = document.getElementById("id_pop_menu"); // this id must be the same to the id in the HTML page.
+	clk_hdlr = pop_menu_handler;
+	if(dv_button != null){ dv_button.click_handler = clk_hdlr; dv_button.addEventListener('click', clk_hdlr); }
 }
 
 function do_select(){
@@ -311,7 +296,97 @@ async function toggle_text_analysis(dv_txt, bibobj){
 	}
 }
 
-function add_buttons(dv_tab){
+function pop_menu_handler(){
+	const dv_pop_sec = document.getElementById("id_pop_opt_sec");
+
+	let dv_pop_men = null;
+	dv_pop_men = get_new_dv_under(dv_pop_sec, id_pop_menu_sele);
+	if(dv_pop_men == null){
+		if(DEBUG_POP_MENU){ console.log("toggle_pop_menu OFF"); }
+		return;
+	}
+	
+	let op = document.createElement("div");
+	op.classList.add("exam", "is_block", "big_item");
+	op.innerHTML = "HISTORY";
+	op.addEventListener('click', toggle_history_info);
+	dv_pop_men.appendChild(op);
+	
+	op = document.createElement("div");
+	op.classList.add("exam", "is_block", "big_item");
+	op.innerHTML = "BOOKS";
+	op.addEventListener('click', toggle_books_info);
+	dv_pop_men.appendChild(op);
+	
+	op = document.createElement("div");
+	op.classList.add("exam", "is_block", "big_item");
+	op.innerHTML = "DEBUG";
+	op.addEventListener('click', toggle_dbg_info);
+	dv_pop_men.appendChild(op);
+	
+	scroll_to_top(dv_pop_men);
 }
 
+function toggle_data(id_dat, arr_dat){
+	const dv_dat = document.getElementById(id_dat);
+	if(dv_dat == null){ console.err("No div for " + id_dat); }
+	const cnt = dv_dat.innerHTML;
+	if(cnt != ""){
+		dv_dat.innerHTML = "";
+		return;
+	}
+
+	if(arr_dat.length == 0){
+		dv_dat.innerHTML = "NO DATA TO SHOW";
+		return;
+	}
+
+	let ii = 0;
+	for(; ii < arr_dat.length; ii++){
+		dv_dat.innerHTML += arr_dat[ii] + "<br>";
+	}
+}
+
+function toggle_history_info(){
+	toggle_data("id_history", gvar.biblang.history);
+	//close_pop_menu();
+}
+
+function toggle_books_info(){
+	const abbr = Object.keys(gvar.abbr2num);
+	toggle_data("id_info", abbr);
+	//close_pop_menu();
+}
+
+function toggle_dbg_info(){
+	toggle_data("id_dbg", gvar.biblang.dbg_log);
+	//close_pop_menu();
+}
+
+function close_pop_menu() {
+	let dv_pop_men = document.getElementById(id_pop_menu_sele);
+	if(dv_pop_men != null){ dv_pop_men.remove(); }
+}
+
+function get_tab_buttons_to_show(){
+}
+
+function add_buttons(dv_tab){
+	//tab1_adds
+	const ids1 = object.keys(tab1_adds);
+	const id_test = ids1[0];
+	const dv_test = document.getElementById(id_test);
+	if(dv_test != null){
+	}
+	//const dv_test = 
+}
+
+function set_prv_in_history(){
+}
+
+function set_nxt_in_history(){
+}
+
+function append_command_text(txt){
+}
 

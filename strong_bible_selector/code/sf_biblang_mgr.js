@@ -10,11 +10,11 @@ const GREEK_PREFIX = "G";
 const biblang_def = {
 	INFIX_OPS: {
 		'&': (a, b) => calc_and(a, b),
-		'|': (a, b) => calc_or(a, b),
+		'|': (a, b) => calc_or(a, b, '|'),
 		'!': (a, b) => calc_not(a, b),
-		';': (a, b) => calc_or(a, b),
-		'=': (a, b) => calc_or(a, b),
-		'<>': (a, b) => calc_range(a, b),
+		';': (a, b) => calc_or(a, b, ';'),
+		'=': (a, b) => calc_or(a, b, '='),
+		'::': (a, b) => calc_range(a, b),
 	},
 	PREFIX_OPS: {
 		// '.': (bib) => set_bib(bib),
@@ -117,7 +117,9 @@ function init_ranges(){
 }
 
 function size_outputs_to_all(){
-	const sizes = Object.keys(gvar.biblang.size_output);
+	const sizes = Object.keys(size_nams);
+	
+	if(gvar.biblang.size_output == null){ gvar.biblang.size_output = {}; }
 	let ii = 0;
 	for(ii = 0; ii < sizes.length; ii++){
 		const kk = sizes[ii];
@@ -147,11 +149,7 @@ export function init_biblang(lng){
 	gvar.biblang.history = [];
 	gvar.biblang.dbg_log = [];
 	
-	if(gvar.biblang.size_output == null){ gvar.biblang.size_output = {}; }
-	
 	size_outputs_to_all();
-	gvar.biblang.size_output.rx = 5;
-	gvar.biblang.size_output.wd = 5;
 	gvar.biblang.size_output.his = 1000;
 	gvar.biblang.size_output.dbg = 1000;
 
@@ -195,7 +193,7 @@ async function calc_and(aa, bb){
 	const obb = await bb();
 	//const obb = await bb(vaa);
 
-	const rop = "(" + oaa.op + " and " + obb.op + ")";
+	const rop = "(" + oaa.op + " & " + obb.op + ")";
 	
 	const vaa = oaa.lverses;
 	const vbb = obb.lverses;
@@ -220,11 +218,11 @@ async function calc_and(aa, bb){
 	return { op: rop, lverses: vand, lscods: sand };
 }
  
-async function calc_or(aa, bb){
+async function calc_or(aa, bb, symb){
 	const oaa = await aa();
 	const obb = await bb();
 	
-	const rop = "(" + oaa.op + " or " + obb.op + ")";
+	const rop = "(" + oaa.op + ` ${symb} ` + obb.op + ")";
 	
 	const vaa = oaa.lverses;
 	const vbb = obb.lverses;
@@ -253,7 +251,7 @@ async function calc_not(aa, bb){
 	const oaa = await aa();
 	const obb = await bb();
 
-	const rop = "(" + oaa.op + " not " + obb.op + ")";
+	const rop = "(" + oaa.op + " ! " + obb.op + ")";
 	
 	const vaa = oaa.lverses;
 	const vbb = obb.lverses;
@@ -288,6 +286,8 @@ function next_book_in_range(book){
 }
 
 function first_book_in_range(){
+	const rng = gvar.biblang.curr_range;
+	gvar.biblang.curr_range = rng.sort((n1, n2) => (n1 - n2));
 	return next_book_in_range(0);
 }
 
@@ -363,7 +363,7 @@ async function calc_range(aa, bb){
 	const oaa = await aa();
 	const obb = await bb();
 
-	const rop = "(" + oaa.op + " <> " + obb.op + ")";
+	const rop = "(" + oaa.op + " :: " + obb.op + ")";
 	
 	const vaa = oaa.lverses;
 	const vbb = obb.lverses;
@@ -634,13 +634,18 @@ async function calc_verse(wrd){
 
 const regex_numvar = /^([\w]+):*(.*)$/;
 
-const regex_bibvar = /^([.#+-=><:]+)([\w\d:_.]+)$/;
+const regex_bibvar = /^([.#+=><:\-]+)([\w\d:_.]+)$/;
 
 function is_bib_var(tm){
 	const matches = tm.match(regex_bibvar);	
 	if(matches){
 		const kk = matches[1];
 		const nam = matches[2];
+		if(gvar.dbg_biblang){
+			console.log("is_bib_var");
+			console.log(matches);
+			console.log("_____________________________");
+		}
 		return { txt:tm, kind: kk, name:nam};
 	}
 	return false;
@@ -652,6 +657,8 @@ async function calc_bibvar(bvar){
 	const rop = bvar.txt;
 	if(gvar.dbg_biblang){
 		add_dbg_log("calc_bibvar");
+		add_dbg_log(kk);
+		add_dbg_log(nam);
 		add_dbg_log(rop);
 	}
 	const robj = { op: rop, lverses: [], lscods: [] };
@@ -709,8 +716,74 @@ async function calc_bibvar(bvar){
 			}
 		}
 	}
+	const rng_var = get_name_range(nam);
+	if(rng_var.length > 0){
+		const rng1 = gvar.biblang.curr_range;
+		if(kk == '<'){
+			const rng2 = get_range(1, rng_var[0] - 1);
+			gvar.biblang.curr_range = arr_intersec(rng1, rng2);
+		}
+		if(kk == '<='){
+			const rng2 = get_range(1, rng_var[rng_var.length - 1]);
+			gvar.biblang.curr_range = arr_intersec(rng1, rng2);
+		}
+		if(kk == '>'){
+			const rng2 = get_range(rng_var[rng_var.length - 1] + 1, 66);
+			gvar.biblang.curr_range = arr_intersec(rng1, rng2);
+		}
+		if(kk == '>='){
+			const rng2 = get_range(rng_var[0], 66);
+			gvar.biblang.curr_range = arr_intersec(rng1, rng2);
+		}
+		if(kk == '='){
+			gvar.biblang.curr_range = rng_var;
+		}
+		if(kk == '+'){
+			gvar.biblang.curr_range = arr_union(rng1, rng_var);
+		}
+		if(kk == '-'){
+			gvar.biblang.curr_range = arr_diff(rng1, rng_var);
+		}
+		if(gvar.dbg_biblang){
+			add_dbg_log("new_range");
+			const str_rng2 = JSON.stringify(rng_var, null, null);
+			add_dbg_log(str_rng2);			
+			const str_rng = JSON.stringify(gvar.biblang.curr_range, null, null);
+			add_dbg_log(str_rng);
+		}
+	}
+	if(gvar.dbg_biblang){
+		add_dbg_log("_____________________________");
+	}
 	
 	return robj;
+}
+
+function get_range(min, max){
+	let ii = min;
+	if(min < 1){ return []; }
+	if(max > 66){ return []; }
+	const rng = [];
+	for(ii = min; ii <= max; ii++){
+		rng.push(ii);
+	}
+	return rng;
+}
+
+function get_name_range(nam){
+	const is_big_rng = (range_nams[nam] != null);
+	if(is_big_rng){
+		return range_nams[nam];
+	}
+	const is_book_abbr = (gvar.abbr2num[nam] != null);
+	if(is_book_abbr){
+		if(gvar.dbg_biblang){
+			add_dbg_log("book abbr " + nam);
+		}
+		const num = Number(gvar.abbr2num[nam]);
+		return [num];
+	}
+	return [];
 }
 
 function no_tildes_word(wrd){
@@ -733,11 +806,12 @@ async function calc_word(word, prev){
 		bib = gvar.biblang.curr_NT;
 	}
 	
-	let num = gvar.biblang.size_output.wd;
+	let num = gvar.biblang.size_output.rx;
 	if(gvar.dbg_biblang){
 		add_dbg_log("calc_word");
 		add_dbg_log(rop);
 		console.log(bib + " " + num  + " " + wrd + " " + prev);
+		add_dbg_log("_____________________________");
 	}
 	const found = await find_regex(bib, num, wrd, prev);
 	
@@ -934,5 +1008,4 @@ export function add_dbg_log(obj){
 	log.push(msg);
 	console.log(obj);
 }
-
 
