@@ -11,6 +11,10 @@ const loc_dir = "../data/js_loc/";
 
 const scodes_dir = "../data/js_scods/";
 
+const loading_img = "../img/loading_icon.gif";
+
+const id_dv_loading = "id_dv_loading";
+
 const local_scods_files = {
 	WLC : scodes_dir + "WLC_SVERSES.js",
 	ALE : scodes_dir + "ALE_SVERSES.js",
@@ -403,7 +407,7 @@ async function import_local_text(locid){
 		return;
 	}
 	const loc_fl = local_text_files[locid];
-	const md_loc = await import_file(loc_fl);
+	const md_loc = await import_file(loc_fl, locid);
 	
 	gvar.full_local_text[locid] = md_loc.loc_txt;
 }
@@ -419,12 +423,14 @@ export async function get_bible_verse(bib_cod, book, chapter, verse){
 	}
 }
 
-export async function import_file(bib_fl){
+async function import_file(bib_fl, fl_id){
+	start_loading(fl_id);
 	add_dbg_log("importing file " + bib_fl);
 	
 	const resp = await import(bib_fl);
 
 	add_dbg_log("FINISHED importing file " + bib_fl);
+	end_loading();
 	return resp;
 }
 
@@ -439,7 +445,7 @@ async function import_bible(bib_cod){
 		return;
 	}
 	const bib_fl = local_bible_files[bib_cod];
-	const md_bib = await import_file(bib_fl);
+	const md_bib = await import_file(bib_fl, bib_cod);
 	
 	gvar.full_bible[bib_cod] = md_bib.bib_verses;	
 }
@@ -592,7 +598,7 @@ async function import_scodes(bib_cod){
 		return;
 	}
 	const scod_fl = local_scods_files[bib_cod];
-	const md_scod = await import_file(scod_fl);
+	const md_scod = await import_file(scod_fl, bib_cod);
 	
 	gvar.full_scodes[bib_cod] = md_scod.scode_verses;	
 }
@@ -617,4 +623,38 @@ export function dbg_log_all_loaded_files(){
 	dbg_log_loaded_files_from(local_bible_files, gvar.full_bible);
 }
 
+function start_loading(fl_nam){
+	if(in_nodejs()){	// working from node
+		return;
+	}
+	let dv_loading = document.getElementById(id_dv_loading);
+	if(dv_loading != null){
+		return;
+	}
+	
+	const msg_ld = gvar.all_msg.loading;
+	const tag_fl_nam = `<div class="file_loading_name">${msg_ld} ${fl_nam}</div><br>`;
+	const tag_img = `<img class="file_loading_img" src="${loading_img}">`;
+	const dv_verses = document.getElementById("id_verses");
+	dv_loading = document.createElement("div");
+	dv_loading.id = id_dv_loading;
+	dv_loading.innerHTML = tag_fl_nam + tag_img;
+	//dv_verses.insertAdjacentHTML('afterbegin', );
+	dv_verses.prepend(dv_loading);
+}
+
+function end_loading(){
+	if(in_nodejs()){	// working from node
+		return;
+	}
+	let dv_loading = document.getElementById(id_dv_loading);
+	if(dv_loading != null){
+		dv_loading.remove();
+	}
+}
+
+
+function in_nodejs(){
+	return (typeof window === 'undefined');
+}
 

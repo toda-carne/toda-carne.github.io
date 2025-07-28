@@ -339,7 +339,7 @@ a.exam_ref:hover {
 	display: grid;
 	margin-left: 10%;
 	margin-right: 10%;
-	grid-template-columns: 15fr 15fr 15fr 15fr 15fr;
+	grid-template-columns: 15fr 15fr 15fr 15fr 15fr 15fr;
 	grid-template-rows: auto;
 	font-size:1em;
 }
@@ -356,7 +356,7 @@ a.exam_ref:hover {
 .input_item {
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
-	font-size:1.5em;
+	font-size:1em;
 	grid-column-start: 1;
 	grid-column-end: -1;
 	grid-row: auto;
@@ -374,6 +374,8 @@ a.exam_ref:hover {
 }
 
 .results_item {
+	height: 100vh;
+	overflow-y: scroll;
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
 	grid-column-start: 1;

@@ -63,6 +63,19 @@ const out_txt = {
 	"3": "ASCII (ASC)",
 };
 
+const simbol_chars = {
+UP:'\u2191',
+DOWN:'\u2193',
+};
+
+const id_dv_tab = "id_dv_tab";
+const tab_txt = "TAB";
+
+const tab1_adds = {
+	id_up_arrow: "" + simbol_chars.UP,
+	id_down_arrow: "" + simbol_chars.DOWN,
+};
+
 const id_crit_sele = "id_crit_sele";
 const id_expression = "id_expression";
 
@@ -110,6 +123,17 @@ function init_menus(){
 	const dv_out_txt = document.getElementById("id_out_txt");
 	add_menu(dv_out_txt, out_txt);
 
+	const dv_tab = document.createElement("div");
+	dv_tab.id = id_dv_tab;
+	dv_tab.innerHTML = tab_txt;
+	dv_tab.classList.add("bib_item");
+	dv_out_txt.insertAdjacentElement('afterend', dv_tab);
+	
+	dv_tab.addEventListener('click', function() {
+		add_buttons(dv_tab);
+		return;
+	});
+	
 	const dv_search = document.getElementById("id_search");
 	const inp_box = document.createElement("input");
 	inp_box.id = id_expression;
@@ -286,3 +310,8 @@ async function toggle_text_analysis(dv_txt, bibobj){
 		dv_tok.innerHTML = tok.id + " " + tok.sco + " :" + tok.tra;
 	}
 }
+
+function add_buttons(dv_tab){
+}
+
+

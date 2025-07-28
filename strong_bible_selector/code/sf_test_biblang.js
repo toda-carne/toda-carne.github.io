@@ -7,7 +7,7 @@ import { init_lang, num2book_en, } from './sf_lang_mgr.js';
 import { diffSequence } from './sf_diff_sequence.js';
 import { distance, closest,  } from './sf_word_dist.js';
 
-import { import_file, get_bible_verse, find_ana, get_text_analysis, } from './sf_bible_mgr.js';
+import { get_bible_verse, find_ana, get_text_analysis, } from './sf_bible_mgr.js';
 
 function file_exists(nm_file){
 	console.log("calling file_exists with " + nm_file);

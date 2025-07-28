@@ -1,6 +1,6 @@
 
 	
-export const bib_ranges = {
+export const bib_chapter_sizes = {
   "1": {
     "1": "31",
     "2": "25",

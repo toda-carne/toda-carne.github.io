@@ -4,6 +4,14 @@ import { gvar, } from './sf_search_mgr.js';
 const DEFAULT_BOOK_NAME = "INVALID_BOOK_NAME";
 const INVALID_BOOK_ABBR = "INVALID_BOOK_ABBR";
 
+const msg_es = {
+	loading: "BAJANDO ",
+};
+
+const msg_en = {
+	loading: "LOADING ",
+};
+
 export const num2book_en = {
 	"-1":DEFAULT_BOOK_NAME,
 	"1":"genesis",
@@ -271,6 +279,7 @@ function init_es(){
 	gvar.num2book = num2book_es;
 	gvar.book2num = book2num_es;
 	gvar.inbook2num = inbook2num_es;
+	gvar.all_msg = msg_es;
 }
 
 function init_en(){
@@ -281,4 +290,5 @@ function init_en(){
 	gvar.num2book = num2book_en;
 	gvar.book2num = book2num_en;
 	gvar.inbook2num = book2num_en;
+	gvar.all_msg = msg_en;
 }
