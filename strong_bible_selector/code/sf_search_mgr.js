@@ -159,7 +159,8 @@ function do_select(){
 	
 	gvar.biblang.output = otxt.toLowerCase();
 	
-	eval_biblang_command(expr).then((all_vrs) => {
+	eval_biblang_command(expr).then((robj) => {
+		const all_vrs = robj.lverses;
 		fill_verses(all_vrs);
 	});	
 }	

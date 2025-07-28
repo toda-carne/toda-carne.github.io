@@ -1,33 +1,57 @@
 
+import * as filesys from "fs";
 
 import { init_biblang, eval_biblang_command, } from './sf_biblang_mgr.js'
 import { gvar, } from './sf_search_mgr.js';
-import { init_lang, } from './sf_lang_mgr.js';
+import { init_lang, num2book_en, } from './sf_lang_mgr.js';
 import { diffSequence } from './sf_diff_sequence.js';
 import { distance, closest,  } from './sf_word_dist.js';
 
-import { get_bible_verse, find_ana, get_text_analysis, } from './sf_bible_mgr.js';
+import { import_file, get_bible_verse, find_ana, get_text_analysis, } from './sf_bible_mgr.js';
+
+function file_exists(nm_file){
+	console.log("calling file_exists with " + nm_file);
+	filesys.access(nm_file, filesys.constants.F_OK, (err) => {
+		if(err){
+			console.log(nm_file + " NO existe");
+		} else {
+			console.log(nm_file + " EXISTE");
+		}
+	});
+}
 
 async function main_selector(){
 	if (process.argv.length < 3) {
 		console.log('Usage: node ' + process.argv[1] + ' <command>');
 		process.exit(1);
 	}
-
+	
 	const command = process.argv[2];
+	
+	/*
+	const n2b = num2book_en;
+	const vii = command.split(":");
+	const bib = "SBLMi";
+	const book = Number(vii[0]);
+	const chapter = Number(vii[1]);
+	const verse = Number(vii[2]);
+	console.log("TRYING get_bible_verse(" + bib + ", " + n2b[book] + ", " + chapter + ", " + verse + ")");
+	const vtxt = await get_bible_verse(bib, n2b[book], chapter, verse);
+	console.log(vtxt);
+	*/
 	
 	gvar.dbg_biblang = true;
 
 	init_lang('es');
 	init_biblang('es');
 	
-	const sorvers = await eval_biblang_command(command);
+	const robj = await eval_biblang_command(command);
 	
-	console.log("FINAL_RESULT");
-	console.log(sorvers);	
+	console.log("TEST_RESULT");
+	//console.log(robj.lverses);	
 }
 
-//main_selector();
+main_selector();
 
 /*
 const arr1 = [0,1,2,3,4,5,6];
@@ -75,42 +99,9 @@ async function main_diff_bib(){
 	
 	const ana = await get_text_analysis(bib, n2b[book], chapter, verse);
 	
-	/*
-	const asc = await get_bible_verse(bib, n2b[book], chapter, verse);
-	const loc = await get_bible_verse(lbib, n2b[book], chapter, verse);
-
-	console.log(asc);
-	console.log(loc);
-
-	const vasc = asc.split(" ");
-	const vtmp = loc.split(" ");
-	
-	const ana = vtmp.map((tok) => { 
-		const arr = tok.split(":");
-		return { id: arr[0], idtra: arr[1], };
-	});
-	
-	const vloc = vtmp.map((tok) => { 
-		const arr = tok.split(":");
-		return arr[0];
-	});
-
-	console.log("vasc");
-	console.log(vasc);
-	console.log("vloc");
-	console.log(vloc);
-	
-	const comm = find_ana(vasc, vloc, ana);
-	console.log(comm);
-	*/
 	console.log(JSON.stringify(ana, null, " "));
 	
 }
-
-	//const comm = find_lcs(vasc, vloc);
-	//console.log(comm);
-	
-	//console.log(JSON.stringify(ana, null, " "));
 
 function find_lcs(s1, s2){
 	const rr = [];
@@ -127,7 +118,7 @@ function find_lcs(s1, s2){
 	return rr;
 }
 
-main_diff_bib();
+//main_diff_bib();
 
 async function main_distance(){
 	if (process.argv.length < 4) {

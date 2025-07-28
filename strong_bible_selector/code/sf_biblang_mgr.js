@@ -14,12 +14,12 @@ const biblang_def = {
 		'!': (a, b) => calc_not(a, b),
 		';': (a, b) => calc_or(a, b),
 		'=': (a, b) => calc_or(a, b),
-		'<->': (a, b) => calc_range(a, b),
+		'<>': (a, b) => calc_range(a, b),
 	},
 	PREFIX_OPS: {
 		// '.': (bib) => set_bib(bib),
 	},
-	PRECEDENCE: [['<->'], ['!'], ['|'], ['&'], ['='], [';']],
+	PRECEDENCE: [['<>'], ['!'], ['|'], ['&'], ['='], [';']],
 	LITERAL_OPEN: '/',
 	LITERAL_CLOSE: '/',
 	GROUP_OPEN: '(',
@@ -150,51 +150,85 @@ function cmp_verses(vv1, vv2){
 }
 
 async function calc_and(aa, bb){
-	const vaa = await aa();
-	const vbb = await bb(vaa);
-	const vtmp = vaa.filter(ee => vbb.includes(ee));
-	//const vand = vtmp.sort(cmp_verses);
-	const vand = vtmp;
+	const oaa = await aa();
+	const obb = await bb();
+	//const obb = await bb(vaa);
+
+	const rop = "(" + oaa.op + " and " + obb.op + ")";
+	
+	const vaa = oaa.lverses;
+	const vbb = obb.lverses;
+	const vtmp1 = vaa.filter(ee => vbb.includes(ee));
+	const vand = vtmp1;
+	
+	const saa = oaa.lscods;
+	const sbb = obb.lscods;
+	const stmp2 = saa.filter(ee => sbb.includes(ee));
+	const sand = stmp2;
+	
 	if(gvar.dbg_biblang){
 		add_dbg_log("calc_and");
-		add_dbg_log(vaa);
-		add_dbg_log(vbb);
-		add_dbg_log(vand);
+		add_dbg_log(rop);
+		console.log(vaa);
+		console.log(vbb);
+		console.log(vand);
 		add_dbg_log("_____________________________");
 	}
-	return vand;
+	return { op: rop, lverses: vand, lscods: sand };
 }
  
 async function calc_or(aa, bb){
-	const vaa = await aa();
-	const vbb = await bb();
+	const oaa = await aa();
+	const obb = await bb();
+	
+	const rop = "(" + oaa.op + " or " + obb.op + ")";
+	
+	const vaa = oaa.lverses;
+	const vbb = obb.lverses;
 	const vtmp = [...new Set([...vaa, ...vbb])];
-	//const vor = vtmp.sort(cmp_verses);
 	const vor = vtmp;
+	
+	const saa = oaa.lscods;
+	const sbb = obb.lscods;
+	const stmp2 = [...new Set([...saa, ...sbb])];
+	const sor = stmp2;
+	
 	if(gvar.dbg_biblang){
 		add_dbg_log("calc_or");
-		add_dbg_log(vaa);
-		add_dbg_log(vbb);
-		add_dbg_log(vor);
+		add_dbg_log(rop);
+		console.log(vaa);
+		console.log(vbb);
+		console.log(vor);
 		add_dbg_log("_____________________________");
 	}
-	return vor;
+	return { op: rop, lverses: vor, lscods: sor };
 }
 
 async function calc_not(aa, bb){
-	const vaa = await aa();
-	const vbb = await bb();
+	const oaa = await aa();
+	const obb = await bb();
+
+	const rop = "(" + oaa.op + " not " + obb.op + ")";
+	
+	const vaa = oaa.lverses;
+	const vbb = obb.lverses;
 	const vtmp = vaa.filter(ee => ! vbb.includes(ee));
-	//const vnot = vtmp.sort(cmp_verses);
 	const vnot = vtmp;
+	
+	const saa = oaa.lscods;
+	const sbb = obb.lscods;
+	const stmp2 = saa.filter(ee => ! sbb.includes(ee));
+	const snot = stmp2;
+	
 	if(gvar.dbg_biblang){
 		add_dbg_log("calc_not");
-		add_dbg_log(vaa);
-		add_dbg_log(vbb);
-		add_dbg_log(vnot);
+		add_dbg_log(rop);
+		console.log(vaa);
+		console.log(vbb);
+		console.log(vnot);
 		add_dbg_log("_____________________________");
 	}
-	return vnot;
+	return { op: rop, lverses: vnot, lscods: snot };
 }
 
 function inc_verse(vr){
@@ -254,8 +288,13 @@ function fill_range(vr1, vr2){
 }
 
 async function calc_range(aa, bb){
-	const vaa = await aa();
-	const vbb = await bb();
+	const oaa = await aa();
+	const obb = await bb();
+
+	const rop = "(" + oaa.op + " <> " + obb.op + ")";
+	
+	const vaa = oaa.lverses;
+	const vbb = obb.lverses;
 	const r1 = vaa.sort(cmp_verses);
 	const r2 = vbb.sort(cmp_verses);
 	
@@ -275,7 +314,13 @@ async function calc_range(aa, bb){
 		fill = fill_range(first, last);
 	}
 	const rng = [...new Set([...r1, ...fill, ...r2])];
-	return rng;
+	
+	const saa = oaa.lscods;
+	const sbb = obb.lscods;
+	const stmp2 = [...new Set([...saa, ...sbb])];
+	const sor = stmp2;	
+	
+	return { op: rop, lverses: rng, lscods: sor };
 }
 
 function set_bib(inbib){
@@ -404,6 +449,7 @@ const regex_citation = /^([^_.-]+)[_.-](\d+)(.*)/;
 
 function is_bib_citation(tm){
 	const citobj = {};
+	citobj.txt = tm;
 	const matches = tm.match(regex_citation);
 	if(matches){
 		let nam = matches[1].toLowerCase();
@@ -436,7 +482,7 @@ function is_bib_var(tm){
 	if(matches){
 		const kk = matches[1];
 		const nam = matches[2];
-		return {kind: kk, name:nam};
+		return { txt:tm, kind: kk, name:nam};
 	}
 	return false;
 }
@@ -454,10 +500,14 @@ async function calc_scode(scode){
 	if(vss.length > 0){
 		arr_vrs = vss.split(' ');
 	}
+	
+	const rop = scode;
+	
 	if(gvar.dbg_biblang){
 		add_dbg_log("calc_scode");
-		add_dbg_log("get_scode_verses(" + bib + "," + scod + ")");
-		add_dbg_log(arr_vrs);
+		add_dbg_log(rop);
+		console.log("get_scode_verses(" + bib + "," + scod + ")");
+		console.log(arr_vrs);
 	}
 	
 	const is_lxx = (gvar.biblang.curr_OT == "LXX");
@@ -474,32 +524,37 @@ async function calc_scode(scode){
 		}
 		if(gvar.dbg_biblang){
 			add_dbg_log("calc_scode LXX");
-			add_dbg_log("get_scode_verses(" + bib + "," + scod + ")");
-			add_dbg_log(arr_vrs2);
-			add_dbg_log(arr_vrs);
+			add_dbg_log(rop);
+			console.log("get_scode_verses(" + bib + "," + scod + ")");
+			console.log(arr_vrs2);
+			console.log(arr_vrs);
 		}
 	}
 	if(gvar.dbg_biblang){
 		add_dbg_log("_____________________________");
 	}
-	return arr_vrs;
+	return { op: rop, lverses: arr_vrs, lscods: [] };
 }
 
 async function calc_citation(cit){
+	const rop = cit.txt;
 	if(gvar.dbg_biblang){
 		add_dbg_log("calc_citation");
-		add_dbg_log(cit);
+		add_dbg_log(rop);
 	}
 	const v1 = "" + cit.book + ":" + cit.chapter + ":" + cit.verse;
 	const v2 = "" + cit.book + ":" + cit.chapter + ":" + cit.verse_end;
 	
-	return fill_range(v1, v2);
+	const rng = fill_range(v1, v2);
+	return { op: rop, lverses: rng, lscods: [] };
 }
 
 async function calc_verse(wrd){
+	const rop = wrd;
 	if(gvar.dbg_biblang){
 		add_dbg_log("calc_verse");
-		add_dbg_log(wrd);
+		add_dbg_log(rop);
+		add_dbg_log("_____________________________");
 		/*
 		const vr = wrd.split(':');
 		const vr2 = inc_verse(vr);
@@ -507,7 +562,7 @@ async function calc_verse(wrd){
 		console.log(vr2);		
 		*/
 	}
-	return [wrd];
+	return { op: rop, lverses: [wrd], lscods: [] };
 }
 
 const regex_numvar = /^([\w]+):*(.*)$/;
@@ -515,13 +570,15 @@ const regex_numvar = /^([\w]+):*(.*)$/;
 async function calc_bibvar(bvar){
 	const kk = bvar.kind;
 	const nam = bvar.name;
+	const rop = bvar.txt;
 	if(gvar.dbg_biblang){
 		add_dbg_log("calc_bibvar");
-		add_dbg_log(bvar);
+		add_dbg_log(rop);
 	}
+	const robj = { op: rop, lverses: [], lscods: [] };
 	if(nam == 'all'){
 		size_outputs_to_all();
-		return [];
+		return robj;
 	}
 	if(kk == ':'){
 		if(rx_in_nams[vr] != null){
@@ -532,7 +589,7 @@ async function calc_bibvar(bvar){
 	if(kk == '.'){
 		const set_ok = set_bib(nam);
 		if(set_ok){
-			return [];
+			return robj;
 		}
 		const vr = nam.toLowerCase();
 		if(out_nams[vr] != null){
@@ -574,7 +631,7 @@ async function calc_bibvar(bvar){
 		}
 	}
 	
-	return [];
+	return robj;
 }
 
 function no_tildes_word(wrd){
@@ -588,10 +645,7 @@ function no_tildes_word(wrd){
 
 async function calc_word(word, prev){
 	const wrd = no_tildes_word(word);
-	if(gvar.dbg_biblang){
-		add_dbg_log("calc_word");
-		add_dbg_log(wrd);
-	}
+	const rop = word;
 	let bib = gvar.biblang.curr_LOC;
 	if(gvar.biblang.regex_input == ot_input){
 		bib = gvar.biblang.curr_OT;
@@ -599,15 +653,23 @@ async function calc_word(word, prev){
 	if(gvar.biblang.regex_input == nt_input){
 		bib = gvar.biblang.curr_NT;
 	}
+	
 	let num = gvar.biblang.size_output.wd;
-	const found = find_regex(bib, num, wrd, prev);
-	return found;
+	if(gvar.dbg_biblang){
+		add_dbg_log("calc_word");
+		add_dbg_log(rop);
+		console.log(bib + " " + num  + " " + wrd + " " + prev);
+	}
+	const found = await find_regex(bib, num, wrd, prev);
+	
+	return { op: rop, lverses: found, lscods: [] };
 }
 
 async function calc_bibregex(rx, prev){
+	const rop = "/" + rx + "/";
 	if(gvar.dbg_biblang){
 		add_dbg_log("calc_bibregex");
-		add_dbg_log(rx);
+		add_dbg_log(rop);
 	}
 	let bib = gvar.biblang.curr_LOC;
 	if(gvar.biblang.regex_input == ot_input){
@@ -616,9 +678,11 @@ async function calc_bibregex(rx, prev){
 	if(gvar.biblang.regex_input == nt_input){
 		bib = gvar.biblang.curr_NT;
 	}
+	
 	let num = gvar.biblang.size_output.rx;
-	const found = find_regex(bib, num, rx, prev);
-	return found;
+	const found = await find_regex(bib, num, rx, prev);
+	
+	return { op: rop, lverses: found, lscods: [] };
 }
 
 async function verse_match(bib, vii, rxo){
@@ -627,10 +691,13 @@ async function verse_match(bib, vii, rxo){
 	const chapter = Number(vii[1]);
 	const verse = Number(vii[2]);
 
+	//console.log("TRYING get_bible_verse(" + bib + ", " + n2b[book] + ", " + chapter + ", " + verse + ")");
 	const vtxt = await get_bible_verse(bib, n2b[book], chapter, verse);
 	if(vtxt == null){
+		console.log("null verse for get_bible_verse(" + bib + ", " + n2b[book] + ", " + chapter + ", " + verse + ")");
 		return null;
 	}
+	//console.log(vtxt);
 
 	const mm = vtxt.match(rxo);
 	if(mm){
@@ -664,14 +731,15 @@ async function find_regex(bib, num, rx, prev){
 		rxo = new RegExp(rx);
 	}
 	if(prev != null){
+		const prv_verses = prev.lverses;
 		if(gvar.dbg_biblang){
 			add_dbg_log("find_regex PREV");
-			add_dbg_log(prev);
+			add_dbg_log(prev.op);
 		}
 		let ii = 0;
 		const all_mm = [];
-		for(ii = 0; ii < prev.length; ii++){
-			const vr = prev[ii];
+		for(ii = 0; ii < prv_verses.length; ii++){
+			const vr = prv_verses[ii];
 			const vii = vr.split(":");
 			const vss = await verse_match(rxbib, vii, rxo);
 			if(vss != null){
@@ -756,13 +824,15 @@ export async function eval_biblang_command(command){
 		add_dbg_log(toks);
 	}
 
-	const all_vss = await par.expressionToValue(command);
-	const sorvers = all_vss.sort(cmp_verses);
+	const robj = await par.expressionToValue(command);
+	const all_vss = robj.lverses;
+	robj.lverses = all_vss.sort(cmp_verses);;
 	if(gvar.dbg_biblang){
 		add_dbg_log("FINAL_RESULT");
-		add_dbg_log(sorvers);
+		add_dbg_log(robj.op);
+		console.log(robj.lverses);
 	}
-	return sorvers;
+	return robj;
 }
 
 export function add_dbg_log(obj){

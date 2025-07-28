@@ -383,9 +383,13 @@ async function fill_translation(ltra, ana){
 }
 
 export async function get_local_text(locid, idtxt){
-	await import_local_text(locid);
-	
-	return gvar.full_local_text[locid][idtxt];
+	try{
+		await import_local_text(locid);
+		
+		return gvar.full_local_text[locid][idtxt];
+	} catch {
+		return null;
+	}
 }
 
 async function import_local_text(locid){
@@ -405,9 +409,14 @@ async function import_local_text(locid){
 }
 
 export async function get_bible_verse(bib_cod, book, chapter, verse){
-	await import_bible(bib_cod);
+	try{
+		await import_bible(bib_cod);
 	
-	return gvar.full_bible[bib_cod][book][chapter][verse];
+		return gvar.full_bible[bib_cod][book][chapter][verse];
+	} catch (err) {
+		console.log("FAILED get_bible_verse");
+		return null;
+	}
 }
 
 export async function import_file(bib_fl){
@@ -559,13 +568,17 @@ export function verse_to_hebrew(verse){
 }
 
 export async function get_scode_verses(bib_cod, scode){
-	await import_scodes(bib_cod);
-	
-	let resp = gvar.full_scodes[bib_cod][scode];
-	if(resp == null){
-		resp = "";
+	try{
+		await import_scodes(bib_cod);
+		
+		let resp = gvar.full_scodes[bib_cod][scode];
+		if(resp == null){
+			resp = "";
+		}
+		return resp;
+	} catch {
+		return null;
 	}
-	return resp;
 }
 
 async function import_scodes(bib_cod){
@@ -589,7 +602,7 @@ export function dbg_log_loaded_files_from(file_names, loaded){
 	let ii = 0;
 	for(ii = 0; ii < all_kk.length; ii++){
 		const nm = all_kk[ii];
-		if(loaded[nm] != null){
+		if((loaded != null) && (loaded[nm] != null)){
 			add_dbg_log("FILE " + file_names[nm] + " ALREADY LOADED AT START OF BIBLANG COMMAND");
 		}
 	}
