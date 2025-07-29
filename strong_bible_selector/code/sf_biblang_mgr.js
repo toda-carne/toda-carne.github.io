@@ -663,6 +663,7 @@ async function calc_bibvar(bvar){
 	}
 	const robj = { op: rop, lverses: [], lscods: [] };
 	if(nam == 'all'){
+		reset_curr_range();
 		size_outputs_to_all();
 		return robj;
 	}

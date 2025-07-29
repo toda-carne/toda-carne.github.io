@@ -177,12 +177,20 @@ async function do_select(){
 		const all_vrs = robj.lverses;
 		fill_verses(all_vrs);
 	});	*/
-}	
+}
+
+function init_handlers(){
+	const dv_verses = document.getElementById("id_verses");
+	dv_verses.addEventListener('wheel', function(ev) {
+		ev.stopPropagation();
+	});
+}
 
 export async function start_srch_mgr(curr_lang){
 	init_lang(curr_lang);
 	init_biblang(curr_lang);
 	init_menus();
+	init_handlers();
 }
 
 async function fill_verses(all_vrs){

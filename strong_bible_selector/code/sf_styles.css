@@ -376,12 +376,27 @@ a.exam_ref:hover {
 .results_item {
 	max-height: 100vh;
 	overflow-y: scroll;
+	scrollbar-color: #ff0000;
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
 	grid-column-start: 1;
 	grid-column-end: -1;
 	grid-row: auto;
 	border: 0.2vw solid #ffff00;
+}
+
+.results_item::-webkit-scrollbar{
+	width: 10px !important;
+}
+
+.results_item::-webkit-scrollbar-track{
+	background: #13234c;
+}
+
+.results_item::-webkit-scrollbar-thumb{
+	background: #ffff00;
+	border-radius: 5px;
+	min-height: 30px;
 }
 
 .aux_item {
