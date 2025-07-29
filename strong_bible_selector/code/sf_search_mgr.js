@@ -122,14 +122,14 @@ function init_menus(){
 	dv_search.appendChild(inp_box);
 
 	const dv_select = document.getElementById("id_select");
-	dv_select.addEventListener('click', function() {
-		do_select();
+	dv_select.addEventListener('click', async function() {
+		await do_select();
 		return;
 	});
 
-	inp_box.addEventListener('keydown', function(ev) {
+	inp_box.addEventListener('keydown', async function(ev) {
 		if(ev.key === "Enter"){
-			do_select();
+			await do_select();
 		}
 		return;
 	});
@@ -142,7 +142,7 @@ function init_menus(){
 	if(dv_button != null){ dv_button.click_handler = clk_hdlr; dv_button.addEventListener('click', clk_hdlr); }
 }
 
-function do_select(){
+async function do_select(){
 	const dv_old_tes = document.getElementById("id_old_test");
 	const oldt = dv_old_tes.innerHTML.trim();
 	const dv_new_tes = document.getElementById("id_new_test");
@@ -167,11 +167,16 @@ function do_select(){
 	gvar.biblang.word_input = wdin;
 	
 	gvar.biblang.output = otxt.toLowerCase();
-	
+
+	const robj = await eval_biblang_command(expr);
+	const all_vrs = robj.lverses;
+	await fill_verses(all_vrs);
+
+	/*
 	eval_biblang_command(expr).then((robj) => {
 		const all_vrs = robj.lverses;
 		fill_verses(all_vrs);
-	});	
+	});	*/
 }	
 
 export async function start_srch_mgr(curr_lang){
@@ -180,7 +185,7 @@ export async function start_srch_mgr(curr_lang){
 	init_menus();
 }
 
-function fill_verses(all_vrs){
+async function fill_verses(all_vrs){
 	const oldt = gvar.biblang.curr_OT;
 	const newt = gvar.biblang.curr_NT;
 	const loc_bib = gvar.biblang.curr_LOC;
@@ -245,20 +250,29 @@ function fill_verses(all_vrs){
 		}
 		
 		const bibobj = {};
+		bibobj.id_dv_ver = id_ver;
 		bibobj.bible = bib_cod;
 		bibobj.book = cod_ver[0];
 		bibobj.chapter = cod_ver[1];
 		bibobj.verse = cod_ver[2];
 		
-		const id_txt = "id_verse_" + ii;
+		const id_txt = "id_verse_loc_" + ii;
+	
+		const vs_txt = await bibobj_to_bibtxt(bibobj, conv_fn, id_txt);
+		dv_ver.innerHTML = vs_txt;
+		const dv_txt = document.getElementById(id_txt);
+		dv_txt.addEventListener('click', async function() {
+			await toggle_text_analysis(dv_txt, bibobj);
+		});
 		
+		/*
 		bibobj_to_bibtxt(bibobj, conv_fn, id_txt).then((vs_txt) => {
 			dv_ver.innerHTML = vs_txt;
 			const dv_txt = document.getElementById(id_txt);
 			dv_txt.addEventListener('click', async function() {
 				await toggle_text_analysis(dv_txt, bibobj);
 			});
-		});
+		});*/
 	}
 }
 	
@@ -278,7 +292,9 @@ async function toggle_text_analysis(dv_txt, bibobj){
 	if(book > 39){
 		bib = gvar.biblang.curr_NT;
 	}
+	gvar.curr_dv_ver_id = bibobj.id_dv_ver;
 	const full_ana = await get_text_analysis(bib, n2b[book], chapter, verse);
+	gvar.curr_dv_ver_id = null;
 	
 	console.log("TEXT_ANALYSIS_OF " + dv_txt.id);
 	console.log(bibobj);

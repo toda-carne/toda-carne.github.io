@@ -418,7 +418,7 @@ export async function get_bible_verse(bib_cod, book, chapter, verse){
 	
 		return gvar.full_bible[bib_cod][book][chapter][verse];
 	} catch (err) {
-		console.log("FAILED get_bible_verse");
+		console.log("FAILED get_bible_verse " + bib_cod + " " + book + ":" + chapter + ":" + verse);
 		return null;
 	}
 }
@@ -627,20 +627,32 @@ function start_loading(fl_nam){
 	if(in_nodejs()){	// working from node
 		return;
 	}
+	//gvar.curr_dv_ver_id
 	let dv_loading = document.getElementById(id_dv_loading);
 	if(dv_loading != null){
 		return;
 	}
 	
+	const dv_verses = document.getElementById("id_verses");
+	let dv_ver_to_ana = null;
+	if(gvar.curr_dv_ver_id != null){
+		dv_ver_to_ana = document.getElementById(gvar.curr_dv_ver_id);
+	}
+	
 	const msg_ld = gvar.all_msg.loading;
 	const tag_fl_nam = `<div class="file_loading_name">${msg_ld} ${fl_nam}</div><br>`;
 	const tag_img = `<img class="file_loading_img" width="100%" src="${loading_img}">`;
-	const dv_verses = document.getElementById("id_verses");
+	
+	
 	dv_loading = document.createElement("div");
 	dv_loading.id = id_dv_loading;
 	dv_loading.innerHTML = tag_fl_nam + tag_img;
-	//dv_verses.insertAdjacentHTML('afterbegin', );
-	dv_verses.prepend(dv_loading);
+	
+	if(dv_ver_to_ana != null){
+		dv_ver_to_ana.insertAdjacentElement('afterend', dv_loading);
+	} else {
+		dv_verses.prepend(dv_loading);
+	}
 }
 
 function end_loading(){

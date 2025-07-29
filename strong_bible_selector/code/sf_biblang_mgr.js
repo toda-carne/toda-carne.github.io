@@ -929,7 +929,7 @@ async function find_regex(bib, num, rx, prev){
 		}
 	}
 	if(gvar.dbg_biblang){
-		add_dbg_log(found);
+		console.log(found);
 		add_dbg_log("_____________________________");
 	}
 	return found;
@@ -987,6 +987,8 @@ export async function eval_biblang_command(command){
 	if(gvar.dbg_biblang){
 		add_dbg_log("FINAL_RESULT");
 		add_dbg_log(robj.op);
+		add_dbg_log("FINAL_NUM_VERSES=" + robj.lverses.length);
+		add_dbg_log("_____________________________");
 		console.log(robj.lverses);
 	}
 	return robj;
