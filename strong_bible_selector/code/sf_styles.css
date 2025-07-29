@@ -339,7 +339,7 @@ a.exam_ref:hover {
 	display: grid;
 	margin-left: 10%;
 	margin-right: 10%;
-	grid-template-columns: 15fr 15fr 15fr 15fr 15fr 15fr;
+	grid-template-columns: 15fr 15fr 15fr 15fr 15fr;
 	grid-template-rows: auto;
 	font-size:1em;
 }
@@ -405,6 +405,10 @@ a.exam_ref:hover {
 	grid-column-start: 1;
 	grid-column-end: -1;
 	grid-row: auto;
+}
+
+.has_border {
+	border: 0.2vw solid #ffff00;
 }
 
 .grid_txt_analysis {

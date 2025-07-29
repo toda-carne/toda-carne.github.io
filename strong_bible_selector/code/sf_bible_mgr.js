@@ -4,6 +4,8 @@ import { num2book_en, } from './sf_lang_mgr.js';
 import { diffSequence } from './sf_diff_sequence.js';
 import { distance, closest,  } from './sf_word_dist.js';
 import { add_dbg_log, } from './sf_biblang_mgr.js';
+import { scroll_to_top, } from './sf_select_option_mgr.js';
+
 
 const bibles_dir = "../data/js_bib/";
 const strongs_dir = "../data/js_sbib/";
@@ -424,13 +426,13 @@ export async function get_bible_verse(bib_cod, book, chapter, verse){
 }
 
 async function import_file(bib_fl, fl_id){
-	start_loading(fl_id);
+	await start_loading(fl_id);
 	add_dbg_log("importing file " + bib_fl);
 	
 	const resp = await import(bib_fl);
 
 	add_dbg_log("FINISHED importing file " + bib_fl);
-	end_loading();
+	await end_loading();
 	return resp;
 }
 
@@ -623,7 +625,15 @@ export function dbg_log_all_loaded_files(){
 	dbg_log_loaded_files_from(local_bible_files, gvar.full_bible);
 }
 
-function start_loading(fl_nam){
+function img_renderized(img_elem){
+	return new Promise(resolve => {
+		img_elem.onload = () => {
+			requestAnimationFrame(resolve);
+		}
+	});
+}
+
+async function start_loading(fl_nam){
 	if(in_nodejs()){	// working from node
 		return;
 	}
@@ -641,21 +651,30 @@ function start_loading(fl_nam){
 	
 	const msg_ld = gvar.all_msg.loading;
 	const tag_fl_nam = `<div class="file_loading_name">${msg_ld} ${fl_nam}</div><br>`;
-	const tag_img = `<img class="file_loading_img" width="100%" src="${loading_img}">`;
-	
+	const id_img = "id_image_loading_file";
+	const tag_img = `<img id="${id_img}" class="file_loading_img" width="100%" src="${loading_img}">`;
 	
 	dv_loading = document.createElement("div");
 	dv_loading.id = id_dv_loading;
 	dv_loading.innerHTML = tag_fl_nam + tag_img;
 	
+	let dv_to_scroll = dv_verses;
 	if(dv_ver_to_ana != null){
 		dv_ver_to_ana.insertAdjacentElement('afterend', dv_loading);
+		dv_to_scroll = dv_ver_to_ana;
 	} else {
 		dv_verses.prepend(dv_loading);
 	}
+	
+	const img_elem = document.getElementById(id_img);
+	await img_renderized(img_elem);
+	
+	scroll_to_top(dv_to_scroll);
+	
+	//await new Promise(resolve => setTImeout(resolve, 0));
 }
 
-function end_loading(){
+async function end_loading(){
 	if(in_nodejs()){	// working from node
 		return;
 	}
@@ -663,6 +682,7 @@ function end_loading(){
 	if(dv_loading != null){
 		dv_loading.remove();
 	}
+	//await new Promise(resolve => setTImeout(resolve, 0));
 }
 
 

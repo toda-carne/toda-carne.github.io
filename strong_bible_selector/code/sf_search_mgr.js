@@ -24,8 +24,11 @@ id_find
 export let gvar = {};
 
 
+const PERSISTANT_STATE = true;
+const STORAGE_STATE_ID = "STORAGE_STATE_ID";
 const id_grid_text_analysis = "id_grid_text_analysis";
 const id_pop_menu_sele = "id_pop_menu_sele";
+const id_select = "id_select";
 
 const DEBUG_SELECTOR = true;
 
@@ -38,14 +41,6 @@ DOWN:'\u2193',
 
 const id_dv_tab = "id_dv_tab";
 const tab_txt = "TAB";
-
-const tab1_adds = {
-	id_up_arrow: { htm: "" + simbol_chars.UP, hndlr: set_prv_in_history, },
-	id_down_arrow: { htm: "" + simbol_chars.DOWN, hndlr: set_nxt_in_history, },
-	id_equal: { htm: "=", hndlr: () => { append_command_text("="); }, },
-	id_more: { htm: ">", hndlr: () => { append_command_text(">"); }, },
-	id_less: { htm: "<", hndlr: () => { append_command_text("<"); }, },
-};
 
 const id_crit_sele = "id_crit_sele";
 const id_expression = "id_expression";
@@ -102,16 +97,7 @@ function init_menus(){
 	const dv_out_txt = document.getElementById("id_out_txt");
 	add_menu(dv_out_txt, gvar.out_txt);
 
-	const dv_tab = document.createElement("div");
-	dv_tab.id = id_dv_tab;
-	dv_tab.innerHTML = tab_txt;
-	dv_tab.classList.add("bib_item");
-	dv_out_txt.insertAdjacentElement('afterend', dv_tab);
-	
-	dv_tab.addEventListener('click', function() {
-		add_buttons(dv_tab);
-		return;
-	});
+	//dv_out_txt.insertAdjacentElement('afterend', dv_tab);
 	
 	const dv_search = document.getElementById("id_search");
 	const inp_box = document.createElement("input");
@@ -120,8 +106,8 @@ function init_menus(){
 	inp_box.value = "G66";
 	inp_box.type = "text";
 	dv_search.appendChild(inp_box);
-
-	const dv_select = document.getElementById("id_select");
+	
+	const dv_select = document.getElementById(id_select);
 	dv_select.addEventListener('click', async function() {
 		await do_select();
 		return;
@@ -190,7 +176,10 @@ export async function start_srch_mgr(curr_lang){
 	init_lang(curr_lang);
 	init_biblang(curr_lang);
 	init_menus();
+	if(PERSISTANT_STATE){ read_storage_state(); }
 	init_handlers();
+	
+	if(PERSISTANT_STATE){ window.addEventListener('beforeunload', write_storage_state); }	
 }
 
 async function fill_verses(all_vrs){
@@ -351,40 +340,47 @@ function pop_menu_handler(){
 	scroll_to_top(dv_pop_men);
 }
 
-function toggle_data(id_dat, arr_dat){
-	const dv_dat = document.getElementById(id_dat);
-	if(dv_dat == null){ console.err("No div for " + id_dat); }
-	const cnt = dv_dat.innerHTML;
-	if(cnt != ""){
-		dv_dat.innerHTML = "";
-		return;
-	}
-
-	if(arr_dat.length == 0){
-		dv_dat.innerHTML = "NO DATA TO SHOW";
-		return;
-	}
-
-	let ii = 0;
-	for(; ii < arr_dat.length; ii++){
-		dv_dat.innerHTML += arr_dat[ii] + "<br>";
-	}
-}
-
 function toggle_history_info(){
-	toggle_data("id_history", gvar.biblang.history);
-	//close_pop_menu();
+	const dv_expr = document.getElementById(id_expression);
+	let his = gvar.biblang.history;
+	let clk_fn = async function(dv_ret, dv_ops, val_sel, idx_sel){
+		dv_expr.value = val_sel;
+		await do_select();
+		//dv_ops.remove();
+	}
+	if(his.length == 0){
+		his = ["NO DATA TO SHOW. Do a search first."];
+		clk_fn = null;
+	}
+	const cls_men = ["aux_item", "has_border"];
+	const cls_itm = [];
+	const dv_select = document.getElementById(id_select);
+	toggle_select_option(dv_select, "id_history", his, clk_fn, cls_men, cls_itm);
 }
 
 function toggle_books_info(){
-	const abbr = Object.keys(gvar.abbr2num);
-	toggle_data("id_info", abbr);
-	//close_pop_menu();
+	const dv_expr = document.getElementById(id_expression);
+	let abbr = Object.keys(gvar.abbr2num);
+	let clk_fn = async function(dv_ret, dv_ops, val_sel, idx_sel){
+		const prv = dv_expr.value;
+		dv_expr.value = prv + val_sel;
+	}
+	const cls_men = ["aux_item", "has_border"];
+	const cls_itm = ["is_option"];
+	const dv_select = document.getElementById(id_select);
+	toggle_select_option(dv_select, "id_books", abbr, clk_fn, cls_men, cls_itm);
 }
 
 function toggle_dbg_info(){
-	toggle_data("id_dbg", gvar.biblang.dbg_log);
-	//close_pop_menu();
+	let log = gvar.biblang.dbg_log;
+	let clk_fn = null;
+	if(log.length == 0){
+		log = [`NO DATA TO SHOW. Debug is not turned on. Turn it on with command '.dbg'`];
+	}
+	const cls_men = ["aux_item", "has_border"];
+	const cls_itm = [];
+	const dv_select = document.getElementById(id_select);
+	toggle_select_option(dv_select, "id_dbg_data", log, clk_fn, cls_men, cls_itm);
 }
 
 function close_pop_menu() {
@@ -392,25 +388,36 @@ function close_pop_menu() {
 	if(dv_pop_men != null){ dv_pop_men.remove(); }
 }
 
-function get_tab_buttons_to_show(){
-}
-
-function add_buttons(dv_tab){
-	//tab1_adds
-	const ids1 = object.keys(tab1_adds);
-	const id_test = ids1[0];
-	const dv_test = document.getElementById(id_test);
-	if(dv_test != null){
+function read_storage_state(){
+	let state_str = window.localStorage.getItem(STORAGE_STATE_ID);
+	let stat = {};
+	if(state_str != null){
+		stat = JSON.parse(state_str);
+		if(stat.expr != null){
+			const dv_expr = document.getElementById(id_expression);
+			if(dv_expr != null){
+				dv_expr.value = stat.expr;
+			}
+		}
+		if(stat.history != null){
+			if(gvar.biblang == null){ gvar.biblang = {}; } 
+			gvar.biblang.history = stat.history;
+		}
 	}
-	//const dv_test = 
 }
 
-function set_prv_in_history(){
-}
-
-function set_nxt_in_history(){
-}
-
-function append_command_text(txt){
+function write_storage_state(){
+	let stat = {};
+	if(gvar.biblang.history != null){
+		stat.history = gvar.biblang.history;
+	}
+	const dv_expr = document.getElementById(id_expression);
+	if(dv_expr != null){
+		let expr = dv_expr.value;
+		if((expr != null) && (expr.length > 0)){
+			stat.expr = expr;
+		}
+	}
+	window.localStorage.setItem(STORAGE_STATE_ID, JSON.stringify(stat));
 }
 

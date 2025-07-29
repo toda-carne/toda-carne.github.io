@@ -1,13 +1,12 @@
 
 // CODE_FOR SELECT FROM ARRAY OF OPTIONS (for example several verses)
 
-export function get_new_dv_under(dv_header, id_dv){
+export function get_new_dv_under(dv_header, id_dv, force_toggle){
 	let dv_options = document.getElementById(id_dv);
 	if(dv_options != null){
 		var was_mine = (dv_header.nextSibling == dv_options);
 		dv_options.remove();
-		if(was_mine){
-			//console.log("get_new_dv_under RETURNS NOTHING !!!!!");
+		if(was_mine || force_toggle){
 			return null;
 		}
 	}
@@ -18,7 +17,8 @@ export function get_new_dv_under(dv_header, id_dv){
 	return dv_options;
 }
 
-export function toggle_select_option(dv_return, id_selec_men, all_options_arr, on_click_fn, menu_cls_arr, item_cls_arr){
+export function toggle_select_option(dv_return, id_selec_men, all_options_arr, on_click_fn, menu_cls_arr, item_cls_arr, dv_to_scroll){
+	
 	var dv_options = get_new_dv_under(dv_return, id_selec_men); // old id_dv_sel_option
 	if(dv_options == null){
 		return;
@@ -46,8 +46,10 @@ export function toggle_select_option(dv_return, id_selec_men, all_options_arr, o
 			}
 		});
 	});
-
-	//scroll_to_top(dv_options);
+	
+	if(dv_to_scroll != null){
+		scroll_to_top(dv_to_scroll);
+	}
 }
 
 function add_option(dv_parent, id_option, label, handler, item_cls_arr){
