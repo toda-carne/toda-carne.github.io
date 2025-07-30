@@ -211,7 +211,7 @@ const ascii_to_may_greek = {
 };
 
 
-export async function get_text_analysis(bib, book, chapter, verse){
+export async function get_text_analysis(bib, book, chapter, verse, lang){
 	const asc = await get_bible_verse(bib, book, chapter, verse);
 	const sbib = bib + "_S";
 	const sco = await get_bible_verse(sbib, book, chapter, verse);
@@ -226,7 +226,11 @@ export async function get_text_analysis(bib, book, chapter, verse){
 
 	const ana = get_obj_analysis(asc, sco, loc);
 	
-	const ltra = lpref + "_" + gvar.lang.toUpperCase();
+	let ltra = lpref + "_" + gvar.lang.toUpperCase();
+	if(lang != null){
+		ltra = lpref + "_" + lang.toUpperCase();
+	}
+	
 	await fill_translation(ltra, ana);
 	
 	const txt_ana = {

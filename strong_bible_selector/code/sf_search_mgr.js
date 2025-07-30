@@ -190,6 +190,31 @@ export async function start_srch_mgr(curr_lang){
 	if(PERSISTANT_STATE){ window.addEventListener('beforeunload', write_storage_state); }	
 }
 
+function get_conversion_func(){
+	let otxt = gvar.biblang.output.toUpperCase();
+	const rxi_val = gvar.biblang.regex_input.toUpperCase();
+	if(rxi_val == "LOC"){
+		otxt = "ASC";
+	}
+}
+
+function verse_cod2obj(vrs_cod){
+	const cod_ver = vrs_cod.split(':');
+	const id_ver = cod_ver.join('_');
+	const bibobj = {};
+	bibobj.id_dv_ver = id_ver;
+	bibobj.book = Number(cod_ver[0]);
+	bibobj.chapter = Number(cod_ver[1]);
+	bibobj.verse = Number(cod_ver[2]);
+	bibobj.cri_txt = gvar.biblang.curr_OT;
+	if(bibobj.book > 39){
+		bibobj.cri_txt = gvar.biblang.curr_NT;
+	}
+	const n2b = gvar.num2book_en;
+	bibobj.book_name = n2b[bibobj.book];
+	return bibobj;
+}
+
 async function fill_verses(all_vrs){
 	const oldt = gvar.biblang.curr_OT;
 	const newt = gvar.biblang.curr_NT;
@@ -239,6 +264,19 @@ async function fill_verses(all_vrs){
 	//const all_vrs = Object.keys(all_found);
 	let ii = 0;
 	for(ii = 0; ii < all_vrs.length; ii++){
+		const bibobj = verse_cod2obj(all_vrs[ii]);
+		const dv_ver = document.createElement("div");
+		dv_ver.id = bibobj.id_dv_ver;
+		dv_ver.innerHTML = bibobj.id_dv_ver;
+		dv_verses.appendChild(dv_ver);
+		
+		bibobj.bible = bib_ot;
+		bibobj.conv_fn = conv_fn_ot;
+		if(bibobj.book > 39){
+			bibobj.bible = bib_nt;
+			bibobj.conv_fn = conv_fn_nt;
+		}
+		/*
 		const cod_ver = all_vrs[ii].split(':');
 		const id_ver = cod_ver.join('_');
 		const dv_ver = document.createElement("div");
@@ -259,10 +297,11 @@ async function fill_verses(all_vrs){
 		bibobj.book = cod_ver[0];
 		bibobj.chapter = cod_ver[1];
 		bibobj.verse = cod_ver[2];
+		*/
 		
 		const id_txt = "id_verse_loc_" + ii;
 	
-		const vs_txt = await bibobj_to_bibtxt(bibobj, conv_fn, id_txt);
+		const vs_txt = await bibobj_to_bibtxt(bibobj, bibobj.conv_fn, id_txt);
 		dv_ver.innerHTML = vs_txt;
 		const dv_txt = document.getElementById(id_txt);
 		dv_txt.addEventListener('click', async function() {
@@ -392,17 +431,15 @@ async function toggle_text_analysis(dv_txt, bibobj){
 	}
 	dv_ana.classList.add("grid_txt_analysis");
 	
+	/*
 	const n2b = gvar.num2book_en;
 	const book = Number(bibobj.book);
 	const chapter = bibobj.chapter;
 	const verse = bibobj.verse;
+	*/
 	
-	let bib = gvar.biblang.curr_OT;
-	if(book > 39){
-		bib = gvar.biblang.curr_NT;
-	}
-	gvar.curr_dv_ver_id = bibobj.id_dv_ver;
-	const full_ana = await get_text_analysis(bib, n2b[book], chapter, verse);
+	gvar.curr_dv_ver_id = bibobj.id_dv_ver;		// UGLY. It is to show the loding image under the right verse. 
+	const full_ana = await get_text_analysis(bibobj.cri_txt, bibobj.book_name, bibobj.chapter, bibobj.verse);
 	gvar.curr_dv_ver_id = null;
 	
 	console.log("TEXT_ANALYSIS_OF " + dv_txt.id);
@@ -421,3 +458,23 @@ async function toggle_text_analysis(dv_txt, bibobj){
 	}
 }
 
+function add_text_analysis_word(dv_ana, bibobj, tok){
+	let cri = "";
+	if(bibobj.conv_fn != null){
+		cri = bibobj.conv_fn(tok.id);
+	}
+	add_tok_item(dv_ana, 1, cri);
+	add_tok_item(dv_ana, 2, tok.id);
+	add_tok_item(dv_ana, 3, tok.sco);
+	//let in_bh = "BH";
+	//add_tok_item(dv_ana, 4, tok.sco);
+}
+
+function add_tok_item(dv_ana, col, htm){
+	const dv_itm = document.createElement("div");
+	dv_itm.classList.add("txt_ana_item");
+	dv_itm.style.gridColumnStart = col;
+	dv_itm.style.gridColumnEnd = col;
+	dv_itm.innerHTML = htm;
+	dv_ana.appendChild(dv_itm);
+}
