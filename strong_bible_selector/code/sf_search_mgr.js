@@ -212,6 +212,11 @@ function verse_cod2obj(vrs_cod){
 	}
 	const n2b = gvar.num2book_en;
 	bibobj.book_name = n2b[bibobj.book];
+	bibobj.conv_fn = verse_to_hebrew;
+	if(bibobj.book > 39){
+		bibobj.conv_fn = verse_to_min_greek;
+	}
+		
 	return bibobj;
 }
 
@@ -261,7 +266,6 @@ async function fill_verses(all_vrs){
 	
 	const dv_verses = document.getElementById("id_verses");
 	dv_verses.innerHTML = "";
-	//const all_vrs = Object.keys(all_found);
 	let ii = 0;
 	for(ii = 0; ii < all_vrs.length; ii++){
 		const bibobj = verse_cod2obj(all_vrs[ii]);
@@ -271,37 +275,18 @@ async function fill_verses(all_vrs){
 		dv_verses.appendChild(dv_ver);
 		
 		bibobj.bible = bib_ot;
-		bibobj.conv_fn = conv_fn_ot;
+		let conv_fn = conv_fn_ot;
 		if(bibobj.book > 39){
 			bibobj.bible = bib_nt;
-			bibobj.conv_fn = conv_fn_nt;
-		}
-		/*
-		const cod_ver = all_vrs[ii].split(':');
-		const id_ver = cod_ver.join('_');
-		const dv_ver = document.createElement("div");
-		dv_ver.id = id_ver;
-		dv_ver.innerHTML = id_ver;
-		dv_verses.appendChild(dv_ver);
-		
-		let bib_cod = bib_ot;
-		let conv_fn = conv_fn_ot;
-		if(cod_ver[0] > 39){
-			bib_cod = bib_nt;
 			conv_fn = conv_fn_nt;
 		}
-		
-		const bibobj = {};
-		bibobj.id_dv_ver = id_ver;
-		bibobj.bible = bib_cod;
-		bibobj.book = cod_ver[0];
-		bibobj.chapter = cod_ver[1];
-		bibobj.verse = cod_ver[2];
-		*/
+		if(conv_fn != null){
+			bibobj.conv_fn = conv_fn;
+		}
 		
 		const id_txt = "id_verse_loc_" + ii;
 	
-		const vs_txt = await bibobj_to_bibtxt(bibobj, bibobj.conv_fn, id_txt);
+		const vs_txt = await bibobj_to_bibtxt(bibobj, conv_fn, id_txt);
 		dv_ver.innerHTML = vs_txt;
 		const dv_txt = document.getElementById(id_txt);
 		dv_txt.addEventListener('click', async function() {
@@ -431,13 +416,6 @@ async function toggle_text_analysis(dv_txt, bibobj){
 	}
 	dv_ana.classList.add("grid_txt_analysis");
 	
-	/*
-	const n2b = gvar.num2book_en;
-	const book = Number(bibobj.book);
-	const chapter = bibobj.chapter;
-	const verse = bibobj.verse;
-	*/
-	
 	gvar.curr_dv_ver_id = bibobj.id_dv_ver;		// UGLY. It is to show the loding image under the right verse. 
 	const full_ana = await get_text_analysis(bibobj.cri_txt, bibobj.book_name, bibobj.chapter, bibobj.verse);
 	gvar.curr_dv_ver_id = null;
@@ -450,11 +428,14 @@ async function toggle_text_analysis(dv_txt, bibobj){
 	let ii = 0;
 	for(; ii < toks.length; ii++){
 		const tok = toks[ii];
+		/*
 		const dv_tok = dv_ana.appendChild(document.createElement("div"));
 		dv_tok.classList.add("txt_ana_item");
 		dv_tok.style.gridColumnStart = 1;
 		dv_tok.style.gridColumnEnd = -1;
 		dv_tok.innerHTML = tok.id + " " + tok.sco + " :" + tok.tra;
+		*/
+		add_text_analysis_word(dv_ana, bibobj, tok);
 	}
 }
 
@@ -466,8 +447,12 @@ function add_text_analysis_word(dv_ana, bibobj, tok){
 	add_tok_item(dv_ana, 1, cri);
 	add_tok_item(dv_ana, 2, tok.id);
 	add_tok_item(dv_ana, 3, tok.sco);
-	//let in_bh = "BH";
-	//add_tok_item(dv_ana, 4, tok.sco);
+	let bib_cri = bibobj.cri_txt;
+	if(! tok.comm){
+		bib_cri = "BH";
+	}
+	add_tok_item(dv_ana, 4, bib_cri);
+	add_tok_item(dv_ana, 5, tok.tra);
 }
 
 function add_tok_item(dv_ana, col, htm){
