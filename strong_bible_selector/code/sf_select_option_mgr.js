@@ -1,12 +1,16 @@
 
 // CODE_FOR SELECT FROM ARRAY OF OPTIONS (for example several verses)
 
-export function get_new_dv_under(dv_header, id_dv, force_toggle){
+export function get_new_dv_under(dv_header, id_dv, toggle_op){
 	let dv_options = document.getElementById(id_dv);
 	if(dv_options != null){
 		var was_mine = (dv_header.nextSibling == dv_options);
-		dv_options.remove();
-		if(was_mine || force_toggle){
+		if(toggle_op != "keep"){
+			dv_options.remove();
+		} else {
+			return dv_options;
+		}
+		if(was_mine || (toggle_op == "force")){
 			return null;
 		}
 	}
@@ -17,12 +21,14 @@ export function get_new_dv_under(dv_header, id_dv, force_toggle){
 	return dv_options;
 }
 
-export function toggle_select_option(dv_return, id_selec_men, all_options_arr, on_click_fn, menu_cls_arr, item_cls_arr, dv_to_scroll){
+export function toggle_select_option(dv_return, id_selec_men, all_options_arr, on_click_fn, menu_cls_arr, item_cls_arr, dv_to_scroll, toggle_op){
 	
-	var dv_options = get_new_dv_under(dv_return, id_selec_men); // old id_dv_sel_option
+	var dv_options = get_new_dv_under(dv_return, id_selec_men, toggle_op); // old id_dv_sel_option
 	if(dv_options == null){
 		return;
 	}
+	dv_options.innerHTML = "";
+	
 	if(menu_cls_arr != null){
 		dv_options.classList.add(...menu_cls_arr);
 	} else {

@@ -92,8 +92,10 @@ const rx_insen = "rx:i";
 const rx_noisen = "rx:ni";
 const dbg_lang = "dbg";
 const nodbg_lang = "nodbg";
+const reset_history = "rhis";
 
 const range_nams = {
+	"all":[],
 	"ot":[],
 	"nt":[],
 	"pa":[45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],	// paul or pablo
@@ -101,9 +103,16 @@ const range_nams = {
 };
 
 function init_ranges(){
+	range_nams.all = [];
+	const rng_all = range_nams.all;
+	let ii = 1;
+	for(; ii <= 66; ii++){
+		rng_all.push(ii);
+	}
+
 	range_nams.ot = [];
 	const rng_ot = range_nams.ot;
-	let ii = 1;
+	ii = 1;
 	for(; ii <= 39; ii++){
 		rng_ot.push(ii);
 	}
@@ -128,37 +137,46 @@ function size_outputs_to_all(){
 }
 
 export function reset_curr_range(){
-	gvar.biblang.curr_range = arr_union(range_nams.ot, range_nams.nt).sort((n1, n2) => (n1 - n2));
+	gvar.biblang.curr_range = range_nams.all;
 }
 
-export function init_biblang(lng){
-	init_ranges();
-	
-	gvar.biblang = {};
-	
+function init_history(){
+	if(gvar.biblang == null){ gvar.biblang = {}; }
+	gvar.biblang.history = [];
+	gvar.biblang.size_output.his = 1000;
+}
+
+function reset_biblang_conf(){
 	gvar.biblang.curr_OT = "WLC";
 	gvar.biblang.curr_NT = "BYZ";
-	gvar.biblang.curr_LOC = "WEB";
-	if(lng == 'es'){
-		gvar.biblang.curr_LOC = "SBLM";
-	}
+	gvar.biblang.curr_LOC = gvar.biblang.default_LOC;
 	
 	gvar.biblang.output = "loc";
 	gvar.biblang.regex_input = "loc";
 	
-	gvar.biblang.history = [];
 	gvar.biblang.dbg_log = [];
 	
 	size_outputs_to_all();
-	gvar.biblang.size_output.his = 1000;
 	gvar.biblang.size_output.dbg = 1000;
 
 	gvar.biblang.regex_insensitive = true;
 
 	reset_curr_range();
+}
+
+export function init_biblang(lng){
+	if(gvar.biblang == null){ gvar.biblang = {}; }
+
+	gvar.biblang.default_LOC = "WEB";
+	if(lng == 'es'){
+		gvar.biblang.default_LOC = "SBLM";
+	}
 	
 	gvar.biblang.parser = new ExpressionParser(biblang_def);
 	
+	init_ranges();
+	reset_biblang_conf();
+	init_history();
 }
 
 function cmp_verses(vv1, vv2){
@@ -668,6 +686,7 @@ async function calc_bibvar(bvar){
 		return robj;
 	}
 	if(kk == ':'){
+		const vr = nam.toLowerCase();
 		if(rx_in_nams[vr] != null){
 			gvar.biblang.regex_input = vr;
 			if(gvar.dbg_biblang){ add_dbg_log("regex_input=" + vr); }
@@ -698,6 +717,10 @@ async function calc_bibvar(bvar){
 		if(vr == nodbg_lang){
 			add_dbg_log("dbg_biblang OFF");
 			gvar.dbg_biblang = false;
+		}
+		if(vr == reset_history){
+			add_dbg_log("reseting history");
+			gvar.biblang.history = [];
 		}
 	}
 	if(kk == '#'){
@@ -964,7 +987,7 @@ export async function eval_biblang_command(command){
 		console.error(eval_biblang_term);
 	}
 
-	gvar.biblang.dbg_log = [];
+	reset_biblang_conf();
 	
 	dbg_log_all_loaded_files();
 	

@@ -605,24 +605,34 @@ async function import_scodes(bib_cod){
 	gvar.full_scodes[bib_cod] = md_scod.scode_verses;	
 }
 
-export function dbg_log_loaded_files_from(file_names, loaded){
+function get_loaded_files_from(file_names, loaded){
+	if(loaded == null){
+		return [];
+	}
 	const all_kk = Object.keys(file_names);
 	let ii = 0;
+	const all_loaded = [];
 	for(ii = 0; ii < all_kk.length; ii++){
 		const nm = all_kk[ii];
-		if((loaded != null) && (loaded[nm] != null)){
-			add_dbg_log("FILE " + file_names[nm] + " ALREADY LOADED AT START OF BIBLANG COMMAND");
+		if(loaded[nm] != null){
+			all_loaded.push(nm);
 		}
 	}
+	return all_loaded;
 }
 
 export function dbg_log_all_loaded_files(){
 	if(! gvar.dbg_biblang){
 		return;
 	}
-	dbg_log_loaded_files_from(local_text_files, gvar.full_local_text);
-	dbg_log_loaded_files_from(local_scods_files, gvar.full_scodes);
-	dbg_log_loaded_files_from(local_bible_files, gvar.full_bible);
+	add_dbg_log("FILES ALREADY LOADED AT START OF BIBLANG COMMAND");
+	const f1 = get_loaded_files_from(local_text_files, gvar.full_local_text);
+	const f2 = get_loaded_files_from(local_scods_files, gvar.full_scodes);
+	const f3 = get_loaded_files_from(local_bible_files, gvar.full_bible);
+	const all_f = [...new Set([...f1, ...f2, ...f3])];
+	const str_f = all_f.join(" ");
+	add_dbg_log(str_f);
+	add_dbg_log("_______________________________");
 }
 
 function img_renderized(img_elem){
