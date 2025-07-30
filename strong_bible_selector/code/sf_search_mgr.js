@@ -414,7 +414,7 @@ async function toggle_text_analysis(dv_txt, bibobj){
 	if(dv_ana == null){
 		return;
 	}
-	dv_ana.classList.add("grid_txt_analysis");
+	dv_ana.classList.add("grid_txt_analysis", "grid_txt_columns");
 	
 	gvar.curr_dv_ver_id = bibobj.id_dv_ver;		// UGLY. It is to show the loding image under the right verse. 
 	const full_ana = await get_text_analysis(bibobj.cri_txt, bibobj.book_name, bibobj.chapter, bibobj.verse);
@@ -436,30 +436,57 @@ async function toggle_text_analysis(dv_txt, bibobj){
 		dv_tok.innerHTML = tok.id + " " + tok.sco + " :" + tok.tra;
 		*/
 		add_text_analysis_word(dv_ana, bibobj, tok);
+		add_all_added(dv_ana, bibobj, tok);
 	}
 }
 
-function add_text_analysis_word(dv_ana, bibobj, tok){
+function add_text_analysis_word(dv_ana, bibobj, tok, is_added){
 	let cri = "";
 	if(bibobj.conv_fn != null){
 		cri = bibobj.conv_fn(tok.id);
 	}
-	add_tok_item(dv_ana, 1, cri);
-	add_tok_item(dv_ana, 2, tok.id);
-	add_tok_item(dv_ana, 3, tok.sco);
 	let bib_cri = bibobj.cri_txt;
-	if(! tok.comm){
+	let marked = false;
+	if(! tok.comm && ! is_added){
 		bib_cri = "BH";
+		marked = true;
 	}
-	add_tok_item(dv_ana, 4, bib_cri);
-	add_tok_item(dv_ana, 5, tok.tra);
+	
+	add_tok_item(dv_ana, 1, cri, marked);
+	add_tok_item(dv_ana, "auto", tok.id, marked, true);
+	add_tok_item(dv_ana, "auto", tok.sco, marked);
+	add_tok_item(dv_ana, "auto", bib_cri, marked, true);
+	add_tok_item(dv_ana, "auto", tok.tra, marked);
 }
 
-function add_tok_item(dv_ana, col, htm){
+function add_all_added(dv_ana, bibobj, tok){
+	const added = tok.added;
+	if(added == null){
+		return;
+	}
+	let ii = 0;
+	for(; ii < added.length; ii++){
+		const obj = added[ii];
+		if(obj.idx1 != null){
+			add_text_analysis_word(dv_ana, bibobj, obj, true);
+		}
+	}
+}
+
+function add_tok_item(dv_ana, col, htm, marked, is_optional){
 	const dv_itm = document.createElement("div");
 	dv_itm.classList.add("txt_ana_item");
+	if(marked){
+		dv_itm.classList.add("txt_ana_maked_item");
+	}
+	if(is_optional){
+		dv_itm.classList.add("txt_optional_item");
+	}
 	dv_itm.style.gridColumnStart = col;
 	dv_itm.style.gridColumnEnd = col;
-	dv_itm.innerHTML = htm;
+	dv_itm.innerHTML = "";
+	if(htm != null){
+		dv_itm.innerHTML = htm;
+	}
 	dv_ana.appendChild(dv_itm);
 }

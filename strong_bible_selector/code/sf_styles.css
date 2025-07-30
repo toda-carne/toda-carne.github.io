@@ -413,11 +413,14 @@ a.exam_ref:hover {
 
 .grid_txt_analysis {
 	display: grid;
-	margin-left: 10%;
-	margin-right: 10%;
-	grid-template-columns: 15fr 15fr 15fr 15fr 15fr;
+	margin-left: 3%;
+	margin-right: 3%;
 	grid-template-rows: auto;
 	font-size:1em;
+}
+
+.grid_txt_columns {
+	grid-template-columns: 10fr 10fr 15fr;
 }
 
 .txt_ana_item {
@@ -426,6 +429,23 @@ a.exam_ref:hover {
 	grid-row: auto;
 }
 
+.txt_optional_item {
+	display: none;
+}
+
+@media (min-width: 600px) and (orientation:landscape) {
+	.grid_txt_columns {
+		grid-template-columns: 10fr 10fr 10fr 10fr 15fr;
+	}
+	.txt_optional_item {
+		display: grid;
+	}
+}
+
+
+.txt_ana_maked_item {
+	background-color: #0c162f;
+}
 
 /*
 	align-content: center center;
