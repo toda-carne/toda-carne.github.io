@@ -51,7 +51,7 @@ async function main_selector(){
 	//console.log(robj.lverses);	
 }
 
-main_selector();
+//main_selector();
 
 /*
 const arr1 = [0,1,2,3,4,5,6];
@@ -71,7 +71,7 @@ console.log(ana);
 
 async function main_diff_bib(){
 	if (process.argv.length < 3) {
-		console.log('Usage: node ' + process.argv[1] + ' <verse1>');
+		console.log('Usage: node ' + process.argv[1] + ' "book:chapter:verse"');
 		process.exit(1);
 	}
 
@@ -118,7 +118,7 @@ function find_lcs(s1, s2){
 	return rr;
 }
 
-//main_diff_bib();
+main_diff_bib();
 
 async function main_distance(){
 	if (process.argv.length < 4) {

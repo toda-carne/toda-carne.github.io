@@ -297,7 +297,7 @@ async function calc_not(aa, bb){
 function next_book_in_range(book){
 	let nx_book = book + 1;
 	const rng = gvar.biblang.curr_range;
-	while((nx_book < 66) && ! rng.includes(nx_book)){
+	while((nx_book <= 66) && ! rng.includes(nx_book)){
 		nx_book++;
 	}
 	return nx_book;

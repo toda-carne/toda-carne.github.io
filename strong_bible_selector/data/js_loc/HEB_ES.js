@@ -1,6 +1,6 @@
 
 	
-export const loc txt = {
+export const loc_txt = {
   "1": " ",
   "2": "un",
   "3": "un altar",
