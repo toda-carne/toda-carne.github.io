@@ -429,6 +429,14 @@ a.exam_ref:hover {
 	grid-row: auto;
 }
 
+.txt_ana_full_item {
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+	grid-row: auto;
+	grid-column-start = 1;
+	grid-column-end = -1;
+}
+
 .txt_optional_item {
 	display: none;
 }

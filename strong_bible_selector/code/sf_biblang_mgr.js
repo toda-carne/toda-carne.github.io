@@ -793,45 +793,52 @@ async function calc_bibvar(bvar){
 	}
 	const rng_var = get_name_range(nam);
 	if(rng_var.length > 0){
-		const rng1 = gvar.biblang.curr_range;
-		if(kk == '<'){
-			const rng2 = get_range(1, rng_var[0] - 1);
-			gvar.biblang.curr_range = arr_intersec(rng1, rng2);
-		}
-		if(kk == '<='){
-			const rng2 = get_range(1, rng_var[rng_var.length - 1]);
-			gvar.biblang.curr_range = arr_intersec(rng1, rng2);
-		}
-		if(kk == '>'){
-			const rng2 = get_range(rng_var[rng_var.length - 1] + 1, 66);
-			gvar.biblang.curr_range = arr_intersec(rng1, rng2);
-		}
-		if(kk == '>='){
-			const rng2 = get_range(rng_var[0], 66);
-			gvar.biblang.curr_range = arr_intersec(rng1, rng2);
-		}
-		if(kk == '='){
-			gvar.biblang.curr_range = rng_var;
-		}
-		if(kk == '+'){
-			gvar.biblang.curr_range = arr_union(rng1, rng_var);
-		}
-		if(kk == '-'){
-			gvar.biblang.curr_range = arr_diff(rng1, rng_var);
-		}
-		if(gvar.dbg_biblang){
-			add_dbg_log("new_range");
-			const str_rng2 = JSON.stringify(rng_var, null, null);
-			add_dbg_log(str_rng2);			
-			const str_rng = JSON.stringify(gvar.biblang.curr_range, null, null);
-			add_dbg_log(str_rng);
-		}
+		set_new_range(kk, rng_var);
 	}
 	if(gvar.dbg_biblang){
 		add_dbg_log("_____________________________");
 	}
 	
 	return robj;
+}
+
+function set_new_range(kk, rng_var){
+	if(rng_var.length <= 0){
+		return;
+	}
+	const rng1 = gvar.biblang.curr_range;
+	if(kk == '<'){
+		const rng2 = get_range(1, rng_var[0] - 1);
+		gvar.biblang.curr_range = arr_intersec(rng1, rng2);
+	}
+	if(kk == '<='){
+		const rng2 = get_range(1, rng_var[rng_var.length - 1]);
+		gvar.biblang.curr_range = arr_intersec(rng1, rng2);
+	}
+	if(kk == '>'){
+		const rng2 = get_range(rng_var[rng_var.length - 1] + 1, 66);
+		gvar.biblang.curr_range = arr_intersec(rng1, rng2);
+	}
+	if(kk == '>='){
+		const rng2 = get_range(rng_var[0], 66);
+		gvar.biblang.curr_range = arr_intersec(rng1, rng2);
+	}
+	if(kk == '='){
+		gvar.biblang.curr_range = rng_var;
+	}
+	if(kk == '+'){
+		gvar.biblang.curr_range = arr_union(rng1, rng_var);
+	}
+	if(kk == '-'){
+		gvar.biblang.curr_range = arr_diff(rng1, rng_var);
+	}
+	if(gvar.dbg_biblang){
+		add_dbg_log("new_range");
+		const str_rng2 = JSON.stringify(rng_var, null, null);
+		add_dbg_log(str_rng2);			
+		const str_rng = JSON.stringify(gvar.biblang.curr_range, null, null);
+		add_dbg_log(str_rng);
+	}
 }
 
 function get_range(min, max){
@@ -870,16 +877,23 @@ function no_tildes_word(wrd){
 	return ntil;
 }
 
-async function calc_word(word, prev){
-	const wrd = no_tildes_word(word);
-	const rop = word;
+function get_rx_input_bib(){
 	let bib = gvar.biblang.curr_LOC;
 	if(gvar.biblang.regex_input == ot_input){
 		bib = gvar.biblang.curr_OT;
+		set_new_range("<=", get_name_range("ot"));
 	}
 	if(gvar.biblang.regex_input == nt_input){
 		bib = gvar.biblang.curr_NT;
+		set_new_range(">=", get_name_range("nt"));
 	}
+	return bib;
+}
+
+async function calc_word(word, prev){
+	const wrd = no_tildes_word(word);
+	const rop = word;
+	let bib = get_rx_input_bib();
 	
 	let num = gvar.biblang.size_output.rx;
 	if(gvar.dbg_biblang){
@@ -899,13 +913,7 @@ async function calc_bibregex(rx, prev){
 		add_dbg_log("calc_bibregex");
 		add_dbg_log(rop);
 	}
-	let bib = gvar.biblang.curr_LOC;
-	if(gvar.biblang.regex_input == ot_input){
-		bib = gvar.biblang.curr_OT;
-	}
-	if(gvar.biblang.regex_input == nt_input){
-		bib = gvar.biblang.curr_NT;
-	}
+	let bib = get_rx_input_bib();
 	
 	let num = gvar.biblang.size_output.rx;
 	const found = await find_regex(bib, num, rx, prev);

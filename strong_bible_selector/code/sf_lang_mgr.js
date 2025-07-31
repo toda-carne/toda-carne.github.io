@@ -12,6 +12,11 @@ const msg_en = {
 	loading: "LOADING ",
 };
 
+const tok_ops_asc_id_es = ["exacto", "parcial", "adicionar"];
+const tok_ops_asc_id_en = ["exact", "partial", "add"];
+const tok_ops_scod_es = ["encuentra", "adicionar", "bibhub"];
+const tok_ops_scod_en = ["find", "add", "bibhub"];
+
 export const num2book_en = {
 	"-1":DEFAULT_BOOK_NAME,
 	"1":"genesis",
@@ -345,6 +350,9 @@ function init_es(){
 	gvar.loc_bible = loc_bible_en;
 	gvar.tgt_rx = tgt_rx_es;
 	gvar.out_txt = out_txt_es;
+	
+	gvar.tok_ops_asc_id = tok_ops_asc_id_es;
+	gvar.tok_ops_scod = tok_ops_scod_es;
 }
 
 function init_en(){
@@ -362,5 +370,8 @@ function init_en(){
 	gvar.loc_bible = loc_bible_en;
 	gvar.tgt_rx = tgt_rx_en;
 	gvar.out_txt = out_txt_en;
+
+	gvar.tok_ops_asc_id = tok_ops_asc_id_en;
+	gvar.tok_ops_scod = tok_ops_scod_en;
 }
 

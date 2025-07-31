@@ -2,7 +2,7 @@
 import { get_new_dv_under, scroll_to_top, toggle_select_option, 
 } from './sf_select_option_mgr.js';
 
-import { bibobj_to_bibtxt, verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, get_text_analysis, get_scode_verses, 
+import { bibobj_to_bibtxt, verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, get_text_analysis, get_scode_verses, make_strong_ref, 
 } from './sf_bible_mgr.js';
 
 import { init_lang, } from './sf_lang_mgr.js';
@@ -31,6 +31,7 @@ const id_pop_menu_sele = "id_pop_menu_sele";
 const id_select = "id_select";
 const id_dbg_data = "id_dbg_data";
 const id_history = "id_history";
+const id_menu_tok = "id_menu_tok";
 
 const DEBUG_SELECTOR = true;
 
@@ -476,21 +477,16 @@ async function toggle_text_analysis(dv_txt, bibobj){
 	const full_ana = await get_text_analysis(bibobj.cri_txt, bibobj.book_name, bibobj.chapter, bibobj.verse);
 	gvar.curr_dv_ver_id = null;
 	
-	console.log("TEXT_ANALYSIS_OF " + dv_txt.id);
-	console.log(bibobj);
-	console.log(full_ana);
+	if(DEBUG_SELECTOR){
+		console.log("TEXT_ANALYSIS_OF " + dv_txt.id);
+		console.log(bibobj);
+		console.log(full_ana);
+	}
 	
 	const toks = full_ana.ana;
 	let ii = 0;
 	for(; ii < toks.length; ii++){
 		const tok = toks[ii];
-		/*
-		const dv_tok = dv_ana.appendChild(document.createElement("div"));
-		dv_tok.classList.add("txt_ana_item");
-		dv_tok.style.gridColumnStart = 1;
-		dv_tok.style.gridColumnEnd = -1;
-		dv_tok.innerHTML = tok.id + " " + tok.sco + " :" + tok.tra;
-		*/
 		add_text_analysis_word(dv_ana, bibobj, tok);
 		add_all_added(dv_ana, bibobj, tok);
 	}
@@ -508,11 +504,22 @@ function add_text_analysis_word(dv_ana, bibobj, tok, is_added){
 		marked = true;
 	}
 	
-	add_tok_item(dv_ana, 1, cri, marked);
-	add_tok_item(dv_ana, "auto", tok.id, marked, true);
-	add_tok_item(dv_ana, "auto", tok.sco, marked);
+	const t1 = add_tok_item(dv_ana, 1, cri, marked);
+	const t2 = add_tok_item(dv_ana, "auto", tok.id, marked, true);
+	const t3 = add_tok_item(dv_ana, "auto", tok.sco, marked);
 	add_tok_item(dv_ana, "auto", bib_cri, marked, true);
-	add_tok_item(dv_ana, "auto", tok.tra, marked);
+	const t4 = add_tok_item(dv_ana, "auto", tok.tra, marked);
+	
+	t1.addEventListener('click', function() {
+		toggle_asc_id_menu(t4, bibobj, tok);
+	});		
+	t2.addEventListener('click', function() {
+		toggle_asc_id_menu(t4, bibobj, tok);
+	});		
+	t3.addEventListener('click', async function() {
+		toggle_scod_menu(t4, bibobj, tok);
+	});		
+	
 }
 
 function add_all_added(dv_ana, bibobj, tok){
@@ -545,4 +552,80 @@ function add_tok_item(dv_ana, col, htm, marked, is_optional){
 		dv_itm.innerHTML = htm;
 	}
 	dv_ana.appendChild(dv_itm);
+	return dv_itm;
 }
+
+function toggle_asc_id_menu(dv_up, bibobj, tok){
+	const dv_expr = document.getElementById(id_expression);
+	const ops = gvar.tok_ops_asc_id; // ["exact", "partial", "add"];
+	if(ops.length != 3){
+		console.err("ops.length != 3");
+		return;
+	}
+	let clk_fn = async function(dv_ret, dv_ops, val_sel, idx_sel){
+		let the_expr = null;
+		let out = ":ot";
+		if(bibobj.book >= 40){
+			out = ":nt";
+		}
+	if(idx_sel == 0){
+			the_expr = `${out} ; /(^|\\s)${tok.id}(\\s|$)/`;
+		}
+		if(idx_sel == 1){
+			the_expr = `${out} ; /${tok.id}/`;
+		}
+		if(idx_sel == 2){
+			const curr_expr = dv_expr.value;
+			the_expr = curr_expr + tok.id;
+		}
+		if(the_expr != null){
+			dv_expr.value = the_expr;
+			if(idx_sel != 2){
+				await do_select();
+			}
+		}
+		dv_ops.remove();
+		scroll_to_top(dv_expr);
+	}
+	const cls_men = ["aux_item"];
+	const cls_itm = ["is_option"];
+	const dv_to_scroll = null;
+	const toggle_op = null;
+	toggle_select_option(dv_up, id_menu_tok, ops, clk_fn, cls_men, cls_itm, dv_to_scroll, toggle_op);
+}
+
+function toggle_scod_menu(dv_up, bibobj, tok){
+	if(tok.sco.length == 0){
+		return;
+	}
+	const dv_expr = document.getElementById(id_expression);
+	const ops = gvar.tok_ops_scod; // ["select", "add", "bibhub"];
+	if(ops.length != 3){
+		console.err("ops.length != 3");
+		return;
+	}
+	let clk_fn = async function(dv_ret, dv_ops, val_sel, idx_sel){
+		let the_expr = null;
+		if(idx_sel == 0){
+			dv_expr.value = tok.sco;
+			await do_select();
+		}
+		if(idx_sel == 1){
+			const curr_expr = dv_expr.value;
+			dv_expr.value = curr_expr + tok.sco;
+		}
+		if(idx_sel == 2){
+			// go to bibhub
+			const href_sco = make_strong_ref(tok.sco);
+			window.open(href_sco, '_blank');
+		}
+		dv_ops.remove();
+		scroll_to_top(dv_expr);
+	}
+	const cls_men = ["aux_item"];
+	const cls_itm = ["is_option"];
+	const dv_to_scroll = null;
+	const toggle_op = null;
+	toggle_select_option(dv_up, id_menu_tok, ops, clk_fn, cls_men, cls_itm, dv_to_scroll, toggle_op);
+}
+

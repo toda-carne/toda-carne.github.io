@@ -21,7 +21,8 @@ export function get_new_dv_under(dv_header, id_dv, toggle_op){
 	return dv_options;
 }
 
-export function toggle_select_option(dv_return, id_selec_men, all_options_arr, on_click_fn, menu_cls_arr, item_cls_arr, dv_to_scroll, toggle_op){
+export function 
+toggle_select_option(dv_return, id_selec_men, all_options_arr, on_click_fn, menu_cls_arr, item_cls_arr, dv_to_scroll, toggle_op){
 	
 	var dv_options = get_new_dv_under(dv_return, id_selec_men, toggle_op); // old id_dv_sel_option
 	if(dv_options == null){
@@ -42,9 +43,16 @@ export function toggle_select_option(dv_return, id_selec_men, all_options_arr, o
 		const opt_idx = consec;
 		consec++;
 		const dv_opt = add_option(dv_options, null, value, null, item_cls_arr);
+		//dv_opt.addEventListener('click', async function() {
 		dv_opt.addEventListener('click', function() {
 			if(on_click_fn != null){
 				on_click_fn(dv_return, dv_options, value, opt_idx);
+				/*
+				if(on_click_fn.constructor.name === "AsyncFunction"){
+					await on_click_fn(dv_return, dv_options, value, opt_idx);
+				} else {
+					on_click_fn(dv_return, dv_options, value, opt_idx);
+				}*/
 			} else {
 				dv_return.innerHTML = value;
 				dv_return.selected_id = opt_idx;

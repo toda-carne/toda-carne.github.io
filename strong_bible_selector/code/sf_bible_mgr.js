@@ -424,7 +424,7 @@ export async function get_bible_verse(bib_cod, book, chapter, verse){
 	
 		return gvar.full_bible[bib_cod][book][chapter][verse];
 	} catch (err) {
-		console.log("FAILED get_bible_verse " + bib_cod + " " + book + ":" + chapter + ":" + verse);
+		console.err("FAILED get_bible_verse " + bib_cod + " " + book + ":" + chapter + ":" + verse);
 		return null;
 	}
 }
@@ -480,6 +480,24 @@ export async function bibobj_to_bibtxt(bibobj, conv_fn, id_txt){
 	}
 	const btxt = `<a class='exam_ref' href="${vhref}"> ${vcit} </a><br><div ${id_sec}><b> ${vtxt} </b></div>`;
 	return btxt;
+}
+
+const regex_scode = /^([HGhg])(\d+)$/;
+
+export function make_strong_ref(scod){
+	let bibref = null;
+	const cod = scod.toUpperCase();
+	const matches = cod.match(regex_scode);	
+	if(matches){
+		const kk = matches[1];
+		let lang = "hebrew";
+		if(kk == "G"){
+			lang = "greek";
+		}
+		let num = Number(matches[2]);
+		bibref = `https://www.biblehub.com/${lang}/${num}.htm`;
+	}
+	return bibref;
 }
 
 function make_bible_ref(cit_obj){
@@ -589,6 +607,7 @@ export async function get_scode_verses(bib_cod, scode){
 		}
 		return resp;
 	} catch {
+		console.err("FAILED get_scode_verses " + bib_cod + " " + scode);
 		return null;
 	}
 }

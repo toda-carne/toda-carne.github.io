@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SiBiblia Homepage</title>
+<meta name="author" content="Jose Luis Quiroga">
+<link rel="stylesheet" href="code/bq_styles.css">
+</head>
+<body>
+<div class="exam_content">
+
+<h1 class="big_title">SiBiblia</h1>    
+
+<h1 class="in_center">
+<a href="en/tool.html">English</a><br>
+<a href="es/tool.html">Español</a><br>
+</h1>
+
+</div>
+
+<script>
+window.onload=function(){
+  let lng = navigator.language;
+  if(lng.startsWith("es")){
+    window.location.replace("es/tool.html");
+  } else {
+    window.location.replace("en/tool.html");
+  }
+}
+</script>
+
+</body>
+</html> 
+ 
