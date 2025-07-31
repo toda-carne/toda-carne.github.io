@@ -130,7 +130,64 @@ function init_menus(){
 	if(dv_button != null){ dv_button.click_handler = clk_hdlr; dv_button.addEventListener('click', clk_hdlr); }
 }
 
-async function do_select(skip_prefix){
+function get_ui_conf(){
+	const dv_old_tes = document.getElementById("id_old_test");
+	const oldt = dv_old_tes.innerHTML.trim();
+	const dv_new_tes = document.getElementById("id_new_test");
+	const newt = dv_new_tes.innerHTML.trim();
+	const dv_loc_bib = document.getElementById("id_loc_bib");
+	const loc_bib = dv_loc_bib.innerHTML.trim();
+	const dv_rx_tgt = document.getElementById("id_rx_tgt");
+	const rxtgt = dv_rx_tgt.innerHTML.trim();
+	const dv_out_txt = document.getElementById("id_out_txt");
+	const otxt = dv_out_txt.innerHTML.trim();
+	const dv_expr = document.getElementById(id_expression);
+	const expr = dv_expr.value.trim();
+
+	const rxin = rxtgt.toLowerCase();
+	const txtout = otxt.toLowerCase();
+	
+	const conf = {};
+	conf.curr_OT = oldt;
+	conf.curr_NT = newt;
+	conf.curr_LOC = loc_bib;
+	conf.regex_input = rxin;
+	conf.output = txtout;
+	conf.expr = expr;
+	return conf;
+}
+
+function set_ui_conf(conf){
+	if(conf == null){
+		return;
+	}
+	const dv_old_tes = document.getElementById("id_old_test");
+	if(conf.curr_OT != null){
+		dv_old_tes.innerHTML = conf.curr_OT;
+	}
+	const dv_new_tes = document.getElementById("id_new_test");
+	if(conf.curr_NT != null){
+		dv_new_tes.innerHTML = conf.curr_NT;
+	}
+	const dv_loc_bib = document.getElementById("id_loc_bib");
+	if(conf.curr_LOC != null){
+		dv_loc_bib.innerHTML = conf.curr_LOC;
+	}
+	const dv_rx_tgt = document.getElementById("id_rx_tgt");
+	if(conf.regex_input != null){
+		dv_rx_tgt.innerHTML = conf.regex_input.toUpperCase();
+	}
+	const dv_out_txt = document.getElementById("id_out_txt");
+	if(conf.output != null){
+		dv_out_txt.innerHTML = conf.output.toUpperCase();
+	}
+	const dv_expr = document.getElementById(id_expression);
+	if(conf.expr != null){
+		dv_expr.value = conf.expr;
+	}
+}
+
+async function do_select(prv_conf){
 	const dv_old_tes = document.getElementById("id_old_test");
 	const oldt = dv_old_tes.innerHTML.trim();
 	const dv_new_tes = document.getElementById("id_new_test");
@@ -144,6 +201,9 @@ async function do_select(skip_prefix){
 	const dv_expr = document.getElementById(id_expression);
 	const expr = dv_expr.value.trim();
 	
+	const rxin = rxtgt.toLowerCase();
+	const txtout = otxt.toLowerCase();
+	
 	const dv_dbg_log = document.getElementById(id_dbg_data);
 	if(dv_dbg_log != null){
 		gvar.dbg_biblang = true;
@@ -151,15 +211,18 @@ async function do_select(skip_prefix){
 		gvar.dbg_biblang = false;
 	}
 
-	const rxin = rxtgt.toLowerCase();
-	const txtout = otxt.toLowerCase();
-	
-	let comm = `.${oldt} ; .${newt} ; .${loc_bib} ; :${rxin} ; .${txtout} ; ${expr}`;
-	if(skip_prefix != null){
-		comm = expr;
+	let conf = prv_conf;
+	if(conf == null){
+		conf = {};
+		conf.curr_OT = oldt;
+		conf.curr_NT = newt;
+		conf.curr_LOC = loc_bib;
+		conf.regex_input = rxin;
+		conf.output = txtout;
 	}
+	//let comm = `.${oldt} ; .${newt} ; .${loc_bib} ; :${rxin} ; .${txtout} ; ${expr}`;
 		
-	const robj = await eval_biblang_command(comm);
+	const robj = await eval_biblang_command(expr, conf);
 	const all_vrs = robj.lverses;
 	await fill_verses(all_vrs);
 	
@@ -328,21 +391,23 @@ function pop_menu_handler(){
 
 function toggle_history_info(toggle_op){
 	const dv_expr = document.getElementById(id_expression);
-	let his = gvar.biblang.history;
+	let his_vals = gvar.biblang.history.map((itm) => itm.expr);
 	let clk_fn = async function(dv_ret, dv_ops, val_sel, idx_sel){
 		dv_expr.value = val_sel;
-		await do_select("skip_prefix");
+		//const idx_conf = dv_ops
+		const conf = gvar.biblang.history[idx_sel].conf;
+		await do_select(conf);
 		//dv_ops.remove();
 	}
-	if(his.length == 0){
-		his = ["NO DATA TO SHOW. Do a search first."];
+	if(his_vals.length == 0){
+		his_vals = ["NO DATA TO SHOW. Do a search first."];
 		clk_fn = null;
 	}
 	const cls_men = ["aux_item", "has_border"];
 	const cls_itm = [];
 	const dv_select = document.getElementById(id_select);
 	const dv_to_scroll = null;
-	toggle_select_option(dv_select, id_history, his, clk_fn, cls_men, cls_itm, dv_to_scroll, toggle_op);
+	toggle_select_option(dv_select, id_history, his_vals, clk_fn, cls_men, cls_itm, dv_to_scroll, toggle_op);
 }
 
 function toggle_books_info(){
@@ -381,15 +446,12 @@ function read_storage_state(){
 	let stat = {};
 	if(state_str != null){
 		stat = JSON.parse(state_str);
-		if(stat.expr != null){
-			const dv_expr = document.getElementById(id_expression);
-			if(dv_expr != null){
-				dv_expr.value = stat.expr;
-			}
+		if(stat.ui_conf != null){
+			set_ui_conf(stat.ui_conf);
 		}
-		if(stat.history != null){
+		if(stat.hist != null){
 			if(gvar.biblang == null){ gvar.biblang = {}; } 
-			gvar.biblang.history = stat.history;
+			gvar.biblang.history = stat.hist;
 		}
 	}
 }
@@ -397,15 +459,9 @@ function read_storage_state(){
 function write_storage_state(){
 	let stat = {};
 	if(gvar.biblang.history != null){
-		stat.history = gvar.biblang.history;
+		stat.hist = gvar.biblang.history;
 	}
-	const dv_expr = document.getElementById(id_expression);
-	if(dv_expr != null){
-		let expr = dv_expr.value;
-		if((expr != null) && (expr.length > 0)){
-			stat.expr = expr;
-		}
-	}
+	stat.ui_conf = get_ui_conf();
 	window.localStorage.setItem(STORAGE_STATE_ID, JSON.stringify(stat));
 }
 

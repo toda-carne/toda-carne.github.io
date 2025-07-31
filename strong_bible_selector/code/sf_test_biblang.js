@@ -51,7 +51,7 @@ async function main_selector(){
 	//console.log(robj.lverses);	
 }
 
-//main_selector();
+main_selector();
 
 /*
 const arr1 = [0,1,2,3,4,5,6];
@@ -118,7 +118,7 @@ function find_lcs(s1, s2){
 	return rr;
 }
 
-main_diff_bib();
+//main_diff_bib();
 
 async function main_distance(){
 	if (process.argv.length < 4) {
