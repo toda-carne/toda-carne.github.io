@@ -436,7 +436,7 @@ async function import_file(bib_fl, fl_id){
 	const resp = await import(bib_fl);
 
 	add_dbg_log("FINISHED importing file " + bib_fl);
-	await end_loading();
+	end_loading();
 	return resp;
 }
 
@@ -707,7 +707,7 @@ async function start_loading(fl_nam){
 	//await new Promise(resolve => setTImeout(resolve, 0));
 }
 
-async function end_loading(){
+function end_loading(){
 	if(in_nodejs()){	// working from node
 		return;
 	}
