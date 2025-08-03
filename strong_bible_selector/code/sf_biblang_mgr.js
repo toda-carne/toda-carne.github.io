@@ -7,6 +7,8 @@ import { get_bible_verse, get_scode_verses, dbg_log_all_loaded_files, } from './
 
 const GREEK_PREFIX = "G";
 
+const SCOD_VERSES_SUFIX = "_sv";
+
 const biblang_def = {
 	INFIX_OPS: {
 		'&': (a, b) => calc_and(a, b),
@@ -631,10 +633,10 @@ function is_bib_citation(tm){
 
 async function calc_scode(scode){
 	const scod = scode.toUpperCase();
-	let bib = gvar.biblang.curr_OT;
+	let bib = gvar.biblang.curr_OT + SCOD_VERSES_SUFIX;
 	const is_gre = scod.startsWith(GREEK_PREFIX);
 	if(is_gre){
-		bib = gvar.biblang.curr_NT;
+		bib = gvar.biblang.curr_NT + SCOD_VERSES_SUFIX;
 	}
 	let arr_vrs = [];
 	const vss = await get_scode_verses(bib, scod);
@@ -654,7 +656,7 @@ async function calc_scode(scode){
 	
 	const is_lxx = (gvar.biblang.curr_OT == "LXX");
 	if(is_gre && is_lxx){
-		bib = gvar.biblang.curr_OT;
+		bib = gvar.biblang.curr_OT + SCOD_VERSES_SUFIX;
 		let arr_vrs2 = [];
 		const vss2 = await get_scode_verses(bib, scod);
 		if(vss2.length > 0){

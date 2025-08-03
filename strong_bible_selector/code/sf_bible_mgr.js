@@ -7,6 +7,8 @@ import { add_dbg_log, } from './sf_biblang_mgr.js';
 import { scroll_to_top, } from './sf_select_option_mgr.js';
 
 
+const DEBUG_BIBLE_MGR = true;
+
 const bibles_dir = "../data/js_bib/";
 const strongs_dir = "../data/js_sbib/";
 const loc_dir = "../data/js_loc/";
@@ -16,17 +18,18 @@ const scodes_dir = "../data/js_scods/";
 const loading_img = "../img/loading_icon.gif";
 
 const id_dv_loading = "id_dv_loading";
+const id_ui_loading = "id_ui_loading";
 
 const local_scods_files = {
-	WLC : scodes_dir + "WLC_SVERSES.js",
-	ALE : scodes_dir + "ALE_SVERSES.js",
-	TKH : scodes_dir + "TKH_SVERSES.js",
-	LXX : scodes_dir + "LXX_SVERSES.js",
+	WLC_sv : scodes_dir + "WLC_SVERSES.js",
+	ALE_sv : scodes_dir + "ALE_SVERSES.js",
+	TKH_sv : scodes_dir + "TKH_SVERSES.js",
+	LXX_sv : scodes_dir + "LXX_SVERSES.js",
 	
-	NES : scodes_dir + "NES_SVERSES.js",
-	BYZ : scodes_dir + "BYZ_SVERSES.js",
-	TR : scodes_dir + "TR_SVERSES.js",
-	WH : scodes_dir + "WH_SVERSES.js",	
+	NES_sv : scodes_dir + "NES_SVERSES.js",
+	BYZ_sv : scodes_dir + "BYZ_SVERSES.js",
+	TR_sv : scodes_dir + "TR_SVERSES.js",
+	WH_sv : scodes_dir + "WH_SVERSES.js",	
 };
 
 const local_bible_files = {
@@ -221,7 +224,7 @@ export async function get_text_analysis(bib, book, chapter, verse, lang){
 		lpref = "GRE";
 	}
 	const lbib = lpref + "_LOC";
-	console.log("" + lbib + " " + book + "_" + chapter + ":" + verse);
+	if(DEBUG_BIBLE_MGR){ console.log("" + lbib + " " + book + "_" + chapter + ":" + verse);	}
 	const loc = await get_bible_verse(lbib, book, chapter, verse);
 
 	const ana = get_obj_analysis(asc, sco, loc);
@@ -430,7 +433,7 @@ export async function get_bible_verse(bib_cod, book, chapter, verse){
 }
 
 async function import_file(bib_fl, fl_id){
-	await start_loading(fl_id);
+	await start_loading(bib_fl, fl_id, true);
 	add_dbg_log("importing file " + bib_fl);
 	
 	const resp = await import(bib_fl);
@@ -653,7 +656,7 @@ export function dbg_log_all_loaded_files(){
 	const f2 = get_loaded_files_from(local_scods_files, gvar.full_scodes);
 	const f3 = get_loaded_files_from(local_bible_files, gvar.full_bible);
 	const all_f = [...new Set([...f1, ...f2, ...f3])];
-	const str_f = all_f.join(" ");
+	const str_f = all_f.join(" , ");
 	add_dbg_log(str_f);
 	add_dbg_log("_______________________________");
 }
@@ -666,9 +669,73 @@ function img_renderized(img_elem){
 	});
 }
 
-async function start_loading(fl_nam){
+async function download_file(file_nam) {
 	if(in_nodejs()){	// working from node
 		return;
+	}
+	// download_bar css class
+	const pbar = document.getElementById(id_ui_loading);
+	const resp = await fetch(file_nam);
+	const rdr = resp.body.getReader();
+	const full_len = resp.headers.get('content-length');
+	let num_recv = 0;
+
+	while (true) {
+		const { done, value } = await rdr.read();
+		if(done){
+			break;
+		}
+		num_recv += value.length;
+		pbar.value = num_recv / full_len;
+	}
+
+	//const texto = await resp.text();
+	//console.log(texto);
+}
+
+async function in_cache(file_nam){
+	const resp = await fetch(file_nam, { cache: 'only-if-cached' }).catch(() => {
+		return false;
+	});
+	if(resp.ok){
+		if(DEBUG_BIBLE_MGR){ console.log("" + file_nam + " ALREADY IN CACHE (1)"); }
+		return true;
+	} 
+	return false;
+}
+
+async function is_cached(url) {
+	try {
+		const response = await fetch(url, {
+			cache: 'only-if-cached',
+			mode: 'same-origin' // Required for 'only-if-cached'
+		});
+
+		if (response.ok) {
+			//const data = await response.json();
+			return true;
+			//console.log('Data retrieved from cache:', data);
+		} else if (response.status === 504) {
+			return false;
+			//console.log('Resource not found in cache (504 Gateway Timeout).');
+		} else {
+			console.error(`Error: ${response.status} - ${response.statusText}`);
+		}
+	} catch (error) {
+		console.error('Fetch error:', error);
+	}
+}
+
+async function start_loading(file_nam, fl_id, use_pbar){
+	if(in_nodejs()){	// working from node
+		return;
+	}
+	let msg_in_cache = "";
+	const is_ok = await is_cached(file_nam);
+	if(is_ok){
+		if(DEBUG_BIBLE_MGR){ console.log("" + file_nam + " ALREADY IN CACHE (2)"); }
+		msg_in_cache = gvar.all_msg.in_cache;
+		//return;
 	}
 	//gvar.curr_dv_ver_id
 	let dv_loading = document.getElementById(id_dv_loading);
@@ -683,9 +750,11 @@ async function start_loading(fl_nam){
 	}
 	
 	const msg_ld = gvar.all_msg.loading;
-	const tag_fl_nam = `<div class="file_loading_name">${msg_ld} ${fl_nam}</div><br>`;
-	const id_img = "id_image_loading_file";
-	const tag_img = `<img id="${id_img}" class="file_loading_img" width="100%" src="${loading_img}">`;
+	const tag_fl_nam = `<div class="file_loading_name"><a class="exam_ref " href=${file_nam}>${msg_ld} ${fl_id}</a> ${msg_in_cache}</div><br>`;
+	let tag_img = `<img id="${id_ui_loading}" class="file_loading_img" width="100%" src="${loading_img}">`;
+	if(use_pbar){
+		tag_img = `<progress id="${id_ui_loading}" class="download_bar" value="0" max="1"></progress>`;
+	}
 	
 	dv_loading = document.createElement("div");
 	dv_loading.id = id_dv_loading;
@@ -699,8 +768,12 @@ async function start_loading(fl_nam){
 		dv_verses.prepend(dv_loading);
 	}
 	
-	const img_elem = document.getElementById(id_img);
-	await img_renderized(img_elem);
+	if(! use_pbar){
+		const img_elem = document.getElementById(id_ui_loading);
+		await img_renderized(img_elem);
+	} else {
+		download_file(file_nam);
+	}
 	
 	scroll_to_top(dv_to_scroll);
 	
@@ -722,4 +795,41 @@ function end_loading(){
 function in_nodejs(){
 	return (typeof window === 'undefined');
 }
+
+/*
+
+fetch('nom_arch.js', { cache: 'only-if-cached' }).then((resp) => {
+	if(resp.ok){
+		console.log("SI ESTA en cache");
+	} else {
+		console.log("NO esta en cache");		
+	}
+}).catch(() => {
+	console.log("NO esta en cache");
+});
+
+
+
+//download_file();
+
+
+<div id="contenedor-progreso">
+  <progress id="barra-progreso" value="0" max="1"></progress>
+</div>
+
+
+#contenedor-progreso {
+  width: 300px; 
+  border: 1px solid #ccc; 
+  padding: 5px; 
+}
+
+#barra-progreso {
+  width: 100%; 
+  height: 20px; 
+}
+
+*/
+
+
 

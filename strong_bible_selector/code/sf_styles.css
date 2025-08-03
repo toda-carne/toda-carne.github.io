@@ -455,6 +455,11 @@ a.exam_ref:hover {
 	background-color: #0c162f;
 }
 
+.download_bar {
+  width: 100%; 
+  height: 20px; 
+}
+
 /*
 	align-content: center center;
 	align-items: stretch;

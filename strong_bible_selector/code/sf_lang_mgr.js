@@ -6,10 +6,12 @@ const INVALID_BOOK_ABBR = "INVALID_BOOK_ABBR";
 
 const msg_es = {
 	loading: "BAJANDO ",
+	in_cache: "(EN CACHE)",
 };
 
 const msg_en = {
 	loading: "LOADING ",
+	in_cache: "(IN CACHE)",
 };
 
 const tok_ops_asc_id_es = ["exacto", "parcial", "adicionar"];
