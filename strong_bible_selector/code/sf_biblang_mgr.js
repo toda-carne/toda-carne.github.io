@@ -926,30 +926,39 @@ async function calc_bibregex(rx, prev){
 	return { op: rop, lverses: found, lscods: [] };
 }
 
-async function verse_match(bib, vii, rxo){
+async function verse_matches(bib, vii, rxo){
 	const n2b = gvar.num2book_en;
 	const book = Number(vii[0]);
 	const chapter = Number(vii[1]);
 	const verse = Number(vii[2]);
+	const all_ocu = [];
 
 	//console.log("TRYING get_bible_verse(" + bib + ", " + n2b[book] + ", " + chapter + ", " + verse + ")");
 	const vtxt = await get_bible_verse(bib, n2b[book], chapter, verse);
 	if(vtxt == null){
 		console.log("null verse for get_bible_verse(" + bib + ", " + n2b[book] + ", " + chapter + ", " + verse + ")");
-		return null;
+		return all_ocu;
 	}
 	//console.log(vtxt);
+	
+	let rr = null;
+	while((rr = rxo.exec(vtxt)) !== null){
+		all_ocu.push({
+			cad: rr[0],
+			idx: rr.index,
+		});
+	}
 
+	return all_ocu;
+
+	/*
 	const mm = vtxt.match(rxo);
 	if(mm){
 		const vss = "" + book + ":" + chapter + ":" + verse;
-		/*if(gvar.dbg_biblang){
-			add_dbg_log("MATCHED_VERSE");
-			add_dbg_log(vtxt);
-		}*/
 		return vss;
 	}
 	return null;
+	*/
 }
 
 function to_insenitive_bib(bib){
@@ -965,11 +974,14 @@ function to_insenitive_bib(bib){
 async function find_regex(bib, num, rx, prev){	
 	let rxbib = bib;
 	let rxo = null;
+	if(gvar.biblang.all_ocu == null){ gvar.biblang.all_ocu = {}; }
+	const comm_ocu = gvar.biblang.all_ocu;
+	
 	if(gvar.biblang.regex_insensitive){
-		rxo = new RegExp(rx, "i");
+		rxo = new RegExp(rx, "ig");
 		rxbib = to_insenitive_bib(bib);;
 	} else {
-		rxo = new RegExp(rx);
+		rxo = new RegExp(rx, "g");
 	}
 	if(prev != null){
 		const prv_verses = prev.lverses;
@@ -982,9 +994,12 @@ async function find_regex(bib, num, rx, prev){
 		for(ii = 0; ii < prv_verses.length; ii++){
 			const vr = prv_verses[ii];
 			const vii = vr.split(":");
-			const vss = await verse_match(rxbib, vii, rxo);
-			if(vss != null){
-				all_mm.push(vss);
+			const all_ocu = await verse_matches(rxbib, vii, rxo);
+			if(all_ocu.length > 0){
+				all_mm.push(vr);
+				if(comm_ocu[rxbib] == null){ comm_ocu[rxbib] = {}; }
+				if(comm_ocu[rxbib][vr] == null){ comm_ocu[rxbib][vr] = []; }
+				comm_ocu[rxbib][vr].push(...all_ocu);
 			}
 		}
 		return all_mm;
@@ -1005,9 +1020,13 @@ async function find_regex(bib, num, rx, prev){
 		let vii = [fst_book, 1, 1];
 		while(true){
 			if(vii == null){ break; }		
-			const vss = await verse_match(rxbib, vii, rxo);
-			if(vss != null){
-				found.push(vss);
+			const all_ocu = await verse_matches(rxbib, vii, rxo);
+			if(all_ocu.length > 0){
+				const vr = vii.join(":");
+				found.push(vr);
+				if(comm_ocu[rxbib] == null){ comm_ocu[rxbib] = {}; }
+				if(comm_ocu[rxbib][vr] == null){ comm_ocu[rxbib][vr] = []; }
+				comm_ocu[rxbib][vr].push(...all_ocu);
 			}
 			if((max != "all") && (found.length >= max)){
 				break;
@@ -1055,7 +1074,9 @@ export async function eval_biblang_command(command, config){
 		set_biblang_conf(config);
 	}
 	gvar.biblang.dbg_log = [];
+	
 	gvar.biblang.all_scods = [];
+	gvar.biblang.all_ocu = {};
 	
 	dbg_log_all_loaded_files();
 	
@@ -1082,7 +1103,13 @@ export async function eval_biblang_command(command, config){
 	const robj = await par.expressionToValue(command);
 	const all_vss = robj.lverses;
 	robj.lverses = all_vss.sort(cmp_verses);;
-	robj.all_scods = gvar.biblang.all_scods.slice();
+	
+	robj.all_scods = gvar.biblang.all_scods;
+	robj.all_ocu = gvar.biblang.all_ocu;
+
+	gvar.biblang.all_scods = [];
+	gvar.biblang.all_ocu = {};
+	
 	if(gvar.dbg_biblang){
 		add_dbg_log("FINAL_RESULT");
 		add_dbg_log(robj.op);

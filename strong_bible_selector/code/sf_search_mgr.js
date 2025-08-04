@@ -437,8 +437,22 @@ async function fill_verses(bl_obj){
 		}
 		
 		const id_txt = "id_verse_loc_" + ii;
+		
+		let mix_fn = null;
+		if(conv_fn != null){
+			mix_fn = (txt) => {
+				const c1_txt = conv_fn(txt);
+				const htm_txt = set_css_matches(c1_txt, bibobj, bl_obj);
+				return htm_txt;
+			};
+		} else {
+			mix_fn = (txt) => {
+				const htm_txt = set_css_matches(txt, bibobj, bl_obj);
+				return htm_txt;
+			};
+		}
 	
-		const vs_txt = await bibobj_to_bibtxt(bibobj, conv_fn, id_txt);
+		const vs_txt = await bibobj_to_bibtxt(bibobj, mix_fn, id_txt);
 		dv_ver.innerHTML = vs_txt;
 		const dv_txt = document.getElementById(id_txt);
 		dv_txt.addEventListener('click', async function() {
@@ -727,5 +741,64 @@ function toggle_scod_menu(dv_up, bibobj, tok){
 	const dv_to_scroll = null;
 	const toggle_op = null;
 	toggle_select_option(dv_up, id_menu_tok, ops, clk_fn, cls_men, cls_itm, dv_to_scroll, toggle_op);
+}
+
+function cmp_ocurrence(oc1, oc2){
+	/*{
+			cad: rr[0],
+			idx: rr.index,
+	}
+		*/
+	const dd = (oc1.idx - oc2.idx);
+	if(dd != 0){ return dd; }
+	
+	const l1 = oc1.cad.length;
+	const l2 = oc2.cad.length;
+	return (l2 - l1);
+}
+
+function insert_tag(htm, pos, tag){
+	if(pos < htm.lpos){
+		return;
+	}
+	const idx = pos + htm.disp;
+	if((idx < 0) || (idx > htm.txt.length)){
+		return;
+	}
+	htm.txt = htm.txt.slice(0, idx) + tag + htm.txt.slice(idx);
+	htm.disp += tag.length;
+	htm.lpos = pos;
+}
+
+function set_css_matches(vs_txt, bibobj, bl_obj){
+	if(vs_txt == null){	return vs_txt; }
+	if(bl_obj.all_ocu == null){	return vs_txt; }
+	if(bibobj.bible == null){ return vs_txt; }
+	let bib = bibobj.bible;
+	if(bl_obj.all_ocu[bib] == null){ 
+		bib += "i";
+		if(bl_obj.all_ocu[bib] == null){ return vs_txt; }
+	}
+	
+	const vs_id = "" + bibobj.book + ":" + bibobj.chapter + ":" + bibobj.verse;
+	if(bl_obj.all_ocu[bib][vs_id] == null){ return vs_txt; }
+	
+	const vs_ocu = bl_obj.all_ocu[bib][vs_id];
+	
+	const socu = vs_ocu.sort(cmp_ocurrence);
+
+	const ini_tag = `<span class="txt_matched">`;
+	const end_tag = `</span>`;
+	
+	let htm = { txt: vs_txt, disp: 0, lpos: 0, };
+	let ii = 0;
+	for(; ii < vs_ocu.length; ii++){
+		const ocu = vs_ocu[ii];
+		insert_tag(htm, ocu.idx, ini_tag);
+		const end_pos = ocu.idx + ocu.cad.length;
+		insert_tag(htm, end_pos, end_tag);
+	}
+	
+	return htm.txt;
 }
 

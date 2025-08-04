@@ -478,7 +478,7 @@ a.exam_ref:hover {
 
 
 .txt_ana_marked_item {
-	background-color: #0c162f;
+	background-color: #e67300;
 }
 
 .txt_ana_added_item {
@@ -488,6 +488,11 @@ a.exam_ref:hover {
 .txt_ana_selected_item {
 	border: 2px solid #00ff00;
 }
+
+.txt_matched {
+	background-color: #3665d3;
+}
+
 
 .download_bar {
   width: 100%; 

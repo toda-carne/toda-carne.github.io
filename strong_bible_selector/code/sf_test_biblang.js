@@ -151,6 +151,6 @@ async function main_distance(){
 }
 
 
-//main_selector();
-main_diff_bib();
+main_selector();
+//main_diff_bib();
 //main_distance();
