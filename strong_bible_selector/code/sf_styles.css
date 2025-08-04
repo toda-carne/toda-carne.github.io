@@ -373,6 +373,16 @@ a.exam_ref:hover {
 	border: 0.2vw solid #00ff00;
 }
 
+.search_header {
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+	grid-column-start: 1;
+	grid-column-end: -1;
+	grid-row: auto;
+	font-size:1.1em;
+	border: 0.2vw solid #55ffff;
+}
+
 .results_item {
 	max-height: 100vh;
 	overflow-y: scroll;
@@ -453,6 +463,10 @@ a.exam_ref:hover {
 
 .txt_ana_maked_item {
 	background-color: #0c162f;
+}
+
+.txt_ana_selected_item {
+	border: 2px solid #00ff00;
 }
 
 .download_bar {

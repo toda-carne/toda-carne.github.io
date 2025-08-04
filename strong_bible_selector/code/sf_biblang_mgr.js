@@ -633,6 +633,9 @@ function is_bib_citation(tm){
 
 async function calc_scode(scode){
 	const scod = scode.toUpperCase();
+	if(gvar.biblang.all_scods == null){ gvar.biblang.all_scods = []; }
+	gvar.biblang.all_scods.push(scod);
+	
 	let bib = gvar.biblang.curr_OT + SCOD_VERSES_SUFIX;
 	const is_gre = scod.startsWith(GREEK_PREFIX);
 	if(is_gre){
@@ -1052,6 +1055,7 @@ export async function eval_biblang_command(command, config){
 		set_biblang_conf(config);
 	}
 	gvar.biblang.dbg_log = [];
+	gvar.biblang.all_scods = [];
 	
 	dbg_log_all_loaded_files();
 	
@@ -1078,6 +1082,7 @@ export async function eval_biblang_command(command, config){
 	const robj = await par.expressionToValue(command);
 	const all_vss = robj.lverses;
 	robj.lverses = all_vss.sort(cmp_verses);;
+	robj.all_scods = gvar.biblang.all_scods.slice();
 	if(gvar.dbg_biblang){
 		add_dbg_log("FINAL_RESULT");
 		add_dbg_log(robj.op);

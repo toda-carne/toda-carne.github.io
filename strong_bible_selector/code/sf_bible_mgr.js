@@ -14,11 +14,18 @@ const strongs_dir = "../data/js_sbib/";
 const loc_dir = "../data/js_loc/";
 
 const scodes_dir = "../data/js_scods/";
+const scod_defs_dir = "../data/js_scod_defs/";
 
 const loading_img = "../img/loading_icon.gif";
 
 const id_dv_loading = "id_dv_loading";
 const id_ui_loading = "id_ui_loading";
+
+const local_sdefs_files = {
+	en: scod_defs_dir + "EN_SCOD_DEFS.js",
+	es: scod_defs_dir + "ES_SCOD_DEFS.js",
+	SDEFS: scod_defs_dir + "SCOD_LOC_DEFS.js",
+};
 
 const local_scods_files = {
 	WLC_sv : scodes_dir + "WLC_SVERSES.js",
@@ -214,7 +221,7 @@ const ascii_to_may_greek = {
 };
 
 
-export async function get_text_analysis(bib, book, chapter, verse, lang){
+export async function get_text_analysis(bib, book, chapter, verse, bl_obj){
 	const asc = await get_bible_verse(bib, book, chapter, verse);
 	const sbib = bib + "_S";
 	const sco = await get_bible_verse(sbib, book, chapter, verse);
@@ -227,11 +234,11 @@ export async function get_text_analysis(bib, book, chapter, verse, lang){
 	if(DEBUG_BIBLE_MGR){ console.log("" + lbib + " " + book + "_" + chapter + ":" + verse);	}
 	const loc = await get_bible_verse(lbib, book, chapter, verse);
 
-	const ana = get_obj_analysis(asc, sco, loc);
+	const ana = get_obj_analysis(asc, sco, loc, bl_obj);
 	
 	let ltra = lpref + "_" + gvar.lang.toUpperCase();
-	if(lang != null){
-		ltra = lpref + "_" + lang.toUpperCase();
+	if((bl_obj != null) && (bl_obj.lang != null)){
+		ltra = lpref + "_" + bl_obj.lang.toUpperCase();
 	}
 	
 	await fill_translation(ltra, ana);
@@ -246,7 +253,7 @@ export async function get_text_analysis(bib, book, chapter, verse, lang){
 	return txt_ana;
 }
 
-function get_obj_analysis(asc, sco, loc){
+function get_obj_analysis(asc, sco, loc, bl_obj){
 	const vasc = asc.split(" ");
 	const vsco = sco.split(" ");
 	const vtmp = loc.split(" ");
@@ -260,12 +267,19 @@ function get_obj_analysis(asc, sco, loc){
 	});
 	const comm = find_ana(vasc, vloc, ana);
 	
-	fill_scodes(ana, vsco, vasc);
+	fill_scodes(ana, vsco, vasc, bl_obj);
 	// [ { id: "asc", sco: "sco"; txt: "g/h"; tra: "tra"; idtra: "idtra"; is_cri: "T/F" } , ... ]
 	return ana;
 }
 
-function fill_scodes(ana, vsco, vasc){
+function is_selected_scode(bl_obj, scode){
+	if(bl_obj == null){ return false; }
+	if(bl_obj.all_scods == null){ return false; }
+	if(bl_obj.all_scods.includes(scode)){ return true; }
+	return false;
+}
+
+function fill_scodes(ana, vsco, vasc, bl_obj){
 	let ii = 0;
 	for(; ii < ana.length; ii++){
 		const obj = ana[ii];
@@ -277,15 +291,17 @@ function fill_scodes(ana, vsco, vasc){
 			if(vasc[idx1] != obj.id){
 				console.err("FALSE idx1 (case 2)");
 			}
-			obj.sco = vsco[idx1];
+			const scode = vsco[idx1];
+			obj.sco = scode;
+			obj.sel_scod = is_selected_scode(bl_obj, scode);
 		} else if(obj.added != null){
-			fill_added_scodes(obj.added, vsco, vasc);
+			fill_added_scodes(obj.added, vsco, vasc, bl_obj);
 		}
 		//obj.sco = vsco[]:;
 	}
 }
 
-function fill_added_scodes(added, vsco, vasc){
+function fill_added_scodes(added, vsco, vasc, bl_obj){
 	let ii = 0;
 	for(; ii < added.length; ii++){
 		const obj = added[ii];
@@ -294,7 +310,9 @@ function fill_added_scodes(added, vsco, vasc){
 			if(vasc[idx1] != obj.id){
 				console.err("FALSE idx1 (case 2)");
 			}
-			obj.sco = vsco[idx1];
+			const scode = vsco[idx1];
+			obj.sco = scode;
+			obj.sel_scod = is_selected_scode(bl_obj, scode);
 		} 
 	}
 }
@@ -631,6 +649,52 @@ async function import_scodes(bib_cod){
 	gvar.full_scodes[bib_cod] = md_scod.scode_verses;	
 }
 
+export async function get_scode_def(scode, lang){
+	const bad = { asc:"", def:"", };
+	try{
+		await import_sdefs("SDEFS");
+		await import_sdefs(lang);
+		
+		let arr_def = gvar.full_sdefs.SDEFS[scode];
+		if(arr_def == null){
+			return bad;
+		}
+		if(arr_def.length != 2){
+			return bad;
+		}
+		const scod_asc = arr_def[0];
+		const scod_id = arr_def[1];
+		let scod_def = gvar.full_sdefs[lang][scod_id];
+		if(scod_def == null){
+			return bad;
+		}
+		return { asc: scod_asc, def: scod_def, };
+	} catch {
+		console.err("FAILED get_scode_def(" + scode + ", " + lang + ")");
+		return bad;
+	}
+}
+
+async function import_sdefs(lang){
+	if(local_sdefs_files[lang] == null){
+		return;
+	}
+	if(gvar.full_sdefs == null){
+		gvar.full_sdefs = {};
+	} 
+	if(gvar.full_sdefs[lang] != null){
+		return;
+	}
+	const scod_fl = local_sdefs_files[lang];
+	const md_scod = await import_file(scod_fl, lang);
+	
+	let defs = md_scod.loc_txt;
+	if(lang == "SDEFS"){
+		defs = md_scod.scod_defs;
+	}
+	gvar.full_sdefs[lang] = defs;
+}
+
 function get_loaded_files_from(file_names, loaded){
 	if(loaded == null){
 		return [];
@@ -655,7 +719,8 @@ export function dbg_log_all_loaded_files(){
 	const f1 = get_loaded_files_from(local_text_files, gvar.full_local_text);
 	const f2 = get_loaded_files_from(local_scods_files, gvar.full_scodes);
 	const f3 = get_loaded_files_from(local_bible_files, gvar.full_bible);
-	const all_f = [...new Set([...f1, ...f2, ...f3])];
+	const f4 = get_loaded_files_from(local_sdefs_files, gvar.full_sdefs);
+	const all_f = [...new Set([...f1, ...f2, ...f3, ...f4])];
 	const str_f = all_f.join(" , ");
 	add_dbg_log(str_f);
 	add_dbg_log("_______________________________");
@@ -750,7 +815,7 @@ async function start_loading(file_nam, fl_id, use_pbar){
 	}
 	
 	const msg_ld = gvar.all_msg.loading;
-	const tag_fl_nam = `<div class="file_loading_name"><a class="exam_ref " href=${file_nam}>${msg_ld} ${fl_id}</a> ${msg_in_cache}</div><br>`;
+	const tag_fl_nam = `<div class="file_loading_name"><a class="exam_ref" href=${file_nam}>${msg_ld} ${fl_id}</a> ${msg_in_cache}</div><br>`;
 	let tag_img = `<img id="${id_ui_loading}" class="file_loading_img" width="100%" src="${loading_img}">`;
 	if(use_pbar){
 		tag_img = `<progress id="${id_ui_loading}" class="download_bar" value="0" max="1"></progress>`;

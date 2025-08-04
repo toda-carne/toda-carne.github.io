@@ -2,7 +2,7 @@
 import { get_new_dv_under, scroll_to_top, toggle_select_option, 
 } from './sf_select_option_mgr.js';
 
-import { bibobj_to_bibtxt, verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, get_text_analysis, make_strong_ref, 
+import { bibobj_to_bibtxt, verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, get_text_analysis, make_strong_ref, get_scode_def, 
 } from './sf_bible_mgr.js';
 
 import { init_lang, } from './sf_lang_mgr.js';
@@ -26,12 +26,16 @@ export let gvar = {};
 
 const PERSISTANT_STATE = true;
 const STORAGE_STATE_ID = "STORAGE_STATE_ID";
+
+const SUF_SCOD_DEF = "_scod_def";
+
 const id_grid_text_analysis = "id_grid_text_analysis";
 const id_pop_menu_sele = "id_pop_menu_sele";
 const id_select = "id_select";
 const id_dbg_data = "id_dbg_data";
 const id_history = "id_history";
 const id_menu_tok = "id_menu_tok";
+const id_header = "id_header";
 
 const DEBUG_SELECTOR = true;
 
@@ -122,6 +126,12 @@ function init_menus(){
 		}
 		return;
 	});
+	
+	const dv_header = document.createElement("div");
+	dv_header.id = id_header;
+	dv_header.classList.add("search_header");
+	dv_header.innerHTML = "";
+	dv_select.after(dv_header);
 
 	let dv_button = null;
 	let clk_hdlr = null;
@@ -223,9 +233,8 @@ async function do_select(prv_conf){
 	}
 	//let comm = `.${oldt} ; .${newt} ; .${loc_bib} ; :${rxin} ; .${txtout} ; ${expr}`;
 		
-	const robj = await eval_biblang_command(expr, conf);
-	const all_vrs = robj.lverses;
-	await fill_verses(all_vrs);
+	const bl_obj = await eval_biblang_command(expr, conf);
+	await fill_verses(bl_obj);
 	
 	if(dv_dbg_log != null){
 		toggle_dbg_info("keep");
@@ -284,7 +293,38 @@ function verse_cod2obj(vrs_cod){
 	return bibobj;
 }
 
-async function fill_verses(all_vrs){
+async function fill_sdefs(bl_obj){
+	const lang = gvar.lang;
+	
+	const dv_header = document.getElementById(id_header);
+	const all_scods = bl_obj.all_scods;
+	dv_header.innerHTML = "";
+	
+	let ii = 0;
+	for(ii = 0; ii < all_scods.length; ii++){
+		const scod = all_scods[ii];
+		let conv_fn_nt = verse_to_hebrew;
+		const is_gre = scod.startsWith(GREEK_PREFIX);
+		if(is_gre){
+			conv_fn_nt = verse_to_min_greek;
+		}
+		
+		const dv_def = document.createElement("div");
+		dv_def.id = scod + SUF_SCOD_DEF;
+		dv_def.classList.add("full_width");
+		//dv_def.classList.add("txt_ana_full_item");
+		const sdef = await get_scode_def(scod, lang);
+		
+		const sco_txt = conv_fn_nt(sdef.asc);
+		const href_sco = make_strong_ref(scod);
+		const htm = `<a class="exam_ref big_font" href="${href_sco}" target="_blank">${scod}</a> <span>${sco_txt}</span>: ${sdef.def}`;
+		dv_def.innerHTML = htm;
+		dv_header.appendChild(dv_def);
+	}
+}
+
+async function fill_verses(bl_obj){
+	const all_vrs = bl_obj.lverses;
 	const oldt = gvar.biblang.curr_OT;
 	const newt = gvar.biblang.curr_NT;
 	const loc_bib = gvar.biblang.curr_LOC;
@@ -354,9 +394,12 @@ async function fill_verses(all_vrs){
 		dv_ver.innerHTML = vs_txt;
 		const dv_txt = document.getElementById(id_txt);
 		dv_txt.addEventListener('click', async function() {
-			await toggle_text_analysis(dv_txt, bibobj);
+			await toggle_text_analysis(dv_txt, bibobj, bl_obj);
+			scroll_to_top(dv_ver);
 		});		
 	}
+	
+	await fill_sdefs(bl_obj);
 }
 	
 function pop_menu_handler(){
@@ -466,7 +509,7 @@ function write_storage_state(){
 	window.localStorage.setItem(STORAGE_STATE_ID, JSON.stringify(stat));
 }
 
-async function toggle_text_analysis(dv_txt, bibobj){
+async function toggle_text_analysis(dv_txt, bibobj, bl_obj){
 	var dv_ana = get_new_dv_under(dv_txt, id_grid_text_analysis);
 	if(dv_ana == null){
 		return;
@@ -474,7 +517,7 @@ async function toggle_text_analysis(dv_txt, bibobj){
 	dv_ana.classList.add("grid_txt_analysis", "grid_txt_columns");
 	
 	gvar.curr_dv_ver_id = bibobj.id_dv_ver;		// UGLY. It is to show the loding image under the right verse. 
-	const full_ana = await get_text_analysis(bibobj.cri_txt, bibobj.book_name, bibobj.chapter, bibobj.verse);
+	const full_ana = await get_text_analysis(bibobj.cri_txt, bibobj.book_name, bibobj.chapter, bibobj.verse, bl_obj);
 	gvar.curr_dv_ver_id = null;
 	
 	if(DEBUG_SELECTOR){
@@ -506,7 +549,7 @@ function add_text_analysis_word(dv_ana, bibobj, tok, is_added){
 	
 	const t1 = add_tok_item(dv_ana, 1, cri, marked);
 	const t2 = add_tok_item(dv_ana, "auto", tok.id, marked, true);
-	const t3 = add_tok_item(dv_ana, "auto", tok.sco, marked);
+	const t3 = add_tok_item(dv_ana, "auto", tok.sco, marked, false, tok.sel_scod);
 	add_tok_item(dv_ana, "auto", bib_cri, marked, true);
 	const t4 = add_tok_item(dv_ana, "auto", tok.tra, marked);
 	
@@ -536,11 +579,14 @@ function add_all_added(dv_ana, bibobj, tok){
 	}
 }
 
-function add_tok_item(dv_ana, col, htm, marked, is_optional){
+function add_tok_item(dv_ana, col, htm, marked, is_optional, sel_itm){
 	const dv_itm = document.createElement("div");
 	dv_itm.classList.add("txt_ana_item");
 	if(marked){
 		dv_itm.classList.add("txt_ana_maked_item");
+	}
+	if(sel_itm){
+		dv_itm.classList.add("txt_ana_selected_item");
 	}
 	if(is_optional){
 		dv_itm.classList.add("txt_optional_item");
