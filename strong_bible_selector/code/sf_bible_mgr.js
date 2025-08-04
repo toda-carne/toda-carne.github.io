@@ -19,6 +19,9 @@ const scod_defs_dir = "../data/js_scod_defs/";
 
 const loading_img = "../img/loading_icon.gif";
 
+const local_smutus_file = "../data/js_mutu/MUT_SCOD_REF.js";
+const local_sroots_file = "../data/js_roots/ROOTS_SCOD.js";
+
 const id_dv_loading = "id_dv_loading";
 const id_ui_loading = "id_ui_loading";
 
@@ -708,6 +711,54 @@ async function import_scodes(bib_cod){
 	gvar.full_scodes[bib_cod] = md_scod.scode_verses;	
 }
 
+export async function get_scode_mutus(scode){
+	try{
+		await import_smutus();
+		
+		let resp = gvar.full_smutus[scode];
+		if(resp == null){
+			resp = "";
+		}
+		return resp;
+	} catch {
+		console.err("FAILED get_scode_mutus " + scode);
+		return null;
+	}
+}
+
+async function import_smutus(){
+	if(gvar.full_smutus != null){
+		return;
+	}
+	const md_smutus = await import_file(local_smutus_file, "SMUTUS");
+	
+	gvar.full_smutus = md_smutus.loc_txt;	
+}
+
+export async function get_scode_roots(scode){
+	try{
+		await import_sroots();
+		
+		let resp = gvar.full_sroots[scode];
+		if(resp == null){
+			resp = "";
+		}
+		return resp;
+	} catch {
+		console.err("FAILED get_scode_roots " + scode);
+		return null;
+	}
+}
+
+async function import_sroots(){
+	if(gvar.full_sroots != null){
+		return;
+	}
+	const md_sroots = await import_file(local_sroots_file, "SROOTS");
+	
+	gvar.full_sroots = md_sroots.loc_txt;	
+}
+
 export async function get_scode_def(scode, lang){
 	const bad = { asc:"", def:"", };
 	try{
@@ -844,10 +895,13 @@ async function is_cached(url) {
 			//console.log('Resource not found in cache (504 Gateway Timeout).');
 		} else {
 			console.error(`Error: ${response.status} - ${response.statusText}`);
+			return false;
 		}
 	} catch (error) {
-		console.error('Fetch error:', error);
+		console.error(url + ' NOT CACHED. Fetch error.', error);
+		return false;
 	}
+	return false;
 }
 
 async function start_loading(file_nam, fl_id, use_pbar){

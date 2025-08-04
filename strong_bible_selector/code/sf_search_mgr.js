@@ -1,8 +1,9 @@
 
-import { get_new_dv_under, scroll_to_top, toggle_select_option, 
+import { get_new_dv_under, scroll_to_top, toggle_select_option, get_opt_id, 
 } from './sf_select_option_mgr.js';
 
 import { bibobj_to_bibtxt, verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, get_text_analysis, make_strong_ref, get_scode_def, 
+	get_scode_mutus, get_scode_roots, 
 } from './sf_bible_mgr.js';
 
 import { init_lang, } from './sf_lang_mgr.js';
@@ -37,8 +38,11 @@ const id_history = "id_history";
 const id_menu_tok = "id_menu_tok";
 const id_header = "id_header";
 const id_del_expr = "id_del_expr";
+const id_menu_scod_def = "id_menu_scod_def";
+const id_menu_mutus = "id_menu_mutus";
 
 const DEBUG_SELECTOR = true;
+const DEBUG_SCODS = true;
 
 const GREEK_PREFIX = "G";
 
@@ -337,10 +341,16 @@ async function fill_sdefs(bl_obj){
 		const sdef = await get_scode_def(scod, lang);
 		
 		const sco_txt = conv_fn_nt(sdef.asc);
-		const href_sco = make_strong_ref(scod);
-		const htm = `<a class="exam_ref big_font" href="${href_sco}" target="_blank">${scod}</a> <span>${sco_txt}</span>: ${sdef.def}`;
+		//const href_sco = make_strong_ref(scod);
+		//const htm = `<a class="exam_ref big_font" href="${href_sco}" target="_blank">${scod}</a> <span>${sco_txt}</span>: ${sdef.def}`;
+		const htm = `<span class="big_font">${scod}</span> <span>${sco_txt}</span>: ${sdef.def}`;
 		dv_def.innerHTML = htm;
 		dv_header.appendChild(dv_def);
+		
+		dv_def.addEventListener('click', function() {
+			toggle_scod_actions(dv_def, scod);
+			scroll_to_top(dv_def);
+		});		
 	}
 }
 
@@ -800,5 +810,70 @@ function set_css_matches(vs_txt, bibobj, bl_obj){
 	}
 	
 	return htm.txt;
+}
+
+function toggle_scod_actions(dv_def, scod){
+	const id_menu = id_menu_scod_def;
+		
+	const ops = gvar.ops_def_scod; // ["roots", "mutual", "bibhub"];
+	if(ops.length != 3){
+		console.err("ops.length != 3");
+		return;
+	}
+	let clk_fn = async function(dv_ret, dv_ops, val_sel, idx_sel){
+		let the_expr = null;
+		if(idx_sel == 0){
+			const roots = await get_scode_roots(scod);
+			if(DEBUG_SCODS){
+				console.log("get_scode_roots");
+				console.log(roots);
+			}
+			let subops = ["HAS NO ROOT"];
+			if((roots != null) && (roots.length > 0)){
+				subops = roots.split(" ");
+			}
+			toggle_scod_subops(dv_ops, scod, id_menu, idx_sel, subops);
+		}
+		if(idx_sel == 1){
+			const mutus = await get_scode_mutus(scod);
+			if(DEBUG_SCODS){
+				console.log("get_scode_mutus");
+				console.log(mutus);
+			}
+			let subops = ["HAS NO MUTUAL"];
+			if((mutus != null) && (mutus.length > 0)){
+				subops = mutus.split(" ");
+			}
+			toggle_scod_subops(dv_ops, scod, id_menu, idx_sel, subops);
+		}
+		if(idx_sel == 2){
+			const href_sco = make_strong_ref(scod);
+			window.open(href_sco, '_blank');
+			dv_ops.remove();
+		}
+	}
+	const cls_men = ["aux_item"];
+	const cls_itm = ["is_option"];
+	const dv_to_scroll = null;
+	const toggle_op = null;
+	toggle_select_option(dv_def, id_menu, ops, clk_fn, cls_men, cls_itm, dv_to_scroll, toggle_op);
+}
+
+function toggle_scod_subops(dv_parent_ops, scod, id_menu, idx_sel, sub_ops){
+	const opt_id = get_opt_id(id_menu, idx_sel);
+	const dv_opt = document.getElementById(opt_id);
+	
+	const dv_expr = document.getElementById(id_expression);
+	let clk_fn = async function(dv_ret, dv_ops, val_sel, idx_sel){
+		dv_expr.value = val_sel;
+		await do_select();
+		dv_ops.remove();
+		dv_parent_ops.remove();
+	}
+	const cls_men = ["aux_item"];
+	const cls_itm = ["is_option"];
+	const dv_to_scroll = null;
+	const toggle_op = null;
+	toggle_select_option(dv_opt, id_menu_mutus, sub_ops, clk_fn, cls_men, cls_itm, dv_to_scroll, toggle_op);
 }
 

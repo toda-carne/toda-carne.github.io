@@ -19,6 +19,9 @@ const tok_ops_asc_id_en = ["exact", "partial", "add"];
 const tok_ops_scod_es = ["encuentra", "adicionar", "bibhub"];
 const tok_ops_scod_en = ["find", "add", "bibhub"];
 
+const ops_def_scod_es = ["raices", "mutuos", "bibhub"];
+const ops_def_scod_en = ["roots", "mutual", "bibhub"];
+
 export const num2book_en = {
 	"-1":DEFAULT_BOOK_NAME,
 	"1":"genesis",
@@ -355,6 +358,7 @@ function init_es(){
 	
 	gvar.tok_ops_asc_id = tok_ops_asc_id_es;
 	gvar.tok_ops_scod = tok_ops_scod_es;
+	gvar.ops_def_scod = ops_def_scod_es;
 }
 
 function init_en(){
@@ -375,5 +379,6 @@ function init_en(){
 
 	gvar.tok_ops_asc_id = tok_ops_asc_id_en;
 	gvar.tok_ops_scod = tok_ops_scod_en;
+	gvar.ops_def_scod = ops_def_scod_en;
 }
 

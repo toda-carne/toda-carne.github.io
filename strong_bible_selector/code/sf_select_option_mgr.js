@@ -42,7 +42,8 @@ toggle_select_option(dv_return, id_selec_men, all_options_arr, on_click_fn, menu
 	all_options_arr.forEach((value) => {
 		const opt_idx = consec;
 		consec++;
-		const dv_opt = add_option(dv_options, null, value, null, item_cls_arr);
+		const opt_id = get_opt_id(id_selec_men, opt_idx);
+		const dv_opt = add_option(dv_options, opt_id, value, null, item_cls_arr);
 		//dv_opt.addEventListener('click', async function() {
 		dv_opt.addEventListener('click', function() {
 			if(on_click_fn != null){
@@ -103,4 +104,6 @@ export function scroll_to_top(dv_elem) {
 	});
 }
 
-
+export function get_opt_id(id_selec_men, opt_idx){
+	return id_selec_men + "_idx_" + opt_idx;
+}
