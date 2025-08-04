@@ -9,6 +9,22 @@ import { distance, closest,  } from './sf_word_dist.js';
 
 import { get_bible_verse, find_ana, get_text_analysis, } from './sf_bible_mgr.js';
 
+
+const OT_bibs = {
+	"WLC":1,
+	"ALE":1,
+	"TKH":1,
+	"LXX":1,		// CAREFUL. if you change this, then also file "LXX" occurences.
+};
+
+const NT_bibs = {
+	"BYZ":1,
+	"TR":1,
+	"WH":1,
+	"NES":1,
+};
+
+
 function file_exists(nm_file){
 	console.log("calling file_exists with " + nm_file);
 	filesys.access(nm_file, filesys.constants.F_OK, (err) => {
@@ -51,31 +67,18 @@ async function main_selector(){
 	//console.log(robj.lverses);	
 }
 
-main_selector();
-
-/*
-const arr1 = [0,1,2,3,4,5,6];
-arr1.splice(3, 1, 'A', 'B');
-console.log(arr1);
-
-const vr = "brewit:34955 bre:22811 elhim:27486 et:1 hwmim:55270 vet:2281 herz:54788";
-const loc = vr.split(" ");
-
-const ana = loc.map((tok) => { 
-	const arr = tok.split(":");
-	return { id: arr[0], idtra: arr[1], };
-});
-
-console.log(ana);
-*/
-
 async function main_diff_bib(){
-	if (process.argv.length < 3) {
-		console.log('Usage: node ' + process.argv[1] + ' "book:chapter:verse"');
+	const num_arg = process.argv.length;
+	if(num_arg < 3) {
+		console.log('Usage: node ' + process.argv[1] + ' "book:chapter:verse" <cri>');
 		process.exit(1);
 	}
 
 	const vr1 = process.argv[2];
+	let pm2 = "";
+	if(num_arg >= 4){
+		pm2 = process.argv[3];
+	}
 
 	init_lang('es');
 	init_biblang('es');
@@ -89,9 +92,15 @@ async function main_diff_bib(){
 
 	let bib = "WLC";
 	let lpref = "HEB";
+	if(OT_bibs[pm2] != null){
+		bib = pm2;
+	}
 	if(book > 39){
 		lpref = "GRE";
 		bib = "BYZ";
+		if(NT_bibs[pm2] != null){
+			bib = pm2;
+		}
 	}
 	const lbib = lpref + "_LOC";
 	
@@ -118,7 +127,6 @@ function find_lcs(s1, s2){
 	return rr;
 }
 
-//main_diff_bib();
 
 async function main_distance(){
 	if (process.argv.length < 4) {
@@ -142,5 +150,7 @@ async function main_distance(){
 	
 }
 
-//main_distance();
 
+//main_selector();
+main_diff_bib();
+//main_distance();

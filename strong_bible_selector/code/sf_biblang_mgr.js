@@ -200,7 +200,7 @@ function get_biblang_conf(){
 	return conf;
 }
 
-function set_biblang_conf(conf){
+export function set_biblang_conf(conf){
 	if(conf == null){ return; }
 	if(conf.curr_OT != null){ gvar.biblang.curr_OT = conf.curr_OT; }
 	if(conf.curr_NT != null){ gvar.biblang.curr_NT = conf.curr_NT; }

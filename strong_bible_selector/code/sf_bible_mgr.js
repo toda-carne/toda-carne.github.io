@@ -8,6 +8,7 @@ import { scroll_to_top, } from './sf_select_option_mgr.js';
 
 
 const DEBUG_BIBLE_MGR = true;
+const DEBUG_ANALYSIS = true;
 
 const bibles_dir = "../data/js_bib/";
 const strongs_dir = "../data/js_sbib/";
@@ -225,23 +226,38 @@ export async function get_text_analysis(bib, book, chapter, verse, bl_obj){
 	const asc = await get_bible_verse(bib, book, chapter, verse);
 	const sbib = bib + "_S";
 	const sco = await get_bible_verse(sbib, book, chapter, verse);
-	let lpref = "HEB";
-	const num_book = gvar.book2num_en[book];
-	if(num_book > 39){
-		lpref = "GRE";
-	}
-	const lbib = lpref + "_LOC";
-	if(DEBUG_BIBLE_MGR){ console.log("" + lbib + " " + book + "_" + chapter + ":" + verse);	}
-	const loc = await get_bible_verse(lbib, book, chapter, verse);
+	
+	let loc = "";
+	let ana = null;
+	
+	if(bib != "LXX"){
+		let lpref = "HEB";
+		const num_book = gvar.book2num_en[book];
+		if(num_book > 39){
+			lpref = "GRE";
+		}
+		const lbib = lpref + "_LOC";
+		if(DEBUG_BIBLE_MGR){ console.log("" + lbib + " " + book + "_" + chapter + ":" + verse);	}
+		loc = await get_bible_verse(lbib, book, chapter, verse);
 
-	const ana = get_obj_analysis(asc, sco, loc, bl_obj);
-	
-	let ltra = lpref + "_" + gvar.lang.toUpperCase();
-	if((bl_obj != null) && (bl_obj.lang != null)){
-		ltra = lpref + "_" + bl_obj.lang.toUpperCase();
+		ana = get_obj_analysis(asc, sco, loc, bl_obj);
+		
+		let ltra = lpref + "_" + gvar.lang.toUpperCase();
+		if((bl_obj != null) && (bl_obj.lang != null)){
+			ltra = lpref + "_" + bl_obj.lang.toUpperCase();
+		}
+		
+		await fill_translation(ltra, ana);
+		
+	} else {
+		const vasc = asc.split(" ");
+		const vsco = sco.split(" ");
+		ana = vasc.map((tok, idx) => { 
+			return { id: tok, sco: vsco[idx], };
+		});		
 	}
 	
-	await fill_translation(ltra, ana);
+	await fill_scod_translation(ana, bl_obj);
 	
 	const txt_ana = {
 		tasc: asc,
@@ -280,6 +296,12 @@ function is_selected_scode(bl_obj, scode){
 }
 
 function fill_scodes(ana, vsco, vasc, bl_obj){
+	if(DEBUG_ANALYSIS){
+		console.log("vasc " + vasc.length);
+		console.log(vasc);
+		console.log("vsco " + vsco.length);
+		console.log(vsco);
+	}
 	let ii = 0;
 	for(; ii < ana.length; ii++){
 		const obj = ana[ii];
@@ -294,7 +316,8 @@ function fill_scodes(ana, vsco, vasc, bl_obj){
 			const scode = vsco[idx1];
 			obj.sco = scode;
 			obj.sel_scod = is_selected_scode(bl_obj, scode);
-		} else if(obj.added != null){
+		} 
+		if(obj.added != null){
 			fill_added_scodes(obj.added, vsco, vasc, bl_obj);
 		}
 		//obj.sco = vsco[]:;
@@ -302,6 +325,10 @@ function fill_scodes(ana, vsco, vasc, bl_obj){
 }
 
 function fill_added_scodes(added, vsco, vasc, bl_obj){
+	if(DEBUG_ANALYSIS){
+		console.log("added " + added.length);
+		console.log(added);
+	}
 	let ii = 0;
 	for(; ii < added.length; ii++){
 		const obj = added[ii];
@@ -313,6 +340,38 @@ function fill_added_scodes(added, vsco, vasc, bl_obj){
 			const scode = vsco[idx1];
 			obj.sco = scode;
 			obj.sel_scod = is_selected_scode(bl_obj, scode);
+		} 
+	}
+}
+
+async function fill_scod_translation(ana, bl_obj){
+	let lang = gvar.lang;
+	if((bl_obj != null) && (bl_obj.lang != null)){
+		lang = bl_obj.lang;
+	}
+	let ii = 0;
+	for(; ii < ana.length; ii++){
+		const obj = ana[ii];
+		if((obj.sco != null) && (obj.tra == null)){
+			const def_obj = await get_scode_def(obj.sco, lang);
+			obj.tra = def_obj.def;
+			obj.sel_scod = is_selected_scode(bl_obj, obj.sco);
+		} 
+		if(obj.added != null){
+			await fill_added_scod_stranslation(obj.added, bl_obj, lang);
+		}
+		//obj.sco = vsco[]:;
+	}
+}
+
+async function fill_added_scod_stranslation(added, bl_obj, lang){
+	let ii = 0;
+	for(; ii < added.length; ii++){
+		const obj = added[ii];
+		if((obj.sco != null) && (obj.tra == null)){
+			const def_obj = await get_scode_def(obj.sco, lang);
+			obj.tra = def_obj.def;
+			obj.sel_scod = is_selected_scode(bl_obj, obj.sco);
 		} 
 	}
 }
@@ -840,7 +899,7 @@ async function start_loading(file_nam, fl_id, use_pbar){
 		download_file(file_nam);
 	}
 	
-	scroll_to_top(dv_to_scroll);
+	//scroll_to_top(dv_to_scroll);
 	
 	//await new Promise(resolve => setTImeout(resolve, 0));
 }

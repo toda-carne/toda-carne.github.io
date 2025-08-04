@@ -324,6 +324,14 @@ a.exam_ref:hover {
 	width: 100%;
 }
 
+.width_95 {
+	width: 95%;
+}
+
+.width_5 {
+	width: 5%;
+}
+
 .big_font{
 	font-size: 1.5em;
 }
@@ -360,6 +368,14 @@ a.exam_ref:hover {
 	grid-column-start: 1;
 	grid-column-end: -1;
 	grid-row: auto;
+}
+
+.delete_expr {
+	display: inline-block;
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: center;  
+	width: 5%;
 }
 
 .search_button_item {
@@ -461,8 +477,12 @@ a.exam_ref:hover {
 }
 
 
-.txt_ana_maked_item {
+.txt_ana_marked_item {
 	background-color: #0c162f;
+}
+
+.txt_ana_added_item {
+	background-color: #3665d3;
 }
 
 .txt_ana_selected_item {
