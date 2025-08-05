@@ -12,6 +12,10 @@ const GREEK_PREFIX = "G";
 
 const SCOD_VERSES_SUFIX = "_sv";
 
+const MIN_VERSE = [1, 1, 1];
+const MAX_VERSE = [66, 22, 21];
+
+
 const biblang_def = {
 	INFIX_OPS: {
 		'&': (a, b) => calc_and(a, b),
@@ -390,6 +394,7 @@ function last_book_in_range(){
 
 export function verse_disp(vr, disp){
 	let out = vr;
+	const dd = disp;
 	while(disp > 0){
 		out = inc_verse(out);
 		disp--;
@@ -398,10 +403,21 @@ export function verse_disp(vr, disp){
 		out = dec_verse(out);
 		disp++;
 	}
+	if(out == null){
+		if(dd > 0){
+			return MAX_VERSE;
+		}
+		if(dd < 0){
+			return MIN_VERSE;
+		}
+	}
 	return out;
 }
 
 function inc_verse(vr){
+	if(vr == null){
+		return null;
+	}
 	const cha_sz = bib_chapter_sizes;
 	let book = Number(vr[0]);
 	let chapter = Number(vr[1]);
@@ -435,6 +451,9 @@ function inc_verse(vr){
 }
 
 function dec_verse(vr){
+	if(vr == null){
+		return null;
+	}
 	const cha_sz = bib_chapter_sizes;
 	let book = Number(vr[0]);
 	let chapter = Number(vr[1]);
