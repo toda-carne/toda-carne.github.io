@@ -5,6 +5,8 @@ import { gvar, } from './sf_search_mgr.js';
 import { bib_chapter_sizes, } from './sf_bib_chapter_sizes.js';
 import { get_bible_verse, get_scode_verses, dbg_log_all_loaded_files, } from './sf_bible_mgr.js';
 
+const DEBUG_MATCHES = false;
+
 const GREEK_PREFIX = "G";
 
 const SCOD_VERSES_SUFIX = "_sv";
@@ -261,8 +263,8 @@ function arr_diff(aa, bb){
 
 async function calc_and(aa, bb){
 	const oaa = await aa();
-	const obb = await bb();
-	//const obb = await bb(vaa);
+	//const obb = await bb();
+	const obb = await bb(oaa);
 
 	const rop = "(" + oaa.op + " & " + obb.op + ")";
 	
@@ -926,39 +928,58 @@ async function calc_bibregex(rx, prev){
 	return { op: rop, lverses: found, lscods: [] };
 }
 
+export function get_txt_matches(vtxt, rxo){
+	let all_ocu = [];
+	let prv = null;
+	let rr = null;
+	while((rr = rxo.exec(vtxt)) !== null){
+		let ocu = {
+			idx: rr.index,
+			lng: rr[0].length,
+		};
+		
+		if(prv != null){
+			const prv_end = prv.idx + prv.lng;
+			if(prv_end >= ocu.idx){
+				const ocu_end = ocu.idx + ocu.lng;
+				if(ocu_end > prv_end){
+					prv.lng += (ocu_end - prv_end);
+				}
+				ocu = null;
+			}
+		}
+		if(ocu != null){
+			all_ocu.push(ocu);
+			prv = ocu;
+		}
+		
+		//all_ocu.push(ocu);
+	}
+	
+	if(DEBUG_MATCHES){
+		console.log("get_txt_matches");
+		console.log(all_ocu);
+	}
+
+	return all_ocu;
+}
+
 async function verse_matches(bib, vii, rxo){
 	const n2b = gvar.num2book_en;
 	const book = Number(vii[0]);
 	const chapter = Number(vii[1]);
 	const verse = Number(vii[2]);
-	const all_ocu = [];
 
 	//console.log("TRYING get_bible_verse(" + bib + ", " + n2b[book] + ", " + chapter + ", " + verse + ")");
 	const vtxt = await get_bible_verse(bib, n2b[book], chapter, verse);
 	if(vtxt == null){
 		console.log("null verse for get_bible_verse(" + bib + ", " + n2b[book] + ", " + chapter + ", " + verse + ")");
-		return all_ocu;
+		return [];
 	}
 	//console.log(vtxt);
 	
-	let rr = null;
-	while((rr = rxo.exec(vtxt)) !== null){
-		all_ocu.push({
-			cad: rr[0],
-			idx: rr.index,
-		});
-	}
-
+	const all_ocu = get_txt_matches(vtxt, rxo);
 	return all_ocu;
-
-	/*
-	const mm = vtxt.match(rxo);
-	if(mm){
-		const vss = "" + book + ":" + chapter + ":" + verse;
-		return vss;
-	}
-	return null;
-	*/
 }
 
 function to_insenitive_bib(bib){

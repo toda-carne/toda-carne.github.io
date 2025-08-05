@@ -1,7 +1,7 @@
 
 import * as filesys from "fs";
 
-import { init_biblang, eval_biblang_command, } from './sf_biblang_mgr.js'
+import { init_biblang, eval_biblang_command, get_txt_matches, } from './sf_biblang_mgr.js'
 import { gvar, } from './sf_search_mgr.js';
 import { init_lang, num2book_en, } from './sf_lang_mgr.js';
 import { diffSequence } from './sf_diff_sequence.js';
@@ -166,7 +166,28 @@ async function main_test_scode_next_and_prev(){
 	console.log(nxt);
 }
 
-//main_selector();
+async function main_test_matches(){
+	const num_arg = process.argv.length;
+	if(num_arg < 2) {
+		console.log('Usage: node ' + process.argv[1] + ' "book:chapter:verse" <cri>');
+		process.exit(1);
+	}
+
+	//const scod = process.argv[2];
+	
+	const vtxt = `Y habló Caín á su hermano Abel: y aconteció que estando ellos en el campo, Caín se levantó contra su hermano Abel, y le mató.`;
+	console.log(vtxt);
+	
+	let mm = get_txt_matches(vtxt, /herm/gi);
+	console.log(mm);
+	mm = get_txt_matches(vtxt, /mano/gi);
+	console.log(mm);
+}
+
+
+
+main_selector();
 //main_diff_bib();
 //main_distance();
-main_test_scode_next_and_prev();
+//main_test_scode_next_and_prev();
+//main_test_matches();

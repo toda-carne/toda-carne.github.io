@@ -543,30 +543,23 @@ async function import_bible(bib_cod){
 	gvar.full_bible[bib_cod] = md_bib.bib_verses;	
 }
 
-export async function bibobj_to_bibtxt(bibobj, conv_fn, id_txt){
+export async function fill_bibobj_vtxt(bibobj){
 	const cit_obj = JSON.parse(JSON.stringify(bibobj));
 	cit_obj.bib_ver = "text";
 	cit_obj.site = "biblehub";
 	const vhref = make_bible_ref(cit_obj);
 	
-	let vcit = "WAITING_FOR_BIBLE_TEXT";
-	let vtxt = "INVALID_BIBLE_TEXT";
-	if((bibobj.book != null) && (bibobj.chapter != null) && (bibobj.verse != null)){ 
-		vcit = get_loc_book_nam(bibobj.book) + " " + bibobj.chapter + ":" + bibobj.verse;
-		//vtxt = await get_bib_verse(bibobj.bible, num2book_en[bibobj.book], bibobj.chapter, bibobj.verse);
-		vtxt = await get_bible_verse(bibobj.bible, num2book_en[bibobj.book], bibobj.chapter, bibobj.verse);
+	bibobj.href_bh = vhref;
 
-		if(conv_fn != null){
-			vtxt = conv_fn(vtxt);
-		}
+	if((bibobj.book != null) && (bibobj.chapter != null) && (bibobj.verse != null)){ 
+		let vcit = get_loc_book_nam(bibobj.book) + "." + bibobj.chapter + ":" + bibobj.verse;
+		let vtxt = await get_bible_verse(bibobj.bible, num2book_en[bibobj.book], bibobj.chapter, bibobj.verse);
+		
+		if((bibobj.last_verse != null) && (bibobj.last_verse != "")){ vcit = vcit + "-" + bibobj.last_verse; }
+		
+		bibobj.vtxt = vtxt;
+		bibobj.vcit = vcit;
 	}
-	if((bibobj.last_verse != null) && (bibobj.last_verse != "")){ vcit = vcit + "-" + bibobj.last_verse; }
-	let id_sec = "";
-	if(id_txt != null){
-		id_sec = ` id="${id_txt}" `;
-	}
-	const btxt = `<a class='exam_ref' href="${vhref}"> ${vcit} </a><br><div ${id_sec}><b> ${vtxt} </b></div>`;
-	return btxt;
 }
 
 const regex_scode = /^([HGhg])(\d+)$/;
