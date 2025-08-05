@@ -1,7 +1,7 @@
 
 import * as filesys from "fs";
 
-import { init_biblang, eval_biblang_command, get_txt_matches, } from './sf_biblang_mgr.js'
+import { init_biblang, eval_biblang_command, get_txt_matches, verse_disp, } from './sf_biblang_mgr.js'
 import { gvar, } from './sf_search_mgr.js';
 import { init_lang, num2book_en, } from './sf_lang_mgr.js';
 import { diffSequence } from './sf_diff_sequence.js';
@@ -166,6 +166,28 @@ async function main_test_scode_next_and_prev(){
 	console.log(nxt);
 }
 
+function main_test_inc_dec(){
+	const num_arg = process.argv.length;
+	if(num_arg < 4) {
+		console.log('Usage: node ' + process.argv[1] + ' "book:chapter:verse" disp');
+		process.exit(1);
+	}
+
+	gvar.dbg_biblang = true;
+
+	init_lang('es');
+	init_biblang('es');
+	
+	const verse = process.argv[2];
+	const disp = Number(process.argv[3]);
+	
+	const vr = verse.split(":");
+	const prv = verse_disp(vr, -disp);
+	const nxt = verse_disp(vr, disp);
+	console.log(prv);
+	console.log(nxt);
+}
+
 async function main_test_matches(){
 	const num_arg = process.argv.length;
 	if(num_arg < 2) {
@@ -186,8 +208,9 @@ async function main_test_matches(){
 
 
 
-main_selector();
+//main_selector();
 //main_diff_bib();
 //main_distance();
 //main_test_scode_next_and_prev();
 //main_test_matches();
+main_test_inc_dec();

@@ -493,6 +493,26 @@ a.exam_ref:hover {
 	background-color: #3665d3;
 }
 
+.is_verse_oper {
+	display: inline-block;
+	margin: 0.5vw;
+}
+
+.is_verse_oper:hover {
+	background-color: #254795;
+}
+
+.is_verse_cit {
+	display: inline-block;
+	margin: 0.5vw;
+	background-color: #254795;
+	color: yellow;
+}
+
+.is_verse_cit:hover {
+	color: black;
+	background-color: white;
+}
 
 .download_bar {
   width: 100%; 
@@ -518,6 +538,7 @@ a.exam_ref:hover {
 	display: block;
 	display: inline-flex;
 	float: left;
+	font-weight: bold;
 	grid-column: auto / -1;
 	height: 6vh;
 	height: 6vh;

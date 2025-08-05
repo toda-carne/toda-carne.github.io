@@ -6,6 +6,7 @@ import { bib_chapter_sizes, } from './sf_bib_chapter_sizes.js';
 import { get_bible_verse, get_scode_verses, dbg_log_all_loaded_files, } from './sf_bible_mgr.js';
 
 const DEBUG_MATCHES = false;
+const DEBUG_VERSE_MATH = true;
 
 const GREEK_PREFIX = "G";
 
@@ -352,16 +353,52 @@ async function calc_not(aa, bb){
 function next_book_in_range(book){
 	let nx_book = book + 1;
 	const rng = gvar.biblang.curr_range;
-	while((nx_book <= 66) && ! rng.includes(nx_book)){
-		nx_book++;
+	if(rng != null){
+		while((nx_book <= 66) && ! rng.includes(nx_book)){
+			nx_book++;
+		}
+	}
+	return nx_book;
+}
+
+function prev_book_in_range(book){
+	let nx_book = book - 1;
+	const rng = gvar.biblang.curr_range;
+	if(rng != null){
+		while((nx_book >= 1) && ! rng.includes(nx_book)){
+			nx_book--;
+		}
 	}
 	return nx_book;
 }
 
 function first_book_in_range(){
 	const rng = gvar.biblang.curr_range;
-	gvar.biblang.curr_range = rng.sort((n1, n2) => (n1 - n2));
+	if(rng != null){
+		gvar.biblang.curr_range = rng.sort((n1, n2) => (n1 - n2));
+	}
 	return next_book_in_range(0);
+}
+
+function last_book_in_range(){
+	const rng = gvar.biblang.curr_range;
+	if(rng != null){
+		gvar.biblang.curr_range = rng.sort((n1, n2) => (n1 - n2));
+	}
+	return prev_book_in_range(67);
+}
+
+export function verse_disp(vr, disp){
+	let out = vr;
+	while(disp > 0){
+		out = inc_verse(out);
+		disp--;
+	}
+	while(disp < 0){
+		out = dec_verse(out);
+		disp++;
+	}
+	return out;
 }
 
 function inc_verse(vr){
@@ -389,6 +426,40 @@ function inc_verse(vr){
 			//	return [book + 1, 1, 1];
 			if(nxt_book <= 66){
 				return [nxt_book, 1, 1];
+			} else {
+				return null;
+			}
+		}
+	}
+	return null;
+}
+
+function dec_verse(vr){
+	const cha_sz = bib_chapter_sizes;
+	let book = Number(vr[0]);
+	let chapter = Number(vr[1]);
+	let verse = Number(vr[2]);
+	if(cha_sz[book] == null){
+		return null;
+	}
+	const chap_sz = cha_sz[book][chapter];
+	if(chap_sz == null){
+		return null;
+	}
+	if(verse > 1){
+		return [book, chapter, verse - 1];
+	} else {
+		if(chapter > 1){
+			const pchap = chapter - 1;
+			const lvers = cha_sz[book][pchap];
+			return [book, pchap, Number(lvers)];
+		} else {
+			const pbook = prev_book_in_range(book);
+			if(pbook >= 1){
+				const all_chap = Object.keys(cha_sz[pbook]);
+				const lchap = all_chap[all_chap.length - 1];
+				const lvers = cha_sz[pbook][lchap];
+				return [pbook, Number(lchap), Number(lvers)];
 			} else {
 				return null;
 			}
@@ -698,7 +769,7 @@ async function calc_citation(cit){
 	return { op: rop, lverses: rng, lscods: [] };
 }
 
-async function calc_verse(wrd){
+function calc_verse(wrd){
 	const rop = wrd;
 	if(gvar.dbg_biblang){
 		add_dbg_log("calc_verse");

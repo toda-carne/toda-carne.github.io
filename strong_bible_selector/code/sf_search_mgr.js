@@ -7,7 +7,7 @@ import { verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, get_text_analy
 } from './sf_bible_mgr.js';
 
 import { init_lang, } from './sf_lang_mgr.js';
-import { init_biblang, eval_biblang_command, set_biblang_conf } from './sf_biblang_mgr.js'
+import { init_biblang, eval_biblang_command, set_biblang_conf, verse_disp, } from './sf_biblang_mgr.js'
 
 //import { keyb_handler, 
 //} from './sf_tokenizer.js';
@@ -449,33 +449,7 @@ async function fill_verses(bl_obj){
 		
 		await fill_bibobj_vtxt(bibobj);
 		
-		add_ui_bibobj(bibobj, dv_ver, conv_fn, bl_obj)
-		
-		/*
-		const id_txt = "id_verse_loc_" + ii;
-		
-		let mix_fn = null;
-		if(conv_fn != null){
-			mix_fn = (txt) => {
-				const c1_txt = conv_fn(txt);
-				const htm_txt = set_css_matches(c1_txt, bibobj, bl_obj);
-				return htm_txt;
-			};
-		} else {
-			mix_fn = (txt) => {
-				const htm_txt = set_css_matches(txt, bibobj, bl_obj);
-				return htm_txt;
-			};
-		}
-	
-		const vs_txt = await bibobj_to_bibtxt(bibobj, mix_fn, id_txt);
-		dv_ver.innerHTML = vs_txt;
-		const dv_txt = document.getElementById(id_txt);
-		dv_txt.addEventListener('click', async function() {
-			await toggle_text_analysis(dv_txt, bibobj, bl_obj);
-			scroll_to_top(dv_ver);
-		});		
-		*/
+		add_ui_bibobj(bibobj, dv_ver, conv_fn, bl_obj)		
 	}
 	
 	await fill_sdefs(bl_obj);
@@ -907,37 +881,33 @@ function add_to_expr(cad){
 	dv_expr.value += cad;
 }
 
-/*
-async function bibobj_to_bibtxt(bibobj, conv_fn, id_txt){
-	await fill_bibobj_vtxt(bibobj);
-	
-	const vhref = bibobj.href_bh;
-	let vcit = "INVALID_BIBLE_CITATION";
-	if(bibobj.vcit != null){
-		vcit = bibobj.vcit;
-	}
-	let vtxt = "INVALID_BIBLE_TEXT";
-	if(bibobj.vtxt != null){
-		vtxt = bibobj.vtxt;
-		if(conv_fn != null){
-			vtxt = conv_fn(vtxt);
-		}
-	}
-	let id_sec = "";
-	if(id_txt != null){
-		id_sec = ` id="${id_txt}" `;
-	}
-	const btxt = `<a class='exam_ref' href="${vhref}"> ${vcit} </a><br><div ${id_sec}><b> ${vtxt} </b></div>`;
-	return btxt;
+async function select_disp(bibobj, num){
+	const vr = [bibobj.book, bibobj.chapter, bibobj.verse];
+	const fst = verse_disp(vr, -num);
+	const lst = verse_disp(vr, num);
+	const expr = `${fst[0]}:${fst[1]}:${fst[2]} :: ${lst[0]}:${lst[1]}:${lst[2]}`;
+	const dv_expr = document.getElementById(id_expression);
+	dv_expr.value = expr;
+	await do_select();
 }
-*/
+
+function add_ui_disp(dv_ver, bibobj, disp, htm, butt_classes){
+	let dv_itm = null;
+	dv_itm = document.createElement("div");
+	dv_itm.classList.add(...butt_classes);
+	dv_itm.innerHTML = htm;
+	dv_itm.addEventListener('click', async function() {
+		await select_disp(bibobj, disp);
+	});		
+	dv_ver.appendChild(dv_itm);
+}
 
 function add_ui_bibobj(bibobj, dv_ver, conv_fn, bl_obj){
 	
 	const vhref = bibobj.href_bh;
 	let vcit = "INVALID_BIBLE_CITATION";
 	if(bibobj.vcit != null){
-		vcit = bibobj.vcit;
+		vcit = `<b>${bibobj.vcit}</b>`;
 	}
 	let vtxt = "INVALID_BIBLE_TEXT";
 	if(bibobj.vtxt != null){
@@ -948,15 +918,32 @@ function add_ui_bibobj(bibobj, dv_ver, conv_fn, bl_obj){
 		vtxt = set_css_matches(vtxt, bibobj, bl_obj);
 	}
 	
-	const id_txt = "id_verse_loc_" + bibobj.ui_idx;
-	const btxt = `<a class='exam_ref' href="${vhref}"> ${vcit} </a><br><div id="${id_txt}"><b> ${vtxt} </b></div>`;
-	dv_ver.innerHTML = btxt;
+	const butt_classes = ["is_verse_oper"];
 	
-	const dv_txt = document.getElementById(id_txt);
+	dv_ver.innerHTML = "";
+	
+	add_ui_disp(dv_ver, bibobj, 5, vcit, ["is_verse_cit"]);
+	add_ui_disp(dv_ver, bibobj, 10, "(10)", butt_classes);
+	add_ui_disp(dv_ver, bibobj, 20, "(20)", butt_classes);
+	add_ui_disp(dv_ver, bibobj, 40, "(40)", butt_classes);
+
+	let dv_itm = null;
+	dv_itm = document.createElement("div");
+	dv_itm.classList.add(...butt_classes);
+	dv_itm.innerHTML = "bibhub";
+	dv_itm.addEventListener('click', function() {
+		window.open(vhref, '_blank');
+	});		
+	dv_ver.appendChild(dv_itm);
+
+	vtxt = `<b>${vtxt}</b>`;
+	
+	const dv_txt = document.createElement("div");
+	dv_txt.innerHTML = vtxt;
 	dv_txt.addEventListener('click', async function() {
 		await toggle_text_analysis(dv_txt, bibobj, bl_obj);
 		scroll_to_top(dv_ver);
 	});		
-	return btxt;
+	dv_ver.appendChild(dv_txt);	
 }
 
