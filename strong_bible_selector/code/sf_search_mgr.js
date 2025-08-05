@@ -3,7 +3,7 @@ import { get_new_dv_under, scroll_to_top, toggle_select_option, get_opt_id,
 } from './sf_select_option_mgr.js';
 
 import { bibobj_to_bibtxt, verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, get_text_analysis, make_strong_ref, get_scode_def, 
-	get_scode_mutus, get_scode_roots, 
+	get_scode_mutus, get_scode_roots, get_next_scode, get_prev_scode, 
 } from './sf_bible_mgr.js';
 
 import { init_lang, } from './sf_lang_mgr.js';
@@ -683,7 +683,7 @@ function toggle_asc_id_menu(dv_up, bibobj, tok){
 	const dv_expr = document.getElementById(id_expression);
 	const ops = gvar.tok_ops_asc_id; // ["exact", "partial", "add"];
 	if(ops.length != 3){
-		console.err("ops.length != 3");
+		console.error("ops.length != 3");
 		return;
 	}
 	let clk_fn = async function(dv_ret, dv_ops, val_sel, idx_sel){
@@ -725,7 +725,7 @@ function toggle_scod_menu(dv_up, bibobj, tok){
 	const dv_expr = document.getElementById(id_expression);
 	const ops = gvar.tok_ops_scod; // ["select", "add", "bibhub"];
 	if(ops.length != 3){
-		console.err("ops.length != 3");
+		console.error("ops.length != 3");
 		return;
 	}
 	let clk_fn = async function(dv_ret, dv_ops, val_sel, idx_sel){
@@ -815,14 +815,25 @@ function set_css_matches(vs_txt, bibobj, bl_obj){
 function toggle_scod_actions(dv_def, scod){
 	const id_menu = id_menu_scod_def;
 		
-	const ops = gvar.ops_def_scod; // ["roots", "mutual", "bibhub"];
-	if(ops.length != 3){
-		console.err("ops.length != 3");
+	const ops = gvar.ops_def_scod; // ["prv", "nxt", "roots", "mutual", "bibhub"];
+	if(ops.length != 5){
+		console.error("ops.length != 5");
 		return;
 	}
+	const dv_expr = document.getElementById(id_expression);
 	let clk_fn = async function(dv_ret, dv_ops, val_sel, idx_sel){
 		let the_expr = null;
 		if(idx_sel == 0){
+			const prv = await get_prev_scode(scod);
+			dv_expr.value = prv;
+			await do_select();
+		}
+		if(idx_sel == 1){
+			const nxt = await get_next_scode(scod);
+			dv_expr.value = nxt;
+			await do_select();
+		}
+		if(idx_sel == 2){
 			const roots = await get_scode_roots(scod);
 			if(DEBUG_SCODS){
 				console.log("get_scode_roots");
@@ -834,7 +845,7 @@ function toggle_scod_actions(dv_def, scod){
 			}
 			toggle_scod_subops(dv_ops, scod, id_menu, idx_sel, subops);
 		}
-		if(idx_sel == 1){
+		if(idx_sel == 3){
 			const mutus = await get_scode_mutus(scod);
 			if(DEBUG_SCODS){
 				console.log("get_scode_mutus");
@@ -846,7 +857,7 @@ function toggle_scod_actions(dv_def, scod){
 			}
 			toggle_scod_subops(dv_ops, scod, id_menu, idx_sel, subops);
 		}
-		if(idx_sel == 2){
+		if(idx_sel == 4){
 			const href_sco = make_strong_ref(scod);
 			window.open(href_sco, '_blank');
 			dv_ops.remove();

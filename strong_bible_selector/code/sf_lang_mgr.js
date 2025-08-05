@@ -19,8 +19,8 @@ const tok_ops_asc_id_en = ["exact", "partial", "add"];
 const tok_ops_scod_es = ["encuentra", "adicionar", "bibhub"];
 const tok_ops_scod_en = ["find", "add", "bibhub"];
 
-const ops_def_scod_es = ["raices", "mutuos", "bibhub"];
-const ops_def_scod_en = ["roots", "mutual", "bibhub"];
+const ops_def_scod_es = ["ant", "sig", "raices", "mutuos", "bibhub"];
+const ops_def_scod_en = ["prv", "nxt", "roots", "mutual", "bibhub"];
 
 export const num2book_en = {
 	"-1":DEFAULT_BOOK_NAME,

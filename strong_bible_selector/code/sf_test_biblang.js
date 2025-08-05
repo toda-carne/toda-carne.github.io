@@ -7,7 +7,9 @@ import { init_lang, num2book_en, } from './sf_lang_mgr.js';
 import { diffSequence } from './sf_diff_sequence.js';
 import { distance, closest,  } from './sf_word_dist.js';
 
-import { get_bible_verse, find_ana, get_text_analysis, } from './sf_bible_mgr.js';
+import { get_bible_verse, find_ana, get_text_analysis, calc_prev_scode, calc_next_scode, 
+	get_next_scode, get_prev_scode, 
+} from './sf_bible_mgr.js';
 
 
 const OT_bibs = {
@@ -150,7 +152,21 @@ async function main_distance(){
 	
 }
 
+async function main_test_scode_next_and_prev(){
+	const num_arg = process.argv.length;
+	if(num_arg < 3) {
+		console.log('Usage: node ' + process.argv[1] + ' "book:chapter:verse" <cri>');
+		process.exit(1);
+	}
 
-main_selector();
+	const scod = process.argv[2];
+	const prv = await get_prev_scode(scod);
+	const nxt = await get_next_scode(scod);
+	console.log(prv);
+	console.log(nxt);
+}
+
+//main_selector();
 //main_diff_bib();
 //main_distance();
+main_test_scode_next_and_prev();

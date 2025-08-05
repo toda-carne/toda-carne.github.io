@@ -10,6 +10,10 @@ import { scroll_to_top, } from './sf_select_option_mgr.js';
 const DEBUG_BIBLE_MGR = true;
 const DEBUG_ANALYSIS = true;
 
+const GREEK_PREFIX = "G";
+const MAX_HEBREW_SCOD = 8675;
+const MAX_GREEK_SCOD = 5624;
+
 const bibles_dir = "../data/js_bib/";
 const strongs_dir = "../data/js_sbib/";
 const loc_dir = "../data/js_loc/";
@@ -759,16 +763,58 @@ async function import_sroots(){
 	gvar.full_sroots = md_sroots.loc_txt;	
 }
 
+export async function get_next_scode(scode){
+	const all_sdefs = await get_sdefs();
+	if(all_sdefs == null){
+		return null;
+	}
+	let nxt = calc_next_scode(scode);
+	while(nxt != null){
+		if(all_sdefs[nxt] != null){
+			return nxt;
+		}
+		nxt = calc_next_scode(nxt);
+	}
+	return null;
+}
+
+export async function get_prev_scode(scode){
+	const all_sdefs = await get_sdefs();
+	if(all_sdefs == null){
+		return null;
+	}
+	let prv = calc_prev_scode(scode);
+	while(prv != null){
+		if(all_sdefs[prv] != null){
+			return prv;
+		}
+		prv = calc_prev_scode(prv);
+	}
+	return null;
+}
+
+export async function get_sdefs(){
+	try{
+		await import_sdefs("SDEFS");		
+		return gvar.full_sdefs.SDEFS;
+	} catch {
+		console.err("cannot get_sdefs");
+		return null;
+	}
+}
+
 export async function get_scode_def(scode, lang){
 	const bad = { asc:"", def:"", };
+	const all_sdefs = await get_sdefs();
+	if(all_sdefs == null){
+		return bad;
+	}
 	try{
-		await import_sdefs("SDEFS");
-		await import_sdefs(lang);
-		
-		let arr_def = gvar.full_sdefs.SDEFS[scode];
+		let arr_def = all_sdefs[scode];
 		if(arr_def == null){
 			return bad;
 		}
+		await import_sdefs(lang);
 		if(arr_def.length != 2){
 			return bad;
 		}
@@ -972,6 +1018,27 @@ function end_loading(){
 
 function in_nodejs(){
 	return (typeof window === 'undefined');
+}
+
+export function calc_next_scode(scode){
+	const num = Number(scode.slice(1)) + 1;
+	const is_gre = scode.startsWith(GREEK_PREFIX);
+	let max = MAX_HEBREW_SCOD + 1;
+	if(is_gre){
+		max = MAX_GREEK_SCOD + 1;
+	}
+	if(num > max){
+		return null;
+	}
+	return (scode.slice(0, 1) + num);
+}
+
+export function calc_prev_scode(scode){
+	const num = Number(scode.slice(1)) - 1;
+	if(num < 0){
+		return null;
+	}
+	return (scode.slice(0, 1) + num);
 }
 
 /*
