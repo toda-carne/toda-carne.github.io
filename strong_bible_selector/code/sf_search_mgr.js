@@ -7,7 +7,9 @@ import { verse_to_min_greek, verse_to_may_greek, verse_to_hebrew, get_text_analy
 } from './sf_bible_mgr.js';
 
 import { init_lang, } from './sf_lang_mgr.js';
-import { init_biblang, eval_biblang_command, set_biblang_conf, verse_disp, } from './sf_biblang_mgr.js'
+import { init_biblang, eval_biblang_command, set_biblang_conf, verse_disp, 
+	conf_to_mini, mini_to_conf, encode_mini, decode_mini, 	
+} from './sf_biblang_mgr.js'
 
 //import { keyb_handler, 
 //} from './sf_tokenizer.js';
@@ -24,6 +26,9 @@ id_find
 
 export let gvar = {};
 
+
+const GET_var_expr = "biblang";
+const GET_var_conf = "conf";
 
 const PERSISTANT_STATE = true;
 const STORAGE_STATE_ID = "STORAGE_STATE_ID";
@@ -287,7 +292,12 @@ export async function start_srch_mgr(curr_lang){
 	if(PERSISTANT_STATE){ read_storage_state(); }
 	init_handlers();
 	
-	if(PERSISTANT_STATE){ window.addEventListener('beforeunload', write_storage_state); }	
+	if(PERSISTANT_STATE){ window.addEventListener('beforeunload', write_storage_state); }
+	
+	const conf = set_search_from_url();
+	if(conf != null){
+		await do_select(conf);
+	}
 }
 
 function get_conversion_func(){
@@ -372,7 +382,7 @@ function fill_search_info(bl_obj){
 	const newt = gvar.biblang.curr_NT;
 	const loc_bib = gvar.biblang.curr_LOC;
 	const rng_tit = gvar.all_msg.ranges_search;
-	const rng_str = bl_obj.ui_range.map(rr => rr.join("-")).join(" ");
+	const rng_str = bl_obj.intervals.map(rr => rr.join("-")).join(" ");
 	const rxi_val = gvar.biblang.regex_input.toUpperCase();
 	let rx_in = gvar.biblang.curr_LOC;
 	if(rxi_val == "OT"){
@@ -522,6 +532,24 @@ function pop_menu_handler(){
 	op.classList.add("exam", "is_block", "big_item");
 	op.innerHTML = "DEBUG";
 	op.addEventListener('click', toggle_dbg_info);
+	dv_pop_men.appendChild(op);
+	
+	op = document.createElement("div");
+	op.classList.add("exam", "is_block", "big_item");
+	op.innerHTML = "GET WEB LINK";
+	op.addEventListener('click', async () => {
+		await get_href();
+	});
+	dv_pop_men.appendChild(op);
+	
+	op = document.createElement("div");
+	op.classList.add("exam", "is_block", "big_item");
+	op.innerHTML = "SHOW WEB LINK";
+	op.addEventListener('click', () => {
+		const hrf = get_search_href();
+		const dv_info = document.getElementById(id_info);
+		dv_info.innerHTML = hrf;
+	});
 	dv_pop_men.appendChild(op);
 	
 	scroll_to_top(dv_pop_men);
@@ -991,6 +1019,71 @@ function add_ui_bibobj(bibobj, dv_ver, conv_fn, bl_obj){
 	dv_ver.appendChild(dv_txt);	
 }
 
-function get_ranges_text(rngs){
-	return rngs.map(rr => rr.join("-")).join(" ");
+function get_search_href(){
+	const loc = document.location;
+	const his = gvar.biblang.history;
+	if(his == null){
+		const qr_href = `${loc.origin}${loc.pathname}`;
+		return qr_href;
+	}
+	if(his.length == 0){
+		const qr_href = `${loc.origin}${loc.pathname}`;
+		return qr_href;
+	}
+	const last = his[his.length - 1];
+	const mm = conf_to_mini(last.conf);
+	const mm2 = encode_mini(mm);
+	const enc_conf = encodeURIComponent(mm2);
+	const enc_expr = encodeURIComponent(last.expr);
+	const qr_href = `${loc.origin}${loc.pathname}?${GET_var_expr}=${enc_expr}&${GET_var_conf}=${enc_conf}`;
+	
+	console.log("get_search_href");
+	console.log(qr_href);
+	return qr_href;
 }
+
+function find_GET_parameter(prm_nm) {
+	let result = null,
+	tmp = [];
+	location.search
+		.substr(1)
+		.split("&")
+		.forEach(function (item) {
+			tmp = item.split("=");
+			if(tmp[0] === prm_nm){ result = decodeURIComponent(tmp[1]); }
+		});
+	return result;
+}
+
+function set_search_from_url(){
+	const expr = find_GET_parameter(GET_var_expr);
+	if(expr == null){
+		return null;
+	}
+	const mini = find_GET_parameter(GET_var_conf);
+	if(mini == null){
+		return null;
+	}
+	const mm = decode_mini(mini);
+	const conf = mini_to_conf(mm);
+
+	const dv_expr = document.getElementById(id_expression);
+	dv_expr.value = expr;
+	set_ui_conf(conf);
+	set_biblang_conf(conf);
+	
+	return conf;
+}
+
+async function get_href(){
+	try{
+		const hrf = get_search_href();
+		if(hrf != null){
+			await navigator.clipboard.writeText(hrf);
+		}
+	} catch(err){
+		console.error("Cannot get_href", err);
+	}
+}
+
+

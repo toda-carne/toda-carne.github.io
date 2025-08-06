@@ -52,6 +52,19 @@ const biblang_def = {
 	],
 };
 
+const conf2mini = {
+	curr_OT: 'O',
+	curr_NT: 'N',
+	curr_LOC: 'L',
+	output: 'o',
+	regex_input: 'i',
+	size_output: 's',
+	regex_insensitive: 'r',
+	intervals: 'I',
+};
+
+const mini2conf = {};
+
 const OT_nams = {
 	"WLC":1,
 	"ALE":1,
@@ -204,7 +217,7 @@ function get_biblang_conf(){
 	
 	conf.regex_insensitive = gvar.biblang.regex_insensitive;
 	conf.curr_range = JSON.parse(JSON.stringify(gvar.biblang.curr_range));	
-	conf.initial_range = JSON.parse(JSON.stringify(gvar.biblang.initial_range));
+	conf.intervals = range_to_intervals(conf.curr_range);
 	
 	return conf;
 }
@@ -223,9 +236,12 @@ export function set_biblang_conf(conf){
 	if(conf.curr_range != null){
 		gvar.biblang.curr_range = JSON.parse(JSON.stringify(conf.curr_range));
 	}
-	if(conf.initial_range != null){
-		gvar.biblang.initial_range = JSON.parse(JSON.stringify(conf.initial_range));
-	}
+}
+
+function fill_reversed_object(orig, reverse){
+	for (const [key, value] of Object.entries(orig)) {
+		reverse[value] = key;
+	}  
 }
 
 export function init_biblang(lng){
@@ -235,6 +251,8 @@ export function init_biblang(lng){
 	if(lng == 'es'){
 		gvar.biblang.default_LOC = "SBLM";
 	}
+	
+	fill_reversed_object(conf2mini, mini2conf);
 	
 	gvar.biblang.parser = new ExpressionParser(biblang_def);
 	
@@ -1240,11 +1258,7 @@ export async function eval_biblang_command(command, config){
 
 	if(config != null){
 		set_biblang_conf(config);
-		if(gvar.biblang.initial_range != null){
-			gvar.biblang.curr_range = gvar.biblang.initial_range;
-		}
 	}
-	gvar.biblang.initial_range = JSON.parse(JSON.stringify(gvar.biblang.curr_range));;
 	gvar.biblang.dbg_log = [];
 	
 	gvar.biblang.all_scods = [];
@@ -1285,7 +1299,7 @@ export async function eval_biblang_command(command, config){
 	gvar.biblang.all_scods = [];
 	gvar.biblang.all_ocu = {};
 
-	robj.ui_range = get_curr_range_ui();
+	robj.intervals = range_to_intervals(gvar.biblang.curr_range);
 	
 	if(gvar.dbg_biblang){
 		add_dbg_log("FINAL_RESULT");
@@ -1316,19 +1330,19 @@ export function add_dbg_log(obj){
 	console.log(obj);
 }
 
-function get_curr_range_ui(){
-	const rng = gvar.biblang.curr_range;
+export function range_to_intervals(range){
+	let rng = range;
 	if(rng == null){
 		return [];
 	}
-	gvar.biblang.curr_range = rng.sort((n1, n2) => (n1 - n2));
+	rng = rng.sort((n1, n2) => (n1 - n2));
 	
 	const all_rng = [];
 	const n2a = gvar.num2abbr;
-	let ii = 0;
 	let prv = -1;
 	let b0 = null;
 	let b1 = null;
+	let ii = 0;
 	for(; ii < rng.length; ii++){
 		const book = rng[ii];
 		
@@ -1347,10 +1361,90 @@ function get_curr_range_ui(){
 		all_rng.push([n2a[b0], n2a[b1]]);
 	}
 	if(gvar.dbg_biblang){
-		add_dbg_log("FINAL_RANGE");
+		add_dbg_log("UI_RANGE");
 		add_dbg_log(all_rng);
 		add_dbg_log("_____________________________");
 	}
 	return all_rng;
+}
+
+function intervals_to_range(intervals){
+	if(intervals == null){
+		return [];
+	}
+	const a2n = gvar.abbr2num;
+	
+	let range = [];
+	let ii = 0;
+	for(; ii < intervals.length; ii++){
+		const itv = intervals[ii];
+		const jj_beg = Number(a2n[itv[0]]);
+		const jj_end = Number(a2n[itv[1]]);
+		let jj = jj_beg;
+		for(; jj <= jj_end; jj++){
+			range.push(jj);
+		}
+	}
+	return range;
+}
+
+export function conf_to_mini(conf){
+	if(conf.intervals == null){
+		conf.intervals = range_to_intervals(conf.curr_range);
+	}
+	const mini = {};
+	const kks = Object.keys(mini2conf);
+	let ii = 0;
+	for(; ii < kks.length; ii++){
+		const kk = kks[ii];
+		const kk2 = mini2conf[kk];
+		mini[kk] = conf[kk2];
+	}
+	return mini;
+}
+
+export function mini_to_conf(mini){
+	const conf = {};
+	const kks = Object.keys(conf2mini);
+	let ii = 0;
+	for(; ii < kks.length; ii++){
+		const kk = kks[ii];
+		const kk2 = conf2mini[kk];
+		conf[kk] = mini[kk2];
+	}
+	conf.curr_range = intervals_to_range(conf.intervals);
+	//conf.size_output
+	return conf;
+}
+
+function fix_bool(cad){
+	if(cad == "true"){ return true; }
+	return false;
+}
+
+function fix_sz(sz){
+	if(sz == "all"){ return sz; }
+	return Number(sz);
+}
+
+export function encode_mini(mini){
+	if(mini.s != null){
+		mini.s = Object.entries(mini.s).map(rr => rr.join(":")).join("+");
+	}
+	mini.I = mini.I.map(rr => rr.join(":")).join("+");
+	const ents = Object.entries(mini);
+	const encoded = ents.map(rr => rr.join("$")).join("|");
+	return encoded;
+}
+
+export function decode_mini(emini){
+	const ents = emini.split("|").map(rr => rr.split("$"));
+	const decoded = Object.fromEntries(ents); 
+	decoded.I = decoded.I.split("+").map(rr => rr.split(":"));
+	if(decoded.s != null){
+		decoded.s = Object.fromEntries(decoded.s.split("+").map(rr => { const oo = rr.split(":"); return [oo[0], fix_sz(oo[1])]}));
+	}
+	decoded.r = fix_bool(decoded.r);
+	return decoded;
 }
 

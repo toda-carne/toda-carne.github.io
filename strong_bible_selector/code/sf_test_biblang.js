@@ -1,7 +1,9 @@
 
 import * as filesys from "fs";
 
-import { init_biblang, eval_biblang_command, get_txt_matches, verse_disp, } from './sf_biblang_mgr.js'
+import { init_biblang, eval_biblang_command, get_txt_matches, verse_disp, range_to_intervals, 
+	conf_to_mini, mini_to_conf, encode_mini, decode_mini, 
+} from './sf_biblang_mgr.js'
 import { gvar, } from './sf_search_mgr.js';
 import { init_lang, num2book_en, } from './sf_lang_mgr.js';
 import { diffSequence } from './sf_diff_sequence.js';
@@ -46,18 +48,6 @@ async function main_selector(){
 	
 	const command = process.argv[2];
 	
-	/*
-	const n2b = num2book_en;
-	const vii = command.split(":");
-	const bib = "SBLMi";
-	const book = Number(vii[0]);
-	const chapter = Number(vii[1]);
-	const verse = Number(vii[2]);
-	console.log("TRYING get_bible_verse(" + bib + ", " + n2b[book] + ", " + chapter + ", " + verse + ")");
-	const vtxt = await get_bible_verse(bib, n2b[book], chapter, verse);
-	console.log(vtxt);
-	*/
-	
 	gvar.dbg_biblang = true;
 
 	init_lang('es');
@@ -65,7 +55,35 @@ async function main_selector(){
 	
 	const robj = await eval_biblang_command(command);
 	
-	console.log("TEST_RESULT");
+	
+	const his = gvar.biblang.history;
+	if((his != null) && (his.length > 0)){
+		console.log("LAST_HISTO");
+		const last = his[his.length - 1];
+		/*
+		const conf = JSON.stringify(last.conf);
+		console.log(conf);
+		console.log(last.expr);
+		*/
+		
+		console.log(last.conf);
+		const mm = conf_to_mini(last.conf);
+		const cc = mini_to_conf(mm);
+		console.log(mm);
+		console.log(cc);
+
+		const mm2 = encode_mini(mm);
+		const cc2 = decode_mini(mm2);
+		console.log(mm2);
+		console.log(cc2);
+		
+		const enc_conf = encodeURIComponent(mm2);
+		const enc_expr = encodeURIComponent(last.expr);
+		console.log(enc_conf);
+		console.log(enc_expr);
+		
+	}
+	
 	//console.log(robj.lverses);	
 }
 
