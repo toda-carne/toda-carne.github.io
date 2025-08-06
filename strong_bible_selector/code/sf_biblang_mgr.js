@@ -163,7 +163,7 @@ function update_size_outputs_from(out_sizes){
 }
 
 export function reset_curr_range(){
-	gvar.biblang.curr_range = range_nams.all;
+	gvar.biblang.curr_range = JSON.parse(JSON.stringify(range_nams.all));
 }
 
 function init_history(){
@@ -203,7 +203,8 @@ function get_biblang_conf(){
 	conf.size_output = JSON.parse(JSON.stringify(gvar.biblang.size_output));
 	
 	conf.regex_insensitive = gvar.biblang.regex_insensitive;
-	conf.curr_range = JSON.parse(JSON.stringify(gvar.biblang.curr_range));
+	conf.curr_range = JSON.parse(JSON.stringify(gvar.biblang.curr_range));	
+	conf.initial_range = JSON.parse(JSON.stringify(gvar.biblang.initial_range));
 	
 	return conf;
 }
@@ -221,6 +222,9 @@ export function set_biblang_conf(conf){
 	if(conf.regex_insensitive != null){ gvar.biblang.regex_insensitive = conf.regex_insensitive; }
 	if(conf.curr_range != null){
 		gvar.biblang.curr_range = JSON.parse(JSON.stringify(conf.curr_range));
+	}
+	if(conf.initial_range != null){
+		gvar.biblang.initial_range = JSON.parse(JSON.stringify(conf.initial_range));
 	}
 }
 
@@ -1236,7 +1240,11 @@ export async function eval_biblang_command(command, config){
 
 	if(config != null){
 		set_biblang_conf(config);
+		if(gvar.biblang.initial_range != null){
+			gvar.biblang.curr_range = gvar.biblang.initial_range;
+		}
 	}
+	gvar.biblang.initial_range = JSON.parse(JSON.stringify(gvar.biblang.curr_range));;
 	gvar.biblang.dbg_log = [];
 	
 	gvar.biblang.all_scods = [];
@@ -1277,7 +1285,7 @@ export async function eval_biblang_command(command, config){
 	gvar.biblang.all_scods = [];
 	gvar.biblang.all_ocu = {};
 
-	set_arr_curr_range();
+	robj.ui_range = get_curr_range_ui();
 	
 	if(gvar.dbg_biblang){
 		add_dbg_log("FINAL_RESULT");
@@ -1308,7 +1316,7 @@ export function add_dbg_log(obj){
 	console.log(obj);
 }
 
-function set_arr_curr_range(){
+function get_curr_range_ui(){
 	const rng = gvar.biblang.curr_range;
 	if(rng == null){
 		return [];
@@ -1343,7 +1351,6 @@ function set_arr_curr_range(){
 		add_dbg_log(all_rng);
 		add_dbg_log("_____________________________");
 	}
-	gvar.biblang.arr_curr_range = all_rng;
 	return all_rng;
 }
 

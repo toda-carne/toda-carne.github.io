@@ -37,6 +37,7 @@ const id_dbg_data = "id_dbg_data";
 const id_history = "id_history";
 const id_menu_tok = "id_menu_tok";
 const id_header = "id_header";
+const id_info = "id_info";
 const id_del_expr = "id_del_expr";
 const id_menu_scod_def = "id_menu_scod_def";
 const id_menu_mutus = "id_menu_mutus";
@@ -152,6 +153,12 @@ function init_menus(){
 	dv_header.innerHTML = "";
 	dv_select.after(dv_header);
 
+	const dv_info = document.createElement("div");
+	dv_info.id = id_info;
+	dv_info.classList.add("search_info");
+	dv_info.innerHTML = "";
+	dv_select.after(dv_info);
+
 	let dv_button = null;
 	let clk_hdlr = null;
 	
@@ -253,6 +260,7 @@ async function do_select(prv_conf){
 	//let comm = `.${oldt} ; .${newt} ; .${loc_bib} ; :${rxin} ; .${txtout} ; ${expr}`;
 		
 	const bl_obj = await eval_biblang_command(expr, conf);
+	fill_search_info(bl_obj);
 	await fill_verses(bl_obj);
 	
 	if(dv_dbg_log != null){
@@ -343,7 +351,7 @@ async function fill_sdefs(bl_obj){
 		const sco_txt = conv_fn_nt(sdef.asc);
 		//const href_sco = make_strong_ref(scod);
 		//const htm = `<a class="exam_ref big_font" href="${href_sco}" target="_blank">${scod}</a> <span>${sco_txt}</span>: ${sdef.def}`;
-		const htm = `<span class="big_font">${scod}</span> <span>${sco_txt}</span>: ${sdef.def}`;
+		const htm = `<span class="scode_info">${scod}</span> <span>${sco_txt}</span>: ${sdef.def}`;
 		dv_def.innerHTML = htm;
 		dv_header.appendChild(dv_def);
 		
@@ -354,6 +362,35 @@ async function fill_sdefs(bl_obj){
 	}
 }
 
+function fill_search_info(bl_obj){
+	const lang = gvar.lang;
+	
+	const dv_info = document.getElementById(id_info);
+	dv_info.innerHTML = "";
+
+	const oldt = gvar.biblang.curr_OT;
+	const newt = gvar.biblang.curr_NT;
+	const loc_bib = gvar.biblang.curr_LOC;
+	const rng_tit = gvar.all_msg.ranges_search;
+	const rng_str = bl_obj.ui_range.map(rr => rr.join("-")).join(" ");
+	const rxi_val = gvar.biblang.regex_input.toUpperCase();
+	let rx_in = gvar.biblang.curr_LOC;
+	if(rxi_val == "OT"){
+		rx_in = gvar.biblang.curr_OT;
+	}
+	if(rxi_val == "NT"){
+		rx_in = gvar.biblang.curr_NT;
+	}
+	const info = `
+	<span class="ot_info">${oldt}</span> 
+	<span class="nt_info">${newt}</span> -> 
+	<span class="loc_info">${loc_bib}</span> 
+	<span class="rx_in_info">${gvar.all_msg.text_search} ${rxi_val} (<span class="rx_in_info_bib">${rx_in}</span>)</span> 
+	<span class="ranges_info">${gvar.all_msg.ranges_search} ${rng_str}</span>`;// rx_in_info_bib
+	dv_info.innerHTML = info;
+}
+
+/*
 /*
 function get_conv_fn(bib, book, op){
 	let conv_fn = verse_to_hebrew;
@@ -425,6 +462,10 @@ async function fill_verses(bl_obj){
 	
 	const dv_verses = document.getElementById("id_verses");
 	dv_verses.innerHTML = "";
+
+	if(all_vrs.length == 0){
+		dv_verses.innerHTML = gvar.all_msg.no_verses;
+	}
 	
 	scroll_to_top(dv_verses);
 			
@@ -940,6 +981,9 @@ function add_ui_bibobj(bibobj, dv_ver, conv_fn, bl_obj){
 	
 	const dv_txt = document.createElement("div");
 	dv_txt.innerHTML = vtxt;
+	if(conv_fn == verse_to_hebrew){
+		dv_txt.classList.add("in_right");
+	}
 	dv_txt.addEventListener('click', async function() {
 		await toggle_text_analysis(dv_txt, bibobj, bl_obj);
 		scroll_to_top(dv_ver);
@@ -947,3 +991,6 @@ function add_ui_bibobj(bibobj, dv_ver, conv_fn, bl_obj){
 	dv_ver.appendChild(dv_txt);	
 }
 
+function get_ranges_text(rngs){
+	return rngs.map(rr => rr.join("-")).join(" ");
+}

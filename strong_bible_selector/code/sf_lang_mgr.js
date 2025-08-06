@@ -7,11 +7,21 @@ const INVALID_BOOK_ABBR = "INVALID_BOOK_ABBR";
 const msg_es = {
 	loading: "BAJANDO ",
 	in_cache: "(EN CACHE)",
+	finding: "Encontrando",
+	scod_search: "Codigos Strong en:",
+	text_search: "Texto:",
+	ranges_search: "En los rangos:",
+	no_verses: "No hay vertsiculos con la configuracion dada",
 };
 
 const msg_en = {
 	loading: "LOADING ",
 	in_cache: "(IN CACHE)",
+	finding: "Finding",
+	scod_search: "Strong Codes in:",
+	text_search: "Text:",
+	ranges_search: "In the ranges:",
+	no_verses: "There are no verses with the configuration given",
 };
 
 const tok_ops_asc_id_es = ["exacto", "parcial", "adicionar"];
