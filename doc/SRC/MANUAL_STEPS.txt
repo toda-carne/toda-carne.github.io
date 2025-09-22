@@ -1,0 +1,7 @@
+Open .odm
+File > Save as > .odt
+
+Open .odt
+Format > Sections
+Remove all sections
+save .odt

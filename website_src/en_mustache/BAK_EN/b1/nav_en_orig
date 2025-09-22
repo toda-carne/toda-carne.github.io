@@ -1,0 +1,2009 @@
+
+    <li id="id_side_li_0">
+     <a href="#todacarne.com" onclick="nav_clk_1('toc-todacarne.com', 'id_side_li_0');" id="toc-todacarne.com">
+      <span id="anchor">
+      </span>
+      TodaCarne.com
+     </a>
+     <ul>
+      <li id="id_side_li_1">
+       <a href="#english" onclick="nav_clk_1('toc-english', 'id_side_li_1');" id="toc-english">
+        English
+       </a>
+      </li>
+     </ul>
+    </li>
+    <li id="id_side_li_2">
+     <a href="#part-1.-introduction." onclick="nav_clk_1('toc-part-1.-introduction.', 'id_side_li_2');" id="toc-part-1.-introduction.">
+      <span id="anchor-2">
+      </span>
+      PART 1.
+INTRODUCTION.
+     </a>
+     <ul>
+      <li id="id_side_li_3">
+       <a href="#introduction." onclick="nav_clk_1('toc-introduction.', 'id_side_li_3');" id="toc-introduction.">
+        <span id="anchor-3">
+        </span>
+        Introduction.
+       </a>
+       <ul>
+        <li id="id_side_li_4">
+         <a href="#goal." onclick="nav_clk_1('toc-goal.', 'id_side_li_4');" id="toc-goal.">
+          <span id="anchor-4">
+          </span>
+          Goal.
+         </a>
+        </li>
+        <li id="id_side_li_5">
+         <a href="#warning." onclick="nav_clk_1('toc-warning.', 'id_side_li_5');" id="toc-warning.">
+          <span id="anchor-5">
+          </span>
+          Warning.
+         </a>
+        </li>
+        <li id="id_side_li_6">
+         <a href="#questions." onclick="nav_clk_1('toc-questions.', 'id_side_li_6');" id="toc-questions.">
+          <span id="anchor-6">
+          </span>
+          Questions.
+         </a>
+        </li>
+       </ul>
+      </li>
+     </ul>
+    </li>
+    <li id="id_side_li_7">
+     <a href="#part-2.-center." onclick="nav_clk_1('toc-part-2.-center.', 'id_side_li_7');" id="toc-part-2.-center.">
+      <span id="anchor-8">
+      </span>
+      PART 2. CENTER.
+     </a>
+     <ul>
+      <li id="id_side_li_8">
+       <a href="#creator." onclick="nav_clk_1('toc-creator.', 'id_side_li_8');" id="toc-creator.">
+        <span id="anchor-9">
+        </span>
+        Creator.
+       </a>
+       <ul>
+        <li id="id_side_li_9">
+         <a href="#technical-creativity." onclick="nav_clk_2('toc-technical-creativity.', 'id_side_li_9');" id="toc-technical-creativity." class="cl_sub_nav">
+          <span id="anchor-10">
+          </span>
+          Technical
+creativity.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_10">
+           <a href="#application." onclick="nav_clk_1('toc-application.', 'id_side_li_10');" id="toc-application.">
+            <span id="anchor-11">
+            </span>
+            Application.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_11">
+         <a href="#technical-complexity." onclick="nav_clk_1('toc-technical-complexity.', 'id_side_li_11');" id="toc-technical-complexity.">
+          <span id="anchor-12">
+          </span>
+          Technical
+complexity.
+         </a>
+        </li>
+        <li id="id_side_li_12">
+         <a href="#biology." onclick="nav_clk_1('toc-biology.', 'id_side_li_12');" id="toc-biology.">
+          <span id="anchor-13">
+          </span>
+          Biology.
+         </a>
+        </li>
+        <li id="id_side_li_13">
+         <a href="#creator.-1" onclick="nav_clk_1('toc-creator.-1', 'id_side_li_13');" id="toc-creator.-1">
+          <span id="anchor-14">
+          </span>
+          Creator.
+         </a>
+        </li>
+        <li id="id_side_li_14">
+         <a href="#evidence." onclick="nav_clk_1('toc-evidence.', 'id_side_li_14');" id="toc-evidence.">
+          <span id="anchor-15">
+          </span>
+          Evidence.
+         </a>
+        </li>
+        <li id="id_side_li_15">
+         <a href="#reproduction." onclick="nav_clk_1('toc-reproduction.', 'id_side_li_15');" id="toc-reproduction.">
+          <span id="anchor-16">
+          </span>
+          Reproduction.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_16">
+       <a href="#resurrection." onclick="nav_clk_1('toc-resurrection.', 'id_side_li_16');" id="toc-resurrection.">
+        <span id="anchor-17">
+        </span>
+        Resurrection.
+       </a>
+       <ul>
+        <li id="id_side_li_17">
+         <a href="#future." onclick="nav_clk_1('toc-future.', 'id_side_li_17');" id="toc-future.">
+          <span id="anchor-18">
+          </span>
+          Future.
+         </a>
+        </li>
+        <li id="id_side_li_18">
+         <a href="#physical." onclick="nav_clk_1('toc-physical.', 'id_side_li_18');" id="toc-physical.">
+          <span id="anchor-19">
+          </span>
+          Physical.
+         </a>
+        </li>
+        <li id="id_side_li_19">
+         <a href="#they-cant-die." onclick="nav_clk_1('toc-they-cant-die.', 'id_side_li_19');" id="toc-they-cant-die.">
+          <span id="anchor-20">
+          </span>
+          They can't die.
+         </a>
+        </li>
+        <li id="id_side_li_20">
+         <a href="#in-the-sky." onclick="nav_clk_1('toc-in-the-sky.', 'id_side_li_20');" id="toc-in-the-sky.">
+          <span id="anchor-21">
+          </span>
+          In the sky.
+         </a>
+        </li>
+        <li id="id_side_li_21">
+         <a href="#for-all." onclick="nav_clk_1('toc-for-all.', 'id_side_li_21');" id="toc-for-all.">
+          <span id="anchor-22">
+          </span>
+          For all.
+         </a>
+        </li>
+        <li id="id_side_li_22">
+         <a href="#has-not-happened." onclick="nav_clk_1('toc-has-not-happened.', 'id_side_li_22');" id="toc-has-not-happened.">
+          <span id="anchor-23">
+          </span>
+          Has not happened.
+         </a>
+        </li>
+        <li id="id_side_li_23">
+         <a href="#asleep." onclick="nav_clk_1('toc-asleep.', 'id_side_li_23');" id="toc-asleep.">
+          <span id="anchor-24">
+          </span>
+          Asleep.
+         </a>
+        </li>
+        <li id="id_side_li_24">
+         <a href="#a-new-earth." onclick="nav_clk_1('toc-a-new-earth.', 'id_side_li_24');" id="toc-a-new-earth.">
+          <span id="anchor-25">
+          </span>
+          A new earth.
+         </a>
+        </li>
+        <li id="id_side_li_25">
+         <a href="#basis-of-faith." onclick="nav_clk_1('toc-basis-of-faith.', 'id_side_li_25');" id="toc-basis-of-faith.">
+          <span id="anchor-26">
+          </span>
+          Basis of Faith.
+         </a>
+        </li>
+        <li id="id_side_li_26">
+         <a href="#possible." onclick="nav_clk_1('toc-possible.', 'id_side_li_26');" id="toc-possible.">
+          <span id="anchor-27">
+          </span>
+          Possible.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_27">
+       <a href="#the-cloth." onclick="nav_clk_1('toc-the-cloth.', 'id_side_li_27');" id="toc-the-cloth.">
+        <span id="anchor-28">
+        </span>
+        The Cloth.
+       </a>
+       <ul>
+        <li id="id_side_li_28">
+         <a href="#a-negative." onclick="nav_clk_1('toc-a-negative.', 'id_side_li_28');" id="toc-a-negative.">
+          <span id="anchor-29">
+          </span>
+          A negative.
+         </a>
+        </li>
+        <li id="id_side_li_29">
+         <a href="#photographic-realism." onclick="nav_clk_1('toc-photographic-realism.', 'id_side_li_29');" id="toc-photographic-realism.">
+          <span id="anchor-30">
+          </span>
+          Photographic
+realism.
+         </a>
+        </li>
+        <li id="id_side_li_30">
+         <a href="#oxidized-microfibers." onclick="nav_clk_1('toc-oxidized-microfibers.', 'id_side_li_30');" id="toc-oxidized-microfibers.">
+          <span id="anchor-31">
+          </span>
+          Oxidized
+microfibers.
+         </a>
+        </li>
+        <li id="id_side_li_31">
+         <a href="#information-in-the-image." onclick="nav_clk_1('toc-information-in-the-image.', 'id_side_li_31');" id="toc-information-in-the-image.">
+          <span id="anchor-32">
+          </span>
+          Information in the image.
+         </a>
+        </li>
+        <li id="id_side_li_32">
+         <a href="#ultraviolet-light." onclick="nav_clk_1('toc-ultraviolet-light.', 'id_side_li_32');" id="toc-ultraviolet-light.">
+          <span id="anchor-33">
+          </span>
+          Ultraviolet light.
+         </a>
+        </li>
+        <li id="id_side_li_33">
+         <a href="#bilirubin." onclick="nav_clk_1('toc-bilirubin.', 'id_side_li_33');" id="toc-bilirubin.">
+          <span id="anchor-34">
+          </span>
+          Bilirubin.
+         </a>
+        </li>
+        <li id="id_side_li_34">
+         <a href="#forensic-details." onclick="nav_clk_1('toc-forensic-details.', 'id_side_li_34');" id="toc-forensic-details.">
+          <span id="anchor-35">
+          </span>
+          Forensic details.
+         </a>
+        </li>
+        <li id="id_side_li_35">
+         <a href="#replications." onclick="nav_clk_1('toc-replications.', 'id_side_li_35');" id="toc-replications.">
+          <span id="anchor-36">
+          </span>
+          Replications.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_36">
+       <a href="#past." onclick="nav_clk_1('toc-past.', 'id_side_li_36');" id="toc-past.">
+        <span id="anchor-37">
+        </span>
+        Past.
+       </a>
+       <ul>
+        <li id="id_side_li_37">
+         <a href="#methods." onclick="nav_clk_1('toc-methods.', 'id_side_li_37');" id="toc-methods.">
+          <span id="anchor-38">
+          </span>
+          Methods.
+         </a>
+        </li>
+        <li id="id_side_li_38">
+         <a href="#coincidences." onclick="nav_clk_1('toc-coincidences.', 'id_side_li_38');" id="toc-coincidences.">
+          <span id="anchor-39">
+          </span>
+          Coincidences.
+         </a>
+        </li>
+        <li id="id_side_li_39">
+         <a href="#people." onclick="nav_clk_1('toc-people.', 'id_side_li_39');" id="toc-people.">
+          <span id="anchor-40">
+          </span>
+          People.
+         </a>
+        </li>
+        <li id="id_side_li_40">
+         <a href="#assuming." onclick="nav_clk_1('toc-assuming.', 'id_side_li_40');" id="toc-assuming.">
+          <span id="anchor-41">
+          </span>
+          Assuming.
+         </a>
+        </li>
+        <li id="id_side_li_41">
+         <a href="#textual." onclick="nav_clk_1('toc-textual.', 'id_side_li_41');" id="toc-textual.">
+          <span id="anchor-42">
+          </span>
+          Textual.
+         </a>
+        </li>
+        <li id="id_side_li_42">
+         <a href="#on-the-cross." onclick="nav_clk_1('toc-on-the-cross.', 'id_side_li_42');" id="toc-on-the-cross.">
+          <span id="anchor-43">
+          </span>
+          On the cross.
+         </a>
+        </li>
+        <li id="id_side_li_43">
+         <a href="#they-believed." onclick="nav_clk_1('toc-they-believed.', 'id_side_li_43');" id="toc-they-believed.">
+          <span id="anchor-44">
+          </span>
+          They believed.
+         </a>
+        </li>
+        <li id="id_side_li_44">
+         <a href="#followers." onclick="nav_clk_1('toc-followers.', 'id_side_li_44');" id="toc-followers.">
+          <span id="anchor-45">
+          </span>
+          Followers.
+         </a>
+        </li>
+        <li id="id_side_li_45">
+         <a href="#dead." onclick="nav_clk_1('toc-dead.', 'id_side_li_45');" id="toc-dead.">
+          <span id="anchor-46">
+          </span>
+          Dead.
+         </a>
+        </li>
+        <li id="id_side_li_46">
+         <a href="#growth." onclick="nav_clk_1('toc-growth.', 'id_side_li_46');" id="toc-growth.">
+          <span id="anchor-47">
+          </span>
+          Growth.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_47">
+       <a href="#credibility." onclick="nav_clk_1('toc-credibility.', 'id_side_li_47');" id="toc-credibility.">
+        <span id="anchor-48">
+        </span>
+        Credibility.
+       </a>
+       <ul>
+        <li id="id_side_li_48">
+         <a href="#denial." onclick="nav_clk_1('toc-denial.', 'id_side_li_48');" id="toc-denial.">
+          <span id="anchor-49">
+          </span>
+          Denial.
+         </a>
+        </li>
+        <li id="id_side_li_49">
+         <a href="#observations." onclick="nav_clk_2('toc-observations.', 'id_side_li_49');" id="toc-observations." class="cl_sub_nav">
+          <span id="anchor-50">
+          </span>
+          Observations.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_50">
+           <a href="#sources." onclick="nav_clk_1('toc-sources.', 'id_side_li_50');" id="toc-sources.">
+            <span id="anchor-51">
+            </span>
+            Sources.
+           </a>
+          </li>
+          <li id="id_side_li_51">
+           <a href="#knowledge." onclick="nav_clk_1('toc-knowledge.', 'id_side_li_51');" id="toc-knowledge.">
+            <span id="anchor-52">
+            </span>
+            Knowledge.
+           </a>
+          </li>
+          <li id="id_side_li_52">
+           <a href="#interdependent." onclick="nav_clk_1('toc-interdependent.', 'id_side_li_52');" id="toc-interdependent.">
+            <span id="anchor-53">
+            </span>
+            Interdependent.
+           </a>
+          </li>
+          <li id="id_side_li_53">
+           <a href="#alive." onclick="nav_clk_1('toc-alive.', 'id_side_li_53');" id="toc-alive.">
+            <span id="anchor-54">
+            </span>
+            Alive.
+           </a>
+          </li>
+          <li id="id_side_li_54">
+           <a href="#jerusalem." onclick="nav_clk_1('toc-jerusalem.', 'id_side_li_54');" id="toc-jerusalem.">
+            <span id="anchor-55">
+            </span>
+            Jerusalem.
+           </a>
+          </li>
+          <li id="id_side_li_55">
+           <a href="#equal." onclick="nav_clk_1('toc-equal.', 'id_side_li_55');" id="toc-equal.">
+            <span id="anchor-56">
+            </span>
+            Equal.
+           </a>
+          </li>
+          <li id="id_side_li_56">
+           <a href="#names." onclick="nav_clk_1('toc-names.', 'id_side_li_56');" id="toc-names.">
+            <span id="anchor-57">
+            </span>
+            Names.
+           </a>
+          </li>
+          <li id="id_side_li_57">
+           <a href="#women." onclick="nav_clk_1('toc-women.', 'id_side_li_57');" id="toc-women.">
+            <span id="anchor-58">
+            </span>
+            Women.
+           </a>
+          </li>
+          <li id="id_side_li_58">
+           <a href="#groups." onclick="nav_clk_1('toc-groups.', 'id_side_li_58');" id="toc-groups.">
+            <span id="anchor-59">
+            </span>
+            Groups.
+           </a>
+          </li>
+          <li id="id_side_li_59">
+           <a href="#they-suffered." onclick="nav_clk_1('toc-they-suffered.', 'id_side_li_59');" id="toc-they-suffered.">
+            <span id="anchor-60">
+            </span>
+            They suffered.
+           </a>
+          </li>
+          <li id="id_side_li_60">
+           <a href="#body." onclick="nav_clk_1('toc-body.', 'id_side_li_60');" id="toc-body.">
+            <span id="anchor-61">
+            </span>
+            Body.
+           </a>
+          </li>
+          <li id="id_side_li_61">
+           <a href="#embarrassing." onclick="nav_clk_1('toc-embarrassing.', 'id_side_li_61');" id="toc-embarrassing.">
+            <span id="anchor-62">
+            </span>
+            Embarrassing.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_62">
+         <a href="#airplanes." onclick="nav_clk_1('toc-airplanes.', 'id_side_li_62');" id="toc-airplanes.">
+          <span id="anchor-63">
+          </span>
+          Airplanes.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_63">
+       <a href="#the-believer." onclick="nav_clk_1('toc-the-believer.', 'id_side_li_63');" id="toc-the-believer.">
+        <span id="anchor-64">
+        </span>
+        The Believer.
+       </a>
+       <ul>
+        <li id="id_side_li_64">
+         <a href="#tanakh." onclick="nav_clk_1('toc-tanakh.', 'id_side_li_64');" id="toc-tanakh.">
+          <span id="anchor-65">
+          </span>
+          Tanakh.
+         </a>
+        </li>
+        <li id="id_side_li_65">
+         <a href="#warning.-1" onclick="nav_clk_1('toc-warning.-1', 'id_side_li_65');" id="toc-warning.-1">
+          <span id="anchor-66">
+          </span>
+          Warning.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_66">
+       <a href="#lord." onclick="nav_clk_1('toc-lord.', 'id_side_li_66');" id="toc-lord.">
+        <span id="anchor-67">
+        </span>
+        Lord.
+       </a>
+       <ul>
+        <li id="id_side_li_67">
+         <a href="#heaven-of-the-heavens." onclick="nav_clk_1('toc-heaven-of-the-heavens.', 'id_side_li_67');" id="toc-heaven-of-the-heavens.">
+          <span id="anchor-68">
+          </span>
+          Heaven of
+the heavens.
+         </a>
+        </li>
+        <li id="id_side_li_68">
+         <a href="#angels." onclick="nav_clk_1('toc-angels.', 'id_side_li_68');" id="toc-angels.">
+          <span id="anchor-69">
+          </span>
+          Angels.
+         </a>
+        </li>
+        <li id="id_side_li_69">
+         <a href="#wings." onclick="nav_clk_1('toc-wings.', 'id_side_li_69');" id="toc-wings.">
+          <span id="anchor-70">
+          </span>
+          Wings.
+         </a>
+        </li>
+        <li id="id_side_li_70">
+         <a href="#creation." onclick="nav_clk_2('toc-creation.', 'id_side_li_70');" id="toc-creation." class="cl_sub_nav">
+          <span id="anchor-72">
+          </span>
+          Creation.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_71">
+           <a href="#day-1." onclick="nav_clk_1('toc-day-1.', 'id_side_li_71');" id="toc-day-1.">
+            <span id="anchor-73">
+            </span>
+            Day
+1.
+           </a>
+          </li>
+          <li id="id_side_li_72">
+           <a href="#day-2." onclick="nav_clk_1('toc-day-2.', 'id_side_li_72');" id="toc-day-2.">
+            <span id="anchor-74">
+            </span>
+            Day
+2.
+           </a>
+          </li>
+          <li id="id_side_li_73">
+           <a href="#day-3." onclick="nav_clk_1('toc-day-3.', 'id_side_li_73');" id="toc-day-3.">
+            <span id="anchor-75">
+            </span>
+            Day
+3.
+           </a>
+          </li>
+          <li id="id_side_li_74">
+           <a href="#day-4." onclick="nav_clk_1('toc-day-4.', 'id_side_li_74');" id="toc-day-4.">
+            <span id="anchor-76">
+            </span>
+            Day
+4.
+           </a>
+          </li>
+          <li id="id_side_li_75">
+           <a href="#day-5." onclick="nav_clk_1('toc-day-5.', 'id_side_li_75');" id="toc-day-5.">
+            <span id="anchor-77">
+            </span>
+            Day
+5.
+           </a>
+          </li>
+          <li id="id_side_li_76">
+           <a href="#day-6." onclick="nav_clk_1('toc-day-6.', 'id_side_li_76');" id="toc-day-6.">
+            <span id="anchor-78">
+            </span>
+            Day
+6.
+           </a>
+          </li>
+          <li id="id_side_li_77">
+           <a href="#easy." onclick="nav_clk_1('toc-easy.', 'id_side_li_77');" id="toc-easy.">
+            <span id="anchor-79">
+            </span>
+            Easy.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_78">
+         <a href="#the-previous." onclick="nav_clk_2('toc-the-previous.', 'id_side_li_78');" id="toc-the-previous." class="cl_sub_nav">
+          <span id="anchor-80">
+          </span>
+          The previous.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_79">
+           <a href="#elohim." onclick="nav_clk_1('toc-elohim.', 'id_side_li_79');" id="toc-elohim.">
+            <span id="anchor-81">
+            </span>
+            Elohim.
+           </a>
+          </li>
+          <li id="id_side_li_80">
+           <a href="#yeshua." onclick="nav_clk_1('toc-yeshua.', 'id_side_li_80');" id="toc-yeshua.">
+            <span id="anchor-82">
+            </span>
+            Yeshua.
+           </a>
+          </li>
+          <li id="id_side_li_81">
+           <a href="#ruakh-hakodesh." onclick="nav_clk_1('toc-ruakh-hakodesh.', 'id_side_li_81');" id="toc-ruakh-hakodesh.">
+            <span id="anchor-83">
+            </span>
+            Ruakh Hakodesh.
+           </a>
+          </li>
+          <li id="id_side_li_82">
+           <a href="#the-sons-of-elohim." onclick="nav_clk_1('toc-the-sons-of-elohim.', 'id_side_li_82');" id="toc-the-sons-of-elohim.">
+            <span id="anchor-84">
+            </span>
+            The Sons of Elohim.
+           </a>
+          </li>
+          <li id="id_side_li_83">
+           <a href="#the-angels." onclick="nav_clk_1('toc-the-angels.', 'id_side_li_83');" id="toc-the-angels.">
+            <span id="anchor-85">
+            </span>
+            The Angels.
+           </a>
+          </li>
+          <li id="id_side_li_84">
+           <a href="#the-satan-and-company." onclick="nav_clk_1('toc-the-satan-and-company.', 'id_side_li_84');" id="toc-the-satan-and-company.">
+            <span id="anchor-86">
+            </span>
+            The Satan
+and company.
+           </a>
+          </li>
+          <li id="id_side_li_85">
+           <a href="#the-winged-ones." onclick="nav_clk_1('toc-the-winged-ones.', 'id_side_li_85');" id="toc-the-winged-ones.">
+            <span id="anchor-87">
+            </span>
+            The Winged Ones.
+           </a>
+          </li>
+          <li id="id_side_li_86">
+           <a href="#the-stars." onclick="nav_clk_1('toc-the-stars.', 'id_side_li_86');" id="toc-the-stars.">
+            <span id="anchor-88">
+            </span>
+            The stars.
+           </a>
+          </li>
+          <li id="id_side_li_87">
+           <a href="#a-part-of-the-armies-of-heaven." onclick="nav_clk_1('toc-a-part-of-the-armies-of-heaven.', 'id_side_li_87');" id="toc-a-part-of-the-armies-of-heaven.">
+            <span id="anchor-89">
+            </span>
+            A
+part of the armies of Heaven.
+           </a>
+          </li>
+          <li id="id_side_li_88">
+           <a href="#heaven-of-heavens." onclick="nav_clk_1('toc-heaven-of-heavens.', 'id_side_li_88');" id="toc-heaven-of-heavens.">
+            <span id="anchor-90">
+            </span>
+            Heaven of Heavens.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_89">
+         <a href="#consistency." onclick="nav_clk_1('toc-consistency.', 'id_side_li_89');" id="toc-consistency.">
+          <span id="anchor-91">
+          </span>
+          Consistency.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_90">
+       <a href="#saviour." onclick="nav_clk_1('toc-saviour.', 'id_side_li_90');" id="toc-saviour.">
+        <span id="anchor-92">
+        </span>
+        Saviour.
+       </a>
+       <ul>
+        <li id="id_side_li_91">
+         <a href="#life." onclick="nav_clk_1('toc-life.', 'id_side_li_91');" id="toc-life.">
+          <span id="anchor-93">
+          </span>
+          Life.
+         </a>
+        </li>
+        <li id="id_side_li_92">
+         <a href="#death." onclick="nav_clk_1('toc-death.', 'id_side_li_92');" id="toc-death.">
+          <span id="anchor-94">
+          </span>
+          Death.
+         </a>
+        </li>
+        <li id="id_side_li_93">
+         <a href="#liberator." onclick="nav_clk_1('toc-liberator.', 'id_side_li_93');" id="toc-liberator.">
+          <span id="anchor-95">
+          </span>
+          Liberator.
+         </a>
+        </li>
+        <li id="id_side_li_94">
+         <a href="#principalities-and-powers." onclick="nav_clk_1('toc-principalities-and-powers.', 'id_side_li_94');" id="toc-principalities-and-powers.">
+          <span id="anchor-96">
+          </span>
+          Principalities and powers.
+         </a>
+        </li>
+        <li id="id_side_li_95">
+         <a href="#one-of-two." onclick="nav_clk_1('toc-one-of-two.', 'id_side_li_95');" id="toc-one-of-two.">
+          <span id="anchor-98">
+          </span>
+          One of two.
+         </a>
+        </li>
+        <li id="id_side_li_96">
+         <a href="#sleeping." onclick="nav_clk_1('toc-sleeping.', 'id_side_li_96');" id="toc-sleeping.">
+          <span id="anchor-99">
+          </span>
+          Sleeping.
+         </a>
+        </li>
+        <li id="id_side_li_97">
+         <a href="#everyone." onclick="nav_clk_1('toc-everyone.', 'id_side_li_97');" id="toc-everyone.">
+          <span id="anchor-100">
+          </span>
+          Everyone.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_98">
+       <a href="#just." onclick="nav_clk_1('toc-just.', 'id_side_li_98');" id="toc-just.">
+        <span id="anchor-101">
+        </span>
+        Just.
+       </a>
+       <ul>
+        <li id="id_side_li_99">
+         <a href="#justice." onclick="nav_clk_1('toc-justice.', 'id_side_li_99');" id="toc-justice.">
+          <span id="anchor-102">
+          </span>
+          Justice.
+         </a>
+        </li>
+        <li id="id_side_li_100">
+         <a href="#the-good-guy." onclick="nav_clk_1('toc-the-good-guy.', 'id_side_li_100');" id="toc-the-good-guy.">
+          <span id="anchor-103">
+          </span>
+          The good guy.
+         </a>
+        </li>
+        <li id="id_side_li_101">
+         <a href="#doing-good." onclick="nav_clk_1('toc-doing-good.', 'id_side_li_101');" id="toc-doing-good.">
+          <span id="anchor-104">
+          </span>
+          Doing good.
+         </a>
+        </li>
+        <li id="id_side_li_102">
+         <a href="#the-bad-guys." onclick="nav_clk_1('toc-the-bad-guys.', 'id_side_li_102');" id="toc-the-bad-guys.">
+          <span id="anchor-105">
+          </span>
+          The bad guys.
+         </a>
+        </li>
+        <li id="id_side_li_103">
+         <a href="#fire." onclick="nav_clk_2('toc-fire.', 'id_side_li_103');" id="toc-fire." class="cl_sub_nav">
+          <span id="anchor-106">
+          </span>
+          Fire.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_104">
+           <a href="#spiritual." onclick="nav_clk_1('toc-spiritual.', 'id_side_li_104');" id="toc-spiritual.">
+            <span id="anchor-107">
+            </span>
+            Spiritual.
+           </a>
+          </li>
+          <li id="id_side_li_105">
+           <a href="#physical.-1" onclick="nav_clk_1('toc-physical.-1', 'id_side_li_105');" id="toc-physical.-1">
+            <span id="anchor-108">
+            </span>
+            Physical.
+           </a>
+          </li>
+         </ul>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_106">
+       <a href="#all-flesh." onclick="nav_clk_1('toc-all-flesh.', 'id_side_li_106');" id="toc-all-flesh.">
+        <span id="anchor-109">
+        </span>
+        All flesh.
+       </a>
+       <ul>
+        <li id="id_side_li_107">
+         <a href="#hell." onclick="nav_clk_2('toc-hell.', 'id_side_li_107');" id="toc-hell." class="cl_sub_nav">
+          <span id="anchor-110">
+          </span>
+          Hell.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_108">
+           <a href="#jesus-christ." onclick="nav_clk_2('toc-jesus-christ.', 'id_side_li_108');" id="toc-jesus-christ." class="cl_sub_nav">
+            <span id="anchor-111">
+            </span>
+            Jesus Christ.
+           <i class="has_icons icon-side-menu"></i></a>
+           <ul class="nested">
+            <li id="id_side_li_109">
+             <a href="#hades.-code-g86." onclick="nav_clk_1('toc-hades.-code-g86.', 'id_side_li_109');" id="toc-hades.-code-g86.">
+              <span id="anchor-112">
+              </span>
+              Hades. Code G86.
+             </a>
+            </li>
+            <li id="id_side_li_110">
+             <a href="#ge-henna.-code-g1067." onclick="nav_clk_1('toc-ge-henna.-code-g1067.', 'id_side_li_110');" id="toc-ge-henna.-code-g1067.">
+              <span id="anchor-113">
+              </span>
+              Ge-Henna.
+Code G1067.
+             </a>
+            </li>
+           </ul>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_111">
+         <a href="#sheol.-code-h7585." onclick="nav_clk_2('toc-sheol.-code-h7585.', 'id_side_li_111');" id="toc-sheol.-code-h7585." class="cl_sub_nav">
+          <span id="anchor-114">
+          </span>
+          Sheol. Code H7585.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_112">
+           <a href="#everyone.-1" onclick="nav_clk_1('toc-everyone.-1', 'id_side_li_112');" id="toc-everyone.-1">
+            <span id="anchor-115">
+            </span>
+            Everyone.
+           </a>
+          </li>
+          <li id="id_side_li_113">
+           <a href="#raise." onclick="nav_clk_1('toc-raise.', 'id_side_li_113');" id="toc-raise.">
+            <span id="anchor-116">
+            </span>
+            Raise.
+           </a>
+          </li>
+          <li id="id_side_li_114">
+           <a href="#nothing." onclick="nav_clk_1('toc-nothing.', 'id_side_li_114');" id="toc-nothing.">
+            <span id="anchor-117">
+            </span>
+            Nothing.
+           </a>
+          </li>
+          <li id="id_side_li_115">
+           <a href="#different." onclick="nav_clk_1('toc-different.', 'id_side_li_115');" id="toc-different.">
+            <span id="anchor-118">
+            </span>
+            Different.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_116">
+         <a href="#ge-henna.-code-g1067.-1" onclick="nav_clk_2('toc-ge-henna.-code-g1067.-1', 'id_side_li_116');" id="toc-ge-henna.-code-g1067.-1" class="cl_sub_nav">
+          <span id="anchor-119">
+          </span>
+          Ge-Henna.
+Code G1067.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_117">
+           <a href="#its-of-fire." onclick="nav_clk_1('toc-its-of-fire.', 'id_side_li_117');" id="toc-its-of-fire.">
+            <span id="anchor-120">
+            </span>
+            It's of fire.
+           </a>
+          </li>
+          <li id="id_side_li_118">
+           <a href="#it-does-not-turn-off." onclick="nav_clk_1('toc-it-does-not-turn-off.', 'id_side_li_118');" id="toc-it-does-not-turn-off.">
+            <span id="anchor-121">
+            </span>
+            It does not
+turn off.
+           </a>
+          </li>
+          <li id="id_side_li_119">
+           <a href="#life.-1" onclick="nav_clk_1('toc-life.-1', 'id_side_li_119');" id="toc-life.-1">
+            <span id="anchor-122">
+            </span>
+            Life.
+           </a>
+          </li>
+          <li id="id_side_li_120">
+           <a href="#gods-kingdom." onclick="nav_clk_1('toc-gods-kingdom.', 'id_side_li_120');" id="toc-gods-kingdom.">
+            <span id="anchor-123">
+            </span>
+            God's Kingdom.
+           </a>
+          </li>
+          <li id="id_side_li_121">
+           <a href="#eternal." onclick="nav_clk_1('toc-eternal.', 'id_side_li_121');" id="toc-eternal.">
+            <span id="anchor-124">
+            </span>
+            Eternal.
+           </a>
+          </li>
+          <li id="id_side_li_122">
+           <a href="#everyone.-2" onclick="nav_clk_1('toc-everyone.-2', 'id_side_li_122');" id="toc-everyone.-2">
+            <span id="anchor-125">
+            </span>
+            Everyone.
+           </a>
+          </li>
+          <li id="id_side_li_123">
+           <a href="#judgment." onclick="nav_clk_1('toc-judgment.', 'id_side_li_123');" id="toc-judgment.">
+            <span id="anchor-126">
+            </span>
+            Judgment.
+           </a>
+          </li>
+          <li id="id_side_li_124">
+           <a href="#before." onclick="nav_clk_1('toc-before.', 'id_side_li_124');" id="toc-before.">
+            <span id="anchor-127">
+            </span>
+            Before.
+           </a>
+          </li>
+          <li id="id_side_li_125">
+           <a href="#after." onclick="nav_clk_1('toc-after.', 'id_side_li_125');" id="toc-after.">
+            <span id="anchor-128">
+            </span>
+            After.
+           </a>
+          </li>
+          <li id="id_side_li_126">
+           <a href="#the-worm-does-not-die." onclick="nav_clk_1('toc-the-worm-does-not-die.', 'id_side_li_126');" id="toc-the-worm-does-not-die.">
+            <span id="anchor-129">
+            </span>
+            The worm
+does not die.
+           </a>
+          </li>
+          <li id="id_side_li_127">
+           <a href="#destroyer." onclick="nav_clk_1('toc-destroyer.', 'id_side_li_127');" id="toc-destroyer.">
+            <span id="anchor-130">
+            </span>
+            Destroyer.
+           </a>
+          </li>
+          <li id="id_side_li_128">
+           <a href="#different.-1" onclick="nav_clk_1('toc-different.-1', 'id_side_li_128');" id="toc-different.-1">
+            <span id="anchor-131">
+            </span>
+            Different.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_129">
+         <a href="#eternal-death." onclick="nav_clk_1('toc-eternal-death.', 'id_side_li_129');" id="toc-eternal-death.">
+          <span id="anchor-132">
+          </span>
+          Eternal death.
+         </a>
+        </li>
+        <li id="id_side_li_130">
+         <a href="#eternal-punishment." onclick="nav_clk_1('toc-eternal-punishment.', 'id_side_li_130');" id="toc-eternal-punishment.">
+          <span id="anchor-133">
+          </span>
+          Eternal punishment.
+         </a>
+        </li>
+        <li id="id_side_li_131">
+         <a href="#lake-of-fire." onclick="nav_clk_1('toc-lake-of-fire.', 'id_side_li_131');" id="toc-lake-of-fire.">
+          <span id="anchor-135">
+          </span>
+          Lake of fire.
+         </a>
+        </li>
+        <li id="id_side_li_132">
+         <a href="#excluded." onclick="nav_clk_1('toc-excluded.', 'id_side_li_132');" id="toc-excluded.">
+          <span id="anchor-136">
+          </span>
+          Excluded.
+         </a>
+        </li>
+        <li id="id_side_li_133">
+         <a href="#the-rich-and-the-poor-lazarus." onclick="nav_clk_1('toc-the-rich-and-the-poor-lazarus.', 'id_side_li_133');" id="toc-the-rich-and-the-poor-lazarus.">
+          <span id="anchor-137">
+          </span>
+          The
+rich and the poor Lazarus.
+         </a>
+        </li>
+        <li id="id_side_li_134">
+         <a href="#free-will." onclick="nav_clk_1('toc-free-will.', 'id_side_li_134');" id="toc-free-will.">
+          <span id="anchor-138">
+          </span>
+          Free will.
+         </a>
+        </li>
+        <li id="id_side_li_135">
+         <a href="#bible." onclick="nav_clk_2('toc-bible.', 'id_side_li_135');" id="toc-bible." class="cl_sub_nav">
+          <span id="anchor-139">
+          </span>
+          Bible.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_136">
+           <a href="#adam." onclick="nav_clk_1('toc-adam.', 'id_side_li_136');" id="toc-adam.">
+            <span id="anchor-140">
+            </span>
+            Adam.
+           </a>
+          </li>
+          <li id="id_side_li_137">
+           <a href="#abraham." onclick="nav_clk_1('toc-abraham.', 'id_side_li_137');" id="toc-abraham.">
+            <span id="anchor-141">
+            </span>
+            Abraham.
+           </a>
+          </li>
+          <li id="id_side_li_138">
+           <a href="#moses." onclick="nav_clk_1('toc-moses.', 'id_side_li_138');" id="toc-moses.">
+            <span id="anchor-142">
+            </span>
+            Moses.
+           </a>
+          </li>
+          <li id="id_side_li_139">
+           <a href="#psalmists." onclick="nav_clk_1('toc-psalmists.', 'id_side_li_139');" id="toc-psalmists.">
+            <span id="anchor-143">
+            </span>
+            Psalmists.
+           </a>
+          </li>
+          <li id="id_side_li_140">
+           <a href="#isaiah." onclick="nav_clk_1('toc-isaiah.', 'id_side_li_140');" id="toc-isaiah.">
+            <span id="anchor-145">
+            </span>
+            Isaiah.
+           </a>
+          </li>
+          <li id="id_side_li_141">
+           <a href="#jeremiah." onclick="nav_clk_1('toc-jeremiah.', 'id_side_li_141');" id="toc-jeremiah.">
+            <span id="anchor-146">
+            </span>
+            Jeremiah.
+           </a>
+          </li>
+          <li id="id_side_li_142">
+           <a href="#ezekiel." onclick="nav_clk_1('toc-ezekiel.', 'id_side_li_142');" id="toc-ezekiel.">
+            <span id="anchor-147">
+            </span>
+            Ezekiel.
+           </a>
+          </li>
+          <li id="id_side_li_143">
+           <a href="#daniel." onclick="nav_clk_1('toc-daniel.', 'id_side_li_143');" id="toc-daniel.">
+            <span id="anchor-148">
+            </span>
+            Daniel.
+           </a>
+          </li>
+          <li id="id_side_li_144">
+           <a href="#the-12." onclick="nav_clk_1('toc-the-12.', 'id_side_li_144');" id="toc-the-12.">
+            <span id="anchor-149">
+            </span>
+            The
+12.
+           </a>
+          </li>
+          <li id="id_side_li_145">
+           <a href="#jesus-christ.-1" onclick="nav_clk_1('toc-jesus-christ.-1', 'id_side_li_145');" id="toc-jesus-christ.-1">
+            <span id="anchor-150">
+            </span>
+            Jesus Christ.
+           </a>
+          </li>
+          <li id="id_side_li_146">
+           <a href="#paul." onclick="nav_clk_1('toc-paul.', 'id_side_li_146');" id="toc-paul.">
+            <span id="anchor-151">
+            </span>
+            Paul.
+           </a>
+          </li>
+          <li id="id_side_li_147">
+           <a href="#peter." onclick="nav_clk_1('toc-peter.', 'id_side_li_147');" id="toc-peter.">
+            <span id="anchor-152">
+            </span>
+            Peter.
+           </a>
+          </li>
+          <li id="id_side_li_148">
+           <a href="#john." onclick="nav_clk_1('toc-john.', 'id_side_li_148');" id="toc-john.">
+            <span id="anchor-153">
+            </span>
+            John.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_149">
+         <a href="#it-is-written." onclick="nav_clk_1('toc-it-is-written.', 'id_side_li_149');" id="toc-it-is-written.">
+          <span id="anchor-154">
+          </span>
+          It is written.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_150">
+       <a href="#the-return." onclick="nav_clk_1('toc-the-return.', 'id_side_li_150');" id="toc-the-return.">
+        <span id="anchor-155">
+        </span>
+        The return.
+       </a>
+       <ul>
+        <li id="id_side_li_151">
+         <a href="#warning.-2" onclick="nav_clk_1('toc-warning.-2', 'id_side_li_151');" id="toc-warning.-2">
+          <span id="anchor-156">
+          </span>
+          Warning.
+         </a>
+        </li>
+        <li id="id_side_li_152">
+         <a href="#jesus-christ.-2" onclick="nav_clk_1('toc-jesus-christ.-2', 'id_side_li_152');" id="toc-jesus-christ.-2">
+          <span id="anchor-157">
+          </span>
+          Jesus Christ.
+         </a>
+        </li>
+        <li id="id_side_li_153">
+         <a href="#peace." onclick="nav_clk_1('toc-peace.', 'id_side_li_153');" id="toc-peace.">
+          <span id="anchor-158">
+          </span>
+          Peace.
+         </a>
+        </li>
+        <li id="id_side_li_154">
+         <a href="#temple." onclick="nav_clk_1('toc-temple.', 'id_side_li_154');" id="toc-temple.">
+          <span id="anchor-159">
+          </span>
+          Temple.
+         </a>
+        </li>
+        <li id="id_side_li_155">
+         <a href="#a-thousand-years." onclick="nav_clk_1('toc-a-thousand-years.', 'id_side_li_155');" id="toc-a-thousand-years.">
+          <span id="anchor-160">
+          </span>
+          A thousand years.
+         </a>
+        </li>
+        <li id="id_side_li_156">
+         <a href="#section" onclick="nav_clk_1('toc-section', 'id_side_li_156');" id="toc-section">
+          <span id="anchor-161">
+          </span>
+          144,000
+         </a>
+        </li>
+        <li id="id_side_li_157">
+         <a href="#gods-wrath." onclick="nav_clk_1('toc-gods-wrath.', 'id_side_li_157');" id="toc-gods-wrath.">
+          <span id="anchor-162">
+          </span>
+          God's Wrath.
+         </a>
+        </li>
+        <li id="id_side_li_158">
+         <a href="#caught-up." onclick="nav_clk_1('toc-caught-up.', 'id_side_li_158');" id="toc-caught-up.">
+          <span id="anchor-163">
+          </span>
+          Caught up.
+         </a>
+        </li>
+        <li id="id_side_li_159">
+         <a href="#great-tribulation." onclick="nav_clk_1('toc-great-tribulation.', 'id_side_li_159');" id="toc-great-tribulation.">
+          <span id="anchor-164">
+          </span>
+          Great Tribulation.
+         </a>
+        </li>
+        <li id="id_side_li_160">
+         <a href="#eternal-abhorrence." onclick="nav_clk_1('toc-eternal-abhorrence.', 'id_side_li_160');" id="toc-eternal-abhorrence.">
+          <span id="anchor-165">
+          </span>
+          Eternal Abhorrence.
+         </a>
+        </li>
+        <li id="id_side_li_161">
+         <a href="#the-abomination-of-desolation." onclick="nav_clk_2('toc-the-abomination-of-desolation.', 'id_side_li_161');" id="toc-the-abomination-of-desolation." class="cl_sub_nav">
+          <span id="anchor-167">
+          </span>
+          The
+Abomination of Desolation.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_162">
+           <a href="#the-final-moment." onclick="nav_clk_1('toc-the-final-moment.', 'id_side_li_162');" id="toc-the-final-moment.">
+            <span id="anchor-168">
+            </span>
+            The final moment.
+           </a>
+          </li>
+          <li id="id_side_li_163">
+           <a href="#weeks." onclick="nav_clk_1('toc-weeks.', 'id_side_li_163');" id="toc-weeks.">
+            <span id="anchor-169">
+            </span>
+            70
+Weeks.
+           </a>
+          </li>
+          <li id="id_side_li_164">
+           <a href="#north-and-south." onclick="nav_clk_1('toc-north-and-south.', 'id_side_li_164');" id="toc-north-and-south.">
+            <span id="anchor-170">
+            </span>
+            North and south.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_165">
+         <a href="#israel." onclick="nav_clk_1('toc-israel.', 'id_side_li_165');" id="toc-israel.">
+          <span id="anchor-171">
+          </span>
+          Israel.
+         </a>
+        </li>
+        <li id="id_side_li_166">
+         <a href="#details." onclick="nav_clk_2('toc-details.', 'id_side_li_166');" id="toc-details." class="cl_sub_nav">
+          <span id="anchor-172">
+          </span>
+          Details.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_167">
+           <a href="#delivery." onclick="nav_clk_1('toc-delivery.', 'id_side_li_167');" id="toc-delivery.">
+            <span id="anchor-173">
+            </span>
+            <strong>
+             Delivery
+            </strong>
+            .
+           </a>
+          </li>
+          <li id="id_side_li_168">
+           <a href="#messengers." onclick="nav_clk_1('toc-messengers.', 'id_side_li_168');" id="toc-messengers.">
+            <span id="anchor-174">
+            </span>
+            7 messengers.
+           </a>
+          </li>
+          <li id="id_side_li_169">
+           <a href="#babylon." onclick="nav_clk_1('toc-babylon.', 'id_side_li_169');" id="toc-babylon.">
+            <span id="anchor-175">
+            </span>
+            Babylon.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_170">
+         <a href="#reign." onclick="nav_clk_1('toc-reign.', 'id_side_li_170');" id="toc-reign.">
+          <span id="anchor-176">
+          </span>
+          Reign.
+         </a>
+        </li>
+       </ul>
+      </li>
+     </ul>
+    </li>
+    <li id="id_side_li_171">
+     <a href="#part-3.-periphery." onclick="nav_clk_1('toc-part-3.-periphery.', 'id_side_li_171');" id="toc-part-3.-periphery.">
+      <span id="anchor-177">
+      </span>
+      PART 3. PERIPHERY.
+     </a>
+     <ul>
+      <li id="id_side_li_172">
+       <a href="#beliefs." onclick="nav_clk_1('toc-beliefs.', 'id_side_li_172');" id="toc-beliefs.">
+        <span id="anchor-178">
+        </span>
+        Beliefs.
+       </a>
+       <ul>
+        <li id="id_side_li_173">
+         <a href="#principles." onclick="nav_clk_1('toc-principles.', 'id_side_li_173');" id="toc-principles.">
+          <span id="anchor-179">
+          </span>
+          Principles.
+         </a>
+        </li>
+        <li id="id_side_li_174">
+         <a href="#evidence.-1" onclick="nav_clk_1('toc-evidence.-1', 'id_side_li_174');" id="toc-evidence.-1">
+          <span id="anchor-180">
+          </span>
+          Evidence.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_175">
+       <a href="#the-truth." onclick="nav_clk_1('toc-the-truth.', 'id_side_li_175');" id="toc-the-truth.">
+        <span id="anchor-181">
+        </span>
+        The Truth.
+       </a>
+      </li>
+      <li id="id_side_li_176">
+       <a href="#the-search." onclick="nav_clk_1('toc-the-search.', 'id_side_li_176');" id="toc-the-search.">
+        <span id="anchor-182">
+        </span>
+        The search.
+       </a>
+      </li>
+      <li id="id_side_li_177">
+       <a href="#supernatural." onclick="nav_clk_1('toc-supernatural.', 'id_side_li_177');" id="toc-supernatural.">
+        <span id="anchor-183">
+        </span>
+        Supernatural.
+       </a>
+      </li>
+      <li id="id_side_li_178">
+       <a href="#science." onclick="nav_clk_1('toc-science.', 'id_side_li_178');" id="toc-science.">
+        <span id="anchor-184">
+        </span>
+        Science.
+       </a>
+      </li>
+      <li id="id_side_li_179">
+       <a href="#distances." onclick="nav_clk_1('toc-distances.', 'id_side_li_179');" id="toc-distances.">
+        <span id="anchor-185">
+        </span>
+        Distances.
+       </a>
+      </li>
+      <li id="id_side_li_180">
+       <a href="#redshift." onclick="nav_clk_1('toc-redshift.', 'id_side_li_180');" id="toc-redshift.">
+        <span id="anchor-186">
+        </span>
+        Redshift.
+       </a>
+      </li>
+      <li id="id_side_li_181">
+       <a href="#radioactive." onclick="nav_clk_1('toc-radioactive.', 'id_side_li_181');" id="toc-radioactive.">
+        <span id="anchor-187">
+        </span>
+        Radioactive.
+       </a>
+      </li>
+      <li id="id_side_li_182">
+       <a href="#helium." onclick="nav_clk_1('toc-helium.', 'id_side_li_182');" id="toc-helium.">
+        <span id="anchor-188">
+        </span>
+        Helium.
+       </a>
+      </li>
+      <li id="id_side_li_183">
+       <a href="#factories." onclick="nav_clk_1('toc-factories.', 'id_side_li_183');" id="toc-factories.">
+        <span id="anchor-189">
+        </span>
+        Factories.
+       </a>
+      </li>
+      <li id="id_side_li_184">
+       <a href="#monomers." onclick="nav_clk_1('toc-monomers.', 'id_side_li_184');" id="toc-monomers.">
+        <span id="anchor-190">
+        </span>
+        Monomers.
+       </a>
+       <ul>
+        <li id="id_side_li_185">
+         <a href="#the-letters." onclick="nav_clk_1('toc-the-letters.', 'id_side_li_185');" id="toc-the-letters.">
+          <span id="anchor-191">
+          </span>
+          The letters.
+         </a>
+        </li>
+        <li id="id_side_li_186">
+         <a href="#gloves." onclick="nav_clk_1('toc-gloves.', 'id_side_li_186');" id="toc-gloves.">
+          <span id="anchor-192">
+          </span>
+          Gloves.
+         </a>
+        </li>
+        <li id="id_side_li_187">
+         <a href="#reactions." onclick="nav_clk_1('toc-reactions.', 'id_side_li_187');" id="toc-reactions.">
+          <span id="anchor-193">
+          </span>
+          Reactions.
+         </a>
+        </li>
+        <li id="id_side_li_188">
+         <a href="#easy.-1" onclick="nav_clk_1('toc-easy.-1', 'id_side_li_188');" id="toc-easy.-1">
+          <span id="anchor-194">
+          </span>
+          Easy.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_189">
+       <a href="#polymers." onclick="nav_clk_1('toc-polymers.', 'id_side_li_189');" id="toc-polymers.">
+        <span id="anchor-195">
+        </span>
+        Polymers.
+       </a>
+      </li>
+      <li id="id_side_li_190">
+       <a href="#programmer." onclick="nav_clk_1('toc-programmer.', 'id_side_li_190');" id="toc-programmer.">
+        <span id="anchor-196">
+        </span>
+        Programmer.
+       </a>
+      </li>
+      <li id="id_side_li_191">
+       <a href="#the-tale-of-the-frog." onclick="nav_clk_1('toc-the-tale-of-the-frog.', 'id_side_li_191');" id="toc-the-tale-of-the-frog.">
+        <span id="anchor-197">
+        </span>
+        The tale of
+the frog.
+       </a>
+      </li>
+      <li id="id_side_li_192">
+       <a href="#trees." onclick="nav_clk_1('toc-trees.', 'id_side_li_192');" id="toc-trees.">
+        <span id="anchor-198">
+        </span>
+        Trees.
+       </a>
+      </li>
+      <li id="id_side_li_193">
+       <a href="#coal." onclick="nav_clk_1('toc-coal.', 'id_side_li_193');" id="toc-coal.">
+        <span id="anchor-199">
+        </span>
+        Coal.
+       </a>
+      </li>
+      <li id="id_side_li_194">
+       <a href="#tectonics." onclick="nav_clk_1('toc-tectonics.', 'id_side_li_194');" id="toc-tectonics.">
+        <span id="anchor-200">
+        </span>
+        Tectonics.
+       </a>
+       <ul>
+        <li id="id_side_li_195">
+         <a href="#trenches." onclick="nav_clk_1('toc-trenches.', 'id_side_li_195');" id="toc-trenches.">
+          <span id="anchor-201">
+          </span>
+          Trenches.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_196">
+       <a href="#ridges." onclick="nav_clk_1('toc-ridges.', 'id_side_li_196');" id="toc-ridges.">
+        <span id="anchor-202">
+        </span>
+        Ridges.
+       </a>
+      </li>
+      <li id="id_side_li_197">
+       <a href="#hydroplates." onclick="nav_clk_1('toc-hydroplates.', 'id_side_li_197');" id="toc-hydroplates.">
+        <span id="anchor-203">
+        </span>
+        Hydroplates.
+       </a>
+       <ul>
+        <li id="id_side_li_198">
+         <a href="#another-story." onclick="nav_clk_1('toc-another-story.', 'id_side_li_198');" id="toc-another-story.">
+          <span id="anchor-204">
+          </span>
+          Another story.
+         </a>
+        </li>
+        <li id="id_side_li_199">
+         <a href="#conditions." onclick="nav_clk_1('toc-conditions.', 'id_side_li_199');" id="toc-conditions.">
+          <span id="anchor-205">
+          </span>
+          Conditions.
+         </a>
+        </li>
+        <li id="id_side_li_200">
+         <a href="#the-process." onclick="nav_clk_1('toc-the-process.', 'id_side_li_200');" id="toc-the-process.">
+          <span id="anchor-206">
+          </span>
+          The process.
+         </a>
+        </li>
+        <li id="id_side_li_201">
+         <a href="#in-two." onclick="nav_clk_1('toc-in-two.', 'id_side_li_201');" id="toc-in-two.">
+          <span id="anchor-207">
+          </span>
+          In
+two.
+         </a>
+        </li>
+        <li id="id_side_li_202">
+         <a href="#a-comparison." onclick="nav_clk_1('toc-a-comparison.', 'id_side_li_202');" id="toc-a-comparison.">
+          <span id="anchor-208">
+          </span>
+          A comparison.
+         </a>
+        </li>
+        <li id="id_side_li_203">
+         <a href="#rupture-phase." onclick="nav_clk_2('toc-rupture-phase.', 'id_side_li_203');" id="toc-rupture-phase." class="cl_sub_nav">
+          <span id="anchor-209">
+          </span>
+          Rupture Phase.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_204">
+           <a href="#water." onclick="nav_clk_1('toc-water.', 'id_side_li_204');" id="toc-water.">
+            <span id="anchor-210">
+            </span>
+            Water.
+           </a>
+          </li>
+          <li id="id_side_li_205">
+           <a href="#objects." onclick="nav_clk_1('toc-objects.', 'id_side_li_205');" id="toc-objects.">
+            <span id="anchor-211">
+            </span>
+            Objects.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_206">
+         <a href="#flood-phase." onclick="nav_clk_2('toc-flood-phase.', 'id_side_li_206');" id="toc-flood-phase." class="cl_sub_nav">
+          <span id="anchor-212">
+          </span>
+          Flood Phase.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_207">
+           <a href="#hail." onclick="nav_clk_1('toc-hail.', 'id_side_li_207');" id="toc-hail.">
+            <span id="anchor-213">
+            </span>
+            Hail.
+           </a>
+          </li>
+          <li id="id_side_li_208">
+           <a href="#discharges." onclick="nav_clk_1('toc-discharges.', 'id_side_li_208');" id="toc-discharges.">
+            <span id="anchor-214">
+            </span>
+            Discharges.
+           </a>
+          </li>
+          <li id="id_side_li_209">
+           <a href="#strata." onclick="nav_clk_1('toc-strata.', 'id_side_li_209');" id="toc-strata.">
+            <span id="anchor-215">
+            </span>
+            Strata.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_210">
+         <a href="#drift-phase." onclick="nav_clk_2('toc-drift-phase.', 'id_side_li_210');" id="toc-drift-phase." class="cl_sub_nav">
+          <span id="anchor-216">
+          </span>
+          Drift Phase.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_211">
+           <a href="#ridge." onclick="nav_clk_1('toc-ridge.', 'id_side_li_211');" id="toc-ridge.">
+            <span id="anchor-217">
+            </span>
+            Ridge.
+           </a>
+          </li>
+          <li id="id_side_li_212">
+           <a href="#magnetic." onclick="nav_clk_1('toc-magnetic.', 'id_side_li_212');" id="toc-magnetic.">
+            <span id="anchor-218">
+            </span>
+            Magnetic.
+           </a>
+          </li>
+          <li id="id_side_li_213">
+           <a href="#separated." onclick="nav_clk_1('toc-separated.', 'id_side_li_213');" id="toc-separated.">
+            <span id="anchor-219">
+            </span>
+            Separated.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_214">
+         <a href="#recovery-phase." onclick="nav_clk_2('toc-recovery-phase.', 'id_side_li_214');" id="toc-recovery-phase." class="cl_sub_nav">
+          <span id="anchor-220">
+          </span>
+          Recovery Phase.
+         <i class="has_icons icon-side-menu"></i></a>
+         <ul class="nested">
+          <li id="id_side_li_215">
+           <a href="#magma." onclick="nav_clk_1('toc-magma.', 'id_side_li_215');" id="toc-magma.">
+            <span id="anchor-221">
+            </span>
+            Magma.
+           </a>
+          </li>
+          <li id="id_side_li_216">
+           <a href="#earthquakes." onclick="nav_clk_1('toc-earthquakes.', 'id_side_li_216');" id="toc-earthquakes.">
+            <span id="anchor-222">
+            </span>
+            Earthquakes.
+           </a>
+          </li>
+          <li id="id_side_li_217">
+           <a href="#field." onclick="nav_clk_1('toc-field.', 'id_side_li_217');" id="toc-field.">
+            <span id="anchor-223">
+            </span>
+            Field.
+           </a>
+          </li>
+          <li id="id_side_li_218">
+           <a href="#bulging-and-sinking." onclick="nav_clk_1('toc-bulging-and-sinking.', 'id_side_li_218');" id="toc-bulging-and-sinking.">
+            <span id="anchor-224">
+            </span>
+            Bulging and Sinking.
+           </a>
+          </li>
+          <li id="id_side_li_219">
+           <a href="#trenches.-1" onclick="nav_clk_1('toc-trenches.-1', 'id_side_li_219');" id="toc-trenches.-1">
+            <span id="anchor-225">
+            </span>
+            Trenches.
+           </a>
+          </li>
+          <li id="id_side_li_220">
+           <a href="#moutains." onclick="nav_clk_1('toc-moutains.', 'id_side_li_220');" id="toc-moutains.">
+            <span id="anchor-226">
+            </span>
+            Moutains.
+           </a>
+          </li>
+          <li id="id_side_li_221">
+           <a href="#unconformities." onclick="nav_clk_1('toc-unconformities.', 'id_side_li_221');" id="toc-unconformities.">
+            <span id="anchor-227">
+            </span>
+            Unconformities.
+           </a>
+          </li>
+          <li id="id_side_li_222">
+           <a href="#hydrocarbs." onclick="nav_clk_1('toc-hydrocarbs.', 'id_side_li_222');" id="toc-hydrocarbs.">
+            <span id="anchor-228">
+            </span>
+            Hydrocarbs.
+           </a>
+          </li>
+          <li id="id_side_li_223">
+           <a href="#canyons." onclick="nav_clk_1('toc-canyons.', 'id_side_li_223');" id="toc-canyons.">
+            <span id="anchor-229">
+            </span>
+            Canyons.
+           </a>
+          </li>
+          <li id="id_side_li_224">
+           <a href="#plateaus." onclick="nav_clk_1('toc-plateaus.', 'id_side_li_224');" id="toc-plateaus.">
+            <span id="anchor-230">
+            </span>
+            Plateaus.
+           </a>
+          </li>
+          <li id="id_side_li_225">
+           <a href="#butte." onclick="nav_clk_1('toc-butte.', 'id_side_li_225');" id="toc-butte.">
+            <span id="anchor-231">
+            </span>
+            Butte.
+           </a>
+          </li>
+          <li id="id_side_li_226">
+           <a href="#latitude-rotation." onclick="nav_clk_1('toc-latitude-rotation.', 'id_side_li_226');" id="toc-latitude-rotation.">
+            <span id="anchor-232">
+            </span>
+            Latitude rotation.
+           </a>
+          </li>
+          <li id="id_side_li_227">
+           <a href="#meridian-90." onclick="nav_clk_1('toc-meridian-90.', 'id_side_li_227');" id="toc-meridian-90.">
+            <span id="anchor-233">
+            </span>
+            Meridian 90.
+           </a>
+          </li>
+          <li id="id_side_li_228">
+           <a href="#continues." onclick="nav_clk_1('toc-continues.', 'id_side_li_228');" id="toc-continues.">
+            <span id="anchor-234">
+            </span>
+            Continues.
+           </a>
+          </li>
+         </ul>
+        </li>
+        <li id="id_side_li_229">
+         <a href="#differences." onclick="nav_clk_1('toc-differences.', 'id_side_li_229');" id="toc-differences.">
+          <span id="anchor-235">
+          </span>
+          Differences.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_230">
+       <a href="#the-couple." onclick="nav_clk_1('toc-the-couple.', 'id_side_li_230');" id="toc-the-couple.">
+        <span id="anchor-236">
+        </span>
+        The couple.
+       </a>
+       <ul>
+        <li id="id_side_li_231">
+         <a href="#reproduction.-1" onclick="nav_clk_1('toc-reproduction.-1', 'id_side_li_231');" id="toc-reproduction.-1">
+          <span id="anchor-237">
+          </span>
+          Reproduction.
+         </a>
+        </li>
+        <li id="id_side_li_232">
+         <a href="#no-cheating." onclick="nav_clk_1('toc-no-cheating.', 'id_side_li_232');" id="toc-no-cheating.">
+          <span id="anchor-238">
+          </span>
+          No cheating.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_233">
+       <a href="#dinosaurs." onclick="nav_clk_1('toc-dinosaurs.', 'id_side_li_233');" id="toc-dinosaurs.">
+        <span id="anchor-239">
+        </span>
+        Dinosaurs.
+       </a>
+       <ul>
+        <li id="id_side_li_234">
+         <a href="#biblical." onclick="nav_clk_1('toc-biblical.', 'id_side_li_234');" id="toc-biblical.">
+          <span id="anchor-240">
+          </span>
+          Biblical.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_235">
+       <a href="#taxonomy." onclick="nav_clk_1('toc-taxonomy.', 'id_side_li_235');" id="toc-taxonomy.">
+        <span id="anchor-241">
+        </span>
+        Taxonomy.
+       </a>
+       <ul>
+        <li id="id_side_li_236">
+         <a href="#th-century." onclick="nav_clk_1('toc-th-century.', 'id_side_li_236');" id="toc-th-century.">
+          <span id="anchor-242">
+          </span>
+          18th century.
+         </a>
+        </li>
+        <li id="id_side_li_237">
+         <a href="#biblical.-1" onclick="nav_clk_1('toc-biblical.-1', 'id_side_li_237');" id="toc-biblical.-1">
+          <span id="anchor-243">
+          </span>
+          Biblical.
+         </a>
+        </li>
+        <li id="id_side_li_238">
+         <a href="#few." onclick="nav_clk_1('toc-few.', 'id_side_li_238');" id="toc-few.">
+          <span id="anchor-244">
+          </span>
+          Few.
+         </a>
+        </li>
+        <li id="id_side_li_239">
+         <a href="#adaptation." onclick="nav_clk_1('toc-adaptation.', 'id_side_li_239');" id="toc-adaptation.">
+          <span id="anchor-245">
+          </span>
+          Adaptation.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_240">
+       <a href="#noahs-ark." onclick="nav_clk_1('toc-noahs-ark.', 'id_side_li_240');" id="toc-noahs-ark.">
+        <span id="anchor-246">
+        </span>
+        Noah's Ark.
+       </a>
+       <ul>
+        <li id="id_side_li_241">
+         <a href="#section-1" onclick="nav_clk_1('toc-section-1', 'id_side_li_241');" id="toc-section-1">
+          <span id="anchor-247">
+          </span>
+          1948.
+         </a>
+        </li>
+        <li id="id_side_li_242">
+         <a href="#section-2" onclick="nav_clk_1('toc-section-2', 'id_side_li_242');" id="toc-section-2">
+          <span id="anchor-248">
+          </span>
+          2014.
+         </a>
+        </li>
+        <li id="id_side_li_243">
+         <a href="#the-facts." onclick="nav_clk_1('toc-the-facts.', 'id_side_li_243');" id="toc-the-facts.">
+          <span id="anchor-249">
+          </span>
+          The facts.
+         </a>
+        </li>
+        <li id="id_side_li_244">
+         <a href="#logistics." onclick="nav_clk_1('toc-logistics.', 'id_side_li_244');" id="toc-logistics.">
+          <span id="anchor-250">
+          </span>
+          Logistics.
+         </a>
+        </li>
+        <li id="id_side_li_245">
+         <a href="#first-things-first." onclick="nav_clk_1('toc-first-things-first.', 'id_side_li_245');" id="toc-first-things-first.">
+          <span id="anchor-251">
+          </span>
+          First thing's first.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_246">
+       <a href="#history." onclick="nav_clk_1('toc-history.', 'id_side_li_246');" id="toc-history.">
+        <span id="anchor-252">
+        </span>
+        History.
+       </a>
+      </li>
+      <li id="id_side_li_247">
+       <a href="#the-column." onclick="nav_clk_1('toc-the-column.', 'id_side_li_247');" id="toc-the-column.">
+        <span id="anchor-253">
+        </span>
+        The Column.
+       </a>
+      </li>
+      <li id="id_side_li_248">
+       <a href="#genealogies." onclick="nav_clk_1('toc-genealogies.', 'id_side_li_248');" id="toc-genealogies.">
+        <span id="anchor-254">
+        </span>
+        Genealogies.
+       </a>
+      </li>
+      <li id="id_side_li_249">
+       <a href="#eridu." onclick="nav_clk_1('toc-eridu.', 'id_side_li_249');" id="toc-eridu.">
+        <span id="anchor-255">
+        </span>
+        Eridu.
+       </a>
+      </li>
+      <li id="id_side_li_250">
+       <a href="#monumental-egypt." onclick="nav_clk_1('toc-monumental-egypt.', 'id_side_li_250');" id="toc-monumental-egypt.">
+        <span id="anchor-256">
+        </span>
+        Monumental Egypt.
+       </a>
+      </li>
+      <li id="id_side_li_251">
+       <a href="#ur." onclick="nav_clk_1('toc-ur.', 'id_side_li_251');" id="toc-ur.">
+        <span id="anchor-257">
+        </span>
+        Ur.
+       </a>
+      </li>
+      <li id="id_side_li_252">
+       <a href="#sodoma-and-gomorra." onclick="nav_clk_1('toc-sodoma-and-gomorra.', 'id_side_li_252');" id="toc-sodoma-and-gomorra.">
+        <span id="anchor-258">
+        </span>
+        Sodoma and Gomorra.
+       </a>
+      </li>
+      <li id="id_side_li_253">
+       <a href="#imhotep." onclick="nav_clk_1('toc-imhotep.', 'id_side_li_253');" id="toc-imhotep.">
+        <span id="anchor-259">
+        </span>
+        Imhotep.
+       </a>
+      </li>
+      <li id="id_side_li_254">
+       <a href="#nuweiba." onclick="nav_clk_1('toc-nuweiba.', 'id_side_li_254');" id="toc-nuweiba.">
+        <span id="anchor-260">
+        </span>
+        Nuweiba.
+       </a>
+      </li>
+      <li id="id_side_li_255">
+       <a href="#jabal-maqla." onclick="nav_clk_1('toc-jabal-maqla.', 'id_side_li_255');" id="toc-jabal-maqla.">
+        <span id="anchor-261">
+        </span>
+        Jabal-Maqla.
+       </a>
+      </li>
+      <li id="id_side_li_256">
+       <a href="#synchronizing-egypt." onclick="nav_clk_1('toc-synchronizing-egypt.', 'id_side_li_256');" id="toc-synchronizing-egypt.">
+        <span id="anchor-262">
+        </span>
+        Synchronizing Egypt.
+       </a>
+      </li>
+      <li id="id_side_li_257">
+       <a href="#probability." onclick="nav_clk_1('toc-probability.', 'id_side_li_257');" id="toc-probability.">
+        <span id="anchor-263">
+        </span>
+        Probability.
+       </a>
+       <ul>
+        <li id="id_side_li_258">
+         <a href="#fundamental-probability." onclick="nav_clk_1('toc-fundamental-probability.', 'id_side_li_258');" id="toc-fundamental-probability.">
+          <span id="anchor-264">
+          </span>
+          Fundamental probability.
+         </a>
+        </li>
+        <li id="id_side_li_259">
+         <a href="#statistical-probability." onclick="nav_clk_1('toc-statistical-probability.', 'id_side_li_259');" id="toc-statistical-probability.">
+          <span id="anchor-265">
+          </span>
+          Statistical probability.
+         </a>
+        </li>
+        <li id="id_side_li_260">
+         <a href="#creations." onclick="nav_clk_1('toc-creations.', 'id_side_li_260');" id="toc-creations.">
+          <span id="anchor-266">
+          </span>
+          Creations.
+         </a>
+        </li>
+        <li id="id_side_li_261">
+         <a href="#quantum." onclick="nav_clk_1('toc-quantum.', 'id_side_li_261');" id="toc-quantum.">
+          <span id="anchor-267">
+          </span>
+          Quantum.
+         </a>
+        </li>
+        <li id="id_side_li_262">
+         <a href="#popular." onclick="nav_clk_1('toc-popular.', 'id_side_li_262');" id="toc-popular.">
+          <span id="anchor-268">
+          </span>
+          Popular.
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li id="id_side_li_263">
+       <a href="#gravely-absurd." onclick="nav_clk_1('toc-gravely-absurd.', 'id_side_li_263');" id="toc-gravely-absurd.">
+        <span id="anchor-269">
+        </span>
+        Gravely absurd.
+       </a>
+      </li>
+      <li id="id_side_li_264">
+       <a href="#fields." onclick="nav_clk_1('toc-fields.', 'id_side_li_264');" id="toc-fields.">
+        <span id="anchor-270">
+        </span>
+        Fields.
+       </a>
+      </li>
+      <li id="id_side_li_265">
+       <a href="#extraterrestrial." onclick="nav_clk_1('toc-extraterrestrial.', 'id_side_li_265');" id="toc-extraterrestrial.">
+        <span id="anchor-271">
+        </span>
+        Extraterrestrial.
+       </a>
+      </li>
+      <li id="id_side_li_266">
+       <a href="#determinism." onclick="nav_clk_1('toc-determinism.', 'id_side_li_266');" id="toc-determinism.">
+        <span id="anchor-272">
+        </span>
+        Determinism.
+       </a>
+      </li>
+     </ul>
+    </li>
+    <li id="id_side_li_267">
+     <a href="#part-4.-testimony." onclick="nav_clk_1('toc-part-4.-testimony.', 'id_side_li_267');" id="toc-part-4.-testimony.">
+      <span id="anchor-273">
+      </span>
+      PART 4. TESTIMONY.
+     </a>
+     <ul>
+      <li id="id_side_li_268">
+       <a href="#my-testimony." onclick="nav_clk_1('toc-my-testimony.', 'id_side_li_268');" id="toc-my-testimony.">
+        <span id="anchor-274">
+        </span>
+        My testimony.
+       </a>
+      </li>
+      <li id="id_side_li_269">
+       <a href="#and-you" onclick="nav_clk_1('toc-and-you', 'id_side_li_269');" id="toc-and-you">
+        <span id="anchor-275">
+        </span>
+        And
+you?
+       </a>
+      </li>
+     </ul>
+    </li>
+    <li id="id_side_li_270">
+     <a href="#biblical-references" onclick="nav_clk_1('toc-biblical-references', 'id_side_li_270');" id="toc-biblical-references">
+      <span id="anchor-276">
+      </span>
+      Biblical References
+     </a>
+    </li>
+   
