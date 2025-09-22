@@ -10,7 +10,7 @@ if (process.argv.length < 3) {
 }
 
 var file = process.argv[2];
-var from_depth = 3;
+var from_depth = 2;
 if(process.argv.length > 3){
     from_depth = process.argv[3];
 }
