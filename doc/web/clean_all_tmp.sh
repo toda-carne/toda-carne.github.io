@@ -8,6 +8,8 @@ echo "clean ${1} using "${BASH_SOURCE[0]}
 cd $SCRIPT_DIR
 
 rm ./Makefile
+rm ./todacarne.html
+rm ./all_flesh.html
 rm ./nav*
 rm ./text*
 rm ./add_refs/content 

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+CURR_DIR=$(pwd)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+echo "GENERATING nav_js "${BASH_SOURCE[0]}
+
+cd $SCRIPT_DIR
+
+SRC_DIR=${1}
+BOOK_NAM=${2}
+LANG=${3}
+
+echo "GENERATING "${SRC_DIR}/text2_${BOOK_NAM}.mustache
+
+rm ./content ./footnotes ./bib_index ./sebib_footnotes
+
+node sep_cont_foot.js ${LANG} ${SRC_DIR}/text1_${BOOK_NAM}.mustache ./content ./footnotes
+node add_tc_sebib_refs.js ${LANG} ./footnotes ./sebib_footnotes
+node get_refs_index.js ${LANG} ./footnotes ./bib_index
+
+cat ./content ./sebib_footnotes ./bib_index > ${SRC_DIR}/text2_${BOOK_NAM}.mustache
+# cat ./content ./footnotes > ${SRC_DIR}/text2_${BOOK_NAM}.mustache
+
+cd ${CURR_DIR}

@@ -1,6 +1,8 @@
 **/.directory
 .directory
 es_CO.dic
+doc/web/SRC
+doc/web/add_refs/code
 **/node_modules
 **/js_print_bib_verses_for_bib_quest
 NO_GIT
