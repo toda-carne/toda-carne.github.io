@@ -23,6 +23,8 @@ async function proc_file(){
 	const rx_bgreref = /biblehub.com\/greek\/([^.]*).htm/;
 	const rx_btxtref = /biblehub.com\/text\/([^/]*)\/(\d+)-(\d+).htm/;
 	const rx_bref = /\?search=([^&]*)\&/;
+	
+	const rx_bakref = /fnref(\d*)/;
 
 	const lngu = process.argv[2];
 	const file_nm = process.argv[3];
@@ -162,7 +164,12 @@ async function proc_file(){
 			let kk = 0;
 			for(kk = 0; kk < obj_chapter.length; kk++){
 				const ref = obj_chapter[kk];
-				const line = ` <a href="${ref}" class="footnote-back" role="doc-backlink">${kk}</a>`;
+				let nref = kk;
+				const mmref = ref.match(rx_bakref);
+				if(mmref){
+					nref = Number(mmref[1]);
+				}
+				const line = ` <a href="${ref}" class="footnote-back" role="doc-backlink">${nref}</a>`;
 				wstm.write(line + '\n');
 			}
 			wstm.write(`</li>\n`);
