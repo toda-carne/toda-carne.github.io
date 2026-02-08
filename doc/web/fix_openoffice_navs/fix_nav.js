@@ -9,8 +9,9 @@ if (process.argv.length < 3) {
   process.exit(1);
 }
 
-var file = process.argv[2];
-var from_depth = 2;
+const file = process.argv[2];
+
+let from_depth = 2;
 if(process.argv.length > 3){
     from_depth = process.argv[3];
 }
@@ -50,6 +51,10 @@ function fix_file(dom){
     const SUB_NAV_ICON = '<i class="has_icons icon-side-menu"></i>';
     
     const document = dom.window.document;
+	
+    const toc = document.getElementById("toc-todacarne.com");
+	toc.remove();
+	
     const all_li = document.getElementsByTagName("li");
     var ii;
 

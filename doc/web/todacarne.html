@@ -60,6 +60,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -152,17 +156,17 @@
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <header id="title-block-header">
@@ -1013,7 +1017,9 @@ añitos?</p>
 <p>Y que un pez grande se traga un tipo y después de 3 días lo escupe en
 un playa. El tal Jonás.</p>
 <p>Y que los muertos resucitan.</p>
-<p>¿Donde están? ¿En el cielo o en el infierno? </p>
+<p>¿Donde están? ¿En el cielo o en el infierno? <img
+src="Pictures/1000000100000078000000781F26994D56D57998.png"
+style="width:7mm;height:7mm" /></p>
 <p>No parece muy científico ni lógico el asunto. ¿No?</p>
 <p>Surgen muchas preguntas. Muchas de ellas asumen otras preguntas.
 Muchas de ellas asumen cosas que no dice la biblia. Muchas de ellas
@@ -1360,7 +1366,9 @@ las máquinas biológicas tiene que ser muchísimo mayor. Probablemente
 también millones de millones de ordenes de magnitud mayor que la del
 hombre.</p>
 <p>Pero no, ahí están todos los que creen que la cosa fue a punta de
-chepa. Y que creen que eso está “demostrado científicamente”.</p>
+chepa. Y que creen que eso está “demostrado científicamente”.<img
+src="Pictures/1000000100000078000000781F26994D56D57998.png"
+style="width:7mm;height:7mm" /></p>
 <p>Lo cual me recuerda algo que alguien dijo:</p>
 <p><strong>“</strong><span id="anchor-20"></span><strong>Como son más
 altos los cielos que la tierra, así mis caminos son más altos que sus
@@ -13189,7 +13197,7 @@ role="doc-noteref"><sup>727</sup></a></strong></strong>.</p>
 <h1 id="referencias-bíblicas"><span id="anchor-1286"></span>Referencias
 Bíblicas</h1>
 
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -16952,6 +16960,6 @@ href="https://www.biblegateway.com/passage/?search=Romanos+11%3A35-36&amp;versio
 </blockquote>
 <a href="#fnref727" class="footnote-back" role="doc-backlink">↩︎</a></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

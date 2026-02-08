@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CURR_DIR=$(pwd)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+echo "UPDATING FROM MAKE "${BASH_SOURCE[0]}
+
+cd $SCRIPT_DIR
+
+cp ../../doc/web/nav3_all_flesh.mustache ./nav_all_flesh.mustache
+cp ../../doc/web/text3_all_flesh.mustache ./text_all_flesh.mustache
+
+cd ${CURR_DIR}
