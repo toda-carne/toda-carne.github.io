@@ -1,0 +1,29 @@
+#!/bin/bash
+
+CURR_DIR=$(pwd)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+echo "GENERATING text1_ and nav1_ "${BASH_SOURCE[0]}
+
+cd $SCRIPT_DIR
+
+ODT_SRC=${1}
+WEB_DIR=${2}
+BOOK_NAM=${3}
+TITLE=${4}
+
+echo "GENERATING "$WEB_DIR/nav1_${BOOK_NAM}.mustache
+
+pandoc -f odt -t html -o $WEB_DIR/${BOOK_NAM}.html $ODT_SRC --toc -s --toc-depth=6 --metadata title="${TITLE}"
+tag=nav
+sed -n "/<$tag/,/<\/$tag>/p" $WEB_DIR/${BOOK_NAM}.html > $WEB_DIR/tmp_nav
+pup -f $WEB_DIR/tmp_nav > $WEB_DIR/nav1_${BOOK_NAM}.mustache
+rm $WEB_DIR/tmp_nav
+
+echo "GENERATING "$WEB_DIR/text1_${BOOK_NAM}.mustache
+
+sed -i 's/<head>/<head>\n\t<meta charset="utf-8">/' $WEB_DIR/nav1_${BOOK_NAM}.mustache
+pandoc -f odt -t html -o $WEB_DIR/text1_${BOOK_NAM}.mustache $ODT_SRC
+
+
+cd ${CURR_DIR}
