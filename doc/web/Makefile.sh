@@ -67,10 +67,10 @@ $(DEST_DIR)/all_flesh.html $(DEST_DIR)/text1_all_flesh.mustache $(DEST_DIR)/nav1
 # NAV2
 
 $(DEST_DIR)/nav2_todacarne.mustache : $(DEST_DIR)/nav1_todacarne.mustache
-	$(BASH) $(GEN_NAVJS_DIR)/gen_nav_js_sh $(DEST_DIR) 'todacarne'
+	$(BASH) $(GEN_NAVJS_DIR)/gen_nav_js_sh $(DEST_DIR) 'todacarne' es
 
 $(DEST_DIR)/nav2_all_flesh.mustache : $(DEST_DIR)/nav1_all_flesh.mustache
-	$(BASH) $(GEN_NAVJS_DIR)/gen_nav_js_sh $(DEST_DIR) 'all_flesh'
+	$(BASH) $(GEN_NAVJS_DIR)/gen_nav_js_sh $(DEST_DIR) 'all_flesh' en
 
 
 #-----

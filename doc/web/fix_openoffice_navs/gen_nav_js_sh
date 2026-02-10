@@ -9,9 +9,10 @@ cd $SCRIPT_DIR
 
 SRC_DIR=${1}
 BOOK_NAM=${2}
+LANG=${3}
 
 echo "GENERATING "${SRC_DIR}/nav2_${BOOK_NAM}.mustache
 
-node fix_nav.js ${SRC_DIR}/nav1_${BOOK_NAM}.mustache > ${SRC_DIR}/nav2_${BOOK_NAM}.mustache
+node fix_nav.js ${SRC_DIR}/nav1_${BOOK_NAM}.mustache ${LANG} > ${SRC_DIR}/nav2_${BOOK_NAM}.mustache
 
 cd ${CURR_DIR}

@@ -5,14 +5,15 @@ var fs = require('fs');
 const { JSDOM } = jsdom;
 
 if (process.argv.length < 3) {
-  console.log('Usage: node ' + process.argv[1] + ' FILENAME [from_depth]');
+  console.log('Usage: node ' + process.argv[1] + ' FILENAME (en|es) [from_depth]');
   process.exit(1);
 }
 
 const file = process.argv[2];
+const lang = process.argv[3];
 
 let from_depth = 2;
-if(process.argv.length > 3){
+if(process.argv.length > 4){
     from_depth = process.argv[3];
 }
 
@@ -54,10 +55,36 @@ function fix_file(dom){
 	
     const toc = document.getElementById("toc-todacarne.com");
 	toc.remove();
+
+    const first_nav = document.querySelector("ul");
+    if(first_nav === null){
+        console.log("<!-- FILE WITHOUT LISTS !!! -->");
+		return;
+	}
+	
+	let bib_idx_tit = "INDICE BIBLICO";
+	if(lang == "en"){
+		bib_idx_tit = "BIBLICAL INDEX";
+	}
+	let info_tit = "AUTOR";
+	if(lang == "en"){
+		info_tit = "AUTHOR";
+	}
+
+	const li_bib_idx = document.createElement("li");
+	const a_bib_idx = `<a href="#biblical_index" id="toc-biblical-index">${bib_idx_tit}</a>`;
+	li_bib_idx.innerHTML = a_bib_idx;
+
+	const li_info = document.createElement("li");
+	const a_info = `<a href="#id_footer" id="toc-info">${info_tit}</a>`;
+	li_info.innerHTML = a_info;
+	
+	first_nav.appendChild(li_bib_idx);
+	first_nav.appendChild(li_info);
 	
     const all_li = document.getElementsByTagName("li");
-    var ii;
-
+    let ii;
+		
     for (ii = 0; ii < all_li.length; ii++) {
         let jj = all_li[ii];
         let first_a = jj.querySelector("a");
@@ -87,11 +114,6 @@ function fix_file(dom){
         }
     }
 
-    var first_nav = document.querySelector("ul");
-    if(! (first_nav === null)){
-        console.log(first_nav.innerHTML);
-    } else {
-        console.log("<!-- FILE WITHOUT LISTS !!! -->");
-    }
+	console.log(first_nav.innerHTML);
 }
 

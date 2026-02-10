@@ -146,7 +146,7 @@ async function proc_file(){
 		title_refs = "Biblical Index";
 	}
 	
-	wstm.write(`<h1>${title_refs}</h1>\n`);
+	wstm.write(`<h1 id="biblical_index">${title_refs}</h1>\n`);
 	const all_books = Object.keys(the_obj).sort((aa, bb) => Number(aa) - Number(bb));
 	for(ii = 0; ii < all_books.length; ii++){
 		const book = Number(all_books[ii]);
