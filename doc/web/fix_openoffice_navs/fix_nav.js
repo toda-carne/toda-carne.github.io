@@ -53,8 +53,28 @@ function fix_file(dom){
     
     const document = dom.window.document;
 	
-    const toc = document.getElementById("toc-todacarne.com");
-	toc.remove();
+	let toc_id = "toc-tabla-de-contenido.";
+	if(lang == "en"){
+		toc_id = "toc-table-of-contents.";
+	}
+
+	let toc = null;
+    toc = document.getElementById(toc_id);
+	if(toc != null){
+		toc.remove();
+	} else {
+		console.log("CANNOT FIND ELEMENT " + toc_id);
+		console.log("DO NOT FORGET MANUAL STEPS IN .odt SOURCE DOCUMENT (DELETE ALL SECTIONS MANUALLY) !!!");
+	}
+
+	toc_id = "toc-todacarne.com"
+    toc = document.getElementById(toc_id);
+	if(toc != null){
+		toc.remove();
+	} else {
+		console.log("CANNOT FIND ELEMENT " + toc_id);
+		console.log("DO NOT FORGET MANUAL STEPS IN .odt SOURCE DOCUMENT (DELETE ALL SECTIONS MANUALLY) !!!");
+	}
 
     const first_nav = document.querySelector("ul");
     if(first_nav === null){
